@@ -26,7 +26,6 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\CmsSlot\Helper\CmsSlotHelper
 
-
     Business:
         path: Business
         class_name: CmsSlotStorageBusinessTester

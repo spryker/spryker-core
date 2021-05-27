@@ -19,10 +19,12 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 class QuoteItemReplacer implements QuoteItemReplacerInterface
 {
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_ITEM_NOT_FOUND_IN_CART = 'product_configuration.error.configured_item_not_found_in_cart';
+    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_AVAILABILITY_FAILED = 'product_configuration.error.availability.failed';
 
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     protected const TRANSLATION_PARAMETER_SKU = '%sku%';
+    protected const TRANSLATION_PARAMETER_AVAILABILITY = '%availability%';
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface
@@ -66,6 +68,11 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
             $quoteTransfer
         );
 
+        $productConfiguratorResponseProcessorResponseTransfer = $this->handleChangedQuantityError(
+            $productConfiguratorResponseProcessorResponseTransfer,
+            $itemReplaceTransfer
+        );
+
         $quoteResponseTransfer = $this->cartClient->replaceItem($itemReplaceTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
@@ -95,10 +102,37 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
             ->setGroupKey(null)
             ->setProductConfigurationInstance($productConfiguratorResponseTransfer->getProductConfigurationInstance());
 
+        $newItemTransfer = $this->replaceItemQuantity($productConfiguratorResponseTransfer, $newItemTransfer);
+
         return (new ItemReplaceTransfer())
             ->setItemToBeReplaced($itemToBeReplacedTransfer)
             ->setNewItem($newItemTransfer)
             ->setQuote($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function replaceItemQuantity(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        ItemTransfer $itemTransfer
+    ): ItemTransfer {
+        $productConfigurationInstanceTransfer = $productConfiguratorResponseTransfer->getProductConfigurationInstance();
+
+        if (!$productConfigurationInstanceTransfer) {
+            return $itemTransfer;
+        }
+
+        $availableQuantity = $productConfigurationInstanceTransfer->getAvailableQuantity();
+
+        if ($availableQuantity && $availableQuantity < $itemTransfer->getQuantity()) {
+            $itemTransfer->setQuantity($availableQuantity);
+        }
+
+        return $itemTransfer;
     }
 
     /**
@@ -121,6 +155,28 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
+     * @param \Generated\Shared\Transfer\ItemReplaceTransfer $itemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    protected function handleChangedQuantityError(
+        ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
+        ItemReplaceTransfer $itemReplaceTransfer
+    ): ProductConfiguratorResponseProcessorResponseTransfer {
+        if ($itemReplaceTransfer->getItemToBeReplaced()->getQuantity() != $itemReplaceTransfer->getNewItem()->getQuantity()) {
+            $productConfiguratorResponseProcessorResponseTransfer
+                ->addMessage(
+                    $this->createConfigurationItemAvailabilityMessage(
+                        $itemReplaceTransfer->getNewItem()->getQuantity()
+                    )
+                );
+        }
+
+        return $productConfiguratorResponseProcessorResponseTransfer;
+    }
+
+    /**
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
@@ -131,5 +187,20 @@ class QuoteItemReplacer implements QuoteItemReplacerInterface
             ->setType(static::MESSAGE_TYPE_ERROR)
             ->setValue(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_ITEM_NOT_FOUND_IN_CART)
             ->setParameters([static::TRANSLATION_PARAMETER_SKU => $sku]);
+    }
+
+    /**
+     * @param int $availability
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer
+     */
+    protected function createConfigurationItemAvailabilityMessage(int $availability): MessageTransfer
+    {
+        return (new MessageTransfer())
+            ->setType(static::MESSAGE_TYPE_ERROR)
+            ->setValue(static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_AVAILABILITY_FAILED)
+            ->setParameters([
+                static::TRANSLATION_PARAMETER_AVAILABILITY => $availability,
+            ]);
     }
 }

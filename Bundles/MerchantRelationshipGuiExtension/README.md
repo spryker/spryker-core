@@ -1,5 +1,5 @@
 # MerchantRelationshipGuiExtension Module
-[![Build Status](https://travis-ci.org/spryker/merchant-relationship-gui-extension.svg)](https://travis-ci.org/spryker/merchant-relationship-gui-extension)
+[![Latest Stable Version](https://poser.pugx.org/spryker/merchant-relationship-gui-extension/v/stable.svg)](https://packagist.org/packages/spryker/merchant-relationship-gui-extension)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Provides interfaces for extension of MerchantRelationshipGui module with plugins.

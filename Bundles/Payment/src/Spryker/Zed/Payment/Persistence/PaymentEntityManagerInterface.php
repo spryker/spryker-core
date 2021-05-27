@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Payment\Persistence;
 
 use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderTransfer;
 
 interface PaymentEntityManagerInterface
 {
@@ -41,4 +42,18 @@ interface PaymentEntityManagerInterface
         array $idStores,
         int $idPaymentMethod
     ): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderTransfer
+     */
+    public function createPaymentProvider(PaymentProviderTransfer $paymentProviderTransfer): PaymentProviderTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer
+     */
+    public function createPaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodTransfer;
 }

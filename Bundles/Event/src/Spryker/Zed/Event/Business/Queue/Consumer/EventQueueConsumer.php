@@ -9,6 +9,7 @@ namespace Spryker\Zed\Event\Business\Queue\Consumer;
 
 use Generated\Shared\Transfer\EventQueueSendMessageBodyTransfer;
 use Generated\Shared\Transfer\QueueReceiveMessageTransfer;
+use Propel\Runtime\Propel;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\Event\EventConfig as SharedEventConfig;
 use Spryker\Zed\Event\Business\Exception\MessageTypeNotFoundException;
@@ -129,12 +130,22 @@ class EventQueueConsumer implements EventQueueConsumerInterface
             return;
         }
 
+        $isInstancePoolingEnabled = Propel::isInstancePoolingEnabled();
+
+        if (!$this->eventConfig->isInstancePoolingAllowed() && $isInstancePoolingEnabled) {
+            Propel::disableInstancePooling();
+        }
+
         foreach ($eventItems as $eventName => $eventItem) {
             try {
                 $listener->handleBulk($eventItem[static::EVENT_TRANSFERS], $eventName);
             } catch (Throwable $throwable) {
                 $this->handleBulkItemsIndividually($eventItem, $eventName, $listener, $listenerClassName);
             }
+        }
+
+        if ($isInstancePoolingEnabled) {
+            Propel::enableInstancePooling();
         }
     }
 

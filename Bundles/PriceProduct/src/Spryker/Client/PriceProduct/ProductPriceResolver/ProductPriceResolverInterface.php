@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 interface ProductPriceResolverInterface
 {
     /**
+     * @phpstan-param array<mixed> $priceMap
+     *
      * @deprecated Use resolveTransfer() instead
      *
      * @param array $priceMap

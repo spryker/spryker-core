@@ -228,8 +228,8 @@ class UsersTable extends AbstractTable
         $actionButtons = [];
         foreach ($buttonTransfers as $buttonTransfer) {
             $actionButtons[] = $this->generateButton(
-                $buttonTransfer->getUrl(),
-                $buttonTransfer->getTitle(),
+                $buttonTransfer->getUrlOrFail(),
+                $buttonTransfer->getTitleOrFail(),
                 $buttonTransfer->getDefaultOptions(),
                 $buttonTransfer->getCustomOptions()
             );

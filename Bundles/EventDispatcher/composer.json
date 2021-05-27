@@ -1,48 +1,48 @@
 {
-  "name": "spryker/event-dispatcher",
-  "type": "library",
-  "description": "EventDispatcher module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/application-extension": "^1.0.0",
-    "spryker/event-dispatcher-extension": "^1.0.0",
-    "spryker/kernel": "^3.52.0",
-    "spryker/symfony": "^3.2.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/container": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "spryker/container": "If you want to use the EventDispatcherApplicationPlugin"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\EventDispatcher\\Helper\\": "tests/SprykerTest/Shared/EventDispatcher/_support/Helper/",
-      "SprykerTest\\Yves\\EventDispatcher\\Helper\\": "tests/SprykerTest/Yves/EventDispatcher/_support/Helper/",
-      "SprykerTest\\Zed\\EventDispatcher\\Helper\\": "tests/SprykerTest/Zed/EventDispatcher/_support/Helper/"
+    "name": "spryker/event-dispatcher",
+    "type": "library",
+    "description": "EventDispatcher module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/application-extension": "^1.0.0",
+        "spryker/event-dispatcher-extension": "^1.0.0",
+        "spryker/kernel": "^3.52.0",
+        "spryker/symfony": "^3.2.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/container": "If you want to use the EventDispatcherApplicationPlugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Shared\\EventDispatcher\\Helper\\": "tests/SprykerTest/Shared/EventDispatcher/_support/Helper/",
+            "SprykerTest\\Yves\\EventDispatcher\\Helper\\": "tests/SprykerTest/Yves/EventDispatcher/_support/Helper/",
+            "SprykerTest\\Zed\\EventDispatcher\\Helper\\": "tests/SprykerTest/Zed/EventDispatcher/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

@@ -29,13 +29,31 @@ class CartHandler implements CartHandlerInterface
     protected $wishlistClient;
 
     /**
+     * @var \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface[]
+     */
+    protected $wishlistPostMoveToCartCollectionExpanderPlugins;
+
+    /**
+     * @var \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface[]
+     */
+    protected $wishlistCollectionToRemoveExpanderPlugins;
+
+    /**
      * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface $cartClient
      * @param \Spryker\Client\Wishlist\WishlistClientInterface $wishlistClient
+     * @param \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface[] $wishlistPostMoveToCartCollectionExpanderPlugins
+     * @param \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface[] $wishlistCollectionToRemoveExpanderPlugins
      */
-    public function __construct(WishlistToCartInterface $cartClient, WishlistClientInterface $wishlistClient)
-    {
+    public function __construct(
+        WishlistToCartInterface $cartClient,
+        WishlistClientInterface $wishlistClient,
+        array $wishlistPostMoveToCartCollectionExpanderPlugins,
+        array $wishlistCollectionToRemoveExpanderPlugins
+    ) {
         $this->cartClient = $cartClient;
         $this->wishlistClient = $wishlistClient;
+        $this->wishlistPostMoveToCartCollectionExpanderPlugins = $wishlistPostMoveToCartCollectionExpanderPlugins;
+        $this->wishlistCollectionToRemoveExpanderPlugins = $wishlistCollectionToRemoveExpanderPlugins;
     }
 
     /**
@@ -59,6 +77,12 @@ class CartHandler implements CartHandlerInterface
 
             $wishlistRequestCollectionDiff->addRequest($wishlistRequestTransfer);
         }
+
+        $wishlistRequestCollectionDiff = $this->executeWishlistPostMoveToCartCollectionExpanderPlugins(
+            $wishlistRequestCollectionDiff,
+            $quoteTransfer,
+            $requestCollectionTransfer
+        );
 
         return $wishlistRequestCollectionDiff;
     }
@@ -88,6 +112,12 @@ class CartHandler implements CartHandlerInterface
             $successfulRequestCollection->addItem($requestTransfer->getWishlistItem());
         }
 
+        $successfulRequestCollection = $this->executeWishlistCollectionToRemoveExpanderPlugins(
+            $requestedCollection,
+            $failedCollection,
+            $successfulRequestCollection
+        );
+
         return $successfulRequestCollection;
     }
 
@@ -102,9 +132,9 @@ class CartHandler implements CartHandlerInterface
         $cartChangeTransfer->setQuote($this->cartClient->getQuote());
         foreach ($wishlistMoveToCartRequestCollectionTransfer->getRequests() as $wishlistMoveToCartRequestTransfer) {
             $this->assertRequestTransfer($wishlistMoveToCartRequestTransfer);
-            $cartChangeTransfer->addItem(
-                $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku())
-            );
+            $itemTransfer = $this->createItemTransfer($wishlistMoveToCartRequestTransfer->getSku());
+            $itemTransfer->fromArray($wishlistMoveToCartRequestTransfer->toArray(), true);
+            $cartChangeTransfer->addItem($itemTransfer);
         }
         $quoteTransfer = $this->cartClient->addValidItems($cartChangeTransfer);
 
@@ -161,6 +191,8 @@ class CartHandler implements CartHandlerInterface
     }
 
     /**
+     * @phpstan-return array<string, bool>
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array
@@ -177,5 +209,51 @@ class CartHandler implements CartHandlerInterface
         }
 
         return $skuIndex;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionDiffTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
+     */
+    protected function executeWishlistPostMoveToCartCollectionExpanderPlugins(
+        WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionDiffTransfer,
+        QuoteTransfer $quoteTransfer,
+        WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
+    ): WishlistMoveToCartRequestCollectionTransfer {
+        foreach ($this->wishlistPostMoveToCartCollectionExpanderPlugins as $wishlistPostMoveToCartCollectionExpanderPlugin) {
+            $wishlistMoveToCartRequestCollectionDiffTransfer = $wishlistPostMoveToCartCollectionExpanderPlugin->expand(
+                $wishlistMoveToCartRequestCollectionTransfer,
+                $quoteTransfer,
+                $wishlistMoveToCartRequestCollectionDiffTransfer
+            );
+        }
+
+        return $wishlistMoveToCartRequestCollectionDiffTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
+     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $failedWishlistMoveToCartRequestCollectionTransfer
+     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
+     */
+    protected function executeWishlistCollectionToRemoveExpanderPlugins(
+        WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer,
+        WishlistMoveToCartRequestCollectionTransfer $failedWishlistMoveToCartRequestCollectionTransfer,
+        WishlistItemCollectionTransfer $wishlistItemCollectionTransfer
+    ): WishlistItemCollectionTransfer {
+        foreach ($this->wishlistCollectionToRemoveExpanderPlugins as $wishlistCollectionToRemoveExpanderPlugin) {
+            $wishlistItemCollectionTransfer = $wishlistCollectionToRemoveExpanderPlugin->expand(
+                $wishlistMoveToCartRequestCollectionTransfer,
+                $failedWishlistMoveToCartRequestCollectionTransfer,
+                $wishlistItemCollectionTransfer
+            );
+        }
+
+        return $wishlistItemCollectionTransfer;
     }
 }

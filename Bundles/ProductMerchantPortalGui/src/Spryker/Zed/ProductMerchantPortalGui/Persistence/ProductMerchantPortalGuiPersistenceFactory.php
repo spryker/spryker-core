@@ -16,8 +16,9 @@ use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductAbstractTableDataMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductTableDataMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductAbstractTableDataMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductTableDataMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PropelModelPagerMapper;
 use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiDependencyProvider;
 
@@ -36,11 +37,11 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductAbstractTableDataMapper
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductTableDataMapper
      */
-    public function createPriceProductAbstractTableDataMapper(): PriceProductAbstractTableDataMapper
+    public function createPriceProductTableDataMapper(): PriceProductTableDataMapper
     {
-        return new PriceProductAbstractTableDataMapper($this->getPriceProductFacade());
+        return new PriceProductTableDataMapper($this->getPriceProductFacade());
     }
 
     /**
@@ -49,6 +50,14 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     public function createPropelModelPagerMapper(): PropelModelPagerMapper
     {
         return new PropelModelPagerMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductTableDataMapper
+     */
+    public function createProductTableDataMapper(): ProductTableDataMapper
+    {
+        return new ProductTableDataMapper($this->getUtilEncodingService());
     }
 
     /**

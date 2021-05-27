@@ -82,12 +82,13 @@ class PriceProductMapper
      */
     protected function hasSeveralConcretesInSameAbstract(SpyPriceProductStore $priceProductStoreEntity): bool
     {
-        $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
-            ->getSpyProductAbstract();
-
-        if (!$abstractProductEntity) {
+        if (!$priceProductStoreEntity->getPriceProduct()->getSpyProductAbstract()) {
             return false;
         }
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity */
+        $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
+            ->getSpyProductAbstract();
 
         return $abstractProductEntity
             ->getSpyProducts()
@@ -108,9 +109,10 @@ class PriceProductMapper
         PriceProductTransfer $priceProductTransfer,
         array $allowedProductSkus
     ): array {
-        $concreateProductEntities = $priceProductStoreEntity->getPriceProduct()
-            ->getSpyProductAbstract()
-            ->getSpyProducts();
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstract $abstractProductEntity */
+        $abstractProductEntity = $priceProductStoreEntity->getPriceProduct()
+            ->getSpyProductAbstract();
+        $concreateProductEntities = $abstractProductEntity->getSpyProducts();
 
         foreach ($concreateProductEntities as $concreateProductEntitity) {
             // Added due to propel entity cache system
@@ -199,7 +201,9 @@ class PriceProductMapper
         PriceProductDimensionTransfer $priceProductDimensionTransfer,
         array $priceProductStoreEntityData
     ): PriceProductTransfer {
-        $sku = $priceProductEntity->getProduct() ? $priceProductEntity->getProduct()->getSku() : $priceProductStoreEntityData['product_sku'];
+        /** @var \Orm\Zed\Product\Persistence\SpyProduct $productEntity */
+        $productEntity = $priceProductEntity->getProduct();
+        $sku = $priceProductEntity->getProduct() ? $productEntity->getSku() : $priceProductStoreEntityData['product_sku'];
 
         return $priceProductTransfer
             ->fromArray($priceProductStoreEntityData, true)

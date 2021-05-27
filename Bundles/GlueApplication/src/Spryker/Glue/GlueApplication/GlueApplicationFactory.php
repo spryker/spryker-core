@@ -23,6 +23,10 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiation;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiationInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeAction;
+use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidator;
+use Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersHttpRequestValidator;
@@ -94,7 +98,8 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRestResourceBuilder(),
             $this->createRestControllerCallbacks(),
             $this->getConfig(),
-            $this->createUserProvider()
+            $this->createUserProvider(),
+            $this->createFormattedControllerBeforeAction()
         );
     }
 
@@ -237,7 +242,20 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestHttpRequestValidator(): HttpRequestValidatorInterface
     {
-        return new HttpRequestValidator($this->getValidateRequestPlugins(), $this->createRestResourceRouteLoader(), $this->getConfig());
+        return new HttpRequestValidator(
+            $this->getValidateRequestPlugins(),
+            $this->createRestResourceRouteLoader(),
+            $this->getConfig(),
+            $this->createHeadersHttpRequestValidator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface
+     */
+    public function createFormattedControllerBeforeAction(): FormattedControllerBeforeActionInterface
+    {
+        return new FormattedControllerBeforeAction($this->getFormattedControllerBeforeActionPlugins());
     }
 
     /**
@@ -370,6 +388,17 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidatorInterface
+     */
+    public function createHeadersHttpRequestValidator(): HeadersHttpRequestValidatorInterface
+    {
+        return new HeadersHttpRequestValidator(
+            $this->getConfig(),
+            $this->createRestResourceRouteLoader()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
      */
     public function getValidateRestRequestPlugins(): array
@@ -410,7 +439,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return array
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
      */
     public function getResourceRoutePlugins(): array
     {
@@ -431,6 +460,14 @@ class GlueApplicationFactory extends AbstractFactory
     public function getValidateRequestPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_VALIDATE_HTTP_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionPluginInterface[]
+     */
+    public function getFormattedControllerBeforeActionPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGIN_FORMATTED_CONTROLLER_BEFORE_ACTION);
     }
 
     /**

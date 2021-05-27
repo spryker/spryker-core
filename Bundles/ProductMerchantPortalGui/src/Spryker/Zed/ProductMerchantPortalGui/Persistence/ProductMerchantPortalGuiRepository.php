@@ -7,15 +7,20 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer;
-use Generated\Shared\Transfer\PriceProductAbstractTableViewTransfer;
+use Generated\Shared\Transfer\PriceProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
+use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
 use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
@@ -28,15 +33,20 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractStoreTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageTableMap;
+use Orm\Zed\ProductValidity\Persistence\Map\SpyProductValidityTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\LikeCriterion;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductAbstractTableDataMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductTableDataMapper;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiPersistenceFactory getFactory()
@@ -50,6 +60,11 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
      */
     protected const COL_KEY_PRODUCT_ABSTRACT_SKU = 'sku';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     */
+    protected const COL_KEY_PRODUCT_SKU = 'sku';
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
@@ -74,8 +89,8 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         );
 
         $propelPager = $merchantProductAbstractPropelQuery->paginate(
-            $merchantProductTableCriteriaTransfer->requirePage()->getPage(),
-            $merchantProductTableCriteriaTransfer->requirePageSize()->getPageSize()
+            $merchantProductTableCriteriaTransfer->getPageOrFail(),
+            $merchantProductTableCriteriaTransfer->getPageSizeOrFail()
         );
 
         $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer(
@@ -112,7 +127,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     ): SpyMerchantProductAbstractQuery {
         $merchantProductAbstractPropelQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
         $idLocale = $merchantProductTableCriteriaTransfer->getLocaleOrFail()->getIdLocaleOrFail();
-        $idMerchant = $merchantProductTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
+        $idMerchant = $merchantProductTableCriteriaTransfer->getIdMerchantOrFail();
 
         $merchantProductAbstractPropelQuery->filterByFkMerchant($idMerchant)
             ->distinct()
@@ -359,6 +374,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $orderColumn = ProductAbstractTableDataMapper::PRODUCT_ABSTRACT_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
 
         if ($orderColumn === SpyProductAbstractTableMap::COL_SKU) {
+            /** @var \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery */
             $merchantProductAbstractQuery = $this->addNaturalSorting($merchantProductAbstractQuery, $orderColumn, $orderDirection);
         }
 
@@ -368,21 +384,21 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $query
+     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
      *
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
+     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
      *
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param string $orderColumn
      * @param string $orderDirection
      *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected function addNaturalSorting(
-        SpyMerchantProductAbstractQuery $query,
+        ModelCriteria $query,
         string $orderColumn,
         string $orderDirection
-    ): SpyMerchantProductAbstractQuery {
+    ): ModelCriteria {
         if ($orderDirection === Criteria::ASC) {
             $query->addAscendingOrderByColumn("LENGTH($orderColumn)");
         }
@@ -514,37 +530,37 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductAbstractTableViewCollectionTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer
      */
-    public function getPriceProductAbstractTableData(
-        PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
-    ): PriceProductAbstractTableViewCollectionTransfer {
-        $priceProductDefaultQuery = $this->buildPriceProductAbstractTableBaseQuery($priceProductAbstractTableCriteriaTransfer);
-        $priceProductDefaultQuery = $this->addPriceProductAbstractTableFilters(
+    public function getPriceProductTableData(
+        PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
+    ): PriceProductTableViewCollectionTransfer {
+        $priceProductDefaultQuery = $this->buildPriceProductTableBaseQuery($priceProductTableCriteriaTransfer);
+        $priceProductDefaultQuery = $this->addPriceProductTableFilters(
             $priceProductDefaultQuery,
-            $priceProductAbstractTableCriteriaTransfer
+            $priceProductTableCriteriaTransfer
         );
 
         $propelPager = $priceProductDefaultQuery->paginate(
-            $priceProductAbstractTableCriteriaTransfer->requirePage()->getPage(),
-            $priceProductAbstractTableCriteriaTransfer->requirePageSize()->getPageSize()
+            $priceProductTableCriteriaTransfer->getPageOrFail(),
+            $priceProductTableCriteriaTransfer->getPageSizeOrFail()
         );
         $paginationTransfer = $this->getFactory()->createPropelModelPagerMapper()->mapPropelModelPagerToPaginationTransfer(
             $propelPager,
             new PaginationTransfer()
         );
 
-        $priceProductAbstractTableViewCollectionTransfer = $this->getFactory()
-            ->createPriceProductAbstractTableDataMapper()
-            ->mapPriceProductAbstractTableDataArrayToPriceProductAbstractTableViewCollectionTransfer(
+        $priceProductTableViewCollectionTransfer = $this->getFactory()
+            ->createPriceProductTableDataMapper()
+            ->mapPriceProductTableDataArrayToPriceProductTableViewCollectionTransfer(
                 $propelPager->getResults()->getData(),
-                new PriceProductAbstractTableViewCollectionTransfer()
+                new PriceProductTableViewCollectionTransfer()
             );
-        $priceProductAbstractTableViewCollectionTransfer->setPagination($paginationTransfer);
+        $priceProductTableViewCollectionTransfer->setPagination($paginationTransfer);
 
-        return $priceProductAbstractTableViewCollectionTransfer;
+        return $priceProductTableViewCollectionTransfer;
     }
 
     /**
@@ -555,40 +571,31 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      *
      * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
      *
-     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
      */
-    protected function buildPriceProductAbstractTableBaseQuery(
-        PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+    protected function buildPriceProductTableBaseQuery(
+        PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
     ): SpyPriceProductDefaultQuery {
-        $idMerchant = $priceProductAbstractTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
-        $idProductAbstract = $priceProductAbstractTableCriteriaTransfer->requireIdProductAbstract()->getIdProductAbstract();
+        $priceProductTableCriteriaTransfer->requireIdMerchant();
         $priceProductDefaultQuery = $this->getFactory()->getPriceProductDefaultPropelQuery();
 
-        $priceProductDefaultQuery->joinPriceProductStore()
+        $priceProductDefaultQuery
             ->usePriceProductStoreQuery()
-                ->joinPriceProduct()
                 ->usePriceProductQuery()
-                    ->joinSpyProductAbstract()
-                    ->useSpyProductAbstractQuery()
-                        ->joinSpyMerchantProductAbstract()
-                        ->useSpyMerchantProductAbstractQuery()
-                            ->filterByFkMerchant($idMerchant)
-                        ->endUse()
-                    ->endUse()
                     ->innerJoinPriceType()
-                    ->filterByFkProductAbstract($idProductAbstract)
                 ->endUse()
                 ->joinCurrency()
                 ->joinStore()
                 ->groupBy(SpyStoreTableMap::COL_NAME)
                 ->groupBy(SpyCurrencyTableMap::COL_CODE)
             ->endUse()
-            ->addAsColumn(PriceProductAbstractTableViewTransfer::STORE, SpyStoreTableMap::COL_NAME)
-            ->addAsColumn(PriceProductAbstractTableViewTransfer::CURRENCY, SpyCurrencyTableMap::COL_CODE)
-            ->addAsColumn(PriceProductAbstractTableViewTransfer::ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
+            ->addAsColumn(PriceProductTableViewTransfer::STORE, SpyStoreTableMap::COL_NAME)
+            ->addAsColumn(PriceProductTableViewTransfer::CURRENCY, SpyCurrencyTableMap::COL_CODE)
             ->select([SpyStoreTableMap::COL_NAME, SpyCurrencyTableMap::COL_CODE]);
+
+        $priceProductDefaultQuery = $this->applyProductIdToPriceProductDefaultQuery($priceProductDefaultQuery, $priceProductTableCriteriaTransfer);
 
         $priceTypeTransfers = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
 
@@ -601,10 +608,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         }
 
         $priceProductDefaultQuery->addAsColumn(
-            PriceProductAbstractTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
+            PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
             sprintf('GROUP_CONCAT(%s)', SpyPriceProductDefaultTableMap::COL_ID_PRICE_PRODUCT_DEFAULT)
         )->addAsColumn(
-            PriceProductAbstractTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
+            PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
             sprintf(
                 'GROUP_CONCAT(CONCAT(%s,\':\',%s))',
                 SpyPriceTypeTableMap::COL_NAME,
@@ -612,12 +619,55 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             )
         );
 
-        if ($priceProductAbstractTableCriteriaTransfer->getOrderBy()) {
-            $orderDirection = $priceProductAbstractTableCriteriaTransfer->getOrderDirection() ?? Criteria::ASC;
+        if ($priceProductTableCriteriaTransfer->getOrderBy()) {
+            $orderDirection = $priceProductTableCriteriaTransfer->getOrderDirection() ?? Criteria::ASC;
             $priceProductDefaultQuery->orderBy(
-                $priceProductAbstractTableCriteriaTransfer->getOrderByOrFail(),
+                $priceProductTableCriteriaTransfer->getOrderByOrFail(),
                 $orderDirection
             );
+        }
+
+        return $priceProductDefaultQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery $priceProductDefaultQuery
+     * @param \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
+     */
+    protected function applyProductIdToPriceProductDefaultQuery(
+        SpyPriceProductDefaultQuery $priceProductDefaultQuery,
+        PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
+    ): SpyPriceProductDefaultQuery {
+        if ($priceProductTableCriteriaTransfer->getIdProductConcrete()) {
+            $priceProductDefaultQuery->usePriceProductStoreQuery()
+                ->usePriceProductQuery()
+                    ->filterByFkProduct($priceProductTableCriteriaTransfer->getIdProductConcrete())
+                    ->useProductQuery()
+                        ->useSpyProductAbstractQuery()
+                            ->useSpyMerchantProductAbstractQuery()
+                                ->filterByFkMerchant($priceProductTableCriteriaTransfer->getIdMerchantOrFail())
+                            ->endUse()
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->addAsColumn(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE, SpyProductTableMap::COL_ID_PRODUCT);
+        }
+
+        if ($priceProductTableCriteriaTransfer->getIdProductAbstract()) {
+            $priceProductDefaultQuery->usePriceProductStoreQuery()
+                ->usePriceProductQuery()
+                    ->filterByFkProductAbstract($priceProductTableCriteriaTransfer->getIdProductAbstract())
+                    ->useSpyProductAbstractQuery()
+                        ->useSpyMerchantProductAbstractQuery()
+                            ->filterByFkMerchant($priceProductTableCriteriaTransfer->getIdMerchantOrFail())
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->addAsColumn(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT, SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
         }
 
         return $priceProductDefaultQuery;
@@ -666,31 +716,302 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
      *
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery $priceProductDefaultQuery
-     * @param \Generated\Shared\Transfer\PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
      */
-    protected function addPriceProductAbstractTableFilters(
+    protected function addPriceProductTableFilters(
         SpyPriceProductDefaultQuery $priceProductDefaultQuery,
-        PriceProductAbstractTableCriteriaTransfer $priceProductAbstractTableCriteriaTransfer
+        PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
     ): SpyPriceProductDefaultQuery {
-        if ($priceProductAbstractTableCriteriaTransfer->getFilterInStores()) {
+        if ($priceProductTableCriteriaTransfer->getFilterInStores()) {
             $priceProductDefaultQuery->joinPriceProductStore()
                 ->usePriceProductStoreQuery()
-                    ->filterByFkStore_In($priceProductAbstractTableCriteriaTransfer->getFilterInStores())
+                    ->filterByFkStore_In($priceProductTableCriteriaTransfer->getFilterInStores())
                 ->endUse();
         }
 
-        if ($priceProductAbstractTableCriteriaTransfer->getFilterInCurrencies()) {
+        if ($priceProductTableCriteriaTransfer->getFilterInCurrencies()) {
             $priceProductDefaultQuery->joinPriceProductStore()
                 ->usePriceProductStoreQuery()
                     ->joinCurrency()
                     ->useCurrencyQuery()
-                        ->filterByIdCurrency_In($priceProductAbstractTableCriteriaTransfer->getFilterInCurrencies())
+                        ->filterByIdCurrency_In($priceProductTableCriteriaTransfer->getFilterInCurrencies())
                     ->endUse()
                 ->endUse();
         }
 
         return $priceProductDefaultQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductTableData(ProductTableCriteriaTransfer $productTableCriteriaTransfer): ProductConcreteCollectionTransfer
+    {
+        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
+        $localeTransfer = $productTableCriteriaTransfer->getLocaleOrFail();
+
+        $productConcreteQuery = $this->buildProductTableBaseQuery($productTableCriteriaTransfer, $localeTransfer);
+        $productConcreteQuery = $this->applyProductConcreteSearch($productConcreteQuery, $productTableCriteriaTransfer);
+        $productConcreteQuery = $this->applyProductConcreteSorting($productConcreteQuery, $productTableCriteriaTransfer);
+        $productConcreteQuery = $this->applyProductConcreteFilters($productConcreteQuery, $productTableCriteriaTransfer);
+
+        $propelPager = $productConcreteQuery->paginate(
+            $productTableCriteriaTransfer->getPageOrFail(),
+            $productTableCriteriaTransfer->getPageSizeOrFail()
+        );
+        $paginationTransfer = $this->getFactory()
+            ->createPropelModelPagerMapper()
+            ->mapPropelModelPagerToPaginationTransfer($propelPager, new PaginationTransfer());
+
+        $productConcreteCollectionTransfer = $this->getFactory()
+            ->createProductTableDataMapper()
+            ->mapProductTableDataArrayToProductConcreteCollectionTransfer(
+                $propelPager->getResults()->getData(),
+                new ProductConcreteCollectionTransfer(),
+                $localeTransfer
+            );
+        $productConcreteCollectionTransfer->setPagination($paginationTransfer);
+
+        return $productConcreteCollectionTransfer;
+    }
+
+    /**
+     * @module Product
+     * @module ProductImage
+     * @module ProductValidity
+     * @module MerchantProduct
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function buildProductTableBaseQuery(
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer,
+        LocaleTransfer $localeTransfer
+    ): SpyProductQuery {
+        /** @var int $idLocale */
+        $idLocale = $localeTransfer->getIdLocaleOrFail();
+        /** @var int $idMerchant */
+        $idMerchant = $productTableCriteriaTransfer->getIdMerchantOrFail();
+        /** @var int $idProductAbstract */
+        $idProductAbstract = $productTableCriteriaTransfer->getIdProductAbstractOrFail();
+
+        $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
+        $productConcreteQuery->leftJoinSpyProductValidity()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->useSpyProductAbstractQuery()
+                ->joinSpyMerchantProductAbstract()
+                ->useSpyMerchantProductAbstractQuery()
+                    ->filterByFkMerchant($idMerchant)
+                ->endUse()
+            ->endUse()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->filterByFkLocale($idLocale)
+            ->endUse()
+            ->addAsColumn(ProductConcreteTransfer::ID_PRODUCT_CONCRETE, SpyProductTableMap::COL_ID_PRODUCT)
+            ->addAsColumn(ProductConcreteTransfer::FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)
+            ->addAsColumn(ProductConcreteTransfer::SKU, SpyProductTableMap::COL_SKU)
+            ->addAsColumn(ProductConcreteTransfer::IS_ACTIVE, SpyProductTableMap::COL_IS_ACTIVE)
+            ->addAsColumn(ProductConcreteTransfer::ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(ProductConcreteTransfer::LOCALIZED_ATTRIBUTES, SpyProductLocalizedAttributesTableMap::COL_ATTRIBUTES)
+            ->addAsColumn(LocalizedAttributesTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
+            ->addAsColumn(ProductConcreteTransfer::VALID_FROM, SpyProductValidityTableMap::COL_VALID_FROM)
+            ->addAsColumn(ProductConcreteTransfer::VALID_TO, SpyProductValidityTableMap::COL_VALID_TO)
+            ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, sprintf('(%s)', $this->createProductImagesSubquery($idLocale)))
+            ->select([
+                ProductConcreteTransfer::ID_PRODUCT_CONCRETE,
+                ProductConcreteTransfer::FK_PRODUCT_ABSTRACT,
+                ProductConcreteTransfer::SKU,
+                ProductConcreteTransfer::IS_ACTIVE,
+                ProductConcreteTransfer::ATTRIBUTES,
+                ProductConcreteTransfer::LOCALIZED_ATTRIBUTES,
+                ProductConcreteTransfer::VALID_FROM,
+                ProductConcreteTransfer::VALID_TO,
+                ProductImageTransfer::EXTERNAL_URL_SMALL,
+            ]);
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function applyProductConcreteSearch(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
+        $searchTerm = $productTableCriteriaTransfer->getSearchTerm();
+
+        if (!$searchTerm) {
+            return $productConcreteQuery;
+        }
+
+        $criteria = new Criteria();
+        $productNameSearchCriterion = $this->getProductConcreteNameSearchCriteria($criteria, $searchTerm);
+        $productSkuSearchCriterion = $this->getProductConcreteSkuSearchCriteria($criteria, $searchTerm);
+        $productNameSearchCriterion->addOr($productSkuSearchCriterion);
+
+        return $productConcreteQuery->addAnd($productNameSearchCriterion);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     * @param string $searchTerm
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
+     */
+    protected function getProductConcreteNameSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
+    {
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
+            SpyProductLocalizedAttributesTableMap::COL_NAME,
+            '%' . $searchTerm . '%',
+            Criteria::LIKE
+        );
+
+        return $likeCriterion->setIgnoreCase(true);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     * @param string $searchTerm
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
+     */
+    protected function getProductConcreteSkuSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
+    {
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
+            SpyProductTableMap::COL_SKU,
+            '%' . $searchTerm . '%',
+            Criteria::LIKE
+        );
+
+        return $likeCriterion->setIgnoreCase(true);
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function applyProductConcreteSorting(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
+        $orderColumn = $productTableCriteriaTransfer->getOrderBy() ?? static::COL_KEY_PRODUCT_SKU;
+        $orderDirection = $productTableCriteriaTransfer->getOrderDirection() ?? Criteria::DESC;
+
+        if (!$orderColumn || !$orderDirection) {
+            return $productConcreteQuery;
+        }
+
+        $orderColumn = ProductTableDataMapper::PRODUCT_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
+
+        if ($orderColumn === SpyProductTableMap::COL_SKU) {
+            /** @var \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery */
+            $productConcreteQuery = $this->addNaturalSorting($productConcreteQuery, $orderColumn, $orderDirection);
+        }
+
+        $productConcreteQuery->orderBy($orderColumn, $orderDirection);
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function applyProductConcreteFilters(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
+        $productConcreteQuery = $this->addIsActiveProductFilter($productConcreteQuery, $productTableCriteriaTransfer);
+        $productConcreteQuery = $this->addValidityProductFilter($productConcreteQuery, $productTableCriteriaTransfer);
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function addIsActiveProductFilter(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
+        $filterValue = $productTableCriteriaTransfer->getFilterIsActive();
+
+        if (isset($filterValue)) {
+            $productConcreteQuery->filterByIsActive($filterValue);
+        }
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
+     *
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function addValidityProductFilter(
+        SpyProductQuery $productConcreteQuery,
+        ProductTableCriteriaTransfer $productTableCriteriaTransfer
+    ): SpyProductQuery {
+        $criteriaRangeFilterTransfer = $productTableCriteriaTransfer->getFilterValidity();
+
+        if (!$criteriaRangeFilterTransfer) {
+            return $productConcreteQuery;
+        }
+
+        if ($criteriaRangeFilterTransfer->getFrom()) {
+            $productConcreteQuery->useSpyProductValidityQuery()
+                    ->filterByValidFrom($criteriaRangeFilterTransfer->getFrom(), Criteria::GREATER_EQUAL)
+                ->endUse();
+        }
+
+        if ($criteriaRangeFilterTransfer->getTo()) {
+            $productConcreteQuery->useSpyProductValidityQuery()
+                    ->filterByValidTo($criteriaRangeFilterTransfer->getTo(), Criteria::LESS_THAN)
+                ->endUse();
+        }
+
+        return $productConcreteQuery;
     }
 }

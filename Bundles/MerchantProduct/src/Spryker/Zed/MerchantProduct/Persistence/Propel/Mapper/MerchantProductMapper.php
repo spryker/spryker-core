@@ -8,7 +8,9 @@
 namespace Spryker\Zed\MerchantProduct\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\MerchantProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class MerchantProductMapper
 {
@@ -22,8 +24,35 @@ class MerchantProductMapper
         SpyMerchantProductAbstract $merchantProductEntity,
         MerchantProductTransfer $merchantProductTransfer
     ): MerchantProductTransfer {
-        return $merchantProductTransfer->fromArray($merchantProductEntity->toArray(), true)
+        $merchantProductTransfer->fromArray($merchantProductEntity->toArray(), true)
             ->setIdProductAbstract($merchantProductEntity->getFkProductAbstract())
             ->setIdMerchant($merchantProductEntity->getFkMerchant());
+
+        $this->mapConcreteProductsToMerchantProductTransfer(
+            $merchantProductTransfer,
+            $merchantProductEntity->getProductAbstract()->getSpyProducts()
+        );
+
+        return $merchantProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productEntities
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer
+     */
+    protected function mapConcreteProductsToMerchantProductTransfer(
+        MerchantProductTransfer $merchantProductTransfer,
+        ObjectCollection $productEntities
+    ): MerchantProductTransfer {
+        foreach ($productEntities as $productEntity) {
+            $productConcreteTransfer = (new ProductConcreteTransfer())->fromArray($productEntity->toArray(), true);
+            $productConcreteTransfer->setIdProductConcrete($productEntity->getIdProduct());
+
+            $merchantProductTransfer->addProduct($productConcreteTransfer);
+        }
+
+        return $merchantProductTransfer;
     }
 }

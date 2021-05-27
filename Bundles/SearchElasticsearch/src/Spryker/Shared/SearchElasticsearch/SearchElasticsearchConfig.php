@@ -24,6 +24,8 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     /**
      * @api
      *
+     * @phpstan-return array<mixed>
+     *
      * @return array
      */
     public function getClientConfig(): array

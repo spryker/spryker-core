@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Nopayment\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -52,4 +53,18 @@ interface NopaymentFacadeInterface
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
     public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Returns true if there is no Nopayment payment provider in QuoteTransfer.payments otherwise does additional checks/logic.
+     * - Returns true if QuoteTransfer.totals.priceToPay greater than 0 otherwise adds an error into CheckoutResponseTransfer and returns false.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkOrderPreSaveConditions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

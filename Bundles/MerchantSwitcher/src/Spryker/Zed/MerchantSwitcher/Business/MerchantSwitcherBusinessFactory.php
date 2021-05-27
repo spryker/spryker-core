@@ -12,6 +12,10 @@ use Spryker\Zed\MerchantSwitcher\Business\MerchantInQuoteValidator\MerchantInQuo
 use Spryker\Zed\MerchantSwitcher\Business\MerchantInQuoteValidator\MerchantInQuoteValidatorInterface;
 use Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher\MerchantSwitcher;
 use Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher\MerchantSwitcherInterface;
+use Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher\WishlistMerchantSwitcher;
+use Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher\WishlistMerchantSwitcherInterface;
+use Spryker\Zed\MerchantSwitcher\Business\WishlistValidator\MerchantWishlistValidator;
+use Spryker\Zed\MerchantSwitcher\Business\WishlistValidator\MerchantWishlistValidatorInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToCartFacadeInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToMerchantProductOfferFacadeInterface;
 use Spryker\Zed\MerchantSwitcher\Dependency\Facade\MerchantSwitcherToQuoteFacadeInterface;
@@ -32,6 +36,24 @@ class MerchantSwitcherBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->getCartFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher\WishlistMerchantSwitcherInterface
+     */
+    public function createWishlistMerchantSwitcher(): WishlistMerchantSwitcherInterface
+    {
+        return new WishlistMerchantSwitcher(
+            $this->getMerchantProductOfferFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSwitcher\Business\WishlistValidator\MerchantWishlistValidatorInterface
+     */
+    public function createMerchantWishlistValidator(): MerchantWishlistValidatorInterface
+    {
+        return new MerchantWishlistValidator();
     }
 
     /**

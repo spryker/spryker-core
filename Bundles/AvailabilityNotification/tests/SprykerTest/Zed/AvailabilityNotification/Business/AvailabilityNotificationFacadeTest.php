@@ -8,12 +8,9 @@
 namespace SprykerTest\Zed\AvailabilityNotification\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
-use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationBusinessFactory;
-use Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
-use Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface;
-use Spryker\Zed\Kernel\Container;
 
 /**
  * Auto-generated group annotations
@@ -33,9 +30,23 @@ class AvailabilityNotificationFacadeTest extends Unit
     public const TESTER_INCORRECT_SUBSCRIPTION_KEY = '992233445566778899';
 
     /**
-     * @var \SprykerTest\Zed\AvailabilityNotification\AvailabilityNotificationBusinessTester
+     * @var \SprykerTest\Zed\AvailabilityNotification\AvailabilityNotificationBusinessTester|\SprykerTest\Zed\AvailabilityNotification\Helper\AvailabilityNotificationDataHelper|\SprykerTest\Shared\Product\Helper\ProductDataHelper|\SprykerTest\Shared\Customer\Helper\CustomerDataHelper
      */
     protected $tester;
+
+    /**
+     * @var \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade
+     */
+    protected $availabilityNotificationFacade;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->availabilityNotificationFacade = $this->tester->getFacade();
+    }
 
     /**
      * @return void
@@ -46,7 +57,9 @@ class AvailabilityNotificationFacadeTest extends Unit
             $this->tester->haveProduct()
         );
 
-        $response = $this->getAvailabilityNotificationFacadeMock()->subscribe($availabilityNotificationSubscription);
+        $this->mockMailDependency();
+
+        $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -61,7 +74,9 @@ class AvailabilityNotificationFacadeTest extends Unit
             $this->tester->haveCustomer()
         );
 
-        $response = $this->getAvailabilityNotificationFacadeMock()->subscribe($availabilityNotificationSubscription);
+        $this->mockMailDependency();
+
+        $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -79,7 +94,9 @@ class AvailabilityNotificationFacadeTest extends Unit
             ]
         );
 
-        $response = $this->getAvailabilityNotificationFacadeMock()->subscribe($availabilityNotificationSubscription);
+        $this->mockMailDependency();
+
+        $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
         $this->assertFalse($response->getIsSuccess());
     }
@@ -93,7 +110,9 @@ class AvailabilityNotificationFacadeTest extends Unit
             $this->tester->haveProduct()
         );
 
-        $response = $this->getAvailabilityNotificationFacadeMock()->subscribe($availabilityNotificationSubscription);
+        $this->mockMailDependency();
+
+        $response = $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -103,11 +122,13 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testUnsubscribeBySubscriptionKeyShouldSucceed(): void
     {
+        $this->mockMailDependency();
+
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscription(
             $this->tester->haveProduct()
         );
 
-        $response = $this->getAvailabilityNotificationFacadeMock()->unsubscribeBySubscriptionKey($availabilityNotificationSubscription);
+        $response = $this->availabilityNotificationFacade->unsubscribeBySubscriptionKey($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -122,11 +143,11 @@ class AvailabilityNotificationFacadeTest extends Unit
             $this->tester->haveCustomer()
         );
 
-        $availabilityNotificationFacade = $this->getAvailabilityNotificationFacadeMock();
+        $this->mockMailDependency();
 
-        $availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
+        $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
-        $response = $availabilityNotificationFacade->unsubscribeByCustomerReferenceAndSku($availabilityNotificationSubscription);
+        $response = $this->availabilityNotificationFacade->unsubscribeByCustomerReferenceAndSku($availabilityNotificationSubscription);
 
         $this->assertTrue($response->getIsSuccess());
     }
@@ -144,7 +165,9 @@ class AvailabilityNotificationFacadeTest extends Unit
             ]
         );
 
-        $response = $this->getAvailabilityNotificationFacadeMock()->unsubscribeBySubscriptionKey($availabilityNotificationSubscription);
+        $this->mockMailDependency();
+
+        $response = $this->availabilityNotificationFacade->unsubscribeBySubscriptionKey($availabilityNotificationSubscription);
 
         $this->assertFalse($response->getIsSuccess());
     }
@@ -154,22 +177,20 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testAnonymize(): void
     {
-        $product = $this->tester->haveProduct();
-
         $customer = $this->tester->haveCustomer();
+        $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
+            $this->tester->haveProduct(),
+            $customer
+        );
 
-        $availabilityNotificationFacade = $this->getAvailabilityNotificationFacadeMock();
+        $this->mockMailDependency();
 
-        $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer($product, $customer);
+        $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
-        $availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
+        $this->availabilityNotificationFacade->anonymizeSubscription($customer);
 
-        $availabilityNotificationFacade->anonymizeSubscription($customer);
-
-        $repositoryMock = $this->getMockBuilder(AvailabilityNotificationRepositoryInterface::class)->getMock();
-
-        $result = $repositoryMock
-            ->findOneByCustomerReferenceAndSku(
+        $result = $this->tester
+            ->findAvailabilityNotificationByCustomerReferenceAndSku(
                 $customer->getCustomerReference(),
                 $availabilityNotificationSubscription->getSku(),
                 $availabilityNotificationSubscription->getStore()->getIdStore()
@@ -179,23 +200,74 @@ class AvailabilityNotificationFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacade
+     * @return void
      */
-    protected function getAvailabilityNotificationFacadeMock(): AvailabilityNotificationFacade
+    public function testExpandCustomerTransferWithAvailabilityNotificationSubscriptionList(): void
     {
-        $availabilityNotificationFacade = new AvailabilityNotificationFacade();
-        $container = new Container();
-        $availabilityNotificationDependencyProvider = new AvailabilityNotificationDependencyProvider();
-        $availabilityNotificationDependencyProvider->provideBusinessLayerDependencies($container);
+        $product1 = $this->tester->haveProduct();
+        $product2 = $this->tester->haveProduct();
+        $customer = $this->tester->haveCustomer();
+        $this->mockMailDependency();
+        $this->availabilityNotificationFacade->subscribe(
+            $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
+                $product1,
+                $customer
+            )
+        );
+        $this->availabilityNotificationFacade->subscribe(
+            $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
+                $product2,
+                $customer
+            )
+        );
+        $expandedCustomerTransfer = $this->availabilityNotificationFacade->expandCustomerTransferWithAvailabilityNotificationSubscriptionList($customer);
+        $this->assertEmpty(
+            array_diff(
+                [
+                    $product1->getSku(),
+                    $product2->getSku(),
+                ],
+                $expandedCustomerTransfer->getAvailabilityNotificationSubscriptionSkus()
+            )
+        );
+    }
 
-        $mailFacadeMock = $this->getMockBuilder(AvailabilityNotificationToMailFacadeInterface::class)->getMock();
-        $container[AvailabilityNotificationDependencyProvider::FACADE_MAIL] = $mailFacadeMock;
+    /**
+     * @return void
+     */
+    public function testGetAvailabilityNotifications(): void
+    {
+        $product1 = $this->tester->haveProduct();
+        $product2 = $this->tester->haveProduct();
+        $customer = $this->tester->haveCustomer();
+        $this->mockMailDependency();
+        $this->availabilityNotificationFacade->subscribe(
+            $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
+                $product1,
+                $customer
+            )
+        );
+        $this->availabilityNotificationFacade->subscribe(
+            $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
+                $product2,
+                $customer
+            )
+        );
+        $availabilityNotificationSubscriptionCollectionTransfer = $this->availabilityNotificationFacade->getAvailabilityNotifications(
+            (new AvailabilityNotificationCriteriaTransfer())->addCustomerReference($customer->getCustomerReference())
+        );
+        $this->assertEquals(2, $availabilityNotificationSubscriptionCollectionTransfer->getAvailabilityNotificationSubscriptions()->count());
+    }
 
-        $availabilityNotificationBusinessFactory = new AvailabilityNotificationBusinessFactory();
-        $availabilityNotificationBusinessFactory->setContainer($container);
-
-        $availabilityNotificationFacade->setFactory($availabilityNotificationBusinessFactory);
-
-        return $availabilityNotificationFacade;
+    /**
+     * @return void
+     */
+    protected function mockMailDependency(): void
+    {
+        $this->tester
+            ->setDependency(
+                AvailabilityNotificationDependencyProvider::FACADE_MAIL,
+                $this->createMock(AvailabilityNotificationToMailFacadeInterface::class)
+            );
     }
 }

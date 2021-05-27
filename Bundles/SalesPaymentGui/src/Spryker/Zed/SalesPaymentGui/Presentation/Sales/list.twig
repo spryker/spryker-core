@@ -1,0 +1,35 @@
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+{# @var payment \Generated\Shared\Transfer\PaymentTransfer #}
+<div class="row">
+    <div class="col-sm-12">
+
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Payments' } %}
+
+            {% block widget_content %}
+
+                <table class="footable table table-striped toggle-arrow-tiny">
+                    <thead>
+                    <tr class="text-left">
+                        <th>{{ "Payment provider" | trans }}</th>
+                        <th>{{ "Payment method" | trans }}</th>
+                        <th>{{ "Amount" | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for payment in order.payments %}
+                        <tr>
+                            <td>{{ payment.paymentProvider }}</td>
+                            <td>{{ payment.paymentMethod }}</td>
+                            <td>{{ payment.amount | money(true, order.currencyIsoCode) }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
+</div>

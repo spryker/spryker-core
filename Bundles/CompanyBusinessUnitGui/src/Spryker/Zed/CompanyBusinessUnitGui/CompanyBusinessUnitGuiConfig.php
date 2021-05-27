@@ -15,4 +15,16 @@ class CompanyBusinessUnitGuiConfig extends AbstractBundleConfig
      * @see \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig
      */
     public const COL_ID_COMPANY_USER = 'id_company_user';
+
+    protected const COMPANY_BUSINESS_UNIT_SUGGESTION_LIMIT = 20;
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getCompanyBusinessUnitSuggestionLimit(): int
+    {
+        return static::COMPANY_BUSINESS_UNIT_SUGGESTION_LIMIT;
+    }
 }

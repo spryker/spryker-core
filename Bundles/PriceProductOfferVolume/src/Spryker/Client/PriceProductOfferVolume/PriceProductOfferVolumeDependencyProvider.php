@@ -9,22 +9,21 @@ namespace Spryker\Client\PriceProductOfferVolume;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\PriceProductOfferVolume\Dependency\Service\PriceProductOfferVolumeToUtilEncodingServiceServiceBridge;
 
 class PriceProductOfferVolumeDependencyProvider extends AbstractDependencyProvider
 {
-    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_PRICE_PRODUCT_OFFER_VOLUME = 'SERVICE_PRICE_PRODUCT_OFFER_VOLUME';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container): Container
+    public function provideServiceLayerDependencies(Container $container)
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container = $this->addUtilEncodingService($container);
+        $container = $this->addPriceProductOfferVolumeService($container);
 
         return $container;
     }
@@ -34,10 +33,10 @@ class PriceProductOfferVolumeDependencyProvider extends AbstractDependencyProvid
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addUtilEncodingService(Container $container): Container
+    protected function addPriceProductOfferVolumeService(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new PriceProductOfferVolumeToUtilEncodingServiceServiceBridge($container->getLocator()->utilEncoding()->service());
+        $container->set(static::SERVICE_PRICE_PRODUCT_OFFER_VOLUME, function (Container $container) {
+            return $container->getLocator()->priceProductOfferVolume()->service();
         });
 
         return $container;

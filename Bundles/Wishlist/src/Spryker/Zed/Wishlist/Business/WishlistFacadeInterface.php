@@ -149,10 +149,8 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Removes item from wishlist
-     *  - Required values of WishlistItemTransfer: fkCustomer, sku. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used
-     *  - Returns WishlistItemTransfer
+     *  - Removes item by provided `WishlistItem` transfer object from wishlist.
+     *  - Returns `WishlistItem` transfer object.
      *
      * @api
      *
@@ -164,9 +162,7 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Removes item from wishlist
-     *  - Required values of WishlistItemTransfer: fkCustomer, sku. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used
+     *  - Removes items from wishlist.
      *
      * @api
      *

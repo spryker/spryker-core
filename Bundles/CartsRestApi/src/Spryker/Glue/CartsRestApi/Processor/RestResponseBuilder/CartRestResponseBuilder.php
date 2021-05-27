@@ -212,4 +212,19 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
 
         return $itemTransfers;
     }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCustomerUnauthorizedErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setCode(CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED)
+            ->setDetail(CartsRestApiConfig::RESPONSE_DETAILS_CUSTOMER_UNAUTHORIZED);
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorMessageTransfer);
+    }
 }

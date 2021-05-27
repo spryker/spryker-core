@@ -24,4 +24,3 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\BusinessHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-

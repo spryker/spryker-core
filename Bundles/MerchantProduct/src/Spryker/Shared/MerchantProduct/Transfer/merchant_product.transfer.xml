@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
     </transfer>
 
     <transfer name="MerchantProductCriteria">
+        <property name="idMerchant" type="int"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="merchantProductAbstractIds" type="int[]" singular="merchantProductAbstractId"/>
     </transfer>
@@ -17,6 +18,7 @@
         <property name="idProductAbstract" type="int"/>
         <property name="idMerchant" type="int"/>
         <property name="productAbstract" type="ProductAbstract"/>
+        <property name="products" type="ProductConcrete[]" singular="product"/>
     </transfer>
 
     <transfer name="MerchantProductCollection">
@@ -66,4 +68,11 @@
         <property name="invalidValue" type="string"/>
     </transfer>
 
+    <transfer name="ProductConcreteCollection">
+        <property name="products" type="ProductConcrete[]" singular="product"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
 </transfers>

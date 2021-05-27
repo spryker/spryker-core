@@ -11,7 +11,7 @@ use Orm\Zed\Nopayment\Persistence\SpyNopaymentPaid;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface;
 
-class Paid
+class Paid implements PaidInterface
 {
     /**
      * @var \Spryker\Zed\Nopayment\Persistence\NopaymentQueryContainerInterface
@@ -31,7 +31,7 @@ class Paid
      *
      * @return void
      */
-    protected function setOrderItemAsPaid(SpySalesOrderItem $orderItem)
+    protected function setOrderItemAsPaid(SpySalesOrderItem $orderItem): void
     {
         $paidItem = new SpyNopaymentPaid();
         $paidItem->setOrderItem($orderItem);
@@ -43,7 +43,7 @@ class Paid
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
-    public function setAsPaid(array $orderItems)
+    public function setAsPaid(array $orderItems): array
     {
         foreach ($orderItems as $orderItem) {
             $this->setOrderItemAsPaid($orderItem);
@@ -57,7 +57,7 @@ class Paid
      *
      * @return bool
      */
-    public function isPaid(SpySalesOrderItem $orderItem)
+    public function isPaid(SpySalesOrderItem $orderItem): bool
     {
         return ($this->queryContainer->queryOrderItem($orderItem)->count() > 0);
     }

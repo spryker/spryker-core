@@ -16,7 +16,7 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantProductOfferDataSetInterface;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step\MerchantSkuValidationStep;
-use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\MerchantProductOfferDataImportPlugin;
+use Spryker\Zed\MerchantProductOfferDataImport\Communication\Plugin\DataImport\MerchantProductOfferDataImportPlugin;
 use Spryker\Zed\MerchantProductOfferDataImport\MerchantProductOfferDataImportConfig;
 
 /**
@@ -110,14 +110,14 @@ class MerchantProductOfferDataImportPluginTest extends Unit
 
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::MERCHANT_SKU => $merchantSku,
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
         ]);
 
         $merchantSkuValidationStep = new MerchantSkuValidationStep();
 
         $dataSet = new DataSet([
             MerchantProductOfferDataSetInterface::MERCHANT_SKU => $merchantSku,
-            MerchantProductOfferDataSetInterface::ID_MERCHANT => $productOfferTransfer->getFkMerchant(),
+            MerchantProductOfferDataSetInterface::MERCHANT_REFERENCE => $productOfferTransfer->getMerchantReference(),
             MerchantProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE => uniqid(),
         ]);
 

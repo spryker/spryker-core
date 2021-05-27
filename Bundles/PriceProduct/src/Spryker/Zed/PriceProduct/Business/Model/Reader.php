@@ -124,7 +124,12 @@ class Reader implements ReaderInterface
             return null;
         }
 
-        return $this->getPriceByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var string $priceMode */
+        $priceMode = $priceProductCriteriaTransfer->requirePriceMode()->getPriceMode();
+
+        return $this->getPriceByPriceMode($moneyValueTransfer, $priceMode);
     }
 
     /**
@@ -142,7 +147,12 @@ class Reader implements ReaderInterface
 
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
 
-        return $this->getPriceByPriceMode($priceProductTransfer->getMoneyValue(), $priceProductCriteriaTransfer->getPriceMode());
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+        $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var string $priceMode */
+        $priceMode = $priceProductCriteriaTransfer->requirePriceMode()->getPriceMode();
+
+        return $this->getPriceByPriceMode($moneyValueTransfer, $priceMode);
     }
 
     /**
@@ -156,7 +166,10 @@ class Reader implements ReaderInterface
 
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
 
-        return $this->findProductPrice($priceProductFilterTransfer->getSku(), $priceProductCriteriaTransfer);
+        /** @var string $sku */
+        $sku = $priceProductFilterTransfer->requireSku()->getSku();
+
+        return $this->findProductPrice($sku, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -218,7 +231,10 @@ class Reader implements ReaderInterface
 
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
 
-        return $this->isValidPrice($priceProductFilterTransfer->getSku(), $priceProductCriteriaTransfer);
+        /** @var string $sku */
+        $sku = $priceProductFilterTransfer->requireSku()->getSku();
+
+        return $this->isValidPrice($sku, $priceProductCriteriaTransfer);
     }
 
     /**
@@ -233,14 +249,20 @@ class Reader implements ReaderInterface
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaWithDefaultValues();
 
         if ($this->priceProductConcreteReader->hasPriceForProductConcrete($sku, $priceProductCriteriaTransfer)) {
-            return $this->priceProductConcreteReader->findPriceProductId($sku, $priceProductCriteriaTransfer);
+            /** @var int $idPriceProduct */
+            $idPriceProduct = $this->priceProductConcreteReader->findPriceProductId($sku, $priceProductCriteriaTransfer);
+
+            return $idPriceProduct;
         }
 
         if (!$this->priceProductAbstractReader->hasPriceForProductAbstract($sku, $priceProductCriteriaTransfer)) {
             $sku = $this->productFacade->getAbstractSkuFromProductConcrete($sku);
         }
 
-        return $this->priceProductAbstractReader->findPriceProductId($sku, $priceProductCriteriaTransfer);
+        /** @var int $idPriceProduct */
+        $idPriceProduct = $this->priceProductAbstractReader->findPriceProductId($sku, $priceProductCriteriaTransfer);
+
+        return $idPriceProduct;
     }
 
     /**
@@ -350,9 +372,14 @@ class Reader implements ReaderInterface
         }
 
         if (!isset($priceProductTransfers[$abstractKey])) {
-            $priceProductAbstractTransfer->getPriceDimension()->setIdPriceProductDefault(null);
-            $priceProductAbstractTransfer->getMoneyValue()->setIdEntity(null);
-            $priceProductTransfers[$abstractKey] = $priceProductAbstractTransfer;
+            /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
+            $priceDimensionTransfer = $priceProductAbstractTransfer->requirePriceDimension()->getPriceDimension();
+            /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
+            $moneyValueTransfer = $priceProductAbstractTransfer->requireMoneyValue()->getMoneyValue();
+            $priceDimensionTransfer->setIdPriceProductDefault(null);
+            $moneyValueTransfer->setIdEntity(null);
+            $priceProductTransfers[$abstractKey] = $priceProductAbstractTransfer->setPriceDimension($priceDimensionTransfer)
+                ->setMoneyValue($moneyValueTransfer);
         }
 
         return $priceProductTransfers;
@@ -368,8 +395,10 @@ class Reader implements ReaderInterface
         PriceProductTransfer $priceProductAbstractTransfer,
         PriceProductTransfer $priceProductConcreteTransfer
     ) {
-        $abstractMoneyValueTransfer = $priceProductAbstractTransfer->getMoneyValue();
-        $concreteMoneyValueTransfer = $priceProductConcreteTransfer->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $abstractMoneyValueTransfer */
+        $abstractMoneyValueTransfer = $priceProductAbstractTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $concreteMoneyValueTransfer */
+        $concreteMoneyValueTransfer = $priceProductConcreteTransfer->requireMoneyValue()->getMoneyValue();
 
         if ($concreteMoneyValueTransfer->getGrossAmount() === null) {
             $concreteMoneyValueTransfer->setGrossAmount($abstractMoneyValueTransfer->getGrossAmount());
@@ -490,7 +519,9 @@ class Reader implements ReaderInterface
      */
     protected function buildPriceProductIdentifier(PriceProductTransfer $priceProductTransfer): string
     {
+        /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
         $moneyValueTransfer = $priceProductTransfer->requireMoneyValue()->getMoneyValue();
+        /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
         $priceTypeTransfer = $priceProductTransfer->requirePriceType()->getPriceType();
 
         return implode(
@@ -588,6 +619,8 @@ class Reader implements ReaderInterface
     }
 
     /**
+     * @phpstan-param array<array<\Generated\Shared\Transfer\PriceProductTransfer>> $priceProductTransfers
+     *
      * @param string $priceProductCriteriaIdentifier
      * @param array $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
@@ -600,10 +633,12 @@ class Reader implements ReaderInterface
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): ?PriceProductTransfer {
         if (!isset(static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier])) {
-            static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier] = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
+            /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+            $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductCriteria(
                 $priceProductTransfers[$priceProductCriteriaIdentifier],
                 $priceProductCriteriaTransfer
             );
+            static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier] = $priceProductTransfer;
         }
 
         return static::$resolvedPriceProductTransferCollection[$priceProductCriteriaIdentifier];
@@ -631,7 +666,10 @@ class Reader implements ReaderInterface
         $priceProductFilterTransfer = $this->getCommonPriceProductFilterTransfer($priceProductFilterTransfers);
         $priceProductCriteriaTransfer = $this->priceProductCriteriaBuilder->buildCriteriaFromFilter($priceProductFilterTransfer);
         $productConcreteSkus = array_map(function (PriceProductFilterTransfer $priceProductFilterTransfer) {
-            return $priceProductFilterTransfer->getSku();
+            /** @var string $sku */
+            $sku = $priceProductFilterTransfer->getSku();
+
+            return $sku;
         }, $priceProductFilterTransfers);
 
         $concretePriceProductTransfers = $this->priceProductConcreteReader->getProductConcretePricesByConcreteSkusAndCriteria(
@@ -692,7 +730,10 @@ class Reader implements ReaderInterface
         $productConcreteSkus = [];
 
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
-            $productConcreteSkus[] = $priceProductFilterTransfer->getSku();
+            /** @var string $sku */
+            $sku = $priceProductFilterTransfer->getSku();
+
+            $productConcreteSkus[] = $sku;
         }
 
         return $productConcreteSkus;
@@ -720,7 +761,10 @@ class Reader implements ReaderInterface
      */
     protected function getCommonPriceProductFilterTransfer(array $priceProductFilterTransfers): PriceProductFilterTransfer
     {
-        return array_shift($priceProductFilterTransfers);
+        /** @var \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer */
+        $priceProductFilterTransfer = array_shift($priceProductFilterTransfers);
+
+        return $priceProductFilterTransfer;
     }
 
     /**
