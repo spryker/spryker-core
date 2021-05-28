@@ -1265,18 +1265,6 @@
         },
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Glue\\GlueApplication\\Rest\\Request\\Data\\RestRequestInterface::setUser has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CartsRestApi/src/Spryker/Glue/CartsRestApi/Processor/RestRequest/RestRequestUpdater.php",
-            "snippet": "        $restRequest->setUser('', $customerReference);",
-            "selected_text": "setUser",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 139,
             "line_to": 139,
             "type": "DeprecatedMethod",
