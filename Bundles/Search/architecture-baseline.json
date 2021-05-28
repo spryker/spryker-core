@@ -1,0 +1,16 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Search\\Business\\SearchFacade::delete() is using an invalid return type \"\\Elastica\\Response\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/SearchFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Search\\Business\\SearchFacade::getDocument() is using an invalid return type \"\\Elastica\\Document\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    }
+]
