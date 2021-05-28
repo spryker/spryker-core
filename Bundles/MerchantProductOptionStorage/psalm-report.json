@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantProductOption\\Persistence\\SpyMerchantProductOptionGroup> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOptionStorage/src/Spryker/Zed/MerchantProductOptionStorage/Persistence/MerchantProductOptionStorageRepository.php",
+            "snippet": "        return $merchantProductOptionGroupQuery->find()->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113,
+            "other_references": null
+        }
+    ],
+    "deprecation": []
+}
