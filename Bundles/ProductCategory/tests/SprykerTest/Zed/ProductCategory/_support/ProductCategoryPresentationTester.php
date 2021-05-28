@@ -11,8 +11,10 @@ use Codeception\Actor;
 use Codeception\Scenario;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use SprykerTest\Zed\ProductCategory\PageObject\ProductCategoryAssignPage;
 
@@ -54,6 +56,18 @@ class ProductCategoryPresentationTester extends Actor
     {
         $localeEntity = $this->createLocaleEntity('en_US');
 
+        $productLocalizedAttributes = new SpyProductLocalizedAttributes();
+        $productLocalizedAttributes
+            ->setName($name)
+            ->setAttributes('[]')
+            ->setLocale($localeEntity);
+
+        $productEntity = new SpyProduct();
+        $productEntity
+            ->setSku($name)
+            ->setAttributes('[]')
+            ->addSpyProductLocalizedAttributes($productLocalizedAttributes);
+
         $productAbstractLocalizedAttributesEntity = new SpyProductAbstractLocalizedAttributes();
         $productAbstractLocalizedAttributesEntity
             ->setName($name)
@@ -64,6 +78,7 @@ class ProductCategoryPresentationTester extends Actor
         $productAbstractEntity
             ->setSku($name)
             ->setAttributes('[]')
+            ->addSpyProduct($productEntity)
             ->addSpyProductAbstractLocalizedAttributes($productAbstractLocalizedAttributesEntity)
             ->save();
 

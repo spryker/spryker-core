@@ -46,6 +46,11 @@ class ProductTable extends AbstractProductTable
     protected $localeTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    protected $localeCollection;
+
+    /**
      * @var \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface
      */
     protected $productTypeHelper;
@@ -63,19 +68,22 @@ class ProductTable extends AbstractProductTable
     /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface $productManagementRepository
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[] $productTableDataExpanderPlugins
+     * @param array $productTableDataExpanderPlugins
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         LocaleTransfer $localeTransfer,
+        array $localeCollection,
         ProductTypeHelperInterface $productTypeHelper,
         ProductManagementRepositoryInterface $productManagementRepository,
         array $productTableDataExpanderPlugins
     ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->localeTransfer = $localeTransfer;
+        $this->localeCollection = $localeCollection;
         $this->productTypeHelper = $productTypeHelper;
         $this->productManagementRepository = $productManagementRepository;
         $this->productTableDataExpanderPlugins = $productTableDataExpanderPlugins;
@@ -139,6 +147,8 @@ class ProductTable extends AbstractProductTable
      */
     protected function prepareData(TableConfiguration $config)
     {
+        $defaultLocale = current($this->localeCollection);
+
         $query = $this
             ->productQueryQueryContainer
             ->queryProductAbstract()
@@ -147,6 +157,8 @@ class ProductTable extends AbstractProductTable
             ->addJoinCondition('SpyProductAbstractLocalizedAttributes', 'SpyProductAbstractLocalizedAttributes.fk_locale = ?', $this->localeTransfer->getIdLocale())
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
+            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, 'SpyProductAbstractLocalizedAttributes.name = null')
+            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.fk_locale = ?', $defaultLocale->getIdLocale())
             ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK)
             ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
             ->groupByIdProductAbstract()

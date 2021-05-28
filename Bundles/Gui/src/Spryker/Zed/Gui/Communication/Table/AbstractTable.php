@@ -789,6 +789,7 @@ abstract class AbstractTable
         $query->offset($offset)
             ->limit($limit);
 
+        $queryString = $query->toString();
         $data = $query->find();
 
         if ($returnRawResults === true) {

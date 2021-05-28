@@ -384,6 +384,7 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductTable(
             $this->getProductQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale(),
+            $this->getLocaleFacade()->getLocaleCollection(),
             $this->createProductTypeHelper(),
             $this->getRepository(),
             $this->getProductTableDataExpanderPlugins()
