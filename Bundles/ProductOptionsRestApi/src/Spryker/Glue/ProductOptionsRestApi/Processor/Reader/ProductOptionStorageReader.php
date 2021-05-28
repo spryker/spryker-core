@@ -78,11 +78,15 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             $productAbstractSkus,
             $localeName
         );
+
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
             $productAbstractIds
         );
-        $productAbstractOptionStorageTransfers = $this->productOptionTranslator
-            ->translateProductAbstractOptionStorageTransfers($productAbstractOptionStorageTransfers, $localeName);
+
+        if ($productAbstractOptionStorageTransfers) {
+            $productAbstractOptionStorageTransfers = $this->productOptionTranslator
+                ->translateProductAbstractOptionStorageTransfers($productAbstractOptionStorageTransfers, $localeName);
+        }
 
         return $this->productOptionRestResponseBuilder
             ->createProductOptionRestResources(
@@ -109,8 +113,11 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
             array_unique($productAbstractIds)
         );
-        $productAbstractOptionStorageTransfers = $this->productOptionTranslator
-            ->translateProductAbstractOptionStorageTransfers($productAbstractOptionStorageTransfers, $localeName);
+
+        if ($productAbstractOptionStorageTransfers) {
+            $productAbstractOptionStorageTransfers = $this->productOptionTranslator
+                ->translateProductAbstractOptionStorageTransfers($productAbstractOptionStorageTransfers, $localeName);
+        }
 
         return $this->productOptionRestResponseBuilder
             ->createProductOptionRestResources(
