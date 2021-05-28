@@ -78,7 +78,6 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
             $productAbstractSkus,
             $localeName
         );
-
         $productAbstractOptionStorageTransfers = $this->productOptionStorageClient->getBulkProductOptions(
             $productAbstractIds
         );
