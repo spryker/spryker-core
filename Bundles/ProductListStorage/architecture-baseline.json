@@ -1,0 +1,23 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/Dependency/Client/ProductListStorageToStorageClientInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'get' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Client/ProductListStorage/Dependency/Service/ProductListStorageToSynchronizationServiceInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'getStorageKeyBuilder' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductListStorage/src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToProductListFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'getProductListsIdsByProductIds' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

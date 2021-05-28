@@ -1,0 +1,44 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Client/CurrencyToSessionInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'set' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Client/CurrencyToSessionInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'get' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Client/CurrencyToSessionInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'set' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Client/CurrencyToSessionInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'get' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Currency/src/Spryker/Shared/Currency/Dependency/Internationalization/CurrencyToInternationalizationInterface.php",
+        "description": "\n      Bridges: The bridge is missing an interface. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Currency/src/Spryker/Zed/Currency/Dependency/Facade/CurrencyToStoreFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findStoreByName' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]
