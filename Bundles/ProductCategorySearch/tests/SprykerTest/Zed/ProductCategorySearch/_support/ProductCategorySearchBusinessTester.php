@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductCategorySearch;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CategoryMapTransfer;
 use Generated\Shared\Transfer\IntegerSortMapTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\ProductCategorySearch\Persistence\ProductCategorySearchRepository;
 
@@ -99,5 +100,31 @@ class ProductCategorySearchBusinessTester extends Actor
     {
         return (new ProductCategorySearchRepository())
             ->getMappedProductCategoriesByIdProductAbstractAndStore($productAbstractIds);
+    }
+
+    /**
+     * @param array $categorySeedData
+     * @param array $categoryLocalizedAttributeSeedData
+     * @param array $productCategorySeedData
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    public function haveCategoryNodeWithDifferentIdCategory(
+        array $categorySeedData,
+        array $categoryLocalizedAttributeSeedData,
+        array $productCategorySeedData,
+        int $idStore
+    ): NodeTransfer {
+        $this->haveCategoryWithoutCategoryNode($categorySeedData);
+
+        $categoryTransfer = $this->haveCategoryWithoutCategoryNode($categorySeedData);
+
+        $idCategory = $categoryTransfer->getIdCategory();
+        $this->haveCategoryLocalizedAttributeForCategory($idCategory, $categoryLocalizedAttributeSeedData);
+        $this->haveProductCategoryForCategory($idCategory, $productCategorySeedData);
+        $this->haveCategoryStoreRelation($idCategory, $idStore);
+
+        return $this->haveCategoryNodeForCategory($idCategory);
     }
 }

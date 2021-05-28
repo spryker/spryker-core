@@ -11,6 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -55,6 +56,40 @@ class ProductCategoryStorageBusinessTester extends Actor
         return $this->createProductAbstractCategoryStorageQuery()
             ->filterByFkProductAbstract($productConcreteTransfer->getFkProductAbstract())
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param string $storeName
+     * @param array $storageData
+     *
+     * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage
+     */
+    public function haveProductAbstractCategoryStorageEntity(
+        ProductConcreteTransfer $productConcreteTransfer,
+        string $storeName,
+        array $storageData = []
+    ): SpyProductAbstractCategoryStorage {
+        $productAbstractCategoryStorageEntity = $this->createProductAbstractCategoryStorageQuery()
+            ->filterByFkProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->filterByStore($storeName)
+            ->findOneOrCreate();
+
+        if (!$productAbstractCategoryStorageEntity->isNew()) {
+            return $productAbstractCategoryStorageEntity;
+        }
+
+        $productAbstractCategoryStorageEntity->setLocale(
+            $productConcreteTransfer->getLocalizedAttributes()->offsetGet(0)->getLocale()->getLocaleName()
+        );
+
+        $productAbstractCategoryStorageEntity->setData(
+            $this->getLocator()->utilEncoding()->service()->encodeJson($storageData)
+        );
+
+        $productAbstractCategoryStorageEntity->save();
+
+        return $productAbstractCategoryStorageEntity;
     }
 
     /**
