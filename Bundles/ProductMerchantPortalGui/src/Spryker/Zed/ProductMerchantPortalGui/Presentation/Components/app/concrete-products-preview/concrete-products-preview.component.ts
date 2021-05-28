@@ -38,6 +38,7 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     @Input() @ToJson() errors?: ConcreteProductPreviewErrors[];
     @Input() name?: string;
     @Output() generatedProductsChange = new EventEmitter<ConcreteProductPreview[]>();
+    @Output() attributesChange = new EventEmitter<ProductAttribute[]>();
 
     @ViewChildren('skuInputRef') skuInputRefs: QueryList<InputComponent>;
     @ViewChildren('nameInputRef') nameInputRefs: QueryList<InputComponent>;
@@ -162,6 +163,48 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
         return this.errors.some((error) => error.errors?.name);
     }
 
+    private updateAttributesOnDelete(): void {
+        const generatedProductsHashedObject = Object.create(null);
+        const superAttrsLength = this.attributes.length;
+        let isAttrsUpdated = false;
+
+        this.generatedProducts.map((product) => {
+            product.superAttributes.map((productAttr) => {
+                generatedProductsHashedObject[
+                    this.computeAttrsHash(productAttr.value, productAttr.attribute.value)
+                ] = true;
+            });
+        });
+
+        this.attributes = this.attributes
+            .map((superAttr) => ({ ...superAttr }))
+            .filter((superAttr) => {
+                const attrsLength = superAttr.attributes.length;
+
+                superAttr.attributes = superAttr.attributes.filter((attr) => {
+                    return this.computeAttrsHash(superAttr.value, attr.value) in generatedProductsHashedObject;
+                });
+
+                if (attrsLength !== superAttr.attributes.length) {
+                    isAttrsUpdated = true;
+                }
+
+                return superAttr.attributes.length > 0;
+            });
+
+        if (superAttrsLength !== this.attributes.length) {
+            isAttrsUpdated = true;
+        }
+
+        if (isAttrsUpdated) {
+            this.attributesChange.emit(this.attributes);
+        }
+    }
+
+    private computeAttrsHash(superAttr: string, attr: string): string {
+        return `${superAttr}&${attr}`;
+    }
+
     generateSku(checked: boolean): void {
         let generatedSku = this.concreteProductSkuGenerator.generate();
 
@@ -216,6 +259,8 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
 
     delete(index: number): void {
         this.generatedProducts = [...this.generatedProducts.filter((product, productIndex) => index !== productIndex)];
+        this.updateAttributesOnDelete();
+
         this.generatedProductsChange.emit(this.generatedProducts);
     }
 

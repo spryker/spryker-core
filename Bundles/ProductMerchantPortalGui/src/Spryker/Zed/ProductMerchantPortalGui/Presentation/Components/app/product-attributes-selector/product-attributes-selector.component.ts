@@ -49,6 +49,11 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
 
         if ('selectedAttributes' in changes) {
             this.initAttributeOptions();
+
+            if (!changes.selectedAttributes.firstChange && !this.selectedAttributes.length) {
+                this.disableSelectedAttributes();
+                this.create();
+            }
         }
     }
 
