@@ -21,9 +21,13 @@ class ListController extends IndexController
     {
         $productOptionListTable = $this->getFactory()->createProductOptionListTable();
 
-        return [
+        $viewData = [
             'listTable' => $productOptionListTable->render(),
         ];
+
+        return $this->viewResponse(
+            $this->expandViewData($viewData)
+        );
     }
 
     /**
@@ -36,5 +40,22 @@ class ListController extends IndexController
         return $this->jsonResponse(
             $productOptionListTable->fetchData()
         );
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function expandViewData(array $viewData): array
+    {
+        $productOptionListActionViewDataExpanderPlugins = $this->getFactory()
+            ->getProductOptionListActionViewDataExpanderPlugins();
+
+        foreach ($productOptionListActionViewDataExpanderPlugins as $productOptionListActionViewDataExpanderPlugin) {
+            $viewData = $productOptionListActionViewDataExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
     }
 }

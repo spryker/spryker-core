@@ -1,6 +1,6 @@
 parameters:
     checkMissingIterableValueType: false
+    excludes_analyse:
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Persistence/ProductMerchantPortalGuiRepository.php'
     ignoreErrors:
         - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion#'
-        - '#Call to an undefined method Orm\\Zed\\Company\\Persistence\\SpyCompanyQuery#'
-        - '#Call to an undefined method Orm\\Zed\\CmsBlockProductConnector\\Persistence\\SpyCmsBlockProductConnectorQuery#'

@@ -16,15 +16,18 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\AbstractFactory;
 use Spryker\Zed\Kernel\Container;
 use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
+use SprykerTest\Shared\Testify\Helper\StaticVariablesHelper;
 
 abstract class AbstractDependencyProviderHelper extends Module
 {
     use ModuleNameTrait;
     use ContainerMocker;
     use ContainerHelperTrait;
+    use StaticVariablesHelper;
 
     protected const DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN = '\%1$s\Zed\%2$s\%2$sDependencyProvider';
 
@@ -170,10 +173,21 @@ abstract class AbstractDependencyProviderHelper extends Module
      *
      * @return void
      */
+    public function _before(TestInterface $test): void
+    {
+        $this->cleanupStaticCache(AbstractFactory::class, 'containers');
+    }
+
+    /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
     public function _after(TestInterface $test): void
     {
         $this->dependencyProviderStub = null;
         $this->mockedDependencyProviderMethods = [];
         $this->containerGlobals->reset();
+        $this->resetStaticCaches();
     }
 }

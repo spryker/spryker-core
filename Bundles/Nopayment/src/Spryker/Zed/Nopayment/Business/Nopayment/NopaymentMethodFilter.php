@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Nopayment\NopaymentConfig;
 
-class NopaymentMethodFilter
+class NopaymentMethodFilter implements NopaymentMethodFilterInterface
 {
     /**
      * @var \Spryker\Zed\Nopayment\NopaymentConfig
@@ -33,8 +33,10 @@ class NopaymentMethodFilter
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    public function filterPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer, QuoteTransfer $quoteTransfer)
-    {
+    public function filterPaymentMethods(
+        PaymentMethodsTransfer $paymentMethodsTransfer,
+        QuoteTransfer $quoteTransfer
+    ): PaymentMethodsTransfer {
         if ($quoteTransfer->getTotals() && $quoteTransfer->getTotals()->getPriceToPay() === 0) {
             return $this->disallowRegularPaymentMethods($paymentMethodsTransfer);
         }
@@ -54,6 +56,8 @@ class NopaymentMethodFilter
         foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
             if (in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getWhitelistMethods())) {
                 $allowedMethods[] = $paymentMethodTransfer;
+
+                continue;
             }
 
             if (in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getNopaymentMethods())) {
@@ -76,6 +80,8 @@ class NopaymentMethodFilter
         foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
             if (in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getWhitelistMethods())) {
                 $allowedMethods[] = $paymentMethodTransfer;
+
+                continue;
             }
 
             if (!in_array($paymentMethodTransfer->getMethodName(), $this->nopaymentConfig->getNopaymentMethods())) {

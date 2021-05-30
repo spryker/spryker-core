@@ -41,21 +41,29 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionGroupExpanderPluginInterface[]
+     */
+    protected $productOptionGroupExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceHydratorInterface $productOptionValuePriceHydrator
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionGroupExpanderPluginInterface[] $productOptionGroupExpanderPlugins
      */
     public function __construct(
         ProductOptionValuePriceHydratorInterface $productOptionValuePriceHydrator,
         ProductOptionQueryContainerInterface $productOptionQueryContainer,
         ProductOptionToGlossaryFacadeInterface $glossaryFacade,
-        ProductOptionToLocaleFacadeInterface $localeFacade
+        ProductOptionToLocaleFacadeInterface $localeFacade,
+        array $productOptionGroupExpanderPlugins
     ) {
         $this->productOptionValuePriceHydrator = $productOptionValuePriceHydrator;
         $this->productOptionQueryContainer = $productOptionQueryContainer;
         $this->glossaryFacade = $glossaryFacade;
         $this->localeFacade = $localeFacade;
+        $this->productOptionGroupExpanderPlugins = $productOptionGroupExpanderPlugins;
     }
 
     /**
@@ -66,8 +74,9 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     public function getProductOptionGroupById($idProductOptionGroup)
     {
         $productOptionGroupEntity = $this->getProductOptionGroupEntityWithValuesAndValuePricesById((int)$idProductOptionGroup);
+        $productOptionGroupTransfer = $this->hydrateProductOptionGroupTransfer($productOptionGroupEntity);
 
-        return $this->hydrateProductOptionGroupTransfer($productOptionGroupEntity);
+        return $this->executeProductOptionGroupExpanderPlugins($productOptionGroupTransfer);
     }
 
     /**
@@ -114,11 +123,11 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     }
 
     /**
-     * @param array $availableLocales
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
      * @param string $translationKey
      * @param string $relatedOptionHash
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductOptionTranslationTransfer[]
      */
     protected function getOptionTranslations(array $availableLocales, $translationKey, $relatedOptionHash)
     {
@@ -156,9 +165,9 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
-     * @param array $availableLocales
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductOptionTranslationTransfer[]
      */
     protected function hydrateProductOptionValues(
         SpyProductOptionGroup $productOptionGroupEntity,
@@ -191,6 +200,10 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     }
 
     /**
+     * @phpstan-param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
+     *
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     *
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
@@ -238,5 +251,20 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
         }
 
         return $productOptionGroupCollection->getFirst();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionGroupTransfer
+     */
+    protected function executeProductOptionGroupExpanderPlugins(
+        ProductOptionGroupTransfer $productOptionGroupTransfer
+    ): ProductOptionGroupTransfer {
+        foreach ($this->productOptionGroupExpanderPlugins as $productOptionGroupExpanderPlugin) {
+            $productOptionGroupTransfer = $productOptionGroupExpanderPlugin->expand($productOptionGroupTransfer);
+        }
+
+        return $productOptionGroupTransfer;
     }
 }

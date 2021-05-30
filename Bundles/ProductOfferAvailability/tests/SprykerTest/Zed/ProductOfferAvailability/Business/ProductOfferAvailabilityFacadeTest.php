@@ -35,7 +35,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductConcreteAvailabilityForRequestReturnsProductOfferAvailabilityAssumingOmsProductReservations(): void
+    public function testFindProductConcreteAvailabilityReturnsProductOfferAvailabilityAssumingOmsProductReservations(): void
     {
         // Arrange=
         $stockQuantity = 5;
@@ -69,7 +69,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteAvailabilityTransfer = $this->tester->getFacade()
-            ->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
+            ->findProductConcreteAvailability($productOfferAvailabilityRequestTransfer);
 
         // Assert
         $this->assertNotNull($productConcreteAvailabilityTransfer);

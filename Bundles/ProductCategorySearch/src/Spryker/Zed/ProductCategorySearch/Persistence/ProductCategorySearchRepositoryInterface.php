@@ -33,10 +33,10 @@ interface ProductCategorySearchRepositoryInterface
     public function getAllCategoriesWithAttributesAndOrderByDescendant(): array;
 
     /**
-     * @param int[] $categoryIds
+     * @param int[] $categoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    public function getCategoryAttributesByLocale(array $categoryIds, LocaleTransfer $localeTransfer): array;
+    public function getCategoryAttributesByLocale(array $categoryNodeIds, LocaleTransfer $localeTransfer): array;
 }

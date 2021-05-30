@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockCollectionTransfer;
+use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
@@ -413,5 +415,21 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
         return $this->getFactory()
             ->createStockReader()
             ->getAvailableWarehousesForStore($storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStocksByStockCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): StockCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createStockReader()
+            ->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
     }
 }

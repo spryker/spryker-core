@@ -137,7 +137,8 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
         return new ProductOptionListTable(
             $this->getQueryContainer(),
             $this->getCurrencyFacade(),
-            $this->getMoneyFacade()
+            $this->getMoneyFacade(),
+            $this->getRepository()
         );
     }
 
@@ -255,5 +256,13 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     public function getMoneyCollectionFormTypePlugin()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::MONEY_COLLECTION_FORM_TYPE_PLUGIN);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionGuiExtension\Dependency\Plugin\ProductOptionListActionViewDataExpanderPluginInterface[]
+     */
+    public function getProductOptionListActionViewDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::PLUGINS_PRODUCT_OPTION_LIST_ACTION_VIEW_DATA_EXPANDER);
     }
 }

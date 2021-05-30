@@ -13,7 +13,6 @@ use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
 
 /**
  * @method \Spryker\Zed\MerchantOpeningHoursStorage\Persistence\MerchantOpeningHoursStorageRepositoryInterface getRepository()
@@ -66,7 +65,7 @@ class MerchantOpeningHoursEventResourceBulkRepositoryPlugin extends AbstractPlug
      */
     public function getEventName(): string
     {
-        return MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH;
+        return MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_PUBLISH;
     }
 
     /**

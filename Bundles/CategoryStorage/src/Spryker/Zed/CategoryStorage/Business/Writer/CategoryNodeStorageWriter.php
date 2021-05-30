@@ -8,9 +8,9 @@
 namespace Spryker\Zed\CategoryStorage\Business\Writer;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
-use Generated\Shared\Transfer\NodeCollectionTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Spryker\Zed\CategoryStorage\Business\Deleter\CategoryNodeStorageDeleterInterface;
+use Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeExtractorInterface;
 use Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface;
 use Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface;
@@ -44,58 +44,32 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     protected $categoryNodeStorageDeleter;
 
     /**
+     * @var \Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeExtractorInterface
+     */
+    protected $categoryNodeExtractor;
+
+    /**
      * @param \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface $categoryStorageEntityManager
      * @param \Spryker\Zed\CategoryStorage\Business\TreeBuilder\CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder
      * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\CategoryStorage\Dependency\Facade\CategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\CategoryStorage\Business\Deleter\CategoryNodeStorageDeleterInterface $categoryNodeStorageDeleter
+     * @param \Spryker\Zed\CategoryStorage\Business\Extractor\CategoryNodeExtractorInterface $categoryNodeExtractor
      */
     public function __construct(
         CategoryStorageEntityManagerInterface $categoryStorageEntityManager,
         CategoryStorageNodeTreeBuilderInterface $categoryStorageNodeTreeBuilder,
         CategoryStorageToCategoryFacadeInterface $categoryFacade,
         CategoryStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        CategoryNodeStorageDeleterInterface $categoryNodeStorageDeleter
+        CategoryNodeStorageDeleterInterface $categoryNodeStorageDeleter,
+        CategoryNodeExtractorInterface $categoryNodeExtractor
     ) {
         $this->categoryStorageEntityManager = $categoryStorageEntityManager;
         $this->categoryStorageNodeTreeBuilder = $categoryStorageNodeTreeBuilder;
         $this->categoryFacade = $categoryFacade;
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->categoryNodeStorageDeleter = $categoryNodeStorageDeleter;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodeStorageCollectionByCategoryStoreEvents(array $eventEntityTransfers): void
-    {
-        $categoryIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryStoreTableMap::COL_FK_CATEGORY);
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
-        );
-
-        $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
-
-        $this->writeCategoryNodeStorageCollection($categoryNodeIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
-     *
-     * @return void
-     */
-    public function writeCategoryNodeStorageCollectionByCategoryStorePublishEvents(array $eventEntityTransfers): void
-    {
-        $categoryIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
-        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes(
-            (new CategoryNodeCriteriaTransfer())->setCategoryIds($categoryIds)
-        );
-
-        $categoryNodeIds = $this->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
-
-        $this->writeCategoryNodeStorageCollection($categoryNodeIds);
+        $this->categoryNodeExtractor = $categoryNodeExtractor;
     }
 
     /**
@@ -118,6 +92,55 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
 
         $this->storeData($categoryNodeStorageTransferTreesIndexedByLocaleAndStore);
         $this->categoryNodeStorageDeleter->deleteMissingCategoryNodeStorage($categoryNodeStorageTransferTreesIndexedByLocaleAndStore, $categoryNodeIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByParentCategoryEvents(array $eventEntityTransfers): void
+    {
+        $parentCategoryNodeIds = $this->eventBehaviorFacade
+            ->getEventTransferForeignKeys(
+                $eventEntityTransfers,
+                SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE
+            );
+
+        $originalParentCategoryNodeIds = $this->eventBehaviorFacade
+            ->getEventTransfersOriginalValues(
+                $eventEntityTransfers,
+                SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE
+            );
+
+        $categoryNodeIds = array_unique(array_merge($parentCategoryNodeIds, $originalParentCategoryNodeIds));
+
+        $this->writeCategoryNodeStorageCollection($categoryNodeIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryNodeEvents(array $eventEntityTransfers): void
+    {
+        $categoryNodeIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+
+        $this->writeCategoryNodeStorageCollection($categoryNodeIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return void
+     */
+    public function writeCategoryNodeStorageCollectionByCategoryNodeCriteria(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): void
+    {
+        $nodeCollectionTransfer = $this->categoryFacade->getCategoryNodes($categoryNodeCriteriaTransfer);
+        $categoryNodeIds = $this->categoryNodeExtractor->extractCategoryNodeIdsFromNodeCollection($nodeCollectionTransfer);
+
+        $this->writeCategoryNodeStorageCollection($categoryNodeIds);
     }
 
     /**
@@ -157,21 +180,5 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
                 $localeName
             );
         }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     *
-     * @return int[]
-     */
-    protected function extractCategoryNodeIdsFromNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer): array
-    {
-        $categoryNodeIds = [];
-
-        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
-        }
-
-        return $categoryNodeIds;
     }
 }

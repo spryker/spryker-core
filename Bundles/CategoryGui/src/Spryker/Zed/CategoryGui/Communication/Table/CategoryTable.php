@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\CategoryGui\Communication\Table;
 
+use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface;
+use Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -24,10 +26,12 @@ class CategoryTable extends AbstractTable
     public const COL_VISIBLE = 'is_in_menu';
     public const COL_SEARCHABLE = 'is_searchable';
     public const COL_TEMPLATE = 'template';
+    public const COL_STORE_RELATION = 'store_relation';
     public const COL_ACTIONS = 'actions';
     public const IDENTIFIER = 'category_data_table';
     public const COL_ID_CATEGORY_NODE = 'id_category_node';
 
+    protected const COL_IS_ROOT = 'is_root';
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
     protected const REQUEST_PARAM_ID_NODE = 'id-node';
     protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
@@ -38,11 +42,20 @@ class CategoryTable extends AbstractTable
     protected $localeFacade;
 
     /**
-     * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
+     * @var \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface
      */
-    public function __construct(CategoryGuiToLocaleFacadeInterface $localeFacade)
-    {
+    protected $categoryGuiRepository;
+
+    /**
+     * @param \Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\CategoryGui\Persistence\CategoryGuiRepositoryInterface $categoryGuiRepository
+     */
+    public function __construct(
+        CategoryGuiToLocaleFacadeInterface $localeFacade,
+        CategoryGuiRepositoryInterface $categoryGuiRepository
+    ) {
         $this->localeFacade = $localeFacade;
+        $this->categoryGuiRepository = $categoryGuiRepository;
     }
 
     /**
@@ -60,6 +73,7 @@ class CategoryTable extends AbstractTable
             static::COL_VISIBLE => 'Visible',
             static::COL_SEARCHABLE => 'Searchable',
             static::COL_TEMPLATE => 'Template',
+            static::COL_STORE_RELATION => 'Stores',
             static::COL_ACTIONS => 'Actions',
         ]);
 
@@ -76,10 +90,12 @@ class CategoryTable extends AbstractTable
         ]);
 
         $config->setSearchable([
+            SpyCategoryTableMap::COL_CATEGORY_KEY,
             'attr.name',
         ]);
 
         $config->setRawColumns([
+            static::COL_STORE_RELATION,
             static::COL_ACTIONS,
         ]);
 
@@ -95,14 +111,17 @@ class CategoryTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $fkLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
+        $fkLocale = $this->localeFacade->getCurrentLocale()->getIdLocaleOrFail();
         $query = $this->prepareQuery($fkLocale);
+
         $queryResults = $this->runQuery($query, $config, true);
 
-        $categoryCollection = [];
+        $categoryIds = $this->extractCategoryIds($queryResults);
+        $categoryStoreNamesGroupedByIdCategory = $this->categoryGuiRepository->getCategoryStoreNamesGroupedByIdCategory($categoryIds);
 
+        $categoryCollection = [];
         foreach ($queryResults as $categoryEntity) {
-            $categoryCollection[] = $this->generateItem($categoryEntity);
+            $categoryCollection[] = $this->generateItem($categoryEntity, $categoryStoreNamesGroupedByIdCategory);
         }
 
         return $categoryCollection;
@@ -115,12 +134,16 @@ class CategoryTable extends AbstractTable
      */
     protected function prepareQuery(int $fkLocale): SpyCategoryQuery
     {
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $query */
         $query = SpyCategoryQuery::create('sc')
-            ->useAttributeQuery('attr', Criteria::LEFT_JOIN)
-                ->filterByFkLocale($fkLocale)
-            ->endUse()
             ->leftJoinCategoryTemplate('tpl')
             ->leftJoinNode('node')
+            ->useAttributeQuery('attr', Criteria::LEFT_JOIN)
+                ->filterByFkLocale($fkLocale)
+            ->endUse();
+
+        /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $query */
+        $query = $query
             ->useNodeQuery('node', Criteria::LEFT_JOIN)
                 ->groupByFkCategory()
                 ->groupByIsMain()
@@ -132,34 +155,36 @@ class CategoryTable extends AbstractTable
                     ->endUse()
                 ->endUse()
             ->endUse()
-            ->addOr('parent_node.id_category_node');
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $query */
-        $query = $query->having('node.is_main = ?', true)
+            ->addOr('parent_node.id_category_node')
+            ->having('node.is_main = ?', true)
             ->withColumn('count(node.fk_category)', 'count')
             ->withColumn('attr.name', static::COL_NAME)
             ->withColumn('tpl.name', static::COL_TEMPLATE)
             ->withColumn('parent_attr.name', static::COL_PARENT)
-            ->withColumn('node.id_category_node', static::COL_ID_CATEGORY_NODE);
+            ->withColumn('node.id_category_node', static::COL_ID_CATEGORY_NODE)
+            ->withColumn('node.is_root', static::COL_IS_ROOT);
 
         return $query;
     }
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
+     * @param string[][] $categoryStoreNamesGroupedByIdCategory
      *
      * @return array
      */
-    protected function generateItem(SpyCategory $categoryEntity): array
+    protected function generateItem(SpyCategory $categoryEntity, array $categoryStoreNamesGroupedByIdCategory): array
     {
         return [
             static::COL_CATEGORY_KEY => $categoryEntity->getCategoryKey(),
             static::COL_NAME => $categoryEntity->getVirtualColumn(static::COL_NAME),
             static::COL_PARENT => $categoryEntity->getVirtualColumn(static::COL_PARENT),
-            static::COL_ACTIVE => $this->yesNoOutput($categoryEntity->getIsActive()),
-            static::COL_VISIBLE => $this->yesNoOutput($categoryEntity->getIsInMenu()),
-            static::COL_SEARCHABLE => $this->yesNoOutput($categoryEntity->getIsSearchable()),
+            static::COL_ACTIVE => $this->yesNoOutput((bool)$categoryEntity->getIsActive()),
+            static::COL_VISIBLE => $this->yesNoOutput((bool)$categoryEntity->getIsInMenu()),
+            static::COL_SEARCHABLE => $this->yesNoOutput((bool)$categoryEntity->getIsSearchable()),
             static::COL_TEMPLATE => $categoryEntity->getVirtualColumn(static::COL_TEMPLATE),
-            static::COL_ACTIONS => implode(' ', $this->createActionColumn($categoryEntity)),
+            static::COL_STORE_RELATION => $this->getStoreNames($categoryEntity->getIdCategory(), $categoryStoreNamesGroupedByIdCategory),
+            static::COL_ACTIONS => $this->generateActionsButton($categoryEntity),
         ];
     }
 
@@ -180,113 +205,154 @@ class CategoryTable extends AbstractTable
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $item
      *
-     * @return string[]
+     * @return string
      */
-    protected function createActionColumn(SpyCategory $item): array
+    protected function generateActionsButton(SpyCategory $item): string
     {
-        return [
-            $this->generateAssignProductsButton($item),
-            $this->generateEditCategoryButton($item),
-            $this->generateViewCategoryButton($item),
-            $this->generateCategoryRemoveButton($item),
-            $this->generateCategoryResortButton($item),
-            $this->generateAddCategoryToNodeButton($item),
-        ];
+        $buttonGroupItems = [];
+
+        $buttonGroupItems[] = $this->generateEditCategoryButtonGroupItem($item);
+
+        if (!$this->isRootCategory($item)) {
+            $buttonGroupItems[] = $this->generateCategoryRemoveButtonGroupItem($item);
+        }
+
+        $buttonGroupItems[] = $this->generateAddCategoryToNodeButtonGroupItem($item);
+        $buttonGroupItems[] = $this->generateCategoryResortButtonGroupItem($item);
+        $buttonGroupItems[] = $this->generateAssignProductsButtonGroupItem($item);
+
+        return $this->generateButtonGroup(
+            $buttonGroupItems,
+            'Actions',
+            [
+                'icon' => '',
+            ]
+        );
     }
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $item
      *
-     * @return string
+     * @return array
      */
-    protected function generateAssignProductsButton(SpyCategory $item): string
+    protected function generateAssignProductsButtonGroupItem(SpyCategory $item): array
     {
-        return $this->generateViewButton(
+        return $this->createButtonGroupItem(
+            'Assign products',
             Url::generate('/product-category/assign', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
             ]),
-            'Assign products'
+            true
         );
     }
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $item
      *
-     * @return string
+     * @return array
      */
-    protected function generateEditCategoryButton(SpyCategory $item): string
+    protected function generateEditCategoryButtonGroupItem(SpyCategory $item): array
     {
-        return $this->generateEditButton(
-            Url::generate('/category/edit', [
+        return $this->createButtonGroupItem(
+            'Edit',
+            Url::generate('/category-gui/edit', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
-            ]),
-            'Edit'
+            ])
         );
     }
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $item
      *
-     * @return string
+     * @return array
      */
-    protected function generateViewCategoryButton(SpyCategory $item): string
+    protected function generateCategoryRemoveButtonGroupItem(SpyCategory $item): array
     {
-        return $this->generateViewButton(
-            Url::generate('/category/view', [
+        return $this->createButtonGroupItem(
+            'Delete',
+            Url::generate('/category-gui/delete', [
                 static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
+            ])
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     *
+     * @return array
+     */
+    protected function generateCategoryResortButtonGroupItem(SpyCategory $item): array
+    {
+        return $this->createButtonGroupItem(
+            'Re-sort child categories',
+            Url::generate('/category-gui/re-sort', [
+                static::REQUEST_PARAM_ID_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
+            ])
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     *
+     * @return array
+     */
+    protected function generateAddCategoryToNodeButtonGroupItem(SpyCategory $item): array
+    {
+        return $this->createButtonGroupItem(
+            'Add category to this node',
+            Url::generate('/category-gui/create', [
+                static::REQUEST_PARAM_ID_PARENT_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
             ]),
-            'View'
+            true
         );
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      *
-     * @return string
+     * @return bool
      */
-    protected function generateCategoryRemoveButton(SpyCategory $item): string
+    protected function isRootCategory(SpyCategory $categoryEntity): bool
     {
-        return $this->generateRemoveButton(
-            Url::generate('/category/delete', [
-                static::REQUEST_PARAM_ID_CATEGORY => $item->getIdCategory(),
-            ]),
-            'Delete'
-        );
+        return (bool)$categoryEntity->getVirtualColumn(static::COL_IS_ROOT);
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     * @param int $idCategory
+     * @param string[][] $categoryStoreNamesGroupedByIdCategory
      *
      * @return string
      */
-    protected function generateCategoryResortButton(SpyCategory $item): string
+    protected function getStoreNames(int $idCategory, array $categoryStoreNamesGroupedByIdCategory): string
     {
-        return $this->generateViewButton(
-            Url::generate(
-                '/category/re-sort',
-                [
-                    static::REQUEST_PARAM_ID_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
-                ]
-            ),
-            'Re-sort child categories'
-        );
+        if (!array_key_exists($idCategory, $categoryStoreNamesGroupedByIdCategory)) {
+            return '';
+        }
+
+        $storeNames = [];
+        foreach ($categoryStoreNamesGroupedByIdCategory[$idCategory] as $storeName) {
+            $storeNames[] = sprintf(
+                '<span class="label label-info">%s</span>',
+                $storeName
+            );
+        }
+
+        return implode(' ', $storeNames);
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory $item
+     * @param array|\Propel\Runtime\Collection\ObjectCollection $queryResults
      *
-     * @return string
+     * @return int[]
      */
-    protected function generateAddCategoryToNodeButton(SpyCategory $item): string
+    protected function extractCategoryIds($queryResults): array
     {
-        return $this->generateViewButton(
-            Url::generate(
-                '/category/create',
-                [
-                    static::REQUEST_PARAM_ID_PARENT_NODE => $item->getVirtualColumn(static::COL_ID_CATEGORY_NODE),
-                ]
-            ),
-            'Add category to this node'
-        );
+        $categoryIds = [];
+        /** @var \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity */
+        foreach ($queryResults as $categoryEntity) {
+            $categoryIds[] = $categoryEntity->getIdCategory();
+        }
+
+        return $categoryIds;
     }
 }

@@ -230,4 +230,7 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
     </transfer>
 
+    <transfer name="QueryCriteria">
+    </transfer>
+
 </transfers>

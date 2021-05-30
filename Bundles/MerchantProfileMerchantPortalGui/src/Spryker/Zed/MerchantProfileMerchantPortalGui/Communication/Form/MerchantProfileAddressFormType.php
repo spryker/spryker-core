@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\MerchantProfileMerchantPortalGuiCommunicationFactory getFactory()
@@ -31,6 +32,8 @@ class MerchantProfileAddressFormType extends AbstractType
     protected const FIELD_ADDRESS_1 = 'address1';
     protected const FIELD_ADDRESS_2 = 'address2';
     protected const FIELD_ADDRESS_3 = 'address3';
+    protected const FIELD_LATITUDE = 'latitude';
+    protected const FIELD_LONGITUDE = 'longitude';
 
     protected const LABEL_CITY = 'City';
     protected const LABEL_ZIP_CODE = 'Zip Code';
@@ -38,6 +41,8 @@ class MerchantProfileAddressFormType extends AbstractType
     protected const LABEL_ADDRESS_1 = 'Street';
     protected const LABEL_ADDRESS_2 = 'Number';
     protected const LABEL_ADDRESS_3 = 'Addition to address';
+    protected const LABEL_LATITUDE = 'Latitude';
+    protected const LABEL_LONGITUDE = 'Longitude';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -65,7 +70,9 @@ class MerchantProfileAddressFormType extends AbstractType
             ->addAddress2Field($builder)
             ->addZipCodeField($builder)
             ->addCityField($builder)
-            ->addAddress3Field($builder);
+            ->addAddress3Field($builder)
+            ->addLatitudeField($builder)
+            ->addLongitudeField($builder);
 
         $builder->addModelTransformer(
             new MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer()
@@ -183,5 +190,43 @@ class MerchantProfileAddressFormType extends AbstractType
     public function getBlockPrefix(): string
     {
         return 'merchant_profile_address';
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLongitudeField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_LONGITUDE, TextType::class, [
+            'label' => static::LABEL_LONGITUDE,
+            'required' => false,
+            'constraints' => [
+                new Length(['max' => 255]),
+                new Regex(['pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/']),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLatitudeField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_LATITUDE, TextType::class, [
+            'label' => static::LABEL_LATITUDE,
+            'required' => false,
+            'constraints' => [
+                new Length(['max' => 255]),
+                new Regex(['pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/']),
+            ],
+        ]);
+
+        return $this;
     }
 }

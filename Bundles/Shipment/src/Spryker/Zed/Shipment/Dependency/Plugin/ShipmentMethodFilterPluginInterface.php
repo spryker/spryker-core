@@ -21,6 +21,10 @@ interface ShipmentMethodFilterPluginInterface
      *
      * @api
      *
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethods
+     *
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\ShipmentMethodTransfer>|array<int,\Generated\Shared\Transfer\ShipmentMethodTransfer>
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
