@@ -147,7 +147,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
      */
     protected function runAnalyzer(array $fileViolations, $directory, array $options): array
     {
-        $reportPath = dirname($directory) . DIRECTORY_SEPARATOR . static::ARCHITECTURE_BASELINE_JSON;
+        $reportPath = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . static::ARCHITECTURE_BASELINE_JSON;
+        if ($this->isCoreModule($options)) {
+            $reportPath = dirname($directory) . DIRECTORY_SEPARATOR . static::ARCHITECTURE_BASELINE_JSON;
+        }
+
         $reportFileExists = file_exists($reportPath);
         $result = $this->formatViolations($fileViolations);
         $reportResult = $reportFileExists ? $this->getReportResult($reportPath) : [];
@@ -296,15 +300,11 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $content = file_get_contents($path);
         if ($content === false) {
             throw new RuntimeException('Invalid content: ' . $path);
-
-            return [];
         }
 
         $result = json_decode($content, true);
         if ($result === null) {
             throw new RuntimeException('Invalid JSON file: ' . $path);
-
-            return [];
         }
 
         return $result;
