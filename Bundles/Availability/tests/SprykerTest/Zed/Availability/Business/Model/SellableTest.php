@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\Availability\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\SellableItemBatchRequestTransfer;
+use Generated\Shared\Transfer\SellableItemBatchResponseTransfer;
+use Generated\Shared\Transfer\SellableItemRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface;
@@ -31,6 +34,8 @@ use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 class SellableTest extends Unit
 {
     public const SKU_PRODUCT = 'sku-123-321';
+
+    public const SKU_PRODUCT_SECOND = 'sku-123-222';
 
     /**
      * @dataProvider isProductSellableStoresDataProvider
@@ -92,6 +97,175 @@ class SellableTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testAreProductConcretesSellableForStoreWhenProductOutOfStockShouldReturnIsNotSellable(): void
+    {
+        // Arrange
+        $storeTransfer = $this->createStoreTransfer();
+        $availabilityRepositoryMock = $this->createAvailabilityRepositoryMock();
+        $availabilityRepositoryMock->method('findProductConcreteAvailabilityBySkusAndStore')
+            ->with([static::SKU_PRODUCT, static::SKU_PRODUCT_SECOND], $storeTransfer)
+            ->willReturn(
+                [
+                    (new ProductConcreteAvailabilityTransfer())
+                        ->setSku(static::SKU_PRODUCT)
+                        ->setAvailability(6)
+                        ->setIsNeverOutOfStock(false),
+                    (new ProductConcreteAvailabilityTransfer())
+                        ->setSku(static::SKU_PRODUCT_SECOND)
+                        ->setAvailability(6)
+                        ->setIsNeverOutOfStock(false),
+                ]
+            );
+        $batchRequestData = [
+            [
+                'sku' => static::SKU_PRODUCT,
+                'quantity' => 6,
+            ],
+            [
+                'sku' => static::SKU_PRODUCT_SECOND,
+                'quantity' => 7,
+            ],
+        ];
+
+        $sellableItemBatchRequestTransfer = $this->createSellableItemBatchRequestTransfer($storeTransfer);
+        $sellableItemBatchRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
+            $sellableItemBatchRequestTransfer,
+            $batchRequestData
+        );
+        $sellableItemBatchResponseTransfer = $this->createSellableItemBatchResponseTransfer();
+
+        $sellable = $this->createSellable($availabilityRepositoryMock);
+
+        //Act
+        $sellableItemBatchResponseTransfer = $sellable->areProductConcretesSellableForStore(
+            $sellableItemBatchRequestTransfer,
+            $sellableItemBatchResponseTransfer
+        );
+
+        //Assert
+        $sellableItemBatchResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemBatchResponseTransfer);
+
+        $this->assertEquals(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
+        $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
+
+        $this->assertFalse($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAreProductConcretesSellableForStoreWhenProductsInStockShouldReturnIsSellable(): void
+    {
+        // Arrange
+        $storeTransfer = $this->createStoreTransfer();
+        $availabilityRepositoryMock = $this->createAvailabilityRepositoryMock();
+        $availabilityRepositoryMock->method('findProductConcreteAvailabilityBySkusAndStore')
+            ->with([static::SKU_PRODUCT, static::SKU_PRODUCT_SECOND], $storeTransfer)
+            ->willReturn(
+                [
+                    (new ProductConcreteAvailabilityTransfer())
+                        ->setSku(static::SKU_PRODUCT)
+                        ->setAvailability(6)
+                        ->setIsNeverOutOfStock(false),
+                    (new ProductConcreteAvailabilityTransfer())
+                        ->setSku(static::SKU_PRODUCT_SECOND)
+                        ->setAvailability(6)
+                        ->setIsNeverOutOfStock(false),
+                ]
+            );
+        $batchRequestData = [
+            [
+                'sku' => static::SKU_PRODUCT,
+                'quantity' => 5,
+            ],
+            [
+                'sku' => static::SKU_PRODUCT_SECOND,
+                'quantity' => 5,
+            ],
+        ];
+
+        $sellableItemBatchRequestTransfer = $this->createSellableItemBatchRequestTransfer($storeTransfer);
+        $sellableItemBatchRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
+            $sellableItemBatchRequestTransfer,
+            $batchRequestData
+        );
+        $sellableItemBatchResponseTransfer = $this->createSellableItemBatchResponseTransfer();
+
+        $sellable = $this->createSellable($availabilityRepositoryMock);
+
+        //Act
+        $sellableItemBatchResponseTransfer = $sellable->areProductConcretesSellableForStore(
+            $sellableItemBatchRequestTransfer,
+            $sellableItemBatchResponseTransfer
+        );
+
+        //Assert
+        $sellableItemBatchResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemBatchResponseTransfer);
+
+        $this->assertEquals(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
+        $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
+
+        $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAreProductConcretesSellableForStoreWhenProductsAreNeverOutOfStockShouldReturnIsSellable(): void
+    {
+        // Arrange
+        $storeTransfer = $this->createStoreTransfer();
+        $availabilityRepositoryMock = $this->createAvailabilityRepositoryMock();
+        $availabilityRepositoryMock->method('findProductConcreteAvailabilityBySkusAndStore')
+            ->with([static::SKU_PRODUCT, static::SKU_PRODUCT_SECOND], $storeTransfer)
+            ->willReturn(
+                [
+                    (new ProductConcreteAvailabilityTransfer())
+                        ->setSku(static::SKU_PRODUCT)
+                        ->setIsNeverOutOfStock(true),
+                    (new ProductConcreteAvailabilityTransfer())
+                        ->setSku(static::SKU_PRODUCT_SECOND)
+                        ->setIsNeverOutOfStock(true),
+                ]
+            );
+        $batchRequestData = [
+            [
+                'sku' => static::SKU_PRODUCT,
+                'quantity' => 5,
+            ],
+            [
+                'sku' => static::SKU_PRODUCT_SECOND,
+                'quantity' => 5,
+            ],
+        ];
+
+        $sellableItemBatchRequestTransfer = $this->createSellableItemBatchRequestTransfer($storeTransfer);
+        $sellableItemBatchRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
+            $sellableItemBatchRequestTransfer,
+            $batchRequestData
+        );
+        $sellableItemBatchResponseTransfer = $this->createSellableItemBatchResponseTransfer();
+
+        $sellable = $this->createSellable($availabilityRepositoryMock);
+
+        //Act
+        $sellableItemBatchResponseTransfer = $sellable->areProductConcretesSellableForStore(
+            $sellableItemBatchRequestTransfer,
+            $sellableItemBatchResponseTransfer
+        );
+
+        //Assert
+        $sellableItemBatchResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemBatchResponseTransfer);
+
+        $this->assertEquals(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
+        $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
+
+        $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
+    }
+
+    /**
      * @return array
      */
     public function reservedItemsAndExistingStockDataProvider(): array
@@ -101,6 +275,62 @@ class SellableTest extends Unit
             'float stock' => [new Decimal(9.8)],
             'float stock high precision' => [new Decimal(1.4444444444444)],
         ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemResponseTransfer[]
+     */
+    protected function getSellableItemResponseTransfersMapBySku(SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer): array
+    {
+        $sellableItemBatchResponseTransferMap = [];
+
+        foreach ($sellableItemBatchResponseTransfer->getSellableItemResponses() as $sellableItemResponseTransfer) {
+            $sellableItemBatchResponseTransferMap[$sellableItemResponseTransfer->getSku()] = $sellableItemResponseTransfer;
+        }
+
+        return $sellableItemBatchResponseTransferMap;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     */
+    protected function createSellableItemBatchResponseTransfer(): SellableItemBatchResponseTransfer
+    {
+        return new SellableItemBatchResponseTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemBatchRequestTransfer
+     */
+    protected function createSellableItemBatchRequestTransfer(StoreTransfer $storeTransfer): SellableItemBatchRequestTransfer
+    {
+        $sellableItemBatchRequestTransfer = new SellableItemBatchRequestTransfer();
+        $sellableItemBatchRequestTransfer->setStore($storeTransfer);
+
+        return $sellableItemBatchRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+     * @param mixed[] $batchRequestData
+     *
+     * @return \Generated\Shared\Transfer\SellableItemBatchRequestTransfer
+     */
+    protected function addSellableItemRequestTransfersFromArray(
+        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer,
+        array $batchRequestData
+    ): SellableItemBatchRequestTransfer {
+        foreach ($batchRequestData as $sellableItemRequest) {
+            $sellableItemRequestTransfer = new SellableItemRequestTransfer();
+            $sellableItemRequestTransfer->fromArray($sellableItemRequest, true);
+            $sellableItemBatchRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
+        }
+
+        return $sellableItemBatchRequestTransfer;
     }
 
     /**
@@ -132,7 +362,7 @@ class SellableTest extends Unit
                 ->willReturn($this->createStoreTransfer());
         }
 
-        return new Sellable($availabilityRepositoryMock, $availabilityHandlerMock, $storeFacade, []);
+        return new Sellable($availabilityRepositoryMock, $availabilityHandlerMock, $storeFacade, [], []);
     }
 
     /**
