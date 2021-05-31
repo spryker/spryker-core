@@ -200,6 +200,14 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[]
+     */
+    public function getBatchAvailabilityStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::PLUGINS_BATCH_AVAILABILITY_STRATEGY);
+    }
+
+    /**
      * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
      */
     public function getCartItemQuantityCounterStrategyPlugins(): array

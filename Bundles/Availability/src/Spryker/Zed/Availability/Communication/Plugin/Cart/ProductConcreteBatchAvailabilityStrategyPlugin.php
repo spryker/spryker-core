@@ -14,7 +14,7 @@ use Spryker\Zed\AvailabilityExtension\Dependency\Plugin\SellableItemBatchRespons
 /**
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
  */
-class ProductConcreteAvailabilityStrategyPlugin implements BatchAvailabilityStrategyPluginInterface
+class ProductConcreteBatchAvailabilityStrategyPlugin implements BatchAvailabilityStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
