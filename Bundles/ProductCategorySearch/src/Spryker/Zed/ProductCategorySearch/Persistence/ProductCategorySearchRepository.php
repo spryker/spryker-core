@@ -130,28 +130,30 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
     }
 
     /**
-     * @param int[] $categoryIds
+     * @param int[] $categoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
      */
-    public function getCategoryAttributesByLocale(array $categoryIds, LocaleTransfer $localeTransfer): array
+    public function getCategoryAttributesByLocale(array $categoryNodeIds, LocaleTransfer $localeTransfer): array
     {
-        if ($categoryIds === []) {
+        if ($categoryNodeIds === []) {
             return [];
         }
 
         return $this->getFactory()
-            ->getCategoryAttributePropelQuery()
-            ->filterByFkCategory_In($categoryIds)
-            ->filterByFkLocale($localeTransfer->getIdLocale())
+            ->getCategoryNodePropelQuery()
+            ->filterByIdCategoryNode_In($categoryNodeIds)
             ->useCategoryQuery()
                 ->filterByIsSearchable(true)
+                ->useAttributeQuery()
+                    ->filterByFkLocale($localeTransfer->getIdLocale())
+                ->endUse()
             ->endUse()
-            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_CATEGORY, static::COLUMN_FK_CATEGORY)
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, static::COLUMN_ID_CATEGORY_NODE)
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, static::COLUMN_CATEGORY_NAME)
             ->select([
-                static::COLUMN_FK_CATEGORY,
+                static::COLUMN_ID_CATEGORY_NODE,
                 static::COLUMN_CATEGORY_NAME,
             ])
             ->find()

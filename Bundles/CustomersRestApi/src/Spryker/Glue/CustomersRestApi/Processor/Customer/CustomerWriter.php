@@ -226,7 +226,7 @@ class CustomerWriter implements CustomerWriterInterface
         }
 
         $resourceId = $restRequest->getResource()->getId();
-        if ($resourceId && $resourceId !== $restRequest->getUser()->getNaturalIdentifier()) {
+        if ($resourceId && $resourceId !== $restRequest->getRestUser()->getNaturalIdentifier()) {
             return $this->restApiError->addCustomerUnauthorizedError($restResponse);
         }
 

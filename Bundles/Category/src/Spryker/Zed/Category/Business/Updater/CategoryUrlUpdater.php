@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\Category\Business\Updater;
 
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
+use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -20,6 +22,11 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 {
     use TransactionTrait;
+
+    /**
+     * @var \Spryker\Zed\Category\CategoryConfig;
+     */
+    protected $categoryConfig;
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
@@ -40,15 +47,18 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
+     * @param \Spryker\Zed\Category\CategoryConfig $categoryConfig
      */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         UrlPathGeneratorInterface $urlPathGenerator,
-        CategoryToUrlInterface $urlFacade
+        CategoryToUrlInterface $urlFacade,
+        CategoryConfig $categoryConfig
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->urlPathGenerator = $urlPathGenerator;
         $this->urlFacade = $urlFacade;
+        $this->categoryConfig = $categoryConfig;
     }
 
     /**
@@ -70,19 +80,35 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      */
     protected function executeUpdateCategoryUrlTransaction(CategoryTransfer $categoryTransfer): void
     {
-        $categoryNodeUrlCriteriaTransfer = new CategoryNodeUrlCriteriaTransfer();
+        $categoryNodeChildCount = $this->categoryRepository->getCategoryNodeChildCountByParentNodeId($categoryTransfer);
 
-        if ($categoryTransfer->getNodeCollection() !== null) {
-            $categoryNodeUrlCriteriaTransfer->setCategoryNodeIds(
-                $this->getCategoryNodeIdsFromNodeCollection($categoryTransfer->getNodeCollectionOrFail())
-            );
+        if (!$categoryNodeChildCount) {
+            $this->updateCategoryNodeUrls($categoryTransfer);
+
+            return;
         }
+
+        $this->bulkUpdateCategoryNodeUrls($categoryTransfer, $categoryNodeChildCount);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function updateCategoryNodeUrls(CategoryTransfer $categoryTransfer): void
+    {
+        $nodeTransfer = (new NodeTransfer())
+            ->setIdCategoryNode($categoryTransfer->getIdCategoryOrFail());
+
+        $categoryNodeUrlCriteriaTransfer = (new CategoryNodeUrlCriteriaTransfer())
+            ->addIdCategoryNode($categoryTransfer->getIdCategoryOrFail());
 
         $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
 
         foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
-            $this->updateUrlsForNodes(
-                $categoryTransfer->getNodeCollectionOrFail(),
+            $this->updateCategoryNodeUrlsForLocale(
+                $nodeTransfer,
                 $urlTransfers,
                 $categoryLocalizedAttributesTransfer->getLocaleOrFail()
             );
@@ -90,20 +116,54 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
-     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param int $categoryNodeChildCount
      *
      * @return void
      */
-    protected function updateUrlsForNodes(NodeCollectionTransfer $nodeCollectionTransfer, array $urlTransfers, LocaleTransfer $localeTransfer): void
+    protected function bulkUpdateCategoryNodeUrls(CategoryTransfer $categoryTransfer, int $categoryNodeChildCount): void
     {
-        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $this->updateCategoryNodeUrlsForLocale($nodeTransfer, $urlTransfers, $localeTransfer);
-            if (!$nodeTransfer->getChildrenNodes()) {
-                continue;
-            }
-            $this->updateUrlsForNodes($nodeTransfer->getChildrenNodesOrFail(), $urlTransfers, $localeTransfer);
+        $categoryNodeUrlCriteriaTransfer = new CategoryNodeUrlCriteriaTransfer();
+        $categoryReadChunkSize = $this->categoryConfig->getCategoryReadChunkSize();
+
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setLimit($categoryReadChunkSize);
+
+        for ($offset = 0; $offset <= $categoryNodeChildCount; $offset += $categoryReadChunkSize) {
+            $categoryCriteriaTransfer->setOffset($offset);
+
+            $categoryNodeIds = $this->categoryRepository
+                ->getDescendantCategoryNodeIdsByIdCategory($categoryTransfer, $categoryCriteriaTransfer);
+            $categoryNodeIds[] = $categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail();
+
+            $categoryNodeUrlCriteriaTransfer->setCategoryNodeIds($categoryNodeIds);
+            $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
+
+            $this->bulkUpdateCategoryNodeUrlsForLocale($categoryNodeIds, $urlTransfers, $categoryTransfer);
+        }
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function bulkUpdateCategoryNodeUrlsForLocale(
+        array $categoryNodeIds,
+        array $urlTransfers,
+        CategoryTransfer $categoryTransfer
+    ): void {
+        foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
+            $localeTransfer = $categoryLocalizedAttributesTransfer->getLocaleOrFail();
+
+            $indexedCategoryUrlPaths = $this->urlPathGenerator->bulkBuildCategoryNodeUrlForLocale(
+                $categoryNodeIds,
+                $categoryLocalizedAttributesTransfer->getLocaleOrFail()
+            );
+
+            $this->updateNodeUrls($urlTransfers, $localeTransfer, $indexedCategoryUrlPaths);
         }
     }
 
@@ -114,12 +174,15 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      *
      * @return void
      */
-    protected function updateCategoryNodeUrlsForLocale(NodeTransfer $nodeTransfer, array $urlTransfers, LocaleTransfer $localeTransfer): void
-    {
+    protected function updateCategoryNodeUrlsForLocale(
+        NodeTransfer $nodeTransfer,
+        array $urlTransfers,
+        LocaleTransfer $localeTransfer
+    ): void {
         foreach ($urlTransfers as $urlTransfer) {
             if (
-                $urlTransfer->getFkLocaleOrFail() !== $localeTransfer->getIdLocaleOrFail()
-                || $urlTransfer->getFkResourceCategorynodeOrFail() !== $nodeTransfer->getIdCategoryNodeOrFail()
+                !$this->checkUrlLocale($urlTransfer, $localeTransfer)
+                || $urlTransfer->getFkResourceCategorynodeOrFail() != $nodeTransfer->getIdCategoryNodeOrFail()
             ) {
                 continue;
             }
@@ -135,25 +198,41 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
+     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param array $indexedCategoryUrlPaths
      *
-     * @return int[]
+     * @return void
      */
-    protected function getCategoryNodeIdsFromNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer): array
-    {
-        $categoryNodeIds = [];
-        foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
-            $categoryNodeIds[] = $nodeTransfer->getIdCategoryNodeOrFail();
-            if (!$nodeTransfer->getChildrenNodes()) {
+    protected function updateNodeUrls(
+        array $urlTransfers,
+        LocaleTransfer $localeTransfer,
+        array $indexedCategoryUrlPaths
+    ): void {
+        foreach ($urlTransfers as $urlTransfer) {
+            if (!$this->checkUrlLocale($urlTransfer, $localeTransfer)) {
                 continue;
             }
 
-            $categoryNodeIds = array_merge(
-                $categoryNodeIds,
-                $this->getCategoryNodeIdsFromNodeCollection($nodeTransfer->getChildrenNodesOrFail())
-            );
-        }
+            $categoryUrlPath = $indexedCategoryUrlPaths[$urlTransfer->getFkResourceCategorynodeOrFail()] ?? null;
 
-        return $categoryNodeIds;
+            if (!$categoryUrlPath || $categoryUrlPath === $urlTransfer->getUrl()) {
+                continue;
+            }
+
+            $urlTransfer->setUrl($categoryUrlPath);
+            $this->urlFacade->updateUrl($urlTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return bool
+     */
+    protected function checkUrlLocale(UrlTransfer $urlTransfer, LocaleTransfer $localeTransfer): bool
+    {
+        return $urlTransfer->getFkLocaleOrFail() == $localeTransfer->getIdLocaleOrFail();
     }
 }

@@ -1,0 +1,18 @@
+{% block relation_dropdown_widget %}
+    {% for child in form %}
+        {% if child.vars.attr.extended is defined %}
+            {{ form_label(child) }}
+            <div class="relation-selector-container">
+                {{ form_widget(child, { 'attr': {
+                    'action-url': child.vars.attr.action_url | default,
+                    'action-event': child.vars.attr.action_event | default,
+                    'action-field': child.vars.attr.action_field | default
+                } }) }}
+
+                <i class="relation-selector-loader fa fa-spinner"></i>
+            </div>
+        {% else %}
+            {{ form_row(child) }}
+        {% endif %}
+    {% endfor %}
+{% endblock relation_dropdown_widget %}

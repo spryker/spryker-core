@@ -46,6 +46,9 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE = 'PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE';
+    public const PLUGINS_PRODUCT_OPTION_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_OPTION_LIST_ACTION_VIEW_DATA_EXPANDER';
+    public const PLUGINS_PRODUCT_OPTION_LIST_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_OPTION_LIST_TABLE_QUERY_CRITERIA_EXPANDER';
+    public const PLUGINS_PRODUCT_OPTION_GROUP_EXPANDER = 'PLUGINS_PRODUCT_OPTION_GROUP_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -75,6 +78,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceFacade($container);
         $container = $this->addEventFacade($container);
         $container = $this->addProductOptionValuesPreRemovePlugins($container);
+        $container = $this->addProductOptionGroupExpanderPlugins($container);
 
         return $container;
     }
@@ -150,6 +154,8 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductOptionToCountryQueryContainerBridge($container->getLocator()->country()->queryContainer());
         });
 
+        $container = $this->addProductOptionListTableQueryCriteriaExpanderPlugins($container);
+
         return $container;
     }
 
@@ -215,6 +221,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);
+        $container = $this->addProductOptionListActionViewDataExpanderPlugins($container);
 
         return $container;
     }
@@ -237,6 +244,72 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[]
      */
     protected function getProductOptionValuesPreRemovePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOptionListActionViewDataExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_OPTION_LIST_ACTION_VIEW_DATA_EXPANDER, function (Container $container) {
+            return $this->getProductOptionListActionViewDataExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionGuiExtension\Dependency\Plugin\ProductOptionListActionViewDataExpanderPluginInterface[]
+     */
+    protected function getProductOptionListActionViewDataExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOptionListTableQueryCriteriaExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_OPTION_LIST_TABLE_QUERY_CRITERIA_EXPANDER, function (Container $container) {
+            return $this->getProductOptionListTableQueryCriteriaExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionGuiExtension\Dependency\Plugin\ProductOptionListTableQueryCriteriaExpanderPluginInterface[]
+     */
+    protected function getProductOptionListTableQueryCriteriaExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOptionGroupExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_OPTION_GROUP_EXPANDER, function (Container $container) {
+            return $this->getProductOptionGroupExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionGroupExpanderPluginInterface[]
+     */
+    protected function getProductOptionGroupExpanderPlugins(): array
     {
         return [];
     }

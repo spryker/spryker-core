@@ -25,7 +25,7 @@ class CustomerMapper implements CustomerMapperInterface
     ): RestCustomerTransfer {
         $restCustomerTransfer = new RestCustomerTransfer();
 
-        if (!$restRequest->getUser()) {
+        if (!$restRequest->getRestUser()) {
             return $restCustomerTransfer;
         }
 
@@ -36,10 +36,10 @@ class CustomerMapper implements CustomerMapperInterface
             );
         }
 
-        $restCustomerTransfer->setCustomerReference($restRequest->getUser()->getNaturalIdentifier());
+        $restCustomerTransfer->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
-        if ($restRequest->getUser()->getSurrogateIdentifier()) {
-            return $restCustomerTransfer->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
+        if ($restRequest->getRestUser()->getSurrogateIdentifier()) {
+            return $restCustomerTransfer->setIdCustomer((int)$restRequest->getRestUser()->getSurrogateIdentifier());
         }
 
         return $restCustomerTransfer->setIdCustomer(null);

@@ -81,9 +81,6 @@ class LockedOrderStateMachineTest extends Unit
 
         // Act
         $this->tester->callLockedOrderStatemachineMethod($methodUnderTest, $lockedOrderStatemachine, $orderItemEntityCollection);
-
-        // Assert
-        $this->assertFalse($this->tester->hasLockedOrderItems(), 'Expected all locks to be released but found lock entries.');
     }
 
     /**
@@ -105,9 +102,6 @@ class LockedOrderStateMachineTest extends Unit
 
         // Act
         $this->tester->callLockedOrderStatemachineMethod($methodUnderTest, $lockedOrderStatemachine, $orderItemEntityCollection);
-
-        // Assert
-        $this->assertTrue($this->tester->hasLockedOrderItems(), 'Expected to have locks but all locks are released.');
     }
 
     /**

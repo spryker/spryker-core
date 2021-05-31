@@ -16,6 +16,21 @@ use Propel\Runtime\Collection\ObjectCollection;
 class PaymentProviderMapper
 {
     /**
+     * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
+     * @param \Orm\Zed\Payment\Persistence\SpyPaymentProvider $paymentProviderEntity
+     *
+     * @return \Orm\Zed\Payment\Persistence\SpyPaymentProvider
+     */
+    public function mapPaymentProviderTransferToPaymentProviderEntity(
+        PaymentProviderTransfer $paymentProviderTransfer,
+        SpyPaymentProvider $paymentProviderEntity
+    ): SpyPaymentProvider {
+        $paymentProviderEntity->fromArray($paymentProviderTransfer->modifiedToArray());
+
+        return $paymentProviderEntity;
+    }
+
+    /**
      * @param \Orm\Zed\Payment\Persistence\SpyPaymentProvider $paymentProviderEntity
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
      *

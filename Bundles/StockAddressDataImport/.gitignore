@@ -16,5 +16,6 @@
 composer.lock
 .phpunit.result.cache
 
+tests/**/_generated/
 /tests/_output/*
 !/tests/_output/.gitkeep

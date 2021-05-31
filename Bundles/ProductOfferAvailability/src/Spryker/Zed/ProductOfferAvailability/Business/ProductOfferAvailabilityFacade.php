@@ -25,11 +25,11 @@ class ProductOfferAvailabilityFacade extends AbstractFacade implements ProductOf
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findProductConcreteAvailabilityForRequest(
+    public function findProductConcreteAvailability(
         ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
     ): ?ProductConcreteAvailabilityTransfer {
         return $this->getFactory()
             ->createProductOfferAvailabilityProvider()
-            ->findProductConcreteAvailabilityForRequest($productOfferAvailabilityRequestTransfer);
+            ->findProductConcreteAvailability($productOfferAvailabilityRequestTransfer);
     }
 }

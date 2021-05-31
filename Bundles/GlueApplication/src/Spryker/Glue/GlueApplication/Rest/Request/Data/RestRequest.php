@@ -256,6 +256,16 @@ class RestRequest implements RestRequestInterface
      */
     public function getUser(): ?UserInterface
     {
+        trigger_error(sprintf('Use %s::getRestUser() instead.', static::class), E_USER_DEPRECATED);
+
+        if (!$this->user && $this->restUser) {
+            $this->user = new User(
+                (string)$this->restUser->getSurrogateIdentifier(),
+                (string)$this->restUser->getNaturalIdentifier(),
+                $this->restUser->getScopes()
+            );
+        }
+
         return $this->user;
     }
 
@@ -275,11 +285,17 @@ class RestRequest implements RestRequestInterface
         string $naturalIdentifier,
         array $scopes = []
     ): void {
-        if ($this->user) {
+        trigger_error(sprintf('Use %s setRestUser() instead.', static::class), E_USER_DEPRECATED);
+
+        if ($this->user || $this->restUser) {
             throw new UserAlreadySetException('Rest request object already have user set.');
         }
 
         $this->user = new User($surrogateIdentifier, $naturalIdentifier, $scopes);
+        $this->restUser = (new RestUserTransfer())
+            ->setSurrogateIdentifier((int)$surrogateIdentifier)
+            ->setNaturalIdentifier($naturalIdentifier)
+            ->setScopes($scopes);
     }
 
     /**

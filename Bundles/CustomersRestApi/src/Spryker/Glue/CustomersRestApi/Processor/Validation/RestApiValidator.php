@@ -123,7 +123,7 @@ class RestApiValidator implements RestApiValidatorInterface
     {
         $customerResource = $restRequest->findParentResourceByType(CustomersRestApiConfig::RESOURCE_CUSTOMERS) ?? $restRequest->getResource();
 
-        return $restRequest->getUser()->getNaturalIdentifier() === $customerResource->getId();
+        return $restRequest->getRestUser()->getNaturalIdentifier() === $customerResource->getId();
     }
 
     /**

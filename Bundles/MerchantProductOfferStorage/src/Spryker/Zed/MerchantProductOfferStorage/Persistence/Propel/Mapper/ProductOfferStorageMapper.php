@@ -46,9 +46,6 @@ class ProductOfferStorageMapper
             $productOfferEntity->toArray(),
             true
         );
-        $productOfferTransfer = $productOfferTransfer->setMerchantReference(
-            $productOfferEntity->getSpyMerchant()->getMerchantReference()
-        );
 
         return $productOfferTransfer;
     }

@@ -155,6 +155,28 @@ class StoreFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetStoresAvailableForCurrentPersistenceWillReturnCurrentStoreWithSharedStores(): void
+    {
+        // Arrange
+        $storeFacade = $this->createStoreFacade();
+
+        $currentStoreTransfer = $storeFacade->getCurrentStore();
+        $expectedStoreNames = array_merge([$currentStoreTransfer->getName()], $currentStoreTransfer->getStoresWithSharedPersistence());
+
+        // Act
+        $availableStoreTransfers = $storeFacade->getStoresAvailableForCurrentPersistence();
+
+        // Assert
+        $availableStoreNames = array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $availableStoreTransfers);
+
+        $this->assertSame($expectedStoreNames, $availableStoreNames, 'Available stores should contain stores with shared persistence.');
+    }
+
+    /**
      * @return \Spryker\Zed\Store\Business\StoreFacade
      */
     protected function createStoreFacade(): StoreFacade

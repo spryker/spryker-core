@@ -63,7 +63,7 @@ class MerchantProductOfferSearchEventListenerTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true, MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
         $productOfferTransfer = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
             ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
             ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
         ]);

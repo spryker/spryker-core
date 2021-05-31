@@ -22,6 +22,8 @@ use Spryker\Zed\Payment\Business\Method\PaymentMethodValidatorInterface;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
+use Spryker\Zed\Payment\Business\Writer\PaymentWriter;
+use Spryker\Zed\Payment\Business\Writer\PaymentWriterInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
@@ -33,59 +35,6 @@ use Spryker\Zed\Payment\PaymentDependencyProvider;
  */
 class PaymentBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutorInterface
-     */
-    public function createCheckoutPaymentPluginExecutor()
-    {
-        return new PaymentPluginExecutor($this->getCheckoutPlugins(), $this->createPaymentSaver());
-    }
-
-    /**
-     * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface
-     */
-    protected function createPaymentSaver()
-    {
-        return new SalesPaymentSaver($this->getQueryContainer());
-    }
-
-    /**
-     * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface
-     */
-    public function getCheckoutPlugins()
-    {
-         return $this->getProvidedDependency(PaymentDependencyProvider::CHECKOUT_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentHydratorInterface
-     */
-    public function createPaymentHydrator()
-    {
-        return new SalesPaymentHydrator(
-            $this->getPaymentHydrationPlugins(),
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface
-     */
-    protected function getPaymentHydrationPlugins()
-    {
-        return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_HYDRATION_PLUGINS);
-    }
-
-    /**
-     * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentReaderInterface
-     */
-    public function createSalesPaymentReader()
-    {
-        return new SalesPaymentReader(
-            $this->getQueryContainer()
-        );
-    }
-
     /**
      * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface
      */
@@ -146,9 +95,9 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
+     * @return \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface[]
      */
-    protected function getPaymentMethodFilterPlugins()
+    public function getPaymentMethodFilterPlugins()
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_METHOD_FILTER_PLUGINS);
     }
@@ -156,8 +105,81 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface
      */
-    protected function getStoreFacade(): PaymentToStoreFacadeInterface
+    public function getStoreFacade(): PaymentToStoreFacadeInterface
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Writer\PaymentWriterInterface
+     */
+    public function createPaymentWriter(): PaymentWriterInterface
+    {
+        return new PaymentWriter($this->getEntityManager());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutorInterface
+     */
+    public function createCheckoutPaymentPluginExecutor()
+    {
+        return new PaymentPluginExecutor($this->getCheckoutPlugins(), $this->createPaymentSaver());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentSaverInterface
+     */
+    public function createPaymentSaver()
+    {
+        return new SalesPaymentSaver($this->getQueryContainer());
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollectionInterface
+     */
+    public function getCheckoutPlugins()
+    {
+        return $this->getProvidedDependency(PaymentDependencyProvider::CHECKOUT_PLUGINS);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentHydratorInterface
+     */
+    public function createPaymentHydrator()
+    {
+        return new SalesPaymentHydrator(
+            $this->getPaymentHydrationPlugins(),
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollectionInterface
+     */
+    public function getPaymentHydrationPlugins()
+    {
+        return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_HYDRATION_PLUGINS);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Zed\Payment\Business\Order\SalesPaymentReaderInterface
+     */
+    public function createSalesPaymentReader()
+    {
+        return new SalesPaymentReader(
+            $this->getQueryContainer()
+        );
     }
 }
