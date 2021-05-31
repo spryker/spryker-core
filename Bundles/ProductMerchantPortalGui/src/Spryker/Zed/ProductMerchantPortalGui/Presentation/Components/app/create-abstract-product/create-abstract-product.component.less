@@ -7,6 +7,7 @@
 @create-abstract-product-card-name-header-margin-bottom: 5px;
 @create-abstract-product-card-name-header-icon-margin-right: 3px;
 @create-abstract-product-card-name-header-icon-font-size: 15px;
+@create-abstract-product-card-error-radios-margin-top: 14px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -74,6 +75,18 @@
 
         &-name-notification-message {
             color: @gray-dark;
+        }
+    }
+
+    &__card-radios {
+        .@{form-item-prefix-cls}-explain {
+            margin-top: @create-abstract-product-card-error-radios-margin-top;
+        }
+    }
+
+    .@{radio-group-spryker-prefix-cls} {
+        &__item:last-child {
+            padding-bottom: 0;
         }
     }
 }

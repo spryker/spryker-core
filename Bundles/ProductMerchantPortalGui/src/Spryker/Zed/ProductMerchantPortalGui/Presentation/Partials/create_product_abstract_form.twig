@@ -51,22 +51,29 @@
                     <web-spy-card
                         cloak
                         spy-title="{{ form.isSingleConcrete.vars.label | trans }} {{ form.isSingleConcrete.vars.required ? '*' }}"
-                        class="{{ mainClass }}__card">
-                        <web-spy-radio-group
-                            cloak
-                            value="{{ form.isSingleConcrete.vars.value }}"
-                            name="{{ form.isSingleConcrete.vars.full_name }}">
-                            {% for choice in form.isSingleConcrete.vars.choices %}
-                                <web-spy-radio
-                                    cloak
-                                    value="{{ choice.value }}"
-                                    {% if form.isSingleConcrete.vars.errors | length > 0 %}has-error="true"{% endif %}>
-                                    {{ choice.label | trans }}
-                                </web-spy-radio>
-                            {% endfor %}
+                        class="{{ mainClass }}__card {{ mainClass }}__card-radios">
+                        <web-spy-form-item
+                            no-spaces="true"
+                            no-label="true"
+                            error="{{ (form.isSingleConcrete.vars.errors | length > 0) ? form.isSingleConcrete.vars.errors[0].message : '' }}"
+                        >
+                            <web-spy-radio-group
+                                cloak
+                                control
+                                value="{{ form.isSingleConcrete.vars.value }}"
+                                name="{{ form.isSingleConcrete.vars.full_name }}">
+                                {% for choice in form.isSingleConcrete.vars.choices %}
+                                    <web-spy-radio
+                                        cloak
+                                        value="{{ choice.value }}"
+                                        {% if form.isSingleConcrete.vars.errors | length > 0 %}has-error="true"{% endif %}>
+                                        {{ choice.label | trans }}
+                                    </web-spy-radio>
+                                {% endfor %}
 
-                            {% do form.isSingleConcrete.setRendered %}
-                        </web-spy-radio-group>
+                                {% do form.isSingleConcrete.setRendered %}
+                            </web-spy-radio-group>
+                        </web-spy-form-item>
                     </web-spy-card>
                 {% endblock %}
             {{ form_end(form) }}
