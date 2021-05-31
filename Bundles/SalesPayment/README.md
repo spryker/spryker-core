@@ -1,5 +1,5 @@
 # SalesPayment Module
-[![Build Status](https://travis-ci.org/spryker/sales-payment.svg)](https://travis-ci.org/spryker/sales-payment)
+[![Latest Stable Version](https://poser.pugx.org/spryker/sales-payment/v/stable.svg)](https://packagist.org/packages/spryker/sales-payment)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 The module provides plugins for:
