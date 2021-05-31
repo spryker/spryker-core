@@ -70,16 +70,13 @@ class Sellable implements SellableInterface
     /**
      * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableProductsBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
      */
     public function areProductsSellableForStore(
         SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
     ): SellableItemBatchResponseTransfer {
-        $sellableProductConcretesBatchRequestTransfer = new SellableItemBatchRequestTransfer();
         $sellableItemBatchResponseTransfer = new SellableItemBatchResponseTransfer();
         $storeTransfer = $sellableItemBatchRequestTransfer->getStoreOrFail();
-        $sellableProductConcretesBatchRequestTransfer->setStore($storeTransfer);
-        $sellableProductConcreteResponseTransfers = [];
 
         foreach ($sellableItemBatchRequestTransfer->getSellableItemRequests() as $sellableItemRequestTransfer) {
             $sellableItemtResponseTransfer = $this->processSellableItemRequestForCustomProducts(
@@ -87,8 +84,6 @@ class Sellable implements SellableInterface
                 $storeTransfer
             );
             if (!$sellableItemtResponseTransfer) {
-                $sellableProductConcretesBatchRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
-
                 continue;
             }
 
@@ -97,7 +92,7 @@ class Sellable implements SellableInterface
 
         foreach ($this->batchAvailabilityStrategyPlugins as $batchAvailabilityStrategyPlugin) {
             $sellableItemBatchResponseTransfer = $batchAvailabilityStrategyPlugin->findItemsAvailabilityForStore(
-                $sellableProductConcretesBatchRequestTransfer,
+                $sellableItemBatchRequestTransfer,
                 $sellableItemBatchResponseTransfer
             );
         }
@@ -113,9 +108,9 @@ class Sellable implements SellableInterface
      */
     public function areProductConcretesSellableForStore(
         SellableItemBatchRequestTransfer $sellableItemsBatchRequestTransfer,
-        SellableItemBatchRequestTransfer $sellableItemsBatchResponseTransfer
+        SellableItemBatchResponseTransfer $sellableItemsBatchResponseTransfer
     ): SellableItemBatchResponseTransfer {
-        if (count($sellableItemsBatchRequestTransfer->getSellableItemRequests())) {
+        if (!count($sellableItemsBatchRequestTransfer->getSellableItemRequests())) {
             return $sellableItemsBatchResponseTransfer;
         }
         $sellableItemResponseTransfers = $this->processProductConcretesBatchRequest($sellableItemsBatchRequestTransfer);
@@ -156,7 +151,6 @@ class Sellable implements SellableInterface
                 $storeTransfer,
                 $productAvailabilityCriteriaTransfer
             );
-            /** @var \Generated\Shared\Transfer\SellableProductResponseItemTransfer $sellableItemResponseTransfer */
             $sellableItemResponseTransfer = $this->getSellableItemResponseTransfer(
                 $sellableItemRequestTransfer,
                 $customProductConcreteAvailability
@@ -176,9 +170,9 @@ class Sellable implements SellableInterface
      * @return \Generated\Shared\Transfer\SellableItemResponseTransfer
      */
     protected function getSellableItemResponseTransfer(
-        SellableProductRequestItemTransfer $sellableItemRequestTransfer,
+        SellableItemRequestTransfer $sellableItemRequestTransfer,
         ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
-    ): SellableProductResponseItemTransfer {
+    ): SellableItemResponseTransfer {
         $sellableItemResponseTransfer = new SellableItemResponseTransfer();
         $availableQuantity = $sellableItemRequestTransfer->getQuantityOrFail() ?? new Decimal(0);
         $sellableItemResponseTransfer->setSku($sellableItemRequestTransfer->getSku());
@@ -194,12 +188,13 @@ class Sellable implements SellableInterface
     /**
      * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
      *
-     * @return array
+     * @return string[]
      */
     protected function getSkus($sellableItemBatchRequestTransfer): array
     {
-        foreach ($sellableItemBatchRequestTransfer->getSellableProductRequestItems() as $sellableProductRequestItem) {
-            $concreteSkus[] = $sellableProductRequestItem->getSkuOrFail();
+        $concreteSkus = [];
+        foreach ($sellableItemBatchRequestTransfer->getSellableItemRequests() as $sellableItemRequest) {
+            $concreteSkus[] = $sellableItemRequest->getSkuOrFail();
         }
 
         return $concreteSkus;
@@ -208,7 +203,7 @@ class Sellable implements SellableInterface
     /**
      * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemResponseItemTransfer[]
+     * @return \Generated\Shared\Transfer\SellableItemResponseTransfer[]
      */
     protected function processProductConcretesBatchRequest(
         SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
@@ -270,7 +265,9 @@ class Sellable implements SellableInterface
         array $productConcreteAvailabilityTransfersMap,
         ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
     ): array {
-        return $productConcreteAvailabilityTransfersMap[$productConcreteAvailabilityTransfer->getSkuOrFail()] = $productConcreteAvailabilityTransfer;
+        $productConcreteAvailabilityTransfersMap[$productConcreteAvailabilityTransfer->getSkuOrFail()] = $productConcreteAvailabilityTransfer;
+
+        return $productConcreteAvailabilityTransfersMap;
     }
 
     /**
