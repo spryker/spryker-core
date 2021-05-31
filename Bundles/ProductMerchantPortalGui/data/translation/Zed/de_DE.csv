@@ -90,3 +90,4 @@ Values,Values
 "SKU Prefix already exists","SKU Präfix existiert schon"
 "Abstract product has 1 concrete product","Abstraktes Produkt hat 1 konkretes Produkt"
 "Abstract product has multiple concrete products","Abstraktes Produkt hat mehrere konkrete Produkte"
+"The value cannot be empty. Please select one.","Dieser Wert sollte nicht leer sein. Bitte wählen Sie einen aus."
