@@ -78,5 +78,9 @@ cssVars({
     watch: true,
 });
 
+if (!Element.prototype.matches) {
+    Element.prototype.matches = (Element.prototype as any).msMatchesSelector || Element.prototype.webkitMatchesSelector;
+}
+
 import '@webcomponents/webcomponents-platform/webcomponents-platform';
 import '@webcomponents/webcomponentsjs/bundles/webcomponents-ce';
