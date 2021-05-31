@@ -39,6 +39,8 @@ class CreateProductAbstractForm extends AbstractType
         'Abstract product has multiple concrete products' => false,
     ];
 
+    protected const ERROR_MESSAGE_IS_SINGLE_CONCRETE = 'The value cannot be empty. Please select one.';
+
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
@@ -113,7 +115,7 @@ class CreateProductAbstractForm extends AbstractType
             'multiple' => false,
             'empty_data' => null,
             'constraints' => [
-                new NotNull(),
+                new NotNull(null, self::ERROR_MESSAGE_IS_SINGLE_CONCRETE),
             ],
         ]);
 

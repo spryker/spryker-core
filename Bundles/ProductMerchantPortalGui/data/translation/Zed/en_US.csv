@@ -90,3 +90,4 @@ Values,Values
 "SKU Prefix already exists","SKU Prefix already exists"
 "Abstract product has 1 concrete product","Abstract product has 1 concrete product"
 "Abstract product has multiple concrete products","Abstract product has multiple concrete products"
+"The value cannot be empty. Please select one.","The value cannot be empty. Please select one."
