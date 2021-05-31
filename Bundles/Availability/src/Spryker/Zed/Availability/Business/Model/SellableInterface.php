@@ -8,21 +8,32 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
-use Generated\Shared\Transfer\SellableProductsBatchRequestTransfer;
-use Generated\Shared\Transfer\SellableProductsBatchResponseTransfer;
+use Generated\Shared\Transfer\SellableItemBatchRequestTransfer;
+use Generated\Shared\Transfer\SellableItemBatchResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface SellableInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableProductsBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
      */
     public function areProductsSellableForStore(
-        SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
-    ): SellableProductsBatchResponseTransfer;
+        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+    ): SellableItemBatchResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemsBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemBatchResponseTransfer $sellableItemsBatchResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     */
+    public function areProductConcretesSellableForStore(
+        SellableItemBatchRequestTransfer $sellableItemsBatchRequestTransfer,
+        SellableItemBatchResponseTransfer $sellableItemsBatchResponseTransfer
+    ): SellableItemBatchResponseTransfer;
 
     /**
      * @param string $concreteSku

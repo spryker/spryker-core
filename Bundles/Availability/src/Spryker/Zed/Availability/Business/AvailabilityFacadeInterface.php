@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SellableProductsBatchRequestTransfer;
-use Generated\Shared\Transfer\SellableProductsBatchResponseTransfer;
+use Generated\Shared\Transfer\SellableItemBatchRequestTransfer;
+use Generated\Shared\Transfer\SellableItemBatchResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -30,13 +30,31 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableProductsBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
      */
     public function areProductsSellableForStore(
-        SellableProductsBatchRequestTransfer $sellableProductsBatchRequestTransfer
-    ): SellableProductsBatchResponseTransfer;
+        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+    ): SellableItemBatchResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Checks if product is never out of stock for given store.
+     *  - Checks if product has stock in stock table.
+     *  - Checks if have placed orders where items have state machine state flagged as reserved.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     */
+    public function areProductConcretesSellableForStore(
+        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer,
+        SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer
+    ): SellableItemBatchResponseTransfer;
 
     /**
      * Specification:

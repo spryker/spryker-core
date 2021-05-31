@@ -7,25 +7,26 @@
         <property name="stocks" type="StockProduct[]" singular="stockProduct"/>
     </transfer>
 
-    <transfer name="SellableProductRequestItem">
+    <transfer name="SellableItemRequest">
+        <property name="isProcessed" type="bool"/>
         <property name="sku" type="string"/>
         <property name="quantity" type="decimal"/>
         <property name="productAvailabilityCriteria" type="ProductAvailabilityCriteria"/>
     </transfer>
 
-    <transfer name="SellableProductResponseItem">
+    <transfer name="SellableItemResponse">
         <property name="sku" type="string"/>
         <property name="isSellable" type="bool"/>
         <property name="availableQuantity" type="decimal"/>
     </transfer>
 
-    <transfer name="SellableProductsBatchRequest">
+    <transfer name="SellableItemBatchRequest">
         <property name="store" type="Store"/>
-        <property name="sellableProductRequestItems" type="SellableProductRequestItem[]" singular="sellableProductRequestItem"/>
+        <property name="sellableItemRequests" type="SellableItemRequest[]" singular="sellableItemRequest"/>
     </transfer>
 
-    <transfer name="SellableProductsBatchResponse">
-        <property name="sellableProductResponseItems" type="SellableProductResponseItem[]" singular="sellableProductRequestItem"/>
+    <transfer name="SellableItemBatchResponse">
+        <property name="sellableItemResponses" type="SellableItemResponse[]" singular="sellableItemResponse"/>
     </transfer>
 
     <transfer name="StorageAvailability">
