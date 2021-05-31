@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductReview\ProductViewExpander;
 
-use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\RatingAggregationTransfer;
@@ -80,15 +79,13 @@ class ProductViewExpander implements ProductViewExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
-     * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function expandProductViewBatchWithProductReviewData(
-        array $productViewTransfers,
-        BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
+    public function expandProductViewsWithProductReviewData(
+        array $productViewTransfers
     ): array {
-        $productReviews = $this->productReviewSearchReader->findButchProductReviews($bulkProductReviewSearchRequestTransfer);
+        $productReviews = $this->productReviewSearchReader->searchProductReviews();
 
         if (!isset($productReviews[static::KEY_RATING_AGGREGATION])) {
             return $productViewTransfer;

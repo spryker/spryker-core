@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductReview\ProductViewExpander;
 
-use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
@@ -26,12 +25,10 @@ interface ProductViewExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
-     * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    public function expandProductViewBatchWithProductReviewData(
-        array $productViewTransfers,
-        BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
+    public function expandProductViewsWithProductReviewData(
+        array $productViewTransfers
     ): array;
 }

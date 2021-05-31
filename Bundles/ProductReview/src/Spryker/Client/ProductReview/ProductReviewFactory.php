@@ -193,11 +193,12 @@ class ProductReviewFactory extends AbstractFactory
      *
      * @return \Spryker\Client\ProductReview\ProductViewExpander\ProductViewExpanderInterface
      */
-    public function createProductViewBatchExpander(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer): ProductViewExpanderInterface
-    {
+    public function createBulkProductViewBatchExpander(
+        BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
+    ): ProductViewExpanderInterface {
         return new ProductViewExpander(
             $this->createProductReviewSummaryCalculator(),
-            $this->createProductReviewButchSearchReader($bulkProductReviewSearchRequestTransfer)
+            $this->createProductReviewSearchBatchReader($bulkProductReviewSearchRequestTransfer)
         );
     }
 
@@ -220,7 +221,7 @@ class ProductReviewFactory extends AbstractFactory
      *
      * @return \Spryker\Client\ProductReview\Search\ProductReviewSearchReaderInterface
      */
-    public function createProductReviewButchSearchReader(
+    public function createProductReviewSearchBatchReader(
         BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
     ): ProductReviewSearchReaderInterface {
         return new ProductReviewSearchReader(

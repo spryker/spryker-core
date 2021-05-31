@@ -58,9 +58,9 @@ class ProductReviewSearchReader implements ProductReviewSearchReaderInterface
     }
 
     /**
-     * @return array
+     * @return array|\Elastica\ResultSet|mixed
      */
-    public function findButchProductReviews(): array
+    public function searchProductReviews()
     {
         return $this->searchClient->search(
             $this->searchQueryPlugin,
