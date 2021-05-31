@@ -21,12 +21,12 @@ interface CategoryEntityManagerInterface
     public function createCategory(CategoryTransfer $categoryTransfer): CategoryTransfer;
 
     /**
-     * @param int $idCategory
+     * @param int[] $categoryIds
      * @param int[] $storeIds
      *
      * @return void
      */
-    public function createCategoryStoreRelationForStores(int $idCategory, array $storeIds): void;
+    public function bulkCreateCategoryStoreRelationForStores(array $categoryIds, array $storeIds): void;
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
@@ -129,10 +129,10 @@ interface CategoryEntityManagerInterface
     public function deleteCategoryClosureTableParentEntriesForCategoryNode(int $idCategoryNode): void;
 
     /**
-     * @param int $idCategory
+     * @param int[] $categoryIds
      * @param int[] $storeIds
      *
      * @return void
      */
-    public function deleteCategoryStoreRelationForStores(int $idCategory, array $storeIds): void;
+    public function bulkDeleteCategoryStoreRelationForStores(array $categoryIds, array $storeIds): void;
 }

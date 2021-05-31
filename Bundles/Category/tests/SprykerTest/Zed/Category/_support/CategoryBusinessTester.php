@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Category;
 
 use Codeception\Actor;
+use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 
 /**
  * @method void wantToTest($text)
@@ -27,4 +28,16 @@ use Codeception\Actor;
 class CategoryBusinessTester extends Actor
 {
     use _generated\CategoryBusinessTesterActions;
+
+    /**
+     * @param int $idCategory
+     *
+     * @return int
+     */
+    public function getStoresCountByIdCategory(int $idCategory): int
+    {
+        return SpyCategoryStoreQuery::create()
+            ->filterByFkCategory($idCategory)
+            ->count();
+    }
 }

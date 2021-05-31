@@ -199,7 +199,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createCategoryReader(),
-            $this->getEventFacade()
+            $this->getEventFacade(),
+            $this->getConfig()
         );
     }
 
@@ -253,7 +254,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryUrlUpdater(
             $this->getRepository(),
             $this->createUrlPathGenerator(),
-            $this->getUrlFacade()
+            $this->getUrlFacade(),
+            $this->getConfig()
         );
     }
 

@@ -16,7 +16,6 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
     protected const COLUMN_ID_CATEGORY_NODE = 'id_category_node';
     protected const COLUMN_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
     protected const COLUMN_FK_LOCALE = 'fk_locale';
-    protected const COLUMN_FK_CATEGORY = 'fk_category';
     protected const COLUMN_CATEGORY_NAME = 'category_name';
     protected const COLUMN_STORE_NAME = 'store_name';
 
@@ -59,24 +58,24 @@ class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
     }
 
     /**
-     * @param int[] $categoryIds
+     * @param int[] $categoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string[][]
      */
-    public function buildProductCategoryTreeNames(array $categoryIds, LocaleTransfer $localeTransfer): array
+    public function buildProductCategoryTreeNames(array $categoryNodeIds, LocaleTransfer $localeTransfer): array
     {
         $categoryNames = [];
         $categoryAttributes = $this->productCategorySearchRepository
-            ->getCategoryAttributesByLocale($categoryIds, $localeTransfer);
+            ->getCategoryAttributesByLocale($categoryNodeIds, $localeTransfer);
 
         $categoryNames[$localeTransfer->getIdLocale()] = [];
 
         foreach ($categoryAttributes as $categoryAttribute) {
-            $idCategory = (int)$categoryAttribute[static::COLUMN_FK_CATEGORY];
+            $idCategoryNode = (int)$categoryAttribute[static::COLUMN_ID_CATEGORY_NODE];
             $categoryName = $categoryAttribute[static::COLUMN_CATEGORY_NAME];
 
-            $categoryNames[$localeTransfer->getIdLocale()][$idCategory] = $categoryName;
+            $categoryNames[$localeTransfer->getIdLocale()][$idCategoryNode] = $categoryName;
         }
 
         return $categoryNames;

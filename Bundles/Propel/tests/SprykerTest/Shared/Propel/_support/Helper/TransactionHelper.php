@@ -10,10 +10,12 @@ namespace SprykerTest\Shared\Propel\Helper;
 use Codeception\Module;
 use Codeception\TestInterface;
 use Propel\Runtime\Propel;
+use ReflectionMethod;
 use Silex\Application;
 use Spryker\Service\Container\Container;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use Throwable;
 
 class TransactionHelper extends Module
 {
@@ -53,6 +55,16 @@ class TransactionHelper extends Module
     public function _before(TestInterface $test): void
     {
         parent::_before($test);
+
+        try {
+            $reflectionMethod = new ReflectionMethod($test, $test->getName());
+            $docBlock = $reflectionMethod->getDocComment();
+
+            if (strpos($docBlock, '@disableTransaction') !== false) {
+                return;
+            }
+        } catch (Throwable $throwable) {
+        }
 
         Propel::getWriteConnection('zed')->beginTransaction();
     }

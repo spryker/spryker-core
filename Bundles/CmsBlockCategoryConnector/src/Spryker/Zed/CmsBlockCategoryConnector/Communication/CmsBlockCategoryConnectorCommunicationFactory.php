@@ -10,6 +10,8 @@ namespace Spryker\Zed\CmsBlockCategoryConnector\Communication;
 use Spryker\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorDependencyProvider;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider\CategoryDataProvider;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\DataProvider\CmsBlockDataProvider;
+use Spryker\Zed\CmsBlockCategoryConnector\Communication\Expander\CmsBlockCategoryFormExpander;
+use Spryker\Zed\CmsBlockCategoryConnector\Communication\Expander\CmsBlockCategoryFormExpanderInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CategoryType;
 use Spryker\Zed\CmsBlockCategoryConnector\Communication\Form\CmsBlockType;
 use Spryker\Zed\CmsBlockCategoryConnector\Persistence\Collector\Storage\Propel\CmsBlockCategoryConnectorCollector;
@@ -118,5 +120,16 @@ class CmsBlockCategoryConnectorCommunicationFactory extends AbstractCommunicatio
     protected function getCmsBlockQueryContainer()
     {
         return $this->getProvidedDependency(CmsBlockCategoryConnectorDependencyProvider::QUERY_CONTAINER_CMS_BLOCK);
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Communication\Expander\CmsBlockCategoryFormExpanderInterface
+     */
+    public function createCmsBlockCategoryFormExpander(): CmsBlockCategoryFormExpanderInterface
+    {
+        return new CmsBlockCategoryFormExpander(
+            $this->createCategoryType(),
+            $this->createCategoryDataProvider()
+        );
     }
 }
