@@ -43,7 +43,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addOmsFacade($container);
-        $container = $this->addStockFacade($container);AvailabilityDependencyProvider.php
+        $container = $this->addStockFacade($container);
         $container = $this->addTouchFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addEventFacade($container);
