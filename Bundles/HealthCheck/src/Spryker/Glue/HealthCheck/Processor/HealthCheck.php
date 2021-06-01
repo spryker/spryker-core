@@ -58,7 +58,10 @@ class HealthCheck implements HealthCheckInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $requestedServices = (string)$restRequest->getHttpRequest()->query->get(static::KEY_HEALTH_CHECK_SERVICES);
+        $requestedServices = $restRequest->getHttpRequest()->query->get(static::KEY_HEALTH_CHECK_SERVICES);
+        if ($requestedServices !== null) {
+            $requestedServices = (string)$requestedServices;
+        }
         $healthCheckResponseTransfer = $this->healthCheckProcessor->process($requestedServices);
 
         $restHealthCheckResponseAttributesTransfer = $this->healthCheckMapper

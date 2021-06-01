@@ -28,7 +28,7 @@ class ReSortController extends CategoryAbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array<string, array>
+     * @return mixed[]
      */
     public function indexAction(Request $request): array
     {
