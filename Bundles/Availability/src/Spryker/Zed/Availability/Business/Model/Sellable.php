@@ -68,17 +68,60 @@ class Sellable implements SellableInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $SellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
      *
      * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
     public function areProductsSellableForStore(
-        SellableItemsRequestTransfer $SellableItemsRequestTransfer
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
     ): SellableItemsResponseTransfer {
         $sellableItemsResponseTransfer = new SellableItemsResponseTransfer();
-        $storeTransfer = $SellableItemsRequestTransfer->getStoreOrFail();
-        // extract into method
-        foreach ($SellableItemsRequestTransfer->getSellableItemRequests() as $sellableItemRequestTransfer) {
+
+        $sellableItemsResponseTransfer = $this->processSellableItemsRequestSuccessively(
+            $sellableItemsRequestTransfer,
+            $sellableItemsResponseTransfer
+        );
+
+        $sellableItemsResponseTransfer = $this->processSellableItemsRequestInBatch(
+            $sellableItemsRequestTransfer,
+            $sellableItemsResponseTransfer
+        );
+
+        return $sellableItemsResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    protected function processSellableItemsRequestInBatch(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer,
+        SellableItemsResponseTransfer $sellableItemsResponseTransfer
+    ): SellableItemsResponseTransfer {
+        foreach ($this->batchAvailabilityStrategyPlugins as $batchAvailabilityStrategyPlugin) {
+            $sellableItemsResponseTransfer = $batchAvailabilityStrategyPlugin->findItemsAvailabilityForStore(
+                $sellableItemsRequestTransfer,
+                $sellableItemsResponseTransfer
+            );
+        }
+
+        return $sellableItemsResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    protected function processSellableItemsRequestSuccessively(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer,
+        SellableItemsResponseTransfer $sellableItemsResponseTransfer
+    ): SellableItemsResponseTransfer {
+        $storeTransfer = $sellableItemsRequestTransfer->getStoreOrFail();
+        foreach ($sellableItemsRequestTransfer->getSellableItemRequests() as $sellableItemRequestTransfer) {
             $sellableItemResponseTransfer = $this->processSellableItemRequestForCustomProducts(
                 $sellableItemRequestTransfer,
                 $storeTransfer
@@ -88,13 +131,6 @@ class Sellable implements SellableInterface
             }
 
             $sellableItemsResponseTransfer->addSellableItemResponse($sellableItemResponseTransfer);
-        }
-
-        foreach ($this->batchAvailabilityStrategyPlugins as $batchAvailabilityStrategyPlugin) {
-            $sellableItemsResponseTransfer = $batchAvailabilityStrategyPlugin->findItemsAvailabilityForStore(
-                $SellableItemsRequestTransfer,
-                $sellableItemsResponseTransfer
-            );
         }
 
         return $sellableItemsResponseTransfer;
