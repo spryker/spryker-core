@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\SellableItemBatchRequestTransfer;
-use Generated\Shared\Transfer\SellableItemBatchResponseTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 
 interface BatchAvailabilityStrategyPluginInterface
 {
@@ -18,13 +18,13 @@ interface BatchAvailabilityStrategyPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
-     * @param \Generated\Shared\Transfer\SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
     public function findItemsAvailabilityForStore(
-        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer,
-        SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer
-    ): SellableItemBatchResponseTransfer;
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer,
+        SellableItemsResponseTransfer $sellableItemsResponseTransfer
+    ): SellableItemsResponseTransfer;
 }

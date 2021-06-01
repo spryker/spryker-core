@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
-use Generated\Shared\Transfer\SellableItemBatchRequestTransfer;
-use Generated\Shared\Transfer\SellableItemBatchResponseTransfer;
 use Generated\Shared\Transfer\SellableItemRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface;
@@ -56,23 +56,23 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
      */
     public function checkCartAvailabilityBatch(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
-        $sellableProductsBatchRequestTransfer = $this->createSellableProductBatchRequestTransfer($cartChangeTransfer);
-        $sellableProductsBatchResponseTransfer = $this->availabilityFacade->areProductsSellableForStore($sellableProductsBatchRequestTransfer);
+        $sellableItemsRequestTransfer = $this->createSellableItemsRequestTransfer($cartChangeTransfer);
+        $sellableItemsResponseTransfer = $this->availabilityFacade->areProductsSellableForStore($sellableItemsRequestTransfer);
 
-        return $this->createCartPreCheckResponseTransfer($sellableProductsBatchResponseTransfer);
+        return $this->createCartPreCheckResponseTransfer($sellableItemsResponseTransfer);
     }
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchRequestTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsRequestTransfer
      */
-    protected function createSellableProductBatchRequestTransfer(CartChangeTransfer $cartChangeTransfer): SellableItemBatchRequestTransfer
+    protected function createSellableItemsRequestTransfer(CartChangeTransfer $cartChangeTransfer): SellableItemsRequestTransfer
     {
         $storeTransfer = $this->getStoreTransfer($cartChangeTransfer);
         $itemsInCart = clone $cartChangeTransfer->getQuote()->getItems();
-        $sellableItemBatchRequestTransfer = new SellableItemBatchRequestTransfer();
-        $sellableItemBatchRequestTransfer->setStore($storeTransfer);
+        $sellableItemsRequestTransfer = new SellableItemsRequestTransfer();
+        $sellableItemsRequestTransfer->setStore($storeTransfer);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getAmount() !== null) {
@@ -80,18 +80,18 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             }
             $itemsInCart->append($itemTransfer);
 
-            $sellableItemRequestItemTransfer = new SellableItemRequestTransfer();
-            $sellableItemRequestItemTransfer->setQuantity($this->calculateTotalItemQuantity($itemsInCart, $itemTransfer));
-            $sellableItemRequestItemTransfer->setProductAvailabilityCriteria(
+            $sellableItemRequestTransfer = new SellableItemRequestTransfer();
+            $sellableItemRequestTransfer->setQuantity($this->calculateTotalItemQuantity($itemsInCart, $itemTransfer));
+            $sellableItemRequestTransfer->setProductAvailabilityCriteria(
                 (new ProductAvailabilityCriteriaTransfer())
                     ->fromArray($itemTransfer->toArray(), true)
             );
 
-            $sellableItemRequestItemTransfer->setSku($itemTransfer->getSku());
-            $sellableItemBatchRequestTransfer->addSellableItemRequest($sellableItemRequestItemTransfer);
+            $sellableItemRequestTransfer->setSku($itemTransfer->getSku());
+            $sellableItemsRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
         }
 
-        return $sellableItemBatchRequestTransfer;
+        return $sellableItemsRequestTransfer;
     }
 
     /**
@@ -109,17 +109,17 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $SellableItemsResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     protected function createCartPreCheckResponseTransfer(
-        SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer
+        SellableItemsResponseTransfer $SellableItemsResponseTransfer
     ): CartPreCheckResponseTransfer {
         $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
         $cartPreCheckResponseTransfer->setIsSuccess(true);
         $messages = new ArrayObject();
-        foreach ($sellableItemBatchResponseTransfer->getSellableItemResponses() as $sellableItemResponseTransfer) {
+        foreach ($SellableItemsResponseTransfer->getSellableItemResponses() as $sellableItemResponseTransfer) {
             if (!$sellableItemResponseTransfer->getIsSellable()) {
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
                 $messages[] = $this->createItemIsNotAvailableMessageTransfer(

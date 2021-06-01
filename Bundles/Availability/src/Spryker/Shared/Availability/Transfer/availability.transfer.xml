@@ -20,12 +20,12 @@
         <property name="availableQuantity" type="decimal"/>
     </transfer>
 
-    <transfer name="SellableItemBatchRequest">
+    <transfer name="SellableItemsRequest">
         <property name="store" type="Store"/>
         <property name="sellableItemRequests" type="SellableItemRequest[]" singular="sellableItemRequest"/>
     </transfer>
 
-    <transfer name="SellableItemBatchResponse">
+    <transfer name="SellableItemsResponse">
         <property name="sellableItemResponses" type="SellableItemResponse[]" singular="sellableItemResponse"/>
     </transfer>
 

@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\SellableItemBatchRequestTransfer;
-use Generated\Shared\Transfer\SellableItemBatchResponseTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -30,13 +30,13 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
     public function areProductsSellableForStore(
-        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
-    ): SellableItemBatchResponseTransfer;
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
+    ): SellableItemsResponseTransfer;
 
     /**
      * Specification:
@@ -46,15 +46,15 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
-     * @param \Generated\Shared\Transfer\SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
     public function areProductConcretesSellableForStore(
-        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer,
-        SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer
-    ): SellableItemBatchResponseTransfer;
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer,
+        SellableItemsResponseTransfer $sellableItemsResponseTransfer
+    ): SellableItemsResponseTransfer;
 
     /**
      * Specification:

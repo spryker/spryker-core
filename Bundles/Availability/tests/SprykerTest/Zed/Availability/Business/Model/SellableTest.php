@@ -9,9 +9,9 @@ namespace SprykerTest\Zed\Availability\Business\Model;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
-use Generated\Shared\Transfer\SellableItemBatchRequestTransfer;
-use Generated\Shared\Transfer\SellableItemBatchResponseTransfer;
 use Generated\Shared\Transfer\SellableItemRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface;
@@ -129,28 +129,28 @@ class SellableTest extends Unit
             ],
         ];
 
-        $sellableItemBatchRequestTransfer = $this->createSellableItemBatchRequestTransfer($storeTransfer);
-        $sellableItemBatchRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
-            $sellableItemBatchRequestTransfer,
+        $sellableItemsRequestTransfer = $this->createSellableItemsRequestTransfer($storeTransfer);
+        $sellableItemsRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
+            $sellableItemsRequestTransfer,
             $batchRequestData
         );
-        $sellableItemBatchResponseTransfer = $this->createSellableItemBatchResponseTransfer();
+        $sellableItemsResponseTransfer = $this->createSellableItemsResponseTransfer();
 
         $sellable = $this->createSellable($availabilityRepositoryMock);
 
         //Act
-        $sellableItemBatchResponseTransfer = $sellable->areProductConcretesSellableForStore(
-            $sellableItemBatchRequestTransfer,
-            $sellableItemBatchResponseTransfer
+        $sellableItemsResponseTransfer = $sellable->areProductConcretesSellableForStore(
+            $sellableItemsRequestTransfer,
+            $sellableItemsResponseTransfer
         );
 
         //Assert
-        $sellableItemBatchResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemBatchResponseTransfer);
+        $sellableItemsResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemsResponseTransfer);
 
-        $this->assertSame(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
-        $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
+        $this->assertSame(2, count($sellableItemsResponseTransfer->getSellableItemResponses()));
+        $this->assertTrue($sellableItemsResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
 
-        $this->assertFalse($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
+        $this->assertFalse($sellableItemsResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
     }
 
     /**
@@ -186,28 +186,28 @@ class SellableTest extends Unit
             ],
         ];
 
-        $sellableItemBatchRequestTransfer = $this->createSellableItemBatchRequestTransfer($storeTransfer);
-        $sellableItemBatchRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
-            $sellableItemBatchRequestTransfer,
+        $sellableItemsRequestTransfer = $this->createSellableItemsRequestTransfer($storeTransfer);
+        $sellableItemsRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
+            $sellableItemsRequestTransfer,
             $batchRequestData
         );
-        $sellableItemBatchResponseTransfer = $this->createSellableItemBatchResponseTransfer();
+        $sellableItemsResponseTransfer = $this->createSellableItemsResponseTransfer();
 
         $sellable = $this->createSellable($availabilityRepositoryMock);
 
         //Act
-        $sellableItemBatchResponseTransfer = $sellable->areProductConcretesSellableForStore(
-            $sellableItemBatchRequestTransfer,
-            $sellableItemBatchResponseTransfer
+        $sellableItemsResponseTransfer = $sellable->areProductConcretesSellableForStore(
+            $sellableItemsRequestTransfer,
+            $sellableItemsResponseTransfer
         );
 
         //Assert
-        $sellableItemBatchResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemBatchResponseTransfer);
+        $sellableItemsResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemsResponseTransfer);
 
-        $this->assertSame(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
-        $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
+        $this->assertSame(2, count($sellableItemsResponseTransfer->getSellableItemResponses()));
+        $this->assertTrue($sellableItemsResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
 
-        $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
+        $this->assertTrue($sellableItemsResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
     }
 
     /**
@@ -241,28 +241,28 @@ class SellableTest extends Unit
             ],
         ];
 
-        $sellableItemBatchRequestTransfer = $this->createSellableItemBatchRequestTransfer($storeTransfer);
-        $sellableItemBatchRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
-            $sellableItemBatchRequestTransfer,
+        $sellableItemsRequestTransfer = $this->createSellableItemsRequestTransfer($storeTransfer);
+        $sellableItemsRequestTransfer = $this->addSellableItemRequestTransfersFromArray(
+            $sellableItemsRequestTransfer,
             $batchRequestData
         );
-        $sellableItemBatchResponseTransfer = $this->createSellableItemBatchResponseTransfer();
+        $sellableItemsResponseTransfer = $this->createSellableItemsResponseTransfer();
 
         $sellable = $this->createSellable($availabilityRepositoryMock);
 
         //Act
-        $sellableItemBatchResponseTransfer = $sellable->areProductConcretesSellableForStore(
-            $sellableItemBatchRequestTransfer,
-            $sellableItemBatchResponseTransfer
+        $sellableItemsResponseTransfer = $sellable->areProductConcretesSellableForStore(
+            $sellableItemsRequestTransfer,
+            $sellableItemsResponseTransfer
         );
 
         //Assert
-        $sellableItemBatchResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemBatchResponseTransfer);
+        $sellableItemsResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemsResponseTransfer);
 
-        $this->assertSame(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
-        $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
+        $this->assertSame(2, count($sellableItemsResponseTransfer->getSellableItemResponses()));
+        $this->assertTrue($sellableItemsResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
 
-        $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
+        $this->assertTrue($sellableItemsResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
     }
 
     /**
@@ -278,59 +278,59 @@ class SellableTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
      *
      * @return \Generated\Shared\Transfer\SellableItemResponseTransfer[]
      */
-    protected function getSellableItemResponseTransfersMapBySku(SellableItemBatchResponseTransfer $sellableItemBatchResponseTransfer): array
+    protected function getSellableItemResponseTransfersMapBySku(SellableItemsResponseTransfer $sellableItemsResponseTransfer): array
     {
-        $sellableItemBatchResponseTransferMap = [];
+        $sellableItemsResponseTransferMap = [];
 
-        foreach ($sellableItemBatchResponseTransfer->getSellableItemResponses() as $sellableItemResponseTransfer) {
-            $sellableItemBatchResponseTransferMap[$sellableItemResponseTransfer->getSku()] = $sellableItemResponseTransfer;
+        foreach ($sellableItemsResponseTransfer->getSellableItemResponses() as $sellableItemResponseTransfer) {
+            $sellableItemsResponseTransferMap[$sellableItemResponseTransfer->getSku()] = $sellableItemResponseTransfer;
         }
 
-        return $sellableItemBatchResponseTransferMap;
+        return $sellableItemsResponseTransferMap;
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
-    protected function createSellableItemBatchResponseTransfer(): SellableItemBatchResponseTransfer
+    protected function createSellableItemsResponseTransfer(): SellableItemsResponseTransfer
     {
-        return new SellableItemBatchResponseTransfer();
+        return new SellableItemsResponseTransfer();
     }
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchRequestTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsRequestTransfer
      */
-    protected function createSellableItemBatchRequestTransfer(StoreTransfer $storeTransfer): SellableItemBatchRequestTransfer
+    protected function createSellableItemsRequestTransfer(StoreTransfer $storeTransfer): SellableItemsRequestTransfer
     {
-        $sellableItemBatchRequestTransfer = new SellableItemBatchRequestTransfer();
-        $sellableItemBatchRequestTransfer->setStore($storeTransfer);
+        $sellableItemsRequestTransfer = new SellableItemsRequestTransfer();
+        $sellableItemsRequestTransfer->setStore($storeTransfer);
 
-        return $sellableItemBatchRequestTransfer;
+        return $sellableItemsRequestTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
      * @param mixed[] $batchRequestData
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchRequestTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsRequestTransfer
      */
     protected function addSellableItemRequestTransfersFromArray(
-        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer,
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer,
         array $batchRequestData
-    ): SellableItemBatchRequestTransfer {
+    ): SellableItemsRequestTransfer {
         foreach ($batchRequestData as $sellableItemRequest) {
             $sellableItemRequestTransfer = new SellableItemRequestTransfer();
             $sellableItemRequestTransfer->fromArray($sellableItemRequest, true);
-            $sellableItemBatchRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
+            $sellableItemsRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
         }
 
-        return $sellableItemBatchRequestTransfer;
+        return $sellableItemsRequestTransfer;
     }
 
     /**

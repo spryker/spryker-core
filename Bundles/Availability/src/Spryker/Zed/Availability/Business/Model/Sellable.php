@@ -10,10 +10,10 @@ namespace Spryker\Zed\Availability\Business\Model;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
-use Generated\Shared\Transfer\SellableItemBatchRequestTransfer;
-use Generated\Shared\Transfer\SellableItemBatchResponseTransfer;
 use Generated\Shared\Transfer\SellableItemRequestTransfer;
 use Generated\Shared\Transfer\SellableItemResponseTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
@@ -68,63 +68,63 @@ class Sellable implements SellableInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $SellableItemsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
     public function areProductsSellableForStore(
-        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
-    ): SellableItemBatchResponseTransfer {
-        $sellableItemBatchResponseTransfer = new SellableItemBatchResponseTransfer();
-        $storeTransfer = $sellableItemBatchRequestTransfer->getStoreOrFail();
-
-        foreach ($sellableItemBatchRequestTransfer->getSellableItemRequests() as $sellableItemRequestTransfer) {
-            $sellableItemtResponseTransfer = $this->processSellableItemRequestForCustomProducts(
+        SellableItemsRequestTransfer $SellableItemsRequestTransfer
+    ): SellableItemsResponseTransfer {
+        $sellableItemsResponseTransfer = new SellableItemsResponseTransfer();
+        $storeTransfer = $SellableItemsRequestTransfer->getStoreOrFail();
+        // extract into method
+        foreach ($SellableItemsRequestTransfer->getSellableItemRequests() as $sellableItemRequestTransfer) {
+            $sellableItemResponseTransfer = $this->processSellableItemRequestForCustomProducts(
                 $sellableItemRequestTransfer,
                 $storeTransfer
             );
-            if (!$sellableItemtResponseTransfer) {
+            if (!$sellableItemResponseTransfer) {
                 continue;
             }
 
-            $sellableItemBatchResponseTransfer->addSellableItemResponse($sellableItemtResponseTransfer);
+            $sellableItemsResponseTransfer->addSellableItemResponse($sellableItemResponseTransfer);
         }
 
         foreach ($this->batchAvailabilityStrategyPlugins as $batchAvailabilityStrategyPlugin) {
-            $sellableItemBatchResponseTransfer = $batchAvailabilityStrategyPlugin->findItemsAvailabilityForStore(
-                $sellableItemBatchRequestTransfer,
-                $sellableItemBatchResponseTransfer
+            $sellableItemsResponseTransfer = $batchAvailabilityStrategyPlugin->findItemsAvailabilityForStore(
+                $SellableItemsRequestTransfer,
+                $sellableItemsResponseTransfer
             );
         }
 
-        return $sellableItemBatchResponseTransfer;
+        return $sellableItemsResponseTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemsBatchRequestTransfer
-     * @param \Generated\Shared\Transfer\SellableItemBatchResponseTransfer $sellableItemsBatchResponseTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
     public function areProductConcretesSellableForStore(
-        SellableItemBatchRequestTransfer $sellableItemsBatchRequestTransfer,
-        SellableItemBatchResponseTransfer $sellableItemsBatchResponseTransfer
-    ): SellableItemBatchResponseTransfer {
-        if (!count($sellableItemsBatchRequestTransfer->getSellableItemRequests())) {
-            return $sellableItemsBatchResponseTransfer;
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer,
+        SellableItemsResponseTransfer $sellableItemsResponseTransfer
+    ): SellableItemsResponseTransfer {
+        if (!count($sellableItemsRequestTransfer->getSellableItemRequests())) {
+            return $sellableItemsResponseTransfer;
         }
-        $sellableItemResponseTransfers = $this->processProductConcretesBatchRequest($sellableItemsBatchRequestTransfer);
+        $sellableItemResponseTransfers = $this->processProductConcretesBatchRequest($sellableItemsRequestTransfer);
         if (count($sellableItemResponseTransfers)) {
             $sellableItemResponseTransfers = new ArrayObject(
                 array_merge(
-                    $sellableItemsBatchResponseTransfer->getSellableItemResponses()->getArrayCopy(),
+                    $sellableItemsResponseTransfer->getSellableItemResponses()->getArrayCopy(),
                     $sellableItemResponseTransfers
                 )
             );
-            $sellableItemsBatchResponseTransfer->setSellableItemResponses($sellableItemResponseTransfers);
+            $sellableItemsResponseTransfer->setSellableItemResponses($sellableItemResponseTransfers);
         }
 
-        return $sellableItemsBatchResponseTransfer;
+        return $sellableItemsResponseTransfer;
     }
 
     /**
@@ -186,14 +186,14 @@ class Sellable implements SellableInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $SellableItemsRequestTransfer
      *
      * @return string[]
      */
-    protected function getSkus($sellableItemBatchRequestTransfer): array
+    protected function getSkus($SellableItemsRequestTransfer): array
     {
         $concreteSkus = [];
-        foreach ($sellableItemBatchRequestTransfer->getSellableItemRequests() as $sellableItemRequest) {
+        foreach ($SellableItemsRequestTransfer->getSellableItemRequests() as $sellableItemRequest) {
             $concreteSkus[] = $sellableItemRequest->getSkuOrFail();
         }
 
@@ -201,23 +201,23 @@ class Sellable implements SellableInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $SellableItemsRequestTransfer
      *
      * @return \Generated\Shared\Transfer\SellableItemResponseTransfer[]
      */
     protected function processProductConcretesBatchRequest(
-        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+        SellableItemsRequestTransfer $SellableItemsRequestTransfer
     ): array {
         $sellableItemResponseTransfers = [];
-        $storeTransfer = $sellableItemBatchRequestTransfer->getStoreOrFail();
-        $concreteSkus = $this->getSkus($sellableItemBatchRequestTransfer);
+        $storeTransfer = $SellableItemsRequestTransfer->getStoreOrFail();
+        $concreteSkus = $this->getSkus($SellableItemsRequestTransfer);
 
         $productConcreteAvailabilityTransfers = $this->availabilityRepository
-        ->findProductConcreteAvailabilityBySkusAndStore($concreteSkus, $storeTransfer);
+            ->findProductConcreteAvailabilityBySkusAndStore($concreteSkus, $storeTransfer);
 
         $productConcreteAvailabilityTransfersSkuMap = $this->getMappedProductConcreteAvailabilityTransfers($productConcreteAvailabilityTransfers);
 
-        foreach ($sellableItemBatchRequestTransfer->getSellableItemRequests() as $sellableItemRequestTransfer) {
+        foreach ($SellableItemsRequestTransfer->getSellableItemRequests() as $sellableItemRequestTransfer) {
             if ($sellableItemRequestTransfer->getIsProcessed()) {
                 continue;
             }

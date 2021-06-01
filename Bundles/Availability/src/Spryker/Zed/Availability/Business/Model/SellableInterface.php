@@ -8,32 +8,32 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
-use Generated\Shared\Transfer\SellableItemBatchRequestTransfer;
-use Generated\Shared\Transfer\SellableItemBatchResponseTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface SellableInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsBatchRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
     public function areProductsSellableForStore(
-        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
-    ): SellableItemBatchResponseTransfer;
+        SellableItemsRequestTransfer $sellableItemsBatchRequestTransfer
+    ): SellableItemsResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemsBatchRequestTransfer
-     * @param \Generated\Shared\Transfer\SellableItemBatchResponseTransfer $sellableItemsBatchResponseTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
     public function areProductConcretesSellableForStore(
-        SellableItemBatchRequestTransfer $sellableItemsBatchRequestTransfer,
-        SellableItemBatchResponseTransfer $sellableItemsBatchResponseTransfer
-    ): SellableItemBatchResponseTransfer;
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer,
+        SellableItemsResponseTransfer $sellableItemsResponseTransfer
+    ): SellableItemsResponseTransfer;
 
     /**
      * @param string $concreteSku

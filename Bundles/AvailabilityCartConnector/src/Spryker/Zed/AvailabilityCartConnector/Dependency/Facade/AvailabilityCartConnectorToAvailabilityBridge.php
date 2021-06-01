@@ -9,8 +9,8 @@ namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
-use Generated\Shared\Transfer\SellableItemBatchRequestTransfer;
-use Generated\Shared\Transfer\SellableItemBatchResponseTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -45,14 +45,14 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemBatchResponseTransfer
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
      */
     public function areProductsSellableForStore(
-        SellableItemBatchRequestTransfer $sellableItemBatchRequestTransfer
-    ): SellableItemBatchResponseTransfer {
-        return $this->availabilityFacade->areProductsSellableForStore($sellableItemBatchRequestTransfer);
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
+    ): SellableItemsResponseTransfer {
+        return $this->availabilityFacade->areProductsSellableForStore($sellableItemsRequestTransfer);
     }
 
     /**
