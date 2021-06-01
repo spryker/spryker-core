@@ -23,7 +23,7 @@ class StockTransformer implements DataTransformerInterface
     public function transform($stockProductTransfers): StockProductTransfer
     {
         if ($stockProductTransfers->count() > 0) {
-            return $stockProductTransfers->offsetGet(0);
+            return $stockProductTransfers->offsetGet(0) ?: new StockProductTransfer();
         }
 
         return new StockProductTransfer();
