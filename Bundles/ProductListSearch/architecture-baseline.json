@@ -1,0 +1,16 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Dependency/Facade/ProductListSearchToProductPageSearchFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'refresh' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductListSearch/src/Spryker/Zed/ProductListSearch/Dependency/Facade/ProductListSearchToProductPageSearchFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'publishProductConcretes' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

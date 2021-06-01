@@ -1,0 +1,23 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Collector/src/Spryker/Shared/Collector/Code/Reader/KeyValue/RedisReader.php",
+        "description": "\n      Access: Method Spryker\\Shared\\Collector\\Code\\Reader\\KeyValue\\RedisReader::__construct() accesses Spryker\\Zed\\Collector\\Business\\Storage\\Adapter\\KeyValue\\ReadWriteInterface which violates rule \"No call from Shared to Zed\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/CollectorBusinessFactory.php",
+        "description": "\n      Factories: The method Spryker\\Zed\\Collector\\Business\\CollectorBusinessFactory::createStorageExporter() contains a \"foreach\" statement which violates rule \"Factory methods should not contain loops.\"\n    ",
+        "rule": "FactoryNoLoopsRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/CollectorBusinessFactory.php",
+        "description": "\n      Factories: The method Spryker\\Zed\\Collector\\Business\\CollectorBusinessFactory::createElasticsearchExporter() contains a \"foreach\" statement which violates rule \"Factory methods should not contain loops.\"\n    ",
+        "rule": "FactoryNoLoopsRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

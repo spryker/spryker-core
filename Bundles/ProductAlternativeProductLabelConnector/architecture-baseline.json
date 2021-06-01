@@ -1,0 +1,23 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/Dependency/Facade/ProductAlternativeProductLabelConnectorToProductInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findProductAbstractIdByConcreteId' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/Dependency/Facade/ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findActiveLabelIdsByIdProductAbstract' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductAlternativeProductLabelConnector/src/Spryker/Zed/ProductAlternativeProductLabelConnector/Dependency/Facade/ProductAlternativeProductLabelConnectorToProductLabelFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findProductAbstractRelationsByIdProductLabel' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]
