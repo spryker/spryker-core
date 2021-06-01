@@ -147,7 +147,7 @@ class SellableTest extends Unit
         //Assert
         $sellableItemBatchResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemBatchResponseTransfer);
 
-        $this->assertEquals(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
+        $this->assertSame(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
         $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
 
         $this->assertFalse($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
@@ -204,7 +204,7 @@ class SellableTest extends Unit
         //Assert
         $sellableItemBatchResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemBatchResponseTransfer);
 
-        $this->assertEquals(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
+        $this->assertSame(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
         $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
 
         $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
@@ -259,7 +259,7 @@ class SellableTest extends Unit
         //Assert
         $sellableItemBatchResponseTransferMap = $this->getSellableItemResponseTransfersMapBySku($sellableItemBatchResponseTransfer);
 
-        $this->assertEquals(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
+        $this->assertSame(2, count($sellableItemBatchResponseTransfer->getSellableItemResponses()));
         $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT]->getIsSellable());
 
         $this->assertTrue($sellableItemBatchResponseTransferMap[static::SKU_PRODUCT_SECOND]->getIsSellable());
