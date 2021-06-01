@@ -64,6 +64,8 @@ interface AvailabilityFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::areProductsSellableForStore()} instead.
+     *
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -83,6 +85,8 @@ interface AvailabilityFacadeInterface
      *  - Checks if product is available.
      *
      * @api
+     *
+     * @deprecated Use {@link Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::areProductConcretesSellableForStore()} instead.
      *
      * @param int $idProductConcrete
      *

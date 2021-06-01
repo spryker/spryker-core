@@ -95,7 +95,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param \ArrayObject<int, ItemTransfer>|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -181,7 +181,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param \ArrayObject<int, ItemTransfer>|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return int
@@ -206,7 +206,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param \ArrayObject<int, ItemTransfer>|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param string $sku
      *
      * @return int
