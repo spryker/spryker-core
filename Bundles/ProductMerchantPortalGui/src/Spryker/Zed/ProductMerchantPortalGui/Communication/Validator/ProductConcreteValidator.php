@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RowValidationTransfer;
 use Generated\Shared\Transfer\TableValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\SkuRegexConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueAbstractSkuConstraint;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueConcreteSkuCollectionConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Collection;
@@ -129,23 +130,26 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
      */
     protected function getProductConcreteConstraints(): array
     {
-        return [new All([
-            new Collection(
-                [
-                    static::FIELD_NAME => [
-                        new NotBlank(),
-                    ],
-                    static::FIELD_SKU => [
-                        new NotBlank(),
-                        new SkuRegexConstraint(),
-                        new UniqueAbstractSkuConstraint(),
-                    ],
-                    static::FIELD_SUPER_ATTRIBUTES => [
-                        new All($this->getSuperAttributeConstraints()),
-                    ],
-                ]
-            ),
-        ])];
+        return [
+            new UniqueConcreteSkuCollectionConstraint(),
+            new All([
+                new Collection(
+                    [
+                        static::FIELD_NAME => [
+                            new NotBlank(),
+                        ],
+                        static::FIELD_SKU => [
+                            new NotBlank(),
+                            new SkuRegexConstraint(),
+                            new UniqueAbstractSkuConstraint(),
+                        ],
+                        static::FIELD_SUPER_ATTRIBUTES => [
+                            new All($this->getSuperAttributeConstraints()),
+                        ],
+                    ]
+                ),
+            ]),
+        ];
     }
 
     /**
