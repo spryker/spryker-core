@@ -78,7 +78,6 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
             if ($itemTransfer->getAmount() !== null) {
                 continue;
             }
-            $itemsInCart->append($itemTransfer);
 
             $sellableItemRequestTransfer = new SellableItemRequestTransfer();
             $sellableItemRequestTransfer->setQuantity($this->calculateTotalItemQuantity($itemsInCart, $itemTransfer));
@@ -86,7 +85,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
                 (new ProductAvailabilityCriteriaTransfer())
                     ->fromArray($itemTransfer->toArray(), true)
             );
-
+            $itemsInCart->append($itemTransfer);
             $sellableItemRequestTransfer->setSku($itemTransfer->getSku());
             $sellableItemsRequestTransfer->addSellableItemRequest($sellableItemRequestTransfer);
         }
