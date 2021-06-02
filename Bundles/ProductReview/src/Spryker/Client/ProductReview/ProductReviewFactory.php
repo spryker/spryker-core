@@ -61,7 +61,7 @@ class ProductReviewFactory extends AbstractFactory
 
         return $this->getSearchClient()->expandQuery(
             $bulkProductReviewsQueryPlugin,
-            $this->getProductReviewsQueryExpanderPlugins(),
+            $this->getBatchProductReviewsQueryExpanderPlugins(),
             $bulkProductReviewSearchRequestTransfer->getFilter()->toArray()
         );
     }
@@ -91,11 +91,27 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     */
+    protected function getBatchProductReviewsQueryExpanderPlugins()
+    {
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::BATCH_PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS);
+    }
+
+    /**
      * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     public function getProductReviewsSearchResultFormatterPlugins()
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     */
+    public function getProductReviewsSearchBatchResultFormatterPlugins()
+    {
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::BATCH_PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS);
     }
 
     /**
@@ -227,7 +243,7 @@ class ProductReviewFactory extends AbstractFactory
         return new ProductReviewSearchReader(
             $this->createBulkProductReviewsQueryPlugin($bulkProductReviewSearchRequestTransfer),
             $this->getSearchClient(),
-            $this->getProductReviewsSearchResultFormatterPlugins()
+            $this->getProductReviewsSearchBatchResultFormatterPlugins()
         );
     }
 }

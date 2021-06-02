@@ -19,6 +19,10 @@ class ProductViewExpander implements ProductViewExpanderInterface
      * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin::NAME
      */
     protected const KEY_RATING_AGGREGATION = 'ratingAggregation';
+    /**
+     * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationBatchResultFormatterPlugin::NAME
+     */
+    protected const KEY_BATCH_RATING_AGGREGATION = 'productAggregation';
 
     /**
      * @var \Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface
@@ -85,17 +89,26 @@ class ProductViewExpander implements ProductViewExpanderInterface
     public function expandProductViewsWithProductReviewData(
         array $productViewTransfers
     ): array {
-        $productReviews = $this->productReviewSearchReader->searchProductReviews();
+        $aggregationProductReviews = $this->productReviewSearchReader->searchProductReviews();
 
-        if (!isset($productReviews[static::KEY_RATING_AGGREGATION])) {
-            return $productViewTransfer;
+        if (!isset($aggregationProductReviews[static::KEY_BATCH_RATING_AGGREGATION])) {
+            return $productViewTransfers;
         }
 
-        $productReviewSummaryTransfer = $this->productReviewSummaryCalculator
-            ->calculate($this->createRatingAggregationTransfer($productReviews));
+        foreach ($aggregationProductReviews[static::KEY_BATCH_RATING_AGGREGATION] as $productId => $productReviews) {
+            if (empty($productReviews[static::KEY_RATING_AGGREGATION])) {
+                continue;
+            }
 
-        foreach ($productViewTransfers as $productViewTransfer) {
-            $productViewTransfer->setRating($productReviewSummaryTransfer);
+            $productReviewSummaryTransfer = $this->productReviewSummaryCalculator->calculate(
+                $this->createRatingAggregationTransfer($productReviews)
+            );
+
+            foreach ($productViewTransfers as $productViewId => $productViewTransfer) {
+                if ($productViewId === $productId) {
+                    $productViewTransfer->setRating($productReviewSummaryTransfer);
+                }
+            }
         }
 
         return $productViewTransfers;
