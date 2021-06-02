@@ -76,6 +76,7 @@ class Sellable implements SellableInterface
         SellableItemsRequestTransfer $sellableItemsRequestTransfer
     ): SellableItemsResponseTransfer {
         $sellableItemsResponseTransfer = new SellableItemsResponseTransfer();
+        $sellableItemsRequestTransfer = $this->assertStoreTransferInSellableItemsRequestTransfer($sellableItemsRequestTransfer);
 
         $sellableItemsResponseTransfer = $this->processSellableItemsRequestSuccessively(
             $sellableItemsRequestTransfer,
@@ -88,6 +89,21 @@ class Sellable implements SellableInterface
         );
 
         return $sellableItemsResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsRequestTransfer
+     */
+    protected function assertStoreTransferInSellableItemsRequestTransfer(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
+    ): SellableItemsRequestTransfer {
+        $storeTransfer = $sellableItemsRequestTransfer->getStoreOrFail();
+        $storeTransfer = $this->assertStoreTransfer($storeTransfer);
+        $sellableItemsRequestTransfer->setStore($storeTransfer);
+
+        return $sellableItemsRequestTransfer;
     }
 
     /**
