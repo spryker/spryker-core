@@ -174,7 +174,7 @@ class CreateProductAbstractController extends AbstractController
             );
         }
 
-        $concreteProductsJson = $request->request->get(static::REQUEST_PARAM_CONCRETE_PRODUCTS);
+        $concreteProductsJson = (string)$request->request->get(static::REQUEST_PARAM_CONCRETE_PRODUCTS);
         $selectedAttributesJson = $request->request->get(static::REQUEST_PARAM_SELECTED_ATTRIBUTES);
 
         $productConcreteData = $this->getFactory()
