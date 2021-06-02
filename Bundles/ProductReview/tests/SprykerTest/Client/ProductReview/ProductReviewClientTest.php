@@ -15,6 +15,7 @@ use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToSearchInterfac
 use Spryker\Client\ProductReview\ProductReviewClient;
 use Spryker\Client\ProductReview\ProductReviewClientInterface;
 use Spryker\Client\ProductReview\ProductReviewDependencyProvider;
+use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
  * Auto-generated group annotations
@@ -27,6 +28,11 @@ use Spryker\Client\ProductReview\ProductReviewDependencyProvider;
  */
 class ProductReviewClientTest extends Unit
 {
+    /**
+     * @var \SprykerTest\Client\ProductReview\ProductReviewClientTester
+     */
+    protected $tester;
+
     /**
      * @retyrn void
      *
@@ -81,7 +87,7 @@ class ProductReviewClientTest extends Unit
     }
 
     /**
-     * @return \float[][]
+     * @return array<array>
      */
     protected function assertTestData(): array
     {
@@ -102,22 +108,26 @@ class ProductReviewClientTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\ProductViewTransfer[]
      */
-    protected function createProductViews()
+    protected function createProductViews(): array
+    {
+        return [
+            1 => $this->buildProductViewTranseferMockById(1),
+            2 => $this->buildProductViewTranseferMockById(2),
+            3 => $this->buildProductViewTranseferMockById(3),
+        ];
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    protected function buildProductViewTranseferMockById(int $id): ProductViewTransfer
     {
         $prodcutView = new ProductViewTransfer();
-        $prodcutView->setIdProductAbstract(1);
+        $prodcutView->setIdProductAbstract($id);
 
-        $prodcutView2 = new ProductViewTransfer();
-        $prodcutView2->setIdProductAbstract(2);
-
-        $prodcutView3 = new ProductViewTransfer();
-        $prodcutView3->setIdProductAbstract(3);
-
-        return [
-            1 => $prodcutView,
-            2 => $prodcutView2,
-            3 => $prodcutView3,
-        ];
+        return $prodcutView;
     }
 
     /**
@@ -126,9 +136,7 @@ class ProductReviewClientTest extends Unit
     protected function createBulkProductReviewSearchRequestTransfer()
     {
         $bulkProductReviewSearchRequestTransfer = new BulkProductReviewSearchRequestTransfer();
-        $bulkProductReviewSearchRequestTransfer->setProductAbstractIds([
-            1, 2, 3,
-        ]);
+        $bulkProductReviewSearchRequestTransfer->setProductAbstractIds(array_keys($this->createProductViews()));
         $bulkProductReviewSearchRequestTransfer->setFilter(new FilterTransfer());
 
         return $bulkProductReviewSearchRequestTransfer;
@@ -149,7 +157,7 @@ class ProductReviewClientTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function cerateQueryMock()
     {
