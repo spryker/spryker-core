@@ -1,0 +1,16 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToMoneyInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'fromInteger' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'removeAbstractProductRelationsForLabel' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

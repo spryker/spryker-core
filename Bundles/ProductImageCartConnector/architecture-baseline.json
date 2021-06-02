@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductImageCartConnector/src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'getProductImagesSetCollectionByProductId' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

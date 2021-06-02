@@ -1,0 +1,16 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToAvailabilityFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'isProductSellableForStore' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductPackagingUnit/src/Spryker/Zed/ProductPackagingUnit/Dependency/Facade/ProductPackagingUnitToAvailabilityFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findOrCreateProductConcreteAvailabilityBySkuForStore' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

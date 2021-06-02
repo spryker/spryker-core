@@ -28,7 +28,7 @@ class ReSortController extends CategoryAbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return mixed[]
      */
     public function indexAction(Request $request): array
     {
@@ -54,9 +54,10 @@ class ReSortController extends CategoryAbstractController
             ]);
         }
 
+        $categoryNodesData = (string)$request->request->get(static::REQUEST_PARAM_NODES);
         $this->getFactory()
             ->createCategoryNodeOrderUpdater()
-            ->updateCategoryNodeOrder($request->request->get(static::REQUEST_PARAM_NODES));
+            ->updateCategoryNodeOrder($categoryNodesData);
 
         return $this->jsonResponse([
             'code' => Response::HTTP_OK,
