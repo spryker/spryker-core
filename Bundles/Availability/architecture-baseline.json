@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Availability\\Business\\AvailabilityFacade::calculateAvailabilityForProductWithStore() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    }
+]

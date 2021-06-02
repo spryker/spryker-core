@@ -1,0 +1,44 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Business/SetupFrontendFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\SetupFrontend\\Business\\SetupFrontendFacade::buildYvesFrontend() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Business/SetupFrontendFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\SetupFrontend\\Business\\SetupFrontendFacade::buildYvesFrontend() uses \"new\" to instantiate an object which violates rule \"No instantiations with 'new'\"\n    ",
+        "rule": "FacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Business/SetupFrontendFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\SetupFrontend\\Business\\SetupFrontendFacade::buildZedFrontend() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Business/SetupFrontendFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\SetupFrontend\\Business\\SetupFrontendFacade::buildZedFrontend() uses \"new\" to instantiate an object which violates rule \"No instantiations with 'new'\"\n    ",
+        "rule": "FacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Business/SetupFrontendFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\SetupFrontend\\Business\\SetupFrontendFacade::buildMerchantPortalFrontend() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/SetupFrontend/src/Spryker/Zed/SetupFrontend/Business/SetupFrontendFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\SetupFrontend\\Business\\SetupFrontendFacade::buildMerchantPortalFrontend() uses \"new\" to instantiate an object which violates rule \"No instantiations with 'new'\"\n    ",
+        "rule": "FacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    }
+]

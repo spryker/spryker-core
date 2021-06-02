@@ -1,0 +1,30 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Cart/src/Spryker/Zed/Cart/Dependency/Facade/CartToCalculationInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'recalculate' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Cart/src/Spryker/Zed/Cart/Dependency/Facade/CartToMessengerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'addSuccessMessage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Cart/src/Spryker/Zed/Cart/Dependency/Facade/CartToMessengerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'addErrorMessage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Cart/src/Spryker/Zed/Cart/Dependency/Facade/CartToMessengerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'addInfoMessage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]
