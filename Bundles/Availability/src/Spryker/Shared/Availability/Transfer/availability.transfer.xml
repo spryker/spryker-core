@@ -115,6 +115,7 @@
     <transfer name="WishlistItem">
         <property name="productConcreteAvailability" type="ProductConcreteAvailability"/>
         <property name="isSellable" type="bool"/>
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

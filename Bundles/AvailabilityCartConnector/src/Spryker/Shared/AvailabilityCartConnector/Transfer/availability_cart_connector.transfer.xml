@@ -59,4 +59,10 @@
         <property name="quantity" type="int"/>
     </transfer>
 
+    <transfer name="SellableItemResponse">
+        <property name="isSellable" type="bool"/>
+        <property name="availableQuantity" type="decimal"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>
