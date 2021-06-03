@@ -44,4 +44,13 @@
         <property name="quantity" type="int"/>
     </transfer>
 
+    <transfer name="SellableItemRequest">
+    </transfer>
+
+    <transfer name="SellableItemsRequest">
+    </transfer>
+
+    <transfer name="SellableItemsResponse">
+    </transfer>
+
 </transfers>
