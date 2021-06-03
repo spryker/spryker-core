@@ -40,17 +40,23 @@
     <transfer name="ProductAvailabilityCriteria">
     </transfer>
 
-    <transfer name="CartItemQuantity">
-        <property name="quantity" type="int"/>
+    <transfer name="SellableItemsRequest">
+        <property name="store" type="Store"/>
+        <property name="sellableItemRequests" type="SellableItemRequest[]" singular="sellableItemRequest"/>
     </transfer>
 
     <transfer name="SellableItemRequest">
-    </transfer>
-
-    <transfer name="SellableItemsRequest">
+        <property name="quantity" type="decimal"/>
+        <property name="productAvailabilityCriteria" type="ProductAvailabilityCriteria"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="SellableItemsResponse">
+        <property name="sellableItemResponses" type="SellableItemResponse[]" singular="sellableItemResponse"/>
+    </transfer>
+
+    <transfer name="CartItemQuantity">
+        <property name="quantity" type="int"/>
     </transfer>
 
 </transfers>
