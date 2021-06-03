@@ -31,23 +31,17 @@ class MerchantProductOfferGuiRepository extends AbstractRepository implements Me
         QueryCriteriaTransfer $queryCriteriaTransfer,
         MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
     ): QueryCriteriaTransfer {
-        $queryJoinTransfer = (new QueryJoinTransfer())
-            ->setJoinType(Criteria::LEFT_JOIN)
-            ->setLeft([SpyProductOfferTableMap::COL_MERCHANT_REFERENCE])
-            ->setRight([SpyMerchantTableMap::COL_MERCHANT_REFERENCE]);
+        $queryJoinTransfer = (new QueryJoinTransfer())->setJoinType(Criteria::LEFT_JOIN);
+        $left = [SpyProductOfferTableMap::COL_MERCHANT_REFERENCE];
+        $right = [SpyMerchantTableMap::COL_MERCHANT_REFERENCE];
 
         if ($merchantProductOfferCriteriaTransfer->getIdMerchant()) {
-            $queryJoinTransfer->setJoinType(Criteria::INNER_JOIN)
-                ->setCondition(
-                    sprintf(
-                        '%s = %s AND %s = %d',
-                        SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
-                        SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                        SpyMerchantTableMap::COL_ID_MERCHANT,
-                        $merchantProductOfferCriteriaTransfer->getIdMerchant()
-                    )
-                );
+            $queryJoinTransfer->setJoinType(Criteria::INNER_JOIN);
+            $left[] = $merchantProductOfferCriteriaTransfer->getIdMerchant();
+            $right[] = SpyMerchantTableMap::COL_ID_MERCHANT;
         }
+
+        $queryJoinTransfer->setLeft($left)->setRight($right);
 
         $queryCriteriaTransfer->addJoin($queryJoinTransfer)
             ->setWithColumns([SpyMerchantTableMap::COL_NAME => MerchantTransfer::NAME]);
