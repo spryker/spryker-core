@@ -221,6 +221,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\ShipmentFacade::saveSalesOrderShipment()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
@@ -232,6 +234,23 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
             ->createCheckoutShipmentOrderSaverStrategyResolver()
             ->resolve($quoteTransfer->getItems())
             ->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->getFactory()
+            ->createCheckoutMultiShipmentOrderSaver()
+            ->saveSalesOrderShipment($quoteTransfer, $saveOrderTransfer);
     }
 
     /**

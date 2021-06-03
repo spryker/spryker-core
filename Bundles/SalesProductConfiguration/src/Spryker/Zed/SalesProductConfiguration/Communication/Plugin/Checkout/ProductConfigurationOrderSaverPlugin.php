@@ -5,38 +5,35 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesProductConfiguration\Communication\Plugin\Sales;
+namespace Spryker\Zed\SalesProductConfiguration\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\SalesProductConfiguration\Communication\Plugin\Checkout\ProductConfigurationOrderSaverPlugin} instead.
- *
  * @method \Spryker\Zed\SalesProductConfiguration\Business\SalesProductConfigurationFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesProductConfiguration\SalesProductConfigurationConfig getConfig()
  * @method \Spryker\Zed\SalesProductConfiguration\Communication\SalesProductConfigurationCommunicationFactory getFactory()
  */
-class ProductConfigurationOrderPostSavePlugin extends AbstractPlugin implements OrderPostSavePluginInterface
+class ProductConfigurationOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
      * {@inheritDoc}
      * - Persists product configuration from ItemTransfer in Quote to sales_order_item_configuration table.
      * - Expects the product configuration instance to be provided.
+     * - Must be called after order items saving is done.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     * @return void
      */
-    public function execute(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): SaveOrderTransfer
+    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
     {
         $this->getFacade()->saveSalesOrderItemConfigurationsFromQuote($quoteTransfer);
-
-        return $saveOrderTransfer;
     }
 }
