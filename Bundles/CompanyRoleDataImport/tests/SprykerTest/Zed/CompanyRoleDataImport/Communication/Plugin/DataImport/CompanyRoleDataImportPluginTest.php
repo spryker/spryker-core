@@ -56,7 +56,7 @@ class CompanyRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
      */
     public function testImportCompanyRoleWithInvalidCompany(): void
     {
-        $this->expectException(DataImportException::class);
+        // Arrange
         $this->tester->truncateCompanyRoles();
         $this->tester->assertCompanyRoleTableIsEmtpy();
 
@@ -67,12 +67,11 @@ class CompanyRoleDataImportPluginTest extends AbstractCompanyRoleDataImportMock
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer)
             ->setThrowException(true);
 
-        $dataImporterReportTransfer = $this->getCompanyRoleDataImportPlugin()->import($dataImportConfigurationTransfer);
+        // Assert
+        $this->expectException(DataImportException::class);
 
-        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        $this->assertFalse($dataImporterReportTransfer->getIsSuccess());
-
-        $this->tester->assertCompanyRoleTableHasRecords();
+        // Act
+        $this->getCompanyRoleDataImportPlugin()->import($dataImportConfigurationTransfer);
     }
 
     /**

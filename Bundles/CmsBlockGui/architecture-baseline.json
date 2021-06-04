@@ -1,0 +1,58 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findCmsBlockById' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'activateById' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'deactivateById' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'syncTemplate' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findGlossary' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'hasTemplateFileById' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Dependency/QueryContainer/CmsBlockGuiToCmsBlockQueryContainerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'queryCmsBlockByName' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Dependency/QueryContainer/CmsBlockGuiToCmsBlockQueryContainerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'queryCmsBlockStoreWithStoreByFkCmsBlock' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

@@ -29,17 +29,17 @@ suites:
         class_name: HealthCheckCommunicationTester
         modules:
             enabled:
-              - Asserts
-              - \SprykerTest\Shared\Testify\Helper\Environment
-              - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-              - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-              - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-              - \SprykerTest\Shared\Application\Helper\ZedHelper
-              - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
-              - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
-              - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
-              - \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper
-              - \SprykerTest\Service\Container\Helper\ContainerHelper
-              - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
-              - \SprykerTest\Zed\Router\Helper\RouterHelper
-              - \SprykerTest\Zed\Application\Helper\ApplicationHelper
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Application\Helper\ZedHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
+                - \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
+                - \SprykerTest\Zed\Router\Helper\RouterHelper
+                - \SprykerTest\Zed\Application\Helper\ApplicationHelper

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
@@ -34,6 +35,11 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
      * @var \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToTranslatorFacadeInterface
      */
     protected $translatorFacade;
+
+    /**
+     * @var int[]|null
+     */
+    protected static $categoryCache = null;
 
     /**
      * @param \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface $categoryFacade
@@ -77,10 +83,18 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
      */
     protected function getCategories(): array
     {
-        $categoryCollectionTransfer = $this->categoryFacade
-            ->getAllCategoryCollection($this->localeFacade->getCurrentLocale());
+        if (static::$categoryCache !== null) {
+            return static::$categoryCache;
+        }
 
-        return $this->getCategoryIdsFromCollection($categoryCollectionTransfer);
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
+
+        static::$categoryCache = $this->getCategoryIdsFromCollection(
+            $this->categoryFacade->getCategoriesByCriteria($categoryCriteriaTransfer)
+        );
+
+        return static::$categoryCache;
     }
 
     /**

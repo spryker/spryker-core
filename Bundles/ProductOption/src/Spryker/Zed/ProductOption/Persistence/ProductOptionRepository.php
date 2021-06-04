@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOption\Persistence;
 use Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductAbstractProductOptionGroupTableMap;
 use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionGroupTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -84,5 +85,15 @@ class ProductOptionRepository extends AbstractRepository implements ProductOptio
         return $this->getFactory()
             ->createProductOptionMapper()
             ->mapProductOptionValueEntityCollectionToProductOptionValueTransfers($productOptionValueQuery->find());
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function expandProductOptionGroupQuery(ModelCriteria $query): ModelCriteria
+    {
+        return $this->getFactory()->createProductOptionGroupQueryExpander()->expandQuery($query);
     }
 }

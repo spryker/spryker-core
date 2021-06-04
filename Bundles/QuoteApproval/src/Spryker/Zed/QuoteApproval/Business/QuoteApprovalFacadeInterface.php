@@ -75,6 +75,18 @@ interface QuoteApprovalFacadeInterface
 
     /**
      * Specification:
+     * - Returns a list of quote approval transfers filtered by the QuoteApprovalRequestTransfer
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     */
+    public function getQuoteApprovals(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array;
+
+    /**
+     * Specification:
      * - Checks that Approver can approve request.
      * - Checks that status is "Waiting".
      * - Sets quote approval request status "Approved" if checks are true.

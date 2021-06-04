@@ -7,35 +7,22 @@
 
 namespace Spryker\Client\MerchantStorage\Storage;
 
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 interface MerchantStorageReaderInterface
 {
     /**
-     * @param int $idMerchant
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findOne(int $idMerchant): ?MerchantStorageTransfer;
+    public function findOne(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): ?MerchantStorageTransfer;
 
     /**
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
      */
-    public function get(array $merchantIds): array;
-
-    /**
-     * @param string $merchantReference
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
-     */
-    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer;
-
-    /**
-     * @param string[] $merchantReferences
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    public function getByMerchantReferences(array $merchantReferences): array;
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array;
 }

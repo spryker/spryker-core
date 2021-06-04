@@ -25,13 +25,15 @@ class UserUpdateFormDataProvider extends UserFormDataProvider
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    protected function getStatusSelectChoices()
+    protected function getStatusSelectChoices(): array
     {
+        $userStatuses = SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS);
+
         return array_combine(
-            SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS),
-            SpyUserTableMap::getValueSet(SpyUserTableMap::COL_STATUS)
+            $userStatuses,
+            $userStatuses
         );
     }
 }

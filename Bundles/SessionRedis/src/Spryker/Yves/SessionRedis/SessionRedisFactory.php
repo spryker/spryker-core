@@ -107,7 +107,7 @@ class SessionRedisFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Zed\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[]
+     * @return \Spryker\Shared\SessionRedisExtension\Dependency\Plugin\SessionRedisLifeTimeCalculatorPluginInterface[]
      */
     public function getSessionRedisLifeTimeCalculatorPlugins(): array
     {

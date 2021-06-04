@@ -73,7 +73,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link saveSalesOrder()} instead
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::saveSalesOrder()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -92,12 +92,58 @@ interface SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::saveOrderRaw()} instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
     public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+
+    /**
+     * Specification:
+     * - Saves order to Persistence.
+     * - Sets "is test" flag.
+     * - Updates checkout response with saved order data.
+     * - Sets initial state for state machine.
+     * - Executes `OrderPostSavePluginInterface` stack of plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderRaw(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+
+    /**
+     * Specification:
+     * - Saves order items to Persistence.
+     * - Execute `OrderItemExpanderPreSavePluginInterface` stack of plugins
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderItems(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+
+    /**
+     * Specification:
+     * - Saves order totals to Persistence.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderTotals(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 
     /**
      * Specification:
@@ -327,7 +373,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link getUniqueItemsFromOrder()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::getUniqueItemsFromOrder()} instead.
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -420,4 +466,20 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer
      */
     public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks that the order is not a duplicate.
+     * - Expects `Quote::orderReference`, `Quote::getIsOrderPlacedSuccessfully` and `Quote::customer::customerReference()` to be set.
+     * - Sets `isSuccess=false` and adds an error message in `CheckoutResponseTransfer` if order is a duplicate and returns `false`.
+     * - Returns `true` if the order was not found in the database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkDuplicateOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool;
 }

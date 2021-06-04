@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 
 interface PriceProductFacadeInterface
 {
@@ -261,7 +262,8 @@ interface PriceProductFacadeInterface
      * Specification:
      *  - Reads prices same as findPricesBySkuForCurrentStore, then groups by currency, price mode, price type for current store.
      *  - Delegates call to findPricesBySkuForCurrentStore and groups result after by currency, price mode and price type.
-     *  - Groups provided transfers `priceData` by currency only.
+     *  - Groups provided transfers `priceData` by currency only for BC reasons.
+     *  - Groups provided transfers `priceData` by currency and price type.
      *
      * For example:
      *   $result = [
@@ -270,11 +272,17 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
-     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceDataByPriceType' => [
+     *            'DEFAULT' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *            'ORIGINAL' => '{"volume_prices":[{"quantity":"2","net_price":700,"gross_price":850}]}'
+     *        ],
      *     ]
      *  ];
      *
      * @api
+     *
+     * @phpstan-return array<mixed>
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer|null $priceProductDimensionTransfer
@@ -286,7 +294,8 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Groups provided transfers by currency, price mode and price type.
-     * - Groups provided transfers `priceData` by currency only.
+     * - Groups provided transfers `priceData` by currency only for BC reasons.
+     * - Groups provided transfers `priceData` by currency and price type.
      *
      * Example:
      *   $result = [
@@ -295,11 +304,17 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
-     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceDataByPriceType' => [
+     *            'DEFAULT' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *            'ORIGINAL' => '{"volume_prices":[{"quantity":"2","net_price":700,"gross_price":850}]}'
+     *        ],
      *     ]
      *  ];
      *
      * @api
+     *
+     * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
@@ -381,6 +396,8 @@ interface PriceProductFacadeInterface
      *  - Generates checksum hash for price data field.
      *
      * @api
+     *
+     * @phpstan-param array<mixed> $priceData
      *
      * @param array $priceData
      *
@@ -604,4 +621,17 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
     public function validatePrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands `WishlistItem` transfer object with a price data.
+     * - Return expanded `WishlistItem` transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function expandWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 }

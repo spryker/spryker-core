@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/FileManager/src/Spryker/Zed/FileManager/Persistence/FileManagerPersistenceFactory.php",
+        "description": "\n      FileManagerPersistenceFactory::createFileQuery() in Spryker\\Zed\\FileManager\\Persistence\\FileManagerPersistenceFactory::createFileQuery() contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"\n    ",
+        "rule": "FactoryCreateContainOneNewRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

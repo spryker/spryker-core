@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface;
 use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface;
+use Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface;
 
 class OrderReader implements OrderReaderInterface
 {
@@ -30,15 +30,23 @@ class OrderReader implements OrderReaderInterface
     protected $orderRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface
+     */
+    protected $ordersRestApiValidator;
+
+    /**
      * @param \Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientInterface $salesClient
      * @param \Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBuilderInterface $orderRestResponseBuilder
+     * @param \Spryker\Glue\OrdersRestApi\Processor\Validator\OrdersRestApiValidatorInterface $ordersRestApiValidator
      */
     public function __construct(
         OrdersRestApiToSalesClientInterface $salesClient,
-        OrderRestResponseBuilderInterface $orderRestResponseBuilder
+        OrderRestResponseBuilderInterface $orderRestResponseBuilder,
+        OrdersRestApiValidatorInterface $ordersRestApiValidator
     ) {
         $this->salesClient = $salesClient;
         $this->orderRestResponseBuilder = $orderRestResponseBuilder;
+        $this->ordersRestApiValidator = $ordersRestApiValidator;
     }
 
     /**
@@ -53,6 +61,20 @@ class OrderReader implements OrderReaderInterface
                 $restRequest->getResource()->getId(),
                 $restRequest->getRestUser()->getNaturalIdentifier()
             );
+        }
+
+        return $this->getOrderListAttributes($restRequest);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getCustomerOrders(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$this->ordersRestApiValidator->isSameCustomerReference($restRequest)) {
+            return $this->orderRestResponseBuilder->createCustomerUnauthorizedErrorResponse();
         }
 
         return $this->getOrderListAttributes($restRequest);
@@ -106,10 +128,23 @@ class OrderReader implements OrderReaderInterface
         $orderListRequestTransfer = (new OrderListRequestTransfer())->setCustomerReference($customerReference);
 
         $limit = 0;
+        $filterTransfer = new FilterTransfer();
+
         if ($restRequest->getPage()) {
             $limit = $restRequest->getPage()->getLimit();
-            $orderListRequestTransfer->setFilter($this->createFilterTransfer($restRequest->getPage()));
+            $filterTransfer
+                ->setOffset($restRequest->getPage()->getOffset())
+                ->setLimit($restRequest->getPage()->getLimit());
         }
+        $sortTransfer = $restRequest->getSort();
+
+        if (isset($sortTransfer[0])) {
+            $filterTransfer
+                ->setOrderDirection($sortTransfer[0]->getDirection())
+                ->setOrderBy($sortTransfer[0]->getField());
+        }
+
+        $orderListRequestTransfer->setFilter($filterTransfer);
 
         $orderListTransfer = $this->salesClient->getOffsetPaginatedCustomerOrderList($orderListRequestTransfer);
 
@@ -137,17 +172,5 @@ class OrderReader implements OrderReaderInterface
         }
 
         return $this->orderRestResponseBuilder->createOrderRestResponse($orderTransfer);
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\PageInterface $page
-     *
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    protected function createFilterTransfer(PageInterface $page): FilterTransfer
-    {
-        return (new FilterTransfer())
-            ->setOffset($page->getOffset())
-            ->setLimit($page->getLimit());
     }
 }

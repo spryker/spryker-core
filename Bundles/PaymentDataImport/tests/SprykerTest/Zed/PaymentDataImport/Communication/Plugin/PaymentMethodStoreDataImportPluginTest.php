@@ -49,7 +49,7 @@ class PaymentMethodStoreDataImportPluginTest extends Unit
         ]);
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
         $this->tester->havePaymentMethod([
-            PaymentMethodTransfer::METHOD_NAME => 'method-1',
+            PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'method-1',
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),
         ]);
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();

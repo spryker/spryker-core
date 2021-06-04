@@ -1,41 +1,41 @@
 {
-  "name": "spryker/company-user-gui",
-  "type": "library",
-  "description": "CompanyUserGui module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/company": "^1.1.3",
-    "spryker/company-user": "^2.7.0",
-    "spryker/company-user-gui-extension": "^1.0.0",
-    "spryker/customer": "^7.10.2",
-    "spryker/customer-extension": "^1.1.0",
-    "spryker/gui": "^3.33.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/propel-orm": "^1.0.0",
-    "spryker/symfony": "^3.1.5",
-    "spryker/util-text": "^1.2.1"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/company-user-gui",
+    "type": "library",
+    "description": "CompanyUserGui module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/company": "^1.1.3",
+        "spryker/company-user": "^2.7.0",
+        "spryker/company-user-gui-extension": "^1.0.0",
+        "spryker/customer": "^7.10.2",
+        "spryker/customer-extension": "^1.1.0",
+        "spryker/gui": "^3.33.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/symfony": "^3.1.5",
+        "spryker/util-text": "^1.2.1"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

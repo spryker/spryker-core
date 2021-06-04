@@ -7,21 +7,22 @@
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantStorageTransfer;
 
 interface MerchantOpeningHoursRestApiToMerchantStorageClientInterface
 {
     /**
-     * @param string[] $merchantReferences
-     *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
-     */
-    public function getByMerchantReferences(array $merchantReferences): array;
-
-    /**
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
      */
-    public function findOneByMerchantReference(string $merchantReference): ?MerchantStorageTransfer;
+    public function findOne(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): ?MerchantStorageTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array;
 }

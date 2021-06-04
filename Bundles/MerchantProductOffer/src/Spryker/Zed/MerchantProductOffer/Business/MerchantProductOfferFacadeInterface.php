@@ -7,22 +7,22 @@
 
 namespace Spryker\Zed\MerchantProductOffer\Business;
 
-use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 
 interface MerchantProductOfferFacadeInterface
 {
     /**
      * Specification:
-     *  - Gets ProductOfferCollectionTransfer filtered by MerchantProductOfferCriteriaFilterTransfer.
+     *  - Gets ProductOfferCollectionTransfer filtered by MerchantProductOfferCriteriaTransfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
     public function getProductOfferCollection(
-        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+        MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
     ): ProductOfferCollectionTransfer;
 }

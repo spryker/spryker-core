@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
-          namespace="Orm\Zed\ProductOffer\Persistence" package="src.Orm.Zed.ProductOffer.Persistence">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductOffer\Persistence" package="src.Orm.Zed.ProductOffer.Persistence">
 
     <table name="spy_product_offer">
         <column name="id_product_offer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -10,6 +7,10 @@
         <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
         <column name="is_active" default="true" type="BOOLEAN"/>
         <column name="approval_status" type="VARCHAR" size="64" required="true"/>
+
+        <index name="spy_product_offer-concrete_sku">
+            <index-column name="concrete_sku"/>
+        </index>
 
         <unique name="spy_product_offer-product_offer_reference">
             <unique-column name="product_offer_reference"/>

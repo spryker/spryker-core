@@ -1,50 +1,51 @@
 {
-  "name": "spryker/error-handler",
-  "type": "library",
-  "description": "ErrorHandler module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/application-extension": "^1.0.0",
-    "spryker/config": "^3.0.0",
-    "spryker/kernel": "^3.30.0",
-    "spryker/log": "^3.0.0",
-    "spryker/monitoring": "^1.0.0 || ^2.0.0"
-  },
-  "require-dev": {
-    "filp/whoops": "^2.1",
-    "spryker/code-sniffer": "*",
-    "spryker/container": "*",
-    "spryker/silex": "*",
-    "spryker/testify": "*"
-  },
-  "suggest": {
-    "filp/whoops": "When you want to use the ErrorHandler plugins.",
-    "spryker/container": "If you want to use Container.",
-    "spryker/silex": "If you want to use ServiceProvider."
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/error-handler",
+    "type": "library",
+    "description": "ErrorHandler module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/application-extension": "^1.0.0",
+        "spryker/config": "^3.0.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/log": "^3.0.0",
+        "spryker/monitoring": "^1.0.0 || ^2.0.0",
+        "spryker/util-sanitize": "^2.3.0"
+    },
+    "require-dev": {
+        "filp/whoops": "^2.1",
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/silex": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "filp/whoops": "When you want to use the ErrorHandler plugins.",
+        "spryker/container": "If you want to use Container.",
+        "spryker/silex": "If you want to use ServiceProvider."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "SprykerTest\\": "tests/SprykerTest/"
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

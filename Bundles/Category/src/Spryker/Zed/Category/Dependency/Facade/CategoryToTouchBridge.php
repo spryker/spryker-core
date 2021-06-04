@@ -43,4 +43,12 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }
+
+    /**
+     * @return bool
+     */
+    public function isTouchEnabled(): bool
+    {
+        return $this->touchFacade->isTouchEnabled();
+    }
 }

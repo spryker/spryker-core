@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Stock\Business;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StockCollectionTransfer;
+use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
@@ -322,6 +324,7 @@ interface StockFacadeInterface
      * Specification:
      *  - Persists a new stock entity to database.
      *  - Touches the newly created stock.
+     *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface} plugin stack.
      *
      * @api
      *
@@ -337,6 +340,7 @@ interface StockFacadeInterface
      *  - Updates stock store relationships.
      *  - Persists stock entity to database.
      *  - Touches the newly created stock.
+     *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface} plugin stack.
      *
      * @api
      *
@@ -363,6 +367,7 @@ interface StockFacadeInterface
      *  - Returns all available stock types for given store.
      *  - Filters out stocks that are inactive.
      *  - StoreTransfer.name is required.
+     *  - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface} plugin stack.
      *
      * @api
      *
@@ -371,4 +376,17 @@ interface StockFacadeInterface
      * @return \Generated\Shared\Transfer\StockTransfer[]
      */
     public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
+
+    /**
+     * Specification:
+     * - Gets Stock collection by criteria filter.
+     * - Executes {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface} plugin stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStocksByStockCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): StockCollectionTransfer;
 }

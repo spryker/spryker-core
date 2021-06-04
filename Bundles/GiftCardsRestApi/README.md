@@ -1,5 +1,5 @@
 # GiftCardsRestApi Module
-[![Build Status](https://travis-ci.org/spryker/gift-cards-rest-api.svg)](https://travis-ci.org/spryker/gift-cards-rest-api)
+[![Latest Stable Version](https://poser.pugx.org/spryker/gift-cards-rest-api/v/stable.svg)](https://packagist.org/packages/spryker/gift-cards-rest-api)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 GiftCardsRestApi module provides REST API resource relation to manage gift cards.

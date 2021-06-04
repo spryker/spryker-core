@@ -1,5 +1,5 @@
 # Price Module
-[![Build Status](https://travis-ci.org/spryker/price.svg)](https://travis-ci.org/spryker/price)
+[![Latest Stable Version](https://poser.pugx.org/spryker/price/v/stable.svg)](https://packagist.org/packages/spryker/price)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Price handles product pricing. Price module also provides plugins for products to populate prices.

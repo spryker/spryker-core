@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
@@ -45,6 +46,7 @@ interface CategoryFacadeInterface
      *  - Touches navigation (via TouchFacade)
      *  - Touches created url entities active (via TouchFacade)
      *  - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
+     *  - Triggers CategoryEvents::CATEGORY_AFTER_PUBLISH_CREATE event.
      *
      * @api
      *
@@ -87,6 +89,7 @@ interface CategoryFacadeInterface
      *   - Touches removed URL entities deleted (via TouchFacade)
      *   - Touches navigation active (via TouchFacade)
      *   - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
+     *   - Triggers CategoryEvents::CATEGORY_AFTER_PUBLISH_UPDATE event.
      *
      * @api
      *
@@ -139,6 +142,7 @@ interface CategoryFacadeInterface
      *  - Touches navigation active (via TouchFacade)
      *  - Calls all registered CategoryRelationDeletePluginInterface-plugins directly before removing the category entity
      *  - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
+     *  - Triggers CategoryEvents::CATEGORY_AFTER_PUBLISH_DELETE event.
      *
      * @api
      *
@@ -201,6 +205,18 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves collection with categories filtered by criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer;
 
     /**
      * Specification:
@@ -281,4 +297,17 @@ interface CategoryFacadeInterface
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
      */
     public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves URL entities from Persistent.
+     * - Filters by category node ids when provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array;
 }

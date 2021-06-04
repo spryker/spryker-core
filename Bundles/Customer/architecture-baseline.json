@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Customer/src/Spryker/Service/Customer/CustomerConfig.php",
+        "description": "\n      Access: Class Spryker\\Service\\Customer\\CustomerConfig accesses Spryker\\Zed\\Kernel\\AbstractBundleConfig which violates rule \"No call from Service to Zed\"\n    ",
+        "rule": "LayerAccessRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

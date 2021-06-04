@@ -323,11 +323,17 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     public function findIdProductAbstractForPriceProduct(PriceProductTransfer $priceProductTransfer): ?int
     {
         if ($priceProductTransfer->getIdProduct()) {
-            return $this->productFacade->getProductAbstractIdByConcreteId($priceProductTransfer->getIdProduct());
+            /** @var int $idProduct */
+            $idProduct = $priceProductTransfer->getIdProduct();
+
+            return $this->productFacade->getProductAbstractIdByConcreteId($idProduct);
         }
 
         if ($priceProductTransfer->getSkuProduct()) {
-            return $this->productFacade->getProductAbstractIdByConcreteSku($priceProductTransfer->getSkuProduct());
+            /** @var string $skuProduct */
+            $skuProduct = $priceProductTransfer->getSkuProduct();
+
+            return $this->productFacade->getProductAbstractIdByConcreteSku($skuProduct);
         }
 
         return null;

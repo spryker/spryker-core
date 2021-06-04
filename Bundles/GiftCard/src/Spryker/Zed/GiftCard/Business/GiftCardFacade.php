@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -147,6 +148,8 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacade::saveOrderGiftCards()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
@@ -154,10 +157,26 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      */
     public function saveGiftCardPayments(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this
-            ->getFactory()
-            ->createSalesOrderSaver()
+        $this->getFactory()
+            ->createSalesOrderPaymentSaver()
             ->saveGiftCardPayments($quoteTransfer, $checkoutResponse);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderGiftCards(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
+    {
+        $this->getFactory()
+            ->createOrderGiftCardsRelationshipWriter()
+            ->saveOrderGiftCards($quoteTransfer, $saveOrderTransfer);
     }
 
     /**
@@ -196,6 +215,8 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacade::saveOrderGiftCards()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -246,6 +267,10 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      *
      * @api
      *
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethods
+     *
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\ShipmentMethodTransfer>|array<int,\Generated\Shared\Transfer\ShipmentMethodTransfer>
+     *
      * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface::filterShipmentGroupMethods()} instead.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
@@ -264,6 +289,8 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\ShipmentMethodTransfer>
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *

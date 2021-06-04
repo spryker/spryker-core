@@ -8,8 +8,10 @@
 namespace Spryker\Zed\MerchantProfile\Business;
 
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
-use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantResponseTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 
 interface MerchantProfileFacadeInterface
 {
@@ -49,11 +51,11 @@ interface MerchantProfileFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
      */
-    public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer;
+    public function findOne(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): ?MerchantProfileTransfer;
 
     /**
      * Specification:
@@ -61,9 +63,23 @@ interface MerchantProfileFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
-    public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer;
+    public function get(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): MerchantProfileCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Saves merchant profile after the merchant is updated.
+     * - Does not save merchant profile if MerchantTransfer.merchantProfile is not set.
+     * - Creates a new merchant profile if MerchantTransfer.merchantProfile.idMerchantProfile is not set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    public function postUpdateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
 }

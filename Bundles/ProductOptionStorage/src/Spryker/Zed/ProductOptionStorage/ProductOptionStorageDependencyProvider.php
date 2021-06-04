@@ -26,6 +26,8 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_STORE = 'FACADE_STORE';
 
+    public const PLUGINS_PRODUCT_OPTION_COLLECTION_FILTER = 'PLUGINS_PRODUCT_OPTION_COLLECTION_FILTER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -47,6 +49,7 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
     {
         $container = $this->addProductOptionFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductOptionCollectionFilterPlugins($container);
 
         return $container;
     }
@@ -132,5 +135,27 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOptionCollectionFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_OPTION_COLLECTION_FILTER, function (Container $container) {
+            return $this->getProductOptionCollectionFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionStorageExtension\Dependency\Plugin\ProductOptionCollectionFilterPluginInterface[]
+     */
+    protected function getProductOptionCollectionFilterPlugins(): array
+    {
+        return [];
     }
 }

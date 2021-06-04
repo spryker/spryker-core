@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="Quote">
         <property name="quoteApprovals" type="QuoteApproval[]" singular="quoteApproval"/>
@@ -27,6 +25,7 @@
 
     <transfer name="QuoteApprovalRequest">
         <property name="idQuote" type="int" deprecated="Use quote property instead."/>
+        <property name="quoteIds" type="int[]" singular="quoteId"/>
         <property name="quote" type="Quote"/>
         <property name="approverCompanyUserId" type="int"/>
         <property name="requesterCompanyUserId" type="int"/>
@@ -96,7 +95,7 @@
 
     <transfer name="QuoteValidationResponse">
         <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="Message[]"  singular="message"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="Shipment">

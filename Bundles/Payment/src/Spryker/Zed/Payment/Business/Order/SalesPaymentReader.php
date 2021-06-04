@@ -10,6 +10,9 @@ namespace Spryker\Zed\Payment\Business\Order;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 
+/**
+ * @deprecated The functionality moved to SalesPayment module.
+ */
 class SalesPaymentReader implements SalesPaymentReaderInterface
 {
     /**

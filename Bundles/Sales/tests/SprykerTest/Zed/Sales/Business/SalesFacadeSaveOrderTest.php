@@ -29,21 +29,26 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Price\PriceMode;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacade;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreBridge;
 use Spryker\Zed\Sales\SalesConfig;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SequenceNumber\Business\SequenceNumberFacade;
+use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
  * Auto-generated group annotations
@@ -115,6 +120,8 @@ class SalesFacadeSaveOrderTest extends Unit
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = new SalesToSequenceNumberBridge($sequenceNumberFacade);
         $container[SalesDependencyProvider::QUERY_CONTAINER_LOCALE] = new LocaleQueryContainer();
         $container[SalesDependencyProvider::STORE] = Store::getInstance();
+        $container[SalesDependencyProvider::FACADE_STORE] = new SalesToStoreBridge(new StoreFacade());
+        $container[SalesDependencyProvider::FACADE_LOCALE] = new SalesToLocaleBridge(new LocaleFacade());
         $container[SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = [];
         $container[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE] = [];
         $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
@@ -221,6 +228,7 @@ class SalesFacadeSaveOrderTest extends Unit
 
         $shipmentTransfer = new ShipmentTransfer();
         $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
+        $shipmentTransfer->setShippingAddress($shippingAddress);
         $quoteTransfer->setShipment($shipmentTransfer);
 
         $itemTransfer = new ItemTransfer();
@@ -230,7 +238,8 @@ class SalesFacadeSaveOrderTest extends Unit
             ->setSumGrossPrice(1)
             ->setQuantity(1)
             ->setName('test-name')
-            ->setSku('sku-test');
+            ->setSku('sku-test')
+            ->setShipment($shipmentTransfer);
         $quoteTransfer->addItem($itemTransfer);
 
         $paymentTransfer = new PaymentTransfer();
@@ -472,5 +481,158 @@ class SalesFacadeSaveOrderTest extends Unit
         $omsOrderProcessEntity->save();
 
         return $omsOrderProcessEntity;
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderCreatesOrderRawAndSavesFields(): void
+    {
+        //Arrange
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+
+        //Act
+        $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
+        $orderQuery = SpySalesOrderQuery::create()
+            ->filterByPrimaryKey($saveOrderTransfer->getIdSalesOrder());
+        $orderEntity = $orderQuery->findOne();
+
+        //Assert
+        $this->assertNotNull($orderEntity);
+        $this->assertSame('max@mustermann.de', $orderEntity->getEmail());
+        $this->assertSame('Max', $orderEntity->getFirstName());
+        $this->assertSame('Mustermann', $orderEntity->getLastName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderRawCreatesAndFillsOrderItems(): void
+    {
+        //Arrange
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $omsConfig = new OmsConfig();
+        $quoteTransfer = $this->getValidItemsQuoteTransfer($quoteTransfer);
+        $checkoutResponseTransfer = $this->getValidBaseResponseTransfer();
+        $saveOrderTransfer = $checkoutResponseTransfer->getSaveOrder();
+
+        //Act
+        $initialState = SpyOmsOrderItemStateQuery::create()
+            ->filterByName($omsConfig->getInitialStatus())
+            ->findOneOrCreate();
+        $initialState->save();
+
+        $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
+        $this->salesFacade->saveSalesOrderItems($quoteTransfer, $saveOrderTransfer);
+
+        $savedItems = $saveOrderTransfer->getOrderItems();
+
+        $item1Entity = $this->findSalesOrderItemByName('item-test-1');
+        $item2Entity = $this->findSalesOrderItemByName('item-test-2');
+
+        //Assert
+        $this->assertNotNull($initialState->getIdOmsOrderItemState());
+
+        $this->assertNotNull($item1Entity);
+        $this->assertNotNull($item2Entity);
+
+        $this->assertSame($savedItems[1]->getIdSalesOrderItem(), $item1Entity->getIdSalesOrderItem());
+        $this->assertSame($quoteTransfer->getItems()[1]->getName(), $item1Entity->getName());
+        $this->assertSame($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder(), $item1Entity->getFkSalesOrder());
+        $this->assertSame($initialState->getIdOmsOrderItemState(), $item1Entity->getFkOmsOrderItemState());
+        $this->assertSame($quoteTransfer->getItems()[1]->getSku(), $item1Entity->getSku());
+        $this->assertSame($savedItems[1]->getUnitGrossPrice(), $item1Entity->getGrossPrice());
+        $this->assertSame(1, $item1Entity->getQuantity());
+
+        $this->assertSame($savedItems[2]->getIdSalesOrderItem(), $item2Entity->getIdSalesOrderItem());
+        $this->assertSame($quoteTransfer->getItems()[2]->getName(), $item2Entity->getName());
+        $this->assertSame($checkoutResponseTransfer->getSaveOrder()->getIdSalesOrder(), $item2Entity->getFkSalesOrder());
+        $this->assertSame($initialState->getIdOmsOrderItemState(), $item2Entity->getFkOmsOrderItemState());
+        $this->assertSame($quoteTransfer->getItems()[2]->getSku(), $item2Entity->getSku());
+        $this->assertSame($savedItems[2]->getUnitGrossPrice(), $item2Entity->getGrossPrice());
+        $this->assertSame(1, $item2Entity->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveOrderCreatesOrderRawAndSavesOrderTotals(): void
+    {
+        //Arrange
+        $quoteTransfer = $this->getValidBaseQuoteTransfer();
+        $saveOrderTransfer = $this->createSaveOrderTransfer();
+
+        //Act
+        $this->salesFacade->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
+        $this->salesFacade->saveSalesOrderTotals($quoteTransfer, $saveOrderTransfer);
+
+        $orderTotalsQuery = SpySalesOrderTotalsQuery::create()
+            ->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
+
+        $orderTotalsEntity = $orderTotalsQuery->findOne();
+
+        //Assert
+        $this->assertNotNull($orderTotalsEntity);
+        $this->assertSame(1337, $orderTotalsEntity->getGrandTotal());
+        $this->assertSame(337, $orderTotalsEntity->getSubtotal());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    private function getValidItemsQuoteTransfer(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $shippingAddress = new AddressTransfer();
+        $shippingAddress->setIso2Code('ix')
+            ->setAddress1('address-1-2-test')
+            ->setFirstName('Max')
+            ->setLastName('Mustermann')
+            ->setZipCode('1337')
+            ->setCity('SpryHome');
+
+        $shipmentTransfer = new ShipmentTransfer();
+        $shipmentTransfer->setMethod(new ShipmentMethodTransfer());
+        $shipmentTransfer->setShippingAddress($shippingAddress);
+
+        $item1 = new ItemTransfer();
+        $item1->setName('item-test-1')
+            ->setSku('sku1')
+            ->setUnitPrice(130)
+            ->setUnitGrossPrice(120)
+            ->setSumGrossPrice(120)
+            ->setQuantity(1)
+            ->setTaxRate(19)
+            ->setShipment($shipmentTransfer);
+
+        $item2 = new ItemTransfer();
+        $item2->setName('item-test-2')
+            ->setSku('sku2')
+            ->setUnitPrice(130)
+            ->setUnitGrossPrice(130)
+            ->setSumGrossPrice(130)
+            ->setQuantity(1)
+            ->setTaxRate(19)
+            ->setShipment($shipmentTransfer);
+
+        $quoteTransfer->addItem($item1);
+        $quoteTransfer->addItem($item2);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
+    private function findSalesOrderItemByName(string $name)
+    {
+        $itemQuery = SpySalesOrderItemQuery::create()
+            ->filterByName($name);
+
+        return $itemQuery->findOne();
     }
 }

@@ -53,11 +53,13 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
     }
 
     /**
+     * @param string $navigationType
+     *
      * @throws \ErrorException
      *
      * @return array
      */
-    public function getNavigation()
+    public function getNavigation(string $navigationType): array
     {
         if ($this->navigationDefinition !== null) {
             return $this->navigationDefinition;
@@ -65,7 +67,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
 
         try {
             /** @var \Laminas\Config\Config $navigationDefinition */
-            $navigationDefinition = Factory::fromFile($this->zedNavigationConfig->getRootNavigationSchema(), true);
+            $navigationDefinition = Factory::fromFile($this->zedNavigationConfig->getRootNavigationSchemaPaths()[$navigationType], true);
             $rootDefinition = clone $navigationDefinition;
         } catch (Exception $e) {
             $navigationDefinition = new Config([]);
@@ -73,7 +75,8 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
         }
 
         $coreNavigationDefinition = new Config([]);
-        foreach ($this->navigationSchemaFinder->getSchemaFiles() as $moduleNavigationFile) {
+        $fileNamePattern = $this->zedNavigationConfig->getNavigationSchemaFileNamePatterns()[$navigationType];
+        foreach ($this->navigationSchemaFinder->getSchemaFiles($fileNamePattern) as $moduleNavigationFile) {
             if (!file_exists($moduleNavigationFile->getPathname())) {
                 throw new ErrorException('Navigation-File does not exist: ' . $moduleNavigationFile);
             }

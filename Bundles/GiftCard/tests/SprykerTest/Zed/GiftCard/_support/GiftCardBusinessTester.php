@@ -11,6 +11,8 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCardQuery;
+use Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainer;
 
 /**
  * @method void wantToTest($text)
@@ -48,6 +50,52 @@ class GiftCardBusinessTester extends Actor
     {
         return $this->createQuoteTransfer()
             ->addGiftCard((new GiftCardTransfer())->setCode(static::GIFT_CARD_CODE));
+    }
+
+    /**
+     * @param int $idSalesPayment
+     * @param int $expectedCount
+     *
+     * @return void
+     */
+    public function assertPaymentGiftCardExistBySalesPaymentId(int $idSalesPayment, int $expectedCount): void
+    {
+        $paymentGiftCards = (new GiftCardQueryContainer())->queryPaymentGiftCards()
+            ->findByFkSalesPayment($idSalesPayment);
+
+        $this->assertCount($expectedCount, $paymentGiftCards);
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param int $expectedCount
+     *
+     * @return void
+     */
+    public function assertSalesOrderItemGiftCardExistBySalesPaymentId(int $idSalesOrder, int $expectedCount): void
+    {
+        $salesOrderItemGiftCardEntities = (new SpySalesOrderItemGiftCardQuery())
+            ->useSpySalesOrderItemQuery()
+                ->filterByFkSalesOrder($idSalesOrder)
+            ->endUse()
+            ->find();
+
+        $this->assertCount($expectedCount, $salesOrderItemGiftCardEntities);
+    }
+
+    /**
+     * @param int $idSalesPayment
+     * @param string $code
+     *
+     * @return void
+     */
+    public function assertPaymentGiftCardExistBySalesPaymentIdAndCode(int $idSalesPayment, string $code): void
+    {
+        $paymentGiftCards = (new GiftCardQueryContainer())->queryPaymentGiftCards()
+            ->filterByCode($code)
+            ->findByFkSalesPayment($idSalesPayment);
+
+        $this->assertCount(1, $paymentGiftCards);
     }
 
     /**

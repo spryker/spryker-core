@@ -1,0 +1,64 @@
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% form_theme merchantAccountForm '@ZedUi/Form/form-webcomponent-layout.twig' %}
+
+{% block headTitle %}
+    {{ 'My Account' | trans }}
+{% endblock %}
+
+{% block content %}
+    {% set actionConfig = '{
+        "type": "drawer",
+        "component": "ajax-form",
+        "options": {
+            "inputs": {
+                "action": "' ~ url(urlChangePassword) ~ '"
+            }
+        }
+    }' %}
+
+    {{ form_start(merchantAccountForm, { attr: { novalidate: '', withMonitor: true } }) }}
+        <web-mp-my-account cloak>
+            <span title>{{ 'My Account' | trans }}</span>
+            {{ form_row(merchantAccountForm.save, { attr: { size: 'lg', action: '' } }) }}
+
+            <web-spy-card class="mp-my-account__card" cloak spy-title="{{ 'Personal Details' | trans }}">
+                <div class="spy-row spy-row-gutter-lg">
+                    <div class="spy-col spy-col-gutter-lg spy-col-5">
+                        {{ form_row(merchantAccountForm.first_name, { row_attr: { 'no-spaces': 'true' } }) }}
+                    </div>
+                    <div class="spy-col spy-col-gutter-lg spy-col-5">
+                        {{ form_row(merchantAccountForm.last_name, { row_attr: { 'no-spaces': 'true' } }) }}
+                    </div>
+                </div>
+            </web-spy-card>
+
+            <web-spy-card class="mp-my-account__card" cloak spy-title="{{ 'Email *' | trans }}">
+                <div class="spy-row spy-row-gutter-lg">
+                    <div class="spy-col spy-col-gutter-lg spy-col-5">
+                        {{ form_row(merchantAccountForm.username, { label: '', row_attr: { 'no-spaces': 'true' } }) }}
+                    </div>
+                </div>
+            </web-spy-card>
+
+            <web-spy-card class="mp-my-account__card" cloak spy-title="{{ 'Password' | trans }}">
+                <web-spy-button-action type="button" variant="secondary" size="md" action="{{ actionConfig }}">
+                    {{ 'Change password' | trans }}
+                </web-spy-button-action>
+            </web-spy-card>
+
+            <web-spy-card class="mp-my-account__card" cloak spy-title="{{ 'Language' | trans }}">
+                <div class="spy-row spy-row-gutter-lg">
+                    <div class="spy-col spy-col-gutter-lg spy-col-5">
+                        {{ form_row(merchantAccountForm.fk_locale, { label: '', row_attr: { 'no-spaces': 'true' } }) }}
+                    </div>
+                </div>
+            </web-spy-card>
+        </web-mp-my-account>
+    {{ form_end(merchantAccountForm) }}
+{% endblock %}
+
+{% block footerJs %}
+    <script src="{{ assetsPath('js/mp/spy/user-merchant-portal-gui-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp/spy/user-merchant-portal-gui-es5.js') }}" nomodule defer></script>
+    {{ parent() }}
+{% endblock %}

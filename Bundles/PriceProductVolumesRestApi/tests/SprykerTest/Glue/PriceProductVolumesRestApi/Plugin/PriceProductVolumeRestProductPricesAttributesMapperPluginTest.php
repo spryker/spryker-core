@@ -27,6 +27,13 @@ use Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig;
 class PriceProductVolumeRestProductPricesAttributesMapperPluginTest extends Unit
 {
     /**
+     * @see \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     */
+    protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
+    protected const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
+
+    /**
      * @return void
      */
     public function testMapWillMapVolumePricesToRestProductPriceAttributesTransfer(): void
@@ -81,5 +88,68 @@ class PriceProductVolumeRestProductPricesAttributesMapperPluginTest extends Unit
         // Assert
         $this->assertCount(0, $restProductPriceAttributesTransfer->getVolumePrices());
         $this->assertEquals($restProductPriceAttributesTransfer, $returnedRestProductPriceAttributesTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapShouldMapDataToAssociatedPriceTypeIfPriceDataByPriceTypeNotEmpty(): void
+    {
+        // Arrange
+        $priceDataForDefaultPriceType = [
+            PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY => 5,
+            PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE => 111,
+            PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE => 222,
+        ];
+
+        $priceDataForOriginalPriceType = [
+            PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY => 8,
+            PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE => 444,
+            PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE => 555,
+        ];
+
+        $currentProductPriceTransfer = (new CurrentProductPriceBuilder())->build();
+        $currentProductPriceTransfer->setPriceData(json_encode([
+            PriceProductVolumeConfig::VOLUME_PRICE_TYPE => [$priceDataForDefaultPriceType],
+        ]));
+
+        $currentProductPriceTransfer->setPriceDataByPriceType([
+            static::PRICE_TYPE_DEFAULT => json_encode([
+                PriceProductVolumeConfig::VOLUME_PRICE_TYPE => [$priceDataForDefaultPriceType],
+            ]),
+            static::PRICE_TYPE_ORIGINAL => json_encode([
+                PriceProductVolumeConfig::VOLUME_PRICE_TYPE => [$priceDataForOriginalPriceType],
+            ]),
+        ]);
+
+        $restProductPriceAttributesTransferWithDefaultPriceType = new RestProductPriceAttributesTransfer();
+        $restProductPriceAttributesTransferWithDefaultPriceType->setPriceTypeName(static::PRICE_TYPE_DEFAULT);
+
+        $restProductPriceAttributesTransferWithOriginalPriceType = new RestProductPriceAttributesTransfer();
+        $restProductPriceAttributesTransferWithOriginalPriceType->setPriceTypeName(static::PRICE_TYPE_ORIGINAL);
+
+        $priceProductVolumeRestProductPricesAttributesMapperPlugin = new PriceProductVolumeRestProductPricesAttributesMapperPlugin();
+
+        // Act
+        $returnedRestProductPriceAttributesTransferWithDefaultPriceType = $priceProductVolumeRestProductPricesAttributesMapperPlugin->map(
+            $currentProductPriceTransfer,
+            $restProductPriceAttributesTransferWithDefaultPriceType
+        );
+
+        $returnedRestProductPriceAttributesTransferWithOriginalPriceType = $priceProductVolumeRestProductPricesAttributesMapperPlugin->map(
+            $currentProductPriceTransfer,
+            $restProductPriceAttributesTransferWithOriginalPriceType
+        );
+
+        // Assert
+        $volumePriceDataForDefaultPriceType = $returnedRestProductPriceAttributesTransferWithDefaultPriceType->getVolumePrices()->offsetGet(0);
+        $this->assertEquals(5, $volumePriceDataForDefaultPriceType->getQuantity());
+        $this->assertEquals(111, $volumePriceDataForDefaultPriceType->getNetAmount());
+        $this->assertEquals(222, $volumePriceDataForDefaultPriceType->getGrossAmount());
+
+        $volumePriceDataForOriginalPriceType = $returnedRestProductPriceAttributesTransferWithOriginalPriceType->getVolumePrices()->offsetGet(0);
+        $this->assertEquals(8, $volumePriceDataForOriginalPriceType->getQuantity());
+        $this->assertEquals(444, $volumePriceDataForOriginalPriceType->getNetAmount());
+        $this->assertEquals(555, $volumePriceDataForOriginalPriceType->getGrossAmount());
     }
 }

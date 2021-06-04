@@ -103,6 +103,10 @@ class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpand
      */
     protected function getOrderItems(array $orderTransfers): array
     {
+        if (!$orderTransfers) {
+            return [];
+        }
+
         $itemTransfers = $this->extractItemTransfersFromOrderTransfers($orderTransfers);
         if ($itemTransfers) {
             return $itemTransfers;
