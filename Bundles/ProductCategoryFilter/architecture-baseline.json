@@ -1,0 +1,23 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Dependency/Facade/ProductCategoryFilterToTouchFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'touchActive' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Dependency/Facade/ProductCategoryFilterToTouchFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'touchDeleted' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Dependency/Service/ProductCategoryFilterToUtilEncodingServiceInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'decodeJson' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]
