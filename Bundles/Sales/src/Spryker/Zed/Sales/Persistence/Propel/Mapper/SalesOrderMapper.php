@@ -9,7 +9,11 @@ namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer;
+use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -63,5 +67,61 @@ class SalesOrderMapper
         }
 
         return $mappedTotalsTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer $salesOrderAddressEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddress
+     */
+    public function mapSalesOrderAddressEntityTransferToSalesOrderAddressEntity(
+        SpySalesOrderAddressEntityTransfer $salesOrderAddressEntityTransfer,
+        SpySalesOrderAddress $salesOrderAddressEntity
+    ): SpySalesOrderAddress {
+         $salesOrderAddressEntity->fromArray($salesOrderAddressEntityTransfer->toArray());
+
+         return $salesOrderAddressEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer $salesOrderAddressEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer
+     */
+    public function mapSalesOrderAddressEntityToSalesOrderAddressEntityTransfer(
+        SpySalesOrderAddressEntityTransfer $salesOrderAddressEntityTransfer,
+        SpySalesOrderAddress $salesOrderAddressEntity
+    ): SpySalesOrderAddressEntityTransfer {
+        return $salesOrderAddressEntityTransfer->fromArray($salesOrderAddressEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    public function mapSalesOrderEntityTransferToSalesOrderEntity(
+        SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
+        SpySalesOrder $salesOrderEntity
+    ): SpySalesOrder {
+        $salesOrderEntity->fromArray($salesOrderEntityTransfer->toArray());
+
+        return $salesOrderEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
+     */
+    public function mapSalesOrderEntityToSalesOrderEntityTransfer(
+        SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
+        SpySalesOrder $salesOrderEntity
+    ): SpySalesOrderEntityTransfer {
+        return $salesOrderEntityTransfer->fromArray($salesOrderEntity->toArray(), true);
     }
 }

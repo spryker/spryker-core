@@ -20,6 +20,8 @@ use Spryker\Zed\Sales\Business\Expense\ExpenseUpdater;
 use Spryker\Zed\Sales\Business\Expense\ExpenseUpdaterInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriter;
 use Spryker\Zed\Sales\Business\Expense\ExpenseWriterInterface;
+use Spryker\Zed\Sales\Business\ItemSaver\OrderItemsSaver;
+use Spryker\Zed\Sales\Business\ItemSaver\OrderItemsSaverInterface;
 use Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdater;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentReader;
 use Spryker\Zed\Sales\Business\Model\Comment\OrderCommentSaver;
@@ -49,6 +51,8 @@ use Spryker\Zed\Sales\Business\Order\OrderReader as OrderReaderWithMultiShipping
 use Spryker\Zed\Sales\Business\Order\OrderReaderInterface;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
+use Spryker\Zed\Sales\Business\OrderWriter\SalesOrderWriter;
+use Spryker\Zed\Sales\Business\OrderWriter\SalesOrderWriterInterface;
 use Spryker\Zed\Sales\Business\Reader\OrderItemReader;
 use Spryker\Zed\Sales\Business\Reader\OrderItemReaderInterface;
 use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReader;
@@ -60,6 +64,8 @@ use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface;
 use Spryker\Zed\Sales\Business\Writer\OrderWriter;
 use Spryker\Zed\Sales\Business\Writer\OrderWriterInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
@@ -169,6 +175,36 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createSalesOrderItemMapper(),
             $this->getOrderPostSavePlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\OrderWriter\SalesOrderWriterInterface
+     */
+    public function createSalesOrderWriter(): SalesOrderWriterInterface
+    {
+        return new SalesOrderWriter(
+            $this->getCountryFacade(),
+            $this->getStoreFacade(),
+            $this->createReferenceGenerator(),
+            $this->getConfig(),
+            $this->getLocaleFacade(),
+            $this->getOrderExpanderPreSavePlugins(),
+            $this->getOrderPostSavePlugins(),
+            $this->getEntityManager()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\ItemSaver\OrderItemsSaverInterface
+     */
+    public function createOrderItemsSaver(): OrderItemsSaverInterface
+    {
+        return new OrderItemsSaver(
+            $this->getOmsFacade(),
+            $this->getConfig(),
+            $this->createSalesOrderSaverPluginExecutor(),
+            $this->getEntityManager()
         );
     }
 
@@ -445,6 +481,22 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getStore()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface
+     */
+    public function getStoreFacade(): SalesToStoreInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface
+     */
+    public function getLocaleFacade(): SalesToLocaleInterface
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_LOCALE);
     }
 
     /**

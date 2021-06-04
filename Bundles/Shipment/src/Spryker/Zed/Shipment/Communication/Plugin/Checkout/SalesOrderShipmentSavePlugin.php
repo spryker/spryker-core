@@ -13,19 +13,17 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Shipment\Communication\Plugin\Checkout\SalesOrderShipmentSavePlugin} instead.
- *
- * Requires Checkout ^4.0.0
- *
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Shipment\ShipmentConfig getConfig()
  * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
  */
-class OrderShipmentSavePlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
+class SalesOrderShipmentSavePlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
      * {@inheritDoc}
+     * - Saves order shipment.
+     * - Adds shipment expenses.
      *
      * @api
      *
@@ -34,8 +32,8 @@ class OrderShipmentSavePlugin extends AbstractPlugin implements CheckoutDoSaveOr
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        $this->getFacade()->saveOrderShipment($quoteTransfer, $saveOrderTransfer);
+        $this->getFacade()->saveSalesOrderShipment($quoteTransfer, $saveOrderTransfer);
     }
 }

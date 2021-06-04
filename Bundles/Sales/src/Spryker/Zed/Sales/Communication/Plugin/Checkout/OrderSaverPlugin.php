@@ -9,28 +9,20 @@ namespace Spryker\Zed\Sales\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
+use Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use
- * {@link \Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderSaverPlugin}
- * {@link \Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderTotalsSaverPlugin}
- * {@link \Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderItemsSaverPlugin}
- * in strict order instead.
- *
- * Requires Checkout ^4.0.0
- *
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
  * @method \Spryker\Zed\Sales\Communication\SalesCommunicationFactory getFactory()
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
  * @method \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface getQueryContainer()
  */
-class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
+class OrderSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
 {
     /**
      * {@inheritDoc}
-     * - Saves order to Persistence.
+     * - Saves order.
      *
      * @api
      *
@@ -39,8 +31,8 @@ class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrde
      *
      * @return void
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        $this->getFacade()->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+        $this->getFacade()->saveOrderRaw($quoteTransfer, $saveOrderTransfer);
     }
 }
