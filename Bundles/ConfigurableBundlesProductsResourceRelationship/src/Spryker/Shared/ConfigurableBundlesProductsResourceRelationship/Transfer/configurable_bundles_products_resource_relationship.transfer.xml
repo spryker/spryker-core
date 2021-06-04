@@ -16,4 +16,8 @@
         <property name="idProductList" type="int"/>
     </transfer>
 
+    <transfer name="ProductConcretePageSearch">
+        <property name="fkProduct" type="int"/>
+    </transfer>
+
 </transfers>

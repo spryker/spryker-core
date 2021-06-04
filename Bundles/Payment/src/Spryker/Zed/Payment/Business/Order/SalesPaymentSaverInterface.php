@@ -10,6 +10,9 @@ namespace Spryker\Zed\Payment\Business\Order;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
+/**
+ * @deprecated The functionality moved to SalesPayment module.
+ */
 interface SalesPaymentSaverInterface
 {
     /**

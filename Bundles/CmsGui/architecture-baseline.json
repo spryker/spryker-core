@@ -1,0 +1,135 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'hasPagePlaceholderMapping' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findPageGlossaryAttributes' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findCmsPageById' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'activatePage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'deactivatePage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'publishWithVersion' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'rollback' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'revert' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findLatestCmsVersionByIdCmsPage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findAllCmsVersionByIdCmsPage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'findCmsVersionByIdCmsPageAndVersion' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'syncTemplate' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/QueryContainer/CmsGuiToCmsQueryContainerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'queryTranslationWithKeyByValue' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/QueryContainer/CmsGuiToCmsQueryContainerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'queryKeyWithTranslationByKey' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/QueryContainer/CmsGuiToCmsQueryContainerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'queryPagesWithTemplatesForSelectedLocale' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/QueryContainer/CmsGuiToCmsQueryContainerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'queryPageWithUrlByIdCmsPageAndLocaleName' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/QueryContainer/CmsGuiToCmsQueryContainerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'queryCmsPageLocalizedAttributesByFkPage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/QueryContainer/CmsGuiToCmsQueryContainerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'queryPagesWithTemplatesForSelectedLocaleAndVersion' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Dependency/QueryContainer/CmsGuiToCmsQueryContainerInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'queryGlossaryKeyMappingByPlaceholdersAndIdPage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

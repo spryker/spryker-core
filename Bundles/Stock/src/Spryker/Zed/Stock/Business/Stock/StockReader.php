@@ -141,6 +141,20 @@ class StockReader implements StockReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStocksByStockCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): StockCollectionTransfer
+    {
+        $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
+
+        $stockCollectionTransfer = (new StockCollectionTransfer())->setStocks(new ArrayObject($stockTransfers));
+
+        return $this->executeStockCollectionExpanderPlugins($stockCollectionTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\StockCollectionTransfer $stockCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer

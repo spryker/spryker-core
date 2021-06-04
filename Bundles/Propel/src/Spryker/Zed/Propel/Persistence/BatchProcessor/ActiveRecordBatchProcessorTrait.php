@@ -49,11 +49,6 @@ trait ActiveRecordBatchProcessorTrait
     protected $tableMapClasses = [];
 
     /**
-     * @var \Propel\Runtime\Connection\ConnectionInterface
-     */
-    protected $writeConnections;
-
-    /**
      * @var \Propel\Runtime\Adapter\AdapterInterface
      */
     protected $adapter;
@@ -93,6 +88,8 @@ trait ActiveRecordBatchProcessorTrait
         $this->insertEntities($this->entitiesToInsert);
         $this->updateEntities($this->entitiesToUpdate);
 
+        $this->clear();
+
         return true;
     }
 
@@ -103,6 +100,8 @@ trait ActiveRecordBatchProcessorTrait
     {
         $this->insertIdenticalEntities($this->entitiesToInsert);
         $this->updateEntities($this->entitiesToUpdate);
+
+        $this->clear();
 
         return true;
     }
@@ -273,8 +272,6 @@ trait ActiveRecordBatchProcessorTrait
                 $statement->execute();
             }
             $connection->commit();
-
-            $this->clear();
         } catch (Throwable $throwable) {
             $connection->rollBack();
 
@@ -289,12 +286,9 @@ trait ActiveRecordBatchProcessorTrait
      */
     protected function getWriteConnection(string $entityClassName): ConnectionInterface
     {
-        if (!isset($this->writeConnections[$entityClassName])) {
-            $tableMapClass = $this->getTableMapClass($entityClassName);
-            $this->writeConnections[$entityClassName] = Propel::getServiceContainer()->getWriteConnection($tableMapClass::DATABASE_NAME);
-        }
+        $tableMapClass = $this->getTableMapClass($entityClassName);
 
-        return $this->writeConnections[$entityClassName];
+        return Propel::getServiceContainer()->getWriteConnection($tableMapClass::DATABASE_NAME);
     }
 
     /**

@@ -147,21 +147,57 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
      */
-    public function findOrphanPriceProductStoreEntities(): array
+    public function findOrphanPriceProductStoreEntities(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
         $priceProductStoreQuery = $this->getFactory()
             ->createPriceProductStoreQuery();
+
+        $priceProductStoreQuery = $this->applyCriteria($priceProductStoreQuery, $priceProductCriteriaTransfer);
 
         $this->getFactory()
             ->createPriceProductDimensionQueryExpander()
             ->expandPriceProductStoreQueryWithPriceDimensionForDelete(
                 $priceProductStoreQuery,
-                new PriceProductCriteriaTransfer()
+                $priceProductCriteriaTransfer
             );
 
         return $this->buildQueryFromCriteria($priceProductStoreQuery)->find();
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     */
+    protected function applyCriteria(
+        SpyPriceProductStoreQuery $priceProductStoreQuery,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): SpyPriceProductStoreQuery {
+        if ($priceProductCriteriaTransfer->getIdProductAbstract()) {
+            $priceProductStoreQuery->joinPriceProduct()
+                ->add(
+                    SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+                    $priceProductCriteriaTransfer->getIdProductAbstract(),
+                    Criteria::EQUAL
+                );
+
+            return $priceProductStoreQuery;
+        }
+        if ($priceProductCriteriaTransfer->getIdProductConcrete()) {
+            $priceProductStoreQuery->joinPriceProduct()
+                ->add(
+                    SpyPriceProductTableMap::COL_FK_PRODUCT,
+                    $priceProductCriteriaTransfer->getIdProductConcrete(),
+                    Criteria::EQUAL
+                );
+        }
+
+        return $priceProductStoreQuery;
     }
 
     /**
@@ -269,7 +305,8 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
             ->createPriceProductDefaultQuery()
             ->filterByFkPriceProductStore($idPriceProductStore);
 
-        return $this->buildQueryFromCriteria($priceProductDefaultQuery)->findOne();
+        return $this->buildQueryFromCriteria($priceProductDefaultQuery)
+            ->findOne();
     }
 
     /**

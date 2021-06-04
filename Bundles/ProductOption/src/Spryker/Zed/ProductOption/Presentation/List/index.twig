@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+    {% include '@ProductOption/_partial/filters.twig' %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Product option list' } %}
         {% block widget_content %}

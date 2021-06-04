@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\SnifferConfiguration\Builder;
 
+use RuntimeException;
 use Spryker\Zed\Development\Business\Exception\ArchitectureSniffer\InvalidTypeException;
 use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\ConfigurationReaderInterface;
 
@@ -41,6 +42,8 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
      * @param string $absoluteModulePath
      * @param array $options
      *
+     * @throws \RuntimeException
+     *
      * @return array
      */
     public function getConfiguration(string $absoluteModulePath, array $options = []): array
@@ -53,7 +56,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
         );
 
         if ($priority === static::CONFIG_PRIORITY_SKIP_VALUE) {
-            return [];
+            throw new RuntimeException('Priority should be more than 0');
         }
 
         $options[static::CONFIG_PRIORITY_NAME] = $priority;

@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupStorageTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorageTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage;
@@ -48,21 +49,29 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected $stores = [];
 
     /**
+     * @var \Spryker\Zed\ProductOptionStorageExtension\Dependency\Plugin\ProductOptionCollectionFilterPluginInterface[]
+     */
+    protected $productOptionCollectionFilterPlugins = [];
+
+    /**
      * @param \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade
      * @param \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\ProductOptionStorageExtension\Dependency\Plugin\ProductOptionCollectionFilterPluginInterface[] $productOptionCollectionFilterPlugins
      */
     public function __construct(
         ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade,
         ProductOptionStorageToStoreFacadeInterface $storeFacade,
         ProductOptionStorageQueryContainerInterface $queryContainer,
-        $isSendingToQueue
+        $isSendingToQueue,
+        $productOptionCollectionFilterPlugins = []
     ) {
         $this->productOptionFacade = $productOptionFacade;
         $this->storeFacade = $storeFacade;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->productOptionCollectionFilterPlugins = $productOptionCollectionFilterPlugins;
     }
 
     /**
@@ -74,10 +83,9 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     {
         $this->stores = $this->storeFacade->getAllStores();
         $productOptionEntities = $this->findProductOptionAbstractEntities($productAbstractIds);
-        $productOptions = [];
-        foreach ($productOptionEntities as $productOptionEntity) {
-            $productOptions[$productOptionEntity['fk_product_abstract']][] = $productOptionEntity;
-        }
+        $producOptionTransfers = $this->mapProductOptionEntitiesToProductOptionTransfers($productOptionEntities);
+        $filteredProducOptionTransfers = $this->executeProductOptionCollectionFilterPlugins($producOptionTransfers);
+        $productOptions = $this->excludeFilteredProductOptions($productOptionEntities, $filteredProducOptionTransfers);
 
         $productAbstractOptionStorageEntities = $this->findProductStorageOptionEntitiesByProductAbstractIds($productAbstractIds);
         $productAbstractIdsToRemove = $this->getProductAbstractIdsToRemove(
@@ -341,5 +349,62 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
         array $productAbstractIdsFromStorage
     ): array {
         return array_diff($productAbstractIdsFromStorage, $storedProductAbstractIds);
+    }
+
+    /**
+     * @param array $productOptionEntities
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $producOptionTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     */
+    protected function mapProductOptionEntitiesToProductOptionTransfers(
+        array $productOptionEntities,
+        array $producOptionTransfers = []
+    ): array {
+        foreach ($productOptionEntities as $productOptionEntity) {
+            $producOptionTransfers[] = (new ProductOptionTransfer())
+                ->setIdGroup($productOptionEntity['fk_product_option_group']);
+        }
+
+        return $producOptionTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $producOptionTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     */
+    protected function executeProductOptionCollectionFilterPlugins(array $producOptionTransfers): array
+    {
+        foreach ($this->productOptionCollectionFilterPlugins as $productOptionCollectionFilterPlugin) {
+            $producOptionTransfers = $productOptionCollectionFilterPlugin->filter($producOptionTransfers);
+        }
+
+        return $producOptionTransfers;
+    }
+
+    /**
+     * @param array $productOptionEntities
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $filteredProducOptionTransfers
+     *
+     * @return array
+     */
+    protected function excludeFilteredProductOptions(
+        array $productOptionEntities,
+        array $filteredProducOptionTransfers
+    ): array {
+        $productOptions = [];
+
+        foreach ($productOptionEntities as $productOptionEntity) {
+            foreach ($filteredProducOptionTransfers as $filteredProducOptionTransfer) {
+                if ($filteredProducOptionTransfer->getIdGroup() === $productOptionEntity['fk_product_option_group']) {
+                    $productOptions[$productOptionEntity['fk_product_abstract']][] = $productOptionEntity;
+
+                    break;
+                }
+            }
+        }
+
+        return $productOptions;
     }
 }

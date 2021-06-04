@@ -1,8 +1,11 @@
+{#
+@var paymentMethod \Generated\Shared\Transfer\PaymentMethodTransfer
+#}
 <div class="row">
     <div class="col-xs-12 col-md-6 col-lg-3">
         <dl>
             <dt>{{ 'Payment Method Key' | trans }}</dt>
-            <dd>{{ paymentMethod.methodName }}</dd>
+            <dd>{{ paymentMethod.paymentMethodKey }}</dd>
             <dt>{{ 'Name' | trans }}</dt>
             <dd>{{ paymentMethod.name }}</dd>
             {{ form_row(paymentMethodForm.isActive) }}

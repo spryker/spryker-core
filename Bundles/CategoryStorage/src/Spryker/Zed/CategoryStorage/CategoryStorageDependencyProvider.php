@@ -37,6 +37,7 @@ class CategoryStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addCategoryFacade($container);
 
         return $container;
     }

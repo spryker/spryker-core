@@ -8,7 +8,6 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use ArrayObject;
-use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
@@ -22,10 +21,10 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 class ConfigHelper extends Module
 {
     use ClassResolverTrait;
+    use ModuleNameTrait;
 
     protected const CONFIG_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sConfig';
     protected const SHARED_CONFIG_CLASS_NAME_PATTERN = '\%1$s\Shared\%3$s\%3$sConfig';
-    protected const MODULE_NAME_POSITION = 2;
 
     /**
      * @var array
@@ -131,23 +130,6 @@ class ConfigHelper extends Module
         $this->configStubs[$moduleName] = $configStub;
 
         return $this->configStubs[$moduleName];
-    }
-
-    /**
-     * @param string|null $moduleName
-     *
-     * @return string
-     */
-    protected function getModuleName(?string $moduleName = null): string
-    {
-        if ($moduleName) {
-            return $moduleName;
-        }
-
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        return $namespaceParts[static::MODULE_NAME_POSITION];
     }
 
     /**

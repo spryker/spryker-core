@@ -78,7 +78,7 @@ class CategoryStorageConstants
 
     /**
      * Specification:
-     * - This events will be used for spy_category_store entity deletion.
+     * - This events will be used for `spy_category_store` entity deletion.
      *
      * @api
      */

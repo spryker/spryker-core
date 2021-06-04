@@ -251,4 +251,9 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
+    <transfer name="RestUser">
+        <property name="naturalIdentifier" type="string"/>
+        <property name="surrogateIdentifier" type="int"/>
+    </transfer>
+
 </transfers>
