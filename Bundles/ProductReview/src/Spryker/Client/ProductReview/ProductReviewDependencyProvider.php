@@ -155,7 +155,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
-    protected function getBatchProductReviewsQueryExpanderPlugins()
+    protected function getBatchProductReviewsQueryExpanderPlugins(): array
     {
         return [
             new PaginatedProductReviewsQueryExpanderPlugin(),
@@ -169,7 +169,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addProductReviewsSearchResultFormatterPlugins(Container $container)
+    protected function addProductReviewsSearchResultFormatterPlugins(Container $container): Container
     {
         $container->set(static::PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS, function () {
             return $this->getProductReviewsSearchResultFormatterPlugins();

@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\BatchRatingAggregationQueryExpanderPlugin;
-use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
+use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()

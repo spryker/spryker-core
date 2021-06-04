@@ -34,20 +34,20 @@ class ProductReviewClientTest extends Unit
     protected $tester;
 
     /**
-     * @retyrn void
-     *
      * @return void
      */
     public function testExpandProductViewBatchWithProductReviewData(): void
     {
+        // Arrange
         $result = $this->createClinetSearchMockResponse();
-
         $this->setSearchReturn($result);
 
+        // Act
         $productViews = $this->createProductViews();
         $prductViewsExpended = $this->createProductViewSearchClient()
             ->expandProductViewBatchWithProductReviewData($productViews, $this->createBulkProductReviewSearchRequestTransfer());
 
+        // Assert
         foreach ($this->assertTestData() as $productId => $testData) {
             $this->assertEquals($prductViewsExpended[$productId]->getIdProductAbstract(), $productId);
             $this->assertEquals($prductViewsExpended[$productId]->getRating()->getAverageRating(), $testData['averageRating']);
@@ -87,7 +87,7 @@ class ProductReviewClientTest extends Unit
     }
 
     /**
-     * @return array<array>
+     * @return array
      */
     protected function assertTestData(): array
     {
@@ -133,7 +133,7 @@ class ProductReviewClientTest extends Unit
     /**
      * @return \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer
      */
-    protected function createBulkProductReviewSearchRequestTransfer()
+    protected function createBulkProductReviewSearchRequestTransfer(): BulkProductReviewSearchRequestTransfer
     {
         $bulkProductReviewSearchRequestTransfer = new BulkProductReviewSearchRequestTransfer();
         $bulkProductReviewSearchRequestTransfer->setProductAbstractIds(array_keys($this->createProductViews()));
@@ -159,7 +159,7 @@ class ProductReviewClientTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    protected function cerateQueryMock()
+    protected function cerateQueryMock(): QueryInterface
     {
         return $this->createMock(QueryInterface::class);
     }

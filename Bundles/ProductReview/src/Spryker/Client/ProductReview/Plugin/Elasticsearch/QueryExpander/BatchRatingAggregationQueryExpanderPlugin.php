@@ -11,8 +11,8 @@ use Elastica\Aggregation\Terms;
 use Elastica\Query;
 use Generated\Shared\Search\ProductReviewIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
+use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 
 class BatchRatingAggregationQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
@@ -20,6 +20,11 @@ class BatchRatingAggregationQueryExpanderPlugin extends AbstractPlugin implement
     public const SUB_AGGREGATION_NAME = 'rating-aggregation';
 
     /**
+     * {@inheritDoc}
+     * - Specify how exactly query is extended
+     *
+     * @api
+     *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $requestParameters
      *
@@ -35,9 +40,9 @@ class BatchRatingAggregationQueryExpanderPlugin extends AbstractPlugin implement
     /**
      * @param \Elastica\Query $query
      *
-     * @return void
+     * @return \Elastica\Query
      */
-    protected function addRatingAggregation(Query $query)
+    protected function addRatingAggregation(Query $query): Query
     {
         $subRatingAggregation = new Terms(static::SUB_AGGREGATION_NAME);
         $subRatingAggregation->setField(ProductReviewIndexMap::RATING);
@@ -47,5 +52,7 @@ class BatchRatingAggregationQueryExpanderPlugin extends AbstractPlugin implement
         $prodcutAggregation->addAggregation($subRatingAggregation);
 
         $query->addAggregation($prodcutAggregation);
+
+        return $query;
     }
 }
