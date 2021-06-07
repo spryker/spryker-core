@@ -215,6 +215,25 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateDiscountPromotionShouldFailIfIdDiscountNotExists(): void
+    {
+        // Arrange
+        $discountPromotionTransferSaved = $this->tester->haveDiscountPromotion([
+            DiscountPromotionTransfer::FK_DISCOUNT => $this->tester->haveDiscount()->getIdDiscount(),
+        ]);
+
+        $discountPromotionTransferSaved->setIdDiscountPromotion(99999);
+
+        // Act
+        $discountPromotionTransfer = $this->tester->getFacade()->updatePromotionDiscount($discountPromotionTransferSaved);
+
+        // Assert
+        $this->assertSame($discountPromotionTransfer->getIdDiscountPromotion(), null);
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateDiscountPromotionShouldUpdateExistingPromotion(): void
     {
         // Arrange
