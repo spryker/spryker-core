@@ -60,7 +60,7 @@ class ShipmentPersistenceTest extends Test
     }
 
     /**
-     * @dataProvider shipmentOrderSaverShouldUseMultipleShipmentsWithMultipleShipmentsArePersistedDataProvider
+     * @dataProvider createOrderShipmentWithMultipleShipmentsDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $countOfNewShipments
@@ -84,6 +84,30 @@ class ShipmentPersistenceTest extends Test
     }
 
     /**
+     * @dataProvider createOrderShipmentWithMultipleShipmentsDataProvider
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param int $countOfNewShipments
+     *
+     * @return void
+     */
+    public function testShipmentSalesOrderSaverShouldUseMultipleShipmentsWithMultipleShipmentsArePersisted(
+        QuoteTransfer $quoteTransfer,
+        int $countOfNewShipments
+    ): void {
+        // Arrange
+        $saveOrderTransfer = $this->tester->createOrderWithoutShipment($quoteTransfer);
+
+        $salesShipmentQuery = SpySalesShipmentQuery::create()->filterByFkSalesOrder($saveOrderTransfer->getIdSalesOrder());
+
+        // Act
+        $this->tester->getFacade()->saveSalesOrderShipment($quoteTransfer, $saveOrderTransfer);
+
+        // Assert
+        $this->assertSame($countOfNewShipments, $salesShipmentQuery->count(), 'Saved order shipments count mismatch!');
+    }
+
+    /**
      * @return array
      */
     public function shipmentOrderSaverShouldUseQuoteLevelShipmentDataProvider(): array
@@ -96,7 +120,7 @@ class ShipmentPersistenceTest extends Test
     /**
      * @return array
      */
-    public function shipmentOrderSaverShouldUseMultipleShipmentsWithMultipleShipmentsArePersistedDataProvider(): array
+    public function createOrderShipmentWithMultipleShipmentsDataProvider(): array
     {
         return [
             'France 1 item; expected: 1 order shipment in DB' => $this->getDataWithMultipleShipmentsAnd1ItemToFrance(),

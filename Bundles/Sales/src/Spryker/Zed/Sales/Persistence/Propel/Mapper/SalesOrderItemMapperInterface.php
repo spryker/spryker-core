@@ -43,4 +43,26 @@ interface SalesOrderItemMapperInterface
     public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(
         ObjectCollection $salesOrderItemEntities
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
+     */
+    public function mapSalesOrderItemEntityTransferToSalesOrderItemEntity(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
+        SpySalesOrderItem $salesOrderItemEntity
+    ): SpySalesOrderItem;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function mapSalesOrderItemEntityToSalesOrderItemEntityTransfer(
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer,
+        SpySalesOrderItem $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer;
 }

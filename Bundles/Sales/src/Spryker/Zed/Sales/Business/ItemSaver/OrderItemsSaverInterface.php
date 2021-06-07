@@ -5,23 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Business\Model\Order;
+namespace Spryker\Zed\Sales\Business\ItemSaver;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\Sales\Business\OrderWriter\SalesOrderWriterInterface} instead.
- */
-interface SalesOrderSaverInterface
+interface OrderItemsSaverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
-     * @throws \Exception
-     *
      * @return void
      */
-    public function saveOrderSales(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+    public function saveOrderItems(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 }
