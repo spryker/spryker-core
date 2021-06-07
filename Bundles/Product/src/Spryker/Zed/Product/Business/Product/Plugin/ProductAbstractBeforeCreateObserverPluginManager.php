@@ -75,7 +75,7 @@ class ProductAbstractBeforeCreateObserverPluginManager implements ProductAbstrac
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
         foreach ($this->productAbstractPreCreatePlugins as $productAbstractPreCreatePlugin) {
-            $productAbstractTransfer = $productAbstractPreCreatePlugin->create($productAbstractTransfer);
+            $productAbstractTransfer = $productAbstractPreCreatePlugin->preCreate($productAbstractTransfer);
         }
 
         return $productAbstractTransfer;

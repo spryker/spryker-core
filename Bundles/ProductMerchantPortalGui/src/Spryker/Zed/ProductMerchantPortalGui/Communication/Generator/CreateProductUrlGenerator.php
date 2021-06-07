@@ -42,16 +42,15 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
      */
     public function getCreateUrl(array $formData, bool $isSingleConcrete): string
     {
-        $getParams = sprintf(
-            '?%s=%s&%s=%s',
-            static::FIELD_SKU,
-            $formData[static::FIELD_SKU],
-            static::FIELD_NAME,
-            $formData[static::FIELD_NAME]
+        $getParams = http_build_query(
+            [
+                static::FIELD_SKU => $formData[static::FIELD_SKU],
+                static::FIELD_NAME => $formData[static::FIELD_NAME],
+            ]
         );
 
         return sprintf(
-            '%s%s',
+            '%s?%s',
             $isSingleConcrete ? static::URL_WITH_SINGLE_CONCRETE_ACTION : static::URL_WITH_MULTI_CONCRETE_ACTION,
             $getParams
         );
@@ -65,13 +64,17 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
      */
     public function getCreateProductAbstractUrl(string $sku, string $name): string
     {
+        $getParams = http_build_query(
+            [
+                static::FIELD_SKU => $sku,
+                static::FIELD_NAME => $name,
+            ]
+        );
+
         return sprintf(
-            '%s?%s=%s&%s=%s',
+            '%s?%s',
             static::URL_INDEX_ACTION,
-            static::FIELD_SKU,
-            $sku,
-            static::FIELD_NAME,
-            $name
+            $getParams
         );
     }
 }

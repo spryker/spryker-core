@@ -28,7 +28,7 @@ class MerchantProductProductAbstractPostCreatePlugin extends AbstractPlugin impl
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function create(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    public function postCreate(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         if ($productAbstractTransfer->getIdMerchant()) {
             $this->getFacade()->create(

@@ -20,7 +20,7 @@ class MerchantProductMapper
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer
      */
-    public function mapMerchantProductEntityToMerchantProductTransfer(
+    public function mapMerchantProductAbstractEntityToMerchantProductTransfer(
         SpyMerchantProductAbstract $merchantProductAbstractEntity,
         MerchantProductTransfer $merchantProductTransfer
     ): MerchantProductTransfer {

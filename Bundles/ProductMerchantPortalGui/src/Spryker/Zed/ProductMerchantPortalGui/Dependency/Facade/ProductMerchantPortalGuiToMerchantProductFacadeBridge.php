@@ -84,14 +84,4 @@ class ProductMerchantPortalGuiToMerchantProductFacadeBridge implements ProductMe
     ): bool {
         return $this->merchantProductFacade->isProductConcreteOwnedByMerchant($productConcreteTransfer, $merchantTransfer);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProductTransfer
-     */
-    public function create(MerchantProductTransfer $merchantProductTransfer): MerchantProductTransfer
-    {
-        return $this->merchantProductFacade->create($merchantProductTransfer);
-    }
 }

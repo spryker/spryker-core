@@ -34,7 +34,7 @@ class MerchantProductEntityManager extends AbstractEntityManager implements Merc
 
         $merchantProductEntity->save();
 
-        return $merchantProductMapper->mapMerchantProductEntityToMerchantProductTransfer(
+        return $merchantProductMapper->mapMerchantProductAbstractEntityToMerchantProductTransfer(
             $merchantProductEntity,
             $merchantProductTransfer
         );

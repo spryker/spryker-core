@@ -279,17 +279,15 @@ class CreateProductAbstractController extends AbstractController
      */
     protected function getProductAbstractTransfer(array $productAbstractData): ProductAbstractTransfer
     {
-        $productAbstractTransfer = $this->getFactory()
-            ->createProductAbstractMapper()
-            ->mapFormDataToProductAbstractTransfer($productAbstractData, new ProductAbstractTransfer());
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->fromArray($productAbstractData);
         $productAbstractTransfer = $this->getFactory()
             ->createProductAbstractLocalizedAttributesExpander()
             ->expandLocalizedAttributes($productAbstractTransfer);
-        $productAbstractTransfer = $this->getFactory()
+
+        return $this->getFactory()
             ->createMerchantDataExpander()
             ->expandProductAbstractWithMerchantData($productAbstractTransfer);
-
-        return $productAbstractTransfer;
     }
 
     /**
@@ -303,11 +301,10 @@ class CreateProductAbstractController extends AbstractController
         $productConcreteTransfers = $this->getFactory()
             ->createProductConcreteMapper()
             ->mapProductConcreteDataToProductConcreteTransfers($productConcreteData, $productConcreteTransfers);
-        $productConcreteTransfers = $this->getFactory()
+
+        return $this->getFactory()
             ->createProductConcreteLocalizedAttributesExpander()
             ->expandLocalizedAttributes($productConcreteTransfers);
-
-        return $productConcreteTransfers;
     }
 
     /**

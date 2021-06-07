@@ -29,7 +29,7 @@ class PriceProductAbstractPostCreatePlugin extends AbstractPlugin implements Pro
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function create(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    public function postCreate(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         return $this->getFacade()->persistProductAbstractPriceCollection($productAbstractTransfer);
     }

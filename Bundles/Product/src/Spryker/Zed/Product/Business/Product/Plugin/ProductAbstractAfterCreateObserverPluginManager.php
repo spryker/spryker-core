@@ -75,7 +75,7 @@ class ProductAbstractAfterCreateObserverPluginManager implements ProductAbstract
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
         foreach ($this->productAbstractPostCreatePlugins as $productAbstractPostCreatePlugin) {
-            $productAbstractTransfer = $productAbstractPostCreatePlugin->create($productAbstractTransfer);
+            $productAbstractTransfer = $productAbstractPostCreatePlugin->postCreate($productAbstractTransfer);
         }
 
         return $productAbstractTransfer;

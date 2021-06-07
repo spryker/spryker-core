@@ -29,7 +29,7 @@ class ImageSetProductAbstractPostCreatePlugin extends AbstractPlugin implements 
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function create(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    public function postCreate(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         return $this->getFacade()->createProductAbstractImageSetCollection($productAbstractTransfer);
     }

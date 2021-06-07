@@ -73,8 +73,6 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\Pro
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapper;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Validator\ProductConcreteValidator;
@@ -322,14 +320,6 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getPriceProductFacade(),
             $this->getMoneyFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapperInterface
-     */
-    public function createProductAbstractMapper(): ProductAbstractMapperInterface
-    {
-        return new ProductAbstractMapper();
     }
 
     /**

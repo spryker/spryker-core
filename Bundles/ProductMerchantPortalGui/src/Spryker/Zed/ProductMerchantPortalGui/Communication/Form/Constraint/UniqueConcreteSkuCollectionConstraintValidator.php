@@ -28,6 +28,10 @@ class UniqueConcreteSkuCollectionConstraintValidator extends AbstractConstraintV
             throw new UnexpectedTypeException($constraint, UniqueConcreteSkuCollectionConstraint::class);
         }
 
+        if (!is_array($concreteProducts)) {
+            throw new UnexpectedTypeException($concreteProducts, 'array');
+        }
+
         $skuCounts = [];
 
         foreach ($concreteProducts as $concreteProduct) {

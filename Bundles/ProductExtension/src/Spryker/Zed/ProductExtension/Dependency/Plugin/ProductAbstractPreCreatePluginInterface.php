@@ -22,5 +22,5 @@ interface ProductAbstractPreCreatePluginInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function create(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer;
+    public function preCreate(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer;
 }
