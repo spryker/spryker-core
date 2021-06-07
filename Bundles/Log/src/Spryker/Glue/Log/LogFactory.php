@@ -81,7 +81,7 @@ class LogFactory extends AbstractFactory
     public function createStreamHandler(): HandlerInterface
     {
         $streamHandler = new StreamHandler(
-            $this->getConfig()->getLogFilePath(),
+            $this->getConfig()->getLogDestinationPath(),
             $this->getConfig()->getLogLevel()
         );
 
@@ -104,7 +104,7 @@ class LogFactory extends AbstractFactory
     public function createExceptionStreamHandler(): HandlerInterface
     {
         $streamHandler = new StreamHandler(
-            $this->getConfig()->getExceptionLogFilePath(),
+            $this->getConfig()->getExceptionLogDestinationPath(),
             Logger::ERROR
         );
         $streamHandler->setFormatter($this->createExceptionFormatter());

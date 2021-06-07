@@ -79,8 +79,15 @@
     }
 
     &__card-radios {
-        .@{form-item-prefix-cls}-explain {
-            margin-top: @create-abstract-product-card-error-radios-margin-top;
+        .@{form-item-prefix-cls} {
+            &-explain {
+                margin-top: @create-abstract-product-card-error-radios-margin-top;
+            }
+
+            .@{radio-prefix-cls}-input {
+                width: 0;
+                height: 0;
+            }
         }
     }
 
