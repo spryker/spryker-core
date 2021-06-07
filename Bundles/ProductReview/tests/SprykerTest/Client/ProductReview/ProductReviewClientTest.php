@@ -8,12 +8,7 @@
 namespace SprykerTest\Client\ProductReview;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToSearchInterface;
-use Spryker\Client\ProductReview\ProductReviewClient;
-use Spryker\Client\ProductReview\ProductReviewClientInterface;
 use Spryker\Client\ProductReview\ProductReviewDependencyProvider;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
@@ -39,107 +34,18 @@ class ProductReviewClientTest extends Unit
     public function testExpandProductViewBatchWithProductReviewData(): void
     {
         // Arrange
-        $result = $this->createClinetSearchMockResponse();
-        $this->setSearchReturn($result);
+        $this->setSearchReturn($this->tester->createClinetSearchMockResponse());
 
         // Act
-        $productViews = $this->createProductViews();
-        $prductViewsExpended = $this->createProductViewSearchClient()
-            ->expandProductViewBatchWithProductReviewData($productViews, $this->createBulkProductReviewSearchRequestTransfer());
+        $productViews = $this->tester->createProductViews();
+        $prductViewsExpended = $this->tester->createProductViewSearchClient()
+            ->expandProductViewBatchWithProductReviewData($productViews, $this->tester->createBulkProductReviewSearchRequestTransfer());
 
         // Assert
-        foreach ($this->assertTestData() as $productId => $testData) {
+        foreach ($this->tester->expectedResultData() as $productId => $testData) {
             $this->assertEquals($prductViewsExpended[$productId]->getIdProductAbstract(), $productId);
             $this->assertEquals($prductViewsExpended[$productId]->getRating()->getAverageRating(), $testData['averageRating']);
         }
-    }
-
-    /**
-     * @return int[][][][]
-     */
-    protected function createClinetSearchMockResponse(): array
-    {
-        return [
-            'productAggregation' => [
-                1 => [
-                    'ratingAggregation' => [
-                        5 => 3,
-                        2 => 1,
-                    ],
-                ],
-                2 => [
-                    'ratingAggregation' => [
-                        5 => 3,
-                        1 => 10,
-                    ],
-                ],
-                3 => [
-                    'ratingAggregation' => [
-                        5 => 130,
-                        4 => 33,
-                        3 => 21,
-                        2 => 10,
-                        1 => 5,
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function assertTestData(): array
-    {
-        return [
-            1 => [
-                'averageRating' => 4.3,
-            ],
-            2 => [
-                'averageRating' => 1.9,
-            ],
-            3 => [
-                'averageRating' => 4.4,
-            ],
-
-        ];
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
-     */
-    protected function createProductViews(): array
-    {
-        return [
-            1 => $this->buildProductViewTranseferMockById(1),
-            2 => $this->buildProductViewTranseferMockById(2),
-            3 => $this->buildProductViewTranseferMockById(3),
-        ];
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
-     */
-    protected function buildProductViewTranseferMockById(int $id): ProductViewTransfer
-    {
-        $prodcutView = new ProductViewTransfer();
-        $prodcutView->setIdProductAbstract($id);
-
-        return $prodcutView;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer
-     */
-    protected function createBulkProductReviewSearchRequestTransfer(): BulkProductReviewSearchRequestTransfer
-    {
-        $bulkProductReviewSearchRequestTransfer = new BulkProductReviewSearchRequestTransfer();
-        $bulkProductReviewSearchRequestTransfer->setProductAbstractIds(array_keys($this->createProductViews()));
-        $bulkProductReviewSearchRequestTransfer->setFilter(new FilterTransfer());
-
-        return $bulkProductReviewSearchRequestTransfer;
     }
 
     /**
@@ -162,13 +68,5 @@ class ProductReviewClientTest extends Unit
     protected function cerateQueryMock(): QueryInterface
     {
         return $this->createMock(QueryInterface::class);
-    }
-
-    /**
-     * @return \Spryker\Client\ProductReview\ProductReviewClientInterface
-     */
-    protected function createProductViewSearchClient(): ProductReviewClientInterface
-    {
-        return new ProductReviewClient();
     }
 }

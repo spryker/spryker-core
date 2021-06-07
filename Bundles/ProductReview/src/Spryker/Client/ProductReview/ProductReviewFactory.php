@@ -10,6 +10,9 @@ namespace Spryker\Client\ProductReview;
 use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductReview\Aggregation\AggregationBuilder;
+use Spryker\Client\ProductReview\Aggregation\AggregationInterface;
+use Spryker\Client\ProductReview\Aggregation\BatchRatingAggregation;
 use Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculator;
 use Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface;
 use Spryker\Client\ProductReview\Pagination\PaginationExpander;
@@ -18,6 +21,8 @@ use Spryker\Client\ProductReview\Plugin\Elasticsearch\Query\BulkProductReviewsQu
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\Query\ProductReviewsQueryPlugin;
 use Spryker\Client\ProductReview\ProductViewExpander\ProductViewExpander;
 use Spryker\Client\ProductReview\ProductViewExpander\ProductViewExpanderInterface;
+use Spryker\Client\ProductReview\ResultFormatter\ProductRatingAggreagationResultFormatter;
+use Spryker\Client\ProductReview\ResultFormatter\ResultFormatterInterface;
 use Spryker\Client\ProductReview\Search\ProductReviewSearchReader;
 use Spryker\Client\ProductReview\Search\ProductReviewSearchReaderInterface;
 use Spryker\Client\ProductReview\Storage\ProductAbstractReviewStorageReader;
@@ -95,7 +100,7 @@ class ProductReviewFactory extends AbstractFactory
      */
     protected function getBatchProductReviewsQueryExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductReviewDependencyProvider::BATCH_PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS);
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::PLUGINS_PRODUCT_REVIEWS_QUERY_EXPANDER);
     }
 
     /**
@@ -109,9 +114,9 @@ class ProductReviewFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
-    public function getProductReviewsSearchBatchResultFormatterPlugins()
+    public function getProductReviewsBatchSearchResultFormatterPlugins(): array
     {
-        return $this->getProvidedDependency(ProductReviewDependencyProvider::BATCH_PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS);
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::PLUGINS_BATCH_PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER);
     }
 
     /**
@@ -243,7 +248,31 @@ class ProductReviewFactory extends AbstractFactory
         return new ProductReviewSearchReader(
             $this->createBulkProductReviewsQueryPlugin($bulkProductReviewSearchRequestTransfer),
             $this->getSearchClient(),
-            $this->getProductReviewsSearchBatchResultFormatterPlugins()
+            $this->getProductReviewsBatchSearchResultFormatterPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductReview\ResultFormatter\ResultFormatterInterface
+     */
+    public function createProductRatingAggreagationResultFormatter(): ResultFormatterInterface
+    {
+        return new ProductRatingAggreagationResultFormatter();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductReview\Aggregation\AggregationBuilder
+     */
+    public function createAggregationBuilder()
+    {
+        return new AggregationBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductReview\Aggregation\AggregationInterface
+     */
+    public function createBatchRatingAggregation(): AggregationInterface
+    {
+        return new BatchRatingAggregation($this->createAggregationBuilder());
     }
 }

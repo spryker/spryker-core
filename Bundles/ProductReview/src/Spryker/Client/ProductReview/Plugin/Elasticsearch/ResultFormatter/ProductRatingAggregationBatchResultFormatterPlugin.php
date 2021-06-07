@@ -8,16 +8,15 @@
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter;
 
 use Elastica\ResultSet;
-use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\BatchRatingAggregationQueryExpanderPlugin;
+use Spryker\Client\ProductReview\Aggregation\BatchRatingAggregation;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
  */
-class RatingAggregationBatchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
+class ProductRatingAggregationBatchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
     public const NAME = 'productAggregation';
-    public const SUB_NAME = 'ratingAggregation';
 
     /**
      * @return string
@@ -48,22 +47,9 @@ class RatingAggregationBatchResultFormatterPlugin extends AbstractElasticsearchR
      */
     protected function extractRatingAggregation(ResultSet $searchResult)
     {
-        $result = [];
-        $aggregation = $searchResult->getAggregation(BatchRatingAggregationQueryExpanderPlugin::AGGREGATION_NAME);
+        $aggregation = $searchResult->getAggregation(BatchRatingAggregation::PRODUCT_AGGREGATOIN_NAME);
 
-        foreach ($aggregation['buckets'] as $bucket) {
-            $result[$bucket['key']] = [
-                static::SUB_NAME => [],
-            ];
-
-            $ratingAggregation = $bucket['rating-aggregation'];
-
-            foreach ($ratingAggregation['buckets'] as $subBucket) {
-                $result[$bucket['key']][static::SUB_NAME][$subBucket['key']] = $subBucket['doc_count'];
-            }
-        }
-
-        return $result;
+        return $this->getFactory()->createProductRatingAggreagationResultFormatter()->formatBatch($aggregation);
     }
 
     /**

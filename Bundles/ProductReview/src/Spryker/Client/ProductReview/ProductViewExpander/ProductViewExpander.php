@@ -19,10 +19,11 @@ class ProductViewExpander implements ProductViewExpanderInterface
      * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin::NAME
      */
     protected const KEY_RATING_AGGREGATION = 'ratingAggregation';
+
     /**
      * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationBatchResultFormatterPlugin::NAME
      */
-    protected const KEY_BATCH_RATING_AGGREGATION = 'productAggregation';
+    protected const KEY_PRODUCT_BATCH_AGGREGATION = 'productAggregation';
 
     /**
      * @var \Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface
@@ -89,13 +90,13 @@ class ProductViewExpander implements ProductViewExpanderInterface
     public function expandProductViewsWithProductReviewData(
         array $productViewTransfers
     ): array {
-        $aggregationProductReviews = $this->productReviewSearchReader->searchProductReviews();
+        $productsReviews = $this->productReviewSearchReader->searchProductReviews();
 
-        if (!isset($aggregationProductReviews[static::KEY_BATCH_RATING_AGGREGATION])) {
+        if (!isset($productsReviews[static::KEY_PRODUCT_BATCH_AGGREGATION])) {
             return $productViewTransfers;
         }
 
-        foreach ($aggregationProductReviews[static::KEY_BATCH_RATING_AGGREGATION] as $productId => $productReviews) {
+        foreach ($productsReviews[static::KEY_PRODUCT_BATCH_AGGREGATION] as $productId => $productReviews) {
             if (empty($productReviews[static::KEY_RATING_AGGREGATION])) {
                 continue;
             }

@@ -8,6 +8,11 @@
 namespace SprykerTest\Client\ProductReview;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\ProductReview\ProductReviewClient;
+use Spryker\Client\ProductReview\ProductReviewClientInterface;
 
 /**
  * Inherited Methods
@@ -28,4 +33,100 @@ use Codeception\Actor;
 class ProductReviewClientTester extends Actor
 {
     use _generated\ProductReviewClientTesterActions;
+
+    /**
+     * @return int[][][][]
+     */
+    public function createClinetSearchMockResponse(): array
+    {
+        return [
+            'productAggregation' => [
+                1 => [
+                    'ratingAggregation' => [
+                        5 => 3,
+                        2 => 1,
+                    ],
+                ],
+                2 => [
+                    'ratingAggregation' => [
+                        5 => 3,
+                        1 => 10,
+                    ],
+                ],
+                3 => [
+                    'ratingAggregation' => [
+                        5 => 130,
+                        4 => 33,
+                        3 => 21,
+                        2 => 10,
+                        1 => 5,
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function expectedResultData(): array
+    {
+        return [
+            1 => [
+                'averageRating' => 4.3,
+            ],
+            2 => [
+                'averageRating' => 1.9,
+            ],
+            3 => [
+                'averageRating' => 4.4,
+            ],
+
+        ];
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function buildProductViewTranseferMockById(int $id): ProductViewTransfer
+    {
+        $prodcutView = new ProductViewTransfer();
+        $prodcutView->setIdProductAbstract($id);
+
+        return $prodcutView;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function createProductViews(): array
+    {
+        return [
+            1 => $this->buildProductViewTranseferMockById(1),
+            2 => $this->buildProductViewTranseferMockById(2),
+            3 => $this->buildProductViewTranseferMockById(3),
+        ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer
+     */
+    public function createBulkProductReviewSearchRequestTransfer(): BulkProductReviewSearchRequestTransfer
+    {
+        $bulkProductReviewSearchRequestTransfer = new BulkProductReviewSearchRequestTransfer();
+        $bulkProductReviewSearchRequestTransfer->setProductAbstractIds(array_keys($this->createProductViews()));
+        $bulkProductReviewSearchRequestTransfer->setFilter(new FilterTransfer());
+
+        return $bulkProductReviewSearchRequestTransfer;
+    }
+
+    /**
+     * @return \Spryker\Client\ProductReview\ProductReviewClientInterface
+     */
+    public function createProductViewSearchClient(): ProductReviewClientInterface
+    {
+        return new ProductReviewClient();
+    }
 }

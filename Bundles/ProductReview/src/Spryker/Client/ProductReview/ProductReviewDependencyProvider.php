@@ -12,13 +12,11 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToSearchBridge;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToStorageBridge;
 use Spryker\Client\ProductReview\Dependency\Client\ProductReviewToZedRequestBridge;
-use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\BatchRatingAggregationQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\PaginatedProductReviewsQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\RatingAggregationQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\SortByCreatedAtQueryExpanderPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatterPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin;
-use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationBatchResultFormatterPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin;
 use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
 
@@ -32,7 +30,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
     public const PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS = 'PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS';
-    public const BATCH_PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS = 'BATCH_PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS';
+    public const PLUGINS_PRODUCT_REVIEWS_QUERY_EXPANDER = 'PLUGINS_PRODUCT_REVIEWS_QUERY_EXPANDER';
     public const PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS = 'PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS';
     public const PLUGINS_BATCH_PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER = 'PLUGINS_BATCH_PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER';
     public const PAGINATION_CONFIG_BUILDER_PLUGIN = 'PAGINATION_CONFIG_BUILDER_PLUGIN';
@@ -143,9 +141,9 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addBatchProductReviewsQueryExpanderPlugins(Container $container)
+    protected function addBatchProductReviewsQueryExpanderPlugins(Container $container): Container
     {
-        $container->set(static::BATCH_PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS, function () {
+        $container->set(static::PLUGINS_PRODUCT_REVIEWS_QUERY_EXPANDER, function () {
             return $this->getBatchProductReviewsQueryExpanderPlugins();
         });
 
@@ -157,11 +155,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      */
     protected function getBatchProductReviewsQueryExpanderPlugins(): array
     {
-        return [
-            new PaginatedProductReviewsQueryExpanderPlugin(),
-            new BatchRatingAggregationQueryExpanderPlugin(),
-            new SortByCreatedAtQueryExpanderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -195,9 +189,9 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addProductReviewsSearchBatchResultFormatterPlugins(Container $container)
+    protected function addProductReviewsSearchBatchResultFormatterPlugins(Container $container): Container
     {
-        $container->set(static::BATCH_PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS, function () {
+        $container->set(static::PLUGINS_BATCH_PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER, function () {
             return $this->getProductReviewsSearchBatchResultFormatterPlugins();
         });
 
@@ -207,12 +201,8 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
-    public function getProductReviewsSearchBatchResultFormatterPlugins()
+    public function getProductReviewsSearchBatchResultFormatterPlugins(): array
     {
-        return [
-            new ProductReviewsResultFormatterPlugin(),
-            new PaginatedProductReviewsResultFormatterPlugin(),
-            new RatingAggregationBatchResultFormatterPlugin(),
-        ];
+        return [];
     }
 }
