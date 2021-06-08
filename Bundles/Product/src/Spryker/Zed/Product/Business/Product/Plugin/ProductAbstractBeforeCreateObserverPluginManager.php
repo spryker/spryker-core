@@ -40,8 +40,6 @@ class ProductAbstractBeforeCreateObserverPluginManager implements ProductAbstrac
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractBeforeCreateObserverPluginManager::executeProductAbstractPreCreatePlugins()} instead.
-     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

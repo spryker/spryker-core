@@ -148,7 +148,7 @@ class ProductTable extends AbstractProductTable
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
             ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, 'SpyProductAbstractLocalizedAttributes.name = null')
-            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name != null')
+            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name is not null')
             ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK)
             ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
             ->groupByIdProductAbstract()

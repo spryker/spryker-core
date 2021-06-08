@@ -357,8 +357,6 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Product\ProductDependencyProvider::getProductAbstractPreCreatePlugins()} instead.
-     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
