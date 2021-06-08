@@ -380,21 +380,11 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Zed\Product\Business\ProductBusinessFactory::getProductAbstractPreCreatePlugins()} instead.
-     *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
      */
     protected function getProductAbstractBeforeCreatePlugins()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPreCreatePluginInterface[]
-     */
-    protected function getProductAbstractPreCreatePlugins(): array
-    {
-        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_PRE_CREATE);
     }
 
     /**
@@ -485,8 +475,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function createProductAbstractBeforeCreateObserverPluginManager()
     {
         return new ProductAbstractBeforeCreateObserverPluginManager(
-            $this->getProductAbstractBeforeCreatePlugins(),
-            $this->getProductAbstractPreCreatePlugins()
+            $this->getProductAbstractBeforeCreatePlugins()
         );
     }
 
