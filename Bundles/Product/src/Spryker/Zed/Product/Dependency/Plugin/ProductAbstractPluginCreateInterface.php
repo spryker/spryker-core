@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface}
- * or {@link \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPreCreatePluginInterface} instead.
+ * instead.
  */
 interface ProductAbstractPluginCreateInterface
 {
