@@ -6,13 +6,10 @@ import {
     Input,
     OnChanges,
     Output,
-    QueryList,
     SimpleChanges,
-    ViewChildren,
     ViewEncapsulation,
 } from '@angular/core';
 import { ToJson } from '@spryker/utils';
-import { InputComponent } from '@spryker/input';
 import { IconDeleteModule } from '../../icons';
 import {
     ConcreteProductPreview,
@@ -39,9 +36,6 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     @Input() name?: string;
     @Output() generatedProductsChange = new EventEmitter<ConcreteProductPreview[]>();
     @Output() attributesChange = new EventEmitter<ProductAttribute[]>();
-
-    @ViewChildren('skuInputRef') skuInputRefs: QueryList<InputComponent>;
-    @ViewChildren('nameInputRef') nameInputRefs: QueryList<InputComponent>;
 
     isAutoGenerateSkuCheckbox = true;
     isAutoGenerateNameCheckbox = true;
@@ -208,7 +202,7 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     generateSku(checked: boolean): void {
         let generatedSku = this.concreteProductSkuGenerator.generate();
 
-        this.skuInputRefs.forEach((item, index) => {
+        this.generatedProducts.forEach((item, index) => {
             if (this.generatedProducts[index]) {
                 this.generatedProducts = [...this.generatedProducts];
                 this.generatedProducts[index].sku = checked ? generatedSku : '';
@@ -219,7 +213,7 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
                 delete this.errors[index]?.errors?.sku;
             }
 
-            if (this.skuInputRefs.length - 1 !== index) {
+            if (this.generatedProducts.length - 1 !== index) {
                 generatedSku = this.concreteProductSkuGenerator.generate(generatedSku);
             }
         });
@@ -228,7 +222,7 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     generateName(checked: boolean): void {
         let generatedName = this.concreteProductNameGenerator.generate();
 
-        this.nameInputRefs.forEach((item, index) => {
+        this.generatedProducts.forEach((item, index) => {
             if (this.generatedProducts[index]) {
                 this.generatedProducts = [...this.generatedProducts];
                 this.generatedProducts[index].name = checked ? generatedName : '';
@@ -239,7 +233,7 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
                 delete this.errors[index]?.errors?.name;
             }
 
-            if (this.nameInputRefs.length - 1 !== index) {
+            if (this.generatedProducts.length - 1 !== index) {
                 generatedName = this.concreteProductNameGenerator.generate(generatedName);
             }
         });
@@ -270,5 +264,11 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
 
     getNameErrors(index: number, errors: ConcreteProductPreviewErrors[]): string | undefined {
         return errors?.[index]?.errors?.name;
+    }
+
+    trackByAttributes(index: number, data: ConcreteProductPreview): string {
+        return data.superAttributes.reduce((acc, item) => {
+            return `${acc}/${item.value}&${item.attribute.value}`;
+        }, '');
     }
 }

@@ -34,62 +34,58 @@
             </div>
 
             <cdk-virtual-scroll-viewport itemSize="50" class="mp-concrete-products-preview__table-list">
-                <div *ngFor="let product of generatedProducts; let i = index">
-                    <div class="mp-concrete-products-preview__table-row">
-                        <div
-                            class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-attr"
-                        >
-                            <span *ngFor="let superAttribute of product.superAttributes; let isLastAttribute = last">
-                                {{ superAttribute.attribute.name }}
-                                <span *ngIf="!isLastAttribute"> / </span>
-                            </span>
-                        </div>
-                        <div
-                            class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-sku"
-                        >
-                            <spy-form-item noSpaces="true" noLabel="true" [error]="getSkuErrors | spyInvoke: i:errors">
-                                <spy-input
-                                    control
-                                    [value]="product.sku"
-                                    [disabled]="isAutoGenerateSkuCheckbox"
-                                    [attrs]="{ id: 'sku-' + i }"
-                                    (valueChange)="skuChange($event, i)"
-                                    #skuInputRef
-                                >
-                                </spy-input>
-                            </spy-form-item>
-                        </div>
-                        <div
-                            class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-name"
-                        >
-                            <spy-form-item
-                                noSpaces="true"
-                                noLabel="true"
-                                [error]="getNameErrors | spyInvoke: i:errors"
-                                class="mp-concrete-products-preview__table-row-name-form-item"
+                <div
+                    *cdkVirtualFor="let product of generatedProducts; let i = index; trackBy: trackByAttributes"
+                    class="mp-concrete-products-preview__table-row"
+                >
+                    <div
+                        class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-attr"
+                    >
+                        <span *ngFor="let superAttribute of product.superAttributes; let isLastAttribute = last">
+                            {{ superAttribute.attribute.name }}
+                            <span *ngIf="!isLastAttribute"> / </span>
+                        </span>
+                    </div>
+                    <div
+                        class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-sku"
+                    >
+                        <spy-form-item noSpaces="true" noLabel="true" [error]="getSkuErrors | spyInvoke: i:errors">
+                            <spy-input
+                                control
+                                [value]="product.sku"
+                                [disabled]="isAutoGenerateSkuCheckbox"
+                                [spyId]="'sku-' + i"
+                                (valueChange)="skuChange($event, i)"
                             >
-                                <spy-input
-                                    control
-                                    [value]="product.name"
-                                    [disabled]="isAutoGenerateNameCheckbox"
-                                    [attrs]="{ id: 'name-' + i }"
-                                    (valueChange)="nameChange($event, i)"
-                                    #nameInputRef
-                                >
-                                </spy-input>
-                            </spy-form-item>
-                            <spy-button
-                                variant="link"
-                                class="mp-concrete-products-preview__table-row-button"
-                                (click)="delete(i)"
+                            </spy-input>
+                        </spy-form-item>
+                    </div>
+                    <div
+                        class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-name"
+                    >
+                        <spy-form-item
+                            noSpaces="true"
+                            noLabel="true"
+                            [error]="getNameErrors | spyInvoke: i:errors"
+                            class="mp-concrete-products-preview__table-row-name-form-item"
+                        >
+                            <spy-input
+                                control
+                                [value]="product.name"
+                                [disabled]="isAutoGenerateNameCheckbox"
+                                [spyId]="'name-' + i"
+                                (valueChange)="nameChange($event, i)"
                             >
-                                <spy-icon
-                                    [name]="deleteIcon"
-                                    class="mp-concrete-products-preview__table-row-delete-icon"
-                                >
-                                </spy-icon>
-                            </spy-button>
-                        </div>
+                            </spy-input>
+                        </spy-form-item>
+                        <spy-button
+                            variant="link"
+                            class="mp-concrete-products-preview__table-row-button"
+                            (click)="delete(i)"
+                        >
+                            <spy-icon [name]="deleteIcon" class="mp-concrete-products-preview__table-row-delete-icon">
+                            </spy-icon>
+                        </spy-button>
                     </div>
                 </div>
             </cdk-virtual-scroll-viewport>
