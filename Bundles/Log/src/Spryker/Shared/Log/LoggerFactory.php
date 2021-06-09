@@ -18,7 +18,7 @@ use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderZed;
 class LoggerFactory
 {
     /**
-     * @var array
+     * @var \Psr\Log\LoggerInterface[]
      */
     protected static $loggers = [];
 
@@ -30,7 +30,7 @@ class LoggerFactory
     /**
      * @param \Spryker\Shared\Log\Config\LoggerConfigInterface|null $loggerConfig
      *
-     * @return \Psr\Log\LoggerInterface|null
+     * @return \Psr\Log\LoggerInterface
      */
     public static function getInstance(?LoggerConfigInterface $loggerConfig = null)
     {

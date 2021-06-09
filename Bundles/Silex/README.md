@@ -1,5 +1,5 @@
 # Silex Module
-[![Build Status](https://travis-ci.org/spryker/silex.svg)](https://travis-ci.org/spryker/silex)
+[![Latest Stable Version](https://poser.pugx.org/spryker/silex/v/stable.svg)](https://packagist.org/packages/spryker/silex)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Silex is a container module for the Silex micro-framework. Silex provides basic routing and service-provider functionality to Spryker. This module has a central role in managing Silex dependencies and supports better decoupling between modules.

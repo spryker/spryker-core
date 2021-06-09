@@ -1,5 +1,5 @@
 # ModuleFinder Module
-[![Build Status](https://travis-ci.org/spryker/module-finder.svg)](https://travis-ci.org/spryker/module-finder)
+[![Latest Stable Version](https://poser.pugx.org/spryker/module-finder/v/stable.svg)](https://packagist.org/packages/spryker/module-finder)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Tool to find modules on core level or on project level.

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -94,11 +95,17 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
      * @return void
      */
-    public function deleteOrphanPriceProductStoreEntities(): void
+    public function deleteOrphanPriceProductStoreEntities(PriceProductTransfer $priceProductTransfer): void
     {
-        $orphanPriceProductStoreEntities = $this->priceProductRepository->findOrphanPriceProductStoreEntities();
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->setIdProductAbstract($priceProductTransfer->getIdProductAbstract())
+            ->setIdProductConcrete($priceProductTransfer->getIdProduct());
+
+        $orphanPriceProductStoreEntities = $this->priceProductRepository->findOrphanPriceProductStoreEntities($priceProductCriteriaTransfer);
 
         if (count($orphanPriceProductStoreEntities) === 0) {
             return;
@@ -152,10 +159,27 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 
         if ($this->priceProductConfig->getIsDeleteOrphanStorePricesOnSaveEnabled()) {
-            $this->deleteOrphanPriceProductStoreEntities();
+            $this->deleteOrphanPriceProductStoreEntities($priceProductTransfer);
         }
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    public function deleteAllOrphanPriceProductStoreEntities(): void
+    {
+        $orphanPriceProductStoreEntities = $this->priceProductRepository
+            ->findOrphanPriceProductStoreEntities(new PriceProductCriteriaTransfer());
+
+        if (count($orphanPriceProductStoreEntities) === 0) {
+            return;
+        }
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
+            $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
+        });
     }
 
     /**

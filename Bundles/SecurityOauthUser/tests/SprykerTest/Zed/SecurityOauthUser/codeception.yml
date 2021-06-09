@@ -26,7 +26,6 @@ suites:
                 - \SprykerTest\Shared\User\Helper\UserDataHelper
                 - \SprykerTest\Zed\Acl\Helper\AclHelper
 
-
     Communication:
         path: Communication
         class_name: SecurityOauthUserCommunicationTester

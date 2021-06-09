@@ -10,9 +10,23 @@ namespace Spryker\Zed\MerchantOpeningHoursStorage\Business\Publisher;
 interface MerchantOpeningHoursStoragePublisherInterface
 {
     /**
-     * @param int[] $merchantIds
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
      *
      * @return void
      */
-    public function publish(array $merchantIds): void;
+    public function writeCollectionByMerchantOpeningHoursWeekdayScheduleEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantOpeningHoursDateScheduleEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantOpeningHoursEvents(array $eventEntityTransfers): void;
 }

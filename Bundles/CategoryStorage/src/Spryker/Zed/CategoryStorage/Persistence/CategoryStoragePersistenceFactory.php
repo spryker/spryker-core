@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  * @method \Spryker\Zed\CategoryStorage\CategoryStorageConfig getConfig()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageRepositoryInterface getRepository()
  */
 class CategoryStoragePersistenceFactory extends AbstractPersistenceFactory
 {

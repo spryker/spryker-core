@@ -1,34 +1,34 @@
 {
-  "name": "spryker/product-offer-validity-gui",
-  "type": "library",
-  "description": "ProductOfferValidityGui module",
-  "license": "proprietary",
-  "require": {
-    "php": ">=7.3",
-    "spryker/kernel": "^3.30.0",
-    "spryker/product-offer-gui-extension": "^0.1.0",
-    "spryker/product-offer-validity": "^0.2.0 || ^0.3.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spryker\\": "src/Spryker/"
+    "name": "spryker/product-offer-validity-gui",
+    "type": "library",
+    "description": "ProductOfferValidityGui module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.3",
+        "spryker/kernel": "^3.30.0",
+        "spryker/product-offer-gui-extension": "^0.1.0",
+        "spryker/product-offer-validity": "^0.2.0 || ^0.3.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
     }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
-  "config": {
-    "sort-packages": true
-  }
 }

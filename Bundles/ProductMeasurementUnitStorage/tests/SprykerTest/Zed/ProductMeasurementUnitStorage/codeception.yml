@@ -12,17 +12,26 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: Business
-        class_name: ProductMeasurementUnitStorageBusinessTester
+    Persistence:
+        path: Persistence
+        class_name: ProductMeasurementUnitStoragePersistenceTester
         modules:
             enabled:
-                - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                      projectNamespaces: ['Pyz']
                 - \SprykerTest\Shared\ProductMeasurementUnit\Helper\ProductMeasurementUnitDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Client\Storage\Helper\StorageHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Client\Testify\Helper\ConfigHelper
+                - \SprykerTest\Client\Testify\Helper\DependencyProviderHelper
+                - \SprykerTest\Client\Testify\Helper\FactoryHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Zed\Publisher\Helper\PublishAndSynchronizeHelper
+                - \SprykerTest\Zed\EventBehavior\Helper\EventBehaviorHelper
+                - \SprykerTest\Client\Queue\Helper\QueueHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\Event\Helper\EventHelper

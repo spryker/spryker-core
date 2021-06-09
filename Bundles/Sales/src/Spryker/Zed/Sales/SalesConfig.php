@@ -34,7 +34,15 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @example The format of returned array is:
+     * [
+     *    'PAYMENT_METHOD_1' => 'StateMachineProcess_1',
+     *    'PAYMENT_METHOD_2' => 'StateMachineProcess_2',
+     * ]
+     *
+     * @phpstan-return array<string, string>
+     *
+     * @return string[]
      */
     protected function getPaymentMethodStatemachineMapping()
     {

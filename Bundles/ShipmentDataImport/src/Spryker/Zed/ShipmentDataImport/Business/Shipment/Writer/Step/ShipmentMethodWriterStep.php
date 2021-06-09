@@ -27,6 +27,7 @@ class ShipmentMethodWriterStep implements DataImportStepInterface
             ->filterByShipmentMethodKey($dataSet[ShipmentDataSetInterface::COL_SHIPMENT_METHOD_KEY])
             ->findOneOrCreate();
 
+        $shipmentMethod->fromArray($dataSet->getArrayCopy());
         $shipmentMethod
             ->setFkShipmentCarrier($dataSet[ShipmentDataSetInterface::COL_ID_CARRIER])
             ->setName($dataSet[ShipmentDataSetInterface::COL_NAME])

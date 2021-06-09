@@ -123,4 +123,27 @@ interface StoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array;
+
+    /**
+     * Specification:
+     * - Checks if multi store per Zed is enabled.
+     * - Gets the value from module configuration.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMultiStorePerZedEnabled(): bool;
+
+    /**
+     * Specification:
+     * - Gets currently selected store transfer.
+     * - Fetches all shared stores related to current store transfer.
+     * - Returns a list of stores available for current persistence.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresAvailableForCurrentPersistence(): array;
 }

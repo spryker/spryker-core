@@ -9,101 +9,60 @@
  * @see \Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm
  * @type {string}
  */
-const companyFieldPath = 'select#company-user_fk_company';
+var companyFieldPath = 'select#company-user_fk_company';
 
 /**
  * @see \Spryker\Zed\CompanyUserBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitChoiceFormType
  * @type {string}
  */
-const parentFieldPath = 'select#company-user_fk_company_business_unit';
-
-/**
- * @type {string}
- */
-const parentAllOptionsFieldId = 'all-options';
-
-/**
- * @see \Spryker\Zed\CompanyUserBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider::OPTION_ATTRIBUTE_DATA
- * @type {string}
- */
-const attributeIdCompany = 'id_company';
+var companyBusinessUnitFieldPath = 'select#company-user_fk_company_business_unit';
 
 function initialize() {
-    const companyField = new CompanyFieldHandler();
+    var companyBusinessUnitField = new companyBusinessUnitFieldHandler();
 
-    companyField.cloneOptions();
-    companyField.addListenerOnCompany();
+    companyBusinessUnitField.init();
+    companyBusinessUnitField.toogleCompanyBusinessUnitVisibility();
 }
 
-function CompanyFieldHandler() {
-    const $companyField = $(companyFieldPath);
-    const $parentField = $(parentFieldPath);
+function companyBusinessUnitFieldHandler() {
+    var $companyField = $(companyFieldPath);
+    var $companyBusinessUnitField = $(companyBusinessUnitFieldPath);
 
-    function addListenerOnCompany() {
-        if (isApplicable()) {
-            setParentNames();
-            $companyField.change(setParentNames);
-        }
+    function toogleCompanyBusinessUnitVisibility() {
+        var isDisabled = Boolean($companyField.val());
+
+        $(companyBusinessUnitFieldPath).prop('disabled', isDisabled);
     }
 
-    function cloneOptions() {
-        $('<div id="' + parentAllOptionsFieldId + '" class="hidden"></div>')
-            .html($parentField.html())
-            .insertAfter($parentField);
-    }
+    function init() {
+        $companyBusinessUnitField.select2({
+            ajax: {
+                url: $companyBusinessUnitField.attr('data-url'),
+                delay: 250,
+                dataType: 'json',
+                cache: true,
+                data: function (params) {
+                    var query = {
+                        suggestion: params.term,
+                        idCompany: $companyField.val(),
+                    };
 
-    /**
-     * @returns {bool}
-     */
-    function isApplicable() {
-        return $parentField.length && $companyField.length;
-    }
+                    return query;
+                },
+            },
+            minimumInputLength: 2,
+            multiple: false,
+        });
 
-    function setParentNames() {
-        restoreAllParentOptions();
-        $parentField.children().each(toggleOption);
-
-        blinkParentField();
-    }
-
-    function toggleOption() {
-        const companyId = getCompanyId();
-        const $parentOption = $(this);
-
-        if (!$parentOption.val()) {
-            $parentField.attr('disabled', true);
-
-            return;
-        }
-
-        if (!companyId || $parentOption.data(attributeIdCompany) == companyId) {
-            return;
-        }
-
-        $parentField.attr('disabled', false);
-        $parentOption.remove();
-    }
-
-    /**
-     * @returns NaN|{string}
-     */
-    function getCompanyId() {
-        return parseInt($companyField.val());
-    }
-
-    function restoreAllParentOptions() {
-        const $parentAllOptionsField = $('#' + parentAllOptionsFieldId);
-
-        $parentField.html($parentAllOptionsField.html());
-    }
-
-    function blinkParentField() {
-        $parentField.effect('highlight', {}, 3000);
+        $companyField.on('change', function () {
+            toogleCompanyBusinessUnitVisibility();
+            $companyBusinessUnitField.val(null).trigger('change');
+        });
     }
 
     return {
-        addListenerOnCompany: addListenerOnCompany,
-        cloneOptions: cloneOptions,
+        toogleCompanyBusinessUnitVisibility: toogleCompanyBusinessUnitVisibility,
+        init: init,
     };
 }
 

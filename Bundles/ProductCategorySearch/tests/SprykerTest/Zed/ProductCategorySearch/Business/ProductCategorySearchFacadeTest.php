@@ -8,7 +8,10 @@
 namespace SprykerTest\Zed\ProductCategorySearch\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
+use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPageSearchTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
@@ -32,6 +35,7 @@ class ProductCategorySearchFacadeTest extends Unit
 {
     protected const STORE_DE = 'DE';
     protected const FAKE_ID_PRODUCT_ABSTRACT = 6666;
+    protected const TEST_CATEGORY_NAME = 'Test category';
 
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA
@@ -59,20 +63,25 @@ class ProductCategorySearchFacadeTest extends Unit
     protected $localeTransfer;
 
     /**
+     * @var \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected $storeTransfer;
+
+    /**
      * @return void
      */
     protected function setUp(): void
     {
         parent::setUp();
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]);
+        $this->storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]);
 
         $this->localeTransfer = $this->tester->getLocator()->locale()->facade()->getCurrentLocale();
         $this->categoryTransfer = $this->tester->haveLocalizedCategory(['locale' => $this->localeTransfer]);
 
         $this->tester->haveCategoryStoreRelation(
             $this->categoryTransfer->getIdCategory(),
-            $storeTransfer->getIdStore()
+            $this->storeTransfer->getIdStore()
         );
 
         $this->productConcreteTransfer = $this->tester->haveFullProduct();
@@ -156,6 +165,19 @@ class ProductCategorySearchFacadeTest extends Unit
     public function testExpandProductPageDataWithCategoryData(): void
     {
         //Arrange
+        $categoryNodeTransfer = $this->tester->haveCategoryNodeWithDifferentIdCategory(
+            [
+                CategoryTransfer::FK_CATEGORY_TEMPLATE => $this->categoryTransfer->getFkCategoryTemplate(),
+            ],
+            [
+                CategoryLocalizedAttributesTransfer::LOCALE => $this->localeTransfer,
+                CategoryLocalizedAttributesTransfer::NAME => static::TEST_CATEGORY_NAME,
+            ],
+            [
+                ProductCategoryTransfer::FK_PRODUCT_ABSTRACT => $this->productConcreteTransfer->getFkProductAbstract(),
+            ],
+            $this->storeTransfer->getIdStore()
+        );
         $productCategoryEntities = $this->tester->getMappedProductCategoriesByIdProductAbstractAndStore([
             $this->productConcreteTransfer->getFkProductAbstract(),
         ]);
@@ -177,8 +199,13 @@ class ProductCategorySearchFacadeTest extends Unit
         );
 
         //Assert
+        $idCategoryNode = $categoryNodeTransfer->getIdCategoryNode();
+        $boostedCategoryNames = $productPageSearchTransfer->getBoostedCategoryNames();
         $this->assertNotEmpty($productPageSearchTransfer->getAllParentCategoryIds(), 'Property `allParentCategoryIds` should be expanded.');
         $this->assertNotEmpty($productPageSearchTransfer->getCategoryNames(), 'Property `categoryNames` should be expanded.');
+        $this->assertNotEmpty($boostedCategoryNames, 'Property `boostedCategoryNames` should be expanded.');
+        $this->assertArrayHasKey($idCategoryNode, $boostedCategoryNames);
+        $this->assertEquals(static::TEST_CATEGORY_NAME, $boostedCategoryNames[$idCategoryNode]);
         $this->assertNotEmpty($productPageSearchTransfer->getSortedCategories(), 'Property `sortedCategories` should be expanded.');
     }
 

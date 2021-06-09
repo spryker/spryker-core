@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductOption">
+        <property name="idGroup" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantProductOptionGroup">
+        <property name="approvalStatus" type="string"/>
+        <property name="fkProductOptionGroup" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantProductOptionGroupCriteria">
+        <property name="productOptionGroupIds" type="int[]" singular="idProductOptionGroup"/>
+    </transfer>
+
+    <transfer name="MerchantProductOptionGroupCollection">
+        <property name="merchantProductOptionGroups" type="MerchantProductOptionGroup[]" singular="merchantProductOptionGroup"/>
+    </transfer>
+
+</transfers>

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantOpeningHoursRestApi\Dependency\Client\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface;
@@ -69,7 +70,10 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
         }
         $merchantReference = $merchantResource->getId();
 
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
+        $merchantStorageTransfer = $this->merchantStorageClient->findOne(
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
+        );
+
         if (!$merchantStorageTransfer) {
             return $this->merchantOpeningHoursRestResponseBuilder->createMerchantNotFoundErrorResponse();
         }
@@ -119,7 +123,9 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
      */
     protected function getMerchantIdsIndexedByReference(array $merchantReferences): array
     {
-        $merchantStorageTransfers = $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
+        $merchantStorageTransfers = $this->merchantStorageClient->get(
+            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences)
+        );
 
         $merchantIdsIndexedByReference = [];
         foreach ($merchantStorageTransfers as $merchantStorageTransfer) {

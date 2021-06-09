@@ -15,7 +15,6 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
-    public const REPLACE_4_WITH_2_SPACES = '/^(  +?)\\1(?=[^ ])/m';
     public const KEY_REQUIRE = 'require';
     public const KEY_REQUIRE_DEV = 'require-dev';
 
@@ -67,6 +66,8 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      * @param bool $dryRun
      *
+     * @throws \RuntimeException
+     *
      * @return bool
      */
     protected function updateComposerJsonFile(SplFileInfo $composerJsonFile, $dryRun = false)
@@ -85,7 +86,10 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         $composerJsonArray = $this->order($composerJsonArray);
 
         $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-        $modifiedComposerJson = preg_replace(static::REPLACE_4_WITH_2_SPACES, '$1', $modifiedComposerJson) . PHP_EOL;
+        if ($modifiedComposerJson === false) {
+            throw new RuntimeException('Cannot create composer.json file for ' . $composerJsonArray['name']);
+        }
+        $modifiedComposerJson .= PHP_EOL;
 
         if ($modifiedComposerJson === $composerJson) {
             return false;

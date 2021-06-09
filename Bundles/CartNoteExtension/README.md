@@ -1,5 +1,5 @@
 # CartNoteExtension Module
-[![Build Status](https://travis-ci.org/spryker/cart-note-extension.svg)](https://travis-ci.org/spryker/cart-note-extension)
+[![Latest Stable Version](https://poser.pugx.org/spryker/cart-note-extension/v/stable.svg)](https://packagist.org/packages/spryker/cart-note-extension)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 This module provides module provides plugin interfaces used by CartNote module.

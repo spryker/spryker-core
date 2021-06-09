@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Interface for the plugin stack defined as \Spryker\Zed\Payment\PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS
+ * @deprecated Use {@link \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutPreConditionPluginInterface} instead.
  */
 interface CheckoutPreCheckPluginInterface extends CheckoutPluginInterface
 {
@@ -27,7 +27,7 @@ interface CheckoutPreCheckPluginInterface extends CheckoutPluginInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return void
+     * @return bool
      */
     public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 }

@@ -1,3 +1,7 @@
+{#
+@var paymentMethod \Generated\Shared\Transfer\PaymentMethodTransfer
+@var paymentMethod.paymentProvider \Generated\Shared\Transfer\PaymentProviderTransfer
+#}
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set widget_title = 'View Payment Method: %s'  | trans | format(paymentMethod.name) %}
@@ -20,7 +24,7 @@
                 <div class="col-xs-12 col-md-6 col-lg-3">
                     <dl>
                         <dt>{{ 'Payment Method Key' | trans }}</dt>
-                        <dd>{{ paymentMethod.methodName }}</dd>
+                        <dd>{{ paymentMethod.paymentMethodKey }}</dd>
                         <dt>{{ 'Name' | trans }}</dt>
                         <dd>{{ paymentMethod.name }}</dd>
                         <dt>{{ 'Payment Provider' | trans }}</dt>

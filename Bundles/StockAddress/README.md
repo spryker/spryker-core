@@ -1,5 +1,6 @@
 # StockAddress Module
-[![Build Status](https://travis-ci.org/spryker/stock-address.svg)](https://travis-ci.org/spryker/stock-address)
+[![Latest Stable Version](https://poser.pugx.org/spryker/stock-address/v/stable.svg)](https://packagist.org/packages/spryker/stock-address)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Stock address provides the support of warehouses addresses.
 

@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -25,6 +27,11 @@ class CompanyUserBusinessUnitForm extends AbstractType
 
     public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
 
+    /**
+     * @uses \Spryker\Zed\CompanyBusinessUnitGui\Communication\Controller\SuggestController::indexAction()
+     */
+    protected const ROUTE_SUGGEST = '/company-business-unit-gui/suggest';
+
     protected const TEMPLATE_PATH = '@CompanyBusinessUnitGui/CompanyUser/company_business_unit.twig';
 
     /**
@@ -36,6 +43,8 @@ class CompanyUserBusinessUnitForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCompanyBusinessUnitCollectionField($builder, $options);
+
+        $this->addPreSubmitEventListener($builder);
     }
 
     /**
@@ -52,6 +61,43 @@ class CompanyUserBusinessUnitForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormEvent $formEvent
+     *
+     * @return void
+     */
+    public function companyBusinessUnitSearchPreSubmitHandler(FormEvent $formEvent): void
+    {
+        $data = $formEvent->getData();
+        $form = $formEvent->getForm();
+
+        if (!isset($data[static::FIELD_FK_COMPANY_BUSINESS_UNIT])) {
+            return;
+        }
+
+        $companyBusinessUnitChoices = $this->getFactory()
+            ->createCompanyUserBusinessUnitFormDataProvider()
+            ->getOptions($data[static::FIELD_FK_COMPANY_BUSINESS_UNIT]);
+
+        $form->add(
+            static::FIELD_FK_COMPANY_BUSINESS_UNIT,
+            SelectType::class,
+            $this->getCompanyBusinessUnitFieldParameters($companyBusinessUnitChoices)
+        );
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addPreSubmitEventListener(FormBuilderInterface $builder): void
+    {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $formEvent): void {
+            $this->companyBusinessUnitSearchPreSubmitHandler($formEvent);
+        });
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -59,11 +105,26 @@ class CompanyUserBusinessUnitForm extends AbstractType
      */
     protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
+        $builder->add(
+            static::FIELD_FK_COMPANY_BUSINESS_UNIT,
+            SelectType::class,
+            $this->getCompanyBusinessUnitFieldParameters($options)
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param array $companyBusinessUnitChoices
+     *
+     * @return array
+     */
+    protected function getCompanyBusinessUnitFieldParameters(array $companyBusinessUnitChoices = []): array
+    {
+        return [
             'label' => 'Business Unit',
             'placeholder' => 'Business Unit name',
-            'choices' => $options[static::OPTION_VALUES_BUSINESS_UNITS_CHOICES],
-            'choice_attr' => $options[static::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES],
+            'choices' => $companyBusinessUnitChoices,
             'required' => true,
             'constraints' => [
                 new NotBlank(),
@@ -71,9 +132,8 @@ class CompanyUserBusinessUnitForm extends AbstractType
             'attr' => [
                 'template_path' => $this->getTemplatePath(),
             ],
-        ]);
-
-        return $this;
+            'url' => static::ROUTE_SUGGEST,
+        ];
     }
 
     /**

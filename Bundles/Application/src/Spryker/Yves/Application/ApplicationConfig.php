@@ -42,9 +42,16 @@ class ApplicationConfig extends AbstractBundleConfig
     protected const HEADER_REFERRER_POLICY_VALUE = 'same-origin';
 
     /**
+     * @deprecated {@link https://www.w3.org/TR/permissions-policy-1/#introduction}
+     *
      * @const string
      */
     protected const HEADER_FEATURE_POLICY_VALUE = '';
+
+    /**
+     * @const string
+     */
+    protected const HEADER_PERMISSION_POLICY_VALUE = '';
 
     /**
      * @api
@@ -112,18 +119,36 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getSecurityHeaders(): array
     {
-        return [
+        $headers = [
             'X-Frame-Options' => static::HEADER_X_FRAME_OPTIONS_VALUE,
             'Content-Security-Policy' => static::HEADER_CONTENT_SECURITY_POLICY_VALUE,
             'X-Content-Type-Options' => static::HEADER_X_CONTENT_TYPE_OPTIONS_VALUE,
             'X-XSS-Protection' => static::HEADER_X_XSS_PROTECTION_VALUE,
             'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
-            'Feature-Policy' => static::HEADER_FEATURE_POLICY_VALUE,
+            'Permissions-Policy' => static::HEADER_PERMISSION_POLICY_VALUE,
         ];
+
+        $headers = $this->addFeaturePolicyHeader($headers);
+
+        return $headers;
+    }
+
+    /**
+     * @deprecated {@link https://www.w3.org/TR/permissions-policy-1/#introduction}
+     *
+     * @param string[] $headers
+     *
+     * @return string[]
+     */
+    protected function addFeaturePolicyHeader(array $headers): array
+    {
+        $headers['Feature-Policy'] = static::HEADER_FEATURE_POLICY_VALUE;
+
+        return $headers;
     }
 
     /**

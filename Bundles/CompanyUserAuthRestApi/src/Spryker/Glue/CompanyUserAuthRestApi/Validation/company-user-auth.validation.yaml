@@ -1,5 +1,5 @@
 company-user-access-tokens:
-  post:
-    idCompanyUser:
-      - NotBlank
-      - Uuid
+    post:
+        idCompanyUser:
+            - NotBlank
+            - Uuid

@@ -13,10 +13,19 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface SalesOrderItemSaverInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\GiftCard\Business\Sales\SalesOrderItemSaverInterface::saveSalesOrderItemGiftCards()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
     public function saveSalesOrderGiftCardItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse);
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderItemGiftCards(QuoteTransfer $quoteTransfer): void;
 }

@@ -19,10 +19,10 @@ suites:
         class_name: SearchElasticsearchZedTester
         modules:
             enabled:
-            - Asserts
-            - \SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper
-            - \SprykerTest\Shared\Testify\Helper\BusinessHelper
-            - \SprykerTest\Shared\Testify\Helper\Environment
-            - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-            - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-            - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
+                - Asserts
+                - \SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper
+                - \SprykerTest\Shared\Testify\Helper\BusinessHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper

@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="MerchantOpeningHoursStorage">
         <property name="weekdaySchedule" type="WeekdaySchedule[]" singular="weekdaySchedule"/>
@@ -35,7 +33,6 @@
 
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
-        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantCollection">
@@ -50,6 +47,9 @@
     <transfer name="MerchantCriteria">
         <property name="merchantIds" type="array" singular="merchantId"/>
         <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="EventEntity">
     </transfer>
 
 </transfers>

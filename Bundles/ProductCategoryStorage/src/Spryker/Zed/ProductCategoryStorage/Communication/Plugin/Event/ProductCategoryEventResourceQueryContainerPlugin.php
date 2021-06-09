@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\ProductCategoryPublisherTriggerPlugin} instead.
+ *
  * @method \Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductCategoryStorage\Business\ProductCategoryStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategoryStorage\Communication\ProductCategoryStorageCommunicationFactory getFactory()
@@ -51,7 +53,7 @@ class ProductCategoryEventResourceQueryContainerPlugin extends AbstractPlugin im
             $query->clear();
         }
 
-        return $query;
+        return $query->distinct();
     }
 
     /**

@@ -299,7 +299,10 @@ class CmsSlotFacadeTest extends Unit
      */
     public function testGetCmsSlotTemplateByIdFailsWithException(): void
     {
-        //Arrange
+        // Arrange
+        $cmsSlotFacade = $this->tester->getFacade();
+
+        // Assert
         $this->expectExceptionObject(
             new MissingCmsSlotTemplateException(
                 sprintf(
@@ -310,10 +313,7 @@ class CmsSlotFacadeTest extends Unit
         );
 
         //Act
-        $cmsSlotTemplateTransfer = $this->tester->getFacade()->getCmsSlotTemplateById(0);
-
-        // Assert
-        $this->assertNull($cmsSlotTemplateTransfer);
+        $cmsSlotFacade->getCmsSlotTemplateById(0);
     }
 
     /**
@@ -337,6 +337,9 @@ class CmsSlotFacadeTest extends Unit
     public function testFindCmsSlotByIdFailsWithException(): void
     {
         // Arrange
+        $cmsSlotFacade = $this->tester->getFacade();
+
+        // Assert
         $this->expectExceptionObject(
             new MissingCmsSlotException(
                 sprintf(
@@ -347,9 +350,6 @@ class CmsSlotFacadeTest extends Unit
         );
 
         // Act
-        $cmsSlotTransferFromDb = $this->tester->getFacade()->getCmsSlotById(0);
-
-        // Assert
-        $this->assertNull($cmsSlotTransferFromDb);
+        $cmsSlotFacade->getCmsSlotById(0);
     }
 }

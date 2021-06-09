@@ -143,7 +143,10 @@ class ProductAbstractForm extends AbstractType
         ]);
 
         $idProductAbstract = $options['data']->getIdProductAbstract();
-        $priceProductTransformer = $this->getFactory()->createPriceProductTransformer($idProductAbstract);
+
+        $priceProductTransformer = $this->getFactory()
+            ->createPriceProductTransformer()
+            ->setIdProductAbstract($idProductAbstract);
 
         $builder->get(ProductAbstractTransfer::PRICES)->addModelTransformer($priceProductTransformer);
 

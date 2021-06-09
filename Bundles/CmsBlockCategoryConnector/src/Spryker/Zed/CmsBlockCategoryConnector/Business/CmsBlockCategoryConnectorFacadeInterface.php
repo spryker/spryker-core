@@ -141,4 +141,17 @@ interface CmsBlockCategoryConnectorFacadeInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     );
+
+    /**
+     * Specification:
+     * - Gets a collection of related CMS Block names indexed by `idCmsBlock`.
+     * - Requires `CategoryTransfer::idCategory` and `CategoryTransfer::fkCategoryTemplate` to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return string[]
+     */
+    public function getCmsBlockNamesIndexedByCmsBlockIdsForCategory(CategoryTransfer $categoryTransfer): array;
 }

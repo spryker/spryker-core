@@ -18,7 +18,7 @@ trait LocatorHelperTrait
     }
 
     /**
-     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\LocatorHelper
+     * @return \SprykerTest\Shared\Testify\Helper\LocatorHelper
      */
     private function getLocatorHelper()
     {

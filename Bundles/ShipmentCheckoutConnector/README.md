@@ -1,5 +1,5 @@
 # ShipmentCheckoutConnector Module
-[![Build Status](https://travis-ci.org/spryker/shipment-checkout-connector.svg)](https://travis-ci.org/spryker/shipment-checkout-connector)
+[![Latest Stable Version](https://poser.pugx.org/spryker/shipment-checkout-connector/v/stable.svg)](https://packagist.org/packages/spryker/shipment-checkout-connector)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ShipmentCheckoutConnector provides plugins for Checkout extension points.

@@ -1,5 +1,5 @@
 # ProductRelationStorage Module
-[![Build Status](https://travis-ci.org/spryker/product-relation-storage.svg)](https://travis-ci.org/spryker/product-relation-storage)
+[![Latest Stable Version](https://poser.pugx.org/spryker/product-relation-storage/v/stable.svg)](https://packagist.org/packages/spryker/product-relation-storage)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 ## Installation

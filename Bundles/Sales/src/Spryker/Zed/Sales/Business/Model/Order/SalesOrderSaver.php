@@ -26,6 +26,9 @@ use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\SalesConfig;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\Sales\Business\OrderWriter\SalesOrderWriter} instead.
+ */
 class SalesOrderSaver implements SalesOrderSaverInterface
 {
     use DatabaseTransactionHandlerTrait;

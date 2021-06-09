@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Testify\Helper\Business;
 
 use Codeception\Configuration;
-use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
@@ -18,12 +17,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerTest\Shared\Testify\Helper\AbstractHelper;
 use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use Throwable;
 
-class BusinessHelper extends Module
+class BusinessHelper extends AbstractHelper
 {
     use ConfigHelperTrait;
     use ClassResolverTrait;
@@ -31,6 +32,7 @@ class BusinessHelper extends Module
 
     protected const BUSINESS_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
     protected const BUSINESS_FACADE_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sFacade';
+    protected const QUERY_CONTAINER_CLASS_NAME_PATTERN = '\%1$s\Zed\%3$s\Persistence\%3$sQueryContainer';
     protected const SHARED_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Shared\%3$s\%3$sSharedFactory';
 
     /**
@@ -230,6 +232,7 @@ class BusinessHelper extends Module
         if (isset($this->factoryStubs[$moduleName])) {
             $this->factoryStubs[$moduleName] = $this->injectConfig($this->factoryStubs[$moduleName], $moduleName);
             $this->factoryStubs[$moduleName] = $this->injectContainer($this->factoryStubs[$moduleName], $moduleName);
+            $this->factoryStubs[$moduleName] = $this->injectQueryContainer($this->factoryStubs[$moduleName], $moduleName);
             $this->factoryStubs[$moduleName] = $this->injectSharedFactory($this->factoryStubs[$moduleName], $moduleName);
 
             return $this->factoryStubs[$moduleName];
@@ -239,6 +242,7 @@ class BusinessHelper extends Module
 
         $moduleFactory = $this->injectConfig($moduleFactory, $moduleName);
         $moduleFactory = $this->injectContainer($moduleFactory, $moduleName);
+        $moduleFactory = $this->injectQueryContainer($moduleFactory, $moduleName);
         $moduleFactory = $this->injectSharedFactory($moduleFactory, $moduleName);
 
         return $moduleFactory;
@@ -265,6 +269,12 @@ class BusinessHelper extends Module
     protected function injectConfig(AbstractBusinessFactory $businessFactory, string $moduleName): AbstractBusinessFactory
     {
         if (!$this->hasModule('\\' . ConfigHelper::class)) {
+            $this->writeMissingHelperMessage(sprintf(
+                'Could not inject <fg=yellow>%1$sConfig</> into <fg=yellow>%1$sBusinessFactory</>. You may want to add <fg=yellow>%2$s</> to your <fg=yellow>%1$s codeception.yml</> enabled modules.',
+                $moduleName,
+                ConfigHelper::class
+            ));
+
             return $businessFactory;
         }
 
@@ -395,6 +405,36 @@ class BusinessHelper extends Module
         $sharedModuleConfig = $this->getConfigHelper()->getSharedModuleConfig($moduleName);
 
         return $sharedModuleConfig;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $businessFactory
+     * @param string $moduleName
+     *
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     */
+    protected function injectQueryContainer(AbstractBusinessFactory $businessFactory, string $moduleName): AbstractBusinessFactory
+    {
+        $queryContainer = $this->createQueryContainer($moduleName);
+
+        if ($queryContainer !== null) {
+            $businessFactory->setQueryContainer($queryContainer);
+        }
+
+        return $businessFactory;
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer|null
+     */
+    protected function createQueryContainer(string $moduleName): ?AbstractQueryContainer
+    {
+        /** @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer */
+        $queryContainer = $this->resolveClass(static::QUERY_CONTAINER_CLASS_NAME_PATTERN, $moduleName);
+
+        return $queryContainer;
     }
 
     /**

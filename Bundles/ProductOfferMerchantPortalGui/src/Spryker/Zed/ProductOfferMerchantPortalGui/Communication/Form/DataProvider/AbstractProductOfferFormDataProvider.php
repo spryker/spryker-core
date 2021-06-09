@@ -97,16 +97,18 @@ abstract class AbstractProductOfferFormDataProvider
      */
     protected function setDefaultMerchantStock(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
+        $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()
+            ->getMerchantOrFail()
+            ->getIdMerchant();
+
         $merchantStockCriteriaTransfer = (new MerchantStockCriteriaTransfer())
             ->setIsDefault(true)
-            ->setIdMerchant($productOfferTransfer->getFkMerchant());
+            ->setIdMerchant($idMerchant);
+
         $stockTransfers = $this->merchantStockFacade->get($merchantStockCriteriaTransfer)->getStocks();
 
         if (!$stockTransfers->count()) {
-            throw new DefaultMerchantStockNotFoundException(sprintf(
-                'Default Merchant stock not found by Merchant ID `%s`',
-                $productOfferTransfer->getFkMerchant()
-            ));
+            throw new DefaultMerchantStockNotFoundException(sprintf('Default Merchant stock not found by Merchant ID `%s`', $idMerchant));
         }
 
         if (!$productOfferTransfer->getProductOfferStocks()->count()) {
