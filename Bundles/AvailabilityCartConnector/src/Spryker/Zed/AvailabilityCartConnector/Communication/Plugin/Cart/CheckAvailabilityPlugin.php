@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\AvailabilityCartConnector\Communication\Plugin;
+namespace Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Cart;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface;
@@ -24,14 +24,12 @@ class CheckAvailabilityPlugin extends AbstractPlugin implements CartPreCheckPlug
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\Cart\CheckAvailabilityPlugin} instead.
-     *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function check(CartChangeTransfer $cartChangeTransfer)
     {
-        return $this->getFacade()->checkCartAvailability($cartChangeTransfer);
+        return $this->getFacade()->checkCartAvailabilityBatch($cartChangeTransfer);
     }
 }
