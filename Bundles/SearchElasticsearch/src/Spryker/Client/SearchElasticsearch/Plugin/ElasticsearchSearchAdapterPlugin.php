@@ -7,9 +7,11 @@
 
 namespace Spryker\Client\SearchElasticsearch\Plugin;
 
+use Generated\Shared\Transfer\SearchConnectionResponseTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 
@@ -17,7 +19,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterfac
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchClientInterface getClient()
  * @method \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory getFactory()()
  */
-class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface
+class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface, ConnectionCheckerAdapterPluginInterface
 {
     protected const NAME = 'elasticsearch';
 
@@ -134,5 +136,17 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
     public function getName(): string
     {
         return static::NAME;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchConnectionResponseTransfer
+     */
+    public function checkConnection(): SearchConnectionResponseTransfer
+    {
+        return $this->getClient()->checkConnection();
     }
 }

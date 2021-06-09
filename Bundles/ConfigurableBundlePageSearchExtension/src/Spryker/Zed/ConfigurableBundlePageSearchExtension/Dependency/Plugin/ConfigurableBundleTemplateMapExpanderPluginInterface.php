@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
-use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface} instead.
- */
-interface ConfigurableBundleTemplatePageMapExpanderPluginInterface
+interface ConfigurableBundleTemplateMapExpanderPluginInterface
 {
     /**
      * Specification:
@@ -23,16 +20,14 @@ interface ConfigurableBundleTemplatePageMapExpanderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $productData
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
     public function expand(
         PageMapTransfer $pageMapTransfer,
-        PageMapBuilderInterface $pageMapBuilder,
-        array $productData,
+        ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer,
         LocaleTransfer $localeTransfer
     ): PageMapTransfer;
 }
