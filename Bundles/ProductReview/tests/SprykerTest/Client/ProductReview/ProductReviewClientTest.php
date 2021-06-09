@@ -34,7 +34,7 @@ class ProductReviewClientTest extends Unit
     public function testExpandProductViewBatchWithProductReviewData(): void
     {
         // Arrange
-        $this->setSearchReturn($this->tester->createClinetSearchMockResponse());
+        $this->mockSearchResult($this->tester->createClinetSearchMockResponse());
         $productViews = $this->tester->createProductViews();
 
         // Act
@@ -53,7 +53,7 @@ class ProductReviewClientTest extends Unit
      *
      * @return void
      */
-    protected function setSearchReturn(array $returnedContent): void
+    protected function mockSearchResult(array $returnedContent): void
     {
         $contentToStorageBridge = $this->getMockBuilder(ProductReviewToSearchInterface::class)->getMock();
         $contentToStorageBridge->method('search')->willReturn($returnedContent);
