@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Spryker\Client\ProductReview\ProductReviewClient;
-use Spryker\Client\ProductReview\ProductReviewClientInterface;
 
 /**
  * Inherited Methods
@@ -27,6 +25,7 @@ use Spryker\Client\ProductReview\ProductReviewClientInterface;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method void pause()
+ * @method \Spryker\Client\ProductReview\ProductReviewClientInterface getClient()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -90,12 +89,12 @@ class ProductReviewClientTester extends Actor
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function buildProductViewTranseferMockById(int $id): ProductViewTransfer
+    public function buildProductViewTranseferById(int $id): ProductViewTransfer
     {
-        $prodcutView = new ProductViewTransfer();
-        $prodcutView->setIdProductAbstract($id);
+        $prodcutViewTransfer = new ProductViewTransfer();
+        $prodcutViewTransfer->setIdProductAbstract($id);
 
-        return $prodcutView;
+        return $prodcutViewTransfer;
     }
 
     /**
@@ -104,9 +103,9 @@ class ProductReviewClientTester extends Actor
     public function createProductViews(): array
     {
         return [
-            1 => $this->buildProductViewTranseferMockById(1),
-            2 => $this->buildProductViewTranseferMockById(2),
-            3 => $this->buildProductViewTranseferMockById(3),
+            1 => $this->buildProductViewTranseferById(1),
+            2 => $this->buildProductViewTranseferById(2),
+            3 => $this->buildProductViewTranseferById(3),
         ];
     }
 
@@ -120,13 +119,5 @@ class ProductReviewClientTester extends Actor
         $bulkProductReviewSearchRequestTransfer->setFilter(new FilterTransfer());
 
         return $bulkProductReviewSearchRequestTransfer;
-    }
-
-    /**
-     * @return \Spryker\Client\ProductReview\ProductReviewClientInterface
-     */
-    public function createProductViewSearchClient(): ProductReviewClientInterface
-    {
-        return new ProductReviewClient();
     }
 }

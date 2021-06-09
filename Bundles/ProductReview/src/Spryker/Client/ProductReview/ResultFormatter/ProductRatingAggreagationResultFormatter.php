@@ -14,11 +14,16 @@ class ProductRatingAggreagationResultFormatter implements ResultFormatterInterfa
     /**
      * @param array $records
      *
-     * @return mixed
+     * @return array
      */
     public function formatBatch(array $records)
     {
         $result = [];
+
+        if (empty($records['buckets'])) {
+            return $result;
+        }
+
         foreach ($records['buckets'] as $bucket) {
             $result[$bucket['key']] = [
                 static::SUB_NAME => [],

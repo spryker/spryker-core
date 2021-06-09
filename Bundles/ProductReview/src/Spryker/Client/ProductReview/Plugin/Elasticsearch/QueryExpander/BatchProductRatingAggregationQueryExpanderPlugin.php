@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander;
 
-use Elastica\Query;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -28,19 +27,19 @@ class BatchProductRatingAggregationQueryExpanderPlugin extends AbstractPlugin im
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
         return $this->addProductRatingAggregation($searchQuery);
-
-        return $searchQuery;
     }
 
     /**
-     * @param \Elastica\Query $query
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      *
-     * @return \Elastica\Query
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     protected function addProductRatingAggregation(QueryInterface $searchQuery): QueryInterface
     {
         $prodcutAggregation = $this->getFactory()->createBatchRatingAggregation()->createAggregation();
 
-        return $query->addAggregation($prodcutAggregation);
+        $searchQuery->getSearchQuery()->addAggregation($prodcutAggregation);
+
+        return $searchQuery;
     }
 }

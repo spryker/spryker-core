@@ -99,7 +99,7 @@ class ProductReviewFactory extends AbstractFactory
      */
     protected function getBatchProductReviewsQueryExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(ProductReviewDependencyProvider::PLUGINS_PRODUCT_REVIEWS_QUERY_EXPANDER);
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::PLUGINS_BATCH_PRODUCT_REVIEWS_QUERY_EXPANDER);
     }
 
     /**

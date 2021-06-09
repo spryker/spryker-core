@@ -24,3 +24,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Content\Helper\ContentHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper

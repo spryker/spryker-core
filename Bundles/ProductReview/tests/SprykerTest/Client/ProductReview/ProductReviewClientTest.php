@@ -35,10 +35,10 @@ class ProductReviewClientTest extends Unit
     {
         // Arrange
         $this->setSearchReturn($this->tester->createClinetSearchMockResponse());
+        $productViews = $this->tester->createProductViews();
 
         // Act
-        $productViews = $this->tester->createProductViews();
-        $prductViewsExpended = $this->tester->createProductViewSearchClient()
+        $prductViewsExpended = $this->tester->getClient()
             ->expandProductViewBatchWithProductReviewData($productViews, $this->tester->createBulkProductReviewSearchRequestTransfer());
 
         // Assert

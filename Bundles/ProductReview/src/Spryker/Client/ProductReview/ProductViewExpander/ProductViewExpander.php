@@ -108,6 +108,8 @@ class ProductViewExpander implements ProductViewExpanderInterface
             foreach ($productViewTransfers as $productViewId => $productViewTransfer) {
                 if ($productViewId === $productId) {
                     $productViewTransfer->setRating($productReviewSummaryTransfer);
+
+                    break;
                 }
             }
         }
