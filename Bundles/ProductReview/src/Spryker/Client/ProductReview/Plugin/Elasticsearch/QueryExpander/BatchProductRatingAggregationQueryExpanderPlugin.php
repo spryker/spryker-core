@@ -27,7 +27,7 @@ class BatchProductRatingAggregationQueryExpanderPlugin extends AbstractPlugin im
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
-        $this->addProductRatingAggregation($searchQuery->getSearchQuery());
+        return $this->addProductRatingAggregation($searchQuery);
 
         return $searchQuery;
     }
@@ -37,7 +37,7 @@ class BatchProductRatingAggregationQueryExpanderPlugin extends AbstractPlugin im
      *
      * @return \Elastica\Query
      */
-    protected function addProductRatingAggregation(Query $query): Query
+    protected function addProductRatingAggregation(QueryInterface $searchQuery): QueryInterface
     {
         $prodcutAggregation = $this->getFactory()->createBatchRatingAggregation()->createAggregation();
 
