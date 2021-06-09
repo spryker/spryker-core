@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductReview\Aggregation;
 
 use Elastica\Aggregation\AbstractAggregation;
+use Elastica\Aggregation\Terms;
 use Generated\Shared\Search\ProductReviewIndexMap;
 
 class BatchRatingAggregation implements AggregationInterface
@@ -16,30 +17,27 @@ class BatchRatingAggregation implements AggregationInterface
     public const REVIEW_AGGREGATION_NAME = 'rating-aggregation';
 
     /**
-     * @var \Spryker\Client\ProductReview\Aggregation\AggregationBuilderInterface
-     */
-    protected $aggregationBuilder;
-
-    /**
-     * @param \Spryker\Client\ProductReview\Aggregation\AggregationBuilderInterface $aggregationBuilder
-     */
-    public function __construct(AggregationBuilderInterface $aggregationBuilder)
-    {
-        $this->aggregationBuilder = $aggregationBuilder;
-    }
-
-    /**
      * @return \Elastica\Aggregation\AbstractAggregation
      */
     public function createAggregation(): AbstractAggregation
     {
-        $reviewAggregation = $this->aggregationBuilder->createTermsAggregation(static::REVIEW_AGGREGATION_NAME);
+        $reviewAggregation = $this->createTermsAggregation(static::REVIEW_AGGREGATION_NAME);
         $reviewAggregation->setField(ProductReviewIndexMap::RATING);
 
-        $prodcutAggregation = $this->aggregationBuilder->createTermsAggregation(static::PRODUCT_AGGREGATOIN_NAME);
-        $prodcutAggregation->setField(ProductReviewIndexMap::ID_PRODUCT_ABSTRACT);
-        $prodcutAggregation->addAggregation($reviewAggregation);
+        $productAggregation = $this->createTermsAggregation(static::PRODUCT_AGGREGATOIN_NAME);
+        $productAggregation->setField(ProductReviewIndexMap::ID_PRODUCT_ABSTRACT);
+        $productAggregation->addAggregation($reviewAggregation);
 
-        return $prodcutAggregation;
+        return $productAggregation;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Elastica\Aggregation\Terms
+     */
+    protected function createTermsAggregation(string $name): Terms
+    {
+        return new Terms($name);
     }
 }

@@ -16,9 +16,13 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsea
  */
 class ProductRatingAggregationBatchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
-    public const NAME = 'productAggregation';
+    protected const NAME = 'productAggregation';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return string
      */
     public function getName()
@@ -34,10 +38,7 @@ class ProductRatingAggregationBatchResultFormatterPlugin extends AbstractElastic
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
-        $result = $this->extractRatingAggregation($searchResult);
-        $result = $this->sortResults($result);
-
-        return $result;
+        return $this->extractRatingAggregation($searchResult);
     }
 
     /**
@@ -50,17 +51,5 @@ class ProductRatingAggregationBatchResultFormatterPlugin extends AbstractElastic
         $aggregation = $searchResult->getAggregation(BatchRatingAggregation::PRODUCT_AGGREGATOIN_NAME);
 
         return $this->getFactory()->createProductRatingAggreagationResultFormatter()->formatBatch($aggregation);
-    }
-
-    /**
-     * @param array $result
-     *
-     * @return array
-     */
-    protected function sortResults(array $result)
-    {
-        krsort($result);
-
-        return $result;
     }
 }

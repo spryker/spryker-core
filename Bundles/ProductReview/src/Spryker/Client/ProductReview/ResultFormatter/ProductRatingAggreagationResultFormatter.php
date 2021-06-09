@@ -31,6 +31,20 @@ class ProductRatingAggreagationResultFormatter implements ResultFormatterInterfa
             }
         }
 
+        $result = $this->sortResults($result);
+
+        return $result;
+    }
+
+    /**
+     * @param array $result
+     *
+     * @return array
+     */
+    protected function sortResults(array $result)
+    {
+        krsort($result);
+
         return $result;
     }
 }

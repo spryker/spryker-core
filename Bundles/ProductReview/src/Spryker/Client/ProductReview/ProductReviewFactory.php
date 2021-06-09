@@ -10,7 +10,6 @@ namespace Spryker\Client\ProductReview;
 use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\ProductReview\Aggregation\AggregationBuilder;
 use Spryker\Client\ProductReview\Aggregation\AggregationInterface;
 use Spryker\Client\ProductReview\Aggregation\BatchRatingAggregation;
 use Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculator;
@@ -261,18 +260,10 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductReview\Aggregation\AggregationBuilder
-     */
-    public function createAggregationBuilder()
-    {
-        return new AggregationBuilder();
-    }
-
-    /**
      * @return \Spryker\Client\ProductReview\Aggregation\AggregationInterface
      */
     public function createBatchRatingAggregation(): AggregationInterface
     {
-        return new BatchRatingAggregation($this->createAggregationBuilder());
+        return new BatchRatingAggregation();
     }
 }
