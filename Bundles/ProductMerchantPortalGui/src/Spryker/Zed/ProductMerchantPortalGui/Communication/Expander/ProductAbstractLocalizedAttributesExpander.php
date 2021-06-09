@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Expander;
 
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
 
 class ProductAbstractLocalizedAttributesExpander implements ProductAbstractLocalizedAttributesExpanderInterface
@@ -20,20 +19,11 @@ class ProductAbstractLocalizedAttributesExpander implements ProductAbstractLocal
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface
-     */
-    protected $localeDataProvider;
-
-    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface $localeDataProvider
      */
-    public function __construct(
-        ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
-        LocaleDataProviderInterface $localeDataProvider
-    ) {
+    public function __construct(ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade)
+    {
         $this->localeFacade = $localeFacade;
-        $this->localeDataProvider = $localeDataProvider;
     }
 
     /**
@@ -44,10 +34,10 @@ class ProductAbstractLocalizedAttributesExpander implements ProductAbstractLocal
     public function expandLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
         $localeTransfers = $this->localeFacade->getLocaleCollection();
-        $defaultStoreDefaultLocale = $this->localeDataProvider->findDefaultStoreDefaultLocale();
+        $currentLocale = $this->localeFacade->getCurrentLocale()->getLocaleNameOrFail();
 
         foreach ($localeTransfers as $localeTransfer) {
-            $productAbstractLocalizedName = $localeTransfer->getLocaleNameOrFail() === $defaultStoreDefaultLocale
+            $productAbstractLocalizedName = $localeTransfer->getLocaleNameOrFail() === $currentLocale
                 ? $productAbstractTransfer->getName()
                 : '';
             $productAbstractTransfer->addLocalizedAttributes(

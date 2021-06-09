@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface;
 
@@ -29,23 +28,15 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
     protected $productAttributeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface
-     */
-    protected $localeDataProvider;
-
-    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface $localeDataProvider
      */
     public function __construct(
         ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
-        ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade,
-        LocaleDataProviderInterface $localeDataProvider
+        ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade
     ) {
         $this->localeFacade = $localeFacade;
         $this->productAttributeFacade = $productAttributeFacade;
-        $this->localeDataProvider = $localeDataProvider;
     }
 
     /**
@@ -56,7 +47,7 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
     public function expandLocalizedAttributes(array $productConcreteTransfers): array
     {
         $localeTransfers = $this->localeFacade->getLocaleCollection();
-        $defaultStoreDefaultLocale = $this->localeDataProvider->findDefaultStoreDefaultLocale();
+        $currentLocale = $this->localeFacade->getCurrentLocale()->getLocaleNameOrFail();
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
             $attributes = $productConcreteTransfer->getAttributes();
@@ -68,7 +59,7 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
                     $attributes,
                     $localeTransfer
                 );
-                $productConcreteLocalizedName = $localeTransfer->getLocaleNameOrFail() === $defaultStoreDefaultLocale
+                $productConcreteLocalizedName = $localeTransfer->getLocaleNameOrFail() === $currentLocale
                     ? $productConcreteTransfer->getName()
                     : '';
 

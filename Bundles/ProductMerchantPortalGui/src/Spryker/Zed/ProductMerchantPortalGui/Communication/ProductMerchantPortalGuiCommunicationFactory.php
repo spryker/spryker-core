@@ -12,10 +12,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProvider;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\MerchantDataExpander;
@@ -336,8 +333,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createProductAbstractLocalizedAttributesExpander(): ProductAbstractLocalizedAttributesExpanderInterface
     {
         return new ProductAbstractLocalizedAttributesExpander(
-            $this->getLocaleFacade(),
-            $this->createLocaleDataProvider()
+            $this->getLocaleFacade()
         );
     }
 
@@ -348,8 +344,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     {
         return new ProductConcreteLocalizedAttributesExpander(
             $this->getLocaleFacade(),
-            $this->getProductAttributeFacade(),
-            $this->createLocaleDataProvider()
+            $this->getProductAttributeFacade()
         );
     }
 
@@ -499,17 +494,6 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
         return new ProductConcreteOwnedByMerchantConstraint(
             $this->getMerchantUserFacade(),
             $this->getMerchantProductFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface
-     */
-    public function createLocaleDataProvider(): LocaleDataProviderInterface
-    {
-        return new LocaleDataProvider(
-            $this->getStoreFacade(),
-            $this->getStore()
         );
     }
 
@@ -691,14 +675,6 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function getProductConcreteTableExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore(): Store
-    {
-        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::STORE);
     }
 
     /**

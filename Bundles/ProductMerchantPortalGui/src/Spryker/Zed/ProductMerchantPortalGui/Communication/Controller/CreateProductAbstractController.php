@@ -70,11 +70,10 @@ class CreateProductAbstractController extends AbstractController
     {
         $createProductAbstractForm = $this->getFactory()->createCreateProductAbstractForm($request->query->all());
         $createProductAbstractForm->handleRequest($request);
-
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/create_product_abstract_form.twig', [
                 'form' => $createProductAbstractForm->createView(),
-                'defaultLocaleCode' => $this->getFactory()->createLocaleDataProvider()->findDefaultStoreDefaultLocale(),
+                'defaultLocaleCode' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleNameOrFail(),
             ])->getContent(),
         ];
 
