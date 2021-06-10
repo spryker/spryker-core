@@ -380,6 +380,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
      */
     protected function getProductAbstractBeforeCreatePlugins()

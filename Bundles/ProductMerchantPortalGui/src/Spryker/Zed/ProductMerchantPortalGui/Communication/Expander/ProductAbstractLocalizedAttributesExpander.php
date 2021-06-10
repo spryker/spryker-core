@@ -37,13 +37,14 @@ class ProductAbstractLocalizedAttributesExpander implements ProductAbstractLocal
         $currentLocale = $this->localeFacade->getCurrentLocale()->getLocaleNameOrFail();
 
         foreach ($localeTransfers as $localeTransfer) {
-            $productAbstractLocalizedName = $localeTransfer->getLocaleNameOrFail() === $currentLocale
-                ? $productAbstractTransfer->getName()
-                : '';
+            if ($localeTransfer->getLocaleNameOrFail() !== $currentLocale) {
+                continue;
+            }
+
             $productAbstractTransfer->addLocalizedAttributes(
                 (new LocalizedAttributesTransfer())
                     ->setLocale($localeTransfer)
-                    ->setName($productAbstractLocalizedName)
+                    ->setName($productAbstractTransfer->getName())
             );
         }
 

@@ -10,6 +10,9 @@ namespace Spryker\Zed\Product\Business\Product\Plugin;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ProductAbstractBeforeCreateObserverPluginManager implements ProductAbstractCreateObserverInterface
 {
     /**

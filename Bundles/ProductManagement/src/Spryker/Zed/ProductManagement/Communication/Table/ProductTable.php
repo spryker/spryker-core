@@ -151,8 +151,7 @@ class ProductTable extends AbstractProductTable
             ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name is not null')
             ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK)
             ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
-            ->groupByIdProductAbstract()
-            ->groupByFkTaxSet();
+            ->groupByIdProductAbstract();
 
         $query = $this->expandPropelQuery($query);
 

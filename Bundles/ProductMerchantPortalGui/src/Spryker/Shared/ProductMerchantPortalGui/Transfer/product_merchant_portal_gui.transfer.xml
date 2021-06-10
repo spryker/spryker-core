@@ -339,5 +339,4 @@
         <property name="reservationQuantity" type="decimal"/>
     </transfer>
 
-
 </transfers>

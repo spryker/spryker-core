@@ -32,6 +32,9 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
     public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
 
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE = 'PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE';
 
     public const PRODUCT_ABSTRACT_PLUGINS_BEFORE_UPDATE = 'PRODUCT_ABSTRACT_PLUGINS_BEFORE_UPDATE';
@@ -164,6 +167,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -357,6 +362,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]

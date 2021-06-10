@@ -91,3 +91,6 @@ Values,Values
 "Abstract product has 1 concrete product","Abstract product has 1 concrete product"
 "Abstract product has multiple concrete products","Abstract product has multiple concrete products"
 "The value cannot be empty. Please select one.","The value cannot be empty. Please select one."
+"SKU Prefix","SKU Prefix"
+"SKU Prefix already exists in collection","SKU Prefix already exists in collection"
+"Enter SKU prefix","Enter SKU prefix"

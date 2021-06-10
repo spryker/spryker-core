@@ -103,7 +103,7 @@ class ViewController extends AddController
             'productAttributes' => $attributes,
             'imageSetCollection' => $imageSets,
             'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
-            'taxSet' => $this->getTaxSet($productAbstractTransfer),
+            'taxSet' => $this->findTaxSet($productAbstractTransfer),
             'renderedPlugins' => $this->getRenderedProductAbstractViewPlugins($idProductAbstract),
             'relatedStoreNames' => $relatedStoreNames,
             'isProductBundle' => $isProductBundle,
@@ -349,7 +349,7 @@ class ViewController extends AddController
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */
-    protected function getTaxSet(ProductAbstractTransfer $productAbstractTransfer): ?TaxSetTransfer
+    protected function findTaxSet(ProductAbstractTransfer $productAbstractTransfer): ?TaxSetTransfer
     {
         if (!$productAbstractTransfer->getIdTaxSet()) {
             return null;
