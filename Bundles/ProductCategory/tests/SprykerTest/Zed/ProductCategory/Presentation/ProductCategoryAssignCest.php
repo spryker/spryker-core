@@ -55,6 +55,8 @@ class ProductCategoryAssignCest
             ProductCategoryAssignPage::ASSIGNED_PRODUCT_CHECKBOX_SELECTOR_PREFIX
         );
         $i->waitForElement($assignedProductCheckboxSelector);
+
+        $i->deleteProductEntity($idAbstractProduct);
     }
 
     /**
@@ -84,6 +86,8 @@ class ProductCategoryAssignCest
         );
         $i->click(ProductCategoryAssignPage::FORM_SUBMIT_SELECTOR);
         $i->waitForElement(ProductCategoryAssignPage::SUCCESS_MESSAGE_SELECTOR);
+
+        $i->deleteProductEntity($idAbstractProduct);
     }
 
     /**
