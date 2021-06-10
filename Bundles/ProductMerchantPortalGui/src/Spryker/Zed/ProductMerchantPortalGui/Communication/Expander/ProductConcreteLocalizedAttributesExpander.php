@@ -46,32 +46,22 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
      */
     public function expandLocalizedAttributes(array $productConcreteTransfers): array
     {
-        $localeTransfers = $this->localeFacade->getLocaleCollection();
-        $currentLocale = $this->localeFacade->getCurrentLocale()->getLocaleNameOrFail();
-
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
             $attributes = $productConcreteTransfer->getAttributes();
             $productManagementAttributeTransfers = $this->getProductManagementAttributes($attributes);
 
-            foreach ($localeTransfers as $localeTransfer) {
-                if ($localeTransfer->getLocaleNameOrFail() !== $currentLocale) {
-                    continue;
-                }
+            $localizedAttributes = $this->extractLocalizedAttributes(
+                $productManagementAttributeTransfers->getArrayCopy(),
+                $attributes,
+                $this->localeFacade->getCurrentLocale()
+            );
 
-                $localizedAttributes = $this->extractLocalizedAttributes(
-                    $productManagementAttributeTransfers->getArrayCopy(),
-                    $attributes,
-                    $localeTransfer
-                );
-
-
-                $productConcreteTransfer->addLocalizedAttributes(
-                    (new LocalizedAttributesTransfer())
-                        ->setName($productConcreteTransfer->getName())
-                        ->setLocale($localeTransfer)
-                        ->setAttributes($localizedAttributes)
-                );
-            }
+            $productConcreteTransfer->addLocalizedAttributes(
+                (new LocalizedAttributesTransfer())
+                    ->setName($productConcreteTransfer->getName())
+                    ->setLocale($this->localeFacade->getCurrentLocale())
+                    ->setAttributes($localizedAttributes)
+            );
         }
 
         return $productConcreteTransfers;

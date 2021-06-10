@@ -279,7 +279,7 @@ class CreateProductAbstractController extends AbstractController
     protected function getProductAbstractTransfer(array $productAbstractData): ProductAbstractTransfer
     {
         $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->fromArray($productAbstractData);
+            ->fromArray($productAbstractData, true);
         $productAbstractTransfer = $this->getFactory()
             ->createProductAbstractLocalizedAttributesExpander()
             ->expandLocalizedAttributes($productAbstractTransfer);

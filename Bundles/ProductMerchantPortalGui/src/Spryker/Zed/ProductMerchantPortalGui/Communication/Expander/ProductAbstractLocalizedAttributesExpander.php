@@ -33,20 +33,11 @@ class ProductAbstractLocalizedAttributesExpander implements ProductAbstractLocal
      */
     public function expandLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
-        $localeTransfers = $this->localeFacade->getLocaleCollection();
-        $currentLocale = $this->localeFacade->getCurrentLocale()->getLocaleNameOrFail();
-
-        foreach ($localeTransfers as $localeTransfer) {
-            if ($localeTransfer->getLocaleNameOrFail() !== $currentLocale) {
-                continue;
-            }
-
-            $productAbstractTransfer->addLocalizedAttributes(
-                (new LocalizedAttributesTransfer())
-                    ->setLocale($localeTransfer)
-                    ->setName($productAbstractTransfer->getName())
-            );
-        }
+        $productAbstractTransfer->addLocalizedAttributes(
+            (new LocalizedAttributesTransfer())
+                ->setLocale($this->localeFacade->getCurrentLocale())
+                ->setName($productAbstractTransfer->getName())
+        );
 
         return $productAbstractTransfer;
     }
