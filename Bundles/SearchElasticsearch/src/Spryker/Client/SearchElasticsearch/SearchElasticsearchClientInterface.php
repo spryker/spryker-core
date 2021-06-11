@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SearchElasticsearch;
 
+use Generated\Shared\Transfer\SearchConnectionResponseTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
@@ -88,4 +89,14 @@ interface SearchElasticsearchClientInterface
      * @return bool
      */
     public function deleteDocuments(array $searchDocumentTransfers): bool;
+
+    /**
+     * Specification:
+     * - Sends request to Elasticsearch for checking connection.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchConnectionResponseTransfer
+     */
+    public function checkConnection(): SearchConnectionResponseTransfer;
 }

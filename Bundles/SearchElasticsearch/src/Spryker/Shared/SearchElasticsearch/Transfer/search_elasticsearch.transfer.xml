@@ -105,4 +105,9 @@
         <property name="data" type="array" singular="data"/>
     </transfer>
 
+    <transfer name="SearchConnectionResponse">
+        <property name="isSuccessfull" type="bool"/>
+        <property name="rawResponse" type="array" singular="rawResponse"/>
+    </transfer>
+
 </transfers>

@@ -274,6 +274,17 @@ class SearchElasticsearchClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCanCheckConnection()
+    {
+        $searchConnectionResponseTransfer = $this->tester->getClient()->checkConnection();
+
+        $this->assertTrue($searchConnectionResponseTransfer->getIsSuccessfull());
+        $this->assertNotEmpty($searchConnectionResponseTransfer->getRawResponse());
+    }
+
+    /**
      * @param string $documentId
      * @param array|string|null $documentData
      * @param string $indexName

@@ -11,6 +11,8 @@ use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapter;
 use Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface;
+use Spryker\Client\Search\Delegator\ConnectionDelegator;
+use Spryker\Client\Search\Delegator\ConnectionDelegatorInterface;
 use Spryker\Client\Search\Delegator\SearchDelegator;
 use Spryker\Client\Search\Delegator\SearchDelegatorInterface;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
@@ -61,6 +63,16 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Search\Delegator\ConnectionDelegatorInterface
+     */
+    public function createConnectionDelegator(): ConnectionDelegatorInterface
+    {
+        return new ConnectionDelegator(
+            $this->getClientAdapterPlugins()
+        );
+    }
+
+    /**
      * @deprecated Will be removed without replacement.
      *
      * @return \Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
@@ -81,7 +93,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface[]
      */
     public function getClientAdapterPlugins(): array
     {
@@ -144,6 +156,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Provider\SearchClientProvider
      */
     protected function createSearchClientProvider()
@@ -162,12 +176,15 @@ class SearchFactory extends AbstractFactory
             return $this->createSearchDelegator();
         }
 
+        // Supports only ElasticSearch before 7.0. For ElasticSearch 7+ use {@link \Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin}.
         return new ElasticsearchSearchHandler(
             $this->createIndexClientProvider()
         );
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Provider\IndexClientProvider
      */
     protected function createIndexClientProvider()
@@ -346,6 +363,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface|\Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
      */
     public function createWriter()
@@ -362,6 +381,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Reader\ReaderInterface|\Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
      */
     public function createReader()
@@ -378,6 +399,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Elastica\Client
      */
     public function createCachedElasticsearchClient()

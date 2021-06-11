@@ -71,10 +71,12 @@ class GlueResolverTest extends Unit
      */
     public function testResolveThrowsExceptionWhenClassNotFound(string $resolverClassName, string $resolverExceptionClassName): void
     {
+        // Assert
         $this->expectException($resolverExceptionClassName);
         /** @var \Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver $resolver */
         $resolver = new $resolverClassName();
 
+        // Act
         $resolver->resolve('NotExistingModule');
     }
 
@@ -87,10 +89,13 @@ class GlueResolverTest extends Unit
      */
     public function testResolveResolvesCoreClass(string $resolverClassName): void
     {
+        // Arrange
         $this->tester->createCoreClass($resolverClassName);
 
+        // Act
         $resolvedInstance = $this->tester->getResolver($resolverClassName)->resolve(ClassResolverHelper::MODULE_NAME);
 
+        // Assert
         $this->assertSame($this->tester->getCoreClassName($resolverClassName), get_class($resolvedInstance));
     }
 
@@ -103,10 +108,13 @@ class GlueResolverTest extends Unit
      */
     public function testResolveResolvesProjectClass(string $resolverClassName): void
     {
+        // Arrange
         $this->tester->createProjectClass($resolverClassName);
 
+        // Act
         $resolvedInstance = $this->tester->getResolver($resolverClassName)->resolve(ClassResolverHelper::MODULE_NAME);
 
+        // Assert
         $this->assertSame($this->tester->getProjectClassName($resolverClassName), get_class($resolvedInstance));
     }
 
@@ -119,10 +127,34 @@ class GlueResolverTest extends Unit
      */
     public function testResolveResolvesStoreClass(string $resolverClassName): void
     {
+        // Arrange
         $this->tester->createProjectStoreClass($resolverClassName);
+        $this->tester->createProjectCodeBucketClass($resolverClassName, ClassResolverHelper::CODE_BUCKET);
 
+        // Act
         $resolvedInstance = $this->tester->getResolver($resolverClassName)->resolve(ClassResolverHelper::MODULE_NAME);
 
+        // Assert
         $this->assertSame($this->tester->getProjectStoreClassName($resolverClassName), get_class($resolvedInstance));
+    }
+
+    /**
+     * @dataProvider resolverDataProvider
+     *
+     * @param string $resolverClassName
+     *
+     * @return void
+     */
+    public function testResolveResolvesCodeBucketClass(string $resolverClassName): void
+    {
+        // Arrange
+        $this->tester->createProjectStoreClass($resolverClassName);
+        $this->tester->createProjectCodeBucketClass($resolverClassName, ClassResolverHelper::CODE_BUCKET);
+
+        // Act
+        $resolvedInstance = $this->tester->getResolver($resolverClassName, ClassResolverHelper::CODE_BUCKET)->resolve(ClassResolverHelper::MODULE_NAME);
+
+        // Assert
+        $this->assertSame($this->tester->getProjectCodeBucketClassName($resolverClassName, ClassResolverHelper::CODE_BUCKET), get_class($resolvedInstance));
     }
 }

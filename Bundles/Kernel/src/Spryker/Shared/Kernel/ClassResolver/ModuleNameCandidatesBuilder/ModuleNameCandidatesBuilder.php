@@ -29,9 +29,27 @@ class ModuleNameCandidatesBuilder implements ModuleNameCandidatesBuilderInterfac
      */
     public function buildModuleNameCandidates(string $moduleName): array
     {
+        $moduleNamePostfix = $this->getApplicationCodeBucket() ?: $this->getCurrentStoreName();
+
         return [
-            $moduleName . $this->config->getCurrentStoreName(),
+            $moduleName . $moduleNamePostfix,
             $moduleName,
         ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getApplicationCodeBucket(): string
+    {
+        return defined('APPLICATION_CODE_BUCKET') ? APPLICATION_CODE_BUCKET : '';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentStoreName(): string
+    {
+        return $this->config->getCurrentStoreName();
     }
 }
