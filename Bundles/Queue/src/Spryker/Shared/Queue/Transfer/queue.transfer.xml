@@ -34,4 +34,11 @@
     <transfer name="QueueDumpResponse">
         <property name="message" type="string"/>
     </transfer>
+
+    <transfer name="QueueTaskResponse">
+        <property name="message" type="string"/>
+        <property name="receivedMessageCount" type="int"/>
+        <property name="processedMessageCount" type="int"/>
+        <property name="isSuccesful" type="bool"/>
+    </transfer>
 </transfers>

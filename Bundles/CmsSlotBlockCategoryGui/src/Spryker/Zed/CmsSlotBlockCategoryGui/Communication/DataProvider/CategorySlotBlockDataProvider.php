@@ -9,6 +9,7 @@ namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Communication\Form\CategorySlotBlockConditionForm;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface;
 use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToLocaleFacadeInterface;
@@ -18,6 +19,7 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
 {
     protected const KEY_OPTION_ALL_CATEGORIES = 'All Category Pages';
     protected const KEY_OPTION_SPECIFIC_CATEGORY = 'Specific Category Pages';
+    protected const FORMATTED_CATEGORY_NAME = '%s [%s]';
 
     /**
      * @var \Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGuiToCategoryFacadeInterface
@@ -103,11 +105,20 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     protected function getCategoryIdsFromCollection(CategoryCollectionTransfer $categoryCollectionTransfer): array
     {
         $categoryIds = [];
-
         foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
-            $categoryIds[$categoryTransfer->getName()] = $categoryTransfer->getIdCategory();
+            $categoryIds[$this->getFormattedCategoryName($categoryTransfer)] = $categoryTransfer->getIdCategory();
         }
 
         return $categoryIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return string
+     */
+    protected function getFormattedCategoryName(CategoryTransfer $categoryTransfer): string
+    {
+        return sprintf(static::FORMATTED_CATEGORY_NAME, $categoryTransfer->getName(), $categoryTransfer->getCategoryKey());
     }
 }

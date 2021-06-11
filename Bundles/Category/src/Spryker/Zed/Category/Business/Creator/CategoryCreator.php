@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Business\Creator;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
@@ -79,9 +80,23 @@ class CategoryCreator implements CategoryCreatorInterface
         $this->categoryEntityManager->createCategory($categoryTransfer);
         $this->categoryRelationshipCreator->createCategoryRelationships($categoryTransfer);
 
+        $this->triggerAfterCreateEvents($categoryTransfer);
+        $this->executePostCreatePlugins($categoryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function triggerAfterCreateEvents(CategoryTransfer $categoryTransfer): void
+    {
         $this->eventFacade->trigger(CategoryEvents::CATEGORY_AFTER_CREATE, $categoryTransfer);
 
-        $this->executePostCreatePlugins($categoryTransfer);
+        $this->eventFacade->trigger(
+            CategoryEvents::CATEGORY_AFTER_PUBLISH_CREATE,
+            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory())
+        );
     }
 
     /**

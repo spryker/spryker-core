@@ -1,0 +1,16 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/SalesStatistics/src/Spryker/Zed/SalesStatistics/Persistence/SalesStatisticsPersistenceFactory.php",
+        "description": "\n      SalesStatisticsPersistenceFactory::createSalesOrderQuery() in Spryker\\Zed\\SalesStatistics\\Persistence\\SalesStatisticsPersistenceFactory::createSalesOrderQuery() contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"\n    ",
+        "rule": "FactoryCreateContainOneNewRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/SalesStatistics/src/Spryker/Zed/SalesStatistics/Persistence/SalesStatisticsPersistenceFactory.php",
+        "description": "\n      SalesStatisticsPersistenceFactory::createSalesOrderItemQuery() in Spryker\\Zed\\SalesStatistics\\Persistence\\SalesStatisticsPersistenceFactory::createSalesOrderItemQuery() contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"\n    ",
+        "rule": "FactoryCreateContainOneNewRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

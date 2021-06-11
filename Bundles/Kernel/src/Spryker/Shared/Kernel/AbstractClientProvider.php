@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Kernel;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 abstract class AbstractClientProvider
 {
     /**

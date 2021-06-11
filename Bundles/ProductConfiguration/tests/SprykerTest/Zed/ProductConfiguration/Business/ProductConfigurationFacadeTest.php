@@ -38,6 +38,11 @@ class ProductConfigurationFacadeTest extends Unit
      */
     protected $tester;
 
+    /**
+     * @uses QuoteRequestProductConfigurationValidator::GLOSSARY_KEY_PRODUCT_CONFIGURATION_IN_QUOTE_REQUEST_IS_INCOMPLETE
+     */
+    protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_IN_QUOTE_REQUEST_IS_INCOMPLETE = 'product_configuration.quote_request.validation.error.incomplete';
+
     protected const TEST_GROUP_KEY = 'test_group_key';
     protected const TEST_PRODUCT_CONFIGURATION_ARRAY = ['test_group_key'];
     protected const TEST_PRODUCT_CONFIGURATION_HASH = '0146dbdb9eb9a1d17dc66478f869f556';
@@ -382,6 +387,43 @@ class ProductConfigurationFacadeTest extends Unit
             3,
             $cartItemQuantity->getQuantity(),
             'Expects that item quantity will be counted correctly.'
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateQuoteRequestProductConfigurationWillReturnSuccessInCaseOfAllProductsCompleted(): void
+    {
+        //Arrange
+        $quoteRequestTransfer = $this->tester->haveQuoteRequestInDraftStatusWithCompleteConfiguredProduct();
+
+        //Act
+        $quoteRequestResponseTransfer = $this->tester->getFacade()
+            ->validateQuoteRequestProductConfiguration($quoteRequestTransfer);
+
+        //Assert
+        $this->assertTrue($quoteRequestResponseTransfer->getIsSuccessful());
+        $this->assertEmpty($quoteRequestResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateQuoteRequestProductConfigurationWillReturnFailInCaseOfAnyProductIsInCompleted(): void
+    {
+        //Arrange
+        $quoteRequestTransfer = $this->tester->haveQuoteRequestInDraftStatusWithIncompleteConfiguredProduct();
+
+        //Act
+        $quoteRequestResponseTransfer = $this->tester->getFacade()
+            ->validateQuoteRequestProductConfiguration($quoteRequestTransfer);
+
+        //Assert
+        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            static::GLOSSARY_KEY_PRODUCT_CONFIGURATION_IN_QUOTE_REQUEST_IS_INCOMPLETE,
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
         );
     }
 }

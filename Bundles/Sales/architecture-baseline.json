@@ -1,0 +1,16 @@
+[
+    {
+        "fileName": "/data/vendor/spryker/spryker/Bundles/Sales/src/Spryker/Zed/Sales/Communication/SalesCommunicationFactory.php",
+        "description": "\n      Factories: The method Spryker\\Zed\\Sales\\Communication\\SalesCommunicationFactory::createOrderItemSplitFormCollection() contains a \"foreach\" statement which violates rule \"Factory methods should not contain loops.\"\n    ",
+        "rule": "FactoryNoLoopsRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "/data/vendor/spryker/spryker/Bundles/Sales/src/Spryker/Zed/Sales/Dependency/Facade/SalesToSequenceNumberInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'generate' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

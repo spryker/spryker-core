@@ -16,11 +16,13 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/propel": "^3.0.0",
+        "spryker/publisher": "*",
         "spryker/testify": "*"
     },
     "autoload": {
         "psr-4": {
-            "Spryker\\": "src/Spryker/"
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Zed\\Event\\Helper\\": "tests/SprykerTest/Zed/Event/_support/Helper/"
         }
     },
     "autoload-dev": {

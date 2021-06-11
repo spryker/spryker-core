@@ -12,6 +12,9 @@ use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class IndexMapGenerator implements IndexMapGeneratorInterface
 {
     public const TWIG_TEMPLATES_LOCATION = '/Templates/';

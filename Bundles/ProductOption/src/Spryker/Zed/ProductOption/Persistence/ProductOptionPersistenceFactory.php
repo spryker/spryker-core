@@ -13,6 +13,8 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePriceQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductOption\Persistence\Expander\ProductOptionGroupQueryExpander;
+use Spryker\Zed\ProductOption\Persistence\Expander\ProductOptionGroupQueryExpanderInterface;
 use Spryker\Zed\ProductOption\Persistence\Propel\Mapper\ProductOptionMapper;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
@@ -72,6 +74,16 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductOption\Persistence\Expander\ProductOptionGroupQueryExpanderInterface
+     */
+    public function createProductOptionGroupQueryExpander(): ProductOptionGroupQueryExpanderInterface
+    {
+        return new ProductOptionGroupQueryExpander(
+            $this->getProductOptionListTableQueryCriteriaExpanderPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesQueryContainerInterface
      */
     public function getSalesQueryContainer()
@@ -85,5 +97,13 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     public function getCountryQueryContainer()
     {
         return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_CONTAINER_COUNTRY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOptionGuiExtension\Dependency\Plugin\ProductOptionListTableQueryCriteriaExpanderPluginInterface[]
+     */
+    public function getProductOptionListTableQueryCriteriaExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::PLUGINS_PRODUCT_OPTION_LIST_TABLE_QUERY_CRITERIA_EXPANDER);
     }
 }

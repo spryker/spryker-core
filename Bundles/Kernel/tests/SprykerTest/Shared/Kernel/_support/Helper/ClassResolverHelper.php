@@ -27,22 +27,25 @@ class ClassResolverHelper extends Module
 
     public const MODULE_NAME = 'ModuleName';
 
+    public const CODE_BUCKET = 'BUCKET';
+
     protected const PROJECT_ORGANIZATION = 'ProjectOrganization';
     protected const CORE_ORGANIZATION = 'CoreOrganization';
     protected const STORE_NAME = 'STORE';
 
     /**
      * @param string $resolverClassName
+     * @param string $codeBucket
      *
      * @return \Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver
      */
-    public function getResolver(string $resolverClassName): AbstractClassResolver
+    public function getResolver(string $resolverClassName, string $codeBucket = ''): AbstractClassResolver
     {
         /** @var \Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver $resolverStub */
         $resolverStub = Stub::make($resolverClassName, [
-            'getClassNameFinder' => function () use ($resolverClassName) {
+            'getClassNameFinder' => function () use ($resolverClassName, $codeBucket) {
                 $sharedConfig = $this->getConfigStub($resolverClassName);
-                $moduleNameCandidatesBuilder = new ModuleNameCandidatesBuilder($sharedConfig);
+                $moduleNameCandidatesBuilder = $this->getModuleNameCandidatesBuilderStub($sharedConfig->getCurrentStoreName(), $codeBucket);
                 $classNameCandidatesBuilder = new ClassNameCandidatesBuilder($moduleNameCandidatesBuilder, $sharedConfig);
                 $resolverCacheManager = new ResolverCacheManager();
 
@@ -123,6 +126,18 @@ class ClassResolverHelper extends Module
      *
      * @return string
      */
+    public function getProjectCodeBucketClassName(string $resolverClassName): string
+    {
+        $classNamePattern = $this->getClassNamePattern($resolverClassName);
+
+        return $this->buildClassName($classNamePattern, static::PROJECT_ORGANIZATION, static::MODULE_NAME, static::CODE_BUCKET);
+    }
+
+    /**
+     * @param string $resolverClassName
+     *
+     * @return string
+     */
     public function getProjectClassName(string $resolverClassName): string
     {
         $classNamePattern = $this->getClassNamePattern($resolverClassName);
@@ -169,13 +184,13 @@ class ClassResolverHelper extends Module
      * @param string $classNamePattern
      * @param string $organization
      * @param string $moduleName
-     * @param string $storeName
+     * @param string $moduleNamePostfix
      *
      * @return string
      */
-    protected function buildClassName(string $classNamePattern, string $organization, string $moduleName, string $storeName = ''): string
+    protected function buildClassName(string $classNamePattern, string $organization, string $moduleName, string $moduleNamePostfix = ''): string
     {
-        $moduleNameCandidate = $moduleName . $storeName;
+        $moduleNameCandidate = $moduleName . $moduleNamePostfix;
 
         return ltrim(sprintf($classNamePattern, $organization, $moduleNameCandidate, $moduleName), '\\');
     }
@@ -188,6 +203,19 @@ class ClassResolverHelper extends Module
     public function createProjectStoreClass(string $resolverClassName): void
     {
         $className = $this->getProjectStoreClassName($resolverClassName);
+        $extends = $this->getClassToExtend($resolverClassName);
+
+        $this->getClassHelper()->createAutoloadableClass($className, $extends);
+    }
+
+    /**
+     * @param string $resolverClassName
+     *
+     * @return void
+     */
+    public function createProjectCodeBucketClass(string $resolverClassName): void
+    {
+        $className = $this->getProjectCodeBucketClassName($resolverClassName);
         $extends = $this->getClassToExtend($resolverClassName);
 
         $this->getClassHelper()->createAutoloadableClass($className, $extends);
@@ -217,6 +245,24 @@ class ClassResolverHelper extends Module
         $extends = $this->getClassToExtend($resolverClassName);
 
         $this->getClassHelper()->createAutoloadableClass($className, $extends);
+    }
+
+    /**
+     * @param string $storeName
+     * @param string $codeBucket
+     *
+     * @return \Spryker\Shared\Kernel\ClassResolver\ModuleNameCandidatesBuilder\ModuleNameCandidatesBuilder
+     */
+    protected function getModuleNameCandidatesBuilderStub(string $storeName, string $codeBucket = ''): ModuleNameCandidatesBuilder
+    {
+        return Stub::make(ModuleNameCandidatesBuilder::class, [
+            'getApplicationCodeBucket' => function () use ($codeBucket) {
+                return $codeBucket;
+            },
+            'getCurrentStoreName' => function () use ($storeName) {
+                return $storeName;
+            },
+        ]);
     }
 
     /**

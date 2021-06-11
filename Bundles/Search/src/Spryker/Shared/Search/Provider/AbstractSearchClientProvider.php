@@ -12,6 +12,9 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractClientProvider;
 use Spryker\Shared\Search\SearchConstants;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 abstract class AbstractSearchClientProvider extends AbstractClientProvider
 {
     /**

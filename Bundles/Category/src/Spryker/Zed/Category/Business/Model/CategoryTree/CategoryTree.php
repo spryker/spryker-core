@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Business\Model\CategoryTree;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -23,6 +24,8 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 class CategoryTree implements CategoryTreeInterface
 {
     use TransactionTrait;
+
+    protected const DEFAULT_DESTINATION_CHILD_COLLECTION_COUNT = 0;
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
@@ -88,11 +91,6 @@ class CategoryTree implements CategoryTreeInterface
             ->queryFirstLevelChildren($idSourceCategoryNode)
             ->find();
 
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryNode $destinationCategoryNodeEntity */
-        $destinationCategoryNodeEntity = $this->queryContainer
-            ->queryNodeById($idDestinationCategoryNode)
-            ->findOne();
-
         $destinationChildrenIds = $this->queryContainer
             ->queryFirstLevelChildren($idDestinationCategoryNode)
             ->select([SpyCategoryNodeTableMap::COL_FK_CATEGORY])
@@ -100,8 +98,16 @@ class CategoryTree implements CategoryTreeInterface
             ->find()
             ->toArray();
 
+        $destinationCategoryTransfer = $this->categoryFacade->findCategory(
+            (new CategoryCriteriaTransfer())->setIdCategoryNode($idDestinationCategoryNode)
+        );
+
+        if ($destinationCategoryTransfer === null) {
+            return static::DEFAULT_DESTINATION_CHILD_COLLECTION_COUNT;
+        }
+
         foreach ($firstLevelChildNodeCollection as $childNodeEntity) {
-            if ($childNodeEntity->getFkCategory() === $destinationCategoryNodeEntity->getFkCategory()) {
+            if ($childNodeEntity->getFkCategory() === $destinationCategoryTransfer->getIdCategoryOrFail()) {
                 $this->deleteNodeById($childNodeEntity->getIdCategoryNode(), $idDestinationCategoryNode);
 
                 continue;
@@ -120,7 +126,7 @@ class CategoryTree implements CategoryTreeInterface
             }
 
             if ($childNodeEntity->getIsMain()) {
-                $this->moveMainCategoryNodeSubTree($categoryTransfer, $idDestinationCategoryNode);
+                $this->moveMainCategoryNodeSubTree($categoryTransfer, $destinationCategoryTransfer);
 
                 continue;
             }
@@ -186,12 +192,18 @@ class CategoryTree implements CategoryTreeInterface
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param int $idDestinationCategoryNode
+     * @param \Generated\Shared\Transfer\CategoryTransfer $destinationCategoryTransfer
      *
      * @return void
      */
-    protected function moveMainCategoryNodeSubTree(CategoryTransfer $categoryTransfer, $idDestinationCategoryNode)
-    {
+    protected function moveMainCategoryNodeSubTree(
+        CategoryTransfer $categoryTransfer,
+        CategoryTransfer $destinationCategoryTransfer
+    ): void {
+        $idDestinationCategoryNode = $destinationCategoryTransfer
+            ->getCategoryNodeOrFail()
+            ->getIdCategoryNodeOrFail();
+
         $categoryNodeTransfer = $categoryTransfer->getCategoryNodeOrFail();
         $categoryNodeTransfer->setFkParentCategoryNode($idDestinationCategoryNode);
         $categoryTransfer->setCategoryNode($categoryNodeTransfer);
@@ -200,6 +212,8 @@ class CategoryTree implements CategoryTreeInterface
         $categoryParentNodeTransfer = $categoryTransfer->getParentCategoryNodeOrFail();
         $categoryParentNodeTransfer->setIdCategoryNode($idDestinationCategoryNode);
         $categoryTransfer->setParentCategoryNode($categoryParentNodeTransfer);
+
+        $categoryTransfer->setStoreRelation($destinationCategoryTransfer->getStoreRelationOrFail());
 
         $this->categoryFacade->update($categoryTransfer);
     }

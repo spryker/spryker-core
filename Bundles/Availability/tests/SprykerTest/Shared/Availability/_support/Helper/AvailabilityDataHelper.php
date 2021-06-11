@@ -60,23 +60,35 @@ class AvailabilityDataHelper extends Module
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      * @param string|int|float|null $quantity
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */
-    public function haveAvailabilityConcrete(string $sku, StoreTransfer $storeTransfer, $quantity = null): ProductConcreteAvailabilityTransfer
+    public function haveAvailabilityConcrete(string $sku, ?StoreTransfer $storeTransfer = null, $quantity = null): ProductConcreteAvailabilityTransfer
     {
+        $storeTransfer = $storeTransfer ?? $this->getStoreFacade()->getCurrentStore();
+
         $this->getAvailabilityFacade()->saveProductAvailabilityForStore(
             $sku,
             $quantity === null ? new Decimal(static::DEFAULT_QUANTITY) : new Decimal($quantity),
             $storeTransfer
         );
 
-        return $this->getAvailabilityFacade()->findOrCreateProductConcreteAvailabilityBySkuForStore(
+        $productConcreteAvailabilityTransfer = $this->getAvailabilityFacade()->findOrCreateProductConcreteAvailabilityBySkuForStore(
             $sku,
             $storeTransfer
         );
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productConcreteAvailabilityTransfer) {
+            $availabilityEntity = SpyAvailabilityQuery::create()->findOneBySku($productConcreteAvailabilityTransfer->getSku());
+
+            if ($availabilityEntity) {
+                $availabilityEntity->delete();
+            }
+        });
+
+        return $productConcreteAvailabilityTransfer;
     }
 
     /**

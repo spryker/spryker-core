@@ -143,7 +143,9 @@ class SavePriceProductOfferController extends AbstractController
                 continue;
             }
 
-            $moneyValueTransfer = $priceProductTransfers[0]->getMoneyValueOrFail();
+            /** @var \Generated\Shared\Transfer\PriceProductTransfer $firstPriceProductTransfer */
+            $firstPriceProductTransfer = $priceProductTransfers[0];
+            $moneyValueTransfer = $firstPriceProductTransfer->getMoneyValueOrFail();
             $priceProductTransfers->append((new PriceProductTransfer())
                 ->setPriceType($priceTypeTransfer)
                 ->setIdProduct($priceProductTransfers->getIterator()->current()->getIdProduct())

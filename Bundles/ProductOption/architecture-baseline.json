@@ -1,0 +1,51 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeBridge.php",
+        "description": "\n      Bridges: The bridge has incorrect method 'hasKey' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'translate' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'hasTranslation' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'createAndTouchTranslation' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'updateAndTouchTranslation' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'hasKey' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductOption/src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'getTranslation' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

@@ -21,10 +21,10 @@ interface ProductCategoryTreeBuilderInterface
     public function buildProductCategoryTree(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array;
 
     /**
-     * @param int[] $categoryIds
+     * @param int[] $categoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string[][]
      */
-    public function buildProductCategoryTreeNames(array $categoryIds, LocaleTransfer $localeTransfer): array;
+    public function buildProductCategoryTreeNames(array $categoryNodeIds, LocaleTransfer $localeTransfer): array;
 }

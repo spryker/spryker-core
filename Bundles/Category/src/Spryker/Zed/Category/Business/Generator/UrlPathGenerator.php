@@ -20,6 +20,16 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
     public const CATEGORY_NAME = 'name';
 
     /**
+     * @uses \Spryker\Zed\Category\Persistence\CategoryRepository::KEY_ID_CATEGORY_NODE
+     */
+    protected const KEY_ID_CATEGORY_NODE = 'id_category_node';
+
+    /**
+     * @uses \Spryker\Zed\Category\Persistence\CategoryRepository::KEY_FK_PARENT_CATEGORY_NODE
+     */
+    protected const KEY_FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
+
+    /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
     protected $categoryRepository;
@@ -70,6 +80,97 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
         }
 
         return '/' . implode('/', $formattedPath);
+    }
+
+    /**
+     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string[]
+     */
+    public function bulkBuildCategoryNodeUrlForLocale(array $categoryNodeIds, LocaleTransfer $localeTransfer): array
+    {
+        $categoryNodeUrlPathCriteriaTransfer = (new CategoryNodeUrlPathCriteriaTransfer())
+            ->setCategoryNodeDescendantIds($categoryNodeIds)
+            ->setIdLocale($localeTransfer->getIdLocaleOrFail())
+            ->setExcludeRootNode(true);
+
+        $categoryUrlPathParts = $this->categoryRepository->getBulkCategoryNodeUrlPathParts($categoryNodeUrlPathCriteriaTransfer);
+        $indexedCategoryUrlPathParts = $this->getCategoryUrlPathPartIndexedByIdCategoryNode($categoryUrlPathParts);
+
+        return $this->generateCategoryUrlPaths($indexedCategoryUrlPathParts, $localeTransfer);
+    }
+
+    /**
+     * @param array $categoryUrlPathParts
+     *
+     * @return array
+     */
+    protected function getCategoryUrlPathPartIndexedByIdCategoryNode(array $categoryUrlPathParts): array
+    {
+        $indexedCategoryUrlPathParts = [];
+
+        foreach ($categoryUrlPathParts as $categoryUrlPathPart) {
+            $idCategoryNode = (int)$categoryUrlPathPart[static::KEY_ID_CATEGORY_NODE];
+            $indexedCategoryUrlPathParts[$idCategoryNode][] = $categoryUrlPathPart;
+
+            $indexedCategoryUrlPathParts = $this->addParentCategoryUrlPathParts(
+                $idCategoryNode,
+                $categoryUrlPathPart,
+                $indexedCategoryUrlPathParts,
+                $categoryUrlPathParts
+            );
+        }
+
+        return $indexedCategoryUrlPathParts;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param array $categoryUrlPathPart
+     * @param array $indexedCategoryUrlPathParts
+     * @param array $categoryUrlPathParts
+     *
+     * @return array
+     */
+    protected function addParentCategoryUrlPathParts(
+        int $idCategoryNode,
+        array $categoryUrlPathPart,
+        array $indexedCategoryUrlPathParts,
+        array $categoryUrlPathParts
+    ): array {
+        $parentCategoryUrlPathPart = $categoryUrlPathParts[(int)$categoryUrlPathPart[static::KEY_FK_PARENT_CATEGORY_NODE]] ?? null;
+
+        if (!$parentCategoryUrlPathPart) {
+            return $indexedCategoryUrlPathParts;
+        }
+
+        array_unshift($indexedCategoryUrlPathParts[$idCategoryNode], $parentCategoryUrlPathPart);
+
+        return $this->addParentCategoryUrlPathParts(
+            $idCategoryNode,
+            $parentCategoryUrlPathPart,
+            $indexedCategoryUrlPathParts,
+            $categoryUrlPathParts
+        );
+    }
+
+    /**
+     * @param array $indexedCategoryUrlPathParts
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string[]
+     */
+    protected function generateCategoryUrlPaths(array $indexedCategoryUrlPathParts, LocaleTransfer $localeTransfer): array
+    {
+        $indexedCategoryUrlPaths = [];
+
+        foreach ($indexedCategoryUrlPathParts as $key => $categoryUrlPathParts) {
+            $expandedCategoryUrlPathParts = $this->executeCategoryUrlPathPlugins($categoryUrlPathParts, $localeTransfer);
+            $indexedCategoryUrlPaths[$key] = $this->generate($expandedCategoryUrlPathParts);
+        }
+
+        return $indexedCategoryUrlPaths;
     }
 
     /**
