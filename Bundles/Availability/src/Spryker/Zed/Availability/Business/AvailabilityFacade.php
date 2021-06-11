@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -26,6 +28,45 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    public function areProductsSellableForStore(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
+    ): SellableItemsResponseTransfer {
+        return $this->getFactory()
+            ->createSellableModel()
+            ->areProductsSellableForStore($sellableItemsRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    public function areProductConcretesSellableForStore(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer,
+        SellableItemsResponseTransfer $sellableItemsResponseTransfer
+    ): SellableItemsResponseTransfer {
+        return $this->getFactory()
+            ->createSellableModel()
+            ->areProductConcretesSellableForStore(
+                $sellableItemsRequestTransfer,
+                $sellableItemsResponseTransfer
+            );
+    }
+
     /**
      * {@inheritDoc}
      *

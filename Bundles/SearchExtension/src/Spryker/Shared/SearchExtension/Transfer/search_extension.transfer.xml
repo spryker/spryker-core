@@ -11,4 +11,7 @@
     <transfer name="SearchDocument">
     </transfer>
 
+    <transfer name="SearchConnectionResponse">
+    </transfer>
+
 </transfers>

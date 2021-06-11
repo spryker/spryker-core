@@ -9,6 +9,8 @@ namespace Spryker\Zed\AvailabilityCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -40,6 +42,17 @@ class AvailabilityCartConnectorToAvailabilityBridge implements AvailabilityCartC
         ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
     ): ?ProductConcreteAvailabilityTransfer {
         return $this->availabilityFacade->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer, $productAvailabilityCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    public function areProductsSellableForStore(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
+    ): SellableItemsResponseTransfer {
+        return $this->availabilityFacade->areProductsSellableForStore($sellableItemsRequestTransfer);
     }
 
     /**
