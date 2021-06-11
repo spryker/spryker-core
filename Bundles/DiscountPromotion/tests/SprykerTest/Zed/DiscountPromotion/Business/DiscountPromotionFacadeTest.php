@@ -215,7 +215,7 @@ class DiscountPromotionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateDiscountPromotionShouldFailIfIdDiscountNotExists(): void
+    public function testUpdateDiscountPromotionShouldReturnTransferEvenIfDiscountDoesNotExists(): void
     {
         // Arrange
         $discountPromotionTransferSaved = $this->tester->haveDiscountPromotion([
@@ -228,7 +228,7 @@ class DiscountPromotionFacadeTest extends Unit
         $discountPromotionTransfer = $this->tester->getFacade()->updatePromotionDiscount($discountPromotionTransferSaved);
 
         // Assert
-        $this->assertSame($discountPromotionTransfer->getIdDiscountPromotion(), null);
+        $this->assertNull($discountPromotionTransfer->getIdDiscountPromotion());
     }
 
     /**
