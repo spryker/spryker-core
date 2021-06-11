@@ -57,7 +57,8 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteRequestReader(),
             $this->createQuoteRequestReferenceGenerator(),
             $this->createQuoteRequestVersionSanitizer(),
-            $this->createQuoteRequestStatus()
+            $this->createQuoteRequestStatus(),
+            $this->getQuoteRequestValidatorPlugins()
         );
     }
 
@@ -72,7 +73,8 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteRequestReader(),
             $this->createQuoteRequestReferenceGenerator(),
             $this->createQuoteRequestVersionSanitizer(),
-            $this->createQuoteRequestUserStatus()
+            $this->createQuoteRequestUserStatus(),
+            $this->getQuoteRequestUserValidatorPlugins()
         );
     }
 
@@ -219,5 +221,21 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function getCartFacade(): QuoteRequestToCartFacadeInterface
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::FACADE_CART);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestValidatorPluginInterface[]
+     */
+    public function getQuoteRequestValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::PLUGINS_QUOTE_REQUEST_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestUserValidatorPluginInterface[]
+     */
+    public function getQuoteRequestUserValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::PLUGINS_QUOTE_REQUEST_USER_VALIDATOR);
     }
 }

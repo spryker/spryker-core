@@ -27,10 +27,20 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      */
     public function checkConnection()
     {
+        $connectionAdapterPlugins = $this->getFactory()->getClientAdapterPlugins();
+
+        if (!$connectionAdapterPlugins) {
+            $this->getFactory()
+                ->getElasticsearchClient()
+                ->getStatus()
+                ->getData();
+
+            return;
+        }
+
         $this->getFactory()
-            ->getElasticsearchClient()
-            ->getStatus()
-            ->getData();
+            ->createConnectionDelegator()
+            ->checkConnection();
     }
 
     /**
@@ -77,20 +87,6 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement. This functionality is obsolete and should not be used.
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
-     */
-    public function getSearchConfig()
-    {
-        return $this->getFactory()->getSearchConfig();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset
@@ -104,6 +100,96 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->createSearchKeysQuery($searchString, $limit, $offset);
 
         return $this->search($query);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return mixed
+     */
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer)
+    {
+        return $this->getFactory()->createSearchDelegator()->readDocument($searchDocumentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
+    {
+        return $this->getFactory()->createSearchDelegator()->writeDocument($searchDocumentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchDocumentTransfers): bool
+    {
+        return $this->getFactory()->createSearchDelegator()->writeDocuments($searchDocumentTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
+    {
+        return $this
+            ->getFactory()
+            ->createSearchDelegator()
+            ->deleteDocument($searchDocumentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteDocuments(array $searchDocumentTransfers): bool
+    {
+        return $this
+            ->getFactory()
+            ->createSearchDelegator()
+            ->deleteDocuments($searchDocumentTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement. This functionality is obsolete and should not be used.
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
+     */
+    public function getSearchConfig()
+    {
+        return $this->getFactory()->getSearchConfig();
     }
 
     /**
@@ -154,20 +240,6 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return mixed
-     */
-    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer)
-    {
-        return $this->getFactory()->createSearchDelegator()->readDocument($searchDocumentTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClient::writeDocument()} instead.
      *
      * @param array $dataSet
@@ -189,20 +261,6 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return bool
-     */
-    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
-    {
-        return $this->getFactory()->createSearchDelegator()->writeDocument($searchDocumentTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClient::writeDocuments()} instead.
      *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
@@ -215,20 +273,6 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->getFactory()
             ->createWriter()
             ->writeBulk($searchDocumentTransfers);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
-     *
-     * @return bool
-     */
-    public function writeDocuments(array $searchDocumentTransfers): bool
-    {
-        return $this->getFactory()->createSearchDelegator()->writeDocuments($searchDocumentTransfers);
     }
 
     /**
@@ -257,23 +301,6 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return bool
-     */
-    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool
-    {
-        return $this
-            ->getFactory()
-            ->createSearchDelegator()
-            ->deleteDocument($searchDocumentTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClient::deleteDocuments()} instead.
      *
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
@@ -286,22 +313,5 @@ class SearchClient extends AbstractClient implements SearchClientInterface
             ->getFactory()
             ->createWriter()
             ->deleteBulk($searchDocumentTransfers);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
-     *
-     * @return bool
-     */
-    public function deleteDocuments(array $searchDocumentTransfers): bool
-    {
-        return $this
-            ->getFactory()
-            ->createSearchDelegator()
-            ->deleteDocuments($searchDocumentTransfers);
     }
 }
