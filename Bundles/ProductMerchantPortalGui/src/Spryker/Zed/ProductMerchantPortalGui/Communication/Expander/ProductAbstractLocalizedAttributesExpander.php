@@ -13,6 +13,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class ProductAbstractLocalizedAttributesExpander implements ProductAbstractLocalizedAttributesExpanderInterface
 {
+    protected const DEFAULT_PRODUCT_NAME = '';
+
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
@@ -33,11 +35,20 @@ class ProductAbstractLocalizedAttributesExpander implements ProductAbstractLocal
      */
     public function expandLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
-        $productAbstractTransfer->addLocalizedAttributes(
-            (new LocalizedAttributesTransfer())
-                ->setLocale($this->localeFacade->getCurrentLocale())
-                ->setName($productAbstractTransfer->getName())
-        );
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
+        $currentLocale = $this->localeFacade->getCurrentLocale()->getLocaleNameOrFail();
+
+        foreach ($localeTransfers as $localeTransfer) {
+            $name = $localeTransfer->getLocaleNameOrFail() === $currentLocale
+                ? $productAbstractTransfer->getName()
+                : static::DEFAULT_PRODUCT_NAME;
+
+            $productAbstractTransfer->addLocalizedAttributes(
+                (new LocalizedAttributesTransfer())
+                    ->setLocale($localeTransfer)
+                    ->setName($name)
+            );
+        }
 
         return $productAbstractTransfer;
     }

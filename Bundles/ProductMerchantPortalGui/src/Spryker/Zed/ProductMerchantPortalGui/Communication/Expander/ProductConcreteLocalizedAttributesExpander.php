@@ -17,6 +17,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocalizedAttributesExpanderInterface
 {
+    protected const DEFAULT_PRODUCT_NAME = '';
+
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
@@ -46,22 +48,32 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
      */
     public function expandLocalizedAttributes(array $productConcreteTransfers): array
     {
+        $localeTransfers = $this->localeFacade->getLocaleCollection();
+        $currentLocale = $this->localeFacade->getCurrentLocale()->getLocaleNameOrFail();
+
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
             $attributes = $productConcreteTransfer->getAttributes();
             $productManagementAttributeTransfers = $this->getProductManagementAttributes($attributes);
 
-            $localizedAttributes = $this->extractLocalizedAttributes(
-                $productManagementAttributeTransfers->getArrayCopy(),
-                $attributes,
-                $this->localeFacade->getCurrentLocale()
-            );
+            foreach ($localeTransfers as $localeTransfer) {
+                $name = $localeTransfer->getLocaleNameOrFail() === $currentLocale
+                    ? $productConcreteTransfer->getName()
+                    : static::DEFAULT_PRODUCT_NAME;
 
-            $productConcreteTransfer->addLocalizedAttributes(
-                (new LocalizedAttributesTransfer())
-                    ->setName($productConcreteTransfer->getName())
-                    ->setLocale($this->localeFacade->getCurrentLocale())
-                    ->setAttributes($localizedAttributes)
-            );
+                $localizedAttributes = $this->extractLocalizedAttributes(
+                    $productManagementAttributeTransfers->getArrayCopy(),
+                    $attributes,
+                    $localeTransfer
+                );
+
+
+                $productConcreteTransfer->addLocalizedAttributes(
+                    (new LocalizedAttributesTransfer())
+                        ->setName($name)
+                        ->setLocale($localeTransfer)
+                        ->setAttributes($localizedAttributes)
+                );
+            }
         }
 
         return $productConcreteTransfers;
