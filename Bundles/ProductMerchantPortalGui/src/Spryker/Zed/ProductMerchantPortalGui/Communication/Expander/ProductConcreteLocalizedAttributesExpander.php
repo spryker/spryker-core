@@ -66,7 +66,6 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
                     $localeTransfer
                 );
 
-
                 $productConcreteTransfer->addLocalizedAttributes(
                     (new LocalizedAttributesTransfer())
                         ->setName($name)
