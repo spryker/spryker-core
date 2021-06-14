@@ -20,6 +20,7 @@ use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Tax\Business\TaxFacade;
 use Spryker\Zed\Tax\Business\TaxFacadeInterface;
 use Spryker\Zed\TaxProductConnector\Business\Exception\ProductAbstractNotFoundException;
+use Spryker\Zed\TaxProductConnector\Business\Exception\TaxSetNotFoundException;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacadeInterface;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractReadPlugin;
@@ -109,15 +110,51 @@ class TaxProductConnectorFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testMapTaxSetWhenTaxSetDoesNotExistShouldReturnProductAbstractWithoutIdTaxSet(): void
+    public function testExpandProductAbstractExpandsProductTransferWithTaxSet(): void
     {
+        // Arrange
+        $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
+        $taxSetTransfer = $this->createTaxSet();
+        $productAbstractTransfer = $this->createProductAbstract();
+        $productAbstractTransfer->setIdTaxSet($taxSetTransfer->getIdTaxSet());
+        $taxProductConnectorFacade->saveTaxSetToProductAbstract($productAbstractTransfer);
+        $productAbstractTransfer->setIdTaxSet(null);
+
+        // Act
+        $productAbstractTransfer = $taxProductConnectorFacade->expandProductAbstract($productAbstractTransfer);
+
+        // Assert
+        $this->assertSame($productAbstractTransfer->getIdTaxSet(), $taxSetTransfer->getIdTaxSet());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductAbstractDoesNothingForProductWithoutTaxSet(): void
+    {
+        // Arrange
+        $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
+        $productAbstractTransfer = $this->createProductAbstract();
+
+        // Act
+        $productAbstractTransfer = $taxProductConnectorFacade->expandProductAbstract($productAbstractTransfer);
+
+        // Assert
+        $this->assertNull($productAbstractTransfer->getIdTaxSet());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddTaxSetWhenTaxSetDoesNotExistShouldThrowException(): void
+    {
+        $this->expectException(TaxSetNotFoundException::class);
+
         $productAbstractTransfer = new ProductAbstractTransfer();
         $productAbstractTransfer->setIdProductAbstract(-1);
 
         $taxProductConnectorFacade = $this->createTaxProductConnectorFacade();
-        $productAbstractTransfer = $taxProductConnectorFacade->mapTaxSet($productAbstractTransfer);
-
-        $this->assertNull($productAbstractTransfer->getIdTaxSet());
+        $taxProductConnectorFacade->mapTaxSet($productAbstractTransfer);
     }
 
     /**

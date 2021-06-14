@@ -5,23 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\TaxProductConnector\Communication\Plugin;
+namespace Spryker\Zed\TaxProductConnector\Communication\Plugin\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface;
+use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\TaxProductConnector\Communication\Plugin\Product\TaxSetProductAbstractExpanderPlugin} instead.
- *
  * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\TaxProductConnector\TaxProductConnectorConfig getConfig()
  * @method \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface getQueryContainer()
  */
-class TaxSetProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginReadInterface
+class TaxSetProductAbstractExpanderPlugin extends AbstractPlugin implements ProductAbstractExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Finds tax set in database by ProductAbstractTransfer.idProductAbstract.
+     * - Sets ProductAbstractTransfer.idTaxSet transfer property.
      *
      * @api
      *
@@ -29,9 +29,8 @@ class TaxSetProductAbstractReadPlugin extends AbstractPlugin implements ProductA
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function read(ProductAbstractTransfer $productAbstractTransfer)
+    public function expand(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
     {
-         return $this->getFacade()
-             ->mapTaxSet($productAbstractTransfer);
+        return $this->getFacade()->expandProductAbstract($productAbstractTransfer);
     }
 }

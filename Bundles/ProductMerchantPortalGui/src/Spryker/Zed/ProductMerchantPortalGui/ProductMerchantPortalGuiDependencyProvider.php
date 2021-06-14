@@ -74,7 +74,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER';
     public const PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER';
 
-    public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
+    public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -521,7 +521,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addValidationAdapter(Container $container): Container
     {
-        $container->set(static::EXTERNAL_ADAPTER_VALIDATION, function () {
+        $container->set(static::ADAPTER_VALIDATION, function () {
             return new ProductMerchantPortalGuiToValidationAdapter();
         });
 

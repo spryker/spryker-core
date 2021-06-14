@@ -682,6 +682,6 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
      */
     public function getValidationAdapter(): ProductMerchantPortalGuiToValidationAdapterInterface
     {
-        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::EXTERNAL_ADAPTER_VALIDATION);
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::ADAPTER_VALIDATION);
     }
 }

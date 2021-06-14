@@ -18,11 +18,18 @@ class ProductAbstractReadObserverPluginManager implements ProductAbstractReadObs
     protected $readCollection;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[] $readCollection
+     * @var \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface[] 
      */
-    public function __construct(array $readCollection)
+    protected $productAbstractExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[] $readCollection
+     * @param \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface[] $productAbstractExpanderPlugins
+     */
+    public function __construct(array $readCollection, array $productAbstractExpanderPlugins)
     {
         $this->readCollection = $readCollection;
+        $this->productAbstractExpanderPlugins = $productAbstractExpanderPlugins;
     }
 
     /**
@@ -34,8 +41,37 @@ class ProductAbstractReadObserverPluginManager implements ProductAbstractReadObs
      */
     public function read(ProductAbstractTransfer $productAbstractTransfer)
     {
+        $productAbstractTransfer = $this->executeProductAbsractReadPlugins($productAbstractTransfer);
+        $productAbstractTransfer = $this->executeProductAbstractExpanderPlugins($productAbstractTransfer);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractReadObserverPluginManager::executeProductAbstractExpanderPlugins()} instead.
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function executeProductAbsractReadPlugins(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    {
         foreach ($this->readCollection as $productAbstractPluginRead) {
             $productAbstractTransfer = $productAbstractPluginRead->read($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function executeProductAbstractExpanderPlugins(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer
+    {
+        foreach ($this->productAbstractExpanderPlugins as $productAbstractExpanderPlugin) {
+            $productAbstractTransfer = $productAbstractExpanderPlugin->expand($productAbstractTransfer);
         }
 
         return $productAbstractTransfer;

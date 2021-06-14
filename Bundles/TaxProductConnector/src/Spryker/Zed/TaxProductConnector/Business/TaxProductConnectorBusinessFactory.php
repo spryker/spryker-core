@@ -10,6 +10,8 @@ namespace Spryker\Zed\TaxProductConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface;
 use Spryker\Zed\TaxProductConnector\Business\Calculator\ProductItemTaxRateCalculator as ProductItemTaxRateCalculatorWithMultipleShipmentTaxRate;
+use Spryker\Zed\TaxProductConnector\Business\Expander\Product\ProductAbstractTaxSetExpander;
+use Spryker\Zed\TaxProductConnector\Business\Expander\Product\ProductAbstractTaxSetExpanderInterface;
 use Spryker\Zed\TaxProductConnector\Business\Model\ProductItemTaxRateCalculator;
 use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxReader;
 use Spryker\Zed\TaxProductConnector\Business\Product\ProductAbstractTaxReaderInterface;
@@ -40,6 +42,16 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractTaxSetMapper()
     {
         return new ProductAbstractTaxSetMapper($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxProductConnector\Business\Expander\Product\ProductAbstractTaxSetExpanderInterface
+     */
+    public function createProductAbstractTaxSetExpander(): ProductAbstractTaxSetExpanderInterface
+    {
+        return new ProductAbstractTaxSetExpander(
+            $this->getRepository()
+        );
     }
 
     /**
