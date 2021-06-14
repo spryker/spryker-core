@@ -61,6 +61,10 @@ class DiscountPromotionEntityManager extends AbstractEntityManager implements Di
             ->createDiscountPromotionQuery()
             ->findOneByIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
 
+        if ($discountPromotionEntity === null) {
+            return new DiscountPromotionTransfer();
+        }
+
         $mapper = $this->getFactory()
             ->createDiscountPromotionMapper();
         $discountPromotionEntity = $mapper->mapDiscountPromotionTransferToEntity(

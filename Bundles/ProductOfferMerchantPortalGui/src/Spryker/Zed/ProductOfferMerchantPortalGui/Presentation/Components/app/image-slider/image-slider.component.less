@@ -1,6 +1,7 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
 @image-slider-height: 125px;
+@image-slider-image-mask: rgba(@ink, 0.05);
 @image-slider-preview-margin-right: 10px;
 @image-slider-preview-img-size: 38px;
 @image-slider-showcard-img-size: 125px;
@@ -12,6 +13,24 @@
     height: @image-slider-height;
     display: flex;
 
+    &-preview-img,
+    &-showcard {
+        position: relative;
+        border-radius: @image-slider-border-radius;
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: @image-slider-image-mask;
+            border-radius: @image-slider-border-radius;
+            z-index: 1;
+        }
+    }
+
     &-preview {
         display: flex;
         flex-direction: column;
@@ -20,7 +39,6 @@
         &-img {
             height: @image-slider-preview-img-size;
             width: @image-slider-preview-img-size;
-            border-radius: @image-slider-border-radius;
             border: @image-slider-preview-border;
 
             &:not(:last-child) {
@@ -36,7 +54,6 @@
     &-showcard {
         width: @image-slider-showcard-img-size;
         height: @image-slider-showcard-img-size;
-        border-radius: @image-slider-border-radius;
 
         &-image {
             position: relative;

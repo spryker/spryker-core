@@ -26,6 +26,13 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPo
 class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
     /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL
+     */
+    protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
+
+    protected const COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'Pending';
+
+    /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
      */
     protected $productOfferMerchantPortalGuiRepository;
@@ -92,8 +99,7 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
     {
         $productOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferTableData($criteriaTransfer);
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
-        /** @var \Generated\Shared\Transfer\LocaleTransfer $localeTransfer */
-        $localeTransfer = $criteriaTransfer->requireLocale()->getLocale();
+        $localeTransfer = $criteriaTransfer->getLocaleOrFail();
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $responseData = [
@@ -105,7 +111,8 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_PRODUCT_NAME => $this->getNameColumnData($productOfferTransfer, $localeTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_STORES => $this->getStoresColumnData($productOfferTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_STOCK => $this->getStockColumnData($productOfferTransfer),
-                ProductOfferGuiTableConfigurationProvider::COL_KEY_VISIBILITY => $this->getVisibilityColumnData($productOfferTransfer),
+                ProductOfferGuiTableConfigurationProvider::COL_KEY_STATUS => $this->getStatusColumnData($productOfferTransfer),
+                ProductOfferGuiTableConfigurationProvider::COL_KEY_APPROVAL_STATUS => $this->getApprovalStatusColumnData($productOfferTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_VALID_FROM => $this->getValidFromColumnData($productOfferTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_VALID_TO => $this->getValidToColumnData($productOfferTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_CREATED_AT => $productOfferTransfer->getCreatedAt(),
@@ -115,13 +122,12 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        /** @var \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer */
-        $paginationTransfer = $productOfferCollectionTransfer->requirePagination()->getPagination();
+        $paginationTransfer = $productOfferCollectionTransfer->getPaginationOrFail();
 
         return $guiTableDataResponseTransfer
-            ->setPage($paginationTransfer->requirePage()->getPage())
-            ->setPageSize($paginationTransfer->requireMaxPerPage()->getMaxPerPage())
-            ->setTotal($paginationTransfer->requireNbResults()->getNbResults());
+            ->setPage($paginationTransfer->getPageOrFail())
+            ->setPageSize($paginationTransfer->getMaxPerPageOrFail())
+            ->setTotal($paginationTransfer->getNbResultsOrFail());
     }
 
     /**
@@ -150,10 +156,7 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
         $storeNames = [];
 
         foreach ($storeTransfers as $storeTransfer) {
-            /** @var string $storeName */
-            $storeName = $storeTransfer->requireName()->getName();
-
-            $storeNames[] = $storeName;
+            $storeNames[] = $storeTransfer->getNameOrFail();
         }
 
         return $storeNames;
@@ -182,13 +185,13 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
      *
      * @return string
      */
-    protected function getVisibilityColumnData(ProductOfferTransfer $productOfferTransfer): string
+    protected function getStatusColumnData(ProductOfferTransfer $productOfferTransfer): string
     {
         if ($productOfferTransfer->getIsActive()) {
-            return $this->translatorFacade->trans(ProductOfferGuiTableConfigurationProvider::COLUMN_DATA_VISIBILITY_ONLINE);
+            return $this->translatorFacade->trans(ProductOfferGuiTableConfigurationProvider::COLUMN_DATA_STATUS_ACTIVE);
         }
 
-        return $this->translatorFacade->trans(ProductOfferGuiTableConfigurationProvider::COLUMN_DATA_VISIBILITY_OFFLINE);
+        return $this->translatorFacade->trans(ProductOfferGuiTableConfigurationProvider::COLUMN_DATA_STATUS_INACTIVE);
     }
 
     /**
@@ -233,5 +236,19 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
         return isset($productOfferTransfer->getProductImages()[0])
             ? $productOfferTransfer->getProductImages()[0]->getExternalUrlSmall()
             : null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return string
+     */
+    protected function getApprovalStatusColumnData(ProductOfferTransfer $productOfferTransfer): string
+    {
+        if ($productOfferTransfer->getApprovalStatus() === static::APPROVAL_STATUS_WAITING_FOR_APPROVAL) {
+            return $this->translatorFacade->trans(static::COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL);
+        }
+
+        return $this->translatorFacade->trans($productOfferTransfer->getApprovalStatusOrFail());
     }
 }
