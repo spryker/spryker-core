@@ -129,4 +129,15 @@ interface TouchFacadeInterface
      * @return int
      */
     public function cleanTouchEntitiesForDeletedItemEvent(): int;
+
+    /**
+     * Specification:
+     * - Checks if touch is enabled.
+     * - Gets the value from module configuration.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isTouchEnabled(): bool;
 }

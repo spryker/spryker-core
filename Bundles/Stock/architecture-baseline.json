@@ -1,0 +1,23 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/StockFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Stock\\Business\\StockFacade::calculateStockForProduct() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/StockFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Stock\\Business\\StockFacade::calculateProductStockForStore() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/StockFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The Spryker\\Zed\\Stock\\Business\\StockFacade::calculateProductAbstractStockForStore() is using an invalid return type \"\\Spryker\\DecimalObject\\Decimal\" which violates the rule \"Every Facade should only return native types or transfer objects.\"\n    ",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    }
+]

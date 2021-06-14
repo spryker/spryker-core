@@ -1,0 +1,30 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/AclFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Acl\\Business\\AclFacade::addGroup() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/AclFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Acl\\Business\\AclFacade::updateGroup() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/AclFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Acl\\Business\\AclFacade::addRolesToGroup() contains a \"foreach\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/AclFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Acl\\Business\\AclFacade::addRolesToGroup() contains a \"if\" statement which violates the rule \"A Facade must not contain logic and only delegate.\"\n    ",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    }
+]

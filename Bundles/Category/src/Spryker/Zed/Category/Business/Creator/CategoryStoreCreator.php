@@ -54,8 +54,8 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
             );
         }
 
-        $this->categoryEntityManager->createCategoryStoreRelationForStores(
-            $categoryTransfer->getIdCategoryOrFail(),
+        $this->categoryEntityManager->bulkCreateCategoryStoreRelationForStores(
+            [$categoryTransfer->getIdCategoryOrFail()],
             $storeIdsToAdd
         );
     }

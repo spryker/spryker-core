@@ -43,7 +43,22 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the log destination path, e.g 'php://stderr' or '/data/log/Yves/application.log'.
+     *
      * @api
+     *
+     * @return resource|string
+     */
+    public function getLogDestinationPath()
+    {
+        return $this->get(LogConstants::LOG_FILE_PATH_YVES, 'php://stderr');
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Yves\Log\LogConfig::getLogDestinationPath()} instead.
      *
      * @return string
      */
@@ -67,7 +82,22 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Defines the log destination path, e.g 'php://stderr' or '/data/log/Yves/exception.log'.
+     *
      * @api
+     *
+     * @return resource|string
+     */
+    public function getExceptionLogDestinationPath()
+    {
+        return $this->get(LogConstants::EXCEPTION_LOG_FILE_PATH_YVES, 'php://stderr');
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Yves\Log\LogConfig::getExceptionLogDestination()} instead.
      *
      * @return string
      */

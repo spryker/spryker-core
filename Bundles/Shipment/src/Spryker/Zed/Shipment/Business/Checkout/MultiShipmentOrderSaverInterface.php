@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Shipment\Business\Checkout;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 
@@ -25,4 +26,12 @@ interface MultiShipmentOrderSaverInterface extends ShipmentOrderSaverInterface
         ShipmentGroupTransfer $shipmentGroupTransfer,
         SaveOrderTransfer $saveOrderTransfer
     ): ShipmentGroupTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 }

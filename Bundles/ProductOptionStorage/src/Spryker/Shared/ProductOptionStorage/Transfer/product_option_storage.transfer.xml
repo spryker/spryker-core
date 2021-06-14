@@ -59,4 +59,8 @@
     <transfer name="StorageProductOptionGroup">
     </transfer>
 
+    <transfer name="ProductOption">
+        <property name="idGroup" type="int"/>
+    </transfer>
+
 </transfers>

@@ -21,6 +21,8 @@ use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroup
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpanderInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpander;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationPriceProductExpanderInterface;
+use Spryker\Zed\ProductConfiguration\Business\Validator\QuoteRequestProductConfigurationValidator;
+use Spryker\Zed\ProductConfiguration\Business\Validator\QuoteRequestProductConfigurationValidatorInterface;
 use Spryker\Zed\ProductConfiguration\ProductConfigurationDependencyProvider;
 
 /**
@@ -90,5 +92,13 @@ class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
             $this->getProductConfigurationService(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductConfiguration\Business\Validator\QuoteRequestProductConfigurationValidatorInterface
+     */
+    public function createQuoteRequestProductConfigurationValidator(): QuoteRequestProductConfigurationValidatorInterface
+    {
+        return new QuoteRequestProductConfigurationValidator();
     }
 }

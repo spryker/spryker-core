@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/SecurityMerchantPortalGui/src/Spryker/Zed/SecurityMerchantPortalGui/Dependency/Facade/SecurityMerchantPortalGuiToMerchantUserFacadeInterface.php",
+        "description": "\n      Bridges: The bridge interface has incorrect method 'authorizeMerchantUser' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

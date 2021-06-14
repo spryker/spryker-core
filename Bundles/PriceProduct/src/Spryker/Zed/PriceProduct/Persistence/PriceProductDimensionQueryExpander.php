@@ -83,6 +83,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
 
             $this->addJoin($priceProductStoreQuery, $queryCriteriaTransfer);
             $this->addWithColumns($priceProductStoreQuery, $queryCriteriaTransfer);
+
             $this->filterEmptyDimensions($priceProductStoreQuery, $queryCriteriaTransfer);
         }
 

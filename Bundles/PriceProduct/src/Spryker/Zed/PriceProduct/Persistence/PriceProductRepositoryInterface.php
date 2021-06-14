@@ -82,9 +82,11 @@ interface PriceProductRepositoryInterface
     public function buildUnconditionalDefaultPriceDimensionQueryCriteria(): QueryCriteriaTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
      * @return \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[]
      */
-    public function findOrphanPriceProductStoreEntities(): array;
+    public function findOrphanPriceProductStoreEntities(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 
     /**
      * @param int $idPriceProductStore

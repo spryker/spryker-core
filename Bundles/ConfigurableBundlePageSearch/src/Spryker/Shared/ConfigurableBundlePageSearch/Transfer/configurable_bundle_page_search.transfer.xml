@@ -65,6 +65,7 @@
     <transfer name="PageMap">
         <property name="locale" type="string"/>
         <property name="type" type="string"/>
+        <property name="searchResultData" type="SearchResultDataMap[]" singular="searchResultData"/>
     </transfer>
 
     <transfer name="ProductImage">
@@ -76,6 +77,11 @@
 
     <transfer name="SearchContext">
         <property name="sourceIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="SearchResultDataMap">
+        <property name="name" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

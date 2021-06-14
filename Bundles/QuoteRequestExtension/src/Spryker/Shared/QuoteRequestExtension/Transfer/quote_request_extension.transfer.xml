@@ -4,4 +4,10 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="QuoteRequestResponse">
+    </transfer>
+
+    <transfer name="QuoteRequest">
+    </transfer>
+
 </transfers>

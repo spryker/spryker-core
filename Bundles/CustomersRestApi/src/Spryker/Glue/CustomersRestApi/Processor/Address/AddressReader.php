@@ -111,7 +111,7 @@ class AddressReader implements AddressReaderInterface
      */
     public function findAddressByUuid(RestRequestInterface $restRequest, string $uuid): ?AddressTransfer
     {
-        $customerTransfer = (new CustomerTransfer())->setIdCustomer((int)$restRequest->getUser()->getSurrogateIdentifier());
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer((int)$restRequest->getRestUser()->getSurrogateIdentifier());
         $addressesTransfer = $this->customerClient->getAddresses($customerTransfer);
 
         foreach ($addressesTransfer->getAddresses() as $address) {

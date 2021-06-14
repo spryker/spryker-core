@@ -151,7 +151,7 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      */
     protected function getRequestParameter(RestRequestInterface $restRequest, string $parameterName): string
     {
-        return $restRequest->getHttpRequest()->query->get($parameterName, '');
+        return (string)$restRequest->getHttpRequest()->query->get($parameterName);
     }
 
     /**

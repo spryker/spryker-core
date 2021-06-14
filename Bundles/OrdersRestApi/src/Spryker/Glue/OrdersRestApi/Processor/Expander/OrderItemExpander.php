@@ -46,7 +46,7 @@ class OrderItemExpander implements OrderItemExpanderInterface
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $customerReference = $restRequest->getUser()->getNaturalIdentifier();
+        $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
 
         if (!$customerReference) {
             return;

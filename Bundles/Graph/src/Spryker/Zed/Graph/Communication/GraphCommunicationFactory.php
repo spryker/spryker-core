@@ -49,7 +49,7 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param string $adapterName
+     * @param mixed $adapterName
      *
      * @throws \Spryker\Zed\Graph\Communication\Exception\GraphAdapterNameIsAnObjectException
      * @throws \Spryker\Zed\Graph\Communication\Exception\InvalidGraphAdapterNameException
@@ -72,7 +72,7 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param string $adapter
+     * @param object $adapter
      *
      * @throws \Spryker\Zed\Graph\Communication\Exception\InvalidGraphAdapterException
      *

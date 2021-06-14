@@ -7,18 +7,21 @@
 
 namespace Spryker\Zed\ConfigurableBundlePageSearch\Business;
 
+use Laminas\Filter\FilterInterface;
+use Laminas\Filter\Word\UnderscoreToDash;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpander;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Mapper\ConfigurableBundleTemplatePageSearchMapper;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Mapper\ConfigurableBundleTemplatePageSearchMapperInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Publisher\ConfigurableBundleTemplatePublisher;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Publisher\ConfigurableBundleTemplatePublisherInterface;
+use Spryker\Zed\ConfigurableBundlePageSearch\Business\Search\DataMapper\ConfigurableBundlePageSearchDataMapper;
+use Spryker\Zed\ConfigurableBundlePageSearch\Business\Search\DataMapper\ConfigurableBundlePageSearchDataMapperInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Unpublisher\ConfigurableBundleTemplateUnpublisher;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Unpublisher\ConfigurableBundleTemplateUnpublisherInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchDependencyProvider;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToConfigurableBundleFacadeInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToProductImageFacadeInterface;
-use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Service\ConfigurableBundlePageSearchToUtilEncodingServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -61,7 +64,7 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     {
         return new ConfigurableBundleTemplatePageSearchMapper(
             $this->getUtilEncodingService(),
-            $this->getSearchFacade(),
+            $this->createConfigurableBundlePageSearchDataMapper(),
             $this->createConfigurableBundleTemplatePageSearchExpander()
         );
     }
@@ -86,14 +89,6 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeInterface
-     */
-    public function getSearchFacade(): ConfigurableBundlePageSearchToSearchFacadeInterface
-    {
-        return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::FACADE_SEARCH);
-    }
-
-    /**
      * @return \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToProductImageFacadeInterface
      */
     public function getProductImageFacade(): ConfigurableBundlePageSearchToProductImageFacadeInterface
@@ -115,5 +110,32 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     public function getConfigurableBundleTemplatePageDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundlePageSearch\Business\Search\DataMapper\ConfigurableBundlePageSearchDataMapperInterface
+     */
+    public function createConfigurableBundlePageSearchDataMapper(): ConfigurableBundlePageSearchDataMapperInterface
+    {
+        return new ConfigurableBundlePageSearchDataMapper(
+            $this->getConfigurableBundleTemplateMapExpanderPlugins(),
+            $this->createUnderscoreToDashFilter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface[]
+     */
+    public function getConfigurableBundleTemplateMapExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ConfigurableBundlePageSearchDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_MAP_EXPANDER);
+    }
+
+    /**
+     * @return \Laminas\Filter\FilterInterface
+     */
+    public function createUnderscoreToDashFilter(): FilterInterface
+    {
+        return new UnderscoreToDash();
     }
 }

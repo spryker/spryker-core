@@ -177,4 +177,16 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
             ->createTouchWriter()
             ->cleanTouchEntitiesForDeletedItemEvent();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isTouchEnabled(): bool
+    {
+        return $this->getFactory()->getConfig()->isTouchEnabled();
+    }
 }
