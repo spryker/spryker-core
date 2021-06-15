@@ -158,6 +158,8 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
      */
     public function create(MerchantProductTransfer $merchantProductTransfer): MerchantProductTransfer
     {
-        return $this->getEntityManager()->create($merchantProductTransfer);
+        return $this->getFactory()
+            ->createMerchantProductWriter()
+            ->create($merchantProductTransfer);
     }
 }
