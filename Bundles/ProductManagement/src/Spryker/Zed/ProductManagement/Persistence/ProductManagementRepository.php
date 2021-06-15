@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Persistence;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -25,5 +27,26 @@ class ProductManagementRepository extends AbstractRepository implements ProductM
         return $this->getFactory()
             ->createProductAbstractQueryExpander()
             ->expandQuery($query);
+    }
+
+    /**
+     * @return string
+     */
+    public function createProductAbstractLocalizedAttributesNameSubQuery(): string
+    {
+        $productAbstractLocalizedAttributesNameSubQuery = $this->getFactory()
+            ->createProductAbstractLocalizedAttributesPropelQuery()
+            ->where(sprintf(
+                '%s NOT LIKE \'\' AND %s = %s',
+                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT
+            ))
+            ->limit(1)
+            ->addSelectColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME);
+
+        $params = [];
+
+        return $productAbstractLocalizedAttributesNameSubQuery->createSelectSql($params);
     }
 }

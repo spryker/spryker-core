@@ -17,4 +17,9 @@ interface ProductManagementRepositoryInterface
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function expandQuery(ModelCriteria $query): ModelCriteria;
+
+    /**
+     * @return string
+     */
+    public function createProductAbstractLocalizedAttributesNameSubQuery(): string;
 }

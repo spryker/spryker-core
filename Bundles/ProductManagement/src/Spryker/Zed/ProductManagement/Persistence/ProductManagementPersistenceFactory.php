@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery;
@@ -55,6 +56,14 @@ class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
     public function createProductManagementAttributeValueTranslationQuery()
     {
         return SpyProductManagementAttributeValueTranslationQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function createProductAbstractLocalizedAttributesPropelQuery(): SpyProductAbstractLocalizedAttributesQuery
+    {
+        return SpyProductAbstractLocalizedAttributesQuery::create();
     }
 
     /**

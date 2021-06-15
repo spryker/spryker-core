@@ -145,7 +145,12 @@ class ProductTable extends AbstractProductTable
             ->leftJoinSpyTaxSet()
             ->leftJoinSpyProductAbstractLocalizedAttributes()
             ->addJoinCondition('SpyProductAbstractLocalizedAttributes', 'SpyProductAbstractLocalizedAttributes.fk_locale = ?', $this->localeTransfer->getIdLocale())
-            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
+            ->withColumn(sprintf(
+                'IF(%s NOT LIKE \'\', %s, (%s))',
+                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+                $this->productManagementRepository->createProductAbstractLocalizedAttributesNameSubQuery()
+            ), static::COL_NAME)
             ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
             ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, 'SpyProductAbstractLocalizedAttributes.name = null')
             ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name is not null')

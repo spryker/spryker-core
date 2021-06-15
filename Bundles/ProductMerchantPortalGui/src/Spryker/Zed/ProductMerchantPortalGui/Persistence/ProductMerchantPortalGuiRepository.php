@@ -202,7 +202,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     /**
      * @return string
      */
-    public function createProductAbstractLocalizedAttributesNameSubQuery(): string
+    protected function createProductAbstractLocalizedAttributesNameSubQuery(): string
     {
         $productAbstractLocalizedAttributesNameSubQuery = $this->getFactory()
             ->getProductAbstractLocalizedAttributesPropelQuery()
