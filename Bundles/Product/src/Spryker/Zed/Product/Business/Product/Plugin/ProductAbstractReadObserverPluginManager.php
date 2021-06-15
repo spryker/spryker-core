@@ -18,7 +18,7 @@ class ProductAbstractReadObserverPluginManager implements ProductAbstractReadObs
     protected $readCollection;
 
     /**
-     * @var \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface[] 
+     * @var \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface[]
      */
     protected $productAbstractExpanderPlugins;
 

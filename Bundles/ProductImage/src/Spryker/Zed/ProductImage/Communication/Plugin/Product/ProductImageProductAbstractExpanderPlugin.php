@@ -15,6 +15,7 @@ use Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPlugin
  * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
+ * @method \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface getQueryContainer()
  */
 class ProductImageProductAbstractExpanderPlugin extends AbstractPlugin implements ProductAbstractExpanderPluginInterface
 {
