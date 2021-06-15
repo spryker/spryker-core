@@ -40,5 +40,5 @@ class PublishAndSynchronizeHealthCheckStorageConfig extends AbstractBundleConfig
      *
      * @api
      */
-    public const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_KEY = 'publish-and-synchronize:storage:health-check';
+    public const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_KEY = 'publish_and_synchronize_health_check:health-check';
 }

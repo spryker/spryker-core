@@ -1,37 +1,34 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@edit-offer-padding: 30px;
+@edit-offer-content-padding: 30px;
 @edit-offer-common-blocks-indent: 7px;
-@edit-offer-common-padding-bottom: 30px;
-@edit-offer-sku-padding-bottom: 18px;
-@edit-offer-title-margin: 10px 0 0;
-@edit-offer-information-margin: -@edit-offer-padding -@edit-offer-padding 0;
-@edit-offer-heading-margin: 0 -@edit-offer-common-blocks-indent;
-@edit-offer-heading-col-padding: 0 @edit-offer-common-blocks-indent;
-@edit-offer-base-content-padding-x: 15px;
-@edit-offer-base-content-margin: 0 -@edit-offer-base-content-padding-x;
-@edit-offer-base-content-col-padding: 0 @edit-offer-base-content-padding-x;
-@edit-offer-base-content-dates-base-width: 190px;
-@edit-offer-base-content-dates-value-margin-left: 5px;
-@edit-offer-base-content-details-item-padding-x: 10px;
-@edit-offer-base-content-details-flex-basis: 200px;
-@edit-offer-base-content-details-padding-y: 20px;
+@edit-offer-header-padding: 15px 30px;
+@edit-offer-header-title-line-height: 2;
+@edit-offer-card-padding-bottom: 20px;
+@edit-offer-approval-status-margin-left: 20px;
+@edit-offer-product-margin: 0 -10px 30px;
+@edit-offer-product-col-padding: 0 10px;
+@edit-offer-product-sku-padding: 5px 0 10px;
+@edit-offer-product-dates-margin: 0 -@edit-offer-common-blocks-indent @edit-offer-common-blocks-indent;
+@edit-offer-product-dates-base-width: 190px;
+@edit-offer-product-dates-value-margin-left: 5px;
+@edit-offer-product-details-flex-basis: 200px;
+@edit-offer-product-details-margin: -@edit-offer-common-blocks-indent -10px;
+@edit-offer-product-details-padding: 20px 0;
+@edit-offer-product-details-col-padding: @edit-offer-common-blocks-indent 10px;
 @edit-offer-collapsible-title-line-height: 1.7;
 @edit-offer-collapsible-text-padding: 5px 0;
-@edit-offer-details-margin: -@edit-offer-common-blocks-indent -@edit-offer-base-content-details-item-padding-x;
-@edit-offer-details-padding: @edit-offer-base-content-details-padding-y 0;
-@edit-offer-details-col-padding: @edit-offer-common-blocks-indent @edit-offer-base-content-details-item-padding-x;
-@edit-offer-card-margin-top: 20px;
 @edit-offer-input-prefix-width: 73px;
 @edit-offer-form-row-padding: 17px;
 @edit-offer-form-row-col-min-height: @input-height-base + @edit-offer-form-row-padding * 2;
-@edit-offer-form-row-col-chheckbox-min-height: @input-height-base + @edit-offer-form-row-padding +
+@edit-offer-form-row-col-checkbox-min-height: @input-height-base + @edit-offer-form-row-padding +
     @edit-offer-form-row-padding / 2;
 @edit-offer-form-row-base-width: 275px;
 @edit-offer-form-row-date-range-base-width: 444px;
 @edit-offer-form-item-width: 130px;
-@edit-offer-visibility-margin: -@edit-offer-common-blocks-indent 0;
-@edit-offer-visibility-row-padding: @edit-offer-common-blocks-indent 0;
+@edit-offer-stock-reserved-margin-bottom: 17px;
+@edit-offer-stock-margin: 0 -17px;
+@edit-offer-stock-row-padding: 0 17px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -44,84 +41,176 @@
 .mp-edit-offer {
     display: block;
     height: 100%;
-    padding: @edit-offer-padding;
     background: @gray-lighter;
     font: @font-default;
     letter-spacing: @letter-spacing-base;
+    color: @ink;
+    overflow-y: auto;
 
-    &-form-overlay {
-        height: 100%;
-    }
-
-    &__information {
-        margin: @edit-offer-information-margin;
-        padding: @edit-offer-padding;
+    &__header {
         background: @white;
-    }
+        padding: @edit-offer-header-padding;
 
-    &__heading {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: @edit-offer-heading-margin;
-        padding-bottom: @edit-offer-common-padding-bottom;
-
-        &-col {
-            padding: @edit-offer-heading-col-padding;
+        .@{headline-prefix-cls} {
+            padding-bottom: 0;
         }
     }
 
-    h3 {
-        font-size: @heading-3-size;
+    &__title {
+        color: @gray-darker;
+        font-size: @font-size-base;
+        font-weight: @font-weight-medium;
+        letter-spacing: @letter-spacing-base;
+        line-height: @edit-offer-header-title-line-height;
+    }
+
+    &__sub-title {
+        display: flex;
+        align-items: center;
+        font-size: @font-size-lg;
+        font-weight: @font-weight-semi-bold;
+        letter-spacing: @letter-spacing-base;
         margin: 0;
     }
 
-    &__base {
+    &__approval-status {
+        margin-left: @edit-offer-approval-status-margin-left;
+    }
+
+    &__content {
+        display: block;
+        padding: @edit-offer-content-padding;
+    }
+
+    &__card {
+        display: block;
+        padding-bottom: @edit-offer-card-padding-bottom;
+    }
+
+    &__product {
         display: flex;
-        margin: @edit-offer-base-content-margin;
-        padding-bottom: @edit-offer-common-padding-bottom;
+        margin: @edit-offer-product-margin;
 
         &-col {
             flex-shrink: 0;
-            padding: @edit-offer-base-content-col-padding;
+            padding: @edit-offer-product-col-padding;
 
             &--content {
                 flex-shrink: 1;
                 flex-grow: 1;
             }
         }
-    }
-
-    &__title {
-        font-size: @heading-4-font-size;
-        font-weight: @font-weight-medium;
-        margin: @edit-offer-title-margin;
-    }
-
-    &__sku {
-        display: block;
-        color: @gray-dark;
-        padding-bottom: @edit-offer-sku-padding-bottom;
-    }
-
-    &__dates {
-        display: flex;
-        flex-wrap: wrap;
-        margin: -@edit-offer-common-blocks-indent;
-
-        &-col {
-            padding: @edit-offer-common-blocks-indent;
-            flex-basis: @edit-offer-base-content-dates-base-width;
-        }
 
         &-title {
-            text-transform: uppercase;
-            font-size: @font-size-sm;
+            font-size: @heading-4-font-size;
+            font-weight: @font-weight-medium;
+            color: @ink;
+            margin: 0;
         }
 
-        &-value {
+        &-sku {
+            display: block;
             color: @gray-dark;
-            margin-left: @edit-offer-base-content-dates-value-margin-left;
+            padding: @edit-offer-product-sku-padding;
+        }
+
+        &-dates {
+            display: flex;
+            flex-wrap: wrap;
+            margin: @edit-offer-product-dates-margin;
+
+            &-col {
+                padding: @edit-offer-common-blocks-indent;
+                flex-basis: @edit-offer-product-dates-base-width;
+            }
+
+            &-title {
+                text-transform: uppercase;
+                color: @ink;
+                font-size: @font-size-sm;
+            }
+
+            &-value {
+                color: @gray-dark;
+                margin-left: @edit-offer-product-dates-value-margin-left;
+            }
+        }
+
+        &-details {
+            display: flex;
+            flex-wrap: wrap;
+            margin: @edit-offer-product-details-margin;
+            padding: @edit-offer-product-details-padding;
+
+            &-col {
+                padding: @edit-offer-product-details-col-padding;
+                flex-basis: @edit-offer-product-details-flex-basis;
+            }
+
+            &-text {
+                display: block;
+
+                &--title {
+                    text-transform: uppercase;
+                    font-size: @font-size-sm;
+                    color: @ink;
+                }
+            }
+        }
+    }
+
+    &__form-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        margin: -@edit-offer-form-row-padding;
+
+        &-col {
+            flex-basis: @edit-offer-form-row-base-width;
+            padding: @edit-offer-form-row-padding;
+            min-height: @edit-offer-form-row-col-min-height;
+
+            &--dates {
+                flex-basis: @edit-offer-form-row-date-range-base-width;
+            }
+
+            &--checkbox {
+                min-height: @edit-offer-form-row-col-checkbox-min-height;
+            }
+        }
+    }
+
+    &__status {
+        .@{form-item-prefix-cls}-control-input {
+            min-height: 0;
+        }
+    }
+
+    &__stock {
+        &-reserved {
+            margin-bottom: @edit-offer-stock-reserved-margin-bottom;
+        }
+
+        &-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            margin: @edit-offer-stock-margin;
+
+            &-row {
+                flex-basis: @edit-offer-form-row-base-width;
+                padding: @edit-offer-stock-row-padding;
+            }
+        }
+
+        .@{form-prefix-cls}-item-label label {
+            font-size: @font-size-sm;
+            font-weight: @font-weight-medium;
+            padding: 0;
+
+            label {
+                margin: 0;
+            }
         }
     }
 
@@ -132,14 +221,6 @@
         p {
             margin: 0;
             padding: @edit-offer-collapsible-text-padding;
-        }
-    }
-
-    .@{card-prefix-cls} {
-        margin-top: @edit-offer-card-margin-top;
-
-        .@{card-prefix-cls} {
-            margin-top: 0;
         }
     }
 
@@ -156,60 +237,6 @@
             padding-right: 0;
             width: @edit-offer-input-prefix-width;
             text-align: left;
-        }
-    }
-
-    &__details {
-        display: flex;
-        flex-wrap: wrap;
-        margin: @edit-offer-details-margin;
-        padding: @edit-offer-details-padding;
-
-        &-col {
-            padding: @edit-offer-details-col-padding;
-            flex-basis: @edit-offer-base-content-details-flex-basis;
-        }
-
-        &-text {
-            display: block;
-
-            &--title {
-                text-transform: uppercase;
-                font-size: @font-size-sm;
-                color: @ink;
-            }
-        }
-    }
-
-    &__form-row {
-        display: flex;
-        margin: -@edit-offer-form-row-padding;
-        flex-wrap: wrap;
-        align-items: flex-end;
-
-        &-col {
-            flex-basis: @edit-offer-form-row-base-width;
-            padding: @edit-offer-form-row-padding;
-            min-height: @edit-offer-form-row-col-min-height;
-
-            &--dates {
-                flex-basis: @edit-offer-form-row-date-range-base-width;
-            }
-
-            &--checkbox {
-                min-height: @edit-offer-form-row-col-chheckbox-min-height;
-            }
-        }
-    }
-
-    &__visibility {
-        color: @gray-dark;
-        margin: @edit-offer-visibility-margin;
-
-        &-row {
-            display: flex;
-            align-items: center;
-            padding: @edit-offer-visibility-row-padding;
         }
     }
 }

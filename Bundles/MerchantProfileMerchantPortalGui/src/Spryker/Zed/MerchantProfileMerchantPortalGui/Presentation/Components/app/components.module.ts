@@ -9,6 +9,7 @@ import { WebComponentsModule } from '@spryker/web-components';
 import { IconGermanyModule, IconUnitedStatesModule } from '../icons';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileModule } from './profile/profile.module';
+import { ChipsModule, ChipsComponent } from '@spryker/chips';
 
 @NgModule({
     imports: [
@@ -19,6 +20,7 @@ import { ProfileModule } from './profile/profile.module';
             CollapsibleComponent,
             LabelComponent,
             TabComponent,
+            ChipsComponent,
         ]),
         CardModule,
         CollapsibleModule,
@@ -28,6 +30,7 @@ import { ProfileModule } from './profile/profile.module';
         IconGermanyModule,
         TabsModule,
         ProfileModule,
+        ChipsModule,
     ],
     providers: [],
     declarations: [],

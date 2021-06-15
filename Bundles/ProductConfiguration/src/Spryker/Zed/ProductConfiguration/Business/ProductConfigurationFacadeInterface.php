@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
@@ -110,4 +112,19 @@ interface ProductConfigurationFacadeInterface
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
      */
     public function countItemQuantity(CartChangeTransfer $cartChangeTransfer, ItemTransfer $itemTransfer): CartItemQuantityTransfer;
+
+    /**
+     * Specification:
+     * - Validates configurable products in a quote request.
+     * - Expects `QuoteRequestTransfer.latestVersion` and `QuoteRequestTransfer.latestVersion.quote` to be set.
+     * - Returns "isSuccessful=true" if all items with a product configuration are fully configured.
+     * - Returns "isSuccessful=false" and adds an error message if any item with product configuration is not fully configured.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function validateQuoteRequestProductConfiguration(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
 }

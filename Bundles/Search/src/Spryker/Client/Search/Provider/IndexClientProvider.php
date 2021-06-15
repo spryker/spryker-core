@@ -9,6 +9,9 @@ namespace Spryker\Client\Search\Provider;
 
 use Spryker\Shared\Search\Provider\AbstractIndexClientProvider;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class IndexClientProvider extends AbstractIndexClientProvider
 {
     /**

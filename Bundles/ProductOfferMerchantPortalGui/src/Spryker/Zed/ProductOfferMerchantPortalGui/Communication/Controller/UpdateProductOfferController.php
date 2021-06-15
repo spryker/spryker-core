@@ -28,6 +28,23 @@ class UpdateProductOfferController extends AbstractProductOfferController
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
 
     /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL
+     */
+    protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
+
+    /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     */
+    protected const APPROVAL_STATUS_APPROVED = 'approved';
+
+    /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
+     */
+    protected const APPROVAL_STATUS_DENIED = 'denied';
+
+    protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL_CHIP_TITLE = 'Pending';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -144,6 +161,9 @@ class UpdateProductOfferController extends AbstractProductOfferController
 
         $productOfferTransfer = $productOfferResponseTransfer->getProductOffer();
         $productOfferReference = $productOfferTransfer ? $productOfferTransfer->getProductOfferReference() : null;
+        $approvalStatus = $productOfferResponseTransfer->getProductOfferOrFail()->getApprovalStatus() === static::APPROVAL_STATUS_WAITING_FOR_APPROVAL
+            ? static::APPROVAL_STATUS_WAITING_FOR_APPROVAL_CHIP_TITLE
+            : $productOfferResponseTransfer->getProductOfferOrFail()->getApprovalStatus();
 
         $priceProductOfferTableConfiguration = $this->getFactory()
             ->createPriceProductOfferUpdateGuiTableConfigurationProvider()
@@ -157,6 +177,12 @@ class UpdateProductOfferController extends AbstractProductOfferController
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
                 'productOfferReference' => $productOfferReference,
                 'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration,
+                'approvalStatus' => $approvalStatus,
+                'approvalStatusChipColors' => [
+                    static::APPROVAL_STATUS_APPROVED => 'green',
+                    static::APPROVAL_STATUS_DENIED => 'red',
+                    static::APPROVAL_STATUS_WAITING_FOR_APPROVAL_CHIP_TITLE => 'yellow',
+                ],
             ])->getContent(),
         ];
 

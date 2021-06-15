@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
+use Spryker\Client\Search\Exception\ConnectDelegatorException;
 use Spryker\Client\Search\Model\Handler\ElasticsearchSearchHandler;
 use Spryker\Client\Search\Plugin\Config\SearchConfig;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
@@ -25,11 +26,13 @@ use Spryker\Client\Search\SearchContext\SearchContextExpanderInterface;
 use Spryker\Client\Search\SearchDependencyProvider;
 use Spryker\Client\Search\SearchFactory;
 use Spryker\Client\SearchElasticsearch\Plugin\ElasticsearchSearchAdapterPlugin;
+use Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface;
 use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
+use StdClass;
 
 /**
  * Auto-generated group annotations
@@ -39,7 +42,6 @@ use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
  * @group Search
  * @group SearchClientTest
  * Add your own group annotations below this line
- * @property \SprykerTest\Client\Search\SearchClientTester $tester
  */
 class SearchClientTest extends Unit
 {
@@ -49,6 +51,11 @@ class SearchClientTest extends Unit
      * @var \Spryker\Client\Search\SearchClientInterface|\Spryker\Client\Kernel\AbstractClient
      */
     protected $searchClient;
+
+    /**
+     * @var \SprykerTest\Client\Search\SearchClientTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -90,27 +97,80 @@ class SearchClientTest extends Unit
     /**
      * @return void
      */
-    public function testCheckConnection(): void
+    public function testCheckConnectionIfClientAdapterPluginsIsEmpty(): void
     {
         $elasticaClientMock = $this
             ->getMockBuilder(Client::class)
             ->setMethods(['getStatus'])
             ->getMock();
         $elasticaClientMock
+            ->expects($this->once())
             ->method('getStatus')
             ->willReturn($this->getMockBuilder(Status::class)->disableOriginalConstructor()->getMock());
 
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
-            ->setMethods(['getElasticsearchClient'])
+            ->setMethods(['getElasticsearchClient', 'getClientAdapterPlugins'])
             ->getMock();
         $searchFactoryMock
             ->method('getElasticsearchClient')
             ->willReturn($elasticaClientMock);
+        $searchFactoryMock
+            ->method('getClientAdapterPlugins')
+            ->willReturn([]);
 
-        $this->searchClient->setFactory($searchFactoryMock);
+        $client = $this->tester->getClient();
+        $client->setFactory($searchFactoryMock);
+        $client->checkConnection();
+    }
 
-        $this->searchClient->checkConnection();
+    /**
+     * @return void
+     */
+    public function testCheckConnectionIfClientAdapterPluginsIsNotEmpty(): void
+    {
+        $clientAdapterPluginMock = $this->createMock(ConnectionCheckerAdapterPluginInterface::class);
+
+        $clientAdapterPluginMock
+            ->expects($this->once())
+            ->method('checkConnection');
+
+        $client = $this->tester->getClient();
+
+        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
+        $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
+            ->setMethods(['getClientAdapterPlugins'])
+            ->getMock();
+
+        $searchFactoryMock
+            ->method('getClientAdapterPlugins')
+            ->willReturn([$clientAdapterPluginMock]);
+
+        $client->setFactory($searchFactoryMock);
+        $client->checkConnection();
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckConnectionIfClientAdapterPluginsIsWrongType(): void
+    {
+        $this->expectException(ConnectDelegatorException::class);
+        $this->expectExceptionMessage('No registered adapters with ConnectionCheckerAdapterPluginInterface.');
+
+        $client = $this->tester->getClient();
+
+        /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
+        $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
+            ->setMethods(['getClientAdapterPlugins'])
+            ->getMock();
+
+        $searchFactoryMock
+            ->method('getClientAdapterPlugins')
+            ->willReturn([new StdClass()]);
+
+        $client->setFactory($searchFactoryMock);
+        $client->checkConnection();
     }
 
     /**

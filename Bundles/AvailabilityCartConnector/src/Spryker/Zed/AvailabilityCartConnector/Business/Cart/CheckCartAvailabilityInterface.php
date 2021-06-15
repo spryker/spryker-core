@@ -17,4 +17,11 @@ interface CheckCartAvailabilityInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkCartAvailabilityBatch(CartChangeTransfer $cartChangeTransfer);
 }
