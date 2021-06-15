@@ -153,7 +153,15 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $merchantProductAbstractPropelQuery->addAsColumn(ProductAbstractTransfer::ID_PRODUCT_ABSTRACT, SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT)
             ->addAsColumn(ProductAbstractTransfer::SKU, SpyProductAbstractTableMap::COL_SKU)
             ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, sprintf('(%s)', $this->createProductImagesSubquery($idLocale)))
-            ->addAsColumn(ProductAbstractTransfer::NAME, SpyProductAbstractLocalizedAttributesTableMap::COL_NAME)
+            ->addAsColumn(
+                ProductAbstractTransfer::NAME,
+                sprintf(
+                    'IF(%s NOT LIKE \'\', %s, (%s))',
+                    SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+                    SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+                    $this->createProductAbstractLocalizedAttributesNameSubQuery()
+                )
+            )
             ->addAsColumn(ProductAbstractTransfer::ATTRIBUTES, sprintf('(%s)', $this->createProductAttributesSubquery()))
             ->addAsColumn(ProductAbstractTransfer::CONCRETE_PRODUCT_COUNT, sprintf('(%s)', $this->createProductsCountSubquery()))
             ->addAsColumn(ProductAbstractTransfer::CATEGORY_NAMES, sprintf('(%s)', $this->createProductAbstractCategoriesSubquery($idLocale)))
@@ -189,6 +197,27 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $params = [];
 
         return $productImagesSubquery->createSelectSql($params);
+    }
+
+    /**
+     * @return string
+     */
+    public function createProductAbstractLocalizedAttributesNameSubQuery(): string
+    {
+        $productAbstractLocalizedAttributesNameSubQuery = $this->getFactory()
+            ->getProductAbstractLocalizedAttributesPropelQuery()
+            ->where(sprintf(
+                '%s NOT LIKE \'\' AND %s = %s',
+                SpyProductAbstractLocalizedAttributesTableMap::COL_NAME,
+                SpyProductAbstractLocalizedAttributesTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT
+            ))
+            ->limit(1)
+            ->addSelectColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME);
+
+        $params = [];
+
+        return $productAbstractLocalizedAttributesNameSubQuery->createSelectSql($params);
     }
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
@@ -134,5 +135,15 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     public function getPriceProductFacade(): ProductMerchantPortalGuiToPriceProductFacadeInterface
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery>
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function getProductAbstractLocalizedAttributesPropelQuery(): SpyProductAbstractLocalizedAttributesQuery
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES);
     }
 }
