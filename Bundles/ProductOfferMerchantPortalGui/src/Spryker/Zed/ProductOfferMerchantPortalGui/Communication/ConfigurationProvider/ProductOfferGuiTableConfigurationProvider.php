@@ -23,14 +23,35 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
     public const COL_KEY_PRODUCT_NAME = 'productName';
     public const COL_KEY_STORES = 'stores';
     public const COL_KEY_STOCK = 'stock';
-    public const COL_KEY_VISIBILITY = 'visibility';
+    public const COL_KEY_STATUS = 'status';
+    public const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
     public const COL_KEY_VALID_FROM = 'validFrom';
     public const COL_KEY_VALID_TO = 'validTo';
     public const COL_KEY_CREATED_AT = 'createdAt';
     public const COL_KEY_UPDATED_AT = 'updatedAt';
 
-    public const COLUMN_DATA_VISIBILITY_ONLINE = 'Online';
-    public const COLUMN_DATA_VISIBILITY_OFFLINE = 'Offline';
+    public const COLUMN_DATA_STATUS_ACTIVE = 'Active';
+    public const COLUMN_DATA_STATUS_INACTIVE = 'Inactive';
+
+    /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferGuiTableDataProvider::COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL
+     */
+    protected const COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'Pending';
+
+    /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL
+     */
+    protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
+
+    /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     */
+    protected const APPROVAL_STATUS_APPROVED = 'approved';
+
+    /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
+     */
+    protected const APPROVAL_STATUS_DENIED = 'denied';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductOffersController::tableDataAction()
@@ -99,8 +120,12 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
             ->addColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true)
             ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'grey')
             ->addColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, 'green', [0 => 'red'])
-            ->addColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, 'grey', [
-                $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_ONLINE) => 'green',
+            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, true, 'grey', [
+                $this->translatorFacade->trans(static::COLUMN_DATA_STATUS_ACTIVE) => 'green',
+            ])
+            ->addColumnChip(static::COL_KEY_APPROVAL_STATUS, 'Approval Status', true, true, 'green', [
+                $this->translatorFacade->trans(static::COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL) => 'yellow',
+                $this->translatorFacade->trans(static::APPROVAL_STATUS_DENIED) => 'red',
             ])
             ->addColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true)
             ->addColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, true)
@@ -121,11 +146,12 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
                 '1' => 'Has stock',
                 '0' => 'Out of stock',
             ])
-            ->addFilterSelect('isActive', 'Visibility', false, [
-                '1' => static::COLUMN_DATA_VISIBILITY_ONLINE,
-                '0' => static::COLUMN_DATA_VISIBILITY_OFFLINE,
+            ->addFilterSelect('isActive', 'Status', false, [
+                '1' => static::COLUMN_DATA_STATUS_ACTIVE,
+                '0' => static::COLUMN_DATA_STATUS_INACTIVE,
             ])
             ->addFilterSelect('inStores', 'Stores', true, $this->getStoreOptions())
+            ->addFilterSelect('approvalStatus', 'Approval Status', false, $this->getApprovalStatusOptions())
             ->addFilterDateRange('createdAt', 'Created')
             ->addFilterDateRange('updatedAt', 'Updated')
             ->addFilterDateRange('validity', 'Validity');
@@ -142,15 +168,25 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
 
         $storeOptions = [];
         foreach ($storeTransfers as $storeTransfer) {
-            /** @var int $idStore */
-            $idStore = $storeTransfer->requireIdStore()->getIdStore();
-            /** @var string $storeName */
-            $storeName = $storeTransfer->requireName()->getName();
+            $idStore = $storeTransfer->getIdStoreOrFail();
+            $storeName = $storeTransfer->getNameOrFail();
 
             $storeOptions[$idStore] = $storeName;
         }
 
         return $storeOptions;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getApprovalStatusOptions(): array
+    {
+        return [
+            static::APPROVAL_STATUS_APPROVED => static::APPROVAL_STATUS_APPROVED,
+            static::APPROVAL_STATUS_WAITING_FOR_APPROVAL => static::COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL,
+            static::APPROVAL_STATUS_DENIED => static::APPROVAL_STATUS_DENIED,
+        ];
     }
 
     /**

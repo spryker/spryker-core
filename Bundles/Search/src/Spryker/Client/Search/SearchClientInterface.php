@@ -60,20 +60,6 @@ interface SearchClientInterface
 
     /**
      * Specification:
-     * - Returns a statically cached instance (for performance reasons) of the search configuration
-     * - The result is the union of the hard-coded and the dynamic configurations
-     * - Dynamic configuration is provided by \Spryker\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins()
-     *
-     * @api
-     *
-     * @deprecated Will be removed without replacement. This functionality is obsolete and should not be used.
-     *
-     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
-     */
-    public function getSearchConfig();
-
-    /**
-     * Specification:
      * - Runs a simple full text search for the given search string
      * - Returns the raw result set ordered by relevance
      *
@@ -86,6 +72,80 @@ interface SearchClientInterface
      * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function searchKeys($searchString, $limit = null, $offset = null);
+
+    /**
+     * Specification:
+     * - Returns data from an external search service (e.g Elasticsearch)
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return mixed
+     */
+    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer);
+
+    /**
+     * Specification:
+     * - Writes data into an external search service (e.g Elasticsearch).
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
+
+    /**
+     * Specification:
+     * - Writes data into an external search service in bulk mode.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function writeDocuments(array $searchDocumentTransfers): bool;
+
+    /**
+     * Specification:
+     * - Deletes data from an external search service (e.g Elasticsearch).
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     *
+     * @return bool
+     */
+    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
+
+    /**
+     * Specification:
+     * - Deletes data from an external search service (e.g Elasticsearch) in bulk mode.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     *
+     * @return bool
+     */
+    public function deleteDocuments(array $searchDocumentTransfers): bool;
+
+    /**
+     * Specification:
+     * - Returns a statically cached instance (for performance reasons) of the search configuration
+     * - The result is the union of the hard-coded and the dynamic configurations
+     * - Dynamic configuration is provided by \Spryker\Client\Search\SearchDependencyProvider::createSearchConfigExpanderPlugins()
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement. This functionality is obsolete and should not be used.
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
+     */
+    public function getSearchConfig();
 
     /**
      * Specification:
@@ -123,18 +183,6 @@ interface SearchClientInterface
 
     /**
      * Specification:
-     * - Returns data from an external search service (e.g Elasticsearch)
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return mixed
-     */
-    public function readDocument(SearchDocumentTransfer $searchDocumentTransfer);
-
-    /**
-     * Specification:
      * - Writes data into an external search service (e.g Elasticsearch)
      *
      * @api
@@ -151,18 +199,6 @@ interface SearchClientInterface
 
     /**
      * Specification:
-     * - Writes data into an external search service (e.g Elasticsearch).
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return bool
-     */
-    public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
-
-    /**
-     * Specification:
      * - Writes data into an external search service in bulk mode.
      *
      * @api
@@ -174,18 +210,6 @@ interface SearchClientInterface
      * @return bool
      */
     public function writeBulk(array $searchDocumentTransfers): bool;
-
-    /**
-     * Specification:
-     * - Writes data into an external search service in bulk mode.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
-     *
-     * @return bool
-     */
-    public function writeDocuments(array $searchDocumentTransfers): bool;
 
     /**
      * Specification:
@@ -205,18 +229,6 @@ interface SearchClientInterface
 
     /**
      * Specification:
-     * - Deletes data from an external search service (e.g Elasticsearch).
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
-     *
-     * @return bool
-     */
-    public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
-
-    /**
-     * Specification:
      * - Deletes data from an external search service (e.g Elasticsearch) in bulk mode.
      *
      * @api
@@ -228,16 +240,4 @@ interface SearchClientInterface
      * @return bool
      */
     public function deleteBulk(array $searchDocumentTransfers): bool;
-
-    /**
-     * Specification:
-     * - Deletes data from an external search service (e.g Elasticsearch) in bulk mode.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
-     *
-     * @return bool
-     */
-    public function deleteDocuments(array $searchDocumentTransfers): bool;
 }

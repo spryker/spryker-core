@@ -402,17 +402,27 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[]
      */
-    protected function getProductAbstractPostCreatePlugins(): array
+    public function getProductAbstractPostCreatePlugins(): array
     {
         return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_POST_CREATE);
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\ProductBusinessFactory::getProductAbstractExpanderPlugins()} instead.
+     *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
      */
     protected function getProductAbstractReadPlugins()
     {
         return $this->getProvidedDependency(ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_READ);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface[]
+     */
+    public function getProductAbstractExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_EXPANDER);
     }
 
     /**
@@ -521,7 +531,10 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     protected function createProductAbstractReadObserverPluginManager()
     {
-        return new ProductAbstractReadObserverPluginManager($this->getProductAbstractReadPlugins());
+        return new ProductAbstractReadObserverPluginManager(
+            $this->getProductAbstractReadPlugins(),
+            $this->getProductAbstractExpanderPlugins()
+        );
     }
 
     /**

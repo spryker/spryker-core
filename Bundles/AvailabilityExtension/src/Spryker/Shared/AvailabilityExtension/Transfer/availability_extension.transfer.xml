@@ -16,4 +16,10 @@
     <transfer name="Item">
     </transfer>
 
+    <transfer name="SellableItemsRequest">
+    </transfer>
+
+    <transfer name="SellableItemsResponse">
+    </transfer>
+
 </transfers>

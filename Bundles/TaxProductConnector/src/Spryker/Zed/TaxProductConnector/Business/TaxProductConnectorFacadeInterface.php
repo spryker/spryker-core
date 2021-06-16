@@ -40,6 +40,20 @@ interface TaxProductConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Finds tax set in database by ProductAbstractTransfer.idProductAbstract.
+     * - Sets ProductAbstractTransfer.idTaxSet transfer property.
+     * - Requires `ProductAbstractTransfer.idProductAbstract` to be provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function expandProductAbstract(ProductAbstractTransfer $productAbstractTransfer): ProductAbstractTransfer;
+
+    /**
+     * Specification:
      *  - Set tax rate for each item based on quote level (BC) or item level shipments.
      *
      * @api

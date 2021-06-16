@@ -1,6 +1,7 @@
 {
     "include": {
         "spryker/zed-ui": "If you want to use Zed Ui layout templates.",
-        "spryker/merchant-profile": "Plugins provide merchant profile functionality."
+        "spryker/merchant-profile": "Plugins provide merchant profile functionality.",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
     }
 }

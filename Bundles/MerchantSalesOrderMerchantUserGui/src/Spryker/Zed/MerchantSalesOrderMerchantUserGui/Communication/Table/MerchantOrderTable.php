@@ -116,6 +116,7 @@ class MerchantOrderTable extends AbstractTable
         $config->setRawColumns([
             SpySalesOrderTableMap::COL_EMAIL,
             static::COL_FULL_CUSTOMER_NAME,
+            static::COL_ORDER_STATE,
             static::COL_ACTIONS,
         ]);
         $config->setDefaultSortField(SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER, TableConfiguration::SORT_DESC);
@@ -236,7 +237,7 @@ class MerchantOrderTable extends AbstractTable
                 SpyMerchantSalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpyMerchantSalesOrderTableMap::COL_CREATED_AT]),
                 static::COL_FULL_CUSTOMER_NAME => $this->formatFullCustomerName($item),
                 SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
-                static::COL_ORDER_STATE => $item[static::COL_ORDER_STATE],
+                static::COL_ORDER_STATE => $this->formatItemStatuses($item[static::COL_ORDER_STATE]),
                 SpyMerchantSalesOrderTotalsTableMap::COL_GRAND_TOTAL => $this->formatGrandTotal($item),
                 static::COL_ITEM_COUNT => $item[static::COL_ITEM_COUNT],
                 static::COL_ACTIONS => $this->buildLinks($item),
@@ -355,5 +356,24 @@ class MerchantOrderTable extends AbstractTable
         }
 
         return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
+    }
+
+    /**
+     * @param string $itemStatuses
+     *
+     * @return string
+     */
+    protected function formatItemStatuses(string $itemStatuses): string
+    {
+        $itemStatusLabelCollection = [];
+
+        $itemStatusCollection = explode(',', $itemStatuses);
+
+        foreach ($itemStatusCollection as $itemStatus) {
+            $itemStatus = trim($itemStatus);
+            $itemStatusLabelCollection[] = $this->generateLabel($itemStatus, null);
+        }
+
+        return implode(' ', $itemStatusLabelCollection);
     }
 }

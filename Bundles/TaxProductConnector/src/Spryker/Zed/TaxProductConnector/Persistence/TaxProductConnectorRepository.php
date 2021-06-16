@@ -37,4 +37,27 @@ class TaxProductConnectorRepository extends AbstractRepository implements TaxPro
             ->createTaxSetMapper()
             ->mapTaxSetEntityToTaxSetTransfer($taxSet);
     }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    public function findByIdProductAbstract(int $idProductAbstract): ?TaxSetTransfer
+    {
+        /** @var \Orm\Zed\Tax\Persistence\SpyTaxSet|null $taxSet */
+        $taxSet = $this->getFactory()->createTaxSetQuery()
+            ->useSpyProductAbstractQuery()
+                ->filterByIdProductAbstract($idProductAbstract)
+            ->endUse()
+            ->findOne();
+
+        if (!$taxSet) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createTaxSetMapper()
+            ->mapTaxSetEntityToTaxSetTransfer($taxSet);
+    }
 }

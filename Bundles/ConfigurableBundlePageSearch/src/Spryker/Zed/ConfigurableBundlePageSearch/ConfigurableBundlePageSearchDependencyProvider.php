@@ -11,7 +11,6 @@ use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateQuery;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToConfigurableBundleFacadeBridge;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToEvenBehaviorFacadeBridge;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToProductImageFacadeBridge;
-use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeBridge;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Service\ConfigurableBundlePageSearchToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -23,6 +22,10 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
 {
     public const FACADE_CONFIGURABLE_BUNDLE = 'FACADE_CONFIGURABLE_BUNDLE';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
     public const FACADE_PRODUCT_IMAGE = 'FACADE_PRODUCT_IMAGE';
 
@@ -30,8 +33,13 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
 
     public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE';
 
+    /**
+     * @deprecated Use {@link \Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchDependencyProvider::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_MAP_EXPANDER} instead.
+     */
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER';
     public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_DATA_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_DATA_EXPANDER';
+
+    public const PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_MAP_EXPANDER = 'PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_MAP_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -43,10 +51,10 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addConfigurableBundleFacade($container);
         $container = $this->addConfigurableBundleFacade($container);
-        $container = $this->addSearchFacade($container);
         $container = $this->addProductImageFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addConfigurableBundleTemplatePageDataExpanderPlugins($container);
+        $container = $this->addConfigurableBundleTemplateMapExpanderPlugins($container);
 
         return $container;
     }
@@ -115,22 +123,6 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSearchFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_SEARCH, function (Container $container) {
-            return new ConfigurableBundlePageSearchToSearchFacadeBridge(
-                $container->getLocator()->search()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductImageFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
@@ -173,6 +165,8 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchDependencyProvider::addConfigurableBundleTemplateMapExpanderPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -181,6 +175,20 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_MAP_EXPANDER, function () {
             return $this->getConfigurableBundleTemplatePageMapExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addConfigurableBundleTemplateMapExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CONFIGURABLE_BUNDLE_TEMPLATE_MAP_EXPANDER, function () {
+            return $this->getConfigurableBundleTemplateMapExpanderPlugins();
         });
 
         return $container;
@@ -201,9 +209,19 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[]
      */
     protected function getConfigurableBundleTemplatePageMapExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface[]
+     */
+    protected function getConfigurableBundleTemplateMapExpanderPlugins(): array
     {
         return [];
     }

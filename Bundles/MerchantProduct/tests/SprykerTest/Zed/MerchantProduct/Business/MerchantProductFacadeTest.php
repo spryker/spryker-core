@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\MerchantProduct\Business\Exception\MerchantProductExistsException;
 
 /**
  * Auto-generated group annotations
@@ -642,6 +643,29 @@ class MerchantProductFacadeTest extends Unit
 
         //Assert
         $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->tester->getFacade()->create($merchantProductTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateThrowsExceptionWhenMerchantProductExists(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+        $merchantProductTransfer = (new MerchantProductTransfer())
+            ->setIdMerchant($merchantTransfer->getIdMerchantOrFail())
+            ->setIdProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail());
+
+        $this->tester->getFacade()->create($merchantProductTransfer);
+
+        //Assert
+        $this->expectException(MerchantProductExistsException::class);
 
         // Act
         $this->tester->getFacade()->create($merchantProductTransfer);

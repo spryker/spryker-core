@@ -23,8 +23,6 @@ class MerchantProductEntityManager extends AbstractEntityManager implements Merc
      */
     public function create(MerchantProductTransfer $merchantProductTransfer): MerchantProductTransfer
     {
-        $merchantProductTransfer->requireIdMerchant()->requireIdProductAbstract();
-
         $merchantProductMapper = $this->getFactory()->createMerchantProductMapper();
 
         $merchantProductEntity = $merchantProductMapper->mapMerchantProductTransferToMerchantProductAbstractEntity(
