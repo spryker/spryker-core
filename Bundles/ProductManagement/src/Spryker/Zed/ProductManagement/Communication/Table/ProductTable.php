@@ -147,8 +147,12 @@ class ProductTable extends AbstractProductTable
             ->addJoinCondition('SpyProductAbstractLocalizedAttributes', 'SpyProductAbstractLocalizedAttributes.fk_locale = ?', $this->localeTransfer->getIdLocale())
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
-            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, 'SpyProductAbstractLocalizedAttributes.name = null')
+            ->addJoinCondition(
+                static::RELATION_LOCALE_FALLBACK,
+                '(SpyProductAbstractLocalizedAttributes.name is null OR SpyProductAbstractLocalizedAttributes.name = \'\')'
+            )
             ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name is not null')
+            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name != \'\'')
             ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK)
             ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
             ->groupByIdProductAbstract();
@@ -335,6 +339,6 @@ class ProductTable extends AbstractProductTable
      */
     protected function resolveProductName(SpyProductAbstract $productAbstractEntity): ?string
     {
-        return $productAbstractEntity->getVirtualColumn(static::COL_NAME) ?? $productAbstractEntity->getVirtualColumn(static::COL_NAME_FALLBACK);
+        return $productAbstractEntity->getVirtualColumn(static::COL_NAME) ?: $productAbstractEntity->getVirtualColumn(static::COL_NAME_FALLBACK);
     }
 }
