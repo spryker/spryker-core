@@ -59,14 +59,6 @@ class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
-     */
-    public function createProductAbstractLocalizedAttributesPropelQuery(): SpyProductAbstractLocalizedAttributesQuery
-    {
-        return SpyProductAbstractLocalizedAttributesQuery::create();
-    }
-
-    /**
      * @return \Spryker\Zed\ProductManagement\Persistence\Expander\ProductAbstractQueryExpanderInterface
      */
     public function createProductAbstractQueryExpander(): ProductAbstractQueryExpanderInterface
