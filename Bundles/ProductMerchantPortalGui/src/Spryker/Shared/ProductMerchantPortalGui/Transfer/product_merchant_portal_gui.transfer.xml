@@ -54,6 +54,7 @@
 
     <transfer name="ProductAbstract">
         <property name="idProductAbstract" type="int"/>
+        <property name="idMerchant" type="int"/>
         <property name="sku" type="string"/>
         <property name="name" type="string"/>
         <property name="concreteProductCount" type="int"/>
@@ -225,13 +226,13 @@
         <property name="columnErrors" type="array" singular="columnError" associative="true" description="Key is column ID."/>
     </transfer>
 
+    <transfer name="PriceProductCriteria">
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+    </transfer>
+
     <transfer name="ValidationResponse">
         <property name="isSuccess" type="bool"/>
         <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
-    </transfer>
-
-    <transfer name="PriceProductCriteria">
-        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
     </transfer>
 
     <transfer name="ValidationError">
@@ -239,6 +240,16 @@
         <property name="root" type="object"/>
         <property name="propertyPath" type="string"/>
         <property name="invalidValue" type="string"/>
+    </transfer>
+
+    <transfer name="TableValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="rowValidations" type="RowValidation[]" singular="rowValidation"/>
+    </transfer>
+
+    <transfer name="RowValidation">
+        <property name="fields" type="array" singular="field"/>
+        <property name="errors" type="array" singular="error"/>
     </transfer>
 
     <transfer name="PriceProductDimension">
@@ -294,10 +305,21 @@
     <transfer name="ProductManagementAttribute">
         <property name="isSuper" type="bool"/>
         <property name="key" type="string"/>
+        <property name="values" type="ProductManagementAttributeValue[]" singular="value"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeFilter">
         <property name="keys" type="string[]" singular="key"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeValue">
+        <property name="value" type="string"/>
+        <property name="localizedValues" type="ProductManagementAttributeValueTranslation[]" singular="localizedValue"/>
+    </transfer>
+
+    <transfer name="ProductManagementAttributeValueTranslation">
+        <property name="localeName" type="string"/>
+        <property name="translation" type="string"/>
     </transfer>
 
     <transfer name="Merchant">

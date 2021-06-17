@@ -4,7 +4,7 @@
             <spy-sidebar (collapsedChange)="updateCollapseHandler($event)">
                 <div class="mp-layout-main-cnt__logo">
                     <div class="mp-layout-main-cnt__logo-inner">
-                        <spy-logo></spy-logo>
+                        <ng-content select="[logo]"></ng-content>
                     </div>
                 </div>
 
