@@ -134,8 +134,10 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     public function createProductAbstractRelationDeleter()
     {
         return new ProductAbstractRelationDeleter(
-            $this->getQueryContainer(),
-            $this->createProductAbstractRelationTouchManager()
+            $this->createProductAbstractRelationTouchManager(),
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->getConfig()
         );
     }
 

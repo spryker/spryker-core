@@ -11,7 +11,7 @@ interface ProductLabelQueryContainerInterface
 {
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find product labels sorted by a position column.
      *
      * @api
      *
@@ -23,7 +23,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find a product label by it's id.
      *
      * @api
      *
@@ -37,7 +37,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find a product label by it's name.
      *
      * @api
      *
@@ -51,7 +51,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find product labels by a product abstract id.
      *
      * @api
      *
@@ -65,7 +65,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find active product labels by a product abstract id.
      *
      * @api
      *
@@ -79,7 +79,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find product label localized attributes by a product label id.
      *
      * @api
      *
@@ -93,7 +93,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a product label localized attributes query.
      *
      * @api
      *
@@ -103,7 +103,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find product label localized attributes by a product label id and a locale id.
      *
      * @api
      *
@@ -118,7 +118,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find a product label with max position.
      *
      * @api
      *
@@ -130,7 +130,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find a product label to a product abstract relations by a product label id.
      *
      * @api
      *
@@ -142,7 +142,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find all product label to a product abstract relations.
      *
      * @api
      *
@@ -152,9 +152,11 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find a product label to a product abstract relations by a product label id and product abstract ids.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductAbstractRelationsByIdProductLabelAndProductAbstractIds()} instead.
      *
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
@@ -168,7 +170,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find an unpublished product labels that become valid for publish.
      *
      * @api
      *
@@ -178,7 +180,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find a published product labels that become invalid.
      *
      * @api
      *
@@ -188,7 +190,7 @@ interface ProductLabelQueryContainerInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Creates a query to find active and valid product labels by a product abstract id.
      *
      * @api
      *
