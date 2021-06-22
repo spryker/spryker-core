@@ -141,21 +141,6 @@ class AddController extends AbstractController
     }
 
     /**
-     * @param array $attributeCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
-     */
-    protected function normalizeAttributeArray(array $attributeCollection)
-    {
-        $attributeArray = [];
-        foreach ($attributeCollection as $attributeTransfer) {
-            $attributeArray[$attributeTransfer->getKey()] = $attributeTransfer;
-        }
-
-        return $attributeArray;
-    }
-
-    /**
      * @param string $type
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Symfony\Component\Form\FormInterface $form
@@ -173,11 +158,13 @@ class AddController extends AbstractController
             return [$productConcreteTransfer];
         }
 
-        $attributeCollection = $this->normalizeAttributeArray($this->getFactory()->getProductAttributeCollection());
+        $productSuperAttributes = $this->getFactory()
+            ->createProductAttributeReader()
+            ->getProductSuperAttributesIndexedByAttributeKey();
 
         $attributeValues = $this->getFactory()
             ->createProductFormTransferGenerator()
-            ->generateVariantAttributeArrayFromData($form->getData(), $attributeCollection);
+            ->generateVariantAttributeArrayFromData($form->getData(), $productSuperAttributes);
 
         $productAbstractTransfer = (new ProductAbstractTransfer())
             ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
