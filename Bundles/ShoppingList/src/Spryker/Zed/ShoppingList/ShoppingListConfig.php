@@ -43,7 +43,7 @@ class ShoppingListConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Controls whether shopping lists overview will load all shopping lists.
+     * - Controls whether shopping lists overview loads all shopping lists.
      *
      * @api
      *
