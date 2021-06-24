@@ -121,7 +121,8 @@ interface SalesFacadeInterface
     /**
      * Specification:
      * - Saves order items to Persistence.
-     * - Execute `OrderItemExpanderPreSavePluginInterface` stack of plugins
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface} plugin stack.
      *
      * @api
      *

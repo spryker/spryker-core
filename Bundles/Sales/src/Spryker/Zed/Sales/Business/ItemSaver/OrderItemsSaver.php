@@ -45,6 +45,11 @@ class OrderItemsSaver implements OrderItemsSaverInterface
     protected $entityManager;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface[]
+     */
+    protected $orderItemsPostSavePlugins;
+
+    /**
      * @var \Generated\Shared\Transfer\SpyOmsOrderProcessEntityTransfer[]
      */
     protected $processEntityTransferCache = [];
@@ -54,17 +59,20 @@ class OrderItemsSaver implements OrderItemsSaverInterface
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface[] $orderItemsPostSavePlugins
      */
     public function __construct(
         SalesToOmsInterface $omsFacade,
         SalesConfig $salesConfiguration,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
-        SalesEntityManagerInterface $entityManager
+        SalesEntityManagerInterface $entityManager,
+        array $orderItemsPostSavePlugins
     ) {
         $this->omsFacade = $omsFacade;
         $this->salesConfiguration = $salesConfiguration;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->entityManager = $entityManager;
+        $this->orderItemsPostSavePlugins = $orderItemsPostSavePlugins;
     }
 
     /**
@@ -105,6 +113,21 @@ class OrderItemsSaver implements OrderItemsSaverInterface
 
         $quoteTransfer->setItems($itemTransfers);
         $saveOrderTransfer = $this->copyQuoteItemsToSaveOrderItems($saveOrderTransfer, $quoteTransfer);
+
+        return $this->executeOrderItemsPostSavePlugins($saveOrderTransfer, $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    protected function executeOrderItemsPostSavePlugins(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): SaveOrderTransfer
+    {
+        foreach ($this->orderItemsPostSavePlugins as $orderItemsPostSavePlugin) {
+            $saveOrderTransfer = $orderItemsPostSavePlugin->execute($saveOrderTransfer, $quoteTransfer);
+        }
 
         return $saveOrderTransfer;
     }

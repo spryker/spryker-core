@@ -204,7 +204,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->getConfig(),
             $this->createSalesOrderSaverPluginExecutor(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getOrderItemsPostSavePlugins()
         );
     }
 
@@ -653,5 +654,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getCustomerOrderAccessCheckPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface[]
+     */
+    public function getOrderItemsPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEMS_POST_SAVE);
     }
 }
