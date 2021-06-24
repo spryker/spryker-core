@@ -11,6 +11,8 @@ import { SelectModule, SelectComponent } from '@spryker/select';
 import { ToggleModule, ToggleComponent } from '@spryker/toggle';
 import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
 import { UserMenuLinkComponent, UserMenuModule } from '@spryker/user-menu';
+import { LogoComponent, LogoModule } from '@spryker/logo';
+
 import { HeaderComponent } from './header/header.component';
 import { HeaderModule } from './header/header.module';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
@@ -52,6 +54,7 @@ import { RootComponent } from './app.component';
             ToggleComponent,
             CheckboxComponent,
             UserMenuLinkComponent,
+            LogoComponent,
         ]),
         LayoutCenteredModule,
         MerchantLayoutCenteredModule,
@@ -70,6 +73,8 @@ import { RootComponent } from './app.component';
         SelectModule,
         ToggleModule,
         CheckboxModule,
+        UserMenuModule,
+        LogoModule,
     ],
     declarations: [RootComponent],
 })

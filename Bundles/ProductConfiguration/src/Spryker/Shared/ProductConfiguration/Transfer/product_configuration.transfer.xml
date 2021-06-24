@@ -126,4 +126,17 @@
     <transfer name="PriceProductDimension">
     </transfer>
 
+    <transfer name="QuoteRequest">
+        <property name="latestVersion" type="QuoteRequestVersion"/>
+    </transfer>
+
+    <transfer name="QuoteRequestResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="QuoteRequestVersion">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
 </transfers>

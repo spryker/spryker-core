@@ -15,6 +15,7 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapter;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeBridge;
@@ -73,6 +74,8 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER';
     public const PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER';
 
+    public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -100,6 +103,8 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
 
         $container = $this->addProductAbstractFormExpanderPlugins($container);
         $container = $this->addProductConcreteTableExpanderPlugins($container);
+
+        $container = $this->addValidationAdapter($container);
 
         return $container;
     }
@@ -507,5 +512,19 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     protected function getProductConcreteTableExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addValidationAdapter(Container $container): Container
+    {
+        $container->set(static::ADAPTER_VALIDATION, function () {
+            return new ProductMerchantPortalGuiToValidationAdapter();
+        });
+
+        return $container;
     }
 }

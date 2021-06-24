@@ -1,0 +1,9 @@
+<spy-form-item noLabel="true" [error]="error">
+    <span control>
+        <spy-input [name]="name" [(value)]="value" [placeholder]="placeholder" [disabled]="isAutogenerate"></spy-input>
+        <input *ngIf="isAutogenerate" type="hidden" [name]="name" [value]="value" />
+    </span>
+</spy-form-item>
+<spy-checkbox [(checked)]="isAutogenerate" [name]="checkboxName" (checkedChange)="onCheckboxChange($event)">
+    <ng-content></ng-content>
+</spy-checkbox>

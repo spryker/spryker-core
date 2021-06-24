@@ -9,6 +9,11 @@ namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer;
+use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 
 /**
  * @method \Spryker\Zed\Sales\Persistence\SalesPersistenceFactory getFactory()
@@ -42,4 +47,33 @@ interface SalesEntityManagerInterface
      * @return \Generated\Shared\Transfer\AddressTransfer
      */
     public function updateSalesOrderAddress(AddressTransfer $addressTransfer): AddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
+     */
+    public function saveOrderEntity(SpySalesOrderEntityTransfer $salesOrderEntityTransfer): SpySalesOrderEntityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderTotals(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer $salesOrderAddressEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer
+     */
+    public function saveSalesOrderAddressEntity(SpySalesOrderAddressEntityTransfer $salesOrderAddressEntityTransfer): SpySalesOrderAddressEntityTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
+     */
+    public function saveSalesOrderItems(SpySalesOrderItemEntityTransfer $salesOrderItemEntityTransfer): SpySalesOrderItemEntityTransfer;
 }

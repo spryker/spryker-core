@@ -21,6 +21,7 @@
 {% endfor %}
 
 {% set productDetailsTitle = 'Description & Details' | trans %}
+{% set productCardTitle = 'Product' | trans %}
 
 {% set productData = {
     name: productName,
@@ -31,136 +32,208 @@
     validToTitle: 'Valid to' | trans,
 } %}
 
-{% macro spyFormItemCardInput(formField, attrs = {}) %}
-    <web-spy-card spy-title="{{ formField.vars.label | trans }} {{ formField.vars.required ? '*' }}">
-        <div class="mp-edit-offer__form-row">
-            <div class="mp-edit-offer__form-row-col">
-                {{ form_row(formField, {label: false, row_attr: {'no-spaces': 'true'}}) }}
+{% macro spyFormItemCardInput(formField, className, attrs = {}) %}
+    <web-spy-card cloak spy-title="{{ formField.vars.label | trans }} {{ formField.vars.required ? '*' }}" class="{{ className }}__card">
+        <div class="{{ className }}__form-row">
+            <div class="{{ className }}__form-row-col">
+                {{ form_row(formField, { label: false, row_attr: { 'no-spaces': 'true' } }) }}
             </div>
         </div>
     </web-spy-card>
 {% endmacro %}
 
-<web-mp-edit-offer
-    images="{{ images | json_encode() }}"
-    product-details-title="{{ productDetailsTitle }}"
-    product="{{ productData | json_encode() }}"
-    cloak
->
-    <h3 title>
-        {{ productOfferReference is defined ? 'Offer' | trans ~ ': ' ~ productOfferReference  : 'Create Offer' | trans }}
-    </h3>
+{% import _self as macros %}
 
-    {{ form_row(form.create, {label: productOfferReference is defined ? 'Save' | trans : 'Create' | trans, attr: {size: 'lg', action: ''}}) }}
+{% block body %}
+    {% set mainClass = 'mp-edit-offer' %}
 
-    <web-spy-chips
-        product-status
-        color="{{ product.isActive ? 'green' : 'grey' }}"
-    >{{ product.isActive ? 'Online' | trans : 'Offline' | trans }}</web-spy-chips>
+    {% block editOffer %}
+        <web-mp-edit-offer
+            product="{{ productData | json_encode() }}"
+            images="{{ images | json_encode() }}"
+            product-details-title="{{ productDetailsTitle }}"
+            product-card-title="{{ productCardTitle }}"
+            cloak
+        >
+            {% block title %}
+                <span title>
+                    {{ productOfferReference is defined ? 'Offer' | trans }}
+                </span>
+            {% endblock %}
 
-    <div product-details>
-        {% for localizedAttribute in product.localizedAttributes %}
-            {% if localizedAttribute.locale.localeName == app.locale %}
-                <p>{{ localizedAttribute.description }}</p>
-            {% endif %}
-        {% endfor %}
+            {% block subTitle %}
+                <span sub-title>
+                    {{ productOfferReference is defined ? productOfferReference : 'Create Offer' | trans }}
+                </span>
+            {% endblock %}
 
-        {% if productAttributes is not empty %}
-            <div class="mp-edit-offer__details">
-                {% for attributeKey, attribute in productAttributes %}
-                    <div class="mp-edit-offer__details-col">
-                        <span class="mp-edit-offer__details-text mp-edit-offer__details-text--title">{{ attributeKey | replace({'_': ' '}) }}</span>
-                        <span class="mp-edit-offer__details-text">{{ attribute }}</span>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    </div>
+            {% block approvalStatus %}
+                <span approval-status>
+                    {% if approvalStatus is defined %}
+                        <web-spy-chips color="{{ approvalStatusChipColors[approvalStatus] ?? 'green' }}">
+                            {{ approvalStatus | trans }}
+                        </web-spy-chips>
+                    {% endif %}
+                </span>
+            {% endblock %}
 
-    <div>
-        {{ form_start(form, {attr: {excludeFormTag: true}}) }}
+            {% block action %}
+                {{ form_row(form.create, {
+                    label: (productOfferReference is defined ? 'Save' : 'Create') | trans,
+                    attr: { size: 'lg', action: '' },
+                }) }}
+            {% endblock %}
 
-            <web-spy-card spy-title="{{ "Offer visibility" | trans }}">
-                <div class="mp-edit-offer__visibility">
-                    <div class="mp-edit-offer__visibility-row">
-                        <div class="spy-toggle__label">{{ form.children.isActive.vars.checked ? 'Offer is online' : 'Offer is offline' | trans }}</div>
-                        {{ form_row(form.children.isActive, {label: false, row_attr: {'no-spaces': 'true'}, toggle: true}) }}
-                    </div>
-                    <div class="mp-edit-offer__visibility-row">
-                        {{ 'This means that the offer does not appear online and noone can see it.' | trans }}
-                    </div>
+            {% block productStatus %}
+                <web-spy-chips
+                    product-status
+                    color="{{ product.isActive ? 'green' : 'grey' }}"
+                >
+                    {{ (product.isActive ? 'Online' : 'Offline') | trans }}
+                </web-spy-chips>
+            {% endblock %}
+
+            {% block productDetails %}
+                <div product-details>
+                    {% for localizedAttribute in product.localizedAttributes %}
+                        {% if localizedAttribute.locale.localeName == app.locale %}
+                            <p>{{ localizedAttribute.description }}</p>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if productAttributes is not empty %}
+                        <div class="{{ mainClass }}__product-details">
+                            {% for attributeKey, attribute in productAttributes %}
+                                <div class="{{ mainClass }}__product-details-col">
+                                    <span class="{{ mainClass }}__product-details-text {{ mainClass }}__product-details-text--title">
+                                        {{ attributeKey | replace({ '_': ' ' }) }}
+                                    </span>
+                                    <span class="{{ mainClass }}__product-details-text">{{ attribute }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
-            </web-spy-card>
+            {% endblock %}
 
-            {{ _self.spyFormItemCardInput(form.children.merchantSku) }}
-
-            {% if form.children.productOfferReference is defined %}
-                {{ _self.spyFormItemCardInput(form.children.productOfferReference) }}
-            {% endif %}
-
-            <web-spy-card spy-title="{{ form.children.stores.vars.label | trans }} {{ form.children.stores.vars.required ? '*' }}">
-                <div class="mp-edit-offer__form-row">
-                    <div class="mp-edit-offer__form-row-col">
-                        {{ form_row(form.children.stores, {label: false, row_attr: {'no-spaces': 'true'}}) }}
-                    </div>
-                </div>
-            </web-spy-card>
-
-            <web-spy-card spy-title="{{ 'Stock' | trans }}">
-                <div class="mp-edit-offer__form-row">
-                    <div class="mp-edit-offer__form-row-col">
-                        {{ form_row(form.children.productOfferStocks.quantity, {row_attr: {'no-spaces': 'true'}}) }}
-                    </div>
-
-                    <div class="mp-edit-offer__form-row-col mp-edit-offer__form-row-col--checkbox">
-                        {{ form_row(form.children.productOfferStocks.isNeverOutOfStock, {row_attr: {'no-spaces': 'true', 'no-label': 'true'}}) }}
-                    </div>
-                </div>
-            </web-spy-card>
-
-            {% do form.prices.setRendered %}
-
-            <web-spy-card spy-title="{{ 'Price' | trans }}">
-                <web-spy-card>
-                    <web-mp-offer-prices-table
-                        cloak
-                        table-id="web-mp-offers-list"
-                        config='{{ guiTableConfiguration(priceProductOfferTableConfiguration) }}'>
-                    </web-mp-offer-prices-table>
-                </web-spy-card>
-            </web-spy-card>
-
-            {% set dates = {
-                from: form.children.productOfferValidity.children.validFrom.vars.value,
-                to: form.children.productOfferValidity.children.validTo.vars.value,
-            } %}
-
-            <web-spy-card spy-title="{{ 'Validity Dates' | trans }}">
-                <div class="mp-edit-offer__form-row">
-                    <div class="mp-edit-offer__form-row-col mp-edit-offer__form-row-col--dates">
-                        {% set productOfferValidityErrors = form.children.productOfferValidity.children.validFrom.vars.errors | merge(
-                                form.children.productOfferValidity.children.validTo.vars.errors
-                            ) %}
-                        <web-spy-form-item
-                            no-spaces="true"
-                            no-label="true"
-                            error="{{ productOfferValidityErrors[0].message | default | trans }}"
+            {% block editOfferForm %}
+                {{ form_start(form, { attr: { excludeFormTag: true } }) }}
+                    {% block status %}
+                        <web-spy-card
+                            cloak
+                            spy-title="{{ 'Offer status' | trans }}"
+                            class="{{ mainClass }}__card {{ mainClass }}__status"
                         >
-                            <web-spy-date-range-picker
-                                control
-                                dates="{{ dates | json_encode() }}"
-                                name-from="{{ form.children.productOfferValidity.children.validFrom.vars.full_name }}"
-                                name-to="{{ form.children.productOfferValidity.children.validTo.vars.full_name }}"
-                                placeholder-from="{{ form.children.productOfferValidity.children.validFrom.vars.attr.placeholder | default | trans }}"
-                                placeholder-to="{{ form.children.productOfferValidity.children.validTo.vars.attr.placeholder | default | trans }}"
-                            ></web-spy-date-range-picker>
-                        </web-spy-form-item>
-                    </div>
-                </div>
-            </web-spy-card>
+                            {{ form_row(form.children.isActive, {
+                                label: 'Offer is Active' | trans,
+                                row_attr: { 'no-spaces': 'true', 'no-label': 'true' },
+                            }) }}
+                        </web-spy-card>
+                    {% endblock %}
 
-            {% do form.children.productOfferValidity.setRendered %}
+                    {% block merchantSku %}
+                        {{ macros.spyFormItemCardInput(form.children.merchantSku, mainClass) }}
+                    {% endblock %}
 
-        {{ form_end(form, {attr: {excludeFormTag: true}}) }}
-    </div>
-</web-mp-edit-offer>
+                    {% block productOfferReference %}
+                        {% if form.children.productOfferReference is defined %}
+                            {{ macros.spyFormItemCardInput(form.children.productOfferReference, mainClass) }}
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block stores %}
+                        {{ macros.spyFormItemCardInput(form.children.stores, mainClass) }}
+                    {% endblock %}
+
+                    {% block availableStock %}
+                        <web-spy-card cloak spy-title="{{ 'Available Stock' | trans }}" class="{{ mainClass }}__card">
+                            {% block availableStockInner %}
+                                <div class="{{ mainClass }}__stock">
+                                    {% block availableStockCard %}
+                                        <web-spy-card>
+                                            {% block availableStockCardInner %}
+                                                <div class="{{ mainClass }}__stock-inner">
+                                                    {% block availableStockCardQuantity %}
+                                                        <div class="{{ mainClass }}__stock-inner-row">
+                                                            {{ form_row(form.children.productOfferStocks.quantity, { row_attr: { 'no-spaces': 'true' } }) }}
+                                                        </div>
+                                                    {% endblock %}
+
+                                                    {% block availableStockCardOutOfStock %}
+                                                        <div class="{{ mainClass }}__stock-inner-row">
+                                                            {{ form_row(form.children.productOfferStocks.isNeverOutOfStock, { row_attr: { 'no-spaces': 'true' } }) }}
+                                                        </div>
+                                                    {% endblock %}
+                                                </div>
+                                            {% endblock %}
+                                        </web-spy-card>
+                                    {% endblock %}
+                                </div>
+                            {% endblock %}
+                        </web-spy-card>
+                    {% endblock %}
+
+                    {% block price %}
+                        <web-spy-card cloak spy-title="{{ 'Price' | trans }}" class="{{ mainClass }}__card">
+                            {% block priceInner %}
+                                <web-spy-card>
+                                    {% block priceTable %}
+                                        <web-mp-offer-prices-table
+                                            cloak
+                                            table-id="web-mp-offers-list"
+                                            config='{{ guiTableConfiguration(priceProductOfferTableConfiguration) }}'>
+                                        </web-mp-offer-prices-table>
+                                    {% endblock %}
+                                </web-spy-card>
+                            {% endblock %}
+                        </web-spy-card>
+
+                        {% do form.prices.setRendered %}
+                    {% endblock %}
+
+                    {% block validityDates %}
+                        {% set dates = {
+                            from: form.children.productOfferValidity.children.validFrom.vars.value,
+                            to: form.children.productOfferValidity.children.validTo.vars.value,
+                        } %}
+
+                        {% block validityDatesInner %}
+                            <web-spy-card cloak spy-title="{{ 'Validity Dates' | trans }}">
+                                <div class="{{ mainClass }}__form-row">
+                                    <div class="{{ mainClass }}__form-row-col {{ mainClass }}__form-row-col--dates">
+                                        {% set productOfferValidityErrors = form.children.productOfferValidity.children.validFrom.vars.errors | merge(
+                                            form.children.productOfferValidity.children.validTo.vars.errors
+                                        ) %}
+
+                                        {% block validityDatesFormItem %}
+                                            <web-spy-form-item
+                                                cloak
+                                                no-spaces="true"
+                                                no-label="true"
+                                                error="{{ productOfferValidityErrors[0].message | default | trans }}"
+                                            >
+                                                {% block validityDatesRangePicker %}
+                                                    <web-spy-date-range-picker
+                                                        cloak
+                                                        control
+                                                        dates="{{ dates | json_encode() }}"
+                                                        name-from="{{ form.children.productOfferValidity.children.validFrom.vars.full_name }}"
+                                                        name-to="{{ form.children.productOfferValidity.children.validTo.vars.full_name }}"
+                                                        placeholder-from="{{ form.children.productOfferValidity.children.validFrom.vars.attr.placeholder | default | trans }}"
+                                                        placeholder-to="{{ form.children.productOfferValidity.children.validTo.vars.attr.placeholder | default | trans }}"
+                                                    ></web-spy-date-range-picker>
+                                                {% endblock %}
+                                            </web-spy-form-item>
+                                        {% endblock %}
+                                    </div>
+                                </div>
+                            </web-spy-card>
+                        {% endblock %}
+
+                        {% do form.children.productOfferValidity.setRendered %}
+                    {% endblock %}
+                {{ form_end(form, { attr: { excludeFormTag: true } }) }}
+            {% endblock %}
+        </web-mp-edit-offer>
+    {% endblock %}
+{% endblock %}

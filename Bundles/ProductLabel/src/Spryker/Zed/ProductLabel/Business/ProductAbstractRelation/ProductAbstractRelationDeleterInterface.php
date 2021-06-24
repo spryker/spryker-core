@@ -11,10 +11,10 @@ interface ProductAbstractRelationDeleterInterface
 {
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param int[] $productAbstractIds
      * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function removeRelations($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true);
+    public function removeRelations($idProductLabel, array $productAbstractIds, bool $isTouchEnabled = true);
 }

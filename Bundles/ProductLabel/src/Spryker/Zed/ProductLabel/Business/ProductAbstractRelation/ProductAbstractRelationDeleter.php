@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
-use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface;
+use Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface;
+use Spryker\Zed\ProductLabel\ProductLabelConfig;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterInterface
@@ -16,74 +18,106 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface
-     */
-    protected $queryContainer;
-
-    /**
      * @var \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface
      */
     protected $productRelationTouchManager;
 
     /**
-     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface
+     */
+    protected $productLabelRepository;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\ProductLabelConfig
+     */
+    protected $productLabelConfig;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface
+     */
+    private $productLabelEntityManager;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface $productLabelRepository
+     * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface $productLabelEntityManager
+     * @param \Spryker\Zed\ProductLabel\ProductLabelConfig $productLabelConfig
      */
     public function __construct(
-        ProductLabelQueryContainerInterface $queryContainer,
-        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
+        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager,
+        ProductLabelRepositoryInterface $productLabelRepository,
+        ProductLabelEntityManagerInterface $productLabelEntityManager,
+        ProductLabelConfig $productLabelConfig
     ) {
-        $this->queryContainer = $queryContainer;
         $this->productRelationTouchManager = $productRelationTouchManager;
+        $this->productLabelRepository = $productLabelRepository;
+        $this->productLabelEntityManager = $productLabelEntityManager;
+        $this->productLabelConfig = $productLabelConfig;
     }
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param int[] $productAbstractIds
      * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function removeRelations($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
+    public function removeRelations($idProductLabel, array $productAbstractIds, bool $isTouchEnabled = true)
     {
-        $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract, $isTouchEnabled) {
-            $this->executeDeleteRelationsTransaction($idProductLabel, $idsProductAbstract, $isTouchEnabled);
+        $this->handleDatabaseTransaction(function () use ($idProductLabel, $productAbstractIds, $isTouchEnabled) {
+            $this->executeDeleteRelationsTransaction($idProductLabel, $productAbstractIds, $isTouchEnabled);
         });
     }
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param int[] $productAbstractIds
      * @param bool $isTouchEnabled
      *
      * @return void
      */
-    protected function executeDeleteRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
+    protected function executeDeleteRelationsTransaction(int $idProductLabel, array $productAbstractIds, bool $isTouchEnabled = true)
     {
-        foreach ($this->findRelationEntities($idProductLabel, $idsProductAbstract) as $relationEntity) {
-            $relationEntity->delete();
+        $productLabelToDeAssignChunkSize = $this->productLabelConfig->getProductLabelToDeAssignChunkSize();
+        $productAbstractIdsChunkCollection = array_chunk($productAbstractIds, $productLabelToDeAssignChunkSize);
 
-            if ($isTouchEnabled) {
-                $this->touchRelationsForAbstractProduct($relationEntity->getFkProductAbstract());
-            }
+        foreach ($productAbstractIdsChunkCollection as $productAbstractIdsChunk) {
+            $this->deleteRelationsByChunk($idProductLabel, $productAbstractIdsChunk, $isTouchEnabled);
         }
     }
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param int[] $productAbstractIds
+     * @param bool $isTouchEnabled
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return void
      */
-    protected function findRelationEntities($idProductLabel, array $idsProductAbstract)
+    protected function deleteRelationsByChunk(int $idProductLabel, array $productAbstractIds, bool $isTouchEnabled): void
     {
-        return $this
-            ->queryContainer
-            ->queryProductAbstractRelationsByIdProductLabelAndIdsProductAbstract(
-                $idProductLabel,
-                $idsProductAbstract
-            )
-            ->find();
+        $productLabelProductAbstractTransfers = $this->productLabelRepository->getProductAbstractRelationsByIdProductLabelAndProductAbstractIds(
+            $idProductLabel,
+            $productAbstractIds
+        );
+
+        if (!count($productLabelProductAbstractTransfers)) {
+            return;
+        }
+
+        $productAbstractIds = $this->extractProductAbstractIds($productLabelProductAbstractTransfers);
+
+        $this->productLabelEntityManager->deleteProductLabelProductAbstractRelations(
+            $idProductLabel,
+            $productAbstractIds
+        );
+
+        if (!$isTouchEnabled) {
+            return;
+        }
+
+        foreach ($productAbstractIds as $idProductAbstract) {
+            $this->touchRelationsForAbstractProduct($idProductAbstract);
+        }
     }
 
     /**
@@ -91,9 +125,9 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
      *
      * @return void
      */
-    protected function touchRelationsForAbstractProduct($idProductAbstract)
+    protected function touchRelationsForAbstractProduct(int $idProductAbstract): void
     {
-        if ($this->isEmptyRelationForAbstractProduct($idProductAbstract)) {
+        if (!$this->productLabelRepository->checkProductLabelProductAbstractByIdProductAbstractExists($idProductAbstract)) {
             $this->productRelationTouchManager->touchDeletedByIdProductAbstract($idProductAbstract);
 
             return;
@@ -103,17 +137,17 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     }
 
     /**
-     * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[] $productLabelProductAbstractTransfers
      *
-     * @return bool
+     * @return int[]
      */
-    protected function isEmptyRelationForAbstractProduct($idProductAbstract)
+    protected function extractProductAbstractIds(array $productLabelProductAbstractTransfers): array
     {
-        $relationCount = $this
-            ->queryContainer
-            ->queryProductsLabelByIdProductAbstract($idProductAbstract)
-            ->count();
+        $productAbstractIds = [];
+        foreach ($productLabelProductAbstractTransfers as $productLabelProductAbstractTransfer) {
+            $productAbstractIds[] = $productLabelProductAbstractTransfer->getFkProductAbstract();
+        }
 
-        return ($relationCount === 0);
+        return $productAbstractIds;
     }
 }

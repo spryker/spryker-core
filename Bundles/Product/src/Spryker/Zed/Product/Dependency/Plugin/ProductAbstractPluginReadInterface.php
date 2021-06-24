@@ -9,6 +9,9 @@ namespace Spryker\Zed\Product\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface} instead.
+ */
 interface ProductAbstractPluginReadInterface
 {
     /**

@@ -20,8 +20,7 @@ Inactive,Inaktiv
 "Merchant SKU",Händler-SKU
 Name,Name
 "Never out of stock","Immer auf Lager"
-"Offer is online","Angebot ist online"
-"Offer is offline","Angebot ist offline"
+"Offer is Active","Angebot ist Aktiv"
 Offers,Angebote
 Offline,Offline
 "On Marketplace","On Marketplace"
@@ -47,7 +46,6 @@ Valid,Gültig
 "Valid From","Gültig Von"
 "Valid, online & with Stock","Valid, online & with Stock"
 "Valid To","Gültig Bis"
-Visibility,Sichtbarkeit
 "With Offers","Mit Angebote"
 "With Stock","With Stock"
 "Without Offers","Ohne Angebote"
@@ -55,7 +53,6 @@ Visibility,Sichtbarkeit
 "The first date cannot be later than the second one.","The first date cannot be later than the second one."
 "The first date is the same as the second one.","The first date is the same as the second one."
 "The second date cannot be earlier than the first one.","The second date cannot be earlier than the first one."
-"This means that the offer does not appear online and noone can see it.","This means that the offer does not appear online and noone can see it."
 To,Bis
 "GROSS DEFAULT","GROSS DEFAULT"
 "GROSS ORIGINAL","GROSS ORIGINAL"
@@ -65,7 +62,6 @@ Offer,Angebot
 Save,Speichern
 Create,Erstellen
 "Validity Dates",Gültigkeitsdatum
-"Offer visibility","Offer visibility"
 select.default.placeholder,Auswählen
 "Enter SKU","Enter SKU"
 "Enter quantity","Enter quantity"
@@ -78,3 +74,7 @@ select.default.placeholder,Auswählen
 "Offer prices saved successfully.","Angebotspreise wurden gespeichert."
 Cancel,Stornieren
 Add,Hinzufügen
+"Approval Status",Genehmigungsstatus
+Product,Produkt
+"Offer status",Angebotsstatus
+"Available Stock","Verfügbarer Lagerbestand"

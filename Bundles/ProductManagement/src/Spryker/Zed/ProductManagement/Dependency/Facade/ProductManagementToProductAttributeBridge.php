@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 class ProductManagementToProductAttributeBridge implements ProductManagementToProductAttributeInterface
@@ -70,5 +72,16 @@ class ProductManagementToProductAttributeBridge implements ProductManagementToPr
     public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array
     {
         return $this->productAttributeFacade->getUniqueSuperAttributesFromConcreteProducts($productConcreteTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
+     */
+    public function getProductManagementAttributes(
+        ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+    ): ProductManagementAttributeCollectionTransfer {
+        return $this->productAttributeFacade->getProductManagementAttributes($productManagementAttributeFilterTransfer);
     }
 }

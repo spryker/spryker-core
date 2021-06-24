@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConfig;
 use Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface;
-use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeInterface;
+use Spryker\Zed\ConfigurableBundlePageSearch\Business\Search\DataMapper\ConfigurableBundlePageSearchDataMapperInterface;
 use Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Service\ConfigurableBundlePageSearchToUtilEncodingServiceInterface;
 
 class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTemplatePageSearchMapperInterface
@@ -23,9 +23,9 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeInterface
+     * @var \Spryker\Zed\ConfigurableBundlePageSearch\Business\Search\DataMapper\ConfigurableBundlePageSearchDataMapperInterface
      */
-    protected $searchFacade;
+    protected $configurableBundlePageSearchDataMapper;
 
     /**
      * @var \Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface
@@ -34,16 +34,16 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
 
     /**
      * @param \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Service\ConfigurableBundlePageSearchToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\ConfigurableBundlePageSearch\Dependency\Facade\ConfigurableBundlePageSearchToSearchFacadeInterface $searchFacade
+     * @param \Spryker\Zed\ConfigurableBundlePageSearch\Business\Search\DataMapper\ConfigurableBundlePageSearchDataMapperInterface $configurableBundlePageSearchDataMapper
      * @param \Spryker\Zed\ConfigurableBundlePageSearch\Business\Expander\ConfigurableBundleTemplatePageSearchExpanderInterface $configurableBundleTemplatePageSearchExpander
      */
     public function __construct(
         ConfigurableBundlePageSearchToUtilEncodingServiceInterface $utilEncodingService,
-        ConfigurableBundlePageSearchToSearchFacadeInterface $searchFacade,
+        ConfigurableBundlePageSearchDataMapperInterface $configurableBundlePageSearchDataMapper,
         ConfigurableBundleTemplatePageSearchExpanderInterface $configurableBundleTemplatePageSearchExpander
     ) {
         $this->utilEncodingService = $utilEncodingService;
-        $this->searchFacade = $searchFacade;
+        $this->configurableBundlePageSearchDataMapper = $configurableBundlePageSearchDataMapper;
         $this->configurableBundleTemplatePageSearchExpander = $configurableBundleTemplatePageSearchExpander;
     }
 
@@ -113,12 +113,9 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
         ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer,
         LocaleTransfer $localeTransfer
     ): ?string {
-        $configurableBundleTemplatePageSearchTransferData = $configurableBundleTemplatePageSearchTransfer->toArray(true, true);
-
-        $data = $this->searchFacade->transformPageMapToDocumentByMapperName(
-            $configurableBundleTemplatePageSearchTransferData,
-            $localeTransfer,
-            ConfigurableBundlePageSearchConfig::CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME
+        $data = $this->configurableBundlePageSearchDataMapper->mapConfigurableBundleTemplatePageSearchTransferToSearchData(
+            $configurableBundleTemplatePageSearchTransfer,
+            $localeTransfer
         );
 
         return $this->utilEncodingService->encodeJson($data);

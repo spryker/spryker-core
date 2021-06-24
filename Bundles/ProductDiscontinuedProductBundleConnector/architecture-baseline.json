@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/ProductDiscontinuedProductBundleConnector/src/Spryker/Zed/ProductDiscontinuedProductBundleConnector/Persistence/ProductDiscontinuedProductBundleConnectorPersistenceFactory.php",
+        "description": "\n      ProductDiscontinuedProductBundleConnectorPersistenceFactory::createProductDiscontinuedPropelQuery() in Spryker\\Zed\\ProductDiscontinuedProductBundleConnector\\Persistence\\ProductDiscontinuedProductBundleConnectorPersistenceFactory::createProductDiscontinuedPropelQuery() contains 0 new statements which violates rule \"A create*() method in factories must contain exactly 1 `new` statement for instantiation.\"\n    ",
+        "rule": "FactoryCreateContainOneNewRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

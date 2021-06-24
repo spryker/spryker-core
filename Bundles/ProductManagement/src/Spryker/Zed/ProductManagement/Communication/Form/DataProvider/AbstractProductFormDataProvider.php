@@ -27,6 +27,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
@@ -125,6 +126,11 @@ class AbstractProductFormDataProvider
     protected $store;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null
+     */
+    protected $productAttributeReader;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface $categoryQueryContainer
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
@@ -134,10 +140,10 @@ class AbstractProductFormDataProvider
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
-     * @param array $attributeCollection
      * @param array $taxCollection
      * @param string $imageUrlPrefix
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface|null $store
+     * @param \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null $productAttributeReader
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -149,10 +155,10 @@ class AbstractProductFormDataProvider
         ProductManagementToPriceProductInterface $priceProductFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
-        array $attributeCollection,
         array $taxCollection,
         $imageUrlPrefix,
-        ?ProductManagementToStoreInterface $store = null
+        ?ProductManagementToStoreInterface $store = null,
+        ?ProductAttributeReaderInterface $productAttributeReader = null
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productManagementQueryContainer = $productManagementQueryContainer;
@@ -163,10 +169,11 @@ class AbstractProductFormDataProvider
         $this->localeProvider = $localeProvider;
         $this->productFacade = $productFacade;
         $this->currentLocale = $currentLocale;
-        $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->taxCollection = $taxCollection;
         $this->imageUrlPrefix = $imageUrlPrefix;
         $this->store = $store;
+        $this->productAttributeReader = $productAttributeReader;
+        $this->attributeTransferCollection = $this->getAttributeTransferCollection();
     }
 
     /**
@@ -843,5 +850,17 @@ class AbstractProductFormDataProvider
         );
 
         return new ArrayObject($priceProducts);
+    }
+
+    /**
+     * @return \Everon\Component\Collection\Collection
+     */
+    protected function getAttributeTransferCollection(): Collection
+    {
+        if ($this->productAttributeReader === null) {
+            return new Collection([]);
+        }
+
+        return new Collection($this->productAttributeReader->getProductSuperAttributesIndexedByAttributeKey());
     }
 }

@@ -40,6 +40,79 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @param string $searchString
+     * @param int|null $limit
+     * @param int|null $offset
+     *
+     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
+     */
+    public function searchKeys($searchString, $limit = null, $offset = null)
+    {
+        return $this
+            ->getFactory()
+            ->getSearchClient()
+            ->searchKeys($searchString, $limit, $offset);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function generateSourceMap(LoggerInterface $messenger): void
+    {
+        $this->getFactory()
+            ->createSourceMapInstaller($messenger)
+            ->install();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $messenger
+     *
+     * @return void
+     */
+    public function installSources(LoggerInterface $messenger): void
+    {
+        $this->getFactory()->createSearchSourceInstaller($messenger)->install();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
+     */
+    public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer
+    {
+        return $this->getFactory()->createSearchHealthChecker()->executeHealthCheck();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeSourceMap(): void
+    {
+        $this->getFactory()->createElasticsearchIndexMapCleaner()->cleanDirectory();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
      *
      * @return int
@@ -111,25 +184,6 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @param string $searchString
-     * @param int|null $limit
-     * @param int|null $offset
-     *
-     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
-     */
-    public function searchKeys($searchString, $limit = null, $offset = null)
-    {
-        return $this
-            ->getFactory()
-            ->getSearchClient()
-            ->searchKeys($searchString, $limit, $offset);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @deprecated Will be removed without replacement.
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
@@ -184,22 +238,6 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     {
         $this->getFactory()
             ->createIndexMapInstaller($messenger)
-            ->install();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
-     * @return void
-     */
-    public function generateSourceMap(LoggerInterface $messenger): void
-    {
-        $this->getFactory()
-            ->createSourceMapInstaller($messenger)
             ->install();
     }
 
@@ -387,32 +425,6 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @param \Psr\Log\LoggerInterface $messenger
-     *
-     * @return void
-     */
-    public function installSources(LoggerInterface $messenger): void
-    {
-        $this->getFactory()->createSearchSourceInstaller($messenger)->install();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
-     */
-    public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer
-    {
-        return $this->getFactory()->createSearchHealthChecker()->executeHealthCheck();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @deprecated Will be remove without replacement.
      *
      * @return bool
@@ -420,17 +432,5 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     public function isInLegacyMode(): bool
     {
         return $this->getFactory()->createSearchLegacyModeChecker()->isInLegacyMode();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function removeSourceMap(): void
-    {
-        $this->getFactory()->createElasticsearchIndexMapCleaner()->cleanDirectory();
     }
 }

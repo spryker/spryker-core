@@ -27,6 +27,9 @@ class IndexController extends AbstractController
     public function indexAction(Request $request): JsonResponse
     {
         $requestedServices = $request->query->get(static::KEY_HEALTH_CHECK_SERVICES);
+        if ($requestedServices !== null) {
+            $requestedServices = (string)$requestedServices;
+        }
         $healthCheckResponseTransfer = $this->getFactory()
             ->createHealthCheckProcessor()
             ->process($requestedServices);
