@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="Discount">
+        <property name="voucherCode" type="string"/>
+    </transfer>
+
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
         <property name="email" type="string"/>
@@ -31,6 +35,7 @@
         <property name="isCancellable" type="bool"/>
         <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" deprecated="Use item level SalesOrderConfiguredBundle (item.salesOrderConfiguredBundle) instead."/>
         <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
     </transfer>
 
     <transfer name="Quote">
@@ -42,6 +47,7 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="priceMode" type="string"/>
         <property name="store" type="Store"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
     </transfer>
 
     <transfer name="Totals">
