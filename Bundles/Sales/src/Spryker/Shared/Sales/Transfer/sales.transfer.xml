@@ -35,7 +35,6 @@
         <property name="isCancellable" type="bool"/>
         <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" deprecated="Use item level SalesOrderConfiguredBundle (item.salesOrderConfiguredBundle) instead."/>
         <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup"/>
-        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
     </transfer>
 
     <transfer name="Quote">
