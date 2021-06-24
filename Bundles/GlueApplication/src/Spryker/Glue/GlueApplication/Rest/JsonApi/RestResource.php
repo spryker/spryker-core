@@ -61,6 +61,12 @@ class RestResource implements RestResourceInterface
      */
     public function addRelationship(RestResourceInterface $restResource): RestResourceInterface
     {
+        if ($restResource->getId()) {
+            $this->relationships[$restResource->getType()][$restResource->getId()] = $restResource;
+
+            return $this;
+        }
+
         $this->relationships[$restResource->getType()][] = $restResource;
 
         return $this;
