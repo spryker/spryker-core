@@ -129,6 +129,7 @@ class PriceProductScheduleForm extends AbstractType
             'label' => 'Start from (included)',
             'date_widget' => 'single_text',
             'format' => static::PATTERN_DATE_FORMAT,
+            'html5' => false,
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),
@@ -152,6 +153,7 @@ class PriceProductScheduleForm extends AbstractType
             'label' => 'Finish at (included)',
             'date_widget' => 'single_text',
             'format' => static::PATTERN_DATE_FORMAT,
+            'html5' => false,
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),
