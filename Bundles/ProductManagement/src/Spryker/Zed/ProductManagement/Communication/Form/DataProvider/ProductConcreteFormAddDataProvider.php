@@ -17,6 +17,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormAdd;
+use Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface;
@@ -80,26 +81,30 @@ class ProductConcreteFormAddDataProvider
     protected $store;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null
+     */
+    protected $productAttributeReader;
+
+    /**
      * @param \Spryker\Zed\Stock\Persistence\StockQueryContainerInterface $stockQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface $productFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
-     * @param array $attributeCollection
      * @param array $taxCollection
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface $store
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductAttributeInterface $productAttributeFacade
+     * @param \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null $productAttributeReader
      */
     public function __construct(
         StockQueryContainerInterface $stockQueryContainer,
         ProductManagementToProductInterface $productFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
-        array $attributeCollection,
         array $taxCollection,
         ProductManagementToStoreInterface $store,
-        ProductManagementToProductAttributeInterface $productAttributeFacade
+        ProductManagementToProductAttributeInterface $productAttributeFacade,
+        ?ProductAttributeReaderInterface $productAttributeReader = null
     ) {
-        $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->stockQueryContainer = $stockQueryContainer;
         $this->productFacade = $productFacade;
         $this->localeProvider = $localeProvider;
@@ -107,6 +112,8 @@ class ProductConcreteFormAddDataProvider
         $this->taxCollection = $taxCollection;
         $this->store = $store;
         $this->productAttributeFacade = $productAttributeFacade;
+        $this->productAttributeReader = $productAttributeReader;
+        $this->attributeTransferCollection = $this->getAttributeTransferCollection();
     }
 
     /**
@@ -395,5 +402,17 @@ class ProductConcreteFormAddDataProvider
         }
 
         return $values;
+    }
+
+    /**
+     * @return \Everon\Component\Collection\Collection
+     */
+    protected function getAttributeTransferCollection(): Collection
+    {
+        if ($this->productAttributeReader === null) {
+            return new Collection([]);
+        }
+
+        return new Collection($this->productAttributeReader->getProductSuperAttributesIndexedByAttributeKey());
     }
 }

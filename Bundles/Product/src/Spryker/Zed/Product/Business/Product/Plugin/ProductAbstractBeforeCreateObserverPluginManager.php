@@ -10,6 +10,9 @@ namespace Spryker\Zed\Product\Business\Product\Plugin;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ProductAbstractBeforeCreateObserverPluginManager implements ProductAbstractCreateObserverInterface
 {
     /**
@@ -34,6 +37,19 @@ class ProductAbstractBeforeCreateObserverPluginManager implements ProductAbstrac
      */
     public function create(ProductAbstractTransfer $productAbstractTransfer)
     {
+        $productAbstractTransfer = $this->executeProductAbstractCreatePlugins($productAbstractTransfer);
+
+        return $productAbstractTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    protected function executeProductAbstractCreatePlugins(
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
         foreach ($this->beforeCreateCollection as $productAbstractPluginCreate) {
             $productAbstractTransfer = $productAbstractPluginCreate->create($productAbstractTransfer);
         }

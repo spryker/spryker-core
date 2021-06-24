@@ -63,6 +63,11 @@ class ProductOfferTableDataMapper
     protected const COL_KEY_VISIBILITY = 'visibility';
 
     /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_APPROVAL_STATUS
+     */
+    protected const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
+
+    /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_VALID_FROM
      */
     protected const COL_KEY_VALID_FROM = 'validFrom';
@@ -91,6 +96,7 @@ class ProductOfferTableDataMapper
         self::COL_KEY_STORES => ProductOfferTransfer::STORES,
         self::COL_KEY_STOCK => SpyProductOfferStockTableMap::COL_QUANTITY,
         self::COL_KEY_VISIBILITY => SpyProductOfferTableMap::COL_IS_ACTIVE,
+        self::COL_KEY_APPROVAL_STATUS => SpyProductOfferTableMap::COL_APPROVAL_STATUS,
         self::COL_KEY_VALID_FROM => SpyProductOfferValidityTableMap::COL_VALID_FROM,
         self::COL_KEY_VALID_TO => SpyProductOfferValidityTableMap::COL_VALID_TO,
         self::COL_KEY_CREATED_AT => SpyProductOfferTableMap::COL_CREATED_AT,

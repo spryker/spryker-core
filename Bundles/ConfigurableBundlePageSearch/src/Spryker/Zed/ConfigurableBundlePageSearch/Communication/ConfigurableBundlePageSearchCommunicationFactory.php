@@ -28,6 +28,8 @@ class ConfigurableBundlePageSearchCommunicationFactory extends AbstractCommunica
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageMapExpanderPluginInterface[]
      */
     public function getConfigurableBundleTemplatePageMapExpanderPlugins(): array

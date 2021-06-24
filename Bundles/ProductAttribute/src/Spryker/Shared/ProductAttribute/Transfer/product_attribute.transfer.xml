@@ -79,6 +79,7 @@
     <transfer name="ProductManagementAttributeFilter">
         <property name="keys" type="string[]" singular="key"/>
         <property name="filter" type="Filter"/>
+        <property name="onlySuperAttributes" type="bool"/>
     </transfer>
 
     <transfer name="ProductManagementAttributeCollection">

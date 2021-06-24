@@ -53,6 +53,7 @@
     <transfer name="ProductOfferTableCriteria">
         <property name="filterIsActive" type="bool"/>
         <property name="filterHasStock" type="bool"/>
+        <property name="filterApprovalStatus" type="string"/>
         <property name="filterInStores" type="int[]" singular="inStore"/>
         <property name="filterValidity" type="CriteriaRangeFilter"/>
         <property name="filterCreatedAt" type="CriteriaRangeFilter"/>

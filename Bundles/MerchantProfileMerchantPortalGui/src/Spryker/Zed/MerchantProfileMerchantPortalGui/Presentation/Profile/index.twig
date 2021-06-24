@@ -67,6 +67,11 @@
                                     row_attr: {'no-spaces': 'true', }
                                 }) }}
                             </web-spy-card>
+                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Stores' | trans }}">
+                                {% for store in stores %}
+                                    <web-spy-chips color="blue">{{ store.name }}</web-spy-chips>
+                                {% endfor %}
+                            </web-spy-card>
                         </div>
                     </div>
                 </web-spy-tab>

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SearchElasticsearch;
 
+use Generated\Shared\Transfer\SearchConnectionResponseTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -100,5 +101,17 @@ class SearchElasticsearchClient extends AbstractClient implements SearchElastics
     public function deleteDocuments(array $searchDocumentTransfers): bool
     {
         return $this->getFactory()->createDocumentWriter()->deleteDocuments($searchDocumentTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\SearchConnectionResponseTransfer
+     */
+    public function checkConnection(): SearchConnectionResponseTransfer
+    {
+        return $this->getFactory()->createConnection()->checkConnection();
     }
 }

@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\DecimalObject\Decimal;
@@ -27,6 +29,42 @@ interface AvailabilityFacadeInterface
      *  - Checks if have placed orders where items have state machine state flagged as reserved.
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    public function areProductsSellableForStore(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
+    ): SellableItemsResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Checks if product is never out of stock for given store.
+     *  - Checks if product has stock in stock table.
+     *  - Checks if have placed orders where items have state machine state flagged as reserved.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    public function areProductConcretesSellableForStore(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer,
+        SellableItemsResponseTransfer $sellableItemsResponseTransfer
+    ): SellableItemsResponseTransfer;
+
+    /**
+     * Specification:
+     *  - Checks if product is never out of stock for given store.
+     *  - Checks if product has stock in stock table.
+     *  - Checks if have placed orders where items have state machine state flagged as reserved.
+     *
+     * @api
+     *
+     * @deprecated Use {@link Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::areProductsSellableForStore()} instead.
      *
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
@@ -47,6 +85,8 @@ interface AvailabilityFacadeInterface
      *  - Checks if product is available.
      *
      * @api
+     *
+     * @deprecated Use {@link Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::areProductConcretesSellableForStore()} instead.
      *
      * @param int $idProductConcrete
      *

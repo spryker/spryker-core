@@ -1,0 +1,71 @@
+{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
+
+{% block body %}
+    {% set mainClass = 'mp-create-multi-concrete-product' %}
+
+    {% set attributesName = 'selectedAttributes' %}
+    {% set productsName = 'concreteProducts' %}
+    {% set attributes = superProductManagementAttributes %}
+    {% set selectedAttributes = selectedAttributesJson | default('[]') %}
+    {% set concreteProducts = concreteProductsJson | default('[]') %}
+    {% set errors = errors ?? {} %}
+    {% set backButtonAttrs = '{
+        "name": "back",
+        "value": true
+    }' %}
+
+    {% block createMultiConcreteProduct %}
+        <web-mp-concrete-product-generator-data
+            cloak
+            abstract-sku="{{ productAbstract.sku }}"
+            abstract-name="{{ productAbstract.name }}">
+            <web-mp-create-multi-concrete-product
+                cloak
+                attributes="{{ attributes | json_encode }}"
+                attributes-name="{{ attributesName }}"
+                products-name="{{ productsName }}"
+                selected-attributes="{{ selectedAttributes }}"
+                generated-products="{{ concreteProducts }}"
+                generated-product-errors="{{ errors | json_encode }}"
+            >
+                {{ form_start(form, { attr: { excludeFormTag: true } }) }}
+                    {% block title %}
+                        <span title>{{ 'Create an Abstract Product with multiple Concrete Products' | trans }}</span>
+                    {% endblock %}
+
+                    {% block actions %}
+                        <div action class="{{ mainClass }}__actions-row">
+                            <web-spy-button cloak size="lg" type="submit" variant="secondary" attrs="{{ backButtonAttrs }}" class="{{ mainClass }}__action">
+                                {{ 'Back' | trans }}
+                            </web-spy-button>
+                            <web-spy-button cloak size="lg" type="submit" class="{{ mainClass }}__action">
+                                {{ 'Create' | trans }}
+                            </web-spy-button>
+                        </div>
+                    {% endblock %}
+
+                    {% block attributesSelector %}
+                        <span selector-col-attr-name>{{ 'Super Attribute' | trans }} *</span>
+                        <span selector-col-attr-values-name>{{ 'Values' | trans }} *</span>
+                        <span selector-btn-attr-add-name>
+                            <web-spy-icon name="plus"></web-spy-icon>
+                            {{ 'Add' | trans }}
+                        </span>
+                    {% endblock %}
+
+                    {% block productsPreview %}
+                        <h3 preview-text>{{ 'Concrete Products’ Preview' | trans }}</h3>
+
+                        <span preview-total-text>{{ 'to be created' | trans }}</span>
+                        <span preview-auto-sku-text>{{ 'Autogenerate SKUs' | trans }}</span>
+                        <span preview-auto-name-text>{{ 'Same Name as Abstract Product' | trans }}</span>
+                        <span preview-col-attr-name>{{ 'Super attribute value' | trans }}</span>
+                        <span preview-col-sku-name>{{ 'SKU' | trans }}</span>
+                        <span preview-col-name-name>{{ 'Name default' | trans }}</span>
+                        <span preview-no-data-text>{{ 'No concretes created yet' | trans }}</span>
+                    {% endblock %}
+                {{ form_end(form) }}
+            </web-mp-create-multi-concrete-product>
+        </web-mp-concrete-product-generator-data>
+    {% endblock %}
+{% endblock %}

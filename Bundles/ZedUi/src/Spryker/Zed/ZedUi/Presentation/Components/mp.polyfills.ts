@@ -63,6 +63,7 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
 import 'classlist.js';
 import 'core-js/features/reflect';
 import 'core-js/features/array/flat';
+import 'core-js/features/array/flat-map';
 import 'core-js/features/array/includes';
 import 'core-js/features/object/entries';
 import 'core-js/features/object/values';
@@ -70,11 +71,16 @@ import 'core-js/features/object/from-entries';
 import 'core-js/es/global-this';
 import cssVars from 'css-vars-ponyfill';
 import 'url-search-params-polyfill';
+import './polyfills/event.submitter.polyfill';
 
 cssVars({
     preserveStatic: false,
     watch: true,
 });
+
+if (!Element.prototype.matches) {
+    Element.prototype.matches = (Element.prototype as any).msMatchesSelector || Element.prototype.webkitMatchesSelector;
+}
 
 import '@webcomponents/webcomponents-platform/webcomponents-platform';
 import '@webcomponents/webcomponentsjs/bundles/webcomponents-ce';

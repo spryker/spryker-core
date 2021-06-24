@@ -8,11 +8,33 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
+use Generated\Shared\Transfer\SellableItemsRequestTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 interface SellableInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsBatchRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    public function areProductsSellableForStore(
+        SellableItemsRequestTransfer $sellableItemsBatchRequestTransfer
+    ): SellableItemsResponseTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    public function areProductConcretesSellableForStore(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer,
+        SellableItemsResponseTransfer $sellableItemsResponseTransfer
+    ): SellableItemsResponseTransfer;
+
     /**
      * @param string $concreteSku
      * @param \Spryker\DecimalObject\Decimal $quantity

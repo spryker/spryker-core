@@ -38,5 +38,5 @@ class PublishAndSynchronizeHealthCheckSearchConfig
      *
      * @api
      */
-    public const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_SEARCH_ID = 'publish-and-synchronize:search:health-check';
+    public const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_SEARCH_ID = 'publish_and_synchronize_health_check:health-check';
 }

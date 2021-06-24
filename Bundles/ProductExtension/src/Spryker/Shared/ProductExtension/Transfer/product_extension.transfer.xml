@@ -4,4 +4,7 @@
     <transfer name="ProductConcrete">
     </transfer>
 
+    <transfer name="ProductAbstract">
+    </transfer>
+
 </transfers>

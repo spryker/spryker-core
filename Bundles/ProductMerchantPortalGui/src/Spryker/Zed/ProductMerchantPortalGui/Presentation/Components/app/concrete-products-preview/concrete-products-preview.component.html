@@ -1,0 +1,105 @@
+<div *ngIf="generatedProducts?.length; else noData">
+    <div class="mp-concrete-products-preview__header">
+        <spy-chips color="grey">
+            {{ generatedProducts.length }}
+            <ng-content select="[total-text]"></ng-content>
+        </spy-chips>
+
+        <div class="mp-concrete-products-preview__header-checkboxes">
+            <div class="mp-concrete-products-preview__header-checkbox">
+                <spy-checkbox (checkedChange)="generateSku($event)" [(checked)]="isAutoGenerateSkuCheckbox">
+                    <ng-content select="[auto-sku-text]"></ng-content>
+                </spy-checkbox>
+            </div>
+            <div class="mp-concrete-products-preview__header-checkbox">
+                <spy-checkbox (checkedChange)="generateName($event)" [(checked)]="isAutoGenerateNameCheckbox">
+                    <ng-content select="[auto-name-text]"></ng-content>
+                </spy-checkbox>
+            </div>
+        </div>
+    </div>
+
+    <div class="mp-concrete-products-preview__table">
+        <div class="mp-concrete-products-preview__table-content">
+            <div class="mp-concrete-products-preview__table-header mp-concrete-products-preview__table-row">
+                <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-attr">
+                    <ng-content select="[col-attr-name]"></ng-content>
+                </div>
+                <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-sku">
+                    <ng-content select="[col-sku-name]"></ng-content>
+                </div>
+                <div class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-name">
+                    <ng-content select="[col-name-name]"></ng-content>
+                </div>
+            </div>
+
+            <cdk-virtual-scroll-viewport itemSize="50" class="mp-concrete-products-preview__table-list">
+                <div
+                    *cdkVirtualFor="let product of generatedProducts; let i = index; trackBy: trackByAttributes"
+                    class="mp-concrete-products-preview__table-row"
+                >
+                    <div
+                        class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-attr"
+                    >
+                        <span *ngFor="let superAttribute of product.superAttributes; let isLastAttribute = last">
+                            {{ superAttribute.attribute.name }}
+                            <span *ngIf="!isLastAttribute"> / </span>
+                        </span>
+                    </div>
+                    <div
+                        class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-sku"
+                    >
+                        <spy-form-item noSpaces="true" noLabel="true" [error]="getSkuErrors | spyInvoke: i:errors">
+                            <spy-input
+                                control
+                                [value]="product.sku"
+                                [disabled]="isAutoGenerateSkuCheckbox"
+                                [spyId]="'sku-' + i"
+                                (valueChange)="skuChange($event, i)"
+                            >
+                            </spy-input>
+                        </spy-form-item>
+                    </div>
+                    <div
+                        class="mp-concrete-products-preview__table-row-item mp-concrete-products-preview__table-row-name"
+                    >
+                        <spy-form-item
+                            noSpaces="true"
+                            noLabel="true"
+                            [error]="getNameErrors | spyInvoke: i:errors"
+                            class="mp-concrete-products-preview__table-row-name-form-item"
+                        >
+                            <spy-input
+                                control
+                                [value]="product.name"
+                                [disabled]="isAutoGenerateNameCheckbox"
+                                [spyId]="'name-' + i"
+                                (valueChange)="nameChange($event, i)"
+                            >
+                            </spy-input>
+                        </spy-form-item>
+                        <spy-button
+                            variant="link"
+                            class="mp-concrete-products-preview__table-row-button"
+                            (click)="delete(i)"
+                        >
+                            <spy-icon [name]="deleteIcon" class="mp-concrete-products-preview__table-row-delete-icon">
+                            </spy-icon>
+                        </spy-button>
+                    </div>
+                </div>
+            </cdk-virtual-scroll-viewport>
+        </div>
+    </div>
+</div>
+
+<ng-template #noData>
+    <div class="mp-concrete-products-preview__no-data">
+        <spy-icon name="no-data" class="mp-concrete-products-preview__no-data-icon"></spy-icon>
+        <div class="mp-concrete-products-preview__no-data-text">
+            <ng-content select="[no-data-text]"></ng-content>
+        </div>
+    </div>
+</ng-template>
+
+<input *ngIf="name" type="hidden" [name]="name" [value]="generatedProducts | json" />

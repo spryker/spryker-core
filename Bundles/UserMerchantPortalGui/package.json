@@ -8,7 +8,7 @@
         "@spryker/actions": "^0.1.0-next.0",
         "@spryker/button": "^0.2.0-next.10",
         "@spryker/button.action": "^0.1.0-next.1",
-        "@spryker/card": "^0.2.0-next.4",
+        "@spryker/card": "^0.2.0-next.5",
         "@spryker/headline": "^0.2.0-next.1",
         "@spryker/utils": "^0.2.0-next.16",
         "@spryker/web-components": "^0.2.1-next.8",
