@@ -265,6 +265,27 @@ class CategoryStorageFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testWriteCategoryNodeStorageCollectionByCategoryNodeEventsWillNotWriteInactiveStorageData(): void
+    {
+        // Arrange
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([
+            CategoryTransfer::IS_ACTIVE => false,
+        ], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+
+        $eventEntityTransfer = (new EventEntityTransfer())->setId(
+            $categoryTransfer->getCategoryNode()->getIdCategoryNode()
+        );
+
+        // Act
+        $this->tester->getFacade()->writeCategoryNodeStorageCollectionByCategoryNodeEvents([$eventEntityTransfer]);
+
+        // Assert
+        $this->executeCategoryNodeStorageDeleterAsserts($categoryTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testDeleteCategoryNodeStorageCollectionByCategoryEventsWillDeleteCategoryStorageData(): void
     {
         // Arrange
