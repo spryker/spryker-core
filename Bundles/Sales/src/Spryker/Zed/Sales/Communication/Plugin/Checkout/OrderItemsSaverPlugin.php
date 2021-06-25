@@ -23,6 +23,8 @@ class OrderItemsSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrde
     /**
      * {@inheritDoc}
      * - Saves order items.
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface} plugin stack.
      *
      * @api
      *

@@ -10,16 +10,14 @@ namespace Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\SalesConfigurableBundle\Communication\Plugin\Sales\ConfiguredBundlesOrderItemsPostSavePlugin} instead.
- *
+ * @method \Spryker\Zed\SalesConfigurableBundle\Communication\SalesConfigurableBundleCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesConfigurableBundle\SalesConfigurableBundleConfig getConfig()
- * @method \Spryker\Zed\SalesConfigurableBundle\Communication\SalesConfigurableBundleCommunicationFactory getFactory()
  */
-class ConfiguredBundlesOrderPostSavePlugin extends AbstractPlugin implements OrderPostSavePluginInterface
+class ConfiguredBundlesOrderItemsPostSavePlugin extends AbstractPlugin implements OrderItemsPostSavePluginInterface
 {
     /**
      * {@inheritDoc}

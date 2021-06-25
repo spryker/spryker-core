@@ -127,6 +127,9 @@ class SalesFacadeSaveOrderTest extends Unit
         $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
             return [];
         };
+        $container[SalesDependencyProvider::PLUGINS_ORDER_ITEMS_POST_SAVE] = function () {
+            return [];
+        };
 
         $this->salesFacade = new SalesFacade();
         $businessFactory = new SalesBusinessFactory();

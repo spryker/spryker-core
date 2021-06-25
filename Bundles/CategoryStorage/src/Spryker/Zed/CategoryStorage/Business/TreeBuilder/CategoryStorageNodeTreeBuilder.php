@@ -114,6 +114,11 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
             }
 
             $categoryNodeStorageTransfer = $this->cloneCategoryNodeStorageTransfer($indexedCategoryNodeStorageTransfers[$idCategoryNode]);
+
+            if (!$categoryNodeStorageTransfer->getIsActive()) {
+                continue;
+            }
+
             $categoryNodeStorageTransfer = $this->buildChildrenTree(
                 $categoryNodeStorageTransfer,
                 $indexedNodeTransfers,

@@ -5,38 +5,35 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesProductConnector\Communication\Plugin\Checkout;
+namespace Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
-use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\SalesProductConnector\Communication\Plugin\Sales\ItemMetadataOrderItemsPostSavePlugin} instead.
- *
- * Requires Checkout ^4.0.0
- *
  * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
  */
-class ItemMetadataSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface
+class ItemMetadataOrderItemsPostSavePlugin extends AbstractPlugin implements OrderItemsPostSavePluginInterface
 {
     /**
      * {@inheritDoc}
-     * Specification:
-     * - This plugin retrieves (its) data item metadata from the quote object and saves it to the database.
+     * - Saves product metadata information (image, super attributes) into a sales table to hydrate them later
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function saveOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer)
+    public function execute(SaveOrderTransfer $saveOrderTransfer, QuoteTransfer $quoteTransfer): SaveOrderTransfer
     {
         $this->getFacade()->saveOrderItemMetadata($quoteTransfer, $saveOrderTransfer);
+
+        return $saveOrderTransfer;
     }
 }
