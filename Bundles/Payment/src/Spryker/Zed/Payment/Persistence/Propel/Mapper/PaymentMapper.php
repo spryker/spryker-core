@@ -72,12 +72,13 @@ class PaymentMapper
         /** @deprecated property usage for BC */
         $paymentMethodTransfer->setMethodName($paymentMethodEntity->getPaymentMethodKey());
 
-        $paymentMethodTransfer->setPaymentProvider(
-            $this->paymentProviderMapper->mapPaymentProviderEntityToPaymentProviderTransfer(
-                $paymentMethodEntity->getSpyPaymentProvider(),
-                new PaymentProviderTransfer()
-            )
+        $paymentProviderTransfer = $this->paymentProviderMapper->mapPaymentProviderEntityToPaymentProviderTransfer(
+            $paymentMethodEntity->getSpyPaymentProvider(),
+            new PaymentProviderTransfer()
         );
+
+        $paymentMethodTransfer->setPaymentProvider($paymentProviderTransfer);
+        $paymentMethodTransfer->setIdPaymentProvider($paymentProviderTransfer->getIdPaymentProvider());
 
         $storeRelationTransfer = (new StoreRelationTransfer())
             ->setIdEntity($paymentMethodEntity->getIdPaymentMethod());
