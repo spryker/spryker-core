@@ -27,6 +27,7 @@
         "spryker/installer": "*",
         "spryker/price-product-storage": "*",
         "spryker/propel": "*",
+        "spryker/session": "*",
         "spryker/testify": "*",
         "spryker/wishlist": "*"
     },

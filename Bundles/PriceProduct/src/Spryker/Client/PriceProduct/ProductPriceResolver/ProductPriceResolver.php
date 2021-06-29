@@ -183,10 +183,18 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         );
 
         $prices = [];
+        $priceDataByPriceType = [];
         foreach ($priceProductAllPriceTypesTransfers as $priceProductOnePriceTypeTransfer) {
             /** @var \Generated\Shared\Transfer\MoneyValueTransfer $onePriceTypeMoneyValueTransfer */
             $onePriceTypeMoneyValueTransfer = $priceProductOnePriceTypeTransfer->requireMoneyValue()->getMoneyValue();
             $prices[$priceProductOnePriceTypeTransfer->getPriceTypeName()] = $this->getPriceValueByPriceMode($onePriceTypeMoneyValueTransfer, $priceMode);
+
+            $priceData = $priceProductOnePriceTypeTransfer->getMoneyValueOrFail()->getPriceData();
+            if (!$priceData) {
+                continue;
+            }
+
+            $priceDataByPriceType[$priceProductOnePriceTypeTransfer->getPriceTypeName()] = $priceData;
         }
 
         return $currentProductPriceTransfer
@@ -197,7 +205,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             ->setPriceMode($priceMode)
             ->setSumPrice($price * $priceProductFilter->getQuantity())
             ->setPriceData($moneyValueTransfer->getPriceData())
-            ->setPriceDataByPriceType($moneyValueTransfer->getPriceDataByPriceType())
+            ->setPriceDataByPriceType($this->getPriceDataByPriceType($moneyValueTransfer, $priceDataByPriceType))
             ->setPriceDimension($priceProductTransfer->getPriceDimension());
     }
 
@@ -225,11 +233,11 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         }
 
         $builtPriceProductFilterTransfer
-            ->setPriceMode($priceMode)
-            ->setCurrency($currencyTransfer)
-            ->setCurrencyIsoCode($currencyTransfer->getCode())
-            ->setPriceTypeName($priceTypeName)
-            ->setQuote($quoteTransfer);
+            ->setPriceMode($builtPriceProductFilterTransfer->getPriceMode() ?? $priceMode)
+            ->setCurrency($builtPriceProductFilterTransfer->getCurrency() ?? $currencyTransfer)
+            ->setCurrencyIsoCode($builtPriceProductFilterTransfer->getCurrencyIsoCode() ?? $currencyTransfer->getCode())
+            ->setPriceTypeName($builtPriceProductFilterTransfer->getPriceTypeName() ?? $priceTypeName)
+            ->setQuote($builtPriceProductFilterTransfer->getQuote() ?? $quoteTransfer);
 
         return $builtPriceProductFilterTransfer;
     }
@@ -326,5 +334,20 @@ class ProductPriceResolver implements ProductPriceResolverInterface
         }
 
         return $moneyValueTransfer->getGrossAmount();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param string[] $priceDataByPriceType
+     *
+     * @return string[]
+     */
+    protected function getPriceDataByPriceType(MoneyValueTransfer $moneyValueTransfer, array $priceDataByPriceType): array
+    {
+        if (empty($moneyValueTransfer->getPriceDataByPriceType())) {
+            return $priceDataByPriceType;
+        }
+
+        return $moneyValueTransfer->getPriceDataByPriceType();
     }
 }

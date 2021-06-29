@@ -6,5 +6,7 @@ Currency,Currency
 "Price Type","Price Type"
 Quantity,Quantity
 Store,Store
-"View Offer Volume Price","View Offer Volume Price"
+"View Offer Volume Price:","View Offer Volume Price:"
 "Volume Prices for Offer","Volume Prices for Offer"
+DEFAULT,DEFAULT
+ORIGINAL,ORIGINAL
