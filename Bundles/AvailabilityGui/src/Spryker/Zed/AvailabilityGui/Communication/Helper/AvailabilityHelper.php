@@ -19,6 +19,7 @@ use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterfac
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
+use Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToAvailabilityServiceInterface;
 
 class AvailabilityHelper implements AvailabilityHelperInterface
 {
@@ -48,24 +49,32 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     protected $omsFacade;
 
     /**
+     * @var \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToAvailabilityServiceInterface
+     */
+    protected $availabilityService;
+
+    /**
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface $stockFacade
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToAvailabilityServiceInterface $availabilityService
      */
     public function __construct(
         AvailabilityGuiToAvailabilityQueryContainerInterface $availabilityQueryContainer,
         AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer,
         AvailabilityToStoreFacadeInterface $storeFacade,
         AvailabilityGuiToStockInterface $stockFacade,
-        AvailabilityGuiToOmsFacadeInterface $omsFacade
+        AvailabilityGuiToOmsFacadeInterface $omsFacade,
+        AvailabilityGuiToAvailabilityServiceInterface $availabilityService
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->storeFacade = $storeFacade;
         $this->stockFacade = $stockFacade;
         $this->omsFacade = $omsFacade;
+        $this->availabilityService = $availabilityService;
     }
 
     /**
@@ -92,7 +101,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
             ->setProductName($productAbstractAvailabilityEntity->getVirtualColumn(static::PRODUCT_NAME))
             ->setSku($productAbstractAvailabilityEntity->getSku())
             ->setAvailability((new Decimal($productAbstractAvailabilityEntity->getVirtualColumn(static::AVAILABILITY_QUANTITY) ?? 0))->trim())
-            ->setIsNeverOutOfStock(stripos($productAbstractAvailabilityEntity->getVirtualColumn(static::CONCRETE_NEVER_OUT_OF_STOCK_SET), 'true') !== false)
+            ->setIsNeverOutOfStock($this->isNeverOutOfStock($productAbstractAvailabilityEntity->getVirtualColumn(static::CONCRETE_NEVER_OUT_OF_STOCK_SET)))
             ->setStockQuantity((new Decimal($productAbstractAvailabilityEntity->getVirtualColumn(static::STOCK_QUANTITY) ?? 0))->trim())
             ->setReservationQuantity(
                 $this->calculateReservation(
@@ -109,7 +118,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
      */
     public function isNeverOutOfStock(string $neverOutOfStockSet): bool
     {
-        return stripos($neverOutOfStockSet, 'true') !== false;
+        return $this->availabilityService->isAbstractProductNeverOutOfStock($neverOutOfStockSet);
     }
 
     /**
