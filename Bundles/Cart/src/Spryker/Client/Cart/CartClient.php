@@ -393,4 +393,19 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         return $this->getFactory()->createQuoteStorageStrategyProxy()->replaceItem($itemReplaceTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartItemsWithGroupKeyPrefix(CartChangeTransfer $cartChangeTransfer, array $params): CartChangeTransfer
+    {
+        return $this->getFactory()->createGroupKeyPrefixItemExpander()->expandCartItemsWithGroupKeyPrefix($cartChangeTransfer, $params);
+    }
 }

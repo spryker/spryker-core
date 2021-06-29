@@ -8,6 +8,7 @@
 namespace SprykerTest\Client\Cart;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
@@ -31,6 +32,14 @@ use Spryker\Client\Kernel\AbstractFactory;
  */
 class CartClientTest extends Unit
 {
+    protected const PARAM_SEPARATE_PRODUCT = 'separate_product';
+    protected const ITEM_SKU = 'sku';
+
+    /**
+     * @var \SprykerTest\Client\Cart\CartClientTest
+     */
+    protected $tester;
+
     /**
      * @return void
      */
@@ -203,6 +212,41 @@ class CartClientTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandCartItemsWithGroupKeyPrefixWhenParamSeparateProductProvided(): void
+    {
+        // Arrange
+        $cartChangeTransfer = $this->createCartChangeTransfer();
+        $params = [static::PARAM_SEPARATE_PRODUCT => 1];
+
+        // Act
+        $cartChangeTransfer = $this->tester->getClient()->expandCartItemsWithGroupKeyPrefix($cartChangeTransfer, $params);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\ItemTransfer $expandCartItem */
+        $expandCartItem = $cartChangeTransfer->getItems()->getIterator()->current();
+        $this->assertNotNull($expandCartItem->getGroupKeyPrefix());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandCartItemsWithGroupKeyPrefixWhenParamSeparateProductNotProvided(): void
+    {
+        // Arrange
+        $cartChangeTransfer = $this->createCartChangeTransfer();
+
+        // Act
+        $cartChangeTransfer = $this->tester->getClient()->expandCartItemsWithGroupKeyPrefix($cartChangeTransfer, []);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\ItemTransfer $expandCartItem */
+        $expandCartItem = $cartChangeTransfer->getItems()->getIterator()->current();
+        $this->assertNull($expandCartItem->getGroupKeyPrefix());
+    }
+
+    /**
      * @param \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface|null $quote
      * @param \Spryker\Client\Cart\Zed\CartStubInterface|null $cartStub
      * @param \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface|null $quoteStorageStrategyPlugin
@@ -315,5 +359,23 @@ class CartClientTest extends Unit
             'removeFromCart',
             'replaceItem',
         ])->getMock();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    protected function createCartChangeTransfer(): CartChangeTransfer
+    {
+        $cartItem = new ItemTransfer();
+        $cartItem->setSku(static::ITEM_SKU);
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->addItem($cartItem);
+
+        $cartChangeTransfer = new CartChangeTransfer();
+        $cartChangeTransfer->setQuote($quoteTransfer);
+        $cartChangeTransfer->addItem($cartItem);
+
+        return $cartChangeTransfer;
     }
 }
