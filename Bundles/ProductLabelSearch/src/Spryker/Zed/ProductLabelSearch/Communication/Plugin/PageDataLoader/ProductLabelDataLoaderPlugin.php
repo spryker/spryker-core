@@ -25,12 +25,12 @@ class ProductLabelDataLoaderPlugin extends AbstractPlugin implements ProductPage
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
-        return $this->getFacade()->expandProductPageDataTransferWithProductLabelIds($loadTransfer);
+        return $this->getFacade()->expandProductPageDataTransferWithProductLabelIds($productPageLoadTransfer);
     }
 }

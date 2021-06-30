@@ -27,12 +27,12 @@ class PriceProductPageDataLoaderPlugin extends AbstractPlugin implements Product
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer): ProductPageLoadTransfer
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
     {
-        return $this->getFacade()->expandProductPageLoadTransferWithPriceData($loadTransfer);
+        return $this->getFacade()->expandProductPageLoadTransferWithPriceData($productPageLoadTransfer);
     }
 }

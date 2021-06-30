@@ -25,19 +25,19 @@ class ProductReviewPageDataLoaderPlugin extends AbstractPlugin implements Produc
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
         $productReviews = $this->getRepository()
-            ->getProductReviewRatingByIdAbstractProductIn($loadTransfer->getProductAbstractIds());
+            ->getProductReviewRatingByIdAbstractProductIn($productPageLoadTransfer->getProductAbstractIds());
 
-        $updatedPayloadTransfers = $this->updatePayloadTransfers($loadTransfer->getPayloadTransfers(), $productReviews);
-        $loadTransfer->setPayloadTransfers($updatedPayloadTransfers);
+        $updatedPayloadTransfers = $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $productReviews);
+        $productPageLoadTransfer->setPayloadTransfers($updatedPayloadTransfers);
 
-        return $loadTransfer;
+        return $productPageLoadTransfer;
     }
 
     /**
