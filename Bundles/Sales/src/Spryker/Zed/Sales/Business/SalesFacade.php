@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderCancelResponseTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -34,6 +35,8 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacade::getOrder()} instead.
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -43,6 +46,22 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
         return $this->getFactory()
             ->createOrderHydratorWithMultiShippingAddress()
             ->hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrder(OrderFilterTransfer $orderFilterTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createSalesOrderReader()
+            ->getOrderTransfer($orderFilterTransfer);
     }
 
     /**

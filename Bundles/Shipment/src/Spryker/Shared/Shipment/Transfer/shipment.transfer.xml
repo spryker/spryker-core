@@ -237,4 +237,11 @@
     <transfer name="Message">
     </transfer>
 
+    <transfer name="Filter">
+    </transfer>
+
+    <transfer name="OrderFilter">
+        <property name="salesOrderId" type="int"/>
+    </transfer>
+
 </transfers>

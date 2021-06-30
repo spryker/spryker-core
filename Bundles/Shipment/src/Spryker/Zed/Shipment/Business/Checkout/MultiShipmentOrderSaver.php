@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Shipment\Business\Checkout;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -162,7 +163,8 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
      */
     protected function saveSalesOrderShipmentTransaction(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
-        $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($saveOrderTransfer->getIdSalesOrder());
+        $orderFilterTransfer = (new OrderFilterTransfer())->setSalesOrderId($saveOrderTransfer->getIdSalesOrder());
+        $orderTransfer = $this->salesFacade->getOrder($orderFilterTransfer);
         $shipmentGroups = $this->shipmentService->groupItemsByShipment($saveOrderTransfer->getOrderItems());
         $orderTransfer = $this->addShipmentExpensesFromQuoteToOrder($quoteTransfer, $orderTransfer);
 

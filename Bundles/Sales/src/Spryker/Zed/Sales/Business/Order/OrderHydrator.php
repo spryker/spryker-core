@@ -49,6 +49,8 @@ class OrderHydrator extends OrderHydratorWithoutMultiShipping
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\Reader\OrderReader::getOrderTransfer()} instead.
+     *
      * @param int $idSalesOrder
      *
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException

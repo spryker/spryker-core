@@ -418,4 +418,9 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
+    <transfer name="OrderFilter">
+        <property name="salesOrderId" type="int"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
 </transfers>

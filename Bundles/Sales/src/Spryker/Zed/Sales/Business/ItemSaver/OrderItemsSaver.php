@@ -55,10 +55,16 @@ class OrderItemsSaver implements OrderItemsSaverInterface
     protected $processEntityTransferCache = [];
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     */
+    protected $orderItemExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $entityManager
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[] $orderItemExpanderPlugins
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface[] $orderItemsPostSavePlugins
      */
     public function __construct(
@@ -66,12 +72,14 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         SalesConfig $salesConfiguration,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
         SalesEntityManagerInterface $entityManager,
+        array $orderItemExpanderPlugins,
         array $orderItemsPostSavePlugins
     ) {
         $this->omsFacade = $omsFacade;
         $this->salesConfiguration = $salesConfiguration;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->entityManager = $entityManager;
+        $this->orderItemExpanderPlugins = $orderItemExpanderPlugins;
         $this->orderItemsPostSavePlugins = $orderItemsPostSavePlugins;
     }
 
@@ -159,6 +167,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
             $quoteItemTransfers[] = clone $itemTransfer;
         }
 
+        $quoteItemTransfers = $this->executeOrderItemExpanderPlugins($quoteItemTransfers);
         $saveOrderTransfer->setOrderItems(new ArrayObject($quoteItemTransfers));
 
         return $saveOrderTransfer;
@@ -181,7 +190,6 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         SpyOmsOrderItemStateEntityTransfer $initialStateEntityTransfer
     ): SpySalesOrderItemEntityTransfer {
         $processEntityTransfer = $this->getProcessEntityTransfer($quoteTransfer, $itemTransfer);
-
         $sanitizedItemTransfer = $this->sanitizeItemSumPrices(clone $itemTransfer);
 
         $salesOrderItemEntityTransfer->fromArray($itemTransfer->toArray(), true);
@@ -201,6 +209,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         $salesOrderItemEntityTransfer->setDiscountAmountFullAggregation($sanitizedItemTransfer->getSumDiscountAmountFullAggregation());
         $salesOrderItemEntityTransfer->setRefundableAmount($itemTransfer->getRefundableAmount());
         $salesOrderItemEntityTransfer->setProcess($processEntityTransfer);
+        $salesOrderItemEntityTransfer->setState($initialStateEntityTransfer);
 
         return $salesOrderItemEntityTransfer;
     }
@@ -278,5 +287,19 @@ class OrderItemsSaver implements OrderItemsSaverInterface
     ): SpySalesOrderItemEntityTransfer {
         return $this->salesOrderSaverPluginExecutor
             ->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntityTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function executeOrderItemExpanderPlugins(array $itemTransfers): array
+    {
+        foreach ($this->orderItemExpanderPlugins as $orderItemExpanderPlugin) {
+            $itemTransfers = $orderItemExpanderPlugin->expand($itemTransfers);
+        }
+
+        return $itemTransfers;
     }
 }

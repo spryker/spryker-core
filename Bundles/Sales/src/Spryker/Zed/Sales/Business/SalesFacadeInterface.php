@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderCancelResponseTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -278,6 +279,8 @@ interface SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::getOrder()} instead.
+     *
      * @param int $idSalesOrder
      *
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
@@ -285,6 +288,22 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder);
+
+    /**
+     * Specification:
+     *  - Returns persisted order information for the given sales order id.
+     *  - Hydrates order by calling HydrateOrderPlugins registered in project dependency provider.
+     *  - Hydrates order using quote level (BC) or item level shipping addresses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrder(OrderFilterTransfer $orderFilterTransfer): OrderTransfer;
 
     /**
      * Specification:

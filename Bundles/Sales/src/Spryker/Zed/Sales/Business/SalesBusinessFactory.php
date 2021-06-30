@@ -55,6 +55,8 @@ use Spryker\Zed\Sales\Business\OrderWriter\SalesOrderWriter;
 use Spryker\Zed\Sales\Business\OrderWriter\SalesOrderWriterInterface;
 use Spryker\Zed\Sales\Business\Reader\OrderItemReader;
 use Spryker\Zed\Sales\Business\Reader\OrderItemReaderInterface;
+use Spryker\Zed\Sales\Business\Reader\OrderReader as SalesOrderReader;
+use Spryker\Zed\Sales\Business\Reader\OrderReaderInterface as SalesOrderReaderInterface;
 use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReader;
 use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
@@ -205,6 +207,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->getEntityManager(),
+            $this->getOrderItemExpanderPlugins(),
             $this->getOrderItemsPostSavePlugins()
         );
     }
@@ -299,6 +302,17 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getHydrateOrderPlugins(),
             $this->getOrderItemExpanderPlugins(),
             $this->getCustomerOrderAccessCheckPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Reader\OrderReaderInterface
+     */
+    public function createSalesOrderReader(): SalesOrderReaderInterface
+    {
+        return new SalesOrderReader(
+            $this->getRepository(),
+            $this->getHydrateOrderPlugins(),
         );
     }
 

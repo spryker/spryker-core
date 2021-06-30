@@ -124,4 +124,19 @@ class SalesOrderMapper
     ): SpySalesOrderEntityTransfer {
         return $salesOrderEntityTransfer->fromArray($salesOrderEntity->toArray(), true);
     }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function mapSalesOrderEntityToSalesOrderTransfer(
+        SpySalesOrder $salesOrderEntity,
+        OrderTransfer $orderTransfer
+    ): OrderTransfer {
+        $orderTransfer->fromArray($salesOrderEntity->toArray(), true);
+
+        return $orderTransfer;
+    }
 }

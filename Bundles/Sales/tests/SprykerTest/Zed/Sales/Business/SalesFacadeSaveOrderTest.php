@@ -124,6 +124,7 @@ class SalesFacadeSaveOrderTest extends Unit
         $container[SalesDependencyProvider::FACADE_LOCALE] = new SalesToLocaleBridge(new LocaleFacade());
         $container[SalesDependencyProvider::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = [];
         $container[SalesDependencyProvider::PLUGINS_ORDER_POST_SAVE] = [];
+        $container[SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER] = [];
         $container[SalesDependencyProvider::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
             return [];
         };

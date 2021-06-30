@@ -9,6 +9,8 @@ namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Generated\Shared\Transfer\TaxTotalTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 
 class SalesOrderTotalsMapper
@@ -35,5 +37,30 @@ class SalesOrderTotalsMapper
         $salesOrderTotalsEntity->setOrderExpenseTotal($quoteTransfer->getTotals()->getExpenseTotal());
 
         return $salesOrderTotalsEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderTotals $salesOrderTotalsEntity
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     * @param \Generated\Shared\Transfer\TaxTotalTransfer $taxTotalTransfer
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    public function mapSalesOrderTotalsTransfer(
+        SpySalesOrderTotals $salesOrderTotalsEntity,
+        TotalsTransfer $totalsTransfer,
+        TaxTotalTransfer $taxTotalTransfer
+    ): TotalsTransfer {
+        $taxTotalTransfer->setAmount($salesOrderTotalsEntity->getTaxTotal());
+        $totalsTransfer->setTaxTotal($taxTotalTransfer);
+
+        $totalsTransfer->setExpenseTotal($salesOrderTotalsEntity->getOrderExpenseTotal());
+        $totalsTransfer->setRefundTotal($salesOrderTotalsEntity->getRefundTotal());
+        $totalsTransfer->setGrandTotal($salesOrderTotalsEntity->getGrandTotal());
+        $totalsTransfer->setSubtotal($salesOrderTotalsEntity->getSubtotal());
+        $totalsTransfer->setDiscountTotal($salesOrderTotalsEntity->getDiscountTotal());
+        $totalsTransfer->setCanceledTotal($salesOrderTotalsEntity->getCanceledTotal());
+
+        return $totalsTransfer;
     }
 }
