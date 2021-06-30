@@ -7,20 +7,31 @@
 
 namespace Spryker\Zed\Gui\Communication\Table;
 
+use DateTime;
 use Generated\Shared\Transfer\DataTablesColumnTransfer;
+use Laminas\Filter\FilterChain;
+use Laminas\Filter\StringToLower;
+use Laminas\Filter\Word\CamelCaseToDash;
 use LogicException;
 use PDO;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
+use Propel\Runtime\Formatter\OnDemandFormatter;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
+use ReflectionClass;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Spryker\Shared\Kernel\Container\GlobalContainerInterface;
+use Spryker\Zed\Gui\Communication\Exception\TableException;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -44,6 +55,11 @@ abstract class AbstractTable
     public const SERVICE_TWIG = 'twig';
 
     /**
+     * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     */
+    public const SERVICE_TRANSLATOR = 'translator';
+
+    /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_FACTORY
      */
     public const SERVICE_FORM_FACTORY = 'form.factory';
@@ -60,6 +76,8 @@ abstract class AbstractTable
     protected const DELETE_FORM_NAME_SUFFIX = 'name_suffix';
 
     protected const DELETE_FORM_NAME = 'delete_form';
+
+    protected const DATE_TIME_FORMAT_FOR_CSV_FILENAME = 'Y-m-d-h-i-s';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -161,6 +179,160 @@ abstract class AbstractTable
     public function setDataTablesTransfer($dataTablesTransfer)
     {
         $this->dataTablesTransfer = $dataTablesTransfer;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function streamDownload(): StreamedResponse
+    {
+        $streamedResponse = new StreamedResponse();
+        $streamedResponse->setCallback($this->getStreamCallback());
+        $streamedResponse->setStatusCode(Response::HTTP_OK);
+        $streamedResponse->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $streamedResponse->headers->set('Content-Disposition', sprintf('attachment; filename="%s"', $this->getCsvFileName()));
+
+        return $streamedResponse;
+    }
+
+    /**
+     * @return callable
+     */
+    protected function getStreamCallback(): callable
+    {
+        $csvHeaders = $this->getCsvHeaders();
+
+        return function () use ($csvHeaders) {
+            $csvHandle = fopen('php://output', 'w+');
+
+            $translatedHeaders = $this->translateCsvHeaders($csvHeaders);
+
+            fputcsv($csvHandle, $translatedHeaders);
+
+            foreach ($this->executeDownloadQuery() as $entity) {
+                $formattedRow = $this->formatCsvRow($entity);
+                $intersection = array_intersect_key($formattedRow, $csvHeaders);
+                $orderedCsvData = array_replace($csvHeaders, $intersection);
+
+                fputcsv($csvHandle, $orderedCsvData);
+            }
+
+            fclose($csvHandle);
+        };
+    }
+
+    /**
+     * @throws \Spryker\Zed\Gui\Communication\Exception\TableException
+     *
+     * @return array
+     */
+    protected function getCsvHeaders(): array
+    {
+        throw new TableException(sprintf('You need to implement `%s()` in your `%s`.', __METHOD__, static::class));
+    }
+
+    /**
+     * @param array $csvHeaders
+     *
+     * @return array
+     */
+    protected function translateCsvHeaders(array $csvHeaders): array
+    {
+        $translator = $this->getTranslator();
+
+        if (!$translator) {
+            return $csvHeaders;
+        }
+
+        foreach ($csvHeaders as $key => $value) {
+            $csvHeaders[$key] = $translator->trans($value);
+        }
+
+        return $csvHeaders;
+    }
+
+    /**
+     * @return \Symfony\Contracts\Translation\TranslatorInterface|null
+     */
+    protected function getTranslator(): ?TranslatorInterface
+    {
+        $container = $this->getApplicationContainer();
+
+        if (!$container->has(static::SERVICE_TRANSLATOR)) {
+            return null;
+        }
+
+        return $container->get(static::SERVICE_TRANSLATOR);
+    }
+
+    /**
+     * @return iterable
+     */
+    protected function executeDownloadQuery(): iterable
+    {
+        return $this->getDownloadQuery()
+            ->setFormatter(OnDemandFormatter::class)
+            ->find();
+    }
+
+    /**
+     * @throws \Spryker\Zed\Gui\Communication\Exception\TableException
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function getDownloadQuery(): ModelCriteria
+    {
+        throw new TableException(sprintf('You need to implement `%s()` in your `%s`.', __METHOD__, static::class));
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     *
+     * @throws \Spryker\Zed\Gui\Communication\Exception\TableException
+     *
+     * @return array
+     */
+    protected function formatCsvRow(ActiveRecordInterface $entity): array
+    {
+        if (!method_exists($entity, 'toArray')) {
+            throw new TableException(sprintf('Missing method `%s::toArray()`.', get_class($entity)));
+        }
+
+        return $entity->toArray();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCsvFileName(): string
+    {
+        return sprintf('%s-%s.csv', $this->getClassNameShort(), $this->getDatetimeString());
+    }
+
+    /**
+     * @return string
+     */
+    protected function getClassNameShort(): string
+    {
+        $reflectionClass = new ReflectionClass($this);
+        $classNameShort = $reflectionClass->getShortName();
+
+        $filter = new FilterChain();
+        $filter
+            ->attach(new CamelCaseToDash())
+            ->attach(new StringToLower());
+
+        return $filter->filter($classNameShort);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDatetimeString(): string
+    {
+        $dateTime = new DateTime('NOW');
+
+        return $dateTime->format(static::DATE_TIME_FORMAT_FOR_CSV_FILENAME);
     }
 
     /**
