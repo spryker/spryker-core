@@ -15,8 +15,25 @@ use Spryker\Zed\Kernel\Container;
  */
 class RouterDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKOFFICE_ROUTER} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKEND_GATEWAY_ROUTER} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKEND_API_ROUTER} instead.
+     */
     public const ROUTER_PLUGINS = 'ROUTER_PLUGINS';
+
+    public const PLUGINS_BACKOFFICE_ROUTER = 'PLUGINS_BACKOFFICE_ROUTER';
+    public const PLUGINS_BACKEND_GATEWAY_ROUTER = 'PLUGINS_BACKEND_GATEWAY_ROUTER';
+    public const PLUGINS_BACKEND_API_ROUTER = 'PLUGINS_BACKEND_API_ROUTER';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKOFFICE_ROUTER_ENHANCER} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKEND_GATEWAY_ROUTER_ENHANCER} instead.
+     */
     public const ROUTER_ENHANCER_PLUGINS = 'router enhancer plugin';
+
+    public const PLUGINS_BACKOFFICE_ROUTER_ENHANCER = 'PLUGINS_BACKOFFICE_ROUTER_ENHANCER';
+    public const PLUGINS_BACKEND_GATEWAY_ROUTER_ENHANCER = 'PLUGINS_BACKEND_GATEWAY_ROUTER_ENHANCER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,10 +45,132 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRouterPlugins($container);
         $container = $this->addRouterEnhancerPlugins($container);
 
+        $container = $this->addBackofficeRouterPlugins($container);
+        $container = $this->addBackofficeRouterEnhancerPlugins($container);
+
+        $container = $this->addBackendGatewayRouterPlugins($container);
+        $container = $this->addBackendGatewayRouterEnhancerPlugins($container);
+
+        $container = $this->addBackendApiRouterPlugins($container);
+
         return $container;
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackofficeRouterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKOFFICE_ROUTER, function () {
+            return $this->getBackofficeRouterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     */
+    protected function getBackofficeRouterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackofficeRouterEnhancerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKOFFICE_ROUTER_ENHANCER, function () {
+            return $this->getBackofficeRouterEnhancerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     */
+    protected function getBackofficeRouterEnhancerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackendGatewayRouterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKEND_GATEWAY_ROUTER, function () {
+            return $this->getBackendGatewayRouterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     */
+    protected function getBackendGatewayRouterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackendGatewayRouterEnhancerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKEND_GATEWAY_ROUTER_ENHANCER, function () {
+            return $this->getBackendGatewayRouterEnhancerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     */
+    protected function getBackendGatewayRouterEnhancerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackendApiRouterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKEND_API_ROUTER, function () {
+            return $this->getBackendApiRouterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     */
+    protected function getBackendApiRouterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addBackofficeRouterPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addBackendGatewayRouterPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addBackendApiRouterPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -46,6 +185,10 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackofficeRouterPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackendGatewayRouterPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackendApiRouterPlugins()} instead.
+     *
      * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
      */
     protected function getRouterPlugins(): array
@@ -54,6 +197,10 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addBackofficeRouterEnhancerPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addBackendGatewayRouterEnhancerPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::addBackendApiRouterEnhancerPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -68,6 +215,10 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackofficeRouterEnhancerPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackendGatewayRouterEnhancerPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackendApiRouterEnhancerPlugins()} instead.
+     *
      * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
      */
     protected function getRouterEnhancerPlugins(): array

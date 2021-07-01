@@ -22,10 +22,7 @@ use Spryker\Zed\Router\RouterConfig;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\Router\Business\Router\RouterResource\BackofficeRouterResource} instead.
- */
-class RouterResource implements ResourceInterface
+abstract class AbstractRouterResource implements ResourceInterface
 {
     public const MODULE_NAME_POSITION = 2;
     public const CONTROLLER_NAME_POSITION = 5;
@@ -55,15 +52,17 @@ class RouterResource implements ResourceInterface
     {
         $routeCollection = new RouteCollection();
 
-        $finder = new Finder();
-        $finder->files()->in($this->config->getControllerDirectories())->name('*Controller.php');
-
-        foreach ($finder as $fileInfo) {
+        foreach ($this->getFinder() as $fileInfo) {
             $routeCollection = $this->addRoutesForFile($fileInfo, $routeCollection);
         }
 
         return $routeCollection;
     }
+
+    /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    abstract protected function getFinder(): Finder;
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo

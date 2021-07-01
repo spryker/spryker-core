@@ -14,13 +14,11 @@ use Spryker\Zed\Router\Communication\Resolver\ControllerResolver;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Application\BackofficeRouterApplicationPlugin} instead.
- *
  * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()
  * @method \Spryker\Zed\Router\RouterConfig getConfig()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */
-class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
+abstract class AbstractRouterApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     /**
      * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
@@ -32,7 +30,6 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
 
     /**
      * {@inheritDoc}
-     * Specification:
      * - Adds a ChainRouter to the Application.
      * - Adds a ControllerResolver to the Application which is used in the HttpKernel.
      * - Adds an ArgumentResolver to the Application which is used in the HttpKernel.
@@ -57,35 +54,7 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      *
      * @return \Spryker\Service\Container\ContainerInterface
      */
-    protected function provideRouter(ContainerInterface $container): ContainerInterface
-    {
-        $container->set(static::SERVICE_ROUTER, function () {
-            return $this->getFacade()->getRouter();
-        });
-
-        $this->setBackwardsCompatibleServiceNames($container, static::SERVICE_ROUTER, [
-            'alias' => [
-                'url_generator',
-                'url_matcher',
-            ],
-        ]);
-
-        return $container;
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param \Spryker\Service\Container\ContainerInterface $container
-     * @param string $serviceName
-     * @param array $configuration
-     *
-     * @return void
-     */
-    protected function setBackwardsCompatibleServiceNames(ContainerInterface $container, string $serviceName, array $configuration): void
-    {
-        $container->configure($serviceName, $configuration);
-    }
+    abstract protected function provideRouter(ContainerInterface $container): ContainerInterface;
 
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container

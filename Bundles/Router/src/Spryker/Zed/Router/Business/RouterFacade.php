@@ -51,6 +51,72 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      *
      * @internal
      *
+     * @return \Spryker\Zed\Router\Business\Router\ChainRouter
+     */
+    public function getBackofficeChainRouter(): ChainRouter
+    {
+        return $this->getFactory()->createBackofficeChainRouter();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
+     */
+    public function getBackofficeRouter(): RouterInterface
+    {
+        return $this->getFactory()->createBackofficeRouter();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @internal
+     *
+     * @return \Spryker\Zed\Router\Business\Router\ChainRouter
+     */
+    public function getBackendGatewayChainRouter(): ChainRouter
+    {
+        return $this->getFactory()->createBackendGatewayChainRouter();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
+     */
+    public function getBackendGatewayRouter(): RouterInterface
+    {
+        return $this->getFactory()->createBackendGatewayRouter();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @internal
+     *
+     * @return \Spryker\Zed\Router\Business\Router\ChainRouter
+     */
+    public function getBackendApiChainRouter(): ChainRouter
+    {
+        return $this->getFactory()->createBackendApiChainRouter();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @internal
+     *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function getZedFallbackRouter(): RouterInterface
@@ -68,5 +134,29 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
     public function cacheWarmUp(): void
     {
         $this->getFactory()->createCache()->warmUp();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function warmUpBackofficeRouterCache(): void
+    {
+        $this->getFactory()->createBackofficeCacheWarmer()->warmUp();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function warmUpBackendGatewayRouterCache(): void
+    {
+        $this->getFactory()->createBackendGatewayCacheWarmer()->warmUp();
     }
 }

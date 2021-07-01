@@ -18,17 +18,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackofficeConsole} instead.
- * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackendGatewayConsole} instead.
- * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackendApiConsole} instead.
- *
  * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */
-class RouterDebugZedConsole extends Console
+abstract class AbstractRouterDebugConsole extends Console
 {
     protected const NAME = 'router:debug';
-    protected const NAME_ALIAS = 'router:debug:zed';
     protected const ARGUMENT_ROUTE_NAME = 'name';
     protected const OPTION_SHOW_CONTROLLERS = 'show-controllers';
     protected const OPTION_SHOW_CONTROLLERS_SHORT = 'c';
@@ -40,7 +35,6 @@ class RouterDebugZedConsole extends Console
     {
         $this
             ->setName(static::NAME)
-            ->setAliases([static::NAME_ALIAS])
             ->setDefinition([
                 new InputArgument(static::ARGUMENT_ROUTE_NAME, InputArgument::OPTIONAL, 'A route name.'),
                 new InputOption(static::OPTION_SHOW_CONTROLLERS, static::OPTION_SHOW_CONTROLLERS_SHORT, InputOption::VALUE_NONE, 'Show assigned controllers in the overview.'),
@@ -61,8 +55,7 @@ class RouterDebugZedConsole extends Console
         $name = $input->getArgument(static::ARGUMENT_ROUTE_NAME);
         $helper = new DescriptorHelper();
 
-        $router = $this->getFacade()->getRouter();
-        $routes = $router->getRouteCollection();
+        $routes = $this->getRouteCollection();
 
         if ($name) {
             $route = $routes->get($name);
@@ -110,4 +103,9 @@ class RouterDebugZedConsole extends Console
 
         return $foundRoutesNames;
     }
+
+    /**
+     * @return \Symfony\Component\Routing\RouteCollection
+     */
+    abstract protected function getRouteCollection(): RouteCollection;
 }
