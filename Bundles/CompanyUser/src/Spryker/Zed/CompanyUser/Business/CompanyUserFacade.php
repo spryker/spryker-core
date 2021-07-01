@@ -353,4 +353,20 @@ class CompanyUserFacade extends AbstractFacade implements CompanyUserFacadeInter
         return $this->getRepository()
             ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function expandCustomerWithIsActiveCompanyUserExists(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerExpander()
+            ->expandCustomerWithIsActiveCompanyUserExists($customerTransfer);
+    }
 }

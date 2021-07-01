@@ -113,4 +113,11 @@ interface CompanyUserRepositoryInterface
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function getCompanyUserCollectionByCriteria(CompanyUserCriteriaTransfer $companyUserCriteriaTransfer): CompanyUserCollectionTransfer;
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return bool
+     */
+    public function isActiveCompanyUserExists(int $idCustomer): bool;
 }

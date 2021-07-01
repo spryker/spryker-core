@@ -303,4 +303,19 @@ interface CompanyUserFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
     public function getRawCompanyUsersByCriteria(CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer): CompanyUserCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CustomerTransfer.idCustomer` to be set.
+     * - Checks if the customer is a company user, if not then skips the extension.
+     * - Expands customer with `isActiveCompanyUserExists` property.
+     * - Returns expanded customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function expandCustomerWithIsActiveCompanyUserExists(CustomerTransfer $customerTransfer): CustomerTransfer;
 }
