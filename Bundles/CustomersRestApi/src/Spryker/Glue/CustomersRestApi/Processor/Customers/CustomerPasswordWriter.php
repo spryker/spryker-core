@@ -8,8 +8,6 @@
 namespace Spryker\Glue\CustomersRestApi\Processor\Customers;
 
 use Generated\Shared\Transfer\RestCustomerRestorePasswordAttributesTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
 use Spryker\Glue\CustomersRestApi\Dependency\Client\CustomersRestApiToCustomerClientInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResourceMapperInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface;
@@ -79,20 +77,9 @@ class CustomerPasswordWriter implements CustomerPasswordWriterInterface
         $customerResponseTransfer = $this->customerClient->restorePassword($customerTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
-            return $restResponse->addError($this->createErrorRestorePasswordKeyIsNotValid());
+            return $this->restApiError->processCustomerErrorOnPasswordReset($restResponse, $customerResponseTransfer);
         }
 
         return $restResponse->setStatus(Response::HTTP_NO_CONTENT);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer
-     */
-    protected function createErrorRestorePasswordKeyIsNotValid(): RestErrorMessageTransfer
-    {
-        return (new RestErrorMessageTransfer())
-            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID)
-            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_RESTORE_PASSWORD_KEY_INVALID);
     }
 }
