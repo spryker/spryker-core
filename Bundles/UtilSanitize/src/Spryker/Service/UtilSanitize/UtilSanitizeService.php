@@ -15,8 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilSanitizeService extends AbstractService implements UtilSanitizeServiceInterface
 {
     /**
-     * Specification:
-     *  - Escapes any string for safe output in HTML.
+     * {@inheritDoc}
      *
      * @api
      *

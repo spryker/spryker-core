@@ -78,8 +78,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Converts a camel cased string into a string where every word is linked with the other by specified separator.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,8 +93,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Converts a camel cased string into a string where every word is linked with the other by a dash (-) separator.
+     * {@inheritDoc}
      *
      * @api
      *
