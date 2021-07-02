@@ -112,12 +112,16 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     }
 
     /**
-     * @param string $neverOutOfStockSet
+     * @param string|null $neverOutOfStockSet
      *
      * @return bool
      */
-    public function isNeverOutOfStock(string $neverOutOfStockSet): bool
+    public function isNeverOutOfStock(?string $neverOutOfStockSet): bool
     {
+        if ($neverOutOfStockSet === null) {
+            return false;
+        }
+
         return $this->availabilityService->isAbstractProductNeverOutOfStock($neverOutOfStockSet);
     }
 
