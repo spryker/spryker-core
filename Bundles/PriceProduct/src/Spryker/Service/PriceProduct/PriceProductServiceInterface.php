@@ -74,7 +74,7 @@ interface PriceProductServiceInterface
     public function mergeConcreteAndAbstractPrices(array $abstractPriceProductTransfers, array $concretePriceProductTransfers): array;
 
     /**
-     * Specifications:
+     * Specification:
      * - Builds price product group key based on PriceProductTransfer data.
      *
      * @api

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 interface ProductConfigurationServiceInterface
 {
     /**
-     * Specification
+     * Specification:
      * - Generates a hash for ProductConfigurationInstanceTransfer.
      * - Uses md5 as hashing algorithm.
      *
