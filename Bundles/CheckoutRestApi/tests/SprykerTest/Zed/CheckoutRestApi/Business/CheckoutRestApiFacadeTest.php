@@ -19,6 +19,7 @@ use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade;
 use Spryker\Zed\Checkout\Business\CheckoutFacade;
 use Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory;
+use Spryker\Zed\CheckoutRestApi\CheckoutRestApiConfig;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartFacadeBridge;
 use Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCartsRestApiFacadeBridge;
@@ -187,6 +188,7 @@ class CheckoutRestApiFacadeTest extends Unit
                 'getCheckoutDataValidatorPlugins',
                 'getReadCheckoutDataValidatorPlugins',
                 'getCalculationFacade',
+                'getConfig',
                 'getCheckoutDataExpanderPlugins',
             ]
         );
@@ -197,6 +199,7 @@ class CheckoutRestApiFacadeTest extends Unit
         $mockCheckoutRestApiFactory = $this->addMockQuoteFacade($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockQuoteMapperPlugins($mockCheckoutRestApiFactory);
         $mockCheckoutRestApiFactory = $this->addMockCalculationFacade($mockCheckoutRestApiFactory);
+        $mockCheckoutRestApiFactory = $this->addMockConfig($mockCheckoutRestApiFactory);
 
         return $mockCheckoutRestApiFactory;
     }
@@ -342,6 +345,28 @@ class CheckoutRestApiFacadeTest extends Unit
                     $mockCartsRestApiFacade
                 )
             );
+
+        return $mockCheckoutRestApiFactory;
+    }
+
+    /**
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     *
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function addMockConfig(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
+    {
+        $mockCheckoutRestApiConfig = $this->createPartialMock(
+            CheckoutRestApiConfig::class,
+            ['deleteCartAfterOrderCreation']
+        );
+        $mockCheckoutRestApiConfig
+            ->method('deleteCartAfterOrderCreation')
+            ->willReturn(true);
+
+        $mockCheckoutRestApiFactory
+            ->method('getConfig')
+            ->willReturn($mockCheckoutRestApiConfig);
 
         return $mockCheckoutRestApiFactory;
     }
