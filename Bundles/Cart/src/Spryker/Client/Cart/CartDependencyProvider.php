@@ -9,6 +9,7 @@ namespace Spryker\Client\Cart;
 
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientBridge;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteBridge;
+use Spryker\Client\Cart\Dependency\Client\CartToUtilTextServiceBridge;
 use Spryker\Client\Cart\Plugin\ItemCountPlugin;
 use Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin;
 use Spryker\Client\Cart\Plugin\SimpleProductQuoteItemFinderPlugin;
@@ -25,6 +26,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_ADD_ITEMS_REQUEST_EXPANDER = 'PLUGINS_ADD_ITEMS_REQUEST_EXPANDER';
     public const PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER = 'PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER';
     public const PLUGIN_QUOTE_ITEM_FINDER = 'PLUGIN_QUOTE_ITEMS_FINDER';
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -41,6 +43,7 @@ class CartDependencyProvider extends AbstractDependencyProvider
         $container = $this->addQuoteItemFinderPlugin($container);
         $container = $this->addAddItemsRequestExpanderPlugins($container);
         $container = $this->addRemoveItemsRequestExpanderPlugins($container);
+        $container = $this->addUtilTextService($container);
 
         return $container;
     }
@@ -152,6 +155,22 @@ class CartDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER, function () {
             return $this->getRemoveItemsRequestExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container)
+    {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
+            return new CartToUtilTextServiceBridge(
+                $container->getLocator()->utilText()->service()
+            );
         });
 
         return $container;

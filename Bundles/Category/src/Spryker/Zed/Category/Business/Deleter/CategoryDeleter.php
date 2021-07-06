@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Business\Deleter;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
@@ -74,6 +75,21 @@ class CategoryDeleter implements CategoryDeleterInterface
         $this->categoryRelationshipDeleter->deleteCategoryRelationships($categoryTransfer);
         $this->categoryEntityManager->deleteCategory($idCategory);
 
+        $this->triggerAfterDeleteEvents($categoryTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    protected function triggerAfterDeleteEvents(CategoryTransfer $categoryTransfer): void
+    {
         $this->eventFacade->trigger(CategoryEvents::CATEGORY_AFTER_DELETE, $categoryTransfer);
+
+        $this->eventFacade->trigger(
+            CategoryEvents::CATEGORY_AFTER_PUBLISH_DELETE,
+            (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory())
+        );
     }
 }

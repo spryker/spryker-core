@@ -10,6 +10,9 @@ namespace Spryker\Shared\Search\Provider;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 abstract class AbstractIndexClientProvider extends AbstractSearchClientProvider
 {
     /**

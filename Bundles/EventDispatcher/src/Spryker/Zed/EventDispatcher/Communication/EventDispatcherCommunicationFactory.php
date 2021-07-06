@@ -26,6 +26,22 @@ class EventDispatcherCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
+     */
+    public function getBackendGatewayEventDispatcherPlugins(): array
+    {
+        return $this->getProvidedDependency(EventDispatcherDependencyProvider::PLUGINS_BACKEND_GATEWAY_EVENT_DISPATCHER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
+     */
+    public function getBackendApiEventDispatcherPlugins(): array
+    {
+        return $this->getProvidedDependency(EventDispatcherDependencyProvider::PLUGINS_BACKEND_API_EVENT_DISPATCHER_PLUGINS);
+    }
+
+    /**
      * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
     public function createEventDispatcher(): EventDispatcherInterface

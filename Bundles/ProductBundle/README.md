@@ -1,5 +1,5 @@
 # ProductBundle Module
-[![Build Status](https://travis-ci.org/spryker/product-bundle.svg)](https://travis-ci.org/spryker/product-bundle)
+[![Latest Stable Version](https://poser.pugx.org/spryker/product-bundle/v/stable.svg)](https://packagist.org/packages/spryker/product-bundle)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Product bundles are two or more existing products combined into a new product for store display and sales purposes. Typically bundles consist of concrete products, because all items in the bundle need to be potential order items (i.e. have stock). The new (bundled) product does not physically exist in the bundled state. A bundle, when bought will still be handled as separate items in the order management system.

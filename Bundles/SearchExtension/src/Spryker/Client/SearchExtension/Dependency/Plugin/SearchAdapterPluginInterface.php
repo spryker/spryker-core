@@ -94,11 +94,11 @@ interface SearchAdapterPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchContextTransfers
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
      *
      * @return bool
      */
-    public function writeDocuments(array $searchContextTransfers): bool;
+    public function writeDocuments(array $searchDocumentTransfers): bool;
 
     /**
      * Specification:

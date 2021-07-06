@@ -435,7 +435,7 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
     {
         $this->getFactory()
             ->createPriceProductStoreWriter()
-            ->deleteOrphanPriceProductStoreEntities();
+            ->deleteAllOrphanPriceProductStoreEntities();
     }
 
     /**

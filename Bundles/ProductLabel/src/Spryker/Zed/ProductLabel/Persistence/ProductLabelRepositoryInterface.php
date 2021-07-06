@@ -81,4 +81,19 @@ interface ProductLabelRepositoryInterface
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
      */
     public function getStoreRelationByIdProductLabel(int $idProductLabel): StoreRelationTransfer;
+
+    /**
+     * @param int $idProductLabel
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductAbstractRelationsByIdProductLabelAndProductAbstractIds(int $idProductLabel, array $productAbstractIds): array;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function checkProductLabelProductAbstractByIdProductAbstractExists(int $idProductAbstract): bool;
 }

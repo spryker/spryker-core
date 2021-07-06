@@ -67,6 +67,11 @@
                                     row_attr: {'no-spaces': 'true', }
                                 }) }}
                             </web-spy-card>
+                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Stores' | trans }}">
+                                {% for store in stores %}
+                                    <web-spy-chips color="blue">{{ store.name }}</web-spy-chips>
+                                {% endfor %}
+                            </web-spy-card>
                         </div>
                     </div>
                 </web-spy-tab>
@@ -120,10 +125,10 @@
                                         {{ form_row(addressCollectionFields.fk_country) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
-                                        {{ form_row(onlineProfileMerchantProfileFields.longitude) }}
+                                        {{ form_row(addressCollectionFields.latitude) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
-                                        {{ form_row(onlineProfileMerchantProfileFields.latitude) }}
+                                        {{ form_row(addressCollectionFields.longitude) }}
                                     </div>
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
                                         {{ form_row(onlineProfileMerchantProfileFields.public_phone) }}

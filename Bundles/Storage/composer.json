@@ -22,6 +22,7 @@
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/event-dispatcher": "*",
+        "spryker/ramsey-uuid": "*",
         "spryker/silex": "*",
         "spryker/testify": "*"
     },

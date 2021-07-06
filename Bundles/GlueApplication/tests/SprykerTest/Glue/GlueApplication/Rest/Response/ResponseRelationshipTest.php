@@ -30,6 +30,13 @@ use SprykerTest\Glue\GlueApplication\Stub\RestRequest;
  */
 class ResponseRelationshipTest extends Unit
 {
+    protected const RESOURCE_TYPE_PRODUCT_ABSTRACT = 'product-abstract';
+    protected const RESOURCE_TYPE_PRODUCT_CONCRETE = 'product-concrete';
+    protected const RESOURCE_TYPE_IMAGE_SET = 'concrete-product-image-sets';
+    protected const RESOURCE_ABSTRACT_PRODUCT_ID = 1;
+    protected const RESOURCE_IMAGE_SET_ID = 1;
+    protected const RESOURCE_CONCRETE_PRODUCT_ID = 2;
+
     /**
      * @return void
      */
@@ -65,11 +72,12 @@ class ResponseRelationshipTest extends Unit
 
         $responseRelationship->loadRelationships('tests', [$resource], $restRequest);
 
-        $this->assertCount(1, $resource->getRelationships());
+        $actualRelationships = $resource->getRelationships()['related'];
+        $this->assertCount(1, $actualRelationships);
 
-        $this->assertCount(1, $resource->getRelationships()['related']);
-        $this->assertSame('1', $resource->getRelationships()['related'][0]->getId());
-        $this->assertSame('related', $resource->getRelationships()['related'][0]->getType());
+        $firstRelation = reset($actualRelationships);
+        $this->assertSame('1', $firstRelation->getId());
+        $this->assertSame('related', $firstRelation->getType());
     }
 
     /**
@@ -91,6 +99,94 @@ class ResponseRelationshipTest extends Unit
         $this->assertCount(1, $included);
         $this->assertSame('related', $included[0]->getType());
         $this->assertSame('1', $included[0]->getId());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProcessIncludedDoesntOverrideResourceWithRelationship(): void
+    {
+        // Arrange
+        $restResourceBuilder = new RestResourceBuilder();
+        $restRequest = (new RestRequest())->createRestRequest();
+
+        $relationshipLoaderMock = $this->createRelationshipLoaderMock();
+        $responseRelationship = $this->createResponseRelationship($relationshipLoaderMock);
+
+        $resources = $this->createResourcesWithOverwritableRelations($restResourceBuilder);
+
+        // Act
+        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $included */
+        [$includeAbstractProduct, $includeImageSet, $includeConcreteProduct] = $responseRelationship
+            ->processIncluded($resources, $restRequest);
+
+        // Assert
+        $this->assertSame(static::RESOURCE_TYPE_PRODUCT_ABSTRACT, $includeAbstractProduct->getType());
+        $this->assertEquals(static::RESOURCE_ABSTRACT_PRODUCT_ID, $includeAbstractProduct->getId());
+
+        $this->assertSame(static::RESOURCE_TYPE_IMAGE_SET, $includeImageSet->getType());
+        $this->assertEquals(static::RESOURCE_IMAGE_SET_ID, $includeImageSet->getId());
+
+        $this->assertSame(static::RESOURCE_TYPE_PRODUCT_CONCRETE, $includeConcreteProduct->getType());
+        $this->assertEquals(static::RESOURCE_CONCRETE_PRODUCT_ID, $includeConcreteProduct->getId());
+
+        $concreteProductIncludesItemRelations = $includeConcreteProduct->getRelationships();
+
+        $this->assertCount(2, $concreteProductIncludesItemRelations);
+
+        $this->assertArrayHasKey(static::RESOURCE_TYPE_PRODUCT_ABSTRACT, $concreteProductIncludesItemRelations);
+        $this->assertCount(1, $concreteProductIncludesItemRelations[static::RESOURCE_TYPE_PRODUCT_ABSTRACT]);
+
+        $this->assertArrayHasKey(static::RESOURCE_TYPE_IMAGE_SET, $concreteProductIncludesItemRelations);
+        $this->assertCount(1, $concreteProductIncludesItemRelations[static::RESOURCE_TYPE_IMAGE_SET]);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder $restResourceBuilder
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    protected function createResourcesWithOverwritableRelations(RestResourceBuilder $restResourceBuilder): array
+    {
+        $abstractProductResource = $restResourceBuilder->createRestResource(
+            static::RESOURCE_TYPE_PRODUCT_ABSTRACT,
+            static::RESOURCE_ABSTRACT_PRODUCT_ID
+        );
+
+        $imageSetResource = $restResourceBuilder->createRestResource(
+            static::RESOURCE_TYPE_IMAGE_SET,
+            static::RESOURCE_IMAGE_SET_ID
+        );
+
+        $concreteProduct = $restResourceBuilder->createRestResource(
+            static::RESOURCE_TYPE_PRODUCT_CONCRETE,
+            static::RESOURCE_CONCRETE_PRODUCT_ID
+        );
+
+        $concreteProduct->addRelationship(
+            $restResourceBuilder->createRestResource(
+                static::RESOURCE_TYPE_PRODUCT_ABSTRACT,
+                static::RESOURCE_ABSTRACT_PRODUCT_ID
+            )
+        );
+
+        $concreteProduct->addRelationship(
+            $restResourceBuilder->createRestResource(
+                static::RESOURCE_TYPE_IMAGE_SET,
+                static::RESOURCE_IMAGE_SET_ID
+            )
+        );
+
+        $abstractProductResource->addRelationship($concreteProduct);
+
+        $imageSetResource->addRelationship(
+            $restResourceBuilder->createRestResource(
+                static::RESOURCE_TYPE_PRODUCT_CONCRETE,
+                static::RESOURCE_CONCRETE_PRODUCT_ID
+            )
+        );
+
+        return [$abstractProductResource, $imageSetResource];
     }
 
     /**

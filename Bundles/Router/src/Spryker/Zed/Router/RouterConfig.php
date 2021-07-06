@@ -28,6 +28,106 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @return array
      */
+    public function getBackofficeRouterConfiguration(): array
+    {
+        return [
+            'cache_dir' => $this->getBackofficeCachePathIfCacheEnabled(),
+            'generator_class' => UrlGenerator::class,
+            'matcher_class' => CompiledUrlMatcher::class,
+        ];
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getBackofficeCachePathIfCacheEnabled(): ?string
+    {
+        if ($this->get(RouterConstants::BACKOFFICE_IS_CACHE_ENABLED, true)) {
+            return $this->get(RouterConstants::BACKOFFICE_CACHE_PATH, $this->getBackofficeRouterCachePath());
+        }
+
+        return null;
+    }
+
+    /**
+     * Specification:
+     * - Defines the default path to the Router cache files.
+     * - Can be redefined on Yves or Zed configs.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getBackofficeRouterCachePath(): string
+    {
+        return sprintf(
+            '%s/src/Generated/Router/Backoffice/codeBucket%s/',
+            APPLICATION_ROOT_DIR,
+            APPLICATION_CODE_BUCKET
+        );
+    }
+
+    /**
+     * Specification:
+     * - Returns a Router configuration which makes use of a Router cache.
+     *
+     * @api
+     *
+     * @see \Symfony\Component\Routing\Router::setOptions()
+     *
+     * @return array
+     */
+    public function getBackendGatewayRouterConfiguration(): array
+    {
+        return [
+            'cache_dir' => $this->getBackendGatewayCachePathIfCacheEnabled(),
+            'generator_class' => UrlGenerator::class,
+            'matcher_class' => CompiledUrlMatcher::class,
+        ];
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getBackendGatewayCachePathIfCacheEnabled(): ?string
+    {
+        if ($this->get(RouterConstants::BACKEND_GATEWAY_IS_CACHE_ENABLED, true)) {
+            return $this->get(RouterConstants::BACKEND_GATEWAY_CACHE_PATH, $this->getBackendGatewayRouterCachePath());
+        }
+
+        return null;
+    }
+
+    /**
+     * Specification:
+     * - Defines the default path to the Router cache files.
+     * - Can be redefined on Yves or Zed configs.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getBackendGatewayRouterCachePath(): string
+    {
+        return sprintf(
+            '%s/src/Generated/Router/BackendGateway/codeBucket%s/',
+            APPLICATION_ROOT_DIR,
+            APPLICATION_CODE_BUCKET
+        );
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterConfig::getBackofficeRouterConfiguration()} instead.
+     *
+     * Specification:
+     * - Returns a Router configuration which makes use of a Router cache.
+     *
+     * @see \Symfony\Component\Routing\Router::setOptions()
+     *
+     * @return array
+     */
     public function getRouterConfiguration(): array
     {
         return [
@@ -57,6 +157,8 @@ class RouterConfig extends AbstractBundleConfig
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterConfig::getBackofficeCachePathIfCacheEnabled()} instead.
+     *
      * @return string|null
      */
     protected function getCachePathIfCacheEnabled(): ?string

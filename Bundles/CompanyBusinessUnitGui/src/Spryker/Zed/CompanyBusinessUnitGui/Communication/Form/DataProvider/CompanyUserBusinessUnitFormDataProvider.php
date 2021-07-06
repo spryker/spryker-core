@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitForm;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Generator\CompanyBusinessUnitNameGeneratorInterface;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
 
 class CompanyUserBusinessUnitFormDataProvider
@@ -24,48 +23,42 @@ class CompanyUserBusinessUnitFormDataProvider
     protected $companyBusinessUnitFacade;
 
     /**
-     * @param \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @var \Spryker\Zed\CompanyBusinessUnitGui\Communication\Generator\CompanyBusinessUnitNameGeneratorInterface
      */
-    public function __construct(CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade)
-    {
+    protected $companyBusinessUnitNameGenerator;
+
+    /**
+     * @param \Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @param \Spryker\Zed\CompanyBusinessUnitGui\Communication\Generator\CompanyBusinessUnitNameGeneratorInterface $generator
+     */
+    public function __construct(
+        CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
+        CompanyBusinessUnitNameGeneratorInterface $generator
+    ) {
+        $this->companyBusinessUnitNameGenerator = $generator;
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
     }
 
     /**
-     * @return array
-     */
-    public function getOptions(): array
-    {
-        [$choicesValues, $choicesAttributes] = $this->prepareCompanyBusinessUnitAttributeMap();
-
-        return [
-            CompanyUserBusinessUnitForm::OPTION_VALUES_BUSINESS_UNITS_CHOICES => $choicesValues,
-            CompanyUserBusinessUnitForm::OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES => $choicesAttributes,
-        ];
-    }
-
-    /**
-     * Retrieves the list of units for the same company.
+     * @param int|null $idCompanyBusinessUnit
      *
-     * @return array [[unitKey => idBusinessUnit], [unitKey => ['data-id-company' => idCompany]]]
-     *                Where unitKey: "<idBusinessUnit> - <BusinessUnitName>"
+     * @return int[]
      */
-    protected function prepareCompanyBusinessUnitAttributeMap(): array
+    public function getOptions(?int $idCompanyBusinessUnit = null): array
     {
-        $values = [];
-        $attributes = [];
-        $companyBusinessUnitCollection = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
-            (new CompanyBusinessUnitCriteriaFilterTransfer())
-        );
-
-        foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
-            $unitKey = $this->generateCompanyBusinessUnitName($companyBusinessUnitTransfer);
-
-            $values[$unitKey] = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
-            $attributes[$unitKey] = [static::OPTION_ATTRIBUTE_DATA => $companyBusinessUnitTransfer->getFkCompany()];
+        if (!$idCompanyBusinessUnit) {
+            return [];
         }
 
-        return [$values, $attributes];
+        $companyBusinessUnitTransfer = $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($idCompanyBusinessUnit);
+
+        if ($companyBusinessUnitTransfer) {
+            $companyBusinessUnitName = $this->generateCompanyBusinessUnitName($companyBusinessUnitTransfer);
+
+            return [$companyBusinessUnitName => $idCompanyBusinessUnit];
+        }
+
+        return [];
     }
 
     /**
@@ -75,6 +68,6 @@ class CompanyUserBusinessUnitFormDataProvider
      */
     protected function generateCompanyBusinessUnitName(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): string
     {
-        return sprintf(static::FORMAT_NAME, $companyBusinessUnitTransfer->getName(), $companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
+        return $this->companyBusinessUnitNameGenerator->generateName($companyBusinessUnitTransfer);
     }
 }

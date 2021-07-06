@@ -1,0 +1,5 @@
+parameters:
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Call to an undefined method .+LocatorLocatorInterface\:\:eventBehavior\(#'
+        - '#Call to an undefined method .+LocatorLocatorInterface\:\:search\(#'

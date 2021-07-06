@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HeaderModule } from '@spryker/header';
 import { LayoutModule } from '@spryker/layout';
-import { LogoModule } from '@spryker/logo';
 import { NavigationModule } from '@spryker/navigation';
 import { SidebarModule } from '@spryker/sidebar';
 import { ApplyContextsModule } from '@spryker/utils';
@@ -17,7 +16,6 @@ import { IconDashboardModule, IconProfileModule, IconOffersModule, IconOrdersMod
         LayoutModule,
         HeaderModule,
         SidebarModule,
-        LogoModule,
         NavigationModule,
         ApplyContextsModule,
         CustomElementBoundaryModule,

@@ -48,7 +48,7 @@
         {% block widget_content %}
             {% set imageUrl = '' %}
             {% for imageSet in product.imageSets %}
-                {% if imageSet.locale.idLocale == locale.idLocale and imageSet.productImages|length > 0 %}
+                {% if (imageSet.locale is null or imageSet.locale.idLocale == locale.idLocale) and imageSet.productImages|length > 0 %}
                     {% set imageUrl = imageSet.productImages[0].externalUrlSmall %}
                 {% endif %}
             {% endfor %}

@@ -65,7 +65,7 @@ class ProductTable extends AbstractProductTable
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface $productManagementRepository
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[] $productTableDataExpanderPlugins
+     * @param array $productTableDataExpanderPlugins
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -142,11 +142,17 @@ class ProductTable extends AbstractProductTable
         $query = $this
             ->productQueryQueryContainer
             ->queryProductAbstract()
-            ->innerJoinSpyTaxSet()
+            ->leftJoinSpyTaxSet()
             ->leftJoinSpyProductAbstractLocalizedAttributes()
             ->addJoinCondition('SpyProductAbstractLocalizedAttributes', 'SpyProductAbstractLocalizedAttributes.fk_locale = ?', $this->localeTransfer->getIdLocale())
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->leftJoinSpyProductAbstractLocalizedAttributes(static::RELATION_LOCALE_FALLBACK)
+            ->addJoinCondition(
+                static::RELATION_LOCALE_FALLBACK,
+                '(SpyProductAbstractLocalizedAttributes.name is null OR SpyProductAbstractLocalizedAttributes.name = \'\')'
+            )
+            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name is not null')
+            ->addJoinCondition(static::RELATION_LOCALE_FALLBACK, static::RELATION_LOCALE_FALLBACK . '.name != \'\'')
             ->withColumn(static::RELATION_LOCALE_FALLBACK . '.name', static::COL_NAME_FALLBACK)
             ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET)
             ->groupByIdProductAbstract();
@@ -333,6 +339,6 @@ class ProductTable extends AbstractProductTable
      */
     protected function resolveProductName(SpyProductAbstract $productAbstractEntity): ?string
     {
-        return $productAbstractEntity->getVirtualColumn(static::COL_NAME) ?? $productAbstractEntity->getVirtualColumn(static::COL_NAME_FALLBACK);
+        return $productAbstractEntity->getVirtualColumn(static::COL_NAME) ?: $productAbstractEntity->getVirtualColumn(static::COL_NAME_FALLBACK);
     }
 }

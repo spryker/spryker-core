@@ -19,7 +19,7 @@ class StoreDataHelper extends Module
     /**
      * @param array $storeOverride
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function haveStore(array $storeOverride = [])
     {

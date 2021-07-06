@@ -151,4 +151,32 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
             ->createStoreReader()
             ->getStoreTransfersByStoreNames($storeNames);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMultiStorePerZedEnabled(): bool
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->isMultiStorePerZedEnabled();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresAvailableForCurrentPersistence(): array
+    {
+        return $this->getFactory()
+            ->createStoreReader()
+            ->getStoresAvailableForCurrentPersistence();
+    }
 }

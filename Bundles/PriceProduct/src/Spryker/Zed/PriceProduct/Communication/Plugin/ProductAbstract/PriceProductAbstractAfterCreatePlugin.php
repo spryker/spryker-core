@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\PriceProduct\Communication\Plugin\Product\PriceProductAbstractPostCreatePlugin} instead.
+ *
  * @method \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProduct\Communication\PriceProductCommunicationFactory getFactory()
  * @method \Spryker\Zed\PriceProduct\PriceProductConfig getConfig()

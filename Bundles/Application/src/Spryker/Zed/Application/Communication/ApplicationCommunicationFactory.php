@@ -30,11 +30,37 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     use LoggerTrait;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory::createBackofficeApplication()} instead.
+     *
      * @return \Spryker\Shared\Application\ApplicationInterface
      */
     public function createApplication(): ApplicationInterface
     {
         return new Application($this->createServiceContainer(), $this->getApplicationPlugins());
+    }
+
+    /**
+     * @return \Spryker\Shared\Application\ApplicationInterface
+     */
+    public function createBackofficeApplication(): ApplicationInterface
+    {
+        return new Application($this->createServiceContainer(), $this->getBackofficeApplicationPlugins());
+    }
+
+    /**
+     * @return \Spryker\Shared\Application\ApplicationInterface
+     */
+    public function createBackendApiApplication(): ApplicationInterface
+    {
+        return new Application($this->createServiceContainer(), $this->getBackendApiApplicationPlugins());
+    }
+
+    /**
+     * @return \Spryker\Shared\Application\ApplicationInterface
+     */
+    public function createBackendGatewayApplication(): ApplicationInterface
+    {
+        return new Application($this->createServiceContainer(), $this->getBackendGatewayApplicationPlugins());
     }
 
     /**
@@ -46,11 +72,37 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory::getBackofficeApplicationPlugins()} instead.
+     *
      * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
     public function getApplicationPlugins(): array
     {
         return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_APPLICATION);
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getBackofficeApplicationPlugins(): array
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_BACKOFFICE_APPLICATION);
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getBackendApiApplicationPlugins(): array
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_BACKEND_API_APPLICATION);
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getBackendGatewayApplicationPlugins(): array
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_BACKEND_GATEWAY_APPLICATION);
     }
 
     /**

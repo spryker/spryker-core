@@ -9,6 +9,7 @@ namespace Spryker\Glue\MerchantsRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 use Generated\Shared\Transfer\MerchantSearchRequestTransfer;
+use Generated\Shared\Transfer\MerchantStorageCriteriaTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantSearchClientInterface;
@@ -79,7 +80,9 @@ class MerchantReader implements MerchantReaderInterface
      */
     public function getMerchantsResources(array $merchantReferences, string $localeName): array
     {
-        $merchantStorageTransfers = $this->merchantStorageClient->getByMerchantReferences($merchantReferences);
+        $merchantStorageTransfers = $this->merchantStorageClient->get(
+            (new MerchantStorageCriteriaTransfer())->setMerchantReferences($merchantReferences)
+        );
 
         $translatedMerchantStorageTransfers = $this->merchantTranslator->translateMerchantStorageTransfers(
             $merchantStorageTransfers,
@@ -100,7 +103,9 @@ class MerchantReader implements MerchantReaderInterface
          * @var string $merchantReference
          */
         $merchantReference = $restRequest->getResource()->getId();
-        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
+        $merchantStorageTransfer = $this->merchantStorageClient->findOne(
+            (new MerchantStorageCriteriaTransfer())->addMerchantReference($merchantReference)
+        );
 
         if (!$merchantStorageTransfer) {
             return $this->merchantRestResponseBuilder->createMerchantNotFoundErrorResponse();
@@ -132,9 +137,11 @@ class MerchantReader implements MerchantReaderInterface
         /** @var \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer */
         $merchantSearchCollectionTransfer = $searchResult[static::KEY_MERCHANT_SEARCH_COLLECTION];
 
-        $merchantStorageTransfers = $this->merchantStorageClient->get(
+        $merchantStorageCriteriaTransfer = (new MerchantStorageCriteriaTransfer())->setMerchantIds(
             $this->extractMerchantIds($merchantSearchCollectionTransfer)
         );
+
+        $merchantStorageTransfers = $this->merchantStorageClient->get($merchantStorageCriteriaTransfer);
 
         $merchantStorageTransfers = $this->merchantTranslator->translateMerchantStorageTransfers(
             $merchantStorageTransfers,

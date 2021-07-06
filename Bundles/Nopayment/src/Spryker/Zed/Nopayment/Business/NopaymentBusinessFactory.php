@@ -8,8 +8,12 @@
 namespace Spryker\Zed\Nopayment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Nopayment\Business\Checkout\NopaymentCheckoutPreConditionChecker;
+use Spryker\Zed\Nopayment\Business\Checkout\NopaymentCheckoutPreConditionCheckerInterface;
 use Spryker\Zed\Nopayment\Business\Nopayment\NopaymentMethodFilter;
+use Spryker\Zed\Nopayment\Business\Nopayment\NopaymentMethodFilterInterface;
 use Spryker\Zed\Nopayment\Business\Nopayment\Paid;
+use Spryker\Zed\Nopayment\Business\Nopayment\PaidInterface;
 
 /**
  * @method \Spryker\Zed\Nopayment\NopaymentConfig getConfig()
@@ -18,20 +22,28 @@ use Spryker\Zed\Nopayment\Business\Nopayment\Paid;
 class NopaymentBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Nopayment\Business\Nopayment\NopaymentMethodFilter
+     * @return \Spryker\Zed\Nopayment\Business\Nopayment\NopaymentMethodFilterInterface
      */
-    public function createNopaymentMethodFilter()
+    public function createNopaymentMethodFilter(): NopaymentMethodFilterInterface
     {
         return new NopaymentMethodFilter($this->getConfig());
     }
 
     /**
-     * @return \Spryker\Zed\Nopayment\Business\Nopayment\Paid
+     * @return \Spryker\Zed\Nopayment\Business\Nopayment\PaidInterface
      */
-    public function createNopaymentPaid()
+    public function createNopaymentPaid(): PaidInterface
     {
         return new Paid(
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Nopayment\Business\Checkout\NopaymentCheckoutPreConditionCheckerInterface
+     */
+    public function createNopaymentCheckoutPreConditionChecker(): NopaymentCheckoutPreConditionCheckerInterface
+    {
+        return new NopaymentCheckoutPreConditionChecker();
     }
 }

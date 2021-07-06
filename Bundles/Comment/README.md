@@ -1,5 +1,5 @@
 # Comment Module
-[![Build Status](https://travis-ci.org/spryker/comment.svg)](https://travis-ci.org/spryker/comment)
+[![Latest Stable Version](https://poser.pugx.org/spryker/comment/v/stable.svg)](https://packagist.org/packages/spryker/comment)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Comment module provides ability to add multiple comments on the Entity.

@@ -49,7 +49,8 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createAvailabilityHandler(),
             $this->getStoreFacade(),
-            $this->getAvailabilityStrategyPlugins()
+            $this->getAvailabilityStrategyPlugins(),
+            $this->getBatchAvailabilityStrategyPlugins()
         );
     }
 
@@ -197,6 +198,14 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     public function getAvailabilityStrategyPlugins(): array
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::PLUGINS_AVAILABILITY_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\BatchAvailabilityStrategyPluginInterface[]
+     */
+    public function getBatchAvailabilityStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::PLUGINS_BATCH_AVAILABILITY_STRATEGY);
     }
 
     /**

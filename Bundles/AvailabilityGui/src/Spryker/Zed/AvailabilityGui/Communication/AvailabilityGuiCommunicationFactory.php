@@ -16,6 +16,7 @@ use Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
+use Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToAvailabilityServiceInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -114,7 +115,8 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getProductBundleQueryContainer(),
             $this->getStoreFacade(),
             $this->getStockFacade(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
+            $this->getAvailabilityService()
         );
     }
 
@@ -190,5 +192,13 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getAvailabilityViewActionViewDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToAvailabilityServiceInterface
+     */
+    public function getAvailabilityService(): AvailabilityGuiToAvailabilityServiceInterface
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::SERVICE_AVAILABILITY);
     }
 }

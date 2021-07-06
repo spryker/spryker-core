@@ -29,15 +29,15 @@ class CompanyUserReloadCustomerTransferExpanderPlugin extends AbstractPlugin imp
      */
     public function expandTransfer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
-        if (!$customerTransfer->getCompanyUserTransfer() || !$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()) {
+        if (!$customerTransfer->getCompanyUserTransfer() || !$customerTransfer->getCompanyUserTransfer()->getUuid()) {
             return $customerTransfer;
         }
 
-        $idCompanyUser = $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser();
-        $companyUserTransfer = $this->getFacade()->getCompanyUserById($idCompanyUser);
+        $companyUserTransfer = $this->getFacade()->findActiveCompanyUserByUuid($customerTransfer->getCompanyUserTransfer());
+        if (!$companyUserTransfer) {
+            return $customerTransfer;
+        }
 
-        $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
-
-        return $customerTransfer;
+        return $customerTransfer->setCompanyUserTransfer($companyUserTransfer);
     }
 }

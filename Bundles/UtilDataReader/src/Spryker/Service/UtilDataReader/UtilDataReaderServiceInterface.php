@@ -56,11 +56,11 @@ interface UtilDataReaderServiceInterface
     public function getXmlBatchIterator($fileName, $rootNodeName, $chunkSize = -1);
 
     /**
-     * @api
-     *
      * Specification:
      * - Returns a PdoBatchIterator
      * - Loads a chunk of entities with given CriteriaBuilderInterface
+     *
+     * @api
      *
      * @deprecated Use {@link getBatchIteratorOrdered()} instead. Method getPdoBatchIterator() does not work with sliced data.
      *
@@ -96,11 +96,11 @@ interface UtilDataReaderServiceInterface
     );
 
     /**
-     * @api
-     *
      * Specification:
      * - Returns a PropelBatchIterator
      * - Loads a chunk of PropelEntities with given ModelCriteria
+     *
+     * @api
      *
      * @deprecated Use {@link getBatchIteratorOrdered()} instead. Method getPropelBatchIteratorOrdered() does not work with sliced data.
      *

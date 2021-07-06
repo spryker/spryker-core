@@ -133,4 +133,17 @@ interface MerchantProductFacadeInterface
         ProductConcreteTransfer $productConcreteTransfer,
         MerchantTransfer $merchantTransfer
     ): bool;
+
+    /**
+     * Specification:
+     * - Creates a new merchant product abstract entity.
+     * - Requires MerchantProductTransfer.idMerchant and MerchantProductTransfer.idProductAbstract.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer
+     */
+    public function create(MerchantProductTransfer $merchantProductTransfer): MerchantProductTransfer;
 }

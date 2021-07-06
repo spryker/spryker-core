@@ -74,4 +74,35 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
     {
         return $this->productFacade->findProductAbstractIdByConcreteId($idConcrete);
     }
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku)
+    {
+        return $this->productFacade->hasProductAbstract($sku);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku)
+    {
+        return $this->productFacade->hasProductConcrete($sku);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @return int
+     */
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    {
+        return $this->productFacade->addProduct($productAbstractTransfer, $productConcreteCollection);
+    }
 }

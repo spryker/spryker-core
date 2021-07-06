@@ -16,6 +16,7 @@ interface RestApiErrorInterface
     public const ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID = 'customer.email.format.invalid';
     public const ERROR_MESSAGE_CUSTOMER_EMAIL_LENGTH_EXCEEDED = 'customer.email.length.exceeded';
     public const ERROR_CUSTOMER_PASSWORD_INVALID = 'customer.password.invalid';
+    public const ERROR_CUSTOMER_TOKEN_INVALID = 'customer.token.invalid';
 
     /**
      * @uses \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\LengthCustomerPasswordPolicy::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MAX
@@ -184,6 +185,17 @@ interface RestApiErrorInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function processCustomerErrorOnPasswordUpdate(
+        RestResponseInterface $restResponse,
+        CustomerResponseTransfer $customerResponseTransfer
+    ): RestResponseInterface;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function processCustomerErrorOnPasswordReset(
         RestResponseInterface $restResponse,
         CustomerResponseTransfer $customerResponseTransfer
     ): RestResponseInterface;

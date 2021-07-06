@@ -13,6 +13,12 @@ use Spryker\Zed\Checkout\Dependency\Plugin\CheckoutDoSaveOrderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use
+ * {@link \Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderSaverPlugin}
+ * {@link \Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderTotalsSaverPlugin}
+ * {@link \Spryker\Zed\Sales\Communication\Plugin\Checkout\OrderItemsSaverPlugin}
+ * in strict order instead.
+ *
  * Requires Checkout ^4.0.0
  *
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
@@ -24,7 +30,7 @@ class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutDoSaveOrde
 {
     /**
      * {@inheritDoc}
-     * - Saves order and items to Persistence.
+     * - Saves order to Persistence.
      *
      * @api
      *

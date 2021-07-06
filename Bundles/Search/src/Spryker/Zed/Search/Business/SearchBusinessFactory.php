@@ -170,6 +170,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Psr\Log\LoggerInterface $messenger
      *
      * @return \Spryker\Zed\Search\Business\Model\SearchInstallerInterface
@@ -205,6 +207,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapGeneratorInterface
      */
     public function createElasticsearchIndexMapGenerator()
@@ -224,6 +228,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Elastica\Client
      */
     public function getElasticsearchClient()
@@ -237,6 +243,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Provider\SearchClientProvider
      */
     public function createSearchClientProvider()
@@ -245,6 +253,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string|null $index
      *
      * @return \Elastica\Index
@@ -257,6 +267,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Provider\IndexClientProvider
      */
     public function createIndexProvider()
@@ -322,6 +334,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandlerInterface
      */
     public function createSnapshotHandler()
@@ -330,6 +344,8 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Elastica\Snapshot
      */
     public function createElasticsearchSnapshot()

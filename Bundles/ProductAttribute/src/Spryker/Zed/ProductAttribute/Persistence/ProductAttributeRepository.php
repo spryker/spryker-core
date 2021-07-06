@@ -121,6 +121,13 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
                 ->endUse();
         }
 
+        if ($productManagementAttributeFilterTransfer->getOnlySuperAttributes()) {
+            $productManagementAttributeQuery
+                ->useSpyProductAttributeKeyQuery()
+                    ->filterByIsSuper(true)
+                ->endUse();
+        }
+
         /** @var \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery $productManagementAttributeQuery */
         $productManagementAttributeQuery = $this->buildQueryFromCriteria(
             $productManagementAttributeQuery,

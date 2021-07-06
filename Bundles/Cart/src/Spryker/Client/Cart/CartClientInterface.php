@@ -371,4 +371,22 @@ interface CartClientInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function replaceItem(ItemReplaceTransfer $itemReplaceTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects `CartChangeTransfer.quote` to be set.
+     * - Requires `CartChangeTransfer.items.sku` to be set.
+     * - Checks if `separate_product` parameter is specified, otherwise skips the extension.
+     * - Checks that an item with the same SKU already exists in the cart.
+     * - Expands the cart item with the group key prefix.
+     * - Returns an expanded `CartChangeTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandCartItemsWithGroupKeyPrefix(CartChangeTransfer $cartChangeTransfer, array $params): CartChangeTransfer;
 }

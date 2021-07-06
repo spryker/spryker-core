@@ -3,10 +3,12 @@
 
     <transfer name="CurrentProductPrice">
         <property name="priceData" type="string"/>
+        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType"/>
     </transfer>
 
     <transfer name="RestProductOfferPriceAttributes">
         <property name="volumePrices" singular="volumePrice" type="RestProductPriceVolumesAttributes[]"/>
+        <property name="priceTypeName" type="string"/>
     </transfer>
 
     <transfer name="RestProductOfferPricesAttributes">

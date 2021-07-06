@@ -71,12 +71,14 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
         $priceTable = [];
         $currencies = [];
         $priceData = [];
+        $priceDataByPriceType = [];
 
         foreach ($productOfferTransfer->getPrices() as $priceProductTransfer) {
             $priceTable = $this->getPriceTable($priceProductTransfer, $priceTable);
             $priceData = $this->getPriceData($priceProductTransfer, $priceData);
             $currencyTransfer = $priceProductTransfer->getMoneyValue()->getCurrency();
             $currencies[$currencyTransfer->getCode()] = $currencyTransfer;
+            $priceDataByPriceType = $this->getPriceDataByPriceType($priceProductTransfer, $priceDataByPriceType);
         }
 
         return [
@@ -84,6 +86,7 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
             'currencies' => $currencies,
             'priceData' => $priceData,
             'productOffer' => $productOfferTransfer,
+            'priceDataByPriceType' => $priceDataByPriceType,
         ];
     }
 
@@ -145,8 +148,7 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
         $storeName = $priceProductTransfer->getMoneyValue()->getStore()->getName();
         $currencyIsoCode = $priceProductTransfer->getMoneyValue()->getCurrency()->getCode();
 
-        $priceData[$storeName][$currencyIsoCode] = $this->utilEncodingService
-            ->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData(), true);
+        $priceData[$storeName][$currencyIsoCode] = $this->getDecodedPriceData($priceProductTransfer);
 
         return $priceData;
     }
@@ -181,5 +183,41 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
         }
 
         return static::$grossPriceModeIdentifier;
+    }
+
+    /**
+     * @phpstan-param array<string, mixed> $priceDataByPriceType
+     *
+     * @phpstan-return array<string, mixed>
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array $priceDataByPriceType
+     *
+     * @return array
+     */
+    protected function getPriceDataByPriceType(
+        PriceProductTransfer $priceProductTransfer,
+        array $priceDataByPriceType
+    ): array {
+        $storeName = $priceProductTransfer->getMoneyValue()->getStore()->getName();
+        $currencyIsoCode = $priceProductTransfer->getMoneyValue()->getCurrency()->getCode();
+        $priceTypeName = $priceProductTransfer->getPriceType()->getName();
+
+        $priceDataByPriceType[$storeName][$currencyIsoCode][$priceTypeName] = $this->getDecodedPriceData($priceProductTransfer);
+
+        return $priceDataByPriceType;
+    }
+
+    /**
+     * @phpstan-return array<string, mixed>
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return array
+     */
+    protected function getDecodedPriceData(PriceProductTransfer $priceProductTransfer): array
+    {
+        return $this->utilEncodingService
+            ->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData(), true) ?? [];
     }
 }

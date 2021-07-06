@@ -8,6 +8,12 @@
 namespace SprykerTest\Zed\ProductConfiguration;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
  * Inherited Methods
@@ -29,4 +35,88 @@ use Codeception\Actor;
 class ProductConfigurationBusinessTester extends Actor
 {
     use _generated\ProductConfigurationBusinessTesterActions;
+
+    protected const PRODUCT_CONFIGURATION_TEST_KEY = 'product_configuration_test_key';
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    public function haveQuoteRequestInDraftStatusWithIncompleteConfiguredProduct(): QuoteRequestTransfer
+    {
+        $quoteRequestTransfer = $this->createQuoteRequestTransfer();
+
+        foreach ($quoteRequestTransfer->getLatestVersion()->getQuote()->getItems() as $itemTransfer) {
+            $itemTransfer->setProductConfigurationInstance($this->createProductConfigurationInstance(false));
+        }
+
+        return $quoteRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    public function haveQuoteRequestInDraftStatusWithCompleteConfiguredProduct(): QuoteRequestTransfer
+    {
+        $quoteRequestTransfer = $this->createQuoteRequestTransfer();
+
+        foreach ($quoteRequestTransfer->getLatestVersion()->getQuote()->getItems() as $itemTransfer) {
+            $itemTransfer->setProductConfigurationInstance($this->createProductConfigurationInstance());
+        }
+
+        return $quoteRequestTransfer;
+    }
+
+    /**
+     * @param bool $isConfigurationComplete
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
+     */
+    public function createProductConfigurationInstance(bool $isConfigurationComplete = true): ProductConfigurationInstanceTransfer
+    {
+        return (new ProductConfigurationInstanceTransfer())
+            ->setConfiguratorKey(static::PRODUCT_CONFIGURATION_TEST_KEY)
+            ->setIsComplete($isConfigurationComplete);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer
+     */
+    public function createQuoteRequestTransfer(): QuoteRequestTransfer
+    {
+        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteRequestVersionTransfer = $this->createQuoteRequestVersionTransfer($quoteTransfer);
+
+        return (new QuoteRequestTransfer())->setLatestVersion($quoteRequestVersionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestVersionTransfer
+     */
+    public function createQuoteRequestVersionTransfer(QuoteTransfer $quoteTransfer): QuoteRequestVersionTransfer
+    {
+        return $this->haveQuoteRequestVersion([
+            QuoteRequestVersionTransfer::QUOTE => $quoteTransfer,
+        ]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransfer(): QuoteTransfer
+    {
+        return (new QuoteBuilder())
+            ->withItem([
+                ItemTransfer::SKU => $this->haveProduct()->getSku(),
+                ItemTransfer::UNIT_PRICE => 100,
+                ItemTransfer::QUANTITY => 1,
+            ])
+            ->withAnotherItem([
+                ItemTransfer::SKU => $this->haveProduct()->getSku(),
+                ItemTransfer::UNIT_PRICE => 25,
+                ItemTransfer::QUANTITY => 5,
+            ])
+            ->build();
+    }
 }

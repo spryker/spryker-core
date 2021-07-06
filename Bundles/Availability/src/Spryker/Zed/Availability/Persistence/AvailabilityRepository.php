@@ -96,6 +96,50 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     }
 
     /**
+     * @param string[] $concreteSkus
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     */
+    public function findProductConcreteAvailabilityBySkusAndStore(
+        array $concreteSkus,
+        StoreTransfer $storeTransfer
+    ): array {
+        $storeTransfer->requireIdStore();
+
+        $availabilityEntities = $this->getFactory()
+            ->createSpyAvailabilityQuery()
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->filterBySku($concreteSkus, Criteria::IN)
+            ->find();
+
+        if (!count($availabilityEntities)) {
+            return [];
+        }
+
+        return $this->mapAvailabilityEntityToProductConcreteAvailabilityTransfers($availabilityEntities->getArrayCopy());
+    }
+
+    /**
+     * @param \Orm\Zed\Availability\Persistence\SpyAvailability[] $availabilityEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     */
+    protected function mapAvailabilityEntityToProductConcreteAvailabilityTransfers(array $availabilityEntities): array
+    {
+        $productConcreteAvailabilityTransfers = [];
+        $availabilityMapper = $this->getFactory()->createAvailabilityMapper();
+        foreach ($availabilityEntities as $availabilityEntity) {
+            $productConcreteAvailabilityTransfers[] = $availabilityMapper->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
+                $availabilityEntity,
+                new ProductConcreteAvailabilityTransfer()
+            );
+        }
+
+        return $productConcreteAvailabilityTransfers;
+    }
+
+    /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

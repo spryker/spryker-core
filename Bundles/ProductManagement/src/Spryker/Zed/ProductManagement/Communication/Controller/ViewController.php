@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Shared\ProductManagement\ProductManagementConstants;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageCollectionForm;
 use Spryker\Zed\ProductManagement\Communication\Form\Product\ImageSetForm;
@@ -102,7 +103,7 @@ class ViewController extends AddController
             'productAttributes' => $attributes,
             'imageSetCollection' => $imageSets,
             'imageUrlPrefix' => $this->getFactory()->getConfig()->getImageUrlPrefix(),
-            'taxSet' => $this->getFactory()->getTaxFacade()->getTaxSet($productAbstractTransfer->getIdTaxSet()),
+            'taxSet' => $this->findTaxSet($productAbstractTransfer),
             'renderedPlugins' => $this->getRenderedProductAbstractViewPlugins($idProductAbstract),
             'relatedStoreNames' => $relatedStoreNames,
             'isProductBundle' => $isProductBundle,
@@ -341,5 +342,21 @@ class ViewController extends AddController
         }
 
         return $viewData;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxSetTransfer|null
+     */
+    protected function findTaxSet(ProductAbstractTransfer $productAbstractTransfer): ?TaxSetTransfer
+    {
+        if (!$productAbstractTransfer->getIdTaxSet()) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->getTaxFacade()
+            ->getTaxSet($productAbstractTransfer->getIdTaxSet());
     }
 }

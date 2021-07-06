@@ -15,25 +15,42 @@ use Propel\Runtime\Collection\ObjectCollection;
 class MerchantProductMapper
 {
     /**
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract $merchantProductEntity
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract $merchantProductAbstractEntity
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer
      */
-    public function mapMerchantProductEntityToMerchantProductTransfer(
-        SpyMerchantProductAbstract $merchantProductEntity,
+    public function mapMerchantProductAbstractEntityToMerchantProductTransfer(
+        SpyMerchantProductAbstract $merchantProductAbstractEntity,
         MerchantProductTransfer $merchantProductTransfer
     ): MerchantProductTransfer {
-        $merchantProductTransfer->fromArray($merchantProductEntity->toArray(), true)
-            ->setIdProductAbstract($merchantProductEntity->getFkProductAbstract())
-            ->setIdMerchant($merchantProductEntity->getFkMerchant());
+        $merchantProductTransfer->fromArray($merchantProductAbstractEntity->toArray(), true)
+            ->setIdProductAbstract($merchantProductAbstractEntity->getFkProductAbstract())
+            ->setIdMerchant($merchantProductAbstractEntity->getFkMerchant());
 
         $this->mapConcreteProductsToMerchantProductTransfer(
             $merchantProductTransfer,
-            $merchantProductEntity->getProductAbstract()->getSpyProducts()
+            $merchantProductAbstractEntity->getProductAbstract()->getSpyProducts()
         );
 
         return $merchantProductTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract $merchantProductAbstractEntity
+     *
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract
+     */
+    public function mapMerchantProductTransferToMerchantProductAbstractEntity(
+        MerchantProductTransfer $merchantProductTransfer,
+        SpyMerchantProductAbstract $merchantProductAbstractEntity
+    ): SpyMerchantProductAbstract {
+        $merchantProductAbstractEntity->fromArray($merchantProductTransfer->toArray());
+        $merchantProductAbstractEntity->setFkMerchant($merchantProductTransfer->getIdMerchantOrFail());
+        $merchantProductAbstractEntity->setFkProductAbstract($merchantProductTransfer->getIdProductAbstractOrFail());
+
+        return $merchantProductAbstractEntity;
     }
 
     /**

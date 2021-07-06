@@ -18,9 +18,45 @@ interface RouterConstants
      *
      * @api
      */
+    public const BACKOFFICE_IS_CACHE_ENABLED = 'ROUTER:BACKOFFICE_IS_CACHE_ENABLED';
+
+    /**
+     * Specification:
+     * - Path to where the cache files should be written to.
+     *
+     * @api
+     */
+    public const BACKOFFICE_CACHE_PATH = 'ROUTER:BACKOFFICE_CACHE_PATH';
+
+    /**
+     * Specification:
+     * - If option set to true, the application will create a router cache on the first request of a route.
+     *
+     * @api
+     */
+    public const BACKEND_GATEWAY_IS_CACHE_ENABLED = 'ROUTER:BACKEND_GATEWAY_IS_CACHE_ENABLED';
+
+    /**
+     * Specification:
+     * - Path to where the cache files should be written to.
+     *
+     * @api
+     */
+    public const BACKEND_GATEWAY_CACHE_PATH = 'ROUTER:BACKEND_GATEWAY_CACHE_PATH';
+
+    /**
+     * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::BACKOFFICE_IS_CACHE_ENABLED} instead.
+     *
+     * Specification:
+     * - If option set to true, the application will create a router cache on the first request of a route.
+     *
+     * @api
+     */
     public const ZED_IS_CACHE_ENABLED = 'ROUTER:ZED_IS_CACHE_ENABLED';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::BACKOFFICE_CACHE_PATH} instead.
+     *
      * Specification:
      * - Path to where the cache files should be written to.
      *

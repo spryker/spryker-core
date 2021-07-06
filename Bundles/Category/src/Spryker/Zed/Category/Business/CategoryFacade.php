@@ -10,6 +10,7 @@ namespace Spryker\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
@@ -293,5 +294,19 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     public function getCategoryNodes(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): NodeCollectionTransfer
     {
         return $this->getRepository()->getCategoryNodes($categoryNodeCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     */
+    public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array
+    {
+        return $this->getRepository()->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
     }
 }

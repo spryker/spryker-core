@@ -10,7 +10,6 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserCustomerForm;
-use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
 
@@ -55,7 +54,6 @@ class CompanyUserFormDataProvider
     {
         return [
             'data_class' => CompanyUserTransfer::class,
-            CompanyUserForm::OPTION_COMPANY_CHOICES => $this->prepareCompanyChoices(),
             CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES => $this->getSalutationChoices(),
             CompanyUserCustomerForm::OPTION_GENDER_CHOICES => $this->getGenderChoices(),
         ];
@@ -75,20 +73,6 @@ class CompanyUserFormDataProvider
         }
 
         return $this->companyUserFacade->findCompanyUserById($idCompanyUser) ?? $companyUserTransfer;
-    }
-
-    /**
-     * @return int[] [company name => company id]
-     */
-    protected function prepareCompanyChoices(): array
-    {
-        $result = [];
-
-        foreach ($this->companyFacade->getCompanies()->getCompanies() as $company) {
-            $result[$company->getName()] = $company->getIdCompany();
-        }
-
-        return $result;
     }
 
     /**

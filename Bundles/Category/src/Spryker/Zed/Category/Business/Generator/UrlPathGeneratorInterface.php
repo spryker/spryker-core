@@ -26,4 +26,12 @@ interface UrlPathGeneratorInterface
      * @return string
      */
     public function generate(array $categoryPath): string;
+
+    /**
+     * @param int[] $categoryNodeIds
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return string[]
+     */
+    public function bulkBuildCategoryNodeUrlForLocale(array $categoryNodeIds, LocaleTransfer $localeTransfer): array;
 }

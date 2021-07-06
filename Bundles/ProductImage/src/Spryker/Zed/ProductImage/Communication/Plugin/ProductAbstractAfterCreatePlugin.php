@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductImage\Communication\Plugin\Product\ImageSetProductAbstractPostCreatePlugin} instead.
+ *
  * @method \Spryker\Zed\ProductImage\Business\ProductImageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductImage\Communication\ProductImageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()

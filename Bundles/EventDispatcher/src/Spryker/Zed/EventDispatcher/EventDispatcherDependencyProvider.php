@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Container;
 class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGINS_EVENT_DISPATCHER_PLUGINS = 'PLUGINS_EVENT_DISPATCHER_PLUGINS';
+    public const PLUGINS_BACKEND_GATEWAY_EVENT_DISPATCHER_PLUGINS = 'PLUGINS_BACKEND_GATEWAY_EVENT_DISPATCHER_PLUGINS';
+    public const PLUGINS_BACKEND_API_EVENT_DISPATCHER_PLUGINS = 'PLUGINS_BACKEND_API_EVENT_DISPATCHER_PLUGINS';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -25,6 +27,8 @@ class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addEventDispatcherPlugins($container);
+        $container = $this->addBackendGatewayEventDispatcherPlugins($container);
+        $container = $this->addBackendApiEventDispatcherPlugins($container);
 
         return $container;
     }
@@ -47,6 +51,50 @@ class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
      */
     protected function getEventDispatcherPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackendGatewayEventDispatcherPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKEND_GATEWAY_EVENT_DISPATCHER_PLUGINS, function (Container $container) {
+            return $this->getBackendGatewayEventDispatcherPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
+     */
+    protected function getBackendGatewayEventDispatcherPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackendApiEventDispatcherPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKEND_API_EVENT_DISPATCHER_PLUGINS, function (Container $container) {
+            return $this->getBackendApiEventDispatcherPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
+     */
+    protected function getBackendApiEventDispatcherPlugins(): array
     {
         return [];
     }

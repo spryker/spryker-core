@@ -26,6 +26,7 @@
         <property name="currency" type="Currency"/>
         <property name="netAmount" type="int"/>
         <property name="grossAmount" type="int"/>
+        <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType"/>
     </transfer>
 
     <transfer name="Currency">
@@ -61,6 +62,7 @@
     </transfer>
 
     <transfer name="PriceProductFilter">
+        <property name="identifier" type="string"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="currency" type="Currency"/>
         <property name="priceMode" type="string"/>

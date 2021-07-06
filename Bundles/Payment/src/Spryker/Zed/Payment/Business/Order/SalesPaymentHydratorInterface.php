@@ -9,6 +9,9 @@ namespace Spryker\Zed\Payment\Business\Order;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated The functionality moved to SalesPayment module.
+ */
 interface SalesPaymentHydratorInterface
 {
     /**

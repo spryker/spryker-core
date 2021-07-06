@@ -10,7 +10,7 @@ namespace Spryker\Zed\GiftCard\Communication\Plugin;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface;
+use Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface;
 
 /**
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()

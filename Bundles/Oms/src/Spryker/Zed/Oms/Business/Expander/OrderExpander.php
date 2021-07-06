@@ -96,6 +96,10 @@ class OrderExpander implements OrderExpanderInterface
      */
     protected function getMappedOrderItemsBySalesOrderIds(array $salesOrderIds): array
     {
+        if (!$salesOrderIds) {
+            return [];
+        }
+
         $mappedItemTransfers = [];
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderIds($salesOrderIds);
 

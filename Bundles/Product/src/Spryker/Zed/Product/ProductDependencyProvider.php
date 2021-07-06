@@ -32,10 +32,25 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
     public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
 
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE = 'PRODUCT_ABSTRACT_PLUGINS_BEFORE_CREATE';
+
     public const PRODUCT_ABSTRACT_PLUGINS_BEFORE_UPDATE = 'PRODUCT_ABSTRACT_PLUGINS_BEFORE_UPDATE';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Product\ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_EXPANDER} instead.
+     */
     public const PRODUCT_ABSTRACT_PLUGINS_READ = 'PRODUCT_ABSTRACT_PLUGINS_READ';
+    public const PLUGINS_PRODUCT_ABSTRACT_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_EXPANDER';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Product\ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_POST_CREATE} instead.
+     */
     public const PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE = 'PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE';
+    public const PLUGINS_PRODUCT_ABSTRACT_POST_CREATE = 'PLUGINS_PRODUCT_ABSTRACT_POST_CREATE';
+
     public const PRODUCT_ABSTRACT_PLUGINS_AFTER_UPDATE = 'PRODUCT_ABSTRACT_PLUGINS_AFTER_UPDATE';
 
     public const PRODUCT_CONCRETE_PLUGINS_BEFORE_CREATE = 'PRODUCT_CONCRETE_PLUGINS_BEFORE_CREATE';
@@ -59,7 +74,9 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addEventFacade($container);
         $container = $this->addProductAbstractBeforeCreatePlugins($container);
         $container = $this->addProductAbstractAfterCreatePlugins($container);
+        $container = $this->addProductAbstractPostCreatePlugins($container);
         $container = $this->addProductAbstractReadPlugins($container);
+        $container = $this->addProductAbstractExpanderPlugins($container);
         $container = $this->addProductAbstractBeforeUpdatePlugin($container);
         $container = $this->addProductAbstractAfterUpdatePlugins($container);
         $container = $this->addProductConcreteBeforeCreatePlugins($container);
@@ -156,6 +173,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -170,6 +189,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Product\ProductDependencyProvider::addProductAbstractPostCreatePlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -188,10 +209,40 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addProductAbstractPostCreatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_POST_CREATE, function () {
+            return $this->getProductAbstractPostCreatePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Product\ProductDependencyProvider::addProductAbstractExpanderPlugins()} instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addProductAbstractReadPlugins(Container $container): Container
     {
         $container->set(static::PRODUCT_ABSTRACT_PLUGINS_READ, function (Container $container) {
             return $this->getProductAbstractReadPlugins($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_EXPANDER, function (Container $container) {
+            return $this->getProductAbstractExpanderPlugins($container);
         });
 
         return $container;
@@ -333,6 +384,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
@@ -343,6 +396,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Product\ProductDependencyProvider::getProductAbstractPostCreatePlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
@@ -353,11 +408,31 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[]
+     */
+    protected function getProductAbstractPostCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Product\ProductDependencyProvider::getProductAbstractExpanderPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
      */
     protected function getProductAbstractReadPlugins(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface[]
+     */
+    protected function getProductAbstractExpanderPlugins(Container $container): array
     {
         return [];
     }
@@ -385,7 +460,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[]
+     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCreatePluginInterface[]
      */
     protected function getProductConcreteBeforeCreatePlugins(Container $container)
     {
@@ -395,7 +470,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginCreateInterface[]
+     * @return \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCreatePluginInterface[]
      */
     protected function getProductConcreteAfterCreatePlugins(Container $container)
     {

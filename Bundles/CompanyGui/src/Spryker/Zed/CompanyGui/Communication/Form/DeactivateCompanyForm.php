@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
  * will be defined in Twig templates.
  *
  * @method \Spryker\Zed\CompanyGui\Communication\CompanyGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyGui\CompanyGuiConfig getConfig()
  */
 class DeactivateCompanyForm extends AbstractType
 {

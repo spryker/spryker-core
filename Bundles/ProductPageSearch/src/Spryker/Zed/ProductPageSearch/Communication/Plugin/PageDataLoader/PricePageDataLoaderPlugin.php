@@ -24,21 +24,21 @@ class PricePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
-        $productAbstractIds = $loadTransfer->getProductAbstractIds();
+        $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
 
         $pricesByIdProductAbstract = $this->findPricesByIdProductAbstractIn($productAbstractIds);
 
-        $loadTransfer->setPayloadTransfers(
-            $this->updatePayloadTransfers($loadTransfer->getPayloadTransfers(), $pricesByIdProductAbstract)
+        $productPageLoadTransfer->setPayloadTransfers(
+            $this->updatePayloadTransfers($productPageLoadTransfer->getPayloadTransfers(), $pricesByIdProductAbstract)
         );
 
-        return $loadTransfer;
+        return $productPageLoadTransfer;
     }
 
     /**

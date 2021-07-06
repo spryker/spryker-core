@@ -30,9 +30,14 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
     public const PLUGINS_AVAILABILITY_STRATEGY = 'PLUGINS_AVAILABILITY_STRATEGY';
+
+    public const PLUGINS_BATCH_AVAILABILITY_STRATEGY = 'PLUGINS_BATCH_AVAILABILITY_STRATEGY';
+
     public const PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY = 'PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY';
 
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
+
+    public const SERVICE_AVAILABILITY = 'SERVICE_AVAILABILITY';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -50,6 +55,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
 
         $container = $this->addAvailabilityStrategyPlugins($container);
         $container = $this->addCartItemQuantityCounterStrategyPlugins($container);
+        $container = $this->addBatchAvailabilityStrategyPlugins($container);
 
         return $container;
     }
@@ -62,6 +68,7 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container = $this->addProductQueryContainer($container);
+        $container = $this->addAvailabilityService($container);
 
         return $container;
     }
@@ -171,6 +178,20 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addBatchAvailabilityStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BATCH_AVAILABILITY_STRATEGY, function () {
+            return $this->getBatchAvailabilityStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCartItemQuantityCounterStrategyPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY, function () {
@@ -184,6 +205,14 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[]
      */
     protected function getAvailabilityStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[]
+     */
+    protected function getBatchAvailabilityStrategyPlugins(): array
     {
         return [];
     }
@@ -205,6 +234,20 @@ class AvailabilityDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new AvailabilityToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAvailabilityService(Container $container): Container
+    {
+        $container->set(static::SERVICE_AVAILABILITY, function (Container $container) {
+            return $container->getLocator()->availability()->service();
         });
 
         return $container;

@@ -10,6 +10,7 @@
         <property name="companyUserTransfer" type="CompanyUser"/>
         <property name="idCustomer" type="int"/>
         <property name="customerReference" type="string"/>
+        <property name="isActiveCompanyUserExists" type="bool"/>
     </transfer>
 
     <transfer name="CompanyUser">

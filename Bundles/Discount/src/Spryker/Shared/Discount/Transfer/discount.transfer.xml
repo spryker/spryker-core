@@ -87,6 +87,7 @@
         <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
         <property name="currency" type="Currency"/>
         <property name="idSalesOrder" type="int"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
     </transfer>
 
     <transfer name="OrderItems">

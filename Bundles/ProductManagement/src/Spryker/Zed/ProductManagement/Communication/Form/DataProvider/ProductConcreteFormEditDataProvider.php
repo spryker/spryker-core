@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\DataProvider;
 
-use Everon\Component\Collection\Collection;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -22,6 +21,7 @@ use Spryker\Zed\ProductManagement\Communication\Form\Product\SeoForm;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductConcreteFormEdit;
 use Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface;
+use Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductImageInterface;
 use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface;
@@ -52,12 +52,12 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
      * @param \Generated\Shared\Transfer\LocaleTransfer $currentLocale
-     * @param array $attributeCollection
      * @param array $taxCollection
      * @param string $imageUrlPrefix
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface $store
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface $productStockHelper
      * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[] $formEditDataProviderExpanderPlugins
+     * @param \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null $productAttributeReader
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -69,12 +69,12 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
         ProductManagementToPriceProductInterface $priceProductFacade,
         LocaleProvider $localeProvider,
         LocaleTransfer $currentLocale,
-        array $attributeCollection,
         array $taxCollection,
         $imageUrlPrefix,
         ProductManagementToStoreInterface $store,
         ProductStockHelperInterface $productStockHelper,
-        array $formEditDataProviderExpanderPlugins
+        array $formEditDataProviderExpanderPlugins,
+        ?ProductAttributeReaderInterface $productAttributeReader = null
     ) {
         parent::__construct(
             $categoryQueryContainer,
@@ -86,13 +86,12 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
             $priceProductFacade,
             $localeProvider,
             $currentLocale,
-            $attributeCollection,
             $taxCollection,
             $imageUrlPrefix,
-            $store
+            $store,
+            $productAttributeReader
         );
 
-        $this->attributeTransferCollection = new Collection($attributeCollection);
         $this->productStockHelper = $productStockHelper;
         $this->formEditDataProviderExpanderPlugins = $formEditDataProviderExpanderPlugins;
     }

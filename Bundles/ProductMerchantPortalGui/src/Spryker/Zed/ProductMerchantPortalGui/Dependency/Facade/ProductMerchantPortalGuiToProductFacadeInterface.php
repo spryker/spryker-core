@@ -45,6 +45,31 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
     public function deactivateProductConcrete($idProductConcrete);
 
     /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductAbstract($sku);
+
+    /**
+     * @param string $sku
+     *
+     * @return bool
+     */
+    public function hasProductConcrete($sku);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
+     *
+     * @return int
+     */
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+
+    /**
      * @param int $idConcrete
      *
      * @return int|null
