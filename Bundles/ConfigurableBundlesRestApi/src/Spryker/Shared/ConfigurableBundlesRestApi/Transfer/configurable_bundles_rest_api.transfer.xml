@@ -54,6 +54,9 @@
     </transfer>
 
     <transfer name="Item">
+        <property name="groupKey" type="string"/>
+        <property name="configuredBundle" type="ConfiguredBundle"/>
+        <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
         <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
         <property name="salesOrderConfiguredBundleItem" type="SalesOrderConfiguredBundleItem"/>
     </transfer>
@@ -90,4 +93,66 @@
         <property name="fkConfigurableBundleTemplate" type="int"/>
     </transfer>
 
+    <transfer name="RestQuoteRequestsConfiguredBundle">
+        <property name="template" type="RestQuoteRequestConfigurableBundleTemplate"/>
+        <property name="quantity" type="int"/>
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestItem">
+        <property name="configuredBundle" type="RestQuoteRequestsConfiguredBundle"/>
+        <property name="configuredBundleItem" type="RestQuoteRequestsConfiguredBundleItem"/>
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsConfiguredBundleItem">
+        <property name="slot" type="RestQuoteRequestConfigurableBundleTemplateSlot"/>
+        <property name="quantityPerSlot" type="int"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestConfigurableBundleTemplate">
+        <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestConfigurableBundleTemplateSlot">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequest">
+        <property name="quoteRequestReference" type="string"/>
+        <property name="latestVersion" type="QuoteRequestVersion"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsAttributes">
+        <property name="shownVersion" type="RestQuoteRequestVersion"/>
+        <property name="quoteRequestReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequestVersion">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestVersion">
+        <property name="cart" type="RestQuoteRequestsCart"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsCart">
+        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundle">
+        <property name="template" type="ConfigurableBundleTemplate"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundleItem">
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplate">
+        <property name="name" type="string"/>
+    </transfer>
 </transfers>

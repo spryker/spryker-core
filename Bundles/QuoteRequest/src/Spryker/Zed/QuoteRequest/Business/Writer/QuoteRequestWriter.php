@@ -27,6 +27,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
     use TransactionTrait;
 
     protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY = 'quote_request.validation.error.cart_is_empty';
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
     protected const GLOSSARY_KEY_CONCURRENT_CUSTOMERS = 'quote_request.update.validation.concurrent';
 
@@ -138,7 +139,7 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
         $quoteRequestTransfer
             ->requireCompanyUser()
             ->getCompanyUser()
-                ->requireIdCompanyUser();
+            ->requireIdCompanyUser();
 
         $customerReference = $this->quoteRequestReader->findCustomerReference($quoteRequestTransfer->getCompanyUser());
 
@@ -155,11 +156,16 @@ class QuoteRequestWriter implements QuoteRequestWriterInterface
 
         $quoteRequestVersionTransfer = $quoteRequestTransfer->requireLatestVersion()->getLatestVersion();
 
+        if ($quoteRequestVersionTransfer->getQuote() === null || !$quoteRequestVersionTransfer->getQuote()->getItems()->count()) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY);
+        }
+
         $quoteRequestVersionTransfer = $this->quoteRequestVersionSanitizer->recalculateQuoteRequestVersionQuote($quoteRequestVersionTransfer);
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
 
         $quoteRequestVersionTransfer = $this->createQuoteRequestVersionTransfer($quoteRequestTransfer);
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
+        $quoteRequestTransfer->setQuoteRequestVersions(new ArrayObject([$quoteRequestTransfer->getLatestVersionOrFail()]));
 
         return $this->createSuccessfulResponse($quoteRequestTransfer);
     }

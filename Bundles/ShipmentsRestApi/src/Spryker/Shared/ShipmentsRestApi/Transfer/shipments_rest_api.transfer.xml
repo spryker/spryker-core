@@ -234,4 +234,40 @@
         <property name="isGiftCard" type="bool"/>
     </transfer>
 
+    <transfer name="RestQuoteRequestShipment">
+        <property name="method" type="string"/>
+        <property name="shippingAddress" type="RestQuoteRequestsAddress"/>
+        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsCart">
+        <property name="shipments" type="RestQuoteRequestShipment[]" singular="shipment"/>
+        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="QuoteRequest">
+        <property name="quoteRequestReference" type="string"/>
+        <property name="latestVersion" type="QuoteRequestVersion"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsAttributes">
+        <property name="shownVersion" type="RestQuoteRequestVersion"/>
+        <property name="quoteRequestReference" type="string"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsAddress">
+    </transfer>
+
+    <transfer name="RestQuoteRequestItem">
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequestVersion">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestVersion">
+        <property name="cart" type="RestQuoteRequestsCart"/>
+    </transfer>
+
 </transfers>

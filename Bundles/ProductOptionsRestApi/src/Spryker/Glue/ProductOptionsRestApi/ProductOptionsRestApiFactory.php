@@ -18,6 +18,8 @@ use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProduct
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductAbstractSkuExpanderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductConcreteSkuExpander;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\ProductOptionByProductConcreteSkuExpanderInterface;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\QuoteRequestItemExpander;
+use Spryker\Glue\ProductOptionsRestApi\Processor\Expander\QuoteRequestItemExpanderInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapper;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Mapper\ProductOptionMapperInterface;
 use Spryker\Glue\ProductOptionsRestApi\Processor\Reader\ProductOptionStorageReader;
@@ -135,5 +137,15 @@ class ProductOptionsRestApiFactory extends AbstractFactory
     public function createProductOptionByProductConcreteSkuExpander(): ProductOptionByProductConcreteSkuExpanderInterface
     {
         return new ProductOptionByProductConcreteSkuExpander($this->createProductOptionStorageReader());
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductOptionsRestApi\Processor\Expander\QuoteRequestItemExpanderInterface
+     */
+    public function createQuoteRequestItemExpander(): QuoteRequestItemExpanderInterface
+    {
+        return new QuoteRequestItemExpander(
+            $this->getGlossaryStorageClient()
+        );
     }
 }

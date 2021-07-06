@@ -41,7 +41,7 @@ interface CompanyBusinessUnitRestResponseBuilderInterface
     ): RestResourceInterface;
 
     /**
-     * @param array $companyBusinessUnitRestResources
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $companyBusinessUnitRestResources
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

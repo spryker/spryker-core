@@ -3,24 +3,28 @@
 
     <transfer name="RestQuoteRequestsAttributes">
         <property name="status" type="string"/>
+        <property name="isLatestVersionVisible" type="bool"/>
         <property name="quoteRequestReference" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="validUntil" type="string"/>
-        <property name="versions" type="RestQuoteRequestVersion[]" singular="version"/>
+        <property name="versions" type="string[]" singular="version"/>
         <property name="shownVersion" type="RestQuoteRequestVersion"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestCancelAttributes">
     </transfer>
 
     <transfer name="RestQuoteRequestVersion">
         <property name="version" type="int"/>
         <property name="versionReference" type="string"/>
         <property name="createdAt" type="string"/>
-        <property name="meta" type="array" singular="meta"/>
+        <property name="metadata" type="array" singular="metadata"/>
         <property name="cart" type="RestQuoteRequestsCart"/>
     </transfer>
 
     <transfer name="RestQuoteRequestsRequestAttributes">
         <property name="cartUuid" type="string" restRequestParameter="required"/>
-        <property name="meta" type="array" singular="meta" restRequestParameter="yes"/>
+        <property name="metadata" type="array" singular="metadata" restRequestParameter="yes"/>
     </transfer>
 
     <transfer name="RestQuoteRequestsCart">
@@ -28,10 +32,8 @@
         <property name="store" type="string"/>
         <property name="currency" type="string"/>
         <property name="totals" type="RestQuoteRequestsTotals"/>
-        <property name="discounts" type="RestQuoteRequestsDiscounts[]" singular="discount"/>
         <property name="billingAddress" type="RestQuoteRequestsAddress"/>
-        <property name="shipments" type="RestQuoteRequestShipment[]" singular="shipment"/>
-        <property name="items" type="RestQuoteRequestsItem[]" singular="item"/>
+        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
     </transfer>
 
     <transfer name="RestQuoteRequestsTotals">
@@ -66,22 +68,7 @@
         <property name="isDefaultBilling" type="bool"/>
     </transfer>
 
-    <transfer name="RestQuoteRequestShipment">
-        <property name="method" type="RestQuoteRequestShipmentMethod"/>
-        <property name="shippingAddress" type="RestQuoteRequestsAddress"/>
-        <property name="items" type="string[]" singular="item"/>
-        <property name="requestedDeliveryDate" type="string"/>
-    </transfer>
-
-    <transfer name="RestQuoteRequestShipmentMethod">
-        <property name="name" type="string"/>
-        <property name="carrierName" type="string"/>
-        <property name="deliveryTime" type="int"/>
-        <property name="price" type="int"/>
-        <property name="currencyIsoCode" type="string"/>
-    </transfer>
-
-    <transfer name="RestQuoteRequestsItem">
+    <transfer name="RestQuoteRequestItem">
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="groupKey" type="string"/>
@@ -133,48 +120,26 @@
         <property name="detail" type="string"/>
     </transfer>
 
-    <transfer name="Message">
-        <property name="message" type="string"/>
-        <property name="value" type="string"/>
-    </transfer>
-
-    <transfer name="QuoteRequest">
-        <property name="quoteRequestReference" type="string"/>
-        <property name="latestVersion" type="QuoteRequestVersion"/>
-        <property name="companyUser" type="CompanyUser"/>
-    </transfer>
-
     <transfer name="Quote">
+        <property name="customer" type="Customer"/>
+        <property name="companyUser" type="CompanyUser"/>
         <property name="uuid" type="string"/>
         <property name="customerReference" type="string"/>
-        <property name="customer" type="Customer"/>
-        <property name="priceMode" type="string"/>
-        <property name="store" type="Store"/>
-        <property name="billingAddress" type="Address"/>
-        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
-        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="currency" type="Currency"/>
-        <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
         <property name="totals" type="Totals"/>
-        <property name="expenses" type="Expense[]" singular="expense"/>
-    </transfer>
-
-    <transfer name="Discount">
-        <property name="voucherCode" type="string"/>
     </transfer>
 
     <transfer name="ShipmentGroup">
         <property name="items" type="Item[]" singular="item"/>
-        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="groupKey" type="string"/>
-        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="CompanyUser">
         <property name="idCompanyUser" type="int"/>
+        <property name="customer" type="Customer"/>
     </transfer>
 
     <transfer name="RestUser">
@@ -185,29 +150,39 @@
 
     <transfer name="Customer">
         <property name="idCustomer" type="int"/>
-        <property name="customerReference" type="string"/>
         <property name="companyUserTransfer" type="CompanyUser"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="QuoteResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="quoteTransfer" type="Quote"/>
+        <property name="errors" type="QuoteError[]" singular="error"/>
+    </transfer>
 
+    <transfer name="QuoteRequest">
+        <property name="companyUser" type="CompanyUser"/>
+        <property name="validUntil" type="string"/>
+        <property name="quoteRequestVersions" type="QuoteRequestVersion[]" singular="quoteRequestVersion"/>
+        <property name="latestVersion" type="QuoteRequestVersion"/>
+        <property name="quoteRequestReference" type="string"/>
     </transfer>
 
     <transfer name="QuoteRequestVersion">
         <property name="quote" type="Quote"/>
+        <property name="versionReference" type="string"/>
         <property name="metadata" type="array" singular="metadata"/>
     </transfer>
 
-    <transfer name="RestQuoteRequestCancelAttributes">
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="message" type="string"/>
     </transfer>
 
-    <transfer name="QuoteRequestFilter">
-        <property name="companyUser" type="CompanyUser"/>
-        <property name="idCompanyUser" type="int"/>
-        <property name="quoteRequestReference" type="string"/>
-        <property name="pagination" type="Pagination"/>
+    <transfer name="Pagination">
+        <property name="nbResults" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="page" type="int"/>
     </transfer>
 
     <transfer name="QuoteRequestCollection">
@@ -223,34 +198,19 @@
         <property name="name" type="string"/>
     </transfer>
 
-    <transfer name="Address">
-    </transfer>
-
     <transfer name="Totals">
-        <property name="taxTotal" type="TaxTotal"/>
     </transfer>
 
-    <transfer name="TaxTotal">
-        <property name="amount" type="int"/>
+    <transfer name="QuoteError">
+        <property name="message" type="string"/>
+        <property name="errorIdentifier" type="string"/>
     </transfer>
 
-    <transfer name="Shipment">
-        <property name="shippingAddress" type="Address"/>
-        <property name="method" type="ShipmentMethod"/>
-        <property name="requestedDeliveryDate" type="string"/>
+    <transfer name="QuoteRequestFilter">
+        <property name="companyUser" type="CompanyUser"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="quoteRequestReference" type="string"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="withVersions" type="bool"/>
     </transfer>
-
-    <transfer name="Expense">
-    </transfer>
-
-    <transfer name="Pagination">
-        <property name="maxPerPage" type="int"/>
-        <property name="nbResults" type="int"/>
-        <property name="page" type="int"/>
-    </transfer>
-
-    <transfer name="ShipmentMethod">
-        <property name="storeCurrencyPrice" type="int"/>
-    </transfer>
-
 </transfers>

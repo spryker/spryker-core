@@ -31,8 +31,8 @@ class ConcreteProductsByProductConcreteIdsResourceRelationshipPlugin extends Abs
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createConcreteProductsRelationshipExpander()
-            ->addResourceRelationshipsByProductConcreteIds($resources, $restRequest);
+            ->createConcreteProductsByProductConcreteIdsResourceRelationshipExpander()
+            ->addResourceRelationships($resources, $restRequest);
     }
 
     /**
