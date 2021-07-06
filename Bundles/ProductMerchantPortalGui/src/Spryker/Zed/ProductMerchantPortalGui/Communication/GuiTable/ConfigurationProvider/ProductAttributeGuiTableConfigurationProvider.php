@@ -9,8 +9,9 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Configurat
 
 use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
+use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider;
 
 class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeGuiTableConfigurationProviderInterface
 {
@@ -26,20 +27,20 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
     protected $guiTableFactory;
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProviderInterface
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider
      */
-    protected $productAttributeTableDataProvider;
+    protected $productAttributeDataProvider;
 
     /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProviderInterface $productAttributeTableDataProvider
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider $productAttributeDataProvider
      */
     public function __construct(
         GuiTableFactoryInterface $guiTableFactory,
-        ProductAttributeTableDataProviderInterface $productAttributeTableDataProvider
+        ProductAttributeDataProvider $productAttributeDataProvider
     ) {
         $this->guiTableFactory = $guiTableFactory;
-        $this->productAttributeTableDataProvider = $productAttributeTableDataProvider;
+        $this->productAttributeDataProvider = $productAttributeDataProvider;
     }
 
     /**
@@ -69,10 +70,14 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
         }
 
         $guiTableConfigurationBuilder
-            ->setDataSourceInlineData($this->productAttributeTableDataProvider->getData($attributes, $localizedAttributeTransfers))
+            ->setDataSourceInlineData($this->productAttributeDataProvider->getData($attributes, $localizedAttributeTransfers))
             ->setIsPaginationEnabled(false)
             ->isSearchEnabled(false);
 
-        return $guiTableConfigurationBuilder->createConfiguration();
+        $guiTableConfigurationTransfer = $guiTableConfigurationBuilder->createConfiguration();
+        $guiTableConfigurationTransfer->getDataSourceOrFail()
+            ->setType(GuiTableConfigurationBuilderInterface::DATA_SOURCE_TYPE_INLINE_TABLE);
+
+        return $guiTableConfigurationTransfer;
     }
 }

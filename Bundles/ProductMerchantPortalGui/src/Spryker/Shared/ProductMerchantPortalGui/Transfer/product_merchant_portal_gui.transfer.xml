@@ -81,7 +81,9 @@
     </transfer>
 
     <transfer name="ProductImage">
+        <property name="sortOrder" type="int"/>
         <property name="externalUrlSmall" type="string"/>
+        <property name="externalUrlLarge" type="string"/>
     </transfer>
 
     <transfer name="ProductImageSet">
@@ -322,6 +324,14 @@
         <property name="translation" type="string"/>
     </transfer>
 
+    <transfer name="ProductAttributeTableCriteria">
+        <property name="idProductAbstract" type="int"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
     <transfer name="Merchant">
     </transfer>
 
@@ -338,5 +348,4 @@
     <transfer name="ReservationResponse">
         <property name="reservationQuantity" type="decimal"/>
     </transfer>
-
 </transfers>

@@ -42,6 +42,8 @@ import { CreateMultiConcreteProductComponent } from './create-multi-concrete-pro
 import { CreateMultiConcreteProductModule } from './create-multi-concrete-product/create-multi-concrete-product.module';
 import { ConcreteProductGeneratorDataComponent } from './concrete-product-generator-data/concrete-product-generator-data.component';
 import { ConcreteProductGeneratorDataModule } from './concrete-product-generator-data/concrete-product-generator-data.module';
+import { EditConcreteProductImageSetsComponent } from './edit-concrete-product-image-sets/edit-concrete-product-image-sets.component';
+import { EditConcreteProductImageSetsModule } from './edit-concrete-product-image-sets/edit-concrete-product-image-sets.module';
 
 @NgModule({
     imports: [
@@ -72,6 +74,7 @@ import { ConcreteProductGeneratorDataModule } from './concrete-product-generator
             AutogenerateInputComponent,
             CreateMultiConcreteProductComponent,
             ConcreteProductGeneratorDataComponent,
+            EditConcreteProductImageSetsComponent,
         ]),
         DateRangePickerModule,
         TabsModule,
@@ -86,6 +89,7 @@ import { ConcreteProductGeneratorDataModule } from './concrete-product-generator
         IconNoDataModule,
         IconPlusModule,
         RadioModule,
+        ProductListModule,
         ImageSetsModule,
         ButtonActionModule,
         EditAbstractProductAttributesModule,
@@ -93,6 +97,7 @@ import { ConcreteProductGeneratorDataModule } from './concrete-product-generator
         EditConcreteProductPricesModule,
         EditConcreteProductAttributesModule,
         EditConcreteProductModule,
+        EditConcreteProductImageSetsModule,
         ProductListModule,
         EditAbstractProductModule,
         BulkEditProductVariantsModule,

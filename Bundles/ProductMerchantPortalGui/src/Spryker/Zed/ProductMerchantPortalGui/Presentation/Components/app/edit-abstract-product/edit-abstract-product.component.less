@@ -1,18 +1,17 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
 @edit-abstract-product-padding: 30px;
+@edit-abstract-product-header-padding: 15px 30px;
+@edit-abstract-product-header-headline-padding-bottom: 0;
+@edit-abstract-product-title-margin-bottom: 7px;
 @edit-abstract-product-common-blocks-indent: 7px;
 @edit-abstract-product-common-padding-bottom: 30px;
-@edit-abstract-product-title-padding-bottom: 15px;
-@edit-abstract-product-default-spacing-top: 20px;
-@edit-abstract-information-margin: -@edit-abstract-product-padding -@edit-abstract-product-padding 0;
-@edit-abstract-heading-margin: 0 -@edit-abstract-product-common-blocks-indent;
-@edit-abstract-heading-padding: 0 @edit-abstract-product-common-blocks-indent;
-@edit-abstract-card-padding-bottom: 20px;
-@edit-abstract-table-padding-inside-card: 3px 5px;
-@edit-abstract-collapsible-padding-bottom: 10px;
-@edit-abstract-stores-field-max-width: 420px;
-@edit-abstract-form-item-width: 130px;
+@edit-abstract-product-sub-title-margin: 0;
+@edit-abstract-product-card-padding-bottom: 20px;
+@edit-abstract-product-card-last-padding-bottom: 0;
+@edit-abstract-product-table-padding-inside-card: 3px 5px;
+@edit-abstract-product-stores-field-max-width: 420px;
+@edit-abstract-product-form-item-width: 130px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -25,53 +24,51 @@
 .mp-edit-abstract-product {
     display: block;
     height: 100%;
-    padding: @edit-abstract-product-padding;
     background: @gray-lighter;
     font: @font-default;
     letter-spacing: @letter-spacing-base;
     color: @ink;
     overflow-y: auto;
 
-    &__information {
-        margin: @edit-abstract-information-margin;
-        padding: @edit-abstract-product-padding;
+    &__header {
         background: @white;
-    }
+        padding: @edit-abstract-product-header-padding;
 
-    &__heading {
-        display: flex;
-        justify-content: space-between;
-        margin: @edit-abstract-heading-margin;
+        .@{headline-prefix-cls} {
+            padding-bottom: @edit-abstract-product-header-headline-padding-bottom;
+        }
 
-        &-col {
-            padding: @edit-abstract-heading-padding;
+        .@{headline-prefix-cls}__row {
+            align-items: unset;
         }
     }
 
     &__title {
-        font-size: @heading-3-font-size;
-        font-weight: @font-weight-semi-bold;
-        padding-bottom: @edit-abstract-product-title-padding-bottom;
+        color: @gray-darker;
+        font-size: @font-size-base;
+        font-weight: @font-weight-medium;
+        margin-bottom: @edit-abstract-product-title-margin-bottom;
+        letter-spacing: @letter-spacing-base;
     }
 
-    &__sku {
-        display: block;
-        color: @gray-dark;
+    &__sub-title {
         font-size: @font-size-lg;
         font-weight: @font-weight-semi-bold;
+        letter-spacing: @letter-spacing-base;
+        margin: @edit-abstract-product-sub-title-margin;
     }
 
     &__content {
         display: block;
-        padding-top: @edit-abstract-product-default-spacing-top;
+        padding: @edit-abstract-product-padding;
     }
 
     &__card {
         display: block;
-        padding-bottom: @edit-abstract-card-padding-bottom;
+        padding-bottom: @edit-abstract-product-card-padding-bottom;
 
         &:last-child {
-            padding-bottom: 0;
+            padding-bottom: @edit-abstract-product-card-last-padding-bottom;
         }
 
         .@{table-prefix-cls},
@@ -80,25 +77,16 @@
         }
 
         .@{table-prefix-cls} {
-            padding: @edit-abstract-table-padding-inside-card;
-        }
-    }
-
-    &__collapsible {
-        display: block;
-        padding-bottom: @edit-abstract-collapsible-padding-bottom;
-
-        &:last-child {
-            padding-bottom: 0;
+            padding: @edit-abstract-product-table-padding-inside-card;
         }
     }
 
     &__md-field {
         display: block;
-        max-width: @edit-abstract-stores-field-max-width;
+        max-width: @edit-abstract-product-stores-field-max-width;
     }
 
     .@{table-editable-feature-prefix-cls}__cell .@{form-prefix-cls}-item {
-        width: @edit-abstract-form-item-width;
+        width: @edit-abstract-product-form-item-width;
     }
 }

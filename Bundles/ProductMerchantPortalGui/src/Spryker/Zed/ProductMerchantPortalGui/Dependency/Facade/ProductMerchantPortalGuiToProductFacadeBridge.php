@@ -105,4 +105,14 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
     {
         return $this->productFacade->addProduct($productAbstractTransfer, $productConcreteCollection);
     }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractById($idProductAbstract)
+    {
+        return $this->productFacade->findProductAbstractById($idProductAbstract);
+    }
 }

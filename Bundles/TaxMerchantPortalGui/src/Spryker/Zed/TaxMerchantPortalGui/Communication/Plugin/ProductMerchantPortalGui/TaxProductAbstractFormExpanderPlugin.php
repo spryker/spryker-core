@@ -12,14 +12,32 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Zed\TaxMerchantPortalGui\Communication\TaxMerchantPortalGuiCommunicationFactory getFactory()
  */
 class TaxProductAbstractFormExpanderPlugin extends AbstractPlugin implements ProductAbstractFormExpanderPluginInterface
 {
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm::GROUP_WITH_STORES
+     */
+    protected const GROUP_WITH_STORES = 'stores';
+
+    /**
+     * @const
+     */
     protected const LABEL_ID_TAX_SET = 'Tax Set';
+
+    /**
+     * @const
+     */
     protected const PLACEHOLDER_ID_TAX_SET = 'Select tax set';
+
+    /**
+     * @const
+     */
+    protected const MESSAGE_VALIDATION_NOT_BLANK_ERROR = 'The value cannot be blank. Please fill in this input';
 
     /**
      * {@inheritDoc}
@@ -44,9 +62,23 @@ class TaxProductAbstractFormExpanderPlugin extends AbstractPlugin implements Pro
             'placeholder' => static::PLACEHOLDER_ID_TAX_SET,
             'required' => false,
             'choices' => $this->getFactory()->createTaxProductAbstractFormDataProvider()->getTaxChoices(),
-            'empty_data' => (string)$builder->getData()->getIdTaxSet(),
+            'empty_data' => '',
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+            ],
         ]);
 
         return $builder;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank([
+            'message' => static::MESSAGE_VALIDATION_NOT_BLANK_ERROR,
+            'groups' => static::GROUP_WITH_STORES,
+        ]);
     }
 }

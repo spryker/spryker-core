@@ -103,6 +103,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
 
         $container = $this->addProductAbstractFormExpanderPlugins($container);
         $container = $this->addProductConcreteTableExpanderPlugins($container);
+        $container = $this->addProductAttributeFacade($container);
 
         $container = $this->addValidationAdapter($container);
 

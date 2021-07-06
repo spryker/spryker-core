@@ -1,16 +1,50 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
 @edit-image-sets-padding: 20px;
+@edit-image-sets-margin-top: 20px;
 @edit-image-sets-radius: 10px;
+@edit-image-sets-order-max-width: 130px;
 @edit-image-sets-title-padding-bottom: 20px;
-@edit-image-sets-images-padding: 5px;
-@edit-image-sets-images-size: 60px + @edit-image-sets-images-padding * 2;
+@edit-image-sets-images-row-margin-top: 25px;
+@edit-image-sets-image-container-margin: 5px 0 25px;
+@edit-image-sets-image-size: 50px;
 
 .mp-image-sets {
     display: block;
-    padding: @edit-image-sets-padding;
-    border-radius: @edit-image-sets-radius;
     background: @white;
+
+    &__set,
+    &__images {
+        background: @gray-lighter;
+        border-radius: @edit-image-sets-radius;
+        padding: @edit-image-sets-padding;
+        margin-top: @edit-image-sets-margin-top;
+    }
+
+    &__images {
+        background: @white;
+    }
+
+    &__button-remove-set-container,
+    &__button-remove-set-data-container {
+        text-align: right;
+    }
+
+    &__order-input {
+        max-width: @edit-image-sets-order-max-width;
+        display: block;
+    }
+
+    &__images-row {
+        margin-top: @edit-image-sets-images-row-margin-top;
+    }
+
+    &__image-container {
+        width: @edit-image-sets-image-size;
+        height: @edit-image-sets-image-size;
+        margin: @edit-image-sets-image-container-margin;
+        text-align: center;
+    }
 
     &__title {
         display: block;
@@ -19,28 +53,17 @@
         padding-bottom: @edit-image-sets-title-padding-bottom;
     }
 
-    &__name {
-        color: @ink;
-    }
-
-    &__images {
-        display: flex;
-        flex-wrap: wrap;
-        margin: -@edit-image-sets-images-padding;
-    }
-
-    &__image-container {
-        width: @edit-image-sets-images-size;
-        height: @edit-image-sets-images-size;
-        padding: @edit-image-sets-images-padding;
-        text-align: center;
-    }
-
     &__image {
         max-width: 100%;
         max-height: 100%;
         position: relative;
         top: 50%;
         transform: translateY(-50%);
+    }
+
+    &__button {
+        &--add-images {
+            margin-top: @edit-image-sets-margin-top;
+        }
     }
 }

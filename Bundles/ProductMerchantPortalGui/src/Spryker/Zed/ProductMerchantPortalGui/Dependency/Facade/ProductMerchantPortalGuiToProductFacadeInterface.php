@@ -75,4 +75,11 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
      * @return int|null
      */
     public function findProductAbstractIdByConcreteId(int $idConcrete): ?int;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractById($idProductAbstract);
 }

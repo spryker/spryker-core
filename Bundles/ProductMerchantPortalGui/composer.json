@@ -8,7 +8,7 @@
         "spryker/category": "^4.21.0 || ^5.0.0",
         "spryker/currency": "^3.0.0",
         "spryker/decimal-object": "^1.0.0",
-        "spryker/gui-table": "^0.4.4",
+        "spryker/gui-table": "^0.4.5",
         "spryker/kernel": "^3.51.0",
         "spryker/laminas": "^1.0.0",
         "spryker/locale": "^3.0.0",
@@ -29,21 +29,27 @@
         "spryker/transfer": "^3.25.0",
         "spryker/translator": "^1.1.0",
         "spryker/util-encoding": "^2.0.0",
-        "spryker/zed-ui": "^0.4.3"
+        "spryker/zed-ui": "^0.4.4 || ^0.5.0"
     },
     "require-dev": {
-        "spryker/code-sniffer": "*"
+        "spryker/code-sniffer": "*",
+        "spryker/testify": "*"
     },
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {

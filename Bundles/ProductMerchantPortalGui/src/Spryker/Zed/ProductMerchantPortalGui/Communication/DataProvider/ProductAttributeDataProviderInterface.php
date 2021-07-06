@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider;
+namespace Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider;
 
 use ArrayObject;
 
-interface ProductAttributeTableDataProviderInterface
+interface ProductAttributeDataProviderInterface
 {
     /**
      * @phpstan-param ArrayObject<string, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers

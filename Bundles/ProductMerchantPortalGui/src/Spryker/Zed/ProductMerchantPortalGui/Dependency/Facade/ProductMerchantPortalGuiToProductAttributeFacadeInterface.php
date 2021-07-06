@@ -25,4 +25,11 @@ interface ProductMerchantPortalGuiToProductAttributeFacadeInterface
     public function getProductManagementAttributes(
         ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
     ): ProductManagementAttributeCollectionTransfer;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductAbstractAttributeValues(int $idProductAbstract);
 }

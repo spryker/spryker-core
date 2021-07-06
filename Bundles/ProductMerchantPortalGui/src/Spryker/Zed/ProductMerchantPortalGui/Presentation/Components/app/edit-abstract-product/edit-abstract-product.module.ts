@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HeadlineModule } from '@spryker/headline';
 import { EditAbstractProductComponent } from './edit-abstract-product.component';
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, HeadlineModule],
     declarations: [EditAbstractProductComponent],
     exports: [EditAbstractProductComponent],
 })

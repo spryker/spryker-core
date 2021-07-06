@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 
 interface GuiTableConfigurationBuilderInterface
 {
+    public const COLUMN_TYPE_AUTOCOMPLETE = 'autocomplete';
     public const COLUMN_TYPE_TEXT = 'text';
     public const COLUMN_TYPE_IMAGE = 'image';
     public const COLUMN_TYPE_DATE = 'date';
@@ -18,6 +19,7 @@ interface GuiTableConfigurationBuilderInterface
     public const COLUMN_TYPE_LIST = 'list';
     public const COLUMN_TYPE_SELECT = 'select';
     public const COLUMN_TYPE_INPUT = 'input';
+    public const COLUMN_TYPE_DYNAMIC = 'dynamic';
 
     public const FILTER_TYPE_SELECT = 'select';
     public const FILTER_TYPE_TREE_SELECT = 'tree-select';
@@ -28,6 +30,9 @@ interface GuiTableConfigurationBuilderInterface
     public const ACTION_TYPE_URL = 'url';
 
     public const DATA_SOURCE_TYPE_INLINE = 'inline';
+    public const DATA_SOURCE_TYPE_DEPENDABLE = 'dependable';
+    public const DATA_SOURCE_TYPE_HTTP = 'http';
+    public const DATA_SOURCE_TYPE_INLINE_TABLE = 'inline.table';
 
     /**
      * @api
@@ -464,6 +469,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $title
      * @param bool $isMultiselect
      * @param array $options
+     * @param string|null $placeholder
      *
      * @return $this
      */
@@ -471,6 +477,21 @@ interface GuiTableConfigurationBuilderInterface
         string $id,
         string $title,
         bool $isMultiselect,
-        array $options
+        array $options,
+        ?string $placeholder = null
     );
+
+    /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $dependableColumn
+     * @param string $dependableUrl
+     *
+     * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
+     *
+     * @return $this
+     */
+    public function addEditableColumnDynamic(string $id, string $title, string $dependableColumn, string $dependableUrl);
 }
