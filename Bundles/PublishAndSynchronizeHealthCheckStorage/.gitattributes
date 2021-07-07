@@ -22,7 +22,6 @@
 *.exe binary
 
 # Remove files for archives generated using `git archive`
-codeception.yml export-ignore
 dependency.json export-ignore
 phpstan.json export-ignore
 phpstan.neon export-ignore
