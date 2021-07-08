@@ -82,4 +82,17 @@ interface AgentClientInterface
      * @return void
      */
     public function finishImpersonationSession(): void;
+
+    /**
+     * Specification:
+     * - Reads a list of allowed patterns for an agent from the module's configuration.
+     * - Modifies secured pattern based on a list.
+     *
+     * @api
+     *
+     * @param string $securedPattern
+     *
+     * @return string
+     */
+    public function applyAgentAccessOnSecuredPattern(string $securedPattern): string;
 }
