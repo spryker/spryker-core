@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Cart\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CartChangeBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\FlashMessagesTransfer;
@@ -19,6 +20,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
+use InvalidArgumentException;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
@@ -669,5 +671,42 @@ class CartFacadeTest extends Unit
             ->findOneOrCreate()
             ->setPrice(100)
             ->save();
+    }
+
+    /**
+     * @return void
+     */
+    public function testQuoteTransferIsDeepClonedDuringValidation(): void
+    {
+        // Arrange
+        $this->expectNotToPerformAssertions();
+
+        $checkChangesCallback = $this->getQuoteChangeObserverPluginCheckChangesCallback();
+        $quoteChangeObserverPluginMock = $this->tester->getQuoteChangeObserverPluginMock($checkChangesCallback);
+        $this->tester->setDependency(
+            CartDependencyProvider::PLUGINS_QUOTE_CHANGE_OBSERVER,
+            [
+                $quoteChangeObserverPluginMock,
+            ]
+        );
+
+        $quoteTransfer = (new QuoteBuilder())->withItem()->build();
+
+        // Act
+        $this->tester->getFacade()->validateQuote($quoteTransfer);
+    }
+
+    /**
+     * @return callable
+     */
+    protected function getQuoteChangeObserverPluginCheckChangesCallback(): callable
+    {
+        return function (QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer) {
+            $resultObjectHash = spl_object_hash($resultQuoteTransfer->getItems()[0]);
+            $sourceObjectHash = spl_object_hash($sourceQuoteTransfer->getItems()[0]);
+            if ($resultObjectHash === $sourceObjectHash) {
+                throw new InvalidArgumentException('Quote transfer was not deep cloned.');
+            }
+        };
     }
 }
