@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Business\Distributor\DiscountableItem;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 
@@ -32,6 +33,10 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() / $totalAmount;
 
         for ($i = 0; $i < $quantity; $i++) {
+            if ($this->isAllOriginalItemCalculatedDiscountsAdded($calculatedDiscountTransfer, $discountableItemTransfer, $discountableItemTransformerTransfer)) {
+                break;
+            }
+
             $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;
             $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
             $roundingError = $itemDiscountAmount - $itemDiscountAmountRounded;
@@ -63,5 +68,25 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         $calculatedDiscountTransfer->fromArray($discountTransfer->toArray(), true);
 
         return $calculatedDiscountTransfer;
+    }
+
+    /**
+     * Checks if all OriginalItemCalculatedDiscounts has been added and if it is not a Voucher code because it should be only Cart rule discount.
+     *
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
+     *
+     * @return bool
+     */
+    protected function isAllOriginalItemCalculatedDiscountsAdded(
+        CalculatedDiscountTransfer $calculatedDiscountTransfer,
+        DiscountableItemTransfer $discountableItemTransfer,
+        DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
+    ): bool {
+        return (
+            !$calculatedDiscountTransfer->getVoucherCode() &&
+            $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->count() === $discountableItemTransformerTransfer->getQuantity()
+        );
     }
 }
