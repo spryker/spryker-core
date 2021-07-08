@@ -22,6 +22,7 @@
         "spryker/price-product": "*",
         "spryker/price-product-volume": "*",
         "spryker/product": "*",
+        "spryker/product-cart-connector": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
@@ -34,6 +35,7 @@ use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\CartItemPricePlugin;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
 use Spryker\Zed\PriceProductVolume\Communication\Plugin\PriceProductExtension\PriceProductVolumeExtractorPlugin;
+use Spryker\Zed\ProductCartConnector\Communication\Plugin\ProductExistsCartPreCheckPlugin;
 
 /**
  * Auto-generated group annotations
@@ -386,6 +388,44 @@ class CartFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testAddValidAddsValidItemsAndIgnoresInvalidOnes(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            CartDependencyProvider::CART_PRE_CHECK_PLUGINS,
+            [new ProductExistsCartPreCheckPlugin()]
+        );
+
+        $activeProductConcreteTransfer = $this->tester->haveFullProduct();
+
+        $inactiveProductConcreteTransfer = $this->tester->haveFullProduct([
+            ProductConcreteTransfer::IS_ACTIVE => false,
+        ]);
+
+        $activeItemTransfer = (new ItemTransfer())
+            ->setSku($activeProductConcreteTransfer->getSku())
+            ->setQuantity(1);
+
+        $inactiveItemTransfer = (new ItemTransfer())
+            ->setSku($inactiveProductConcreteTransfer->getSku())
+            ->setQuantity(1);
+
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setQuote(new QuoteTransfer())
+            ->addItem($activeItemTransfer)
+            ->addItem($inactiveItemTransfer);
+
+        // Act
+        $quoteTransfer = $this->getCartFacade()->addValid($cartChangeTransfer);
+
+        // Assert
+        $this->assertCount(1, $quoteTransfer->getItems());
+        $this->assertSame($activeItemTransfer->getSku(), $quoteTransfer->getItems()->getIterator()->current()->getSku());
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
      */
     protected function getQuoteFacadeMock(): CartToQuoteFacadeInterface
@@ -481,8 +521,8 @@ class CartFacadeTest extends Unit
     {
         // Arrange
         $itemForRemove = (new ItemBuilder([
-                ItemTransfer::SKU => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
-                ItemTransfer::QUANTITY => 1,
+            ItemTransfer::SKU => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
+            ItemTransfer::QUANTITY => 1,
         ]))->build();
 
         $quoteTransfer = new QuoteTransfer();
