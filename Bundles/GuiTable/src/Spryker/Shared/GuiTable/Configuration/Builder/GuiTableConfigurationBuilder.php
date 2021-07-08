@@ -923,6 +923,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $title
      * @param bool $isMultiselect
      * @param array $options
+     * @param string|null $placeholder
      *
      * @return $this
      */
@@ -930,7 +931,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         string $id,
         string $title,
         bool $isMultiselect,
-        array $options
+        array $options,
+        ?string $placeholder = null
     ) {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
@@ -944,6 +946,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
                 'title' => $optionTitle,
                 'value' => $value,
             ];
+        }
+
+        if ($placeholder) {
+            $typeOptionValues['placeholder'] = $placeholder;
         }
 
         $guiTableColumnConfigurationTransfer->setTypeOptions($typeOptionValues);
@@ -1034,7 +1040,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      *
      * @return \Generated\Shared\Transfer\GuiTableEditableButtonTransfer
      */
-    protected function createEditableCancelButton(?array $cancelButton)
+    protected function createEditableCancelButton(?array $cancelButton): GuiTableEditableButtonTransfer
     {
         $title = $cancelButton[GuiTableEditableButtonTransfer::TITLE] ?? 'Cancel';
         $icon = $cancelButton[GuiTableEditableButtonTransfer::ICON] ?? null;
@@ -1164,5 +1170,39 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         $guiTableConfigurationTransfer->setDataSource($guiTableDataSourceConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $dependableColumn
+     * @param string $dependableUrl
+     *
+     * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
+     *
+     * @return $this
+     */
+    public function addEditableColumnDynamic(string $id, string $title, string $dependableColumn, string $dependableUrl)
+    {
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::COLUMN_TYPE_DYNAMIC)
+            ->setTypeOptions([
+                'datasource' => [
+                    'type' => static::DATA_SOURCE_TYPE_DEPENDABLE,
+                    'dependsOn' => $dependableColumn,
+                    'datasource' => [
+                        'type' => static::DATA_SOURCE_TYPE_HTTP,
+                        'url' => $dependableUrl,
+                    ],
+                ],
+            ]);
+
+        $this->addEditableColumn($guiTableColumnConfigurationTransfer);
+
+        return $this;
     }
 }

@@ -39,6 +39,20 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
+     *  - Returns false if current logged in customer is not company user.
+     *  - Returns false if logged in customer is not quote owner and doesn't have "WriteSharedCartPermissionPlugin" permission.
+     *  - Executes `QuoteRequestQuoteCheckPluginInterface` returns false if at least one plugin returns false - true otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function isQuoteApplicableForQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
      * - Finds a "Request for Quote" by QuoteRequestTransfer::idQuoteRequest in the transfer.
      * - Expects "Request for Quote" status to be "draft".
      * - Executes `QuoteRequestValidatorPluginInterface` plugin stack for request validation.

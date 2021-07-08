@@ -1,20 +1,7 @@
-import {
-    NgModule,
-    APP_INITIALIZER,
-    Compiler,
-    Injector,
-    InjectionToken,
-    StaticProvider,
-    ApplicationInitStatus,
-    Inject,
-    PlatformRef,
-    ApplicationRef,
-    DoBootstrap,
-    Optional,
-} from '@angular/core';
-import { _getNgModules, ComponentsNgModule } from './registry';
+import { ApplicationRef, APP_INITIALIZER, Compiler, DoBootstrap, Injector, StaticProvider } from '@angular/core';
+import { ComponentsNgModule, _getNgModules } from './registry';
 
-export function appBootstrapProvider() {
+export function appBootstrapProvider(): StaticProvider {
     return {
         provide: APP_INITIALIZER,
         useFactory: appBootstrapFactory,

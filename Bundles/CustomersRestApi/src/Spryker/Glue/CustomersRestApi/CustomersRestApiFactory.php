@@ -36,6 +36,7 @@ use Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerRestorePasswordResour
 use Spryker\Glue\CustomersRestApi\Processor\Relationship\AddressByCheckoutDataResourceRelationshipExpander;
 use Spryker\Glue\CustomersRestApi\Processor\Relationship\AddressResourceRelationshipExpanderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerByCompanyUserResourceRelationshipExpander;
+use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerByQuoteRequestResourceRelationshipExpander;
 use Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface;
 use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\AddressRestResponseBuilder;
 use Spryker\Glue\CustomersRestApi\Processor\RestResponseBuilder\AddressRestResponseBuilderInterface;
@@ -156,6 +157,17 @@ class CustomersRestApiFactory extends AbstractFactory
     public function createCustomerByCompanyUserResourceRelationshipExpander(): CustomerResourceRelationshipExpanderInterface
     {
         return new CustomerByCompanyUserResourceRelationshipExpander(
+            $this->createCustomerRestResponseBuilder(),
+            $this->createCustomerResourceMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CustomersRestApi\Processor\Relationship\CustomerResourceRelationshipExpanderInterface
+     */
+    public function createCustomerByQuoteRequestResourceRelationshipExpander(): CustomerResourceRelationshipExpanderInterface
+    {
+        return new CustomerByQuoteRequestResourceRelationshipExpander(
             $this->createCustomerRestResponseBuilder(),
             $this->createCustomerResourceMapper()
         );

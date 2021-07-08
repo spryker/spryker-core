@@ -107,4 +107,8 @@
         <property name="customer" type="RestCustomer" restRequestParameter="yes"/>
     </transfer>
 
+    <transfer name="QuoteRequest">
+        <property name="companyUser" type="CompanyUser"/>
+    </transfer>
+
 </transfers>

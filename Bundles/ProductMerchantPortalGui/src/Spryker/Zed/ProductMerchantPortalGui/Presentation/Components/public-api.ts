@@ -22,6 +22,14 @@ export * from './app/edit-abstract-product-prices/edit-abstract-product-prices.c
 export * from './app/edit-abstract-product-prices/edit-abstract-product-prices.module';
 export * from './app/edit-abstract-product-variants/edit-abstract-product-variants.component';
 export * from './app/edit-abstract-product-variants/edit-abstract-product-variants.module';
+export * from './app/edit-concrete-product/edit-concrete-product.component';
+export * from './app/edit-concrete-product/edit-concrete-product.module';
+export * from './app/edit-concrete-product-attributes/edit-concrete-product-attributes.component';
+export * from './app/edit-concrete-product-attributes/edit-concrete-product-attributes.module';
+export * from './app/edit-concrete-product-image-sets/edit-concrete-product-image-sets.component';
+export * from './app/edit-concrete-product-image-sets/edit-concrete-product-image-sets.module';
+export * from './app/edit-concrete-product-prices/edit-concrete-product-prices.component';
+export * from './app/edit-concrete-product-prices/edit-concrete-product-prices.module';
 export * from './app/image-sets/image-sets.component';
 export * from './app/image-sets/image-sets.module';
 export * from './app/edit-concrete-product/edit-concrete-product.component';

@@ -94,3 +94,20 @@ Values,Values
 "SKU Prefix","SKU Präfix"
 "SKU Prefix already exists in collection","SKU Präfix existiert bereits in der Liste."
 "Enter SKU prefix","Geben sie ein SKU Präfix ein"
+"Add Image Set","Bildsatz hinzufügen"
+"Set name","Name einsetzen"
+"Delete Image Set","Bildsatz löschen"
+"Image Ordered","Bild bestellt"
+"Small Image URL","Kleine Bild-URL"
+"Large Image URL","Große Bild-URL"
+"Add Image","Bild hinzufügen"
+"Abstract Product",Produkt
+"Abstract Product Details",Produkt-Details
+"Concrete Products",Varianten
+"The attribute %attribute% already exists. Please define another one","Das Attribut %attribute% existiert bereits. Bitte definieren Sie einen anderen"
+"Please fill in at least one value","Bitte geben Sie mindestens einen Wert ein"
+"Success! The Attribute is deleted","Geschafft! Das Attribut wurde gelöscht"
+"The value cannot be blank. Please fill in this input","Dies ist ein Pflichtfeld."
+"Provide meta title","Meta-Titel angeben"
+"Provide meta keywords","Meta-Keywords angeben"
+"Provide meta description","Meta-Beschreibung angeben"

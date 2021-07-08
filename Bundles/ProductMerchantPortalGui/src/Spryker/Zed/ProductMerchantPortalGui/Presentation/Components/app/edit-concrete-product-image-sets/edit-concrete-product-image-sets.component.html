@@ -1,0 +1,7 @@
+<ng-content></ng-content>
+
+<div class="mp-edit-concrete-product-image-sets__images" *ngIf="images">
+    <div class="mp-edit-concrete-product-image-sets__image-container" *ngFor="let image of images">
+        <img [src]="image.src" [alt]="image.alt" class="mp-edit-concrete-product-image-sets__image" />
+    </div>
+</div>

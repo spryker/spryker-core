@@ -7,8 +7,7 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi;
 
-use ArrayObject;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
+use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\Kernel\AbstractRestResource;
 
@@ -22,30 +21,20 @@ class QuoteRequestsRestApiResource extends AbstractRestResource implements Quote
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MessageTransfer[]|\ArrayObject $errors
+     * @param \Generated\Shared\Transfer\QuoteRequestResponseTransfer $quoteRequestResponseTransfer
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(ArrayObject $errors): RestResponseInterface
-    {
+    public function createQuoteRequestRestResponse(
+        QuoteRequestResponseTransfer $quoteRequestResponseTransfer,
+        string $localeName
+    ): RestResponseInterface {
         return $this->getFactory()
-            ->createQuoteRequestsRestResponseBuilder()
-            ->createFailedErrorResponse($errors);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createQuoteRequestRestResponse(QuoteRequestTransfer $quoteRequestTransfer): RestResponseInterface
-    {
-        return $this->getFactory()
-            ->createQuoteRequestsRestResponseBuilder()
-            ->createQuoteRequestRestResponse($quoteRequestTransfer);
+            ->createQuoteRequestRestResponseBuilder()
+            ->createQuoteRequestRestResponse(
+                $quoteRequestResponseTransfer,
+                $localeName
+            );
     }
 }

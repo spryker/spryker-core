@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\QuoteRequestAgent\Reader;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Spryker\Client\QuoteRequestAgent\Dependency\Client\QuoteRequestAgentToQuoteRequestClientInterface;
@@ -27,6 +28,8 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Client\QuoteRequestAgent\Reader\QuoteRequestReaderInterface::findQuoteRequest()} instead.
+     *
      * @param string $quoteRequestReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
@@ -40,5 +43,31 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
         return $this->quoteRequestClient
             ->getQuoteRequest($quoteRequestFilterTransfer)
             ->getQuoteRequest();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): ?QuoteRequestTransfer
+    {
+        $quoteRequestFilterTransfer = (new QuoteRequestFilterTransfer())
+            ->fromArray($quoteRequestFilterTransfer->toArray(), true)
+            ->setWithHidden(true);
+
+        return $this->quoteRequestClient
+            ->getQuoteRequest($quoteRequestFilterTransfer)
+            ->getQuoteRequest();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    {
+        return $this->quoteRequestClient->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
     }
 }

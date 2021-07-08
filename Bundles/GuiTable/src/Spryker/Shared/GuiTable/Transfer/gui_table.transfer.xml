@@ -106,6 +106,7 @@
         <property name="saveButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button look and wording or disable save button."/>
         <property name="cancelButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button look and wording or disable cancel button."/>
         <property name="url" type="GuiTableEditableUrl"/>
+        <property name="disableForCols" type="string[]" singular="disableForCol"/>
     </transfer>
 
     <transfer name="GuiTableEditableButton">

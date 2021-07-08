@@ -388,7 +388,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             ->addAnd(SpyAvailabilityAbstractTableMap::COL_FK_STORE, $idStore)
             ->filterByIdProductAbstract($idProductAbstract)
             ->select([static::CONCRETE_SKU])
-            ->groupBy(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT);
+            ->groupBy(static::ID_PRODUCT);
     }
 
     /**

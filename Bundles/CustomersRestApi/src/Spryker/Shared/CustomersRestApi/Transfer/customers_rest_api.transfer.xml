@@ -202,4 +202,8 @@
         <property name="shippingAddress" type="RestAddress" restRequestParameter="yes"/>
     </transfer>
 
+    <transfer name="QuoteRequest">
+        <property name="companyUser" type="CompanyUser"/>
+    </transfer>
+
 </transfers>

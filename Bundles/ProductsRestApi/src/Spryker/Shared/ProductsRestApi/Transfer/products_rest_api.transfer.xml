@@ -61,4 +61,20 @@
     <transfer name="Store">
         <property name="name" type="string"/>
     </transfer>
+
+    <transfer name="RestQuoteRequestsAttributes">
+        <property name="shownVersion" type="RestQuoteRequestVersion"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestVersion">
+        <property name="cart" type="RestQuoteRequestsCart"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsCart">
+        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestItem">
+        <property name="sku" type="string"/>
+    </transfer>
 </transfers>

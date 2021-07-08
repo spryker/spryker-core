@@ -56,12 +56,12 @@ class QuoteRequestsResourceController extends AbstractController
     {
         if ($restRequest->getResource()->getId()) {
             return $this->getFactory()
-                ->createQuoteRequestsReader()
+                ->createQuoteRequestReader()
                 ->getQuoteRequest($restRequest);
         }
 
         return $this->getFactory()
-            ->createQuoteRequestsReader()
+            ->createQuoteRequestReader()
             ->getQuoteRequestCollection($restRequest);
     }
 

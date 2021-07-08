@@ -159,12 +159,12 @@
                                         spy-title="{{ 'DEFAULT' | trans }}"
                                         active="true"
                                     >
-                                        <web-mp-image-sets images="{{ _self.imagesJson(imageSet) }}">
-                                            <span class="mp-image-sets__title">
+                                        <web-mp-edit-concrete-product-image-sets images="{{ _self.imagesJson(imageSet) }}">
+                                            <span class="mp-edit-concrete-product-image-sets__title">
                                                 {{ 'Image Set:' | trans }}
-                                                <span class="mp-image-sets__name">{{ imageSet.name }}</span>
+                                                <span class="mp-edit-concrete-product-image-sets__name">{{ imageSet.name }}</span>
                                             </span>
-                                        </web-mp-image-sets>
+                                        </web-mp-edit-concrete-product-image-sets>
                                     </web-spy-collapsible>
                                 {% endif %}
                             {% endfor %}
@@ -178,12 +178,12 @@
                                         spy-title="{{ imageSet.locale.localeName }}"
                                         active="true"
                                     >
-                                        <web-mp-image-sets images="{{ _self.imagesJson(imageSet) }}">
-                                            <span class="mp-image-sets__title">
+                                        <web-mp-edit-concrete-product-image-sets images="{{ _self.imagesJson(imageSet) }}">
+                                            <span class="mp-edit-concrete-product-image-sets__title">
                                                 {{ 'Image Set' | trans ~ ':' }}
-                                                <span class="mp-image-sets__name">{{ imageSet.name }}</span>
+                                                <span class="mp-edit-concrete-product-image-sets__name">{{ imageSet.name }}</span>
                                             </span>
-                                        </web-mp-image-sets>
+                                        </web-mp-edit-concrete-product-image-sets>
                                     </web-spy-collapsible>
                                 {% endif %}
                             {% endfor %}

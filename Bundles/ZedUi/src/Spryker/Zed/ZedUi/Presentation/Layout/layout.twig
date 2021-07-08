@@ -17,11 +17,13 @@
         {% endblock %}
     </head>
     <body>
-        {% block globalBody %}
-            <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
-        {% endblock %}
+        <web-mp-root cloak>
+            {% block globalBody %}
+                <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
+            {% endblock %}
 
-        {% block body %}{% endblock %}
+            {% block body %}{% endblock %}
+        </web-mp-root>
 
         {% block polyfillsJs %}
             <script src="{{ assetsPath('js/mp/runtime-es2015.js') }}" type="module"></script>

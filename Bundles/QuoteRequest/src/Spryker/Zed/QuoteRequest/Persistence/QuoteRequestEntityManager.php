@@ -36,6 +36,8 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
 
         $quoteRequestEntity->save();
         $quoteRequestTransfer->setIdQuoteRequest($quoteRequestEntity->getIdQuoteRequest());
+        $quoteRequestTransfer->setCreatedAt($quoteRequestEntity->getCreatedAt()->format('Y-m-d H:i:s'));
+        $quoteRequestTransfer->setIsLatestVersionVisible($quoteRequestEntity->getIsLatestVersionVisible());
 
         return $quoteRequestTransfer;
     }
@@ -74,6 +76,7 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
 
         $quoteRequestVersionEntity->save();
         $quoteRequestVersionTransfer->setIdQuoteRequestVersion($quoteRequestVersionEntity->getIdQuoteRequestVersion());
+        $quoteRequestVersionTransfer->setCreatedAt($quoteRequestVersionEntity->getCreatedAt()->format('Y-m-d H:i:s'));
 
         return $quoteRequestVersionTransfer;
     }

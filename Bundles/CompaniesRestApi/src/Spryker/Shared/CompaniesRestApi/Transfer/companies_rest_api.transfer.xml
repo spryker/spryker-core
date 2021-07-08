@@ -39,4 +39,7 @@
         <property name="detail" type="string"/>
     </transfer>
 
+    <transfer name="QuoteRequest">
+        <property name="companyUser" type="CompanyUser"/>
+    </transfer>
 </transfers>

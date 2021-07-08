@@ -164,6 +164,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
 
         $quoteRequestVersionTransfer = $this->createQuoteRequestVersionTransfer($quoteRequestTransfer);
         $quoteRequestTransfer->setLatestVersion($quoteRequestVersionTransfer);
+        $quoteRequestTransfer->setQuoteRequestVersions(new ArrayObject([$quoteRequestTransfer->getLatestVersionOrFail()]));
 
         return $this->createSuccessfulResponse($quoteRequestTransfer);
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\QuoteRequestAgent;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -108,7 +109,7 @@ interface QuoteRequestAgentClientInterface
      * - Makes Zed request.
      * - Retrieves "Request for Quote" entities according to provided filter.
      * - Sets current "Request for Quote" by quote request reference when provided.
-     * - Selects latestVersion based on latest version id.
+     * - Selects `latestVersion` based on latest version id.
      *
      * @api
      *
@@ -124,15 +125,31 @@ interface QuoteRequestAgentClientInterface
      * Specification:
      * - Makes Zed request.
      * - Retrieves "Request for Quote" entity filtered by quote request reference.
-     * - Selects latestVersion based on latest version id.
+     * - Selects `latestVersion` based on latest version id.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\QuoteRequestAgent\QuoteRequestAgentClientInterface::findQuoteRequest()} instead.
      *
      * @param string $quoteRequestReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
      */
     public function findQuoteRequestByReference(string $quoteRequestReference): ?QuoteRequestTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves the filtered "Request for Quote" entity.
+     * - Selects `latestVersion` based on latest version id.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): ?QuoteRequestTransfer;
 
     /**
      * Specification:
@@ -196,4 +213,19 @@ interface QuoteRequestAgentClientInterface
      * @return bool
      */
     public function isEditableQuoteRequestVersion(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Retrieves the filtered "Request for Quote" entities.
+     * - Filters by quote request reference when provided.
+     * - Selects latest visible quote request version.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer;
 }

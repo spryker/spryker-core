@@ -67,6 +67,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
         $productConcreteEditForm = $this->getFactory()->createProductConcreteEditForm($formData, $formOptions);
         $productConcreteEditForm->handleRequest($request);
         $initialData = $this->getDefaultInitialData(
+            PriceProductTableViewTransfer::PRICES,
             $request->get($productConcreteEditForm->getName())[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE] ?? null
         );
 

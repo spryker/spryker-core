@@ -26,6 +26,8 @@ use Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestUserStatus;
 use Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestUserStatusInterface;
 use Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidator;
 use Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidatorInterface;
+use Spryker\Zed\QuoteRequest\Business\Validator\QuoteValidator;
+use Spryker\Zed\QuoteRequest\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestTerminator;
 use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestTerminatorInterface;
 use Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestUserTerminator;
@@ -237,5 +239,23 @@ class QuoteRequestBusinessFactory extends AbstractBusinessFactory
     public function getQuoteRequestUserValidatorPlugins(): array
     {
         return $this->getProvidedDependency(QuoteRequestDependencyProvider::PLUGINS_QUOTE_REQUEST_USER_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequest\Business\Validator\QuoteValidatorInterface;
+     */
+    public function createQuoteValidator(): QuoteValidatorInterface
+    {
+        return new QuoteValidator(
+            $this->getQuoteRequestPreCreateCheckPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestPreCreateCheckPluginInterface[]
+     */
+    public function getQuoteRequestPreCreateCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteRequestDependencyProvider::PLUGINS_QUOTE_REQUEST_QUOTE_CHECK);
     }
 }
