@@ -64,7 +64,6 @@ class OrderItemsSaver implements OrderItemsSaverInterface
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[] $orderItemExpanderPlugins
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface[] $orderItemsPostSavePlugins
      */
     public function __construct(
@@ -72,14 +71,12 @@ class OrderItemsSaver implements OrderItemsSaverInterface
         SalesConfig $salesConfiguration,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
         SalesEntityManagerInterface $entityManager,
-        array $orderItemExpanderPlugins,
         array $orderItemsPostSavePlugins
     ) {
         $this->omsFacade = $omsFacade;
         $this->salesConfiguration = $salesConfiguration;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->entityManager = $entityManager;
-        $this->orderItemExpanderPlugins = $orderItemExpanderPlugins;
         $this->orderItemsPostSavePlugins = $orderItemsPostSavePlugins;
     }
 
@@ -167,7 +164,6 @@ class OrderItemsSaver implements OrderItemsSaverInterface
             $quoteItemTransfers[] = clone $itemTransfer;
         }
 
-        $quoteItemTransfers = $this->executeOrderItemExpanderPlugins($quoteItemTransfers);
         $saveOrderTransfer->setOrderItems(new ArrayObject($quoteItemTransfers));
 
         return $saveOrderTransfer;
@@ -287,19 +283,5 @@ class OrderItemsSaver implements OrderItemsSaverInterface
     ): SpySalesOrderItemEntityTransfer {
         return $this->salesOrderSaverPluginExecutor
             ->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntityTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function executeOrderItemExpanderPlugins(array $itemTransfers): array
-    {
-        foreach ($this->orderItemExpanderPlugins as $orderItemExpanderPlugin) {
-            $itemTransfers = $orderItemExpanderPlugin->expand($itemTransfers);
-        }
-
-        return $itemTransfers;
     }
 }
