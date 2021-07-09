@@ -50,4 +50,9 @@
         <property name="limit" type="int"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+    </transfer>
+
 </transfers>
