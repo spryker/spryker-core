@@ -190,11 +190,9 @@ class AvailabilityDataFeedQueryContainerTest extends Unit
         return [
             'spy_availability',
             'spy_availability_abstract',
-            'spy_oms_product_reservation',
             'spy_product',
             'spy_product_abstract_localized_attributes',
             'spy_product_localized_attributes',
-            'spy_stock_product',
         ];
     }
 

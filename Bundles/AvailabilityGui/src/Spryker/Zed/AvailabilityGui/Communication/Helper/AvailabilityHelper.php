@@ -97,18 +97,29 @@ class AvailabilityHelper implements AvailabilityHelperInterface
             return null;
         }
 
+        $neverOutOfStockSet = '';
+        $stockQuantity = 0;
+        $reservationQuantity = '';
+
+        if ($productAbstractAvailabilityEntity->hasVirtualColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET)) {
+            $neverOutOfStockSet = $productAbstractAvailabilityEntity->getVirtualColumn(static::CONCRETE_NEVER_OUT_OF_STOCK_SET) ?? '';
+        }
+
+        if ($productAbstractAvailabilityEntity->hasVirtualColumn(static::STOCK_QUANTITY)) {
+            $stockQuantity = $productAbstractAvailabilityEntity->getVirtualColumn(static::STOCK_QUANTITY) ?? 0;
+        }
+
+        if ($productAbstractAvailabilityEntity->hasVirtualColumn(static::RESERVATION_QUANTITY)) {
+            $reservationQuantity = $productAbstractAvailabilityEntity->getVirtualColumn(static::RESERVATION_QUANTITY) ?? '';
+        }
+
         return (new ProductAbstractAvailabilityTransfer())
             ->setProductName($productAbstractAvailabilityEntity->getVirtualColumn(static::PRODUCT_NAME))
             ->setSku($productAbstractAvailabilityEntity->getSku())
             ->setAvailability((new Decimal($productAbstractAvailabilityEntity->getVirtualColumn(static::AVAILABILITY_QUANTITY) ?? 0))->trim())
-            ->setIsNeverOutOfStock($this->isNeverOutOfStock($productAbstractAvailabilityEntity->getVirtualColumn(static::CONCRETE_NEVER_OUT_OF_STOCK_SET)))
-            ->setStockQuantity((new Decimal($productAbstractAvailabilityEntity->getVirtualColumn(static::STOCK_QUANTITY) ?? 0))->trim())
-            ->setReservationQuantity(
-                $this->calculateReservation(
-                    $productAbstractAvailabilityEntity->getVirtualColumn(static::RESERVATION_QUANTITY) ?? '',
-                    $storeTransfer
-                )->trim()
-            );
+            ->setIsNeverOutOfStock($this->isNeverOutOfStock($neverOutOfStockSet))
+            ->setStockQuantity((new Decimal($stockQuantity))->trim())
+            ->setReservationQuantity($this->calculateReservation($reservationQuantity, $storeTransfer)->trim());
     }
 
     /**
