@@ -10,10 +10,12 @@ namespace SprykerTest\Service\PriceProduct;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\PriceProductBuilder;
+use Generated\Shared\DataBuilder\PriceProductFilterBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 
@@ -29,6 +31,8 @@ use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 class PriceProductServiceTest extends Unit
 {
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+
+    protected const CURRENCY_ISO_CODE = 'EUR';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
@@ -311,6 +315,89 @@ class PriceProductServiceTest extends Unit
     }
 
     /**
+     * @dataProvider getDifferentPriceModeProductPricesData
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param int $expectedProductPrice
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    public function testProductPricesAreFilteredByPriceMode(
+        array $priceProductTransfers,
+        int $expectedProductPrice,
+        string $priceMode
+    ): void {
+        // Arrange
+        $priceProductFilterTransfer = $this->buildPriceProductFilterTransfer([
+            'priceMode' => $priceMode,
+        ]);
+
+        // Act
+        $resultPriceProductTransfer = $this->getPriceProductService()->resolveProductPriceByPriceProductFilter(
+            $priceProductTransfers,
+            $priceProductFilterTransfer
+        );
+
+        // Assert
+        $this->assertExpectedProductPrice(
+            $resultPriceProductTransfer,
+            $expectedProductPrice,
+            $priceMode
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getDifferentPriceModeProductPricesData(): array
+    {
+        return [
+            'min gross price' => [
+                [
+                    $this->buildPriceProductTransfer(['grossAmount' => 100, 'netAmount' => null]),
+                    $this->buildPriceProductTransfer(['grossAmount' => 90, 'netAmount' => null]),
+                    $this->buildPriceProductTransfer(['netAmount' => 80, 'grossAmount' => null]),
+                ],
+                90,
+                static::PRICE_MODE_GROSS,
+            ],
+            'min net price' => [
+                [
+                    $this->buildPriceProductTransfer(['netAmount' => 110, 'grossAmount' => null]),
+                    $this->buildPriceProductTransfer(['grossAmount' => 70, 'netAmount' => null]),
+                    $this->buildPriceProductTransfer(['netAmount' => 100, 'grossAmount' => null]),
+                ],
+                100,
+                static::PRICE_MODE_NET,
+            ],
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param int $expectedProductPrice
+     * @param string $priceMode
+     *
+     * @return void
+     */
+    protected function assertExpectedProductPrice(
+        PriceProductTransfer $priceProductTransfer,
+        int $expectedProductPrice,
+        string $priceMode
+    ): void {
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
+
+        if ($priceMode === static::PRICE_MODE_GROSS) {
+            $this->assertEquals($expectedProductPrice, $moneyValueTransfer->getGrossAmount());
+
+            return;
+        }
+
+        $this->assertEquals($expectedProductPrice, $moneyValueTransfer->getNetAmount());
+    }
+
+    /**
      * @return \Spryker\Service\PriceProduct\PriceProductServiceInterface
      */
     protected function getPriceProductService(): PriceProductServiceInterface
@@ -408,5 +495,35 @@ class PriceProductServiceTest extends Unit
         }
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param array $priceProductDataSeed
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function buildPriceProductTransfer(array $priceProductDataSeed): PriceProductTransfer
+    {
+        $priceProductDataSeed = array_merge([PriceProductTransfer::PRICE_TYPE_NAME => static::PRICE_TYPE_DEFAULT], $priceProductDataSeed);
+
+        return (new PriceProductBuilder($priceProductDataSeed))->withMoneyValue((new MoneyValueBuilder())->withCurrency($priceProductDataSeed))
+            ->withPriceDimension()
+            ->withPriceType()
+            ->build();
+    }
+
+    /**
+     * @param array $priceProductFilterDataSeed
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     */
+    protected function buildPriceProductFilterTransfer(array $priceProductFilterDataSeed): PriceProductFilterTransfer
+    {
+        $priceProductFilterDataSeed = array_merge([
+            PriceProductFilterTransfer::PRICE_TYPE_NAME => static::PRICE_TYPE_DEFAULT,
+            PriceProductFilterTransfer::CURRENCY_ISO_CODE => static::CURRENCY_ISO_CODE,
+        ], $priceProductFilterDataSeed);
+
+        return (new PriceProductFilterBuilder($priceProductFilterDataSeed))->build();
     }
 }
