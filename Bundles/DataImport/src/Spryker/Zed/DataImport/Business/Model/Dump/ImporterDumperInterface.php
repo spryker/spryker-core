@@ -7,10 +7,21 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\Dump;
 
+use Generated\Shared\Transfer\DataImportConfigurationTransfer;
+
 interface ImporterDumperInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumperInterface::getImportersDumpByConfiguration()} instead.
+     *
      * @return string[]
      */
     public function dump(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
+     *
+     * @return string[]
+     */
+    public function getImportersDumpByConfiguration(DataImportConfigurationTransfer $dataImportConfigurationTransfer): array;
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DataImport\Business;
 
 use Generated\Shared\Transfer\DataImportConfigurationActionTransfer;
+use Generated\Shared\Transfer\DataImportConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -57,6 +58,8 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\DataImport\Business\DataImportFacade::getImportersDumpByConfiguration()} instead.
+     *
      * @return string[]
      */
     public function listImporters(): array
@@ -89,5 +92,19 @@ class DataImportFacade extends AbstractFacade implements DataImportFacadeInterfa
     public function writeDataSetItemsToQueue(string $queueName, array $dataSetItems): void
     {
         $this->getFactory()->createQueueWriter()->write($queueName, $dataSetItems);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
+     *
+     * @return string[]
+     */
+    public function getImportersDumpByConfiguration(DataImportConfigurationTransfer $dataImportConfigurationTransfer): array
+    {
+        return $this->getFactory()->createImportDumper()->getImportersDumpByConfiguration($dataImportConfigurationTransfer);
     }
 }
