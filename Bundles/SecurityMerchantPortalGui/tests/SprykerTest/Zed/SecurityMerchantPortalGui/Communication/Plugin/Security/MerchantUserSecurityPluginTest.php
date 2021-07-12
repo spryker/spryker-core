@@ -38,6 +38,11 @@ class MerchantUserSecurityPluginTest extends Unit
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
     /**
+     * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     */
+    protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
+
+    /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
      */
     protected const MERCHANT_STATUS_APPROVED = 'approved';
@@ -90,6 +95,10 @@ class MerchantUserSecurityPluginTest extends Unit
         $this->assertNull($token);
 
         $container->get(static::SERVICE_SESSION)->start();
+
+        $csrfToken = $container->get(static::SERVICE_FORM_CSRF_PROVIDER)
+            ->getToken('security-merchant-portal-gui');
+
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
 
         // Act
@@ -101,6 +110,7 @@ class MerchantUserSecurityPluginTest extends Unit
                 'security-merchant-portal-gui' => [
                     'username' => $userTransfer->getUsername(),
                     'password' => 'foo',
+                    '_token' => $csrfToken->getValue(),
                 ],
             ]
         );
