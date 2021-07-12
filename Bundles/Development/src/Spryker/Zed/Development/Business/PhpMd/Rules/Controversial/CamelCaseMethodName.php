@@ -44,7 +44,7 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
         '_beforeStep',
         '_afterStep',
         '_before',
-        '_before',
+        '_after',
         '_depends',
         '_inject',
     ];
