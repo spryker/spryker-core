@@ -7,38 +7,11 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Constraint;
 
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ValidProductOfferPriceIdsOwnByMerchantConstraint extends SymfonyConstraint
 {
     protected const MESSAGE = "The merchant doesn't own the product offer.";
-
-    /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
-     */
-    protected $priceProductOfferFacade;
-
-    /**
-     * @phpstan-param array<mixed> $options
-     *
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade
-     * @param array|null $options
-     */
-    public function __construct(ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade, $options = null)
-    {
-        $this->priceProductOfferFacade = $priceProductOfferFacade;
-
-        parent::__construct($options);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
-     */
-    public function getPriceProductOfferFacade(): ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
-    {
-        return $this->priceProductOfferFacade;
-    }
 
     /**
      * @return string

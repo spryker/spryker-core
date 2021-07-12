@@ -27,8 +27,18 @@
         <property name="priceDataByPriceType" type="array" singular="priceDataByPriceType"/>
         <property name="grossAmount" type="int"/>
         <property name="netAmount" type="int"/>
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
     </transfer>
 
     <transfer name="PriceProductCriteria">
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
+
+    <transfer name="Currency">
     </transfer>
 </transfers>

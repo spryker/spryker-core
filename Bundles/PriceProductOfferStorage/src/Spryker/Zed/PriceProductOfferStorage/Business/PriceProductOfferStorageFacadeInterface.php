@@ -62,4 +62,19 @@ interface PriceProductOfferStorageFacadeInterface
      * @return void
      */
     public function unpublishByProductIds(array $productIds): void;
+
+    /**
+     * Specification:
+     * - Extracts price product store IDs from the $eventTransfers created by price product store entity events.
+     * - Queries all price product offers with the extracted price product store IDs.
+     * - Stores data as JSON encoded to storage table.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByPriceProductStoreEvents(array $eventEntityTransfers): void;
 }

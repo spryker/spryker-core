@@ -1,1 +1,4 @@
-"The set of inputs Store and Currency needs to be unique.","The set of inputs Store and Currency needs to be unique."
+"The set of Store and Currency needs to be unique.","The set of inputs Store and Currency needs to be unique."
+"This value should be equal or greater than {{ compared_value }} or empty.","This value should be equal or greater than {{ compared_value }} or empty."
+"This field is missing.","This field is missing."
+"Currency {{ currency }} is not assigned to the store {{ store }}","Currency {{ currency }} is not assigned to the store {{ store }}"

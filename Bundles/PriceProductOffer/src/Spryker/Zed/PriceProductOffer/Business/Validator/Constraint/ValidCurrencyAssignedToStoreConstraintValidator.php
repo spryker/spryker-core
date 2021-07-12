@@ -15,24 +15,24 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class ValidCurrencyAssignedToStoreConstraintValidator extends AbstractConstraintValidator
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $value
+     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint): void
+    public function validate($priceProductOfferTransfer, Constraint $constraint): void
     {
-        if (!$value instanceof PriceProductOfferTransfer) {
-            throw new UnexpectedTypeException($value, PriceProductOfferTransfer::class);
+        if (!$priceProductOfferTransfer instanceof PriceProductOfferTransfer) {
+            throw new UnexpectedTypeException($priceProductOfferTransfer, PriceProductOfferTransfer::class);
         }
 
         if (!$constraint instanceof ValidCurrencyAssignedToStoreConstraint) {
             throw new UnexpectedTypeException($constraint, ValidCurrencyAssignedToStoreConstraint::class);
         }
 
-        $priceProductTransfers = $value->getProductOfferOrFail()->getPrices();
+        $priceProductTransfers = $priceProductOfferTransfer->getProductOfferOrFail()->getPrices();
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
             /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */

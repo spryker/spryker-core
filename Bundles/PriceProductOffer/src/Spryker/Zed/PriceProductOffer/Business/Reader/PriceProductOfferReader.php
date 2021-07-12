@@ -24,15 +24,23 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     protected $priceProductOfferExtractorPlugins;
 
     /**
+     * @var \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExpanderPluginInterface[]
+     */
+    protected $priceProductOfferExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface $priceProductOfferRepository
      * @param \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExtractorPluginInterface[] $priceProductOfferExtractorPlugins
+     * @param \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExpanderPluginInterface[] $priceProductOfferExpanderPlugins
      */
     public function __construct(
         PriceProductOfferRepositoryInterface $priceProductOfferRepository,
-        array $priceProductOfferExtractorPlugins
+        array $priceProductOfferExtractorPlugins,
+        array $priceProductOfferExpanderPlugins
     ) {
         $this->priceProductOfferRepository = $priceProductOfferRepository;
         $this->priceProductOfferExtractorPlugins = $priceProductOfferExtractorPlugins;
+        $this->priceProductOfferExpanderPlugins = $priceProductOfferExpanderPlugins;
     }
 
     /**
@@ -42,17 +50,26 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject
-    {
+    public function getProductOfferPrices(
+        PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+    ): ArrayObject {
         $priceProductTransfers = $this->priceProductOfferRepository
             ->getProductOfferPrices($priceProductOfferCriteriaTransfer)
             ->getArrayCopy();
 
-        foreach ($this->priceProductOfferExtractorPlugins as $priceProductOfferExtractorPlugin) {
-            $priceProductTransfers = array_merge(
-                $priceProductTransfers,
-                $priceProductOfferExtractorPlugin->extract($priceProductTransfers)
-            );
+        if ($priceProductOfferCriteriaTransfer->getWithExtractedPrices() !== false) {
+            foreach ($this->priceProductOfferExtractorPlugins as $priceProductOfferExtractorPlugin) {
+                $priceProductTransfers = array_merge(
+                    $priceProductTransfers,
+                    $priceProductOfferExtractorPlugin->extract($priceProductTransfers)
+                );
+            }
+        }
+
+        foreach ($this->priceProductOfferExpanderPlugins as $priceProductOfferExpanderPlugin) {
+            foreach ($priceProductTransfers as $priceProductTransfer) {
+                $priceProductOfferExpanderPlugin->expand($priceProductTransfer);
+            }
         }
 
         return new ArrayObject($priceProductTransfers);

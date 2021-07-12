@@ -295,7 +295,7 @@
 
     <transfer name="PriceProductOfferTableCriteria">
         <property name="filterInStores" type="int[]" singular="inStore"/>
-        <property name="filterInCurrencies" type="string[]" singular="inCurrency"/>
+        <property name="filterInCurrencies" type="int[]" singular="inCurrency"/>
         <property name="idProductOffer" type="int"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
@@ -317,6 +317,7 @@
         <property name="productOffer" type="ProductOffer"/>
         <property name="priceProductOfferIds" type="array" singular="priceProductOfferId"/>
         <property name="typePriceProductOfferIds" type="string"/>
+        <property name="volumeQuantity" type="int"/>
     </transfer>
 
     <transfer name="PriceProductOfferCollection">
@@ -329,6 +330,8 @@
     </transfer>
 
     <transfer name="PriceProductOfferCriteria">
+        <property name="withExtractedPrices" type="bool"/>
+        <property name="volumeQuantities" type="int[]" singular="volumeQuantity"/>
         <property name="priceProductOfferIds" type="int[]" singular="idPriceProductOffer"/>
         <property name="productOfferCriteria" type="ProductOfferCriteria"/>
     </transfer>
@@ -359,6 +362,9 @@
 
     <transfer name="Merchant">
         <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductCriteria">
     </transfer>
 
 </transfers>

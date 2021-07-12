@@ -65,14 +65,15 @@ class CreateProductOfferController extends AbstractProductOfferController
             ->addPriceProductOffer($priceProductOfferTransfer);
 
         $validationResponseTransfer = $this->getFactory()
-            ->getPriceProductOfferFacade()
-            ->validateProductOfferPrices($priceProductOfferCollectionTransfer);
+            ->createPriceProductOfferValidator()
+            ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 
         if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
             $initialData = $this->getFactory()
                 ->createPriceProductOfferMapper()
                 ->mapValidationResponseTransferToInitialDataErrors(
                     $validationResponseTransfer,
+                    $priceProductOfferCollectionTransfer,
                     $initialData
                 );
 
@@ -105,12 +106,11 @@ class CreateProductOfferController extends AbstractProductOfferController
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
-     * @phpstan-param array<mixed> $initialData
      *
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param array $initialData
+     * @param mixed[] $initialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */

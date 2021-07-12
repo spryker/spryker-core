@@ -66,7 +66,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOfferExpander(): ProductOfferExpanderInterface
     {
-        return new ProductOfferExpander($this->getRepository());
+        return new ProductOfferExpander($this->createPriceProductOfferReader());
     }
 
     /**
@@ -77,7 +77,8 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
         return new PriceProductOfferValidator(
             $this->createPriceProductOfferConstraintProvider(),
             $this->createPriceProductConstraintProvider(),
-            $this->getValidationAdapter()
+            $this->getValidationAdapter(),
+            $this->getPriceProductOfferValidatorPlugins()
         );
     }
 
@@ -117,7 +118,8 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductOfferReader(
             $this->getRepository(),
-            $this->getPriceProductOfferExtractorPlugins()
+            $this->getPriceProductOfferExtractorPlugins(),
+            $this->getPriceProductOfferExpanderPlugins()
         );
     }
 
@@ -180,5 +182,21 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductOfferExtractorPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductOfferDependencyProvider::PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExpanderPluginInterface[]
+     */
+    public function getPriceProductOfferExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductOfferDependencyProvider::PLUGINS_PRICE_PRODUCT_OFFER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferValidatorPluginInterface[]
+     */
+    public function getPriceProductOfferValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductOfferDependencyProvider::PLUGINS_PRICE_PRODUCT_OFFER_VALIDATOR);
     }
 }

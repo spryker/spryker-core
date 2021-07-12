@@ -117,9 +117,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableDataArray
-     *
-     * @param array $productOfferTableDataArray
+     * @param mixed[] $productOfferTableDataArray
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
@@ -151,13 +149,9 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
+     * @param mixed[] $productOfferTableRowDataArray
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productOfferTableRowDataArray
-     *
-     * @return array
+     * @return mixed[]
      */
     protected function prepareProductOfferStoresTableData(array $productOfferTableRowDataArray): array
     {
@@ -175,13 +169,9 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
+     * @param mixed[] $productOfferTableRowDataArray
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productOfferTableRowDataArray
-     *
-     * @return array
+     * @return mixed[]
      */
     protected function prepareProductOfferAttributesTableData(array $productOfferTableRowDataArray): array
     {
@@ -208,9 +198,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
-     *
-     * @param array $productOfferTableRowDataArray
+     * @param mixed[] $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
@@ -228,9 +216,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
-     *
-     * @param array $productOfferTableRowDataArray
+     * @param mixed[] $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
@@ -248,9 +234,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
-     *
-     * @param array $productOfferTableRowDataArray
+     * @param mixed[] $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer

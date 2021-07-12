@@ -57,7 +57,7 @@ class PriceProductOfferWriter implements PriceProductOfferWriterInterface
     {
         $productConcreteTransfer = (new ProductConcreteTransfer())
             ->setPrices($this->getPriceProductTransfers($productOfferTransfer))
-            ->setIdProductConcrete($productOfferTransfer->getIdProductConcrete());
+            ->setIdProductConcrete($productOfferTransfer->getIdProductConcreteOrFail());
         $productConcreteTransfer = $this->priceProductFacade->persistProductConcretePriceCollection($productConcreteTransfer);
 
         $productOfferTransfer->setPrices($productConcreteTransfer->getPrices());

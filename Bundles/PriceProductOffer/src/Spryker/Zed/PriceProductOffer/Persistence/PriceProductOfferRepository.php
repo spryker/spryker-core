@@ -86,9 +86,7 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
         /** @var \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery $priceProductOfferQuery */
         $priceProductOfferQuery = $this->getFactory()
             ->getPriceProductOfferPropelQuery()
-            ->joinWithSpyProductOffer()
-            ->useSpyProductOfferQuery()
-            ->endUse();
+            ->joinWithSpyProductOffer();
 
         $this->applyCriteria($priceProductOfferQuery, $priceProductOfferCriteriaTransfer);
 
@@ -147,6 +145,12 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
                 ->useStoreQuery()
                 ->filterByIdStore_In($priceProductOfferCriteriaTransfer->getStoreIds())
                 ->endUse()
+                ->endUse();
+        }
+
+        if ($priceProductOfferCriteriaTransfer->getPriceProductStoreIds()) {
+            $priceProductOfferQuery->useSpyPriceProductStoreQuery()
+                    ->filterByIdPriceProductStore_In($priceProductOfferCriteriaTransfer->getPriceProductStoreIds())
                 ->endUse();
         }
 

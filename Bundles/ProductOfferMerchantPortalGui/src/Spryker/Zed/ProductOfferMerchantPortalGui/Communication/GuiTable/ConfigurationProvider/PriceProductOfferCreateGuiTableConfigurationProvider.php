@@ -17,9 +17,7 @@ class PriceProductOfferCreateGuiTableConfigurationProvider extends AbstractPrice
     protected const DATA_URL = '/product-offer-merchant-portal-gui/create-product-offer/price-table-data';
 
     /**
-     * @phpstan-param array<mixed> $initialData
-     *
-     * @param array $initialData
+     * @param mixed[] $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
