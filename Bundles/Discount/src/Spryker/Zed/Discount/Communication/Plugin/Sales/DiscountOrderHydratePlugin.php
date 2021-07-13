@@ -21,6 +21,8 @@ class DiscountOrderHydratePlugin extends AbstractPlugin implements HydrateOrderP
 {
     /**
      * {@inheritDoc}
+     * - Hydrates sales discount data for current order to `OrderTransfer`.
+     * - If discount has voucher code, it is added to `OrderTransfer.voucherDiscounts`.
      *
      * @api
      *
@@ -30,7 +32,6 @@ class DiscountOrderHydratePlugin extends AbstractPlugin implements HydrateOrderP
      */
     public function hydrate(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()
-            ->hydrateOrder($orderTransfer);
+        return $this->getFacade()->hydrateOrder($orderTransfer);
     }
 }
