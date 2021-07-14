@@ -47,7 +47,14 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
             $distributedDiscountTransfer->setUnitAmount($itemDiscountAmountRounded);
             $distributedDiscountTransfer->setQuantity(1);
 
-            $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
+            $isCalculatedDiscountAddable = $this->isCalculatedDiscountAddable(
+                $discountableItemTransfer,
+                $distributedDiscountTransfer
+            );
+
+            if ($isCalculatedDiscountAddable) {
+                $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);
+            }
         }
 
         $discountableItemTransformerTransfer
@@ -55,6 +62,29 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
             ->setDiscountableItem($discountableItemTransfer);
 
         return $discountableItemTransformerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $distributedCalculatedDiscountTransfer
+     *
+     * @return bool
+     */
+    protected function isCalculatedDiscountAddable(
+        DiscountableItemTransfer $discountableItemTransfer,
+        CalculatedDiscountTransfer $distributedCalculatedDiscountTransfer
+    ): bool {
+        if (!$distributedCalculatedDiscountTransfer->getVoucherCode() || $discountableItemTransfer->getOriginalItem()) {
+            return true;
+        }
+
+        foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $calculatedDiscountTransfer) {
+            if ($calculatedDiscountTransfer->getVoucherCode() === $distributedCalculatedDiscountTransfer->getVoucherCode()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
