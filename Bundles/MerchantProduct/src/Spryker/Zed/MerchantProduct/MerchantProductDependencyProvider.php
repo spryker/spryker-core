@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProduct\Dependency\External\MerchantProductToValidationAdapter;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeBridge;
+use Spryker\Zed\MerchantProduct\Dependency\Service\MerchantProductToUtilEncodingServiceBridge;
 
 /**
  * @method \Spryker\Zed\MerchantProduct\MerchantProductConfig getConfig()
@@ -18,6 +19,8 @@ use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacade
 class MerchantProductDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
 
@@ -39,10 +42,36 @@ class MerchantProductDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addProductFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new MerchantProductToProductFacadeBridge($container->getLocator()->product()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new MerchantProductToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         });
 
         return $container;

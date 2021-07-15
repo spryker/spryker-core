@@ -19,20 +19,20 @@ describe('ConcreteProductGeneratorDataComponent', () => {
     });
 
     it('`getAbstractName` method should return value from `@Input(abstractName)`', () => {
-        const mockAbstractName = 'AbstractName';
+        const expectedAbstractName = 'AbstractName';
 
-        component.abstractName = mockAbstractName;
+        component.abstractName = expectedAbstractName;
         fixture.detectChanges();
 
-        expect(component.getAbstractName()).toEqual(mockAbstractName);
+        expect(component.getAbstractName()).toEqual(expectedAbstractName);
     });
 
     it('`getAbstractSku` method should return value from `@Input(abstractSku)`', () => {
-        const mockAbstractSku = 'AbstractSku';
+        const expectedAbstractSku = 'AbstractSku';
 
-        component.abstractSku = mockAbstractSku;
+        component.abstractSku = expectedAbstractSku;
         fixture.detectChanges();
 
-        expect(component.getAbstractSku()).toEqual(mockAbstractSku);
+        expect(component.getAbstractSku()).toEqual(expectedAbstractSku);
     });
 });

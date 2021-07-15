@@ -6,6 +6,7 @@ import { By } from '@angular/platform-browser';
 import { ConcreteProductsPreviewComponent } from './concrete-products-preview.component';
 import { ConcreteProductSkuGeneratorFactoryService } from '../../services/concrete-product-sku-generator-factory.service';
 import { ConcreteProductNameGeneratorFactoryService } from '../../services/concrete-product-name-generator-factory.service';
+import { ProductAttributesFinderService } from '../../services/product-attributes-finder.service';
 import { IdGenerator } from '../../services/types';
 
 const mockName = 'Name';
@@ -92,7 +93,31 @@ const mockGeneratedProductErrors = [
             sku: 'SKU Prefix already exists',
         },
     },
-    {},
+];
+
+const mockExistingProducts = [
+    {
+        name: '',
+        sku: '',
+        superAttributes: [
+            {
+                name: 'name1',
+                value: 'value1',
+                attribute: {
+                    name: 'name12',
+                    value: 'value12',
+                },
+            },
+            {
+                name: 'name2',
+                value: 'value2',
+                attribute: {
+                    name: 'name21',
+                    value: 'value21',
+                },
+            },
+        ],
+    },
 ];
 
 class MockGenerator implements IdGenerator {
@@ -112,7 +137,13 @@ class MockGeneratorFactory {
 @Component({
     selector: 'spy-test',
     template: `
-        <mp-concrete-products-preview [name]="name" [attributes]="attributes" [errors]="errors">
+        <mp-concrete-products-preview
+            [name]="name"
+            [attributes]="attributes"
+            [generatedProducts]="generatedProducts"
+            [errors]="errors"
+            [existingProducts]="existingProducts"
+        >
             <span total-text>to be created</span>
             <span auto-sku-text>Autogenerate SKUs</span>
             <span auto-name-text>Same Name as Abstract Product</span>
@@ -126,7 +157,9 @@ class MockGeneratorFactory {
 class TestComponent {
     name: string;
     attributes: any;
+    generatedProducts: any = [];
     errors: any;
+    existingProducts: any;
 }
 
 describe('ConcreteProductsPreviewComponent', () => {
@@ -150,6 +183,7 @@ describe('ConcreteProductsPreviewComponent', () => {
                             provide: ConcreteProductNameGeneratorFactoryService,
                             useClass: MockGeneratorFactory,
                         },
+                        ProductAttributesFinderService,
                     ],
                 },
             })
@@ -345,8 +379,9 @@ describe('ConcreteProductsPreviewComponent', () => {
             };
 
             component.attributes = mockAttributes;
-            fixture.autoDetectChanges();
+            fixture.detectChanges();
             tick();
+            fixture.detectChanges();
 
             const headerCheckboxes = fixture.debugElement.queryAll(
                 By.css('.mp-concrete-products-preview__header-checkboxes spy-checkbox'),
@@ -358,6 +393,9 @@ describe('ConcreteProductsPreviewComponent', () => {
             const skuGeneratorFactory = (componentElem.injector.get(
                 ConcreteProductSkuGeneratorFactoryService,
             ) as any) as MockGeneratorFactory;
+
+            headerCheckboxes[0].triggerEventHandler('checkedChange', true);
+            fixture.detectChanges();
 
             expect(skuInputs[0].properties.value).toBe(expectedSkuValues.firstRow);
             expect(skuGeneratorFactory.generator.generate).toHaveBeenCalledWith(expectedSkuValues.firstRow);
@@ -382,8 +420,9 @@ describe('ConcreteProductsPreviewComponent', () => {
             };
 
             component.attributes = mockAttributes;
-            fixture.autoDetectChanges();
+            fixture.detectChanges();
             tick();
+            fixture.detectChanges();
 
             const headerCheckboxes = fixture.debugElement.queryAll(
                 By.css('.mp-concrete-products-preview__header-checkboxes spy-checkbox'),
@@ -395,6 +434,9 @@ describe('ConcreteProductsPreviewComponent', () => {
             const nameGeneratorFactory = (componentElem.injector.get(
                 ConcreteProductNameGeneratorFactoryService,
             ) as any) as MockGeneratorFactory;
+
+            headerCheckboxes[1].triggerEventHandler('checkedChange', true);
+            fixture.detectChanges();
 
             expect(nameInputs[0].properties.value).toBe(expectedNameValues.firstRow);
             expect(nameGeneratorFactory.generator.generate).toHaveBeenCalledWith(expectedNameValues.firstRow);
@@ -414,6 +456,7 @@ describe('ConcreteProductsPreviewComponent', () => {
 
         it('should bound `@Input(errors)` to the input `error` of <spy-form-item> component', fakeAsync(() => {
             component.attributes = mockAttributes;
+            component.generatedProducts = mockGeneratedProducts;
             component.errors = mockGeneratedProductErrors;
             fixture.detectChanges();
             tick();
@@ -428,6 +471,38 @@ describe('ConcreteProductsPreviewComponent', () => {
 
             expect(skuFormItems[0].properties.error).toBe(mockGeneratedProductErrors[0].errors.sku);
             expect(nameFormItems[0].properties.error).toBe(mockGeneratedProductErrors[0].errors.name);
+        }));
+
+        it('should update `@Input(errors)` after removing item with errors', fakeAsync(() => {
+            component.attributes = mockAttributes;
+            component.generatedProducts = mockGeneratedProducts;
+            component.errors = mockGeneratedProductErrors;
+            fixture.detectChanges();
+            tick();
+            fixture.detectChanges();
+
+            const button = fixture.debugElement.query(By.css('.mp-concrete-products-preview__table-row-button'));
+            button.triggerEventHandler('click', null);
+            fixture.detectChanges();
+
+            const formItem = fixture.debugElement.query(By.css('spy-form-item'));
+
+            expect(formItem.properties.error).toBeFalsy();
+        }));
+
+        it('should excludes existing products according to `@Input(existingProducts)`', fakeAsync(() => {
+            component.attributes = mockAttributes;
+            component.existingProducts = mockExistingProducts;
+            fixture.detectChanges();
+            tick();
+            fixture.detectChanges();
+
+            const existVariant = `${mockExistingProducts[0].superAttributes[0].attribute.name}  /  ${mockExistingProducts[0].superAttributes[1].attribute.name}`;
+            const variants = fixture.debugElement.queryAll(
+                By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-attr'),
+            );
+
+            expect(variants.some((item) => item.nativeElement.textContent.trim() === existVariant)).toBeFalsy();
         }));
     });
 });

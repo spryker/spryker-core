@@ -1,0 +1,59 @@
+{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
+
+{% block body %}
+    {% set mainClass = 'mp-create-concrete-products-overlay' %}
+
+    {% set productData = {
+        name: productAbstractDisplayedName,
+        sku: productAbstract.sku,
+    }  %}
+
+    {% block concreteProducts %}
+        <web-mp-create-concrete-products-overlay product="{{ productData | json_encode() }}" cloak>
+            {{ form_start(form, { attr: { excludeFormTag: true } }) }}
+                {% block concreteProductsTitle %}
+                    <span title>{{ 'Create Concrete Products for' | trans }}</span>
+                {% endblock %}
+
+                {% block concreteProductsAction %}
+                    <web-spy-button size="lg" type="submit" cloak action>{{ 'Create' | trans }}</web-spy-button>
+                {% endblock %}
+
+                {% block concreteProductsContent %}
+                    <web-spy-card class="{{ mainClass }}__card">
+                        <web-mp-existing-concrete-product-generator-data
+                            abstract-sku="{{ productData.sku }}"
+                            abstract-name="{{ productData.name }}"
+                            existing-products="{{ existingProducts | json_encode }}"
+                            cloak
+                        >
+                            <web-mp-create-concrete-products
+                                attributes="{{ attributes | json_encode }}"
+                                attribute-errors="{{ attributesErrors | json_encode }}"
+                                selected-attributes="{{ form.children.attributes.vars.value }}"
+                                existing-products="{{ existingProducts | json_encode }}"
+                                generated-products="{{ generatedProducts | json_encode }}"
+                                generated-product-errors="{{ errors | json_encode }}"
+                                products-name="{{ form.children.products.vars.full_name }}"
+                                attributes-name="{{ form.children.attributes.vars.full_name }}"
+                                attributes-placeholder="{{ 'Select at least one value' | trans }}"
+                            >
+                                <h3 preview-text>{{ 'Concrete Products’ Preview' | trans }}</h3>
+                                <span preview-total-text>{{ 'to be created' | trans }}</span>
+                                <span preview-auto-sku-text>{{ 'Autogenerate SKUs' | trans }}</span>
+                                <span preview-auto-name-text>{{ 'Same Name as Abstract Product' | trans }}</span>
+                                <span preview-col-attr-name>{{ 'Super attribute value' | trans }}</span>
+                                <span preview-col-sku-name>{{ 'SKU' | trans }}</span>
+                                <span preview-col-name-name>{{ 'Name default' | trans }}</span>
+                                <span preview-no-data-text>{{ 'No concretes created yet' | trans }}</span>
+                            </web-mp-create-concrete-products>
+                        </web-mp-existing-concrete-product-generator-data>
+                    </web-spy-card>
+
+                    {% do form.products.setRendered %}
+                    {% do form.attributes.setRendered %}
+                {% endblock %}
+            {{ form_end(form) }}
+        </web-mp-create-concrete-products-overlay>
+    {% endblock %}
+{% endblock %}

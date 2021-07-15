@@ -259,20 +259,39 @@
                             </web-spy-tab>
                         {% endblock %}
 
-                        {% block variantsTab %}
-                            <web-spy-tab cloak spy-title="{{ 'Concrete Products' | trans }}">
-                                {% block variantsTable %}
-                                    <web-mp-edit-abstract-product-variants
-                                        cloak
-                                        config='{{ guiTableConfiguration(productConcreteTableConfiguration) }}'
-                                        table-id="web-mp-edit-abstract-product-variants"
+                    {% block variantsTab %}
+                        <web-spy-tab spy-title="{{ 'Concrete Products' | trans }}">
+                            {% set actionConfig = '{
+                                "type": "drawer",
+                                "component": "ajax-form",
+                                "options": {
+                                    "inputs": {
+                                        "action": "' ~ url(urlAddProductConcrete, {'product-abstract-id': productAbstract.idProductAbstract}) ~ '"
+                                    }
+                                }
+                            }' %}
+                            {% block variantsTable %}
+                                <web-mp-edit-abstract-product-variants
+                                    cloak
+                                    config='{{ guiTableConfiguration(productConcreteTableConfiguration) }}'
+                                    table-id="web-mp-edit-abstract-product-variants"
+                                >
+                                    <span title>{{ 'Concrete Products' | trans }}</span>
+                                    <web-spy-button-action
+                                        type="button"
+                                        variant="primary"
+                                        size="md"
+                                        action="{{ actionConfig }}"
                                     >
-                                    </web-mp-edit-abstract-product-variants>
-                                {% endblock %}
-                            </web-spy-tab>
-                        {% endblock %}
-                    </web-spy-tabs>
-                {% endblock %}
+                                        <web-spy-icon name="plus" icon></web-spy-icon>
+                                        {{ 'Add Concrete Products' | trans }}
+                                    </web-spy-button-action>
+                                </web-mp-edit-abstract-product-variants>
+                            {% endblock %}
+                        </web-spy-tab>
+                    {% endblock %}
+                </web-spy-tabs>
+            {% endblock %}
             {{ form_end(form) }}
         </web-mp-edit-abstract-product>
     {% endblock %}

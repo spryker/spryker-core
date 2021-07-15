@@ -9,6 +9,8 @@ namespace Spryker\Zed\MerchantProduct\Persistence;
 
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\MerchantProduct\Dependency\Service\MerchantProductToUtilEncodingServiceInterface;
+use Spryker\Zed\MerchantProduct\MerchantProductDependencyProvider;
 use Spryker\Zed\MerchantProduct\Persistence\Propel\Mapper\MerchantMapper;
 use Spryker\Zed\MerchantProduct\Persistence\Propel\Mapper\MerchantProductMapper;
 
@@ -40,6 +42,14 @@ class MerchantProductPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createMerchantProductMapper(): MerchantProductMapper
     {
-        return new MerchantProductMapper();
+        return new MerchantProductMapper($this->getUtilEncodingService());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Dependency\Service\MerchantProductToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): MerchantProductToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(MerchantProductDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

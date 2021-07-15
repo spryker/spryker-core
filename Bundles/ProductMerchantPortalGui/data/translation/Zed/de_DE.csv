@@ -77,14 +77,14 @@ English,Englisch
 "Same as Abstract Product","Vom abstrakten Produkt übernehmen"
 "Concrete Products’ Preview","Vorschau der Varianten"
 "Create an Abstract Product with multiple Concrete Products","Ein abstraktes Produkt mit mehreren Varianten erstellen"
-"Super Attribute","Super Attribut"
+"Super Attribute",Superattribut
 Values,Values
 "No concretes created yet","Es wurden noch keine Varianten erstellt"
 "to be created","zu erstellen"
 "Autogenerate SKUs","SKU automatisch generieren"
-"Same Name as Abstract Product","Name vom abstrakten Produkt übernehmen"
-"Super attribute value","Super Attributwert"
-"Name default","Name Standard"
+"Same Name as Abstract Product","Name des abstrakten Produktes übernehmen"
+"Super attribute value",Superattribut-Wert
+"Name default",Standardname
 "Invalid value provided. Please use only alphanumeric characters and . - _","Die SKU enthält ein ungültiges Zeichen. Bitte nutzen sie nur alphanummerische Zeichen und . - _"
 "Concrete Product SKU already exists","Concrete Product SKU existiert schon"
 "SKU Prefix already exists","SKU Präfix existiert schon"
@@ -111,3 +111,13 @@ Values,Values
 "Provide meta title","Meta-Titel angeben"
 "Provide meta keywords","Meta-Keywords angeben"
 "Provide meta description","Meta-Beschreibung angeben"
+"Add Concrete Products","Varianten hinzufügen"
+Create,Create
+"This value should not be blank.","Dieser Wert sollte nicht leer sein."
+"Combination of super attribute values already exists.","Die Kombination aus Superattribut-Werten wird bereits verwendet."
+"This abstract product is not owned by this merchant.","Dieses abstrakte Produkt gehört nicht diesem Händler."
+"Invalid value provided. Please use only alphanumeric characters and  . - _","Ungültiger Wert. Bitte nur alphanumerische Zeichen und . - _ verwenden."
+"This value needs to be unique.","Dieser Wert muss einmalig sein."
+"This value already exists.","Dieser Wert existiert bereits."
+"Success! %d Concrete Products are saved.","Änderungen gespeichert! %d Varianten sind gespeichert."
+"Success! %d Concrete Product is saved.","Änderungen gespeichert! %d Variante ist gespeichert."

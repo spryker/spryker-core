@@ -1,0 +1,16 @@
+<ng-container *ngFor="let attribute of attributes; let attributeIndex = index">
+    <spy-form-item required="true" [error]="getAttributeError | spyInvoke: attributeIndex:errors">
+        {{ attribute.name }}
+        <spy-select
+            [placeholder]="placeholder"
+            [options]="getAttributes | spyInvoke: attribute.attributes"
+            [value]="getSelectedAttributes | spyInvoke: selectedAttributes:attributeIndex"
+            (valueChange)="updateSelectedAttributes($event, attribute, attributeIndex)"
+            multiple
+            control
+        >
+        </spy-select>
+    </spy-form-item>
+</ng-container>
+
+<input *ngIf="name" type="hidden" [name]="name" [value]="selectedAttributes | json" />

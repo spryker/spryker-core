@@ -688,6 +688,51 @@ class MerchantProductFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testIsProductAbstractOwnedByMerchantReturnsTrueIfMerchantOwnsTheProduct(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->createMerchantProduct($merchantTransfer->getIdMerchantOrFail(), $productAbstractTransfer->getIdProductAbstractOrFail());
+
+        // Act
+        $isProductAbstractOwnedByMerchant = $this->tester->getFacade()->isProductAbstractOwnedByMerchant(
+            $productAbstractTransfer,
+            $merchantTransfer
+        );
+
+        // Assert
+        $this->assertTrue($isProductAbstractOwnedByMerchant);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsProductAbstractOwnedByMerchantReturnsFalseIfMerchantDoesNotOwnTheProduct(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+        $merchantTransfer1 = $this->tester->haveMerchant();
+        $merchantTransfer2 = $this->tester->haveMerchant();
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+        $this->createMerchantProduct($merchantTransfer1->getIdMerchantOrFail(), $productAbstractTransfer1->getIdProductAbstractOrFail());
+        $this->createMerchantProduct($merchantTransfer2->getIdMerchantOrFail(), $productAbstractTransfer2->getIdProductAbstractOrFail());
+
+        // Act
+        $isProductAbstractOwnedByMerchant = $this->tester->getFacade()->isProductAbstractOwnedByMerchant(
+            $productAbstractTransfer2,
+            $merchantTransfer1
+        );
+
+        // Assert
+        $this->assertFalse($isProductAbstractOwnedByMerchant);
+    }
+
+    /**
      * @param int $idMerchant
      * @param int $idProductAbstract
      *

@@ -20,6 +20,15 @@ interface ProductMerchantPortalGuiToLocaleFacadeInterface
     public function getAvailableLocales();
 
     /**
+     * @param string $localeName
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocale($localeName);
+
+    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection();

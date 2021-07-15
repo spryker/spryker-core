@@ -98,7 +98,7 @@ abstract class AbstractProductConcreteManagerSubject
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function notifyBeforeCreateObservers(ProductConcreteTransfer $productConcreteTransfer)
+    public function notifyBeforeCreateObservers(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         foreach ($this->beforeCreateObservers as $observer) {
             $productConcreteTransfer = $observer->create($productConcreteTransfer);
@@ -114,7 +114,7 @@ abstract class AbstractProductConcreteManagerSubject
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function notifyAfterCreateObservers(ProductConcreteTransfer $productConcreteTransfer)
+    public function notifyAfterCreateObservers(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         foreach ($this->afterCreateObservers as $observer) {
             $productConcreteTransfer = $observer->create($productConcreteTransfer);

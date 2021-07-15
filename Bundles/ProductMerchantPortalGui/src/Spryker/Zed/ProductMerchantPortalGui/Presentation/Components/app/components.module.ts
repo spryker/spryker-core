@@ -44,6 +44,12 @@ import { ConcreteProductGeneratorDataComponent } from './concrete-product-genera
 import { ConcreteProductGeneratorDataModule } from './concrete-product-generator-data/concrete-product-generator-data.module';
 import { EditConcreteProductImageSetsComponent } from './edit-concrete-product-image-sets/edit-concrete-product-image-sets.component';
 import { EditConcreteProductImageSetsModule } from './edit-concrete-product-image-sets/edit-concrete-product-image-sets.module';
+import { ExistingConcreteProductGeneratorDataModule } from './existing-concrete-product-generator-data/existing-concrete-product-generator-data.module';
+import { ExistingConcreteProductGeneratorDataComponent } from './existing-concrete-product-generator-data/existing-concrete-product-generator-data.component';
+import { CreateConcreteProductsModule } from './create-concrete-products/create-concrete-products.module';
+import { CreateConcreteProductsComponent } from './create-concrete-products/create-concrete-products.component';
+import { CreateConcreteProductsOverlayModule } from './create-concrete-products-overlay/create-concrete-products-overlay.module';
+import { CreateConcreteProductsOverlayComponent } from './create-concrete-products-overlay/create-concrete-products-overlay.component';
 
 @NgModule({
     imports: [
@@ -75,6 +81,9 @@ import { EditConcreteProductImageSetsModule } from './edit-concrete-product-imag
             CreateMultiConcreteProductComponent,
             ConcreteProductGeneratorDataComponent,
             EditConcreteProductImageSetsComponent,
+            ExistingConcreteProductGeneratorDataComponent,
+            CreateConcreteProductsComponent,
+            CreateConcreteProductsOverlayComponent,
         ]),
         DateRangePickerModule,
         TabsModule,
@@ -107,6 +116,9 @@ import { EditConcreteProductImageSetsModule } from './edit-concrete-product-imag
         AutogenerateInputModule,
         CreateMultiConcreteProductModule,
         ConcreteProductGeneratorDataModule,
+        ExistingConcreteProductGeneratorDataModule,
+        CreateConcreteProductsModule,
+        CreateConcreteProductsOverlayModule,
     ],
 })
 export class ComponentsModule {}

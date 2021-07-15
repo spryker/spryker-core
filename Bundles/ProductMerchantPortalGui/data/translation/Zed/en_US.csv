@@ -111,3 +111,13 @@ Values,Values
 "Provide meta title","Provide meta title"
 "Provide meta keywords","Provide meta keywords"
 "Provide meta description","Provide meta description"
+"Add Concrete Products","Add Concrete Products"
+Create,Create
+"This value should not be blank.","This value should not be blank."
+"Combination of super attribute values already exists.","Combination of super attribute values already exists."
+"This abstract product is not owned by this merchant.","This abstract product is not owned by this merchant."
+"Invalid value provided. Please use only alphanumeric characters and  . - _","Invalid value provided. Please use only alphanumeric characters and  . - _"
+"This value needs to be unique.","This value needs to be unique."
+"This value already exists.","This value already exists."
+"Success! %d Concrete Products are saved.","Success! %d Concrete Products are saved."
+"Success! %d Concrete Product is saved.","Success! %d Concrete Product is saved."

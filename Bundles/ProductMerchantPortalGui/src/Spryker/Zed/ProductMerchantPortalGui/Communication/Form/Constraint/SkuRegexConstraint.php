@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\Regex;
 class SkuRegexConstraint extends Regex
 {
     protected const REGEX_PATTERN = '/^[a-zA-Z0-9-_\.]+$/u';
-    protected const MESSAGE = 'Invalid value provided. Please use only alphanumeric characters and  ". - _"';
+    protected const MESSAGE = 'Invalid value provided. Please use only alphanumeric characters and  . - _';
 
     /**
      * @param array|null $options

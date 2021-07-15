@@ -47,6 +47,11 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     ];
 
     /**
+     * @see \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\AddProductConcreteController::indexAction()
+     */
+    protected const URL_ADD_PRODUCT_CONCRETE = '/product-merchant-portal-gui/add-product-concrete';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\MerchantProductNotFoundException
@@ -272,8 +277,10 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                     'productConcreteTableConfiguration' => $this->getFactory()
                         ->createProductGuiTableConfigurationProvider()
                         ->getConfiguration($productAbstractTransfer->getIdProductAbstractOrFail()),
-                    'productCategoryTree' => $this->getFactory(
-                    )->createProductAbstractFormDataProvider()->getProductCategoryTree(),
+                    'productCategoryTree' => $this->getFactory()
+                        ->createProductAbstractFormDataProvider()
+                        ->getProductCategoryTree(),
+                    'urlAddProductConcrete' => static::URL_ADD_PRODUCT_CONCRETE,
                 ]
             )->getContent(),
         ];

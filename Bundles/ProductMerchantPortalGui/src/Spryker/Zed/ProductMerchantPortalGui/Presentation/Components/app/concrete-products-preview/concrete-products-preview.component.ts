@@ -10,7 +10,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { ToJson } from '@spryker/utils';
-import { IconDeleteModule } from '../../icons';
+import { IconDeleteModule, IconNoDataModule } from '../../icons';
 import {
     ConcreteProductPreview,
     ConcreteProductPreviewErrors,
@@ -19,6 +19,7 @@ import {
 } from '../../services/types';
 import { ConcreteProductSkuGeneratorFactoryService } from '../../services/concrete-product-sku-generator-factory.service';
 import { ConcreteProductNameGeneratorFactoryService } from '../../services/concrete-product-name-generator-factory.service';
+import { ProductAttributesFinderService } from '../../services/product-attributes-finder.service';
 
 @Component({
     selector: 'mp-concrete-products-preview',
@@ -26,20 +27,27 @@ import { ConcreteProductNameGeneratorFactoryService } from '../../services/concr
     styleUrls: ['./concrete-products-preview.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    providers: [ConcreteProductSkuGeneratorFactoryService, ConcreteProductNameGeneratorFactoryService],
+    providers: [
+        ConcreteProductSkuGeneratorFactoryService,
+        ConcreteProductNameGeneratorFactoryService,
+        ProductAttributesFinderService,
+    ],
     host: { class: 'mp-concrete-products-preview' },
 })
 export class ConcreteProductsPreviewComponent implements OnChanges {
     @Input() @ToJson() attributes: ProductAttribute[] = [];
     @Input() @ToJson() generatedProducts: ConcreteProductPreview[] = [];
+    @Input() @ToJson() existingProducts?: ConcreteProductPreview[];
     @Input() @ToJson() errors?: ConcreteProductPreviewErrors[];
     @Input() name?: string;
     @Output() generatedProductsChange = new EventEmitter<ConcreteProductPreview[]>();
     @Output() attributesChange = new EventEmitter<ProductAttribute[]>();
 
+    areAttributesComplete = false;
     isAutoGenerateSkuCheckbox = true;
     isAutoGenerateNameCheckbox = true;
     deleteIcon = IconDeleteModule.icon;
+    noDataIcon = IconNoDataModule.icon;
 
     private attributeValues: ConcreteProductPreviewSuperAttribute[][] = [];
     private generatedAttributeValues: ConcreteProductPreviewSuperAttribute[][] = [];
@@ -51,24 +59,34 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
         private concreteProductSkuGeneratorFactory: ConcreteProductSkuGeneratorFactoryService,
         private concreteProductNameGeneratorFactory: ConcreteProductNameGeneratorFactoryService,
         private cdr: ChangeDetectorRef,
+        private productAttributesFinderService: ProductAttributesFinderService,
     ) {}
 
     ngOnChanges(changes: SimpleChanges) {
         if ('attributes' in changes) {
+            this.areAttributesComplete =
+                this.attributes?.every?.((attribute) => attribute?.attributes.length > 0) ?? false;
             this.initialGeneratedProducts = this.generatedProducts?.length ? [...this.generatedProducts] : [];
-            this.generateProductsArray();
 
-            setTimeout(() => {
-                if (this.isAutoGenerateSkuCheckbox) {
-                    this.generateSku(this.isAutoGenerateSkuCheckbox);
-                }
+            if (this.areAttributesComplete) {
+                this.generateProductsArray();
 
-                if (this.isAutoGenerateNameCheckbox) {
-                    this.generateName(this.isAutoGenerateNameCheckbox);
-                }
+                setTimeout(() => {
+                    if (this.isAutoGenerateSkuCheckbox) {
+                        this.generateSku(this.isAutoGenerateSkuCheckbox);
+                    }
 
-                this.cdr.markForCheck();
-            });
+                    if (this.isAutoGenerateNameCheckbox) {
+                        this.generateName(this.isAutoGenerateNameCheckbox);
+                    }
+
+                    this.cdr.markForCheck();
+                });
+            }
+
+            if (!changes.attributes.firstChange) {
+                this.errors = [];
+            }
         }
 
         if ('generatedProducts' in changes) {
@@ -115,10 +133,18 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
             return;
         }
 
-        this.generatedAttributeValues = this.attributeValues.reduce(
-            (accum, values) => accum.flatMap((currentValue) => values.map((value) => [...currentValue, value])),
-            [[]],
+        const existingAttributeCollection = this.productAttributesFinderService.getAttributeCollection(
+            this.existingProducts ?? [],
         );
+
+        this.generatedAttributeValues = this.attributeValues
+            .reduce(
+                (accum, values) => accum.flatMap((currentValue) => values.map((value) => [...currentValue, value])),
+                [[]],
+            )
+            .filter((attribute: ConcreteProductPreviewSuperAttribute[]) =>
+                this.productAttributesFinderService.isAttributeNew(attribute, existingAttributeCollection),
+            );
 
         this.generatedProducts = this.generatedAttributeValues.map((attrs) => {
             const existingGeneratedProduct = this.generatedProducts?.find((product) => {
@@ -252,8 +278,12 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     }
 
     delete(index: number): void {
-        this.generatedProducts = [...this.generatedProducts.filter((product, productIndex) => index !== productIndex)];
+        this.generatedProducts = this.generatedProducts.filter((product, productIndex) => index !== productIndex);
         this.updateAttributesOnDelete();
+
+        if (this.errors?.length) {
+            this.errors = this.errors.filter((error, errorIndex) => errorIndex !== index);
+        }
 
         this.generatedProductsChange.emit(this.generatedProducts);
     }
@@ -267,8 +297,6 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     }
 
     trackByAttributes(index: number, data: ConcreteProductPreview): string {
-        return data.superAttributes.reduce((acc, item) => {
-            return `${acc}/${item.value}&${item.attribute.value}`;
-        }, '');
+        return data.superAttributes.reduce((acc, item) => `${acc}/${item.value}&${item.attribute.value}`, '');
     }
 }

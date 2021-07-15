@@ -301,6 +301,10 @@ class CreateProductAbstractController extends AbstractController
             ->createProductConcreteMapper()
             ->mapProductConcreteDataToProductConcreteTransfers($productConcreteData, $productConcreteTransfers);
 
+        $productConcreteTransfers = $this->getFactory()
+            ->createProductStockExpander()
+            ->expandProductConcreteTransfersWithDefaultMerchantProductStock($productConcreteTransfers);
+
         return $this->getFactory()
             ->createProductConcreteLocalizedAttributesExpander()
             ->expandLocalizedAttributes($productConcreteTransfers);

@@ -1,4 +1,4 @@
-<div *ngIf="generatedProducts?.length; else noData">
+<div *ngIf="generatedProducts?.length && areAttributesComplete; else noData">
     <div class="mp-concrete-products-preview__header">
         <spy-chips color="grey">
             {{ generatedProducts.length }}
@@ -95,7 +95,7 @@
 
 <ng-template #noData>
     <div class="mp-concrete-products-preview__no-data">
-        <spy-icon name="no-data" class="mp-concrete-products-preview__no-data-icon"></spy-icon>
+        <spy-icon [name]="noDataIcon" class="mp-concrete-products-preview__no-data-icon"></spy-icon>
         <div class="mp-concrete-products-preview__no-data-text">
             <ng-content select="[no-data-text]"></ng-content>
         </div>

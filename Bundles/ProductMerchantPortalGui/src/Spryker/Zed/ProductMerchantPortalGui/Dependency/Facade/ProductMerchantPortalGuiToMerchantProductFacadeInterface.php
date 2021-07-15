@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
@@ -58,6 +59,17 @@ interface ProductMerchantPortalGuiToMerchantProductFacadeInterface
      */
     public function isProductConcreteOwnedByMerchant(
         ProductConcreteTransfer $productConcreteTransfer,
+        MerchantTransfer $merchantTransfer
+    ): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractOwnedByMerchant(
+        ProductAbstractTransfer $productAbstractTransfer,
         MerchantTransfer $merchantTransfer
     ): bool;
 }

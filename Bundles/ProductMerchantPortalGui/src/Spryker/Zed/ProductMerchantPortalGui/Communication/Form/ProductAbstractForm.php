@@ -78,10 +78,9 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return void
      */
@@ -140,10 +139,9 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return $this
      */
@@ -170,10 +168,9 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return $this
      */
@@ -220,10 +217,9 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return $this
      */
@@ -249,10 +245,9 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return $this
      */

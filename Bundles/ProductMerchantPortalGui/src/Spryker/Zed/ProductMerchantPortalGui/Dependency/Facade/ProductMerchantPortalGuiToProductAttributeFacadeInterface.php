@@ -32,4 +32,11 @@ interface ProductMerchantPortalGuiToProductAttributeFacadeInterface
      * @return array
      */
     public function getProductAbstractAttributeValues(int $idProductAbstract);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array;
 }

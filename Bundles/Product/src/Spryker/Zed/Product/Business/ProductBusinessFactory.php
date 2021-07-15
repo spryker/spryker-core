@@ -48,12 +48,15 @@ use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
+use Spryker\Zed\Product\Business\Writer\ProductConcreteWriter;
+use Spryker\Zed\Product\Business\Writer\ProductConcreteWriterInterface;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
  * @method \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Product\Persistence\ProductEntityManagerInterface getEntityManager()
  */
 class ProductBusinessFactory extends AbstractBusinessFactory
 {
@@ -594,6 +597,18 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getRepository(),
             $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Writer\ProductConcreteWriterInterface
+     */
+    public function createProductConcreteWriter(): ProductConcreteWriterInterface
+    {
+        return new ProductConcreteWriter(
+            $this->createProductConcreteManager(),
+            $this->getEntityManager(),
+            $this->createProductConcreteAssertion()
         );
     }
 }

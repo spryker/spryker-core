@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCriteriaTransfer;
 
 interface ProductMerchantPortalGuiToProductFacadeInterface
 {
@@ -82,4 +84,20 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
     public function findProductAbstractById($idProductAbstract);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+     *
+     * @return void
+     */
+    public function createProductConcreteCollection(
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): void;
 }

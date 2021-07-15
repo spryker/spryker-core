@@ -7,6 +7,10 @@ export interface ConcreteProductGeneratorData {
     getAbstractSku(): string;
 }
 
+export interface ExistingConcreteProductGeneratorData extends ConcreteProductGeneratorData {
+    getExistingProducts(): ConcreteProductPreview[];
+}
+
 export interface ConcreteProductSkuGeneratorFactory {
     create(): IdGenerator;
 }
@@ -45,6 +49,10 @@ export interface ProductAttribute {
     attributes: ProductAttributeValue[];
 }
 
+export interface ProductAttributeError {
+    error?: string;
+}
+
 export interface ProductAttributeValue {
     value: string;
     name: string;
@@ -54,4 +62,8 @@ export interface AttributeOptions {
     value: string;
     title: string;
     isDisabled?: boolean;
+}
+
+export interface AttributeCollection {
+    [key: string]: boolean;
 }

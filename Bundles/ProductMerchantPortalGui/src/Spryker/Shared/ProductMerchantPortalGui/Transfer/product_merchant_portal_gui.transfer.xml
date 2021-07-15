@@ -338,6 +338,14 @@
     <transfer name="StockProduct">
         <property name="quantity" type="decimal"/>
         <property name="isNeverOutOfStock" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="stockType" type="string"/>
+        <property name="fkStock" type="int"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ReservationRequest">
@@ -348,4 +356,19 @@
     <transfer name="ReservationResponse">
         <property name="reservationQuantity" type="decimal"/>
     </transfer>
+
+    <transfer name="ProductCriteria">
+        <property name="idProductAbstract" type="int"/>
+        <property name="attributes" type="string[]" associative="true" singular="attribute"/>
+    </transfer>
+
+    <transfer name="MerchantStockCriteria">
+        <property name="idMerchant" type="int"/>
+        <property name="isDefault" type="bool"/>
+    </transfer>
+
+    <transfer name="StockCollection">
+        <property name="stocks" type="Stock[]" singular="stock"/>
+    </transfer>
+
 </transfers>
