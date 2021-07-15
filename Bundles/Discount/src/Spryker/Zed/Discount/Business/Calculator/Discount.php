@@ -279,6 +279,8 @@ class Discount implements DiscountInterface
             return true;
         }
 
+        $isDiscountApplicable = false;
+
         try {
             $compositeSpecification = $this->decisionRuleBuilder->buildFromQueryString($queryString);
 
@@ -297,16 +299,18 @@ class Discount implements DiscountInterface
 
                 $matchedProductAmount += $itemTransfer->getQuantity();
                 if ($matchedProductAmount >= $minimumItemAmount) {
-                    $quoteTransfer->setItems($originalItemsCollection ?? $quoteTransfer->getItems());
+                    $isDiscountApplicable = true;
 
-                    return true;
+                    break;
                 }
             }
+
+            $quoteTransfer->setItems($originalItemsCollection ?? $quoteTransfer->getItems());
         } catch (QueryStringException $exception) {
             $this->getLogger()->warning($exception->getMessage(), ['exception' => $exception]);
         }
 
-        return false;
+        return $isDiscountApplicable;
     }
 
     /**
