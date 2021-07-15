@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\DataTablesTransfer;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Discount\Communication\Form\DeleteVoucherCodeForm;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -168,7 +169,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             ]
         )->build();
 
-        $buttons[] = $this->generateRemoveButton($deleteVoucherCodeUrl, 'Delete');
+        $buttons[] = $this->generateRemoveButton($deleteVoucherCodeUrl, 'Delete', [], DeleteVoucherCodeForm::class);
 
         return implode(' ', $buttons);
     }
