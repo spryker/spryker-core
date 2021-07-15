@@ -93,7 +93,7 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
             ->setActionButtons(new ArrayObject([
                 (new MerchantDashboardActionButtonTransfer())
                     ->setTitle('Manage Orders')
-                    ->setUrl($this->routerFacade->getRouter()->generate('sales-merchant-portal-gui:orders')),
+                    ->setUrl($this->routerFacade->getMerchantPortalRouter()->generate('sales-merchant-portal-gui:orders')),
             ]));
     }
 }

@@ -25,6 +25,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_BACKOFFICE_ROUTER = 'PLUGINS_BACKOFFICE_ROUTER';
     public const PLUGINS_BACKEND_GATEWAY_ROUTER = 'PLUGINS_BACKEND_GATEWAY_ROUTER';
     public const PLUGINS_BACKEND_API_ROUTER = 'PLUGINS_BACKEND_API_ROUTER';
+    public const PLUGINS_MERCHANT_PORTAL_ROUTER = 'PLUGINS_MERCHANT_PORTAL_ROUTER';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::PLUGINS_BACKOFFICE_ROUTER_ENHANCER} instead.
@@ -33,6 +34,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     public const ROUTER_ENHANCER_PLUGINS = 'router enhancer plugin';
 
     public const PLUGINS_BACKOFFICE_ROUTER_ENHANCER = 'PLUGINS_BACKOFFICE_ROUTER_ENHANCER';
+    public const PLUGINS_MERCHANT_PORTAL_ROUTER_ENHANCER = 'PLUGINS_MERCHANT_PORTAL_ROUTER_ENHANCER';
     public const PLUGINS_BACKEND_GATEWAY_ROUTER_ENHANCER = 'PLUGINS_BACKEND_GATEWAY_ROUTER_ENHANCER';
 
     /**
@@ -52,6 +54,9 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addBackendGatewayRouterEnhancerPlugins($container);
 
         $container = $this->addBackendApiRouterPlugins($container);
+
+        $container = $this->addMerchantPortalRouterPlugins($container);
+        $container = $this->addMerchantPortalRouterEnhancerPlugins($container);
 
         return $container;
     }
@@ -90,6 +95,50 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantPortalRouterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_PORTAL_ROUTER, function () {
+            return $this->getMerchantPortalRouterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     */
+    protected function getMerchantPortalRouterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantPortalRouterEnhancerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_PORTAL_ROUTER_ENHANCER, function () {
+            return $this->getMerchantPortalRouterEnhancerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     */
+    protected function getMerchantPortalRouterEnhancerPlugins(): array
+    {
+        return [];
     }
 
     /**

@@ -18,6 +18,7 @@ use Spryker\Zed\Router\Business\Router\Router;
 use Spryker\Zed\Router\Business\Router\RouterInterface;
 use Spryker\Zed\Router\Business\Router\RouterResource\BackendGatewayRouterResource;
 use Spryker\Zed\Router\Business\Router\RouterResource\BackofficeRouterResource;
+use Spryker\Zed\Router\Business\Router\RouterResource\MerchantPortalRouterResource;
 use Spryker\Zed\Router\Business\Router\RouterResource\RouterResource;
 use Spryker\Zed\Router\Business\RouterResource\ResourceInterface;
 use Spryker\Zed\Router\RouterDependencyProvider;
@@ -44,6 +45,22 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Router\Business\Router\ChainRouter
+     */
+    public function createMerchantPortalChainRouter(): ChainRouter
+    {
+        return new ChainRouter($this->getMerchantPortalRouterPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     */
+    public function getMerchantPortalRouterPlugins(): array
+    {
+        return $this->getProvidedDependency(RouterDependencyProvider::PLUGINS_MERCHANT_PORTAL_ROUTER);
+    }
+
+    /**
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function createBackofficeRouter(): RouterInterface
@@ -53,6 +70,19 @@ class RouterBusinessFactory extends AbstractBusinessFactory
             $this->createBackofficeRouterResource(),
             $this->getBackofficeRouterEnhancerPlugins(),
             $this->getConfig()->getBackofficeRouterConfiguration()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
+     */
+    public function createMerchantPortalRouter(): RouterInterface
+    {
+        return new Router(
+            $this->createClosureLoader(),
+            $this->createMerchantPortalRouterResource(),
+            $this->getMerchantPortalRouterEnhancerPlugins(),
+            $this->getConfig()->getMerchantPortalRouterConfiguration()
         );
     }
 
@@ -99,6 +129,16 @@ class RouterBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Router\Business\RouterResource\ResourceInterface
+     */
+    public function createMerchantPortalRouterResource(): ResourceInterface
+    {
+        return new MerchantPortalRouterResource(
+            $this->getConfig()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function createBackendGatewayRouter(): RouterInterface
@@ -119,6 +159,22 @@ class RouterBusinessFactory extends AbstractBusinessFactory
         return new BackendGatewayRouterResource(
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     */
+    public function getMerchantPortalRouterEnhancerPlugins(): array
+    {
+        return $this->getProvidedDependency(RouterDependencyProvider::PLUGINS_MERCHANT_PORTAL_ROUTER_ENHANCER);
+    }
+
+    /**
+     * @return \Spryker\Shared\Router\Cache\CacheInterface
+     */
+    public function createMerchantPortalCacheWarmer(): CacheInterface
+    {
+        return new CacheWarmer($this->createMerchantPortalChainRouter());
     }
 
     /**

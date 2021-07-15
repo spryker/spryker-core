@@ -63,11 +63,37 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      *
      * @api
      *
+     * @internal
+     *
+     * @return \Spryker\Zed\Router\Business\Router\ChainRouter
+     */
+    public function getMerchantPortalChainRouter(): ChainRouter
+    {
+        return $this->getFactory()->createMerchantPortalChainRouter();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function getBackofficeRouter(): RouterInterface
     {
         return $this->getFactory()->createBackofficeRouter();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
+     */
+    public function getMerchantPortalRouter(): RouterInterface
+    {
+        return $this->getFactory()->createMerchantPortalRouter();
     }
 
     /**
@@ -146,6 +172,18 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
     public function warmUpBackofficeRouterCache(): void
     {
         $this->getFactory()->createBackofficeCacheWarmer()->warmUp();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function warmUpMerchantPortalRouterCache(): void
+    {
+        $this->getFactory()->createMerchantPortalCacheWarmer()->warmUp();
     }
 
     /**

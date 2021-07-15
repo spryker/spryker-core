@@ -69,6 +69,42 @@ class RouterConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Returns a Merchant Portal Router configuration which makes use of a Router cache.
+     *
+     * @api
+     *
+     * @see \Symfony\Component\Routing\Router::setOptions()
+     *
+     * @return array
+     */
+    public function getMerchantPortalRouterConfiguration(): array
+    {
+        return [
+            'cache_dir' => $this->getMerchantPortalRouterCachePath(),
+            'generator_class' => UrlGenerator::class,
+            'matcher_class' => CompiledUrlMatcher::class,
+        ];
+    }
+
+    /**
+     * Specification:
+     * - Defines the default path to the MerchantPortal Router cache files.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getMerchantPortalRouterCachePath(): string
+    {
+        return sprintf(
+            '%s/src/Generated/Router/MerchantPortal/codeBucket%s/',
+            APPLICATION_ROOT_DIR,
+            APPLICATION_CODE_BUCKET
+        );
+    }
+
+    /**
+     * Specification:
      * - Returns a Router configuration which makes use of a Router cache.
      *
      * @api

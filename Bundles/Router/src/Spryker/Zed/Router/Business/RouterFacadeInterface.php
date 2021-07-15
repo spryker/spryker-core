@@ -30,6 +30,18 @@ interface RouterFacadeInterface
 
     /**
      * Specification:
+     * - Returns a ChainRouter which is added to the MerchantPortal Application.
+     *
+     * @api
+     *
+     * @internal
+     *
+     * @return \Spryker\Zed\Router\Business\Router\ChainRouter
+     */
+    public function getMerchantPortalChainRouter(): ChainRouter;
+
+    /**
+     * Specification:
      * - Returns Router which handles Backoffice routes.
      *
      * @api
@@ -54,6 +66,22 @@ interface RouterFacadeInterface
     public function getBackendGatewayChainRouter(): ChainRouter;
 
     /**
+     * Specification:
+     * - Returns Router which handles MerchantPortal routes.
+     *
+     * @api
+     *
+     * @internal
+     *
+     * @return \Spryker\Zed\Router\Business\Router\RouterInterface
+     */
+    public function getMerchantPortalRouter(): RouterInterface;
+
+    /**
+     * @api
+     *
+     * @internal
+     *
      * Specification:
      * - Returns Router which handles BackendGateway routes.
      *
@@ -87,6 +115,16 @@ interface RouterFacadeInterface
      * @return void
      */
     public function warmUpBackofficeRouterCache(): void;
+
+    /**
+     * Specification:
+     * - Builds the cache for the MerchantPortal Router.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function warmUpMerchantPortalRouterCache(): void;
 
     /**
      * Specification:

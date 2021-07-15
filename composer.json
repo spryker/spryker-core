@@ -352,6 +352,7 @@
         "spryker/merchant-opening-hours-data-import": "*",
         "spryker/merchant-opening-hours-rest-api": "*",
         "spryker/merchant-opening-hours-storage": "*",
+        "spryker/merchant-portal-application": "*",
         "spryker/merchant-product": "*",
         "spryker/merchant-product-data-import": "*",
         "spryker/merchant-product-gui": "*",
