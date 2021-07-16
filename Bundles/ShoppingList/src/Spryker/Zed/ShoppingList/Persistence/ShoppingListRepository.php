@@ -512,7 +512,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     public function getBlacklistedShoppingListIdsByIdCompanyUser(int $idCompanyUser): array
     {
-        return $this->getFactory()
+        $shoppingListIdsAsString = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
             ->useSpyShoppingListCompanyBusinessUnitQuery()
                 ->leftJoinSpyShoppingList()
@@ -520,6 +520,14 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->select([SpyShoppingListTableMap::COL_ID_SHOPPING_LIST])
             ->findByFkCompanyUser($idCompanyUser)
             ->toArray();
+
+        $shoppingListIds = [];
+
+        foreach ($shoppingListIdsAsString as $idShoppingList) {
+            $shoppingListIds[] = (int)$idShoppingList;
+        }
+
+        return $shoppingListIds;
     }
 
     /**
