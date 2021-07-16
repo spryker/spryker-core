@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesProductConnector\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -133,5 +134,33 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
         return $this->getFactory()
             ->createProductIdExpander()
             ->expandOrderItemsWithProduct($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function expandProductAbstractPageWithPopularity(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
+    {
+        return $this->getFactory()
+            ->createPopularityProductPageExpander()
+            ->expandProductPageLoadTransferWithPopularityData($productPageLoadTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
+     */
+    public function getProductPageLoadTransferForRefresh(): ProductPageLoadTransfer
+    {
+        return $this->getFactory()->createProductAbstractIdsRefreshReader()->getProductProductPageLoadTransferForRefresh();
     }
 }

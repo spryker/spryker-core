@@ -239,4 +239,18 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
         return $this->getRepository()
             ->getSynchronizationDataTransfersByFilterAndProductIds($filterTransfer, $productIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function refreshProductAbstractPage(): void
+    {
+        $this->getFactory()
+            ->createProductAbstractPageRefresher()
+            ->refresh();
+    }
 }

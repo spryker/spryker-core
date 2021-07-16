@@ -14,9 +14,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
+use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory;
 use Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade;
+use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductAbstractPagePublisherInterface;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -255,6 +259,45 @@ class ProductPageSearchFacadeTest extends Unit
             'different parent categories' => $this->getDataWithDifferentParentCategories(),
             'parent categories are intersected' => $this->getDataWithParentCategoriesIntersected(),
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testRefreshProductAbstractPage(): void
+    {
+        // Arrange
+        $productAbstractCollectionRefreshPluginMock = $this->createMock(ProductAbstractCollectionRefreshPluginInterface::class);
+        $productAbstractPagePublisherMock = $this->createMock(ProductAbstractPagePublisherInterface::class);
+
+        $productPageLoadTransfer = (new ProductPageLoadTransfer())->setProductAbstractIds([]);
+
+        $productAbstractCollectionRefreshPluginMock
+            ->expects($this->once())
+            ->method('getProductPageLoadTransferForRefresh')
+            ->willReturn($productPageLoadTransfer);
+
+        $productAbstractPagePublisherMock->expects($this->once())
+            ->method('publish')
+            ->with($this->equalTo($productPageLoadTransfer->getProductAbstractIds()));
+
+        /** @var \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
+        $productPageSearchBusinessFactoryMock = $this->getMockBuilder(ProductPageSearchBusinessFactory::class)
+            ->setMethods(['getProductPageRefreshPlugins', 'createProductAbstractPagePublisher'])
+            ->getMock();
+
+        $productPageSearchBusinessFactoryMock
+            ->method('getProductPageRefreshPlugins')
+            ->willReturn([$productAbstractCollectionRefreshPluginMock]);
+
+        $productPageSearchBusinessFactoryMock
+            ->method('createProductAbstractPagePublisher')
+            ->willReturn($productAbstractPagePublisherMock);
+
+        $this->productPageSearchFacade->setFactory($productPageSearchBusinessFactoryMock);
+
+        // Act
+        $this->productPageSearchFacade->refreshProductAbstractPage();
     }
 
     /**
