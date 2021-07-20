@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
@@ -24,12 +25,24 @@ class ProductAttributesController extends AbstractController
 {
     protected const RESPONSE_DELETE_MESSAGE_SUCCESS = 'Success! The Attribute is deleted.';
     protected const RESPONSE_MESSAGE_SUCCESS = 'Product attributes updated successfully.';
-    protected const ERROR_MESSAGE_ATTRIBUTE_NAME_EMPTY = 'The attribute name must be not empty';
-    protected const ERROR_MESSAGE_PRODUCT_CANNOT_BE_FOUND = 'Abstract Product cannot be found';
-    protected const ERROR_MESSAGE_ALL_ATTRIBUTES_EMPTY = 'Please fill in at least one value';
+    protected const ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME = 'The attribute name must be not empty';
+    protected const ERROR_MESSAGE_EMPTY_ATTRIBUTES = 'Please fill in at least one value';
+    protected const ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND = 'Abstract Product cannot be found';
+    protected const ERROR_MESSAGE_CONCRETE_PRODUCT_CANNOT_BE_FOUND = 'Concrete Product cannot be found';
+    protected const ERROR_MESSAGE_SUPER_ATTRIBUTE_WAS_NOT_DELETED = 'Super attribute was not deleted';
 
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+    protected const PARAM_ID_PRODUCT_CONCRETE = 'idProductConcrete';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME
+     */
     protected const PARAM_ATTRIBUTE_NAME = 'attribute_name';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT
+     */
+    protected const PARAM_ATTRIBUTE_DEFAULT = 'attribute_default';
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Response\ResponseFactory
@@ -82,24 +95,66 @@ class ProductAttributesController extends AbstractController
         $attributeName = $request->get(static::PARAM_ATTRIBUTE_NAME);
 
         if (empty($attributeName)) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ATTRIBUTE_NAME_EMPTY);
-        }
-
-        $attributes = $this->getAttributes($request);
-
-        if ($this->isAllAttributesEmpty($attributes, $attributeName)) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ALL_ATTRIBUTES_EMPTY);
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
         }
 
         $productAbstractTransfer = $this->findProductAbstract($request);
 
         if (!$productAbstractTransfer) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_PRODUCT_CANNOT_BE_FOUND);
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
         }
 
-        $this->updateAttributes($attributes, $productAbstractTransfer, $attributeName);
+        $attributes = $this->getAttributes($request);
 
+        $productAttributes = $this->updateProductAttributes($attributes, $productAbstractTransfer->getAttributes(), $attributeName);
+        $localizedAttributes = $this->updateLocalizedAttributes($attributes, $productAbstractTransfer->getLocalizedAttributes(), $attributeName);
+
+        if ($this->isAllAttributesEmpty($productAttributes, $localizedAttributes, $attributeName)) {
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTES);
+        }
+
+        $productAbstractTransfer->setAttributes($productAttributes)->setLocalizedAttributes($localizedAttributes);
         $this->getFactory()->getProductFacade()->saveProductAbstract($productAbstractTransfer);
+
+        return $this->responseFactory->createSuccessJsonResponse(ResponseBuilder::POST_ACTION_REFRESH_TABLE, static::RESPONSE_MESSAGE_SUCCESS);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function saveProductConcreteAttributeAction(Request $request): JsonResponse
+    {
+        $attributeName = $request->get(static::PARAM_ATTRIBUTE_NAME);
+
+        if (!$attributeName) {
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
+        }
+
+        $idProductConcrete = $this->castId(
+            $request->get(static::PARAM_ID_PRODUCT_CONCRETE)
+        );
+
+        $productConcreteTransfer = $this->getFactory()
+            ->getProductFacade()
+            ->findProductConcreteById($idProductConcrete);
+
+        if (!$productConcreteTransfer) {
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
+        }
+
+        $attributes = $this->getAttributes($request);
+
+        $productAttributes = $this->updateProductAttributes($attributes, $productConcreteTransfer->getAttributes(), $attributeName);
+        $localizedAttributes = $this->updateLocalizedAttributes($attributes, $productConcreteTransfer->getLocalizedAttributes(), $attributeName);
+
+        if ($this->isAllAttributesEmpty($productAttributes, $localizedAttributes, $attributeName)) {
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTES);
+        }
+
+        $productConcreteTransfer->setAttributes($productAttributes)->setLocalizedAttributes($localizedAttributes);
+        $this->getFactory()->getProductFacade()->saveProductConcrete($productConcreteTransfer);
 
         return $this->responseFactory->createSuccessJsonResponse(ResponseBuilder::POST_ACTION_REFRESH_TABLE, static::RESPONSE_MESSAGE_SUCCESS);
     }
@@ -114,20 +169,71 @@ class ProductAttributesController extends AbstractController
         $attributeName = $request->get(static::PARAM_ATTRIBUTE_NAME);
 
         if (!$attributeName) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ATTRIBUTE_NAME_EMPTY);
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
         }
 
         $productAbstractTransfer = $this->findProductAbstract($request);
 
         if (!$productAbstractTransfer) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_PRODUCT_CANNOT_BE_FOUND);
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
         }
 
-        $this->deleteAttribute($productAbstractTransfer, (string)$attributeName);
+        $productAttributes = $productAbstractTransfer->getAttributes();
+        $localizedAttributes = $this->deleteLocalizedAttribute($productAbstractTransfer->getLocalizedAttributes(), $attributeName);
 
-        $this->getFactory()
+        unset($productAttributes[$attributeName]);
+
+        $productAbstractTransfer->setAttributes($productAttributes)->setLocalizedAttributes($localizedAttributes);
+        $this->getFactory()->getProductFacade()->saveProductAbstract($productAbstractTransfer);
+
+        return $this->responseFactory->createSuccessJsonResponse(ResponseBuilder::POST_ACTION_REFRESH_TABLE, static::RESPONSE_DELETE_MESSAGE_SUCCESS);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function deleteConcreteProductAttributeAction(Request $request): JsonResponse
+    {
+        $attributeName = $request->get(static::PARAM_ATTRIBUTE_NAME);
+
+        if (!$attributeName) {
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
+        }
+
+        $idProductConcrete = $this->castId(
+            $request->get(static::PARAM_ID_PRODUCT_CONCRETE)
+        );
+
+        $productConcreteTransfer = $this->getFactory()
             ->getProductFacade()
-            ->saveProductAbstract($productAbstractTransfer);
+            ->findProductConcreteById($idProductConcrete);
+
+        if (!$productConcreteTransfer) {
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_CONCRETE_PRODUCT_CANNOT_BE_FOUND);
+        }
+
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+        $superAttributeNames = $this->getFactory()
+            ->createLocalizedAttributesExtractor()
+            ->extractSuperAttributes(
+                $productConcreteTransfer->getAttributes(),
+                $productConcreteTransfer->getLocalizedAttributes(),
+                $localeTransfer
+            );
+
+        if (isset($superAttributeNames[$attributeName])) {
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_SUPER_ATTRIBUTE_WAS_NOT_DELETED);
+        }
+
+        $productAttributes = $productConcreteTransfer->getAttributes();
+        $localizedAttributes = $this->deleteLocalizedAttribute($productConcreteTransfer->getLocalizedAttributes(), $attributeName);
+
+        unset($productAttributes[$attributeName]);
+
+        $productConcreteTransfer->setAttributes($productAttributes)->setLocalizedAttributes($localizedAttributes);
+        $this->getFactory()->getProductFacade()->saveProductConcrete($productConcreteTransfer);
 
         return $this->responseFactory->createSuccessJsonResponse(ResponseBuilder::POST_ACTION_REFRESH_TABLE, static::RESPONSE_DELETE_MESSAGE_SUCCESS);
     }
@@ -142,40 +248,73 @@ class ProductAttributesController extends AbstractController
         $productAbstractTransfer = $this->findProductAbstract($request);
 
         if (!$productAbstractTransfer) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_PRODUCT_CANNOT_BE_FOUND);
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
         }
 
-        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
-            $request,
-            $this->getFactory()->createProductAbstractAttributesTableDataProvider(
-                $productAbstractTransfer->getIdProductAbstractOrFail()
-            ),
-            $this->getFactory()->createProductAbstractAttributeGuiTableConfigurationProvider()->getConfiguration(
-                $productAbstractTransfer->getIdProductAbstractOrFail(),
-                []
-            )
-        );
+        $idProductAbstract = $productAbstractTransfer->getIdProductAbstractOrFail();
+        $guiTableDataProvider = $this->getFactory()
+            ->createProductAbstractAttributesTableDataProvider($idProductAbstract);
+        $guiTableConfigurationTransfer = $this->getFactory()
+            ->createProductAbstractAttributeGuiTableConfigurationProvider()
+            ->getConfiguration($idProductAbstract, []);
+
+        return $this->getFactory()
+            ->getGuiTableHttpDataRequestExecutor()
+            ->execute($request, $guiTableDataProvider, $guiTableConfigurationTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param string $attributeName
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function deleteAttribute(ProductAbstractTransfer $productAbstractTransfer, string $attributeName): ProductAbstractTransfer
+    public function concreteTableDataAction(Request $request): Response
     {
-        $attributes = $productAbstractTransfer->getAttributes();
-        unset($attributes[$attributeName]);
-        $productAbstractTransfer->setAttributes($attributes);
+        $idProductConcrete = $this->castId(
+            $request->get(static::PARAM_ID_PRODUCT_CONCRETE)
+        );
 
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
-            $attributes = $localizedAttribute->getAttributes();
-            unset($attributes[$attributeName]);
-            $localizedAttribute->setAttributes($attributes);
+        $productConcreteTransfer = $this->getFactory()
+            ->getProductFacade()
+            ->findProductConcreteById($idProductConcrete);
+
+        if (!$productConcreteTransfer) {
+            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_CONCRETE_PRODUCT_CANNOT_BE_FOUND);
         }
 
-        return $productAbstractTransfer;
+        $idProductConcrete = $productConcreteTransfer->getIdProductConcreteOrFail();
+        $guiTableDataProvider = $this->getFactory()
+            ->createProductConcreteAttributesTableDataProvider($idProductConcrete);
+        $guiTableConfigurationTransfer = $this->getFactory()
+            ->createProductConcreteAttributeGuiTableConfigurationProvider()
+            ->getConfiguration($idProductConcrete, []);
+
+        return $this->getFactory()
+            ->getGuiTableHttpDataRequestExecutor()
+            ->execute($request, $guiTableDataProvider, $guiTableConfigurationTransfer);
+    }
+
+    /**
+     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
+     *
+     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param string $attributeName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     */
+    protected function deleteLocalizedAttribute(ArrayObject $localizedAttributesTransfers, string $attributeName): ArrayObject
+    {
+        foreach ($localizedAttributesTransfers as $localizedAttributesTransfer) {
+            $attributes = $localizedAttributesTransfer->getAttributes();
+
+            unset($attributes[$attributeName]);
+
+            $localizedAttributesTransfer->setAttributes($attributes);
+        }
+
+        return $localizedAttributesTransfers;
     }
 
     /**
@@ -186,7 +325,10 @@ class ProductAttributesController extends AbstractController
     protected function findProductAbstract(Request $request): ?ProductAbstractTransfer
     {
         $idProductAbstract = $this->castId($request->get(static::PARAM_ID_PRODUCT_ABSTRACT));
-        $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchantOrFail();
+        $idMerchant = $this->getFactory()
+            ->getMerchantUserFacade()
+            ->getCurrentMerchantUser()
+            ->getIdMerchantOrFail();
 
         return $this->getFactory()
             ->createProductAbstractFormDataProvider()
@@ -194,45 +336,80 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @param array $attributes
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param string[] $newAttributes
+     * @param string[] $productAttributes
      * @param string $attributeName
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     * @return array
      */
-    protected function updateAttributes(
-        array $attributes,
-        ProductAbstractTransfer $productAbstractTransfer,
+    protected function updateProductAttributes(
+        array $newAttributes,
+        array $productAttributes,
         string $attributeName
-    ): ProductAbstractTransfer {
-        foreach ($attributes as $attributeType => $attributeValue) {
-            foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
-                if ($attributeType === $localizedAttribute->getLocaleOrFail()->getLocaleNameOrFail()) {
-                    $localeAttributes = $localizedAttribute->getAttributes();
-
-                    unset($localeAttributes[$attributeName]);
-
-                    if (!empty($attributeValue)) {
-                        $localeAttributes[$attributeName] = $attributeValue;
-                    }
-
-                    $localizedAttribute->setAttributes($localeAttributes);
-
-                    break 2;
-                }
+    ): array {
+        foreach ($newAttributes as $attributeKey => $attributeValue) {
+            if ($attributeKey === static::PARAM_ATTRIBUTE_DEFAULT) {
+                $productAttributes = $this->updateAttribute(
+                    $productAttributes,
+                    $attributeName,
+                    $attributeValue
+                );
             }
-
-            $attributes = $productAbstractTransfer->getAttributes();
-            unset($attributes[$attributeName]);
-
-            if (!empty($attributeValue)) {
-                $attributes[$attributeName] = $attributeValue;
-            }
-
-            $productAbstractTransfer->setAttributes($attributes);
         }
 
-        return $productAbstractTransfer;
+        return $productAttributes;
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
+     *
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
+     *
+     * @param string[] $newAttributes
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param string $attributeName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     */
+    protected function updateLocalizedAttributes(array $newAttributes, ArrayObject $localizedAttributesTransfers, string $attributeName): ArrayObject
+    {
+        foreach ($newAttributes as $attributeType => $attributeValue) {
+            $localizedAttributesTransfer = $this->getFactory()
+                ->createProductAttributeDataProvider()
+                ->findLocalizedAttributeByLocaleName($localizedAttributesTransfers, $attributeType);
+
+            if (!$localizedAttributesTransfer) {
+                return $localizedAttributesTransfers;
+            }
+
+            $localizedAttributes = $this->updateAttribute(
+                $localizedAttributesTransfer->getAttributes(),
+                $attributeName,
+                $attributeValue
+            );
+
+            $localizedAttributesTransfer->setAttributes($localizedAttributes);
+        }
+
+        return $localizedAttributesTransfers;
+    }
+
+    /**
+     * @param array $attributes
+     * @param string $attributeName
+     * @param string $attributeValue
+     *
+     * @return array
+     */
+    protected function updateAttribute(array $attributes, string $attributeName, string $attributeValue): array
+    {
+        unset($attributes[$attributeName]);
+
+        if ($attributeValue) {
+            $attributes[$attributeName] = $attributeValue;
+        }
+
+        return $attributes;
     }
 
     /**
@@ -286,7 +463,7 @@ class ProductAttributesController extends AbstractController
      *
      * @return string[]
      */
-    private function getAttributes(Request $request): array
+    protected function getAttributes(Request $request): array
     {
         $content = $this->getFactory()
                    ->getUtilEncodingService()
@@ -296,23 +473,40 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
+     *
      * @param string[] $attributes
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
      * @param string $attributeName
      *
      * @return bool
      */
-    private function isAllAttributesEmpty(array $attributes, string $attributeName): bool
+    protected function isAllAttributesEmpty(array $attributes, ArrayObject $localizedAttributesTransfers, string $attributeName): bool
     {
-        foreach ($attributes as $attributeType => $attributeValue) {
-            if ($attributeType === $attributeName) {
-                continue;
-            }
+        if ($this->existsNotEmptyLocalizedAttribute($localizedAttributesTransfers, $attributeName)) {
+            return false;
+        }
 
-            if (!empty($attributeValue)) {
-                return false;
+        return empty($attributes[static::PARAM_ATTRIBUTE_NAME]);
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param string $attributeName
+     *
+     * @return bool
+     */
+    protected function existsNotEmptyLocalizedAttribute(ArrayObject $localizedAttributesTransfers, string $attributeName): bool
+    {
+        foreach ($localizedAttributesTransfers as $localizedAttributesTransfer) {
+            $attributes = $localizedAttributesTransfer->getAttributes();
+            if (!empty($attributes[$attributeName])) {
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

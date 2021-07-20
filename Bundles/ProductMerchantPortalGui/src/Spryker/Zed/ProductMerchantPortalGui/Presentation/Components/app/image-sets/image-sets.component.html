@@ -5,7 +5,11 @@
 
 <div class="mp-image-sets__set" *ngFor="let imageSet of imageSets; index as imageSetIndex; trackBy: trackByImageSet">
     <div class="spy-row spy-row-gutter-sm spy-row-align-col-flex-end spy-row-align-row-space-between">
-        <spy-form-item class="mp-image-sets__set-name spy-col-6 spy-col-gutter-sm" noSpaces>
+        <spy-form-item
+            class="mp-image-sets__set-name spy-col-6 spy-col-gutter-sm"
+            noSpaces
+            [error]="getNameErrors | spyInvoke: errors:imageSetIndex"
+        >
             {{ titles.setName }}
             <spy-input name="{{ names.prop }}[{{ imageSetIndex }}][{{ names.name }}]" [(value)]="imageSet.name" control>
             </spy-input>
@@ -37,75 +41,89 @@
         class="mp-image-sets__images"
         *ngFor="let image of imageSet.images; index as imageIndex; trackBy: trackByImageSetImages"
     >
-        <div class="spy-row spy-row-gutter-sm spy-row-align-row-space-between">
-            <spy-form-item class="mp-image-sets__order spy-col-6 spy-col-gutter-sm" noSpaces>
-                {{ titles.imageOrder }}
-                <spy-input
-                    class="mp-image-sets__order-input"
-                    type="number"
+        <ng-container *ngIf="getImageSetErrors | spyInvoke: errors:imageSetIndex:imageIndex as imageSetErrors">
+            <div class="spy-row spy-row-gutter-sm spy-row-align-row-space-between">
+                <spy-form-item
+                    class="mp-image-sets__order spy-col-6 spy-col-gutter-sm"
+                    noSpaces
+                    [error]="imageSetErrors?.order"
+                >
+                    {{ titles.imageOrder }}
+                    <spy-input
+                        class="mp-image-sets__order-input"
+                        type="number"
+                        name="{{ names.prop }}[{{ imageSetIndex }}][{{ names.images }}][{{ imageIndex }}][{{
+                            names.order
+                        }}]"
+                        [(value)]="image.order"
+                        control
+                    >
+                    </spy-input>
+                </spy-form-item>
+                <input
                     name="{{ names.prop }}[{{ imageSetIndex }}][{{ names.images }}][{{ imageIndex }}][{{
-                        names.order
+                        names.idProductImage
                     }}]"
-                    [(value)]="image.order"
-                    control
-                >
-                </spy-input>
-            </spy-form-item>
-            <input
-                name="{{ names.prop }}[{{ imageSetIndex }}][{{ names.images }}][{{ imageIndex }}][{{
-                    names.idProductImage
-                }}]"
-                *ngIf="image.idProductImage"
-                [value]="image.idProductImage"
-                type="hidden"
-            />
-            <div class="mp-image-sets__button-remove-set-data-container spy-col spy-col-gutter-sm">
-                <spy-button-icon
-                    class="mp-image-sets__button mp-image-sets__button--remove-images"
-                    [iconName]="removeButtonIcon"
-                    *ngIf="imageSet.images.length > 1"
-                    (click)="removeImageSetData(imageSetIndex, imageIndex)"
-                >
-                </spy-button-icon>
+                    *ngIf="image.idProductImage"
+                    [value]="image.idProductImage"
+                    type="hidden"
+                />
+                <div class="mp-image-sets__button-remove-set-data-container spy-col spy-col-gutter-sm">
+                    <spy-button-icon
+                        class="mp-image-sets__button mp-image-sets__button--remove-images"
+                        [iconName]="removeButtonIcon"
+                        *ngIf="imageSet.images.length > 1"
+                        (click)="removeImageSetData(imageSetIndex, imageIndex)"
+                    >
+                    </spy-button-icon>
+                </div>
             </div>
-        </div>
 
-        <div class="mp-image-sets__images-row">
-            <div class="spy-row spy-row-gutter-sm">
-                <div class="spy-col-6 spy-col-gutter-sm">
-                    <div class="mp-image-sets__image-container" *ngIf="image.srcSmall && image.idProductImage">
-                        <img [src]="image.srcSmall" class="mp-image-sets__image mp-image-sets__image--small" />
-                    </div>
-                    <spy-form-item class="mp-image-sets__image-url-small" noSpaces>
-                        {{ titles.smallImageUrl }}
-                        <spy-input
-                            name="{{ names.prop }}[{{ imageSetIndex }}][{{ names.images }}][{{ imageIndex }}][{{
-                                names.urlSmall
-                            }}]"
-                            [(value)]="image.srcSmall"
-                            control
+            <div class="mp-image-sets__images-row">
+                <div class="spy-row spy-row-gutter-sm">
+                    <div class="spy-col-6 spy-col-gutter-sm">
+                        <div class="mp-image-sets__image-container" *ngIf="image.srcSmall && image.idProductImage">
+                            <img [src]="image.srcSmall" class="mp-image-sets__image mp-image-sets__image--small" />
+                        </div>
+                        <spy-form-item
+                            class="mp-image-sets__image-url-small"
+                            noSpaces
+                            [error]="imageSetErrors?.srcSmall"
                         >
-                        </spy-input>
-                    </spy-form-item>
-                </div>
-                <div class="spy-col-6 spy-col-gutter-sm">
-                    <div class="mp-image-sets__image-container" *ngIf="image.srcLarge && image.idProductImage">
-                        <img [src]="image.srcLarge" class="mp-image-sets__image mp-image-sets__image--large" />
+                            {{ titles.smallImageUrl }}
+                            <spy-input
+                                name="{{ names.prop }}[{{ imageSetIndex }}][{{ names.images }}][{{ imageIndex }}][{{
+                                    names.urlSmall
+                                }}]"
+                                [(value)]="image.srcSmall"
+                                control
+                            >
+                            </spy-input>
+                        </spy-form-item>
                     </div>
-                    <spy-form-item class="mp-image-sets__image-url-large" noSpaces>
-                        {{ titles.largeImageUrl }}
-                        <spy-input
-                            name="{{ names.prop }}[{{ imageSetIndex }}][{{ names.images }}][{{ imageIndex }}][{{
-                                names.urlLarge
-                            }}]"
-                            [(value)]="image.srcLarge"
-                            control
+                    <div class="spy-col-6 spy-col-gutter-sm">
+                        <div class="mp-image-sets__image-container" *ngIf="image.srcLarge && image.idProductImage">
+                            <img [src]="image.srcLarge" class="mp-image-sets__image mp-image-sets__image--large" />
+                        </div>
+                        <spy-form-item
+                            class="mp-image-sets__image-url-large"
+                            noSpaces
+                            [error]="imageSetErrors?.srcLarge"
                         >
-                        </spy-input>
-                    </spy-form-item>
+                            {{ titles.largeImageUrl }}
+                            <spy-input
+                                name="{{ names.prop }}[{{ imageSetIndex }}][{{ names.images }}][{{ imageIndex }}][{{
+                                    names.urlLarge
+                                }}]"
+                                [(value)]="image.srcLarge"
+                                control
+                            >
+                            </spy-input>
+                        </spy-form-item>
+                    </div>
                 </div>
             </div>
-        </div>
+        </ng-container>
     </div>
 
     <spy-button

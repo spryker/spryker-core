@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -49,18 +52,35 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
      */
     protected function validateAttributeUniqueCombination(array $attributes, ProductAbstractAttributeUniqueCombinationConstraint $constraint): void
     {
-        $parentFormData = $this->getFormData();
+        $existingAttributes = [];
+        $parentFormData = $this->getParentFormData();
 
-        $idProductAbstract = $parentFormData[ProductAbstractTransfer::ID_PRODUCT_ABSTRACT];
+        if ($parentFormData instanceof ProductAbstractTransfer) {
+            $idProductAbstract = $parentFormData[ProductAbstractTransfer::ID_PRODUCT_ABSTRACT];
 
-        $existingAttributes = $constraint->getProductAttributeFacade()
-            ->getProductAbstractAttributeValues($idProductAbstract);
+            $existingAttributes = $constraint->getProductAttributeFacade()->getProductAbstractAttributeValues($idProductAbstract);
+        }
+
+        if ($parentFormData instanceof ProductConcreteTransfer) {
+            $idProductConcrete = $parentFormData[ProductConcreteTransfer::ID_PRODUCT_CONCRETE];
+            $productConcreteTransfer = $constraint->getProductFacade()->findProductConcreteById($idProductConcrete);
+
+            if ($productConcreteTransfer) {
+                $attributesGroupedByLocaleName = $this->getAttributesGroupedByLocaleName(
+                    $productConcreteTransfer->getLocalizedAttributes()
+                );
+                $existingAttributes = $this->appendAttributesWithDefaultAttributes(
+                    $attributesGroupedByLocaleName,
+                    $productConcreteTransfer->getAttributes()
+                );
+            }
+        }
 
         foreach ($attributes as $attributesRowNumber => $formAttribute) {
             $attributeName = $formAttribute['attribute_name'] ?? '';
 
-            foreach ($existingAttributes as $localizedAttributes) {
-                if (isset($localizedAttributes[$attributeName])) {
+            foreach ($existingAttributes as $attributes) {
+                if (isset($attributes[$attributeName])) {
                     $this->context->buildViolation($constraint->getMessage($attributeName))
                         ->setParameter('attributesRowNumber', $attributesRowNumber)
                         ->addViolation();
@@ -72,9 +92,9 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function getFormData(): ProductAbstractTransfer
+    protected function getParentFormData(): AbstractTransfer
     {
         /** @var \Symfony\Component\Form\Form $form */
         $form = $this->context->getObject();
@@ -82,5 +102,39 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
         $parentForm = $form->getParent();
 
         return $parentForm->getData();
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     *
+     * @return string[][]
+     */
+    protected function getAttributesGroupedByLocaleName(ArrayObject $localizedAttributesTransfers): array
+    {
+        $result = [];
+
+        foreach ($localizedAttributesTransfers as $localizedAttributeTransfer) {
+            $localeName = $localizedAttributeTransfer->getLocaleOrFail()->getLocaleName();
+            $result[$localeName] = $localizedAttributeTransfer->getAttributes();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param string[][] $attributes
+     * @param string[] $defaultAttributes
+     *
+     * @return string[][]
+     */
+    protected function appendAttributesWithDefaultAttributes(array $attributes, array $defaultAttributes): array
+    {
+        $attributes[static::DEFAULT_LOCALE] = $defaultAttributes;
+
+        ksort($attributes);
+
+        return $attributes;
     }
 }

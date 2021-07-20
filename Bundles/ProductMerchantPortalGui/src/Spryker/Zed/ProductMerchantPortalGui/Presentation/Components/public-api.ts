@@ -41,6 +41,10 @@ export * from './app/existing-concrete-product-generator-data/existing-concrete-
 export * from './app/image-sets/image-sets.component';
 export * from './app/image-sets/image-sets.module';
 export * from './app/image-sets/types';
+export * from './app/edit-concrete-product/edit-concrete-product.component';
+export * from './app/edit-concrete-product/edit-concrete-product.module';
+export * from './app/edit-concrete-product-attributes/edit-concrete-product-attributes.component';
+export * from './app/edit-concrete-product-attributes/edit-concrete-product-attributes.module';
 export * from './app/product-attributes-selector/product-attributes-selector.component';
 export * from './app/product-attributes-selector/product-attributes-selector.module';
 export * from './app/product-list/product-list.component';

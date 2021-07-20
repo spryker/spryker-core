@@ -7,19 +7,18 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 
 interface ProductConcreteAttributeGuiTableConfigurationProviderInterface
 {
     /**
-     * @phpstan-param ArrayObject<string, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
-     *
-     * @param string[] $attributes
-     * @param string[] $superAttributes
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransfers
+     * @param int $idProductConcrete
+     * @param array $attributesInitialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    public function getConfiguration(array $attributes, array $superAttributes, ArrayObject $localizedAttributeTransfers): GuiTableConfigurationTransfer;
+    public function getConfiguration(
+        int $idProductConcrete,
+        array $attributesInitialData
+    ): GuiTableConfigurationTransfer;
 }

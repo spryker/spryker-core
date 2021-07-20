@@ -33,3 +33,14 @@ export interface ImageSetTitles {
     largeImageUrl: string;
     addImage: string;
 }
+
+export interface ImageSetError {
+    name?: string;
+    images: ImageDataError[];
+}
+
+export interface ImageDataError {
+    order?: string;
+    srcLarge?: string;
+    srcSmall?: string;
+}

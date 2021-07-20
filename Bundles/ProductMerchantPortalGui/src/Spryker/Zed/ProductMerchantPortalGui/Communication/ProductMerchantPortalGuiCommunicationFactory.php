@@ -82,13 +82,14 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\Pri
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\PriceProductConcreteTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAbstractAttributeTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAbstractTableDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductConcreteAttributeTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FormErrorsMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FormErrorsMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ImageSetMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ImageSetMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapper;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAttributesMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAttributesMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper;
@@ -275,6 +276,21 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
         return new ProductAbstractAttributeTableDataProvider(
             $this->getProductFacade(),
             $idProductAbstract
+        );
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
+     */
+    public function createProductConcreteAttributesTableDataProvider(int $idProductConcrete): GuiTableDataProviderInterface
+    {
+        return new ProductConcreteAttributeTableDataProvider(
+            $this->getProductFacade(),
+            $this->getLocaleFacade(),
+            $this->createLocalizedAttributesExtractor(),
+            $idProductConcrete
         );
     }
 
@@ -482,7 +498,9 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createProductConcreteAttributeGuiTableConfigurationProvider(): ProductConcreteAttributeGuiTableConfigurationProviderInterface
     {
         return new ProductConcreteAttributeGuiTableConfigurationProvider(
-            $this->createProductAttributeGuiTableConfigurationProvider()
+            $this->getGuiTableFactory(),
+            $this->getProductAttributeFacade(),
+            $this->getProductFacade()
         );
     }
 
@@ -550,7 +568,9 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
         return new ProductConcreteEditFormDataProvider(
             $this->getMerchantUserFacade(),
             $this->getMerchantProductFacade(),
-            $this->getLocaleFacade()
+            $this->getLocaleFacade(),
+            $this->getProductFacade(),
+            $this->createProductAttributeDataProvider()
         );
     }
 
@@ -826,7 +846,10 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
      */
     public function createProductAttributesNotBlankConstraint(): Constraint
     {
-        return new ProductAttributesNotBlankConstraint($this->getProductAttributeFacade());
+        return new ProductAttributesNotBlankConstraint(
+            $this->getProductAttributeFacade(),
+            $this->getProductFacade()
+        );
     }
 
     /**
@@ -836,16 +859,9 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     {
         return new ProductAbstractAttributeUniqueCombinationConstraint(
             $this->getProductAttributeFacade(),
+            $this->getProductFacade(),
             $this->getTranslatorFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAbstractMapperInterface
-     */
-    public function createProductAbstractMapper(): ProductAbstractMapperInterface
-    {
-        return new ProductAbstractMapper();
     }
 
     /**
@@ -853,7 +869,9 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
      */
     public function createProductAttributesMapper(): ProductAttributesMapperInterface
     {
-        return new ProductAttributesMapper();
+        return new ProductAttributesMapper(
+            $this->createProductAttributeDataProvider()
+        );
     }
 
     /**
@@ -862,6 +880,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createResponseFactory(): ResponseFactory
     {
         return new ResponseFactory();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ImageSetMapperInterface
+     */
+    public function createImageSetMapper(): ImageSetMapperInterface
+    {
+        return new ImageSetMapper();
     }
 
     /**

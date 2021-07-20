@@ -45,6 +45,44 @@ class ProductAttributeDataProvider implements ProductAttributeDataProviderInterf
     }
 
     /**
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     * @param int $idLocale
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer|null
+     */
+    public function findLocalizedAttribute(ArrayObject $localizedAttributes, int $idLocale): ?LocalizedAttributesTransfer
+    {
+        foreach ($localizedAttributes as $localizedAttribute) {
+            if ($localizedAttribute->getLocaleOrFail()->getIdLocaleOrFail() === $idLocale) {
+                return $localizedAttribute;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer|null
+     */
+    public function findLocalizedAttributeByLocaleName(ArrayObject $localizedAttributesTransfers, string $localeName): ?LocalizedAttributesTransfer
+    {
+        foreach ($localizedAttributesTransfers as $localizedAttribute) {
+            if ($localizedAttribute->getLocaleOrFail()->getLocaleNameOrFail() === $localeName) {
+                return $localizedAttribute;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
      * @param string[][] $data
      *
@@ -53,7 +91,7 @@ class ProductAttributeDataProvider implements ProductAttributeDataProviderInterf
     protected function addLocalizedAttributes(
         LocalizedAttributesTransfer $localizedAttributesTransfer,
         array $data
-    ) {
+    ): array {
         foreach ($localizedAttributesTransfer->getAttributes() as $attributeName => $value) {
             if (!isset($data[$attributeName])) {
                 $data[$attributeName] = [

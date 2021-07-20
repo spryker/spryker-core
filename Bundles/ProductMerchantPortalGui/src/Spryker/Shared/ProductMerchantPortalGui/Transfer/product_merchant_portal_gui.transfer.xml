@@ -2,6 +2,16 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="GuiTableConfiguration">
+        <property name="editable" type="GuiTableEditableConfiguration"/>
+    </transfer>
+
+    <transfer name="GuiTableEditableConfiguration">
+        <property name="disableRowKey" type="string"/>
+        <property name="update" type="GuiTableEditableUpdateConfiguration"/>
+    </transfer>
+
+    <transfer name="GuiTableEditableUpdateConfiguration">
+        <property name="disableForCols" type="string[]" singular="disableForCol"/>
     </transfer>
 
     <transfer name="GuiTableDataRequest">
@@ -325,7 +335,7 @@
     </transfer>
 
     <transfer name="ProductAttributeTableCriteria">
-        <property name="idProductAbstract" type="int"/>
+        <property name="idProduct" type="int"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
         <property name="orderBy" type="string"/>

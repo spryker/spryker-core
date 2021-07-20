@@ -2,25 +2,13 @@
 
 {% set productConcreteFormFields = form.productConcrete.children %}
 
-{% macro imagesJson(imageSet) -%}
-    {% set images = [] %}
-
-    {% for productImage in imageSet.productImages %}
-        {% set images = images | merge ([
-            { src: productImage.externalUrlSmall },
-        ]) %}
-    {% endfor %}
-
-    {{ images | json_encode }}
-{% endmacro %}
-
 {% macro langIcon(localeName) -%}
-    {%- if localeName == 'en_US' -%}
-        united-states
-    {%- elseif localeName == 'de_DE' -%}
-        germany
+    {%- if localeName == 'en_US' -%}united-states
+    {%- elseif localeName == 'de_DE' -%}germany
     {%- endif -%}
 {% endmacro %}
+
+{% import _self as macros %}
 
 {% block body %}
     {% set editConcreteProductClass = 'mp-edit-concrete-product' %}
@@ -29,81 +17,135 @@
         <web-mp-edit-concrete-product cloak>
             {{ form_start(form, { attr: { excludeFormTag: true } }) }}
                 {% block title %}
-                    <span title>{{ productConcreteName }}</span>
+                    <span title>{{ 'Concrete Product' | trans }}</span>
                 {% endblock %}
 
-                {% block subTitle %}
-                    <span sub-title>{{ productConcrete.sku }}</span>
+                {% block name %}
+                    <span name>{{ productConcrete.sku }}, {{ productConcreteName }}</span>
                 {% endblock %}
 
                 {% block action %}
                     <web-spy-button cloak size="lg" type="submit" action>{{ 'Save' | trans }}</web-spy-button>
                 {% endblock %}
 
-                {% block description %}
-                    <web-spy-card cloak spy-title="{{ 'Name & Description' | trans }}" class="{{ editConcreteProductClass }}__card">
-                        {% for localizedAttributeForm in productConcreteFormFields.localizedAttributes.children %}
-                            <web-spy-collapsible
-                                cloak
-                                class="{{ editConcreteProductClass }}__collapsible"
-                                title-icon="{{ _self.langIcon(localizedAttributeForm.vars.value.locale.localeName) }}"
-                                spy-title="{{ localizedAttributeForm.vars.value.locale.localeName }}"
-                                active="true"
-                            >
-                                {{ form_row(localizedAttributeForm.children.name) }}
-                                {{ form_row(localizedAttributeForm.children.description) }}
-                            </web-spy-collapsible>
-                        {% endfor %}
-                    </web-spy-card>
-                {% endblock %}
-
-                {% block status %}
-                    <web-spy-card cloak spy-title="{{ 'Status' | trans }}" class="{{ editConcreteProductClass }}__card">
-                        <div class="{{ editConcreteProductClass }}__status">
-                            <div class="{{ editConcreteProductClass }}__status-row">
-                                <div class="spy-toggle__label">
-                                    {{ productConcreteFormFields.isActive.vars.checked ? 'Variant is online' : 'Variant is offline' | trans }}
-                                </div>
-                                {{ form_row(productConcreteFormFields.isActive, { label: false, toggle: true, row_attr: { 'no-spaces': 'true' } }) }}
-                            </div>
-
-                            {% if not productConcreteFormFields.isActive.vars.checked %}
-                                <div class="{{ editConcreteProductClass }}__status-row">
-                                    {{ 'This means that the product does not appear online and noone can see it.' | trans }}
-                                </div>
-                            {% endif %}
-                        </div>
-                    </web-spy-card>
-                {% endblock %}
-
-                {% block stock %}
-                    <web-spy-card cloak spy-title="{{ 'Stock' | trans }}" class="{{ editConcreteProductClass }}__stock">
-                        <web-spy-chips max-width="none" color="grey" class="{{ editConcreteProductClass }}__reserved-stock">
-                            {{ 'Reserved Stock' | trans }}: {{ reservedStock }}
-                        </web-spy-chips>
-
-                        <web-spy-card>
-                            <div class="{{ editConcreteProductClass }}__stock-inner">
-                                <div class="{{ editConcreteProductClass }}__stock-inner-row">
-                                    {{ form_row(productConcreteFormFields.stocks.quantity, { row_attr: { 'no-spaces': 'true' } }) }}
-                                </div>
-                                <div class="{{ editConcreteProductClass }}__stock-inner-row">
-                                    {{ form_row(productConcreteFormFields.stocks.isNeverOutOfStock, { row_attr: { 'no-spaces': 'true' } }) }}
-                                </div>
-                            </div>
-                        </web-spy-card>
-                    </web-spy-card>
-                {% endblock %}
-
-                {% block superAttributes %}
-                    <web-spy-card cloak spy-title="{{ 'Super Attributes' | trans }}" class="{{ editConcreteProductClass }}__card {{ editConcreteProductClass }}__super-attributes">
+                {% block subTitle %}
+                    <span sub-title>
                         {% for superAttributeName in superAttributeNames %}
-                            <web-spy-chips color="grey">{{ superAttributeName }}</web-spy-chips>
+                            {% block subTitleChips %}
+                                <web-spy-chips color="grey-lighter" title="{{ superAttributeName }}">{{ superAttributeName }}</web-spy-chips>
+                            {% endblock %}
                         {% endfor %}
+                    </span>
+                {% endblock %}
+
+                {% block statusCard %}
+                    <web-spy-card cloak spy-title="{{ 'Status' | trans }}" class="{{ editConcreteProductClass }}__card {{ editConcreteProductClass }}__status">
+                        {{ form_row(productConcreteFormFields.isActive, {
+                            label: 'Concrete Product is online' | trans,
+                            row_attr: { 'no-spaces': 'true', 'no-label': 'true' },
+                        }) }}
                     </web-spy-card>
                 {% endblock %}
 
-                {% block validityDates %}
+                {% block stockCard %}
+                    <web-spy-card cloak spy-title="{{ 'Stock' | trans }}" class="{{ editConcreteProductClass }}__card {{ editConcreteProductClass }}__stock">
+                        {% block reservedStock %}
+                            <web-spy-chips max-width="none" color="grey" class="{{ editConcreteProductClass }}__stock-reserved">
+                                {{ 'Reserved Stock' | trans }}: {{ reservedStock }}
+                            </web-spy-chips>
+                        {% endblock %}
+
+                        {% block stockCardInner %}
+                            <web-spy-card>
+                                <div class="{{ editConcreteProductClass }}__stock-inner">
+                                    {% block stockCardQuantity %}
+                                        <div class="{{ editConcreteProductClass }}__stock-inner-row">
+                                            {{ form_row(productConcreteFormFields.stocks.quantity, { row_attr: { 'no-spaces': 'true' } }) }}
+                                        </div>
+                                    {% endblock %}
+
+                                    {% block stockCardOutOfStock %}
+                                        <div class="{{ editConcreteProductClass }}__stock-inner-row">
+                                            {{ form_row(productConcreteFormFields.stocks.isNeverOutOfStock, { row_attr: { 'no-spaces': 'true' } }) }}
+                                        </div>
+                                    {% endblock %}
+                                </div>
+                            </web-spy-card>
+                        {% endblock %}
+                    </web-spy-card>
+                {% endblock %}
+
+                {% block nameCard %}
+                    <web-spy-card cloak spy-title="{{ 'Name' | trans }} *" class="{{ editConcreteProductClass }}__card">
+                        {% block nameCardInner %}
+                            <web-mp-content-toggle
+                                cloak
+                                name="{{ form.useAbstractProductName.vars.full_name }}"
+                                is-content-hidden="{{ form.useAbstractProductName.vars.checked | json_encode }}"
+                            >
+                                {% block nameCardTogglerText %}
+                                    <span toggle-text>{{ 'Use Abstract Product name for all locales' | trans }}</span>
+                                {% endblock %}
+
+                                {% block nameCardTabs %}
+                                    <web-spy-tabs cloak mode="card">
+                                        {% for localizedAttributeForm in productConcreteFormFields.localizedAttributes.children %}
+                                            {% block nameCardTab %}
+                                                <web-spy-tab
+                                                    cloak
+                                                    spy-title="{{ localizedAttributeForm.vars.value.locale.localeName }}"
+                                                    icon-name="{{ macros.langIcon(localizedAttributeForm.vars.value.locale.localeName) }}"
+                                                >
+                                                    {{ form_row(localizedAttributeForm.children.name, { row_attr: { 'no-spaces': 'true' } }) }}
+                                                </web-spy-tab>
+                                            {% endblock %}
+                                        {% endfor %}
+                                    </web-spy-tabs>
+                                {% endblock %}
+                            </web-mp-content-toggle>
+                        {% endblock %}
+                    </web-spy-card>
+
+                    {% do form.useAbstractProductName.setRendered %}
+                {% endblock %}
+
+                {% block descriptionCard %}
+                    <web-spy-card cloak spy-title="{{ 'Description' | trans }}" class="{{ editConcreteProductClass }}__card">
+                        {% block descriptionCardInner %}
+                            <web-mp-content-toggle
+                                cloak
+                                name="{{ form.useAbstractProductDescription.vars.full_name }}"
+                                is-content-hidden="{{ form.useAbstractProductDescription.vars.checked | json_encode }}"
+                            >
+                                {% block descriptionCardTogglerText %}
+                                    <span toggle-text>{{ 'Use Abstract Product description for all locales' | trans }}</span>
+                                {% endblock %}
+
+                                {% block descriptionCardTabs %}
+                                    <web-spy-tabs cloak mode="card">
+                                        {% for localizedAttributeForm in productConcreteFormFields.localizedAttributes.children %}
+                                            {% block descriptionCardTab %}
+                                                <web-spy-tab
+                                                    cloak
+                                                    spy-title="{{ localizedAttributeForm.vars.value.locale.localeName }}"
+                                                    icon-name="{{ macros.langIcon(localizedAttributeForm.vars.value.locale.localeName) }}"
+                                                >
+                                                    {{ form_row(localizedAttributeForm.children.description, { row_attr: { 'no-spaces': 'true' } }) }}
+                                                    {{ form_row(localizedAttributeForm.children.locale) }}
+                                                </web-spy-tab>
+                                            {% endblock %}
+                                        {% endfor %}
+                                    </web-spy-tabs>
+                                {% endblock %}
+                            </web-mp-content-toggle>
+                        {% endblock %}
+                    </web-spy-card>
+
+                    {% do form.useAbstractProductDescription.setRendered %}
+                    {% do productConcreteFormFields.localizedAttributes.setRendered %}
+                {% endblock %}
+
+                {% block validityDatesCard %}
                     {% set dates = {
                         from: productConcreteFormFields.validFrom.vars.value,
                         to: productConcreteFormFields.validTo.vars.value,
@@ -111,99 +153,174 @@
                     {% set validityDatesErrors = productConcreteFormFields.validFrom.vars.errors | merge(
                         productConcreteFormFields.validTo.vars.errors) %}
 
-                    <web-spy-card cloak spy-title="{{ 'Validity Dates & Time' | trans }}" class="{{ editConcreteProductClass }}__card">
-                        <web-spy-form-item
-                            no-spaces="true"
-                            no-label="true"
-                            error="{{ validityDatesErrors[0].message | default | trans }}"
-                        >
-                            <web-spy-date-range-picker
-                                control
-                                dates="{{ dates | json_encode() }}"
-                                name-from="{{ productConcreteFormFields.validFrom.vars.full_name }}"
-                                name-to="{{ productConcreteFormFields.validTo.vars.full_name }}"
-                                placeholder-from="{{ 'Valid from' | trans }}"
-                                placeholder-to="{{ 'Valid to' | trans }}"
-                            ></web-spy-date-range-picker>
-                        </web-spy-form-item>
-                    </web-spy-card>
+                    {% block validityDatesCardInner %}
+                        <web-spy-card cloak spy-title="{{ 'Validity Dates & Time' | trans }}" class="{{ editConcreteProductClass }}__card">
+                            {% block validityDatesCardFormItem %}
+                                <web-spy-form-item
+                                    no-spaces="true"
+                                    no-label="true"
+                                    error="{{ validityDatesErrors[0].message | default | trans }}"
+                                >
+                                    {% block validityDatesCardRangePicker %}
+                                        <web-spy-date-range-picker
+                                            control
+                                            dates="{{ dates | json_encode() }}"
+                                            name-from="{{ productConcreteFormFields.validFrom.vars.full_name }}"
+                                            name-to="{{ productConcreteFormFields.validTo.vars.full_name }}"
+                                            placeholder-from="{{ 'Valid from' | trans }}"
+                                            placeholder-to="{{ 'Valid to' | trans }}"
+                                        ></web-spy-date-range-picker>
+                                    {% endblock %}
+                                </web-spy-form-item>
+                            {% endblock %}
+                        </web-spy-card>
+                    {% endblock %}
 
                     {% do productConcreteFormFields.validFrom.setRendered %}
                     {% do productConcreteFormFields.validTo.setRendered %}
                 {% endblock %}
 
-                {% block prices %}
+                {% block pricesCard %}
                     <web-spy-card cloak spy-title="{{ 'Price' | trans }}" class="{{ editConcreteProductClass }}__card">
-                        <web-mp-edit-concrete-product-prices
-                            cloak
-                            is-table-hidden="{{ form.useAbstractProductPrices.vars.checked | json_encode }}"
-                            checkbox-name="{{ form.useAbstractProductPrices.vars.full_name }}"
-                            table-id="web-mp-edit-concrete-product-prices"
-                            table-config='{{ guiTableConfiguration(priceProductConcreteTableConfiguration) }}'>
-                            <span toggle-text>{{ 'Use Abstract Product prices' | trans }}</span>
-                        </web-mp-edit-concrete-product-prices>
+                        {% block pricesCardInner %}
+                            <web-mp-content-toggle
+                                cloak
+                                name="{{ form.useAbstractProductPrices.vars.full_name }}"
+                                is-content-hidden="{{ form.useAbstractProductPrices.vars.checked | json_encode }}"
+                            >
+                                {% block pricesCardTogglerText %}
+                                    <span toggle-text>{{ 'Use Abstract Product price for all locales' | trans }}</span>
+                                {% endblock %}
+
+                                {% block pricesCardTable %}
+                                    <web-mp-edit-concrete-product-prices
+                                        cloak
+                                        table-id="web-mp-edit-concrete-product-prices"
+                                        table-config='{{ guiTableConfiguration(priceProductConcreteTableConfiguration) }}'>
+                                    </web-mp-edit-concrete-product-prices>
+                                {% endblock %}
+                            </web-mp-content-toggle>
+                        {% endblock %}
                     </web-spy-card>
 
                     {% do productConcreteFormFields.prices.setRendered %}
                     {% do form.useAbstractProductPrices.setRendered %}
                 {% endblock %}
 
-                {% if productConcrete.imageSets is not null %}
-                    {% block images %}
-                        <web-spy-card cloak spy-title="{{ 'Images' | trans }}" class="{{ editConcreteProductClass }}__card">
-                            {% for imageSet in productConcrete.imageSets %}
-                                {% if imageSet.locale is null %}
-                                    <web-spy-collapsible
-                                        cloak
-                                        class="{{ editConcreteProductClass }}__collapsible"
-                                        spy-title="{{ 'DEFAULT' | trans }}"
-                                        active="true"
-                                    >
-                                        <web-mp-edit-concrete-product-image-sets images="{{ _self.imagesJson(imageSet) }}">
-                                            <span class="mp-edit-concrete-product-image-sets__title">
-                                                {{ 'Image Set:' | trans }}
-                                                <span class="mp-edit-concrete-product-image-sets__name">{{ imageSet.name }}</span>
-                                            </span>
-                                        </web-mp-edit-concrete-product-image-sets>
-                                    </web-spy-collapsible>
-                                {% endif %}
-                            {% endfor %}
+                {% block imagesCard %}
+                    <web-spy-card cloak spy-title="{{ 'Images' | trans }}" class="{{ editConcreteProductClass }}__card">
+                        {% set imageSetTitles = {
+                            addImageSet: 'Add Image Set' | trans,
+                            setName: 'Set name' | trans,
+                            deleteImageSet: 'Delete Image Set' | trans,
+                            imageOrder: 'Image Ordered' | trans,
+                            smallImageUrl: 'Small Image URL' | trans,
+                            largeImageUrl: 'Large Image URL' | trans,
+                            addImage: 'Add Image' | trans,
+                        } %}
 
-                            {% for imageSet in productConcrete.imageSets %}
-                                {% if imageSet.locale is not null %}
-                                    <web-spy-collapsible
-                                        cloak
-                                        class="{{ editConcreteProductClass }}__collapsible"
-                                        title-icon="{{ _self.langIcon(imageSet.locale.localeName) }}"
-                                        spy-title="{{ imageSet.locale.localeName }}"
-                                        active="true"
-                                    >
-                                        <web-mp-edit-concrete-product-image-sets images="{{ _self.imagesJson(imageSet) }}">
-                                            <span class="mp-edit-concrete-product-image-sets__title">
-                                                {{ 'Image Set' | trans ~ ':' }}
-                                                <span class="mp-edit-concrete-product-image-sets__name">{{ imageSet.name }}</span>
-                                            </span>
-                                        </web-mp-edit-concrete-product-image-sets>
-                                    </web-spy-collapsible>
-                                {% endif %}
-                            {% endfor %}
-                        </web-spy-card>
-                    {% endblock %}
-                {% endif %}
+                        {% block imagesCardInner %}
+                            <web-mp-content-toggle
+                                cloak
+                                name="{{ form.useAbstractProductImageSets.vars.full_name }}"
+                                is-content-hidden="{{ form.useAbstractProductImageSets.vars.checked | json_encode }}"
+                            >
+                                {% block imagesCardTogglerText %}
+                                    <span toggle-text>{{ 'Use Abstract Product Images for all locales' | trans }}</span>
+                                {% endblock %}
 
-                {% block attributes %}
-                    {% if productAttributeTableConfiguration.dataSource.data is not empty %}
-                        <web-spy-card cloak spy-title="{{ 'Attributes' | trans }}" class="{{ editConcreteProductClass }}__card">
+                                {% block imagesCardTabs %}
+                                    <web-spy-tabs cloak mode="card">
+                                        {% for idLocale, localeName in imageSetTabNames %}
+                                            {% set imageSetNames = {
+                                                prop: 'productConcreteEdit[productConcrete][imageSetsFront]['~ loop.index0 ~']',
+                                                name: 'name',
+                                                images: 'productImages',
+                                                order: 'sortOrder',
+                                                urlSmall: 'externalUrlSmall',
+                                                urlLarge: 'externalUrlLarge',
+                                                idProductImageSet: 'idProductImageSet',
+                                                originalIndex: 'originalIndex',
+                                                idLocale: '[idLocale]',
+                                                localeName: '[localeName]',
+                                                idProductImage: 'idProductImage',
+                                            } %}
+
+                                            {% block imagesCardTab %}
+                                                <web-spy-tab cloak spy-title="{{ localeName }}" icon-name="{{ macros.langIcon(localeName) }}">
+                                                    {% set imageSets = imageSetsGroupedByIdLocale[idLocale] | default([]) %}
+                                                    {% set mappedImageSets = [] %}
+                                                    {% set mappedImageSetsErrors = [] %}
+
+                                                    {% for imageSet in imageSets %}
+                                                        {% set mappedImageSet = {
+                                                            idProductImageSet: imageSet.idProductImageSet,
+                                                            originalIndex: imageSetMetaData[imageSet].originalIndex,
+                                                            name: imageSet.name,
+                                                            locale: {
+                                                                idLocale: imageSet.locale.idLocale | default(null),
+                                                                localeName: imageSet.locale.localeName| default('Default'),
+                                                            },
+                                                        } %}
+                                                        {% set mappedImages = [] %}
+
+                                                        {% for productImage in imageSet.productImages %}
+                                                            {% set mappedImages = mappedImages | merge([{
+                                                                idProductImage: productImage.idProductImage,
+                                                                order: productImage.sortOrder,
+                                                                srcLarge: productImage.externalUrlLarge,
+                                                                srcSmall: productImage.externalUrlSmall,
+                                                            }]) %}
+                                                        {% endfor %}
+
+                                                        {% set mappedImageSet = mappedImageSet | merge({ images: mappedImages }) %}
+                                                        {% set mappedImageSets = mappedImageSets | merge([mappedImageSet]) %}
+                                                        {% set mappedImageSetsErrors = mappedImageSetsErrors | merge([imageSetMetaData[imageSet].errors]) %}
+                                                    {% endfor %}
+
+                                                    {% block imagesCardTabSets %}
+                                                        <web-mp-image-sets
+                                                            cloak
+                                                            names="{{ imageSetNames | json_encode }}"
+                                                            image-sets="{{ mappedImageSets | json_encode }}"
+                                                            titles="{{ imageSetTitles | json_encode }}"
+                                                            errors="{{ mappedImageSetsErrors | json_encode }}">
+                                                        </web-mp-image-sets>
+                                                        <input
+                                                            name="{{ imageSetNames.prop }}{{ imageSetNames.idLocale }}"
+                                                            value="{{ idLocale }}"
+                                                            type="hidden" />
+                                                        <input
+                                                            name="{{ imageSetNames.prop }}{{ imageSetNames.localeName }}"
+                                                            value="{{ localeName }}"
+                                                            type="hidden" />
+                                                    {% endblock %}
+                                                </web-spy-tab>
+                                            {% endblock %}
+                                        {% endfor %}
+                                    </web-spy-tabs>
+
+                                    {% do form.productConcrete.imageSets.setRendered %}
+                                    {% do form.useAbstractProductImageSets.setRendered %}
+                                {% endblock %}
+                            </web-mp-content-toggle>
+                        {% endblock %}
+                    </web-spy-card>
+                {% endblock %}
+
+                {% block attributesCard %}
+                    <web-spy-card cloak spy-title="{{ 'Attributes' | trans }}" class="{{ editConcreteProductClass }}__card">
+                        {% block attributesCardTable %}
                             <web-mp-edit-concrete-product-attributes
                                 table-id="web-mp-edit-concrete-product-attributes"
                                 table-config='{{ guiTableConfiguration(productAttributeTableConfiguration) }}'>
                             </web-mp-edit-concrete-product-attributes>
-                        </web-spy-card>
-                    {% endif %}
+                        {% endblock %}
+                    </web-spy-card>
                 {% endblock %}
 
-                {% block searchability %}
-                    <web-spy-card cloak spy-title="{{ form.children.searchability.vars.label | trans }}" class="{{ editConcreteProductClass }}__card">
+                {% block searchabilityCard %}
+                    <web-spy-card cloak spy-title="{{ form.children.searchability.vars.label | trans }}" class="{{ editConcreteProductClass }}__card {{ editConcreteProductClass }}__searchability">
                         {{ form_row(form.children.searchability, { label: false, row_attr: { 'no-spaces': 'true' }}) }}
                     </web-spy-card>
                 {% endblock %}

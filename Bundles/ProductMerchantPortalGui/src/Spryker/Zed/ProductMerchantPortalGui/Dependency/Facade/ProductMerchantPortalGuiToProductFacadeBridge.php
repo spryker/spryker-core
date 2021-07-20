@@ -119,6 +119,16 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
     }
 
     /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteById($idProduct)
+    {
+        return $this->productFacade->findProductConcreteById($idProduct);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]

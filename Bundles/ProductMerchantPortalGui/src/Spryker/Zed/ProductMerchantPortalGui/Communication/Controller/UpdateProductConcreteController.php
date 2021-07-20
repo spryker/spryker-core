@@ -13,8 +13,11 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
+use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
+use SplObjectStorage;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\ProductConcreteNotFoundException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -40,9 +43,26 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
 
     /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_NAME
+     */
+    protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION
+     */
+    protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'useAbstractProductDescription';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS
+     */
+    protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'useAbstractProductImageSets';
+
+    /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_PRODUCT_CONCRETE
      */
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE = 'productConcrete';
+
+    protected const DEFAULT_LOCALE = 'Default';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -65,21 +85,38 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
         $productConcreteTransfer = $formData[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE];
 
         $productConcreteEditForm = $this->getFactory()->createProductConcreteEditForm($formData, $formOptions);
+
+        $storedProductAttributes = $productConcreteTransfer->getAttributes();
+
         $productConcreteEditForm->handleRequest($request);
-        $initialData = $this->getDefaultInitialData(
+
+        $pricesInitialData = $this->getDefaultInitialData(
             PriceProductTableViewTransfer::PRICES,
             $request->get($productConcreteEditForm->getName())[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE] ?? null
         );
 
+        $attributesInitialData = $this->getDefaultInitialData(
+            ProductConcreteTransfer::ATTRIBUTES,
+            $request->get($productConcreteEditForm->getName())[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE] ?? null
+        );
+
         if ($productConcreteEditForm->isSubmitted()) {
-            return $this->handleProductConcreteEditFormSubmission($productConcreteEditForm, $initialData);
+            $productConcreteTransfer->setAttributes($storedProductAttributes);
+
+            return $this->handleProductConcreteEditFormSubmission(
+                $productConcreteEditForm,
+                $pricesInitialData,
+                $attributesInitialData
+            );
         }
 
         return $this->getResponse(
             $productConcreteEditForm,
             $productConcreteTransfer,
             new ValidationResponseTransfer(),
-            $initialData
+            $pricesInitialData,
+            $attributesInitialData,
+            []
         );
     }
 
@@ -92,25 +129,34 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     {
         $idProductConcrete = $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE));
 
-        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
-            $request,
-            $this->getFactory()->createPriceProductConcreteTableDataProvider($idProductConcrete),
-            $this->getFactory()->createPriceProductConcreteGuiTableConfigurationProvider()->getConfiguration($idProductConcrete)
-        );
+        return $this->getFactory()
+            ->getGuiTableHttpDataRequestExecutor()
+            ->execute(
+                $request,
+                $this->getFactory()
+                    ->createPriceProductConcreteTableDataProvider($idProductConcrete),
+                $this->getFactory()
+                    ->createPriceProductConcreteGuiTableConfigurationProvider()
+                    ->getConfiguration($idProductConcrete)
+            );
     }
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productConcreteEditForm
      *
      * @param \Symfony\Component\Form\FormInterface $productConcreteEditForm
-     * @param mixed[] $initialData
+     * @param array $pricesInitialData
+     * @param array $attributesInitialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     protected function handleProductConcreteEditFormSubmission(
         FormInterface $productConcreteEditForm,
-        array $initialData
+        array $pricesInitialData,
+        array $attributesInitialData
     ): JsonResponse {
+        $imageSetsErrors = [];
+
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $productConcreteEditForm->getData()[static::BLOCK_PREFIX_PRODUCT_CONCRETE_FORM];
 
@@ -119,9 +165,9 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             ->validatePrices($productConcreteTransfer->getPrices());
         $merchantProductValidationResponseTransfer = new ValidationResponseTransfer();
 
-        $initialData = $this->getFactory()
+        $pricesInitialData = $this->getFactory()
             ->createPriceProductMapper()
-            ->mapValidationResponseTransferToInitialDataErrors($pricesValidationResponseTransfer, $initialData);
+            ->mapValidationResponseTransferToInitialDataErrors($pricesValidationResponseTransfer, $pricesInitialData);
 
         if ($productConcreteEditForm->isValid() && $pricesValidationResponseTransfer->getIsSuccess()) {
             $merchantProductValidationResponseTransfer = $this->validateMerchantProduct(
@@ -129,26 +175,61 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                 $productConcreteTransfer->getFkProductAbstractOrFail()
             );
 
+            $productAttributes = $this->getFactory()
+                ->createProductAttributesMapper()
+                ->mapAttributesDataToProductAttributes(
+                    $attributesInitialData,
+                    $productConcreteTransfer->getAttributes()
+                );
+            $productLocalizedAttributes = $this->getFactory()
+                ->createProductAttributesMapper()
+                ->mapAttributesDataToLocalizedAttributesTransfers(
+                    $attributesInitialData,
+                    $productConcreteTransfer->getLocalizedAttributes()
+                );
+
+            $productConcreteTransfer->setAttributes($productAttributes)->setLocalizedAttributes($productLocalizedAttributes);
+
+            $attributesInitialData = [];
+
             if ($merchantProductValidationResponseTransfer->getIsSuccess()) {
-                $this->saveProductConcreteData($productConcreteEditForm, $productConcreteTransfer);
+                $productAbstractTransfer = $this->getFactory()
+                    ->getProductFacade()
+                    ->findProductAbstractById($productConcreteTransfer->getFkProductAbstractOrFail());
+
+                $this->saveProductConcreteData($productConcreteEditForm, $productConcreteTransfer, $productAbstractTransfer);
             }
+        } else {
+            $errors = $productConcreteEditForm->getErrors(true, false);
+
+            $imageSetsErrors = $this->getFactory()
+                ->createImageSetMapper()
+                ->mapErrorsToImageSetValidationData(
+                    $productConcreteEditForm->getErrors(true, true)
+                );
+
+            $attributesInitialData = $this->getFactory()
+                ->createProductAttributesMapper()
+                ->mapErrorsToAttributesData($errors, $attributesInitialData);
         }
 
         return $this->getResponse(
             $productConcreteEditForm,
             $productConcreteTransfer,
             $merchantProductValidationResponseTransfer,
-            $initialData
+            $pricesInitialData,
+            $attributesInitialData,
+            $imageSetsErrors
         );
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productConcreteEditForm
-     *
      * @param \Symfony\Component\Form\FormInterface $productConcreteEditForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param mixed[] $initialData
+     * @param array $priceInitialData
+     * @param array $attributesInitialData
+     * @param array $imageSetsErrors
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -156,36 +237,53 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
         FormInterface $productConcreteEditForm,
         ProductConcreteTransfer $productConcreteTransfer,
         ValidationResponseTransfer $validationResponseTransfer,
-        array $initialData
+        array $priceInitialData,
+        array $attributesInitialData,
+        array $imageSetsErrors
     ): JsonResponse {
-        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
-        $localizedAttributesTransfer = $this->getFactory()->createLocalizedAttributesExtractor()->extractLocalizedAttributes(
-            $productConcreteTransfer->getLocalizedAttributes(),
-            $localeTransfer
-        );
-        $superAttributeNames = $this->getFactory()->createLocalizedAttributesExtractor()->extractCombinedSuperAttributeNames(
-            $productConcreteTransfer->getAttributes(),
-            $productConcreteTransfer->getLocalizedAttributes(),
-            $localeTransfer
-        );
-        $reservationResponseTransfer = $this->getFactory()->getOmsFacade()->getOmsReservedProductQuantity(
-            (new ReservationRequestTransfer())
-                ->setSku($productConcreteTransfer->getSku())
-                ->setStore($this->getFactory()->getStoreFacade()->getCurrentStore())
-        );
+        $localeTransfer = $this->getFactory()
+            ->getLocaleFacade()
+            ->getCurrentLocale();
+        $localizedAttributesTransfer = $this->getFactory()
+            ->createLocalizedAttributesExtractor()
+            ->extractLocalizedAttributes(
+                $productConcreteTransfer->getLocalizedAttributes(),
+                $localeTransfer
+            );
+        $superAttributeNames = $this->getFactory()
+            ->createLocalizedAttributesExtractor()
+            ->extractCombinedSuperAttributeNames(
+                $productConcreteTransfer->getAttributes(),
+                $productConcreteTransfer->getLocalizedAttributes(),
+                $localeTransfer
+            );
+        $reservationResponseTransfer = $this->getFactory()
+            ->getOmsFacade()
+            ->getOmsReservedProductQuantity(
+                (new ReservationRequestTransfer())
+                    ->setSku($productConcreteTransfer->getSku())
+                    ->setStore($this->getFactory()->getStoreFacade()->getCurrentStore())
+            );
+
+        $imageSetTabNames = $this->getImageSetTabNames($productConcreteTransfer);
+        $imageSetsGroupedByIdLocale = $this->getImageSetsGroupedByIdLocale($productConcreteTransfer->getImageSets());
+        $imageSetMetaData = $this->getImageSetMetaDataGroupedByImageSet($productConcreteTransfer->getImageSets(), $imageSetsErrors);
 
         $responseData = [
             'form' => $this->renderView('@ProductMerchantPortalGui/Partials/product_concrete_form.twig', [
                 'form' => $productConcreteEditForm->createView(),
                 'productConcrete' => $productConcreteTransfer,
+                'imageSetTabNames' => $imageSetTabNames,
+                'imageSetsGroupedByIdLocale' => $imageSetsGroupedByIdLocale,
+                'imageSetMetaData' => $imageSetMetaData,
                 'productConcreteName' => $localizedAttributesTransfer ? $localizedAttributesTransfer->getName() : $productConcreteTransfer->getName(),
-                'productAttributeTableConfiguration' => $this->getFactory()
-                    ->createProductConcreteAttributeGuiTableConfigurationProvider()
-                    ->getConfiguration($productConcreteTransfer->getAttributes(), array_keys($superAttributeNames), $productConcreteTransfer->getLocalizedAttributes()),
                 'superAttributeNames' => $superAttributeNames,
                 'priceProductConcreteTableConfiguration' => $this->getFactory()
                     ->createPriceProductConcreteGuiTableConfigurationProvider()
-                    ->getConfiguration($productConcreteTransfer->getIdProductConcreteOrFail(), $initialData),
+                    ->getConfiguration($productConcreteTransfer->getIdProductConcreteOrFail(), $priceInitialData),
+                'productAttributeTableConfiguration' => $this->getFactory()
+                    ->createProductConcreteAttributeGuiTableConfigurationProvider()
+                    ->getConfiguration($productConcreteTransfer->getIdProductConcreteOrFail(), $attributesInitialData),
                 'reservedStock' => $reservationResponseTransfer->getReservationQuantityOrFail()->toFloat(),
             ])->getContent(),
         ];
@@ -209,6 +307,52 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
         }
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
+     *
+     * @phpstan-return array<int, array<int, \Generated\Shared\Transfer\ProductImageSetTransfer>>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     */
+    protected function getImageSetsGroupedByIdLocale(ArrayObject $imageSets): array
+    {
+        $imageSetsGroupedByIdLocale = [];
+
+        foreach ($imageSets as $imageSet) {
+            $idLocale = $imageSet->getLocale() ? $imageSet->getLocaleOrFail()->getIdLocaleOrFail() : 0;
+            $imageSetsGroupedByIdLocale[$idLocale][] = $imageSet;
+        }
+
+        return $imageSetsGroupedByIdLocale;
+    }
+
+    /**
+     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
+     * @phpstan-param array<int, mixed> $imageSetsErrors
+     *
+     * @phpstan-return \SplObjectStorage<object, mixed>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
+     * @param array $imageSetsErrors
+     *
+     * @return \SplObjectStorage
+     */
+    protected function getImageSetMetaDataGroupedByImageSet(ArrayObject $imageSets, array $imageSetsErrors): SplObjectStorage
+    {
+        $imageSetMetaData = new SplObjectStorage();
+
+        foreach ($imageSets as $originalIndex => $imageSet) {
+            $imageSetMetaData[$imageSet] = [
+                'originalIndex' => $originalIndex,
+                'errors' => $imageSetsErrors[$originalIndex] ?? [],
+            ];
+        }
+
+        return $imageSetMetaData;
     }
 
     /**
@@ -245,14 +389,17 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     /**
      * @param \Symfony\Component\Form\FormInterface $productConcreteEditForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $productAbstractTransfer
      *
      * @return void
      */
     protected function saveProductConcreteData(
         FormInterface $productConcreteEditForm,
-        ProductConcreteTransfer $productConcreteTransfer
+        ProductConcreteTransfer $productConcreteTransfer,
+        ?ProductAbstractTransfer $productAbstractTransfer
     ): void {
-        if ($productConcreteEditForm->getData()[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES]) {
+        $data = $productConcreteEditForm->getData();
+        if ($data[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES]) {
             $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
                 ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
 
@@ -273,6 +420,116 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             $productConcreteTransfer->setPrices(new ArrayObject());
         }
 
-        $this->getFactory()->getProductFacade()->saveProductConcrete($productConcreteTransfer);
+        if ($productAbstractTransfer) {
+            if ($data[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_NAME]) {
+                $localizedAttributeTransfers = $this->getFactory()
+                    ->createProductAttributesMapper()
+                    ->mapLocalizedAttributesNames(
+                        $productConcreteTransfer->getLocalizedAttributes(),
+                        $productAbstractTransfer->getLocalizedAttributes()
+                    );
+
+                $productConcreteTransfer->setLocalizedAttributes($localizedAttributeTransfers);
+            }
+
+            if ($data[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION]) {
+                $localizedAttributeTransfers = $this->getFactory()
+                    ->createProductAttributesMapper()
+                    ->mapLocalizedDescriptions(
+                        $productConcreteTransfer->getLocalizedAttributes(),
+                        $productAbstractTransfer->getLocalizedAttributes()
+                    );
+                $productConcreteTransfer->setLocalizedAttributes($localizedAttributeTransfers);
+            }
+
+            if ($data[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS]) {
+                $concreteProductImageSetsTransfers = $this->mapAbstractProductImageSets(
+                    $productAbstractTransfer->getImageSets(),
+                    $productConcreteTransfer->getIdProductConcreteOrFail()
+                );
+
+                $productConcreteTransfer->setImageSets($concreteProductImageSetsTransfers);
+            }
+        }
+
+        $this->getFactory()
+            ->getProductFacade()
+            ->saveProductConcrete($productConcreteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return string[]
+     */
+    protected function getImageSetTabNames(ProductConcreteTransfer $productConcreteTransfer): array
+    {
+        $localeNamesIndexedByIdLocale = $this->getLocaleNamesIndexedByIdLocale($productConcreteTransfer->getLocalizedAttributes());
+
+        asort($localeNamesIndexedByIdLocale);
+
+        return [0 => static::DEFAULT_LOCALE] + $localeNamesIndexedByIdLocale;
+    }
+
+    /**
+     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
+     *
+     * @phpstan-return array<int, string>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     *
+     * @return string[]
+     */
+    protected function getLocaleNamesIndexedByIdLocale(ArrayObject $localizedAttributesTransfers): array
+    {
+        $result = [];
+
+        foreach ($localizedAttributesTransfers as $localizedAttributesTransfer) {
+            $idLocale = $localizedAttributesTransfer->getLocaleOrFail()->getIdLocaleOrFail();
+            $localeName = $localizedAttributesTransfer->getLocaleOrFail()->getLocaleNameOrFail();
+
+            $result[$idLocale] = $localeName;
+        }
+
+        return $result;
+    }
+
+    /**
+     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
+     *
+     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param int $idProductConcrete
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    protected function mapAbstractProductImageSets(ArrayObject $productImageSetTransfers, int $idProductConcrete): ArrayObject
+    {
+        $mappedImageSetsTransfers = new ArrayObject();
+
+        foreach ($productImageSetTransfers as $productImageSetTransfer) {
+            $newProductImages = new ArrayObject();
+            foreach ($productImageSetTransfer->getProductImages() as $productImage) {
+                $newProductImage = new ProductImageTransfer();
+                $newProductImage->fromArray($productImage->toArray());
+                $newProductImage->setIdProductImage(null);
+                $newProductImage->setIdProductImageSetToProductImage(null);
+                $newProductImages[] = $newProductImage;
+            }
+
+            $newImageSet = new ProductImageSetTransfer();
+            $newImageSet->setIdProduct($idProductConcrete)
+                ->setLocale($productImageSetTransfer->getLocale())
+                ->setName($productImageSetTransfer->getNameOrFail())
+                ->setProductImages($newProductImages);
+
+            $newImageSet->setIdProductAbstract(null);
+            $newImageSet->setIdProduct($idProductConcrete);
+
+            $mappedImageSetsTransfers[] = $newImageSet;
+        }
+
+        return $mappedImageSetsTransfers;
     }
 }

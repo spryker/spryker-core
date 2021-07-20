@@ -8,6 +8,7 @@
 @edit-abstract-product-common-padding-bottom: 30px;
 @edit-abstract-product-sub-title-margin: 0;
 @edit-abstract-product-card-padding-bottom: 20px;
+@edit-abstract-product-card-textarea-min-height: 100px;
 @edit-abstract-product-card-last-padding-bottom: 0;
 @edit-abstract-product-table-padding-inside-card: 3px 5px;
 @edit-abstract-product-stores-field-max-width: 420px;
@@ -36,10 +37,6 @@
 
         .@{headline-prefix-cls} {
             padding-bottom: @edit-abstract-product-header-headline-padding-bottom;
-        }
-
-        .@{headline-prefix-cls}__row {
-            align-items: unset;
         }
     }
 
@@ -78,6 +75,11 @@
 
         .@{table-prefix-cls} {
             padding: @edit-abstract-product-table-padding-inside-card;
+        }
+
+        .@{textarea-prefix-cls}_textfield {
+            min-height: @edit-abstract-product-card-textarea-min-height;
+            height: auto !important;
         }
     }
 

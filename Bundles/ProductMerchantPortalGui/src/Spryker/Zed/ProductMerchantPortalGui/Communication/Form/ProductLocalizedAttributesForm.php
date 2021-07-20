@@ -24,6 +24,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductLocalizedAttributesForm extends AbstractType
 {
+    protected const NAME_VALIDATION_GROUP = 'name_validation_group';
+
     protected const PLACEHOLDER_NAME = 'Provide a name';
     protected const PLACEHOLDER_DESCRIPTION = 'Provide description';
     protected const PLACEHOLDER_META_TITLE = 'Provide meta title';
@@ -90,10 +92,12 @@ class ProductLocalizedAttributesForm extends AbstractType
             'attr' => [
                 'placeholder' => static::PLACEHOLDER_NAME,
             ],
-            'required' => true,
+            'required' => false,
+            'empty_data' => '',
             'constraints' => [
                 new NotBlank([
                     'message' => static::VALIDATION_MESSAGE_NOT_BLANK,
+                    'groups' => static::NAME_VALIDATION_GROUP,
                 ]),
                 new Length([
                     'max' => 255,
@@ -118,6 +122,7 @@ class ProductLocalizedAttributesForm extends AbstractType
                 'placeholder' => static::PLACEHOLDER_DESCRIPTION,
             ],
             'required' => false,
+            'empty_data' => '',
         ]);
 
         return $this;

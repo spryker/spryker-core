@@ -9,7 +9,6 @@ Image,Bild
 Images,Bilder
 "Manage Product","Artikel verwalten"
 Name,Name
-"Name & Description","Name & Beschreibung"
 Offline,Offline
 Online,Online
 "Product successfully created!","Artikel erfolgreich hinzugefügt."
@@ -67,7 +66,6 @@ Quantity,Menge
 "Reserved Stock","Reservierter Bestand"
 "Variant is offline","Variante ist offline"
 "Variant is online","Variante ist online"
-"This means that the product does not appear online and noone can see it.","Dies bedeutet, dass das Produkt nicht online angezeigt wird und es niemand sehen kann."
 "This concrete product is not owned by this merchant.","Diese Variante gehört nicht diesem Händler."
 "Create Abstract Product","Abstraktes Produkt erstellen"
 English,Englisch
@@ -111,6 +109,13 @@ Values,Values
 "Provide meta title","Meta-Titel angeben"
 "Provide meta keywords","Meta-Keywords angeben"
 "Provide meta description","Meta-Beschreibung angeben"
+"Concrete Product","Concrete Product"
+"Concrete Product is online","Concrete Product is online"
+"Use Abstract Product name for all locales","Use Abstract Product name for all locales"
+"Use Abstract Product description for all locales","Use Abstract Product description for all locales"
+"Use Abstract Product price for all locales","Use Abstract Product price for all locales"
+"Use Abstract Product images for all locales","Use Abstract Product images for all locales"
+"Super attribute was not deleted","Superattribut wurde nicht gelöscht"
 "Add Concrete Products","Varianten hinzufügen"
 Create,Create
 "This value should not be blank.","Dieser Wert sollte nicht leer sein."

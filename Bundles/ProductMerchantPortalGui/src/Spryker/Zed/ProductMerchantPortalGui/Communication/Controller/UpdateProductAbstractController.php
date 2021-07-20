@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
@@ -76,10 +77,13 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
         }
 
         $initialCategoryIds = $productAbstractTransfer->getCategoryIds();
-        $productAbstractForm = $this->getFactory()->createProductAbstractForm(
-            $productAbstractTransfer,
-            $this->getFactory()->createProductAbstractFormDataProvider()->getOptions()
-        );
+        $productAbstractForm = $this->getFactory()
+            ->createProductAbstractForm(
+                $productAbstractTransfer,
+                $this->getFactory()
+                    ->createProductAbstractFormDataProvider()
+                    ->getOptions()
+            );
 
         $storedProductAttributes = $productAbstractTransfer->getAttributes();
 
@@ -112,7 +116,8 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             $productAbstractTransfer,
             new ValidationResponseTransfer(),
             $priceTableInitialData,
-            $attributesTableInitialData
+            $attributesTableInitialData,
+            []
         );
     }
 
@@ -134,6 +139,8 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
         array $attributesInitialData,
         array $initialCategoryIds
     ): JsonResponse {
+        $imageSetsErrors = [];
+
         $pricesValidationResponseTransfer = $this->getFactory()
             ->getPriceProductFacade()
             ->validatePrices($productAbstractForm->getData()->getPrices());
@@ -142,6 +149,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
         $isValid = $productAbstractForm->isValid();
 
         if ($isValid && $pricesValidationResponseTransfer->getIsSuccess()) {
+            /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
             $productAbstractTransfer = $productAbstractForm->getData();
             $merchantProductTransfer = (new MerchantProductTransfer())
                 ->setProductAbstract($productAbstractTransfer)
@@ -151,23 +159,40 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                 ->getMerchantProductFacade()
                 ->validateMerchantProduct($merchantProductTransfer);
 
-            $productAbstractTransfer = $this->getFactory()
-                ->createProductAbstractMapper()
-                ->mapAttributesDataToProductAbstractTransfer($attributesInitialData, $productAbstractTransfer);
+            $productAttributes = $this->getFactory()
+                ->createProductAttributesMapper()
+                ->mapAttributesDataToProductAttributes(
+                    $attributesInitialData,
+                    $productAbstractTransfer->getAttributes()
+                );
+            $productLocalizedAttributes = $this->getFactory()
+                ->createProductAttributesMapper()
+                ->mapAttributesDataToLocalizedAttributesTransfers(
+                    $attributesInitialData,
+                    $productAbstractTransfer->getLocalizedAttributes()
+                );
+
+            $productAbstractTransfer->setAttributes($productAttributes)->setLocalizedAttributes($productLocalizedAttributes);
 
             $attributesInitialData = [];
 
             if ($merchantProductValidationResponseTransfer->getIsSuccess()) {
-                $this->getFactory()->getProductFacade()->saveProductAbstract($productAbstractTransfer);
+                $this->getFactory()
+                    ->getProductFacade()
+                    ->saveProductAbstract($productAbstractTransfer);
             }
 
             $this->updateProductCategories($productAbstractTransfer, $initialCategoryIds);
         } else {
-            $errors = $productAbstractForm->getErrors(true, false);
+            $imageSetsErrors = $this->getFactory()
+                ->createImageSetMapper()
+                ->mapErrorsToImageSetValidationData(
+                    $productAbstractForm->getErrors(true, true)
+                );
 
             $attributesInitialData = $this->getFactory()
                 ->createProductAttributesMapper()
-                ->mapErrorsToAttributesData($errors, $attributesInitialData);
+                ->mapErrorsToAttributesData($productAbstractForm->getErrors(true, false), $attributesInitialData);
         }
 
         $priceInitialData = $this->getFactory()
@@ -179,7 +204,8 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             $productAbstractTransfer,
             $merchantProductValidationResponseTransfer,
             $priceInitialData,
-            $attributesInitialData
+            $attributesInitialData,
+            $imageSetsErrors
         );
     }
 
@@ -218,8 +244,9 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
      * @param \Symfony\Component\Form\FormInterface $productAbstractForm
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param mixed[] $priceInitialData
-     * @param mixed[] $attributesInitialData
+     * @param array $priceInitialData
+     * @param array $attributesInitialData
+     * @param array $imageSetsErrors
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -228,7 +255,8 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
         ProductAbstractTransfer $productAbstractTransfer,
         ValidationResponseTransfer $validationResponseTransfer,
         array $priceInitialData,
-        array $attributesInitialData
+        array $attributesInitialData,
+        array $imageSetsErrors
     ): JsonResponse {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
@@ -241,22 +269,9 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                 $localeTransfer
             );
 
-        $imageSetsGroupedByLocale = [];
-        $imageSetMetaData = new SplObjectStorage();
         $imageSetTabNames = $this->getImageSetTabNames($productAbstractTransfer);
-
-        foreach ($productAbstractTransfer->getImageSets() as $originalIndex => $imageSet) {
-            $idLocale = 0;
-
-            if ($imageSet->getLocale() !== null) {
-                $idLocale = $imageSet->getLocale()->getIdLocaleOrFail();
-            }
-
-            $imageSetsGroupedByLocale[$idLocale][] = $imageSet;
-            $imageSetMetaData[$imageSet] = [
-                'originalIndex' => $originalIndex,
-            ];
-        }
+        $imageSetsGroupedByIdLocale = $this->getImageSetsGroupedByIdLocale($productAbstractTransfer->getImageSets());
+        $imageSetMetaData = $this->getImageSetMetaDataGroupedByImageSet($productAbstractTransfer->getImageSets(), $imageSetsErrors);
 
         $responseData = [
             'form' => $this->renderView(
@@ -264,7 +279,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                 [
                     'productAbstract' => $productAbstractTransfer,
                     'imageSetTabNames' => $imageSetTabNames,
-                    'imageSetsGroupedByLocale' => $imageSetsGroupedByLocale,
+                    'imageSetsGroupedByIdLocale' => $imageSetsGroupedByIdLocale,
                     'imageSetMetaData' => $imageSetMetaData,
                     'productAbstractName' => $localizedAttributesTransfer ? $localizedAttributesTransfer->getName() : $productAbstractTransfer->getName(),
                     'form' => $productAbstractForm->createView(),
@@ -307,6 +322,52 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     }
 
     /**
+     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
+     *
+     * @phpstan-return array<int, array<int, \Generated\Shared\Transfer\ProductImageSetTransfer>>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     */
+    protected function getImageSetsGroupedByIdLocale(ArrayObject $imageSets): array
+    {
+        $imageSetsGroupedByIdLocale = [];
+
+        foreach ($imageSets as $imageSet) {
+            $idLocale = $imageSet->getLocale() ? $imageSet->getLocaleOrFail()->getIdLocaleOrFail() : 0;
+            $imageSetsGroupedByIdLocale[$idLocale][] = $imageSet;
+        }
+
+        return $imageSetsGroupedByIdLocale;
+    }
+
+    /**
+     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
+     * @phpstan-param array<int, mixed> $imageSetsErrors
+     *
+     * @phpstan-return \SplObjectStorage<object, mixed>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
+     * @param array $imageSetsErrors
+     *
+     * @return \SplObjectStorage
+     */
+    protected function getImageSetMetaDataGroupedByImageSet(ArrayObject $imageSets, array $imageSetsErrors): SplObjectStorage
+    {
+        $imageSetMetaData = new SplObjectStorage();
+
+        foreach ($imageSets as $originalIndex => $imageSet) {
+            $imageSetMetaData[$imageSet] = [
+                'originalIndex' => $originalIndex,
+                'errors' => $imageSetsErrors[$originalIndex] ?? [],
+            ];
+        }
+
+        return $imageSetMetaData;
+    }
+
+    /**
      * @param mixed[] $responseData
      *
      * @return mixed[]
@@ -315,7 +376,10 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     {
         $responseData[static::RESPONSE_KEY_POST_ACTIONS] = [
             [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_DRAWER,
+                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
+            ],
+            [
+                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
             ],
         ];
         $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [
@@ -372,13 +436,18 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     {
         $idProductAbstract = $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT));
 
-        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
-            $request,
-            $this->getFactory()->createPriceProductAbstractTableDataProvider($idProductAbstract),
-            $this->getFactory()->createPriceProductAbstractGuiTableConfigurationProvider()->getConfiguration(
-                $idProductAbstract
-            )
-        );
+        return $this->getFactory()
+            ->getGuiTableHttpDataRequestExecutor()
+            ->execute(
+                $request,
+                $this->getFactory()
+                    ->createPriceProductAbstractTableDataProvider($idProductAbstract),
+                $this->getFactory()
+                    ->createPriceProductAbstractGuiTableConfigurationProvider()
+                    ->getConfiguration(
+                        $idProductAbstract
+                    )
+            );
     }
 
     /**

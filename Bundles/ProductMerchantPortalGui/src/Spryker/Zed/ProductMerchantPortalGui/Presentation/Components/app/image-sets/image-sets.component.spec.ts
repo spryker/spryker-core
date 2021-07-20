@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { InvokeModule } from '@spryker/utils';
 import { ImageSetsComponent } from './image-sets.component';
-import { ImageSets, ImageSetNames, ImageSetTitles } from './types';
+import { ImageSets, ImageSetNames, ImageSetTitles, ImageSetError } from './types';
 
 describe('ImageSetsComponent', () => {
     let component: TestComponent;
@@ -57,19 +58,38 @@ describe('ImageSetsComponent', () => {
         largeImageUrl: 'Large Image URL',
         addImage: 'Add Image',
     };
+    const mockedImageSetError = [
+        {
+            name: 'Name error',
+            images: [
+                {
+                    order: 'Order error',
+                    srcLarge: 'Src Large error',
+                    srcSmall: 'Src Small error',
+                },
+            ],
+        },
+    ];
 
     @Component({
         selector: 'test',
-        template: `<mp-image-sets [imageSets]="imageSets" [names]="names" [titles]="titles"></mp-image-sets>`,
+        template: `<mp-image-sets
+            [imageSets]="imageSets"
+            [names]="names"
+            [titles]="titles"
+            [errors]="errors"
+        ></mp-image-sets>`,
     })
     class TestComponent {
         imageSets?: ImageSets[];
         names?: ImageSetNames;
         titles?: ImageSetTitles;
+        errors?: ImageSetError[];
     }
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
+            imports: [InvokeModule],
             declarations: [ImageSetsComponent, TestComponent],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
@@ -95,9 +115,9 @@ describe('ImageSetsComponent', () => {
     });
 
     it(`should render ${mockedImageSets.length} 'Image sets'`, () => {
-        const imageSetElements = fixture.debugElement.queryAll(By.css('.mp-image-sets__set'));
+        const imageSetElems = fixture.debugElement.queryAll(By.css('.mp-image-sets__set'));
 
-        expect(imageSetElements.length).toBe(mockedImageSets.length);
+        expect(imageSetElems.length).toBe(mockedImageSets.length);
     });
 
     describe(`should render '<spy-form-item>' component with '<spy-input>' component for 'Image Set name'`, () => {
@@ -229,26 +249,55 @@ describe('ImageSetsComponent', () => {
         expect(buttonElem.nativeElement.textContent).toMatch(titles.addImage);
     });
 
+    it(`should bind 'errors' to 'error' of '<spy-form-item>' components`, () => {
+        component.errors = mockedImageSetError;
+        fixture.detectChanges();
+        const nameFormItemElem = fixture.debugElement.query(By.css('spy-form-item.mp-image-sets__set-name'));
+        const imageOrderFormItemElem = fixture.debugElement.query(By.css('spy-form-item.mp-image-sets__order'));
+        const imageSrcSmallFormItemElem = fixture.debugElement.query(
+            By.css('spy-form-item.mp-image-sets__image-url-small'),
+        );
+        const imageSrcLargeFormItemElem = fixture.debugElement.query(
+            By.css('spy-form-item.mp-image-sets__image-url-large'),
+        );
+
+        expect(nameFormItemElem.properties.error).toMatch(mockedImageSetError[0].name);
+        expect(imageOrderFormItemElem.properties.error).toMatch(mockedImageSetError[0].images[0].order);
+        expect(imageSrcSmallFormItemElem.properties.error).toMatch(mockedImageSetError[0].images[0].srcSmall);
+        expect(imageSrcLargeFormItemElem.properties.error).toMatch(mockedImageSetError[0].images[0].srcLarge);
+    });
+
     describe(`Buttons clicking`, () => {
         it(`should add 'Image set'`, () => {
+            component.errors = mockedImageSetError;
+            fixture.detectChanges();
             const buttonElem = fixture.debugElement.query(By.css('spy-button.mp-image-sets__button--add-set'));
             buttonElem.triggerEventHandler('click', {});
             fixture.detectChanges();
-            const imageSetElements = fixture.debugElement.queryAll(By.css('.mp-image-sets__set'));
+            const imageSetElems = fixture.debugElement.queryAll(By.css('.mp-image-sets__set'));
+            const nameFormItemElems = fixture.debugElement.queryAll(By.css('spy-form-item.mp-image-sets__set-name'));
 
-            expect(imageSetElements.length).toBe(mockedImageSets.length + 1);
+            expect(imageSetElems.length).toBe(mockedImageSets.length + 1);
+            expect(nameFormItemElems[0].properties.error).toBeFalsy();
+            expect(nameFormItemElems[1].properties.error).toMatch(mockedImageSetError[0].name);
         });
 
         it(`should remove 'Image set'`, () => {
+            component.errors = mockedImageSetError;
+            fixture.detectChanges();
+            const nameFormItemElem = fixture.debugElement.query(By.css('spy-form-item.mp-image-sets__set-name'));
             const buttonElem = fixture.debugElement.query(By.css('spy-button.mp-image-sets__button--remove-set'));
             buttonElem.triggerEventHandler('click', {});
             fixture.detectChanges();
-            const imageSetElements = fixture.debugElement.queryAll(By.css('.mp-image-sets__set'));
+            const imageSetElems = fixture.debugElement.queryAll(By.css('.mp-image-sets__set'));
 
-            expect(imageSetElements.length).toBe(mockedImageSets.length - 1);
+            expect(imageSetElems.length).toBe(mockedImageSets.length - 1);
+            expect(nameFormItemElem.properties.error).toBeFalsy();
         });
 
         it(`should remove 'Image set images'`, () => {
+            component.errors = mockedImageSetError;
+            fixture.detectChanges();
             const buttonElem = fixture.debugElement.query(
                 By.css('spy-button-icon.mp-image-sets__button--remove-images'),
             );
@@ -256,8 +305,10 @@ describe('ImageSetsComponent', () => {
             fixture.detectChanges();
             const imageSetElem = fixture.debugElement.query(By.css('.mp-image-sets__set'));
             const imageSetElems = imageSetElem.queryAll(By.css('.mp-image-sets__images'));
+            const imageOrderFormItemElem = imageSetElem.query(By.css('spy-form-item.mp-image-sets__order'));
 
             expect(imageSetElems.length).toBe(mockedImageSets[0].images.length - 1);
+            expect(imageOrderFormItemElem.properties.error).toBeFalsy();
         });
 
         it(`should add 'Image set images'`, () => {

@@ -119,8 +119,8 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
 
         $guiTableConfigurationBuilder
-            ->addColumnChip(static::COL_KEY_ATTRIBUTE_NAME, static::TITLE_COLUMN_ATTRIBUTE_NAME, true, false, self::COLOR_GREY)
-            ->addColumnChip(static::COL_KEY_ATTRIBUTE_DEFAULT, static::TITLE_COLUMN_ATTRIBUTE_DEFAULT, true, false, self::COLOR_BLUE);
+            ->addColumnChip(static::COL_KEY_ATTRIBUTE_NAME, static::TITLE_COLUMN_ATTRIBUTE_NAME, true, false, static::COLOR_GREY)
+            ->addColumnChip(static::COL_KEY_ATTRIBUTE_DEFAULT, static::TITLE_COLUMN_ATTRIBUTE_DEFAULT, true, false, static::COLOR_BLUE);
 
         foreach ($productAbstract->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $localeTransfer = $localizedAttributesTransfer->getLocaleOrFail();
@@ -135,7 +135,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
                 $localeTransfer->getLocaleNameOrFail(),
                 $localeTransfer->getLocaleNameOrFail(),
                 static::COL_KEY_ATTRIBUTE_NAME,
-                self::PRODUCT_ATTRIBUTES_DATA_URL
+                static::PRODUCT_ATTRIBUTES_DATA_URL
             );
         }
 
@@ -154,7 +154,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
         $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
         $guiTableConfigurationTransfer = $guiTableConfigurationBuilder->createConfiguration();
 
-        $guiTableConfigurationTransfer->getEditableOrFail()->getUpdateOrFail()->addDisableForCol('attribute_name');
+        $guiTableConfigurationTransfer->getEditableOrFail()->getUpdateOrFail()->addDisableForCol(static::COL_KEY_ATTRIBUTE_NAME);
 
         return $guiTableConfigurationTransfer;
     }
@@ -181,15 +181,15 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
             static::TITLE_COLUMN_ATTRIBUTE_NAME,
             false,
             $attributesOptions,
-            self::PLACEHOLDER_SELECT_ATTRIBUTE
+            static::PLACEHOLDER_SELECT_ATTRIBUTE
         )->addEditableColumnDynamic(
             static::COL_KEY_ATTRIBUTE_DEFAULT,
             static::TITLE_COLUMN_ATTRIBUTE_DEFAULT,
             static::COL_KEY_ATTRIBUTE_NAME,
-            self::PRODUCT_ATTRIBUTES_DATA_URL
+            static::PRODUCT_ATTRIBUTES_DATA_URL
         );
 
-        $guiTableConfigurationBuilder->enableInlineDataEditing($this->getAttributeActionUrl(self::PRODUCT_ATTRIBUTE_SAVE_DATA_URL), 'POST');
+        $guiTableConfigurationBuilder->enableInlineDataEditing($this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_SAVE_DATA_URL), 'POST');
 
         $formInputName = sprintf('%s[%s]', ProductAbstractForm::BLOCK_PREFIX, ProductAbstractTransfer::ATTRIBUTES);
 
@@ -208,7 +208,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
         $guiTableConfigurationBuilder->addRowActionUrl(
             static::ID_ROW_ACTION_DELETE,
             static::TITLE_ROW_ACTION_DELETE,
-            $this->getAttributeActionUrl(self::PRODUCT_ATTRIBUTE_DELETE_URL)
+            $this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_DELETE_URL)
         );
 
         return $guiTableConfigurationBuilder;

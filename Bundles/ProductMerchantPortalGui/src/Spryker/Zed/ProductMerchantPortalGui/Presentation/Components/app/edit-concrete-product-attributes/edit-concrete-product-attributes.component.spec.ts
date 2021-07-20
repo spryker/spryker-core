@@ -25,7 +25,7 @@ describe('EditAbstractProductAttributesComponent', () => {
         expect(tableComponent).toBeTruthy();
     });
 
-    it('should bind @Input(tableConfig) to `config` of <spy-table> component', () => {
+    it('should bind `@Input(tableConfig)` to `config` input of <spy-table> component', () => {
         const mockTableConfig = {
             config: 'config',
             data: 'data',
@@ -39,7 +39,7 @@ describe('EditAbstractProductAttributesComponent', () => {
         expect(tableComponent.properties.config).toEqual(mockTableConfig);
     });
 
-    it('should bind @Input(tableId) to `tableId` of <spy-table> component', () => {
+    it('should bind `@Input(tableId)` to `tableId` input of <spy-table> component', () => {
         const mockTableId = 'mockTableId';
         const tableComponent = fixture.debugElement.query(By.css('spy-table'));
 

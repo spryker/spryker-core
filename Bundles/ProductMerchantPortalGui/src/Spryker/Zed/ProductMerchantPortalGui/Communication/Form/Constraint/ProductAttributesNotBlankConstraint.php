@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint;
 
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface;
 use Symfony\Component\Validator\Constraint;
 
 class ProductAttributesNotBlankConstraint extends Constraint
@@ -23,14 +24,22 @@ class ProductAttributesNotBlankConstraint extends Constraint
     protected $productAttributeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface $productFacade
      */
     public function __construct(
-        ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade
+        ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade,
+        ProductMerchantPortalGuiToProductFacadeInterface $productFacade
     ) {
         parent::__construct();
 
         $this->productAttributeFacade = $productAttributeFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -39,6 +48,14 @@ class ProductAttributesNotBlankConstraint extends Constraint
     public function getProductAttributeFacade(): ProductMerchantPortalGuiToProductAttributeFacadeInterface
     {
         return $this->productAttributeFacade;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
+     */
+    public function getProductFacade(): ProductMerchantPortalGuiToProductFacadeInterface
+    {
+        return $this->productFacade;
     }
 
     /**

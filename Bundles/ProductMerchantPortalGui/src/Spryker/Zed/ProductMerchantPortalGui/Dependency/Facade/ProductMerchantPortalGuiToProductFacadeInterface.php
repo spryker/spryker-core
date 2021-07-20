@@ -86,6 +86,13 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
     public function findProductAbstractById($idProductAbstract);
 
     /**
+     * @param int $idProduct
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcreteById($idProduct);
+
+    /**
      * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]

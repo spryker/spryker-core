@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint;
 
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface;
 use Symfony\Component\Validator\Constraint;
 
@@ -29,21 +30,29 @@ class ProductAbstractAttributeUniqueCombinationConstraint extends Constraint
     protected $productAttributeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
+     */
+    protected $productFacade;
+
+    /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface
      */
-    private $translatorFacade;
+    protected $translatorFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
         ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade,
+        ProductMerchantPortalGuiToProductFacadeInterface $productFacade,
         ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
     ) {
         parent::__construct();
 
         $this->productAttributeFacade = $productAttributeFacade;
+        $this->productFacade = $productFacade;
         $this->translatorFacade = $translatorFacade;
     }
 
@@ -53,6 +62,14 @@ class ProductAbstractAttributeUniqueCombinationConstraint extends Constraint
     public function getProductAttributeFacade(): ProductMerchantPortalGuiToProductAttributeFacadeInterface
     {
         return $this->productAttributeFacade;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
+     */
+    public function getProductFacade(): ProductMerchantPortalGuiToProductFacadeInterface
+    {
+        return $this->productFacade;
     }
 
     /**

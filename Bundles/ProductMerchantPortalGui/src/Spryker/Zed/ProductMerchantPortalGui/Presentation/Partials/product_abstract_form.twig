@@ -97,7 +97,7 @@
 
                                 {% if form.children.idTaxSet is defined %}
                                     {% block taxCard %}
-                                        <web-spy-card cloak spy-title="{{ form.children.idTaxSet.vars.label | trans }}" class="{{ mainClass }}__card">
+                                        <web-spy-card cloak spy-title="{{ form.children.idTaxSet.vars.label | trans }}{{ form.children.stores.vars.value is not empty ? ' *' }}" class="{{ mainClass }}__card">
                                             {% block taxCardInner %}
                                                 {{ form_row(form.children.idTaxSet, { label: false, row_attr: { 'no-spaces': 'true' } }) }}
                                             {% endblock %}
@@ -105,7 +105,7 @@
                                     {% endblock %}
                                 {% endif %}
 
-                                {% if imageSetsGroupedByLocale is not null %}
+                                {% if imageSetsGroupedByIdLocale is not null %}
                                     {% block imagesCard %}
                                         {% set imageSetTitles = {
                                             addImageSet: 'Add Image Set' | trans,
@@ -137,8 +137,9 @@
 
                                                         {% block imagesCardInnerTab %}
                                                             <web-spy-tab cloak spy-title="{{ localeName }}" icon-name="{{ macros.langIcon(localeName) }}">
-                                                                {% set imageSets = imageSetsGroupedByLocale[idLocale] | default([]) %}
+                                                                {% set imageSets = imageSetsGroupedByIdLocale[idLocale] | default([]) %}
                                                                 {% set mappedImageSets = [] %}
+                                                                {% set mappedImageSetsErrors = [] %}
 
                                                                 {% for imageSet in imageSets %}
                                                                     {% set mappedImageSet = {
@@ -152,17 +153,18 @@
                                                                     } %}
                                                                     {% set mappedImages = [] %}
 
-                                                                    {% for productImage in imageSet.productImages  %}
+                                                                    {% for productImage in imageSet.productImages %}
                                                                         {% set mappedImages = mappedImages | merge([{
                                                                             idProductImage: productImage.idProductImage,
                                                                             order: productImage.sortOrder,
-                                                                            srcLarge: productImage.externalUrlSmall,
-                                                                            srcSmall: productImage.externalUrlLarge,
+                                                                            srcLarge: productImage.externalUrlLarge,
+                                                                            srcSmall: productImage.externalUrlSmall,
                                                                         }]) %}
                                                                     {% endfor %}
 
                                                                     {% set mappedImageSet = mappedImageSet | merge({ images: mappedImages }) %}
                                                                     {% set mappedImageSets = mappedImageSets | merge([mappedImageSet]) %}
+                                                                    {% set mappedImageSetsErrors = mappedImageSetsErrors | merge([imageSetMetaData[imageSet].errors]) %}
                                                                 {% endfor %}
 
                                                                 {% block imagesCardInnerTabSets %}
@@ -170,6 +172,7 @@
                                                                         cloak
                                                                         names="{{ imageSetNames | json_encode }}"
                                                                         image-sets="{{ mappedImageSets | json_encode }}"
+                                                                        errors="{{ mappedImageSetsErrors | json_encode }}"
                                                                         titles="{{ imageSetTitles | json_encode }}">
                                                                     </web-mp-image-sets>
                                                                     <input
@@ -200,6 +203,7 @@
                                                 table-id="web-mp-edit-abstract-product-attributes"
                                                 config='{{ guiTableConfiguration(productAbstractAttributeTableConfiguration) }}'>
                                             </web-mp-edit-abstract-product-attributes>
+
                                             {% do form.attributes.setRendered %}
                                         {% endblock %}
                                     </web-spy-card>

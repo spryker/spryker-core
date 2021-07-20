@@ -10,7 +10,7 @@ import { ButtonActionComponent, ButtonActionModule } from '@spryker/button.actio
 import { CardModule, CardComponent } from '@spryker/card';
 import { ChipsModule, ChipsComponent } from '@spryker/chips';
 import { DateRangePickerModule, DateRangePickerComponent } from '@spryker/date-picker';
-import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
+import { ContentToggleComponent, ContentToggleModule } from '@mp/zed-ui';
 
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductListModule } from './product-list/product-list.module';
@@ -60,12 +60,12 @@ import { CreateConcreteProductsOverlayComponent } from './create-concrete-produc
             CardComponent,
             IconComponent,
             TreeSelectComponent,
-            CollapsibleComponent,
             ChipsComponent,
             RadioComponent,
             RadioGroupComponent,
             ImageSetsComponent,
             ButtonActionComponent,
+            ContentToggleComponent,
             EditAbstractProductAttributesComponent,
             EditAbstractProductPricesComponent,
             EditConcreteProductPricesComponent,
@@ -90,7 +90,6 @@ import { CreateConcreteProductsOverlayComponent } from './create-concrete-produc
         CardModule,
         IconModule,
         TreeSelectModule,
-        CollapsibleModule,
         ChipsModule,
         IconGermanyModule,
         IconUnitedStatesModule,
@@ -98,9 +97,10 @@ import { CreateConcreteProductsOverlayComponent } from './create-concrete-produc
         IconNoDataModule,
         IconPlusModule,
         RadioModule,
+        ButtonActionModule,
+        ContentToggleModule,
         ProductListModule,
         ImageSetsModule,
-        ButtonActionModule,
         EditAbstractProductAttributesModule,
         EditAbstractProductPricesModule,
         EditConcreteProductPricesModule,

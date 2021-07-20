@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -50,11 +53,30 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
         ProductAttributesNotBlankConstraint $constraint
     ): void {
         $parentFormData = $this->getParentFormData();
+        $existingAttributes = [];
 
-        $idProductAbstract = $parentFormData[ProductAbstractTransfer::ID_PRODUCT_ABSTRACT];
+        if ($parentFormData instanceof ProductAbstractTransfer) {
+            $idProductAbstract = $parentFormData[ProductAbstractTransfer::ID_PRODUCT_ABSTRACT];
 
-        $existingAttributes = $constraint->getProductAttributeFacade()
-            ->getProductAbstractAttributeValues($idProductAbstract);
+            $existingAttributes = $constraint->getProductAttributeFacade()
+                ->getProductAbstractAttributeValues($idProductAbstract);
+        }
+
+        if ($parentFormData instanceof ProductConcreteTransfer) {
+            $idProductConcrete = $parentFormData[ProductConcreteTransfer::ID_PRODUCT_CONCRETE];
+
+            $productConcrete = $constraint->getProductFacade()->findProductConcreteById($idProductConcrete);
+
+            if ($productConcrete) {
+                $localizedAttributesGroupedByLocaleName = $this->getLocalizedAttributesGroupedByLocaleName(
+                    $productConcrete->requireLocalizedAttributes()->getLocalizedAttributes()
+                );
+                $existingAttributes = $this->appendDefaultAttributes(
+                    $localizedAttributesGroupedByLocaleName,
+                    $productConcrete->requireAttributes()->getAttributes()
+                );
+            }
+        }
 
         $existingLocaleNames = $this->getLocaleNames($existingAttributes);
 
@@ -73,7 +95,7 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
      *
      * @return bool
      */
-    private function isAllAttributesEmpty(array $formAttribute, array $existingLocaleNames): bool
+    protected function isAllAttributesEmpty(array $formAttribute, array $existingLocaleNames): bool
     {
         foreach ($existingLocaleNames as $localeName) {
             if (!empty($formAttribute[$localeName])) {
@@ -101,9 +123,9 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
      */
-    protected function getParentFormData(): ProductAbstractTransfer
+    protected function getParentFormData(): AbstractTransfer
     {
         /** @var \Symfony\Component\Form\Form $form */
         $form = $this->context->getObject();
@@ -111,5 +133,39 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
         $parentForm = $form->getParent();
 
         return $parentForm->getData();
+    }
+
+    /**
+     * @param array $attributesIndexedByLocaleName
+     * @param array $defaultAttributes
+     *
+     * @return array
+     */
+    protected function appendDefaultAttributes(array $attributesIndexedByLocaleName, array $defaultAttributes): array
+    {
+        $attributesIndexedByLocaleName[static::DEFAULT_LOCALE] = $defaultAttributes;
+
+        ksort($attributesIndexedByLocaleName);
+
+        return $attributesIndexedByLocaleName;
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     *
+     * @return array
+     */
+    protected function getLocalizedAttributesGroupedByLocaleName(ArrayObject $localizedAttributesTransfers): array
+    {
+        $result = [];
+
+        foreach ($localizedAttributesTransfers as $localizedAttributeTransfer) {
+            $localeName = $localizedAttributeTransfer->getLocaleOrFail()->getLocaleName();
+            $result[$localeName] = $localizedAttributeTransfer->getAttributes();
+        }
+
+        return $result;
     }
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAbstractAttributeUniqueCombinationConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAbstractAttributeUniqueCombinationConstraintValidator;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -41,6 +42,11 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidatorTest extends C
     private $productAttributeFacade;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeBridge
+     */
+    private $productFacade;
+
+    /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeBridge
      */
     private $translatorFacade;
@@ -63,6 +69,10 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidatorTest extends C
         parent::setUp();
 
         $this->productAttributeFacade = $this->getMockBuilder(ProductMerchantPortalGuiToProductAttributeFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->productFacade = $this->getMockBuilder(ProductMerchantPortalGuiToProductFacadeBridge::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -114,6 +124,7 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidatorTest extends C
 
         $constraint = new ProductAbstractAttributeUniqueCombinationConstraint(
             $this->productAttributeFacade,
+            $this->productFacade,
             $this->translatorFacade
         );
 

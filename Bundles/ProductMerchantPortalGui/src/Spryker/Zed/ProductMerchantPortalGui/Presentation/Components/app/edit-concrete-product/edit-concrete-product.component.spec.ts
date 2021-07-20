@@ -7,10 +7,11 @@ import { EditConcreteProductComponent } from './edit-concrete-product.component'
     selector: 'spy-test',
     template: `
         <mp-edit-concrete-product>
-            <span title class="projected-title">Name</span>
-            <span sub-title class="projected-sub-title">Sku</span>
-            <span action class="projected-action">Button</span>
-            <div class="projected-content">Content</div>
+            <span title></span>
+            <span name></span>
+            <span action></span>
+            <span sub-title></span>
+            <div class="default-slot"></div>
         </mp-edit-concrete-product>
     `,
 })
@@ -33,38 +34,38 @@ describe('EditConcreteProductComponent', () => {
     });
 
     it('should render <spy-headline> component', () => {
-        const headlineElem = fixture.debugElement.query(By.css('spy-headline'));
+        const headlineComponent = fixture.debugElement.query(By.css('spy-headline'));
 
-        expect(headlineElem).toBeTruthy();
+        expect(headlineComponent).toBeTruthy();
     });
 
-    it('should render default projected title to the `.mp-edit-concrete-product__header` element', () => {
-        const projectedTitle = fixture.debugElement.query(By.css('.mp-edit-concrete-product__header .projected-title'));
+    it('should render `title` slot to the <spy-headline> component', () => {
+        const titleSlot = fixture.debugElement.query(By.css('spy-headline [title]'));
 
-        expect(projectedTitle.nativeElement.textContent).toBe('Name');
+        expect(titleSlot).toBeTruthy();
     });
 
-    it('should render default projected sub-title to the `.mp-edit-concrete-product__header` element', () => {
-        const projectedSubTitle = fixture.debugElement.query(
-            By.css('.mp-edit-concrete-product__header .projected-sub-title'),
-        );
+    it('should render `name` slot to the <spy-headline> component', () => {
+        const nameSlot = fixture.debugElement.query(By.css('spy-headline [name]'));
 
-        expect(projectedSubTitle.nativeElement.textContent).toBe('Sku');
+        expect(nameSlot).toBeTruthy();
     });
 
-    it('should render default projected action to the `.mp-edit-concrete-product__header` element', () => {
-        const projectedAction = fixture.debugElement.query(
-            By.css('.mp-edit-concrete-product__header .projected-action'),
-        );
+    it('should render `action` to the <spy-headline> component', () => {
+        const actionSlot = fixture.debugElement.query(By.css('spy-headline [action]'));
 
-        expect(projectedAction.nativeElement.textContent).toBe('Button');
+        expect(actionSlot).toBeTruthy();
     });
 
-    it('should render default projected content to the `.mp-edit-concrete-product__content` element', () => {
-        const projectedContent = fixture.debugElement.query(
-            By.css('.mp-edit-concrete-product__content .projected-content'),
-        );
+    it('should render `sub-title` slot to the `.mp-edit-concrete-product__header` element', () => {
+        const subTitleSlot = fixture.debugElement.query(By.css('.mp-edit-concrete-product__header [sub-title]'));
 
-        expect(projectedContent.nativeElement.textContent).toBe('Content');
+        expect(subTitleSlot).toBeTruthy();
+    });
+
+    it('should render default slot to the `.mp-edit-concrete-product__content` element', () => {
+        const defaultSlot = fixture.debugElement.query(By.css('.mp-edit-concrete-product__content .default-slot'));
+
+        expect(defaultSlot).toBeTruthy();
     });
 });

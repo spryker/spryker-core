@@ -33,6 +33,10 @@ class ProductAbstractForm extends AbstractType
 
     public const GROUP_WITH_STORES = self::FIELD_STORES;
 
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductLocalizedAttributesForm::NAME_VALIDATION_GROUP
+     */
+    protected const NAME_VALIDATION_GROUP = 'name_validation_group';
     protected const FIELD_STORES = 'stores';
 
     protected const LABEL_STORES = 'Stores';
@@ -62,7 +66,7 @@ class ProductAbstractForm extends AbstractType
         $resolver->setDefaults([
             'data_class' => ProductAbstractTransfer::class,
             'validation_groups' => function (FormInterface $form) {
-                $validationGroups = [Constraint::DEFAULT_GROUP];
+                $validationGroups = [Constraint::DEFAULT_GROUP, static::NAME_VALIDATION_GROUP];
 
                 if ($form->get(static::FIELD_STORES)->getData()) {
                     $validationGroups[] = static::GROUP_WITH_STORES;

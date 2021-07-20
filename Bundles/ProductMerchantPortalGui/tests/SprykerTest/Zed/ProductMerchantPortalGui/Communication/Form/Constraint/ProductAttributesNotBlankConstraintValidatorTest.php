@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAttributesNotBlankConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAttributesNotBlankConstraintValidator;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeBridge;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -40,6 +41,11 @@ class ProductAttributesNotBlankConstraintValidatorTest extends ConstraintValidat
     private $productAttributeFacade;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeBridge
+     */
+    private $productFacade;
+
+    /**
      * @var \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Form\Form
      */
     private $parentForm;
@@ -57,6 +63,10 @@ class ProductAttributesNotBlankConstraintValidatorTest extends ConstraintValidat
         parent::setUp();
 
         $this->productAttributeFacade = $this->getMockBuilder(ProductMerchantPortalGuiToProductAttributeFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->productFacade = $this->getMockBuilder(ProductMerchantPortalGuiToProductFacadeBridge::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -106,7 +116,7 @@ class ProductAttributesNotBlankConstraintValidatorTest extends ConstraintValidat
             ->with()
             ->willReturn($this->parentForm);
 
-        $constraint = new ProductAttributesNotBlankConstraint($this->productAttributeFacade);
+        $constraint = new ProductAttributesNotBlankConstraint($this->productAttributeFacade, $this->productFacade);
 
         // Act
         $this->setObject($this->form);

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -23,14 +24,20 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ProductConcreteEditForm extends AbstractType
 {
     protected const FIELD_PRODUCT_CONCRETE = 'productConcrete';
+    protected const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
+    protected const FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'useAbstractProductDescription';
     protected const FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
+    protected const FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'useAbstractProductImageSets';
     protected const FIELD_SEARCHABILITY = 'searchability';
 
     protected const BLOCK_PREFIX = 'productConcreteEdit';
 
     protected const OPTION_SEARCHABILITY_CHOICES = 'OPTION_SEARCHABILITY_CHOICES';
 
+    protected const LABEL_USE_ABSTRACT_PRODUCT_NAME = 'Use Abstract Product Name';
+    protected const LABEL_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'Use Abstract Product Description';
     protected const LABEL_USE_ABSTRACT_PRODUCT_PRICES = 'Use Abstract Product prices';
+    protected const LABEL_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'Use Abstract Product Image Sets';
     protected const LABEL_SEARCHABILITY = 'Searchability';
 
     protected const PLACEHOLDER_SEARCHABILITY = 'Select Locales';
@@ -69,11 +76,64 @@ class ProductConcreteEditForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addProductConcreteSubForm($builder)
+        $this
+            ->addProductConcreteSubForm($builder)
+            ->addUseAbstractProductNameField($builder)
+            ->addUseAbstractProductDescriptionField($builder)
             ->addUseAbstractProductPricesField($builder)
+            ->addUseAbstractProductImageSetsField($builder)
             ->addSearchabilityField($builder, $options);
 
         $builder->addModelTransformer($this->getFactory()->createProductConcreteEditFormDataTransformer());
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addLocalizedAttributesSubform(FormBuilderInterface $builder)
+    {
+        $builder->add(ProductConcreteTransfer::LOCALIZED_ATTRIBUTES, CollectionType::class, [
+            'label' => false,
+            'entry_type' => ProductLocalizedAttributesForm::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addUseAbstractProductNameField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_USE_ABSTRACT_PRODUCT_NAME, CheckboxType::class, [
+            'required' => false,
+            'label' => static::LABEL_USE_ABSTRACT_PRODUCT_NAME,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addUseAbstractProductDescriptionField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION, CheckboxType::class, [
+            'required' => false,
+            'label' => static::LABEL_USE_ABSTRACT_PRODUCT_DESCRIPTION,
+        ]);
+
+        return $this;
     }
 
     /**
@@ -114,6 +174,21 @@ class ProductConcreteEditForm extends AbstractType
         $builder->add(static::FIELD_USE_ABSTRACT_PRODUCT_PRICES, CheckboxType::class, [
             'required' => false,
             'label' => static::LABEL_USE_ABSTRACT_PRODUCT_PRICES,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addUseAbstractProductImageSetsField(FormBuilderInterface $builder)
+    {
+        $builder->add(static::FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS, CheckboxType::class, [
+            'required' => false,
+            'label' => static::LABEL_USE_ABSTRACT_PRODUCT_IMAGE_SETS,
         ]);
 
         return $this;
