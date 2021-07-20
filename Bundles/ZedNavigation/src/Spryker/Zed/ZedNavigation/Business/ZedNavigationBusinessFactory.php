@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ZedNavigation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ZedNavigation\Business\Filter\BackofficeNavigationItemCollectionRouterFilter;
+use Spryker\Zed\ZedNavigation\Business\Filter\BackofficeNavigationItemCollectionRouterFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilter;
 use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache;
@@ -26,6 +28,7 @@ use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverI
 use Spryker\Zed\ZedNavigation\Business\Strategy\BreadcrumbNavigationMergeStrategy;
 use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationFullMergeStrategy;
 use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface;
+use Spryker\Zed\ZedNavigation\Dependency\Facade\ZedNavigationToRouterFacadeInterface;
 use Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider;
 
 /**
@@ -228,5 +231,23 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     public function createUrlUniqueValidator()
     {
         return new UrlUniqueValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Filter\BackofficeNavigationItemCollectionRouterFilterInterface
+     */
+    public function createBackofficeNavigationItemCollectionRouterFilter(): BackofficeNavigationItemCollectionRouterFilterInterface
+    {
+        return new BackofficeNavigationItemCollectionRouterFilter(
+            $this->getRouterFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Dependency\Facade\ZedNavigationToRouterFacadeInterface
+     */
+    public function getRouterFacade(): ZedNavigationToRouterFacadeInterface
+    {
+        return $this->getProvidedDependency(ZedNavigationDependencyProvider::FACADE_ROUTER);
     }
 }
