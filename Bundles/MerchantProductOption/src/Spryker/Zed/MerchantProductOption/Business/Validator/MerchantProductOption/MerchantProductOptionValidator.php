@@ -85,7 +85,7 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): CheckoutResponseTransfer {
-        $checkoutResponseTransfer->setIsSuccess(true);
+        $checkoutResponseTransfer = $this->updateCheckoutResponseTransferStatus($checkoutResponseTransfer);
         /** @var int[] $productOptionGroupIds */
         $productOptionGroupIds = $this->extractProductOptionGroupIdsFromItemTransfers($quoteTransfer->getItems());
 
@@ -239,5 +239,21 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
         $messageTransfer->setValue($translationKey);
 
         return $messageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    protected function updateCheckoutResponseTransferStatus(CheckoutResponseTransfer $checkoutResponseTransfer): CheckoutResponseTransfer
+    {
+        if ($checkoutResponseTransfer->getIsSuccess() === false) {
+            return $checkoutResponseTransfer;
+        }
+
+        $checkoutResponseTransfer->setIsSuccess($checkoutResponseTransfer->getErrors()->count() === 0);
+
+        return $checkoutResponseTransfer;
     }
 }

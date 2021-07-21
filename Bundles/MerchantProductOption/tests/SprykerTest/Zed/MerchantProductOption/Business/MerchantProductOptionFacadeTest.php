@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\MerchantProductOption\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer;
@@ -202,5 +203,34 @@ class MerchantProductOptionFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(MerchantTransfer::class, $productOptionGroupTransfer->getMerchant());
         $this->assertSame($productOptionGroupTransfer->getMerchant()->getMerchantReference(), $merchantProductOptionGroupTransfer->getMerchantReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateMerchantProductOptionsOnCheckoutReturnsFalseWhenErrorProvidedAtTheBeginning(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductOptionGroupTableEmpty();
+        $merchantProductOptionGroupTransfer = $this->tester->haveMerchantProductOptionGroup([
+            MerchantProductOptionGroupTransfer::APPROVAL_STATUS => MerchantProductOptionConfig::STATUS_APPROVED,
+        ]);
+        $productOptionTransfer = (new ProductOptionTransfer())->setIdGroup($merchantProductOptionGroupTransfer->getFkProductOptionGroup());
+        $itemTransfer = (new ItemTransfer())->setProductOptions(new ArrayObject([$productOptionTransfer]));
+        $quoteTransfer = (new QuoteTransfer())
+            ->setItems(new ArrayObject([$itemTransfer]));
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $checkoutErrorTransfer = new CheckoutErrorTransfer();
+        $checkoutResponseTransfer->addError($checkoutErrorTransfer);
+        $checkoutResponseTransfer->setIsSuccess(false);
+
+        // Act
+        $checkoutResponseTransfer = $this->tester->getFacade()->validateMerchantProductOptionsOnCheckout(
+            $quoteTransfer,
+            $checkoutResponseTransfer
+        );
+
+        // Assert
+        $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
     }
 }
