@@ -17,7 +17,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationPro
 class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductAbstractGuiTableConfigurationProviderInterface
 {
     protected const FORMAT_STRING_DATA_URL = '%s?%s=%s';
-    protected const FORMAT_STRING_PRICES_URL = '%s?%s=${row.%s}&%s=${row.%s}';
+    protected const FORMAT_STRING_PRICES_URL = '%s?%s=${row.%s}&%s=${row.%s}&%s=${row.%s}';
 
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
     protected const TITLE_EDITABLE_BUTTON = 'Add';
@@ -74,7 +74,9 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
             PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT,
             PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT,
             PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
-            PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS
+            PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
+            PriceProductTableViewTransfer::VOLUME_QUANTITY,
+            PriceProductTableViewTransfer::VOLUME_QUANTITY
         );
         $savePricesUrl = sprintf(
             static::FORMAT_STRING_PRICES_URL,
@@ -82,7 +84,9 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
             PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
             PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
             PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT,
-            PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT
+            PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT,
+            PriceProductTableViewTransfer::VOLUME_QUANTITY,
+            PriceProductTableViewTransfer::VOLUME_QUANTITY
         );
         $formInputName = sprintf('%s[%s]', ProductAbstractForm::BLOCK_PREFIX, ProductAbstractTransfer::PRICES);
 

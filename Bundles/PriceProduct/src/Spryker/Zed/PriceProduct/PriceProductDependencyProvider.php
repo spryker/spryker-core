@@ -39,6 +39,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR = 'PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR';
     public const PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE = 'PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE';
     public const PLUGIN_PRICE_PRODUCT_EXTERNAL_PROVIDER = 'PLUGIN_PRICE_PRODUCT_PROVIDER';
+    public const PLUGIN_PRICE_PRODUCT_VALIDATOR = 'PLUGIN_PRICE_PRODUCT_VALIDATOR';
 
     public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
 
@@ -63,6 +64,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPriceProductStorePreDeletePlugins($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addValidationAdapter($container);
+        $container = $this->addPriceProductValidatorPlugins($container);
 
         return $container;
     }
@@ -357,5 +359,27 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_PRICE_PRODUCT_VALIDATOR, function () {
+            return $this->getPriceProductValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface[]
+     */
+    protected function getPriceProductValidatorPlugins(): array
+    {
+        return [];
     }
 }

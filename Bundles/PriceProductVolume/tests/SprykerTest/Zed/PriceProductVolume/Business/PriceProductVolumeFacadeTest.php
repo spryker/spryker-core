@@ -7,10 +7,12 @@
 
 namespace SprykerTest\Zed\PriceProductVolume\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\PriceTypeTransfer;
 use Spryker\Zed\PriceProductVolume\Business\PriceProductVolumeFacade;
 
 /**
@@ -30,9 +32,19 @@ class PriceProductVolumeFacadeTest extends Unit
     protected const MONEY_VALUE = 10000;
     protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+    protected const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
+    protected const PRICE_TYPE_ID = 1;
+    protected const CURRENCY_ID = 1;
+    protected const STORE_ID = 1;
+
+    protected const VALID_GROSS_NET_PRICE_CONSTRAINT_MESSAGE = 'Gross Default and/or Net Default price is required for volume price.';
+    protected const VALID_VOLUME_QUANTITY_CONSTRAINT_MESSAGE = 'Invalid volume quantity.';
+    protected const VALID_DEFAULT_PRICE_TYPE_CONSTRAINT_MESSAGE = 'Volume prices can only have DEFAULT prices.';
+    protected const VALID_UNIQUE_VOLUME_PRICE_CONSTRAINT_MESSAGE = 'The set of inputs Store, Currency, and Quantity needs to be unique.';
+    protected const VALID_VOLUME_PRICE_HAS_BASE_PRICE_CONSTRAINT_MESSAGE = 'A Price for Quantity of 2 or above requires a Price for 1 for this set of inputs Store, Currency, and Quantity.';
 
     /**
-     * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
+     * @var \SprykerTest\Zed\PriceProductVolume\PriceProductVolumeBusinessTester
      */
     protected $tester;
 
@@ -63,6 +75,158 @@ class PriceProductVolumeFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExtractPriceProductVolumeTransfersFromArray(): void
+    {
+        // Arrange
+        $priceProductVolumeFacade = $this->getPriceProductVolumeFacade();
+        $priceProducts = $this->preparePriceProductsWithVolumePrices();
+
+        // Act
+        $volumePrices = $priceProductVolumeFacade->extractPriceProductVolumeTransfersFromArray($priceProducts);
+
+        // Assert
+        $this->assertCount(2, $volumePrices);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidatePriceProductsPassesValidation(): void
+    {
+        // Arrange
+        $priceProducts = new ArrayObject($this->preparePriceProductsWithVolumePrices());
+
+        // Act
+        $validationResponseTransfer = $this->getPriceProductVolumeFacade()
+            ->validateVolumePrices($priceProducts);
+
+        // Assert
+        $this->assertTrue($validationResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidatePriceProductsViolatesValidGrossNetPriceConstraint(): void
+    {
+        // Arrange
+        $priceProducts = new ArrayObject($this->preparePriceProductsWithoutVolumePrices());
+        $priceProducts[0]
+            ->getMoneyValueOrFail()
+            ->setPriceData('{"volume_prices":[{"quantity":200,"net_price":null,"gross_price":null}]}');
+
+        // Act
+        $validationResponseTransfer = $this->getPriceProductVolumeFacade()
+            ->validateVolumePrices($priceProducts);
+
+        // Assert
+        $this->assertSame(
+            static::VALID_GROSS_NET_PRICE_CONSTRAINT_MESSAGE,
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidatePriceProductsViolatesValidVolumeQuantityConstraint(): void
+    {
+        // Arrange
+        $priceProducts = new ArrayObject($this->preparePriceProductsWithoutVolumePrices());
+        $priceProducts[0]
+            ->getMoneyValueOrFail()
+            ->setPriceData('{"volume_prices":[{"quantity":null,"net_price":123,"gross_price":123}]}');
+
+        // Act
+        $validationResponseTransfer = $this->getPriceProductVolumeFacade()
+            ->validateVolumePrices($priceProducts);
+
+        // Assert
+        $this->assertSame(
+            static::VALID_VOLUME_QUANTITY_CONSTRAINT_MESSAGE,
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidatePriceProductsViolatesDefaultPriceTypeConstraint(): void
+    {
+        // Arrange
+        $priceProducts = new ArrayObject($this->preparePriceProductsWithoutVolumePrices());
+        $priceProducts[0]
+            ->getMoneyValueOrFail()
+            ->setPriceData('{"volume_prices":[{"quantity":2,"net_price":123,"gross_price":123}]}');
+        $priceProducts[0]
+            ->getPriceTypeOrFail()
+            ->setName(static::PRICE_TYPE_ORIGINAL);
+
+        // Act
+        $validationResponseTransfer = $this->getPriceProductVolumeFacade()
+            ->validateVolumePrices($priceProducts);
+
+        // Assert
+        $this->assertSame(
+            static::VALID_DEFAULT_PRICE_TYPE_CONSTRAINT_MESSAGE,
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidatePriceProductsViolatesUniqueVolumePriceConstraint(): void
+    {
+        // Arrange
+        $priceProducts = new ArrayObject($this->preparePriceProductsWithoutVolumePrices());
+        $priceProducts[0]
+            ->getMoneyValueOrFail()
+            ->setFkCurrency(static::CURRENCY_ID)
+            ->setFkStore(static::STORE_ID)
+            ->setPriceData('{"volume_prices":[{"quantity":2,"net_price":123,"gross_price":123},{"quantity":2,"net_price":123,"gross_price":123}]}');
+
+        // Act
+        $validationResponseTransfer = $this->getPriceProductVolumeFacade()
+            ->validateVolumePrices($priceProducts);
+
+        // Assert
+        $this->assertSame(
+            static::VALID_UNIQUE_VOLUME_PRICE_CONSTRAINT_MESSAGE,
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidatePriceProductsViolatesVolumePriceHasBasePriceConstraint(): void
+    {
+        // Arrange
+        $priceProducts = new ArrayObject($this->preparePriceProductsWithoutVolumePrices());
+        $priceProducts[0]
+            ->setVolumeQuantity(2)
+            ->getMoneyValueOrFail()
+            ->setGrossAmount(null)
+            ->setNetAmount(null)
+            ->setFkCurrency(static::CURRENCY_ID)
+            ->setFkStore(static::STORE_ID)
+            ->setPriceData('{"volume_prices":[{"quantity":2,"net_price":123,"gross_price":123}]}');
+
+        // Act
+        $validationResponseTransfer = $this->getPriceProductVolumeFacade()
+            ->validateVolumePrices($priceProducts);
+
+        // Assert
+        $this->assertSame(
+            static::VALID_VOLUME_PRICE_HAS_BASE_PRICE_CONSTRAINT_MESSAGE,
+            $validationResponseTransfer->getValidationErrors()[0]->getMessage()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProductVolume\Business\PriceProductVolumeFacade
      */
     protected function getPriceProductVolumeFacade(): PriceProductVolumeFacade
@@ -83,9 +247,14 @@ class PriceProductVolumeFacadeTest extends Unit
         $priceDimensionTransfer = (new PriceProductDimensionTransfer())
             ->setType(static::PRICE_DIMENSION_DEFAULT);
 
+        $priceTypeTransfer = (new PriceTypeTransfer())
+            ->setIdPriceType(static::PRICE_TYPE_ID)
+            ->setName(static::PRICE_TYPE_DEFAULT);
+
         $priceProductTransfer = (new PriceProductTransfer())
             ->setPriceTypeName(static::PRICE_TYPE_DEFAULT)
-            ->setPriceDimension($priceDimensionTransfer);
+            ->setPriceDimension($priceDimensionTransfer)
+            ->setPriceType($priceTypeTransfer);
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(
             $grossPrice,

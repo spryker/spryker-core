@@ -75,6 +75,27 @@ class PriceProductVolumeService extends AbstractService implements PriceProductV
      * @api
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $volumePriceProductTransferToReplace
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $newVolumePriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function replaceVolumePrice(
+        PriceProductTransfer $priceProductTransfer,
+        PriceProductTransfer $volumePriceProductTransferToReplace,
+        PriceProductTransfer $newVolumePriceProductTransfer
+    ): PriceProductTransfer {
+        return $this->getFactory()
+            ->createVolumePriceUpdater()
+            ->replaceVolumePrice($priceProductTransfer, $volumePriceProductTransferToReplace, $newVolumePriceProductTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $volumePriceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null

@@ -141,10 +141,12 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     ): JsonResponse {
         $imageSetsErrors = [];
 
+        $priceProductTransfers = $productAbstractForm->getData()->getPrices();
         $pricesValidationResponseTransfer = $this->getFactory()
             ->getPriceProductFacade()
-            ->validatePrices($productAbstractForm->getData()->getPrices());
-        $merchantProductValidationResponseTransfer = new ValidationResponseTransfer();
+            ->validatePrices($priceProductTransfers);
+
+        $merchantProductValidationResponseTransfer = (new ValidationResponseTransfer())->setIsSuccess(true);
 
         $isValid = $productAbstractForm->isValid();
 
@@ -196,8 +198,17 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
         }
 
         $priceInitialData = $this->getFactory()
-            ->createPriceProductMapper()
-            ->mapValidationResponseTransferToInitialDataErrors($pricesValidationResponseTransfer, $priceInitialData);
+            ->createPriceProductValidationMapper()
+            ->mapValidationResponseTransferToInitialData(
+                $pricesValidationResponseTransfer,
+                $priceProductTransfers,
+                $priceInitialData
+            );
+
+        $merchantProductValidationResponseTransfer->setIsSuccess(
+            $pricesValidationResponseTransfer->getIsSuccessOrFail()
+            && $merchantProductValidationResponseTransfer->getIsSuccessOrFail()
+        );
 
         return $this->getResponse(
             $productAbstractForm,
@@ -310,7 +321,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             return new JsonResponse($responseData);
         }
 
-        if (!$productAbstractForm->isValid()) {
+        if (!$productAbstractForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
             $responseData = $this->addErrorResponseDataToResponse($responseData);
         }
 

@@ -184,11 +184,15 @@ class Reader implements ReaderInterface
         int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ): array {
-        $abstractPriceProductTransfers = $this->priceProductAbstractReader
-            ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
-
         $concretePriceProductTransfers = $this->priceProductConcreteReader
             ->findProductConcretePricesById($idProductConcrete, $priceProductCriteriaTransfer);
+
+        if ($priceProductCriteriaTransfer !== null && $priceProductCriteriaTransfer->getOnlyConcretePrices()) {
+            return $concretePriceProductTransfers;
+        }
+
+        $abstractPriceProductTransfers = $this->priceProductAbstractReader
+            ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
 
         return $this->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
     }
@@ -503,11 +507,15 @@ class Reader implements ReaderInterface
         int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ): array {
-        $abstractPriceProductTransfers = $this->priceProductAbstractReader
-            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
-
         $concretePriceProductTransfers = $this->priceProductConcreteReader
             ->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $priceProductCriteriaTransfer);
+
+        if ($priceProductCriteriaTransfer !== null && $priceProductCriteriaTransfer->getOnlyConcretePrices()) {
+            return $concretePriceProductTransfers;
+        }
+
+        $abstractPriceProductTransfers = $this->priceProductAbstractReader
+            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
 
         return $this->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
     }

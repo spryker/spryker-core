@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductVolume\Business;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -44,5 +46,39 @@ class PriceProductVolumeFacade extends AbstractFacade implements PriceProductVol
         return $this->getFactory()
             ->createVolumePriceExtractor()
             ->extractPriceProductVolumesForProductConcrete($priceProductTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function extractPriceProductVolumeTransfersFromArray(array $priceProductTransfers): array
+    {
+        return $this->getFactory()
+            ->createVolumePriceExtractor()
+            ->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    public function validateVolumePrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer
+    {
+        return $this->getFactory()
+            ->createPriceProductVolumeValidator()
+            ->validate($priceProductTransfers);
     }
 }

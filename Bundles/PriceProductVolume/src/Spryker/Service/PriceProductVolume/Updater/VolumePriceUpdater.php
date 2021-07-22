@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\PriceProductVolume\VolumePriceUpdater;
+namespace Spryker\Service\PriceProductVolume\Updater;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceInterface;
@@ -46,6 +46,40 @@ class VolumePriceUpdater implements VolumePriceUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $volumePriceProductTransferToReplace
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $newVolumePriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function replaceVolumePrice(
+        PriceProductTransfer $priceProductTransfer,
+        PriceProductTransfer $volumePriceProductTransferToReplace,
+        PriceProductTransfer $newVolumePriceProductTransfer
+    ): PriceProductTransfer {
+        $volumePriceData = $this->getVolumePriceData($priceProductTransfer);
+        $moneyValueTransfer = $newVolumePriceProductTransfer->getMoneyValueOrFail();
+
+        foreach ($volumePriceData as $index => $volumePriceDataElement) {
+            if ($this->isSameQuantity($volumePriceDataElement, $volumePriceProductTransferToReplace)) {
+                $volumePriceQuantity = $newVolumePriceProductTransfer->getVolumeQuantity() ?? $volumePriceDataElement[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY];
+                $volumePriceNetPrice = $moneyValueTransfer->getNetAmount() ?? $volumePriceDataElement[PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE];
+                $volumePriceGrossPrice = $moneyValueTransfer->getGrossAmount() ?? $volumePriceDataElement[PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE];
+
+                $volumePriceData[$index] = [
+                    PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY => $volumePriceQuantity,
+                    PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE => $volumePriceNetPrice,
+                    PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE => $volumePriceGrossPrice,
+                ];
+
+                return $this->setVolumePriceData($priceProductTransfer, $volumePriceData);
+            }
+        }
+
+        return $this->addVolumePrice($priceProductTransfer, $newVolumePriceProductTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $volumePriceProductTransferToDelete
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -57,7 +91,7 @@ class VolumePriceUpdater implements VolumePriceUpdaterInterface
         $volumePriceData = $this->getVolumePriceData($priceProductTransfer);
 
         foreach ($volumePriceData as $index => $volumePriceDataElement) {
-            if ($volumePriceDataElement[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY] === $volumePriceProductTransferToDelete->getVolumeQuantity()) {
+            if ($this->isSameQuantity($volumePriceDataElement, $volumePriceProductTransferToDelete)) {
                 unset($volumePriceData[$index]);
 
                 break;

@@ -8,30 +8,21 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ValidationResponseTransfer;
 
 interface PriceProductMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param mixed[] $initialDataErrors
-     *
-     * @return mixed[]
-     */
-    public function mapValidationResponseTransferToInitialDataErrors(
-        ValidationResponseTransfer $validationResponseTransfer,
-        array $initialDataErrors
-    ): array;
-
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @param mixed[] $data
+     * @param mixed[] $newPriceProducts
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function mapDataToPriceProductTransfers(array $data, ArrayObject $priceProductTransfers): ArrayObject;
+    public function mapTableRowsToPriceProductTransfers(
+        array $newPriceProducts,
+        ArrayObject $priceProductTransfers
+    ): ArrayObject;
 }

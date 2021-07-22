@@ -10,11 +10,17 @@ namespace Spryker\Zed\PriceProductVolume\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProductVolume\Business\PriceProductReader\PriceProductReader;
 use Spryker\Zed\PriceProductVolume\Business\PriceProductReader\PriceProductReaderInterface;
+use Spryker\Zed\PriceProductVolume\Business\Validator\Constraint\UniqueVolumePriceConstraint;
+use Spryker\Zed\PriceProductVolume\Business\Validator\Constraint\VolumePriceHasBasePriceProductConstraint;
+use Spryker\Zed\PriceProductVolume\Business\Validator\PriceProductVolumeValidator;
+use Spryker\Zed\PriceProductVolume\Business\Validator\PriceProductVolumeValidatorInterface;
 use Spryker\Zed\PriceProductVolume\Business\VolumePriceExtractor\VolumePriceExtractor;
 use Spryker\Zed\PriceProductVolume\Business\VolumePriceExtractor\VolumePriceExtractorInterface;
+use Spryker\Zed\PriceProductVolume\Dependency\External\PriceProductVolumeToValidationAdapterInterface;
 use Spryker\Zed\PriceProductVolume\Dependency\Facade\PriceProductVolumeToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProductVolume\PriceProductVolumeDependencyProvider;
+use Symfony\Component\Validator\Constraint;
 
 class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
 {
@@ -30,6 +36,18 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProductVolume\Business\Validator\PriceProductVolumeValidatorInterface
+     */
+    public function createPriceProductVolumeValidator(): PriceProductVolumeValidatorInterface
+    {
+        return new PriceProductVolumeValidator(
+            $this->getValidationAdapter(),
+            $this->createVolumePriceExtractor(),
+            $this->getPriceVolumeCollectionConstraints()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProductVolume\Business\PriceProductReader\PriceProductReaderInterface
      */
     public function createPriceProductReader(): PriceProductReaderInterface
@@ -37,6 +55,37 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
         return new PriceProductReader(
             $this->getPriceProductFacade()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createUniqueVolumePriceConstraint(): Constraint
+    {
+        return new UniqueVolumePriceConstraint(
+            $this->createVolumePriceExtractor()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createVolumePriceHasBasePriceProductConstraint(): Constraint
+    {
+        return new VolumePriceHasBasePriceProductConstraint(
+            $this->createVolumePriceExtractor()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint[]
+     */
+    public function getPriceVolumeCollectionConstraints(): array
+    {
+        return [
+            $this->createVolumePriceHasBasePriceProductConstraint(),
+            $this->createUniqueVolumePriceConstraint(),
+        ];
     }
 
     /**
@@ -53,5 +102,13 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductFacade(): PriceProductVolumeToPriceProductFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductVolumeDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductVolume\Dependency\External\PriceProductVolumeToValidationAdapterInterface
+     */
+    public function getValidationAdapter(): PriceProductVolumeToValidationAdapterInterface
+    {
+        return $this->getProvidedDependency(PriceProductVolumeDependencyProvider::ADAPTER_VALIDATION);
     }
 }

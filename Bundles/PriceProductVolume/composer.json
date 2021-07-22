@@ -8,10 +8,11 @@
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.0.0",
         "spryker/price-product": "^2.11.0 || ^4.0.0",
-        "spryker/price-product-extension": "^1.1.0",
+        "spryker/price-product-extension": "^1.5.0",
         "spryker/price-product-storage": "^2.17.0 || ^4.6.0",
         "spryker/price-product-storage-extension": "^1.1.0",
         "spryker/product-storage": "^1.1.0",
+        "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.25.0",
         "spryker/util-encoding": "^2.0.0"
     },

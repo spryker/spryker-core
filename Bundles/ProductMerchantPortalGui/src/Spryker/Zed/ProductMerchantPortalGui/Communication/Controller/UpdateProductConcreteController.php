@@ -159,15 +159,25 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
 
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $productConcreteEditForm->getData()[static::BLOCK_PREFIX_PRODUCT_CONCRETE_FORM];
+        $priceProductTransfers = $productConcreteTransfer->getPrices();
+
+        $priceProductTransfers = $priceProductTransfers->getArrayCopy();
+        $priceProductTransfers = array_values($priceProductTransfers);
+        $priceProductTransfers = new ArrayObject($priceProductTransfers);
 
         $pricesValidationResponseTransfer = $this->getFactory()
             ->getPriceProductFacade()
-            ->validatePrices($productConcreteTransfer->getPrices());
-        $merchantProductValidationResponseTransfer = new ValidationResponseTransfer();
+            ->validatePrices($priceProductTransfers);
+
+        $merchantProductValidationResponseTransfer = (new ValidationResponseTransfer())->setIsSuccess(true);
 
         $pricesInitialData = $this->getFactory()
-            ->createPriceProductMapper()
-            ->mapValidationResponseTransferToInitialDataErrors($pricesValidationResponseTransfer, $pricesInitialData);
+            ->createPriceProductValidationMapper()
+            ->mapValidationResponseTransferToInitialData(
+                $pricesValidationResponseTransfer,
+                $priceProductTransfers,
+                $pricesInitialData
+            );
 
         if ($productConcreteEditForm->isValid() && $pricesValidationResponseTransfer->getIsSuccess()) {
             $merchantProductValidationResponseTransfer = $this->validateMerchantProduct(
@@ -212,6 +222,11 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                 ->createProductAttributesMapper()
                 ->mapErrorsToAttributesData($errors, $attributesInitialData);
         }
+
+        $merchantProductValidationResponseTransfer->setIsSuccess(
+            $pricesValidationResponseTransfer->getIsSuccessOrFail()
+            && $merchantProductValidationResponseTransfer->getIsSuccessOrFail()
+        );
 
         return $this->getResponse(
             $productConcreteEditForm,
@@ -298,7 +313,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             return new JsonResponse($responseData);
         }
 
-        if (!$productConcreteEditForm->isValid()) {
+        if (!$productConcreteEditForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
             $responseData = $this->addErrorResponseDataToResponse($responseData);
         }
 

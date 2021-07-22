@@ -47,7 +47,8 @@ class SavePriceProductAbstractController extends AbstractSavePriceProductControl
      */
     protected function findPriceProductTransfers(array $priceProductStoreIds, Request $request): array
     {
-        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds);
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->setPriceProductStoreIds($priceProductStoreIds);
 
         return $this->getFactory()
             ->getPriceProductFacade()

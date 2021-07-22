@@ -59,6 +59,25 @@ interface PriceProductVolumeServiceInterface
 
     /**
      * Specification:
+     * - Replaces a volume price in `PriceProductTransfer` money value price data by the same volume price quantity.
+     * - Requires `PriceProductTransfer.volumeQuantity` transfer property to be set for `PriceProductTransfer` to replace.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $volumePriceProductTransferToReplace
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $newVolumePriceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function replaceVolumePrice(
+        PriceProductTransfer $priceProductTransfer,
+        PriceProductTransfer $volumePriceProductTransferToReplace,
+        PriceProductTransfer $newVolumePriceProductTransfer
+    ): PriceProductTransfer;
+
+    /**
+     * Specification:
      * - Extracts volume price data from `PriceProductTransfer` money value price data by the same volume price quantity.
      * - Returns `PriceProductTransfer` with extracted `volumePrice` data.
      *

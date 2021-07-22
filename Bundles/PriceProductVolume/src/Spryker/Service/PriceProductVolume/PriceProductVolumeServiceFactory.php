@@ -9,15 +9,15 @@ namespace Spryker\Service\PriceProductVolume;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceInterface;
-use Spryker\Service\PriceProductVolume\VolumePriceReader\VolumePriceReader;
-use Spryker\Service\PriceProductVolume\VolumePriceReader\VolumePriceReaderInterface;
-use Spryker\Service\PriceProductVolume\VolumePriceUpdater\VolumePriceUpdater;
-use Spryker\Service\PriceProductVolume\VolumePriceUpdater\VolumePriceUpdaterInterface;
+use Spryker\Service\PriceProductVolume\Reader\VolumePriceReader;
+use Spryker\Service\PriceProductVolume\Reader\VolumePriceReaderInterface;
+use Spryker\Service\PriceProductVolume\Updater\VolumePriceUpdater;
+use Spryker\Service\PriceProductVolume\Updater\VolumePriceUpdaterInterface;
 
 class PriceProductVolumeServiceFactory extends AbstractServiceFactory
 {
     /**
-     * @return \Spryker\Service\PriceProductVolume\VolumePriceUpdater\VolumePriceUpdaterInterface
+     * @return \Spryker\Service\PriceProductVolume\Updater\VolumePriceUpdaterInterface
      */
     public function createVolumePriceUpdater(): VolumePriceUpdaterInterface
     {
@@ -25,7 +25,7 @@ class PriceProductVolumeServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\PriceProductVolume\VolumePriceReader\VolumePriceReaderInterface
+     * @return \Spryker\Service\PriceProductVolume\Reader\VolumePriceReaderInterface
      */
     public function createVolumePriceReader(): VolumePriceReaderInterface
     {

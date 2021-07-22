@@ -26,15 +26,23 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected $validator;
 
     /**
+     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface[]
+     */
+    protected $priceProductValidatorPlugins;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProviderInterface $priceProductConstraintProvider
      * @param \Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface $validationAdapter
+     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface[] $priceProductValidatorPlugins
      */
     public function __construct(
         PriceProductConstraintProviderInterface $priceProductConstraintProvider,
-        PriceProductToValidationAdapterInterface $validationAdapter
+        PriceProductToValidationAdapterInterface $validationAdapter,
+        array $priceProductValidatorPlugins
     ) {
         $this->priceProductConstraintProvider = $priceProductConstraintProvider;
         $this->validator = $validationAdapter->createValidator();
+        $this->priceProductValidatorPlugins = $priceProductValidatorPlugins;
     }
 
     /**
@@ -48,6 +56,23 @@ class PriceProductValidator implements PriceProductValidatorInterface
     {
         $validationResponseTransfer = (new ValidationResponseTransfer())->setIsSuccess(true);
 
+        $validationResponseTransfer = $this->executeValidation($priceProductTransfers, $validationResponseTransfer);
+
+        return $this->executeValidatorPlugins($priceProductTransfers, $validationResponseTransfer);
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    protected function executeValidation(
+        ArrayObject $priceProductTransfers,
+        ValidationResponseTransfer $validationResponseTransfer
+    ): ValidationResponseTransfer {
         $constraintViolationList = $this->validator->validate(
             $priceProductTransfers,
             $this->priceProductConstraintProvider->getConstraints()
@@ -69,6 +94,30 @@ class PriceProductValidator implements PriceProductValidatorInterface
                 ->setInvalidValue($constraintViolation->getInvalidValue())
                 ->setRoot($constraintViolation->getRoot());
             $validationResponseTransfer->addValidationError($validationErrorTransfer);
+        }
+
+        return $validationResponseTransfer;
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
+     */
+    protected function executeValidatorPlugins(
+        ArrayObject $priceProductTransfers,
+        ValidationResponseTransfer $validationResponseTransfer
+    ): ValidationResponseTransfer {
+        foreach ($this->priceProductValidatorPlugins as $priceProductValidatorPlugin) {
+            $pluginValidationResponseTransfer = $priceProductValidatorPlugin->validate($priceProductTransfers);
+            foreach ($pluginValidationResponseTransfer->getValidationErrors() as $validationError) {
+                $validationResponseTransfer
+                    ->addValidationError($validationError)
+                    ->setIsSuccess(false);
+            }
         }
 
         return $validationResponseTransfer;

@@ -22,11 +22,16 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
     protected const TITLE_COLUMN_CURRENCY = 'Currency';
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_NET = 'Net';
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS = 'Gross';
+    protected const TITLE_COLUMN_QUANTITY = 'Quantity';
 
     protected const TITLE_FILTER_IN_STORES = 'Stores';
     protected const TITLE_FILTER_IN_CURRENCIES = 'Currencies';
 
     protected const FORMAT_STRING_PRICE_KEY = '%s[%s][%s]';
+
+    protected const INPUT_TYPE_NUMBER = 'number';
+
+    protected const TYPE_OPTION_VALUE = 'value';
 
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
@@ -137,6 +142,13 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
             );
         }
 
+        $guiTableConfigurationBuilder->addColumnText(
+            PriceProductTableViewTransfer::VOLUME_QUANTITY,
+            static::TITLE_COLUMN_QUANTITY,
+            true,
+            false
+        );
+
         return $guiTableConfigurationBuilder;
     }
 
@@ -183,15 +195,22 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
             $guiTableConfigurationBuilder->addEditableColumnInput(
                 $idNetColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_NET . ' ' . $titlePriceTypeName,
-                'number',
+                static::INPUT_TYPE_NUMBER,
                 $fieldOptions
             )->addEditableColumnInput(
                 $idGrossColumn,
                 static::TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS . ' ' . $titlePriceTypeName,
-                'number',
+                static::INPUT_TYPE_NUMBER,
                 $fieldOptions
             );
         }
+
+        $guiTableConfigurationBuilder->addEditableColumnInput(
+            PriceProductTableViewTransfer::VOLUME_QUANTITY,
+            static::TITLE_COLUMN_QUANTITY,
+            static::INPUT_TYPE_NUMBER,
+            $this->getVolumeQuantityColumnOptions()
+        );
 
         return $guiTableConfigurationBuilder;
     }
@@ -218,5 +237,15 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
             );
 
         return $guiTableConfigurationBuilder;
+    }
+
+    /**
+     * @return mixed[]
+     */
+    protected function getVolumeQuantityColumnOptions(): array
+    {
+        return [
+            static::TYPE_OPTION_VALUE => 1,
+        ];
     }
 }

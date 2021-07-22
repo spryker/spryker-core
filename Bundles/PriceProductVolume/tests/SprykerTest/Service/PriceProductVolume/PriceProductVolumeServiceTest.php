@@ -23,6 +23,10 @@ use Spryker\Service\PriceProductVolume\PriceProductVolumeService;
  */
 class PriceProductVolumeServiceTest extends Unit
 {
+    protected const VOLUME_QUANTITY = 5;
+    protected const GROSS_AMOUNT = 200;
+    protected const NET_AMOUNT = 123;
+
     /**
      * @var \SprykerTest\Service\PriceProductVolume\PriceProductVolumeServiceTester
      */
@@ -49,9 +53,9 @@ class PriceProductVolumeServiceTest extends Unit
     public function testAddVolumePriceAddsVolumePrice(): void
     {
         // Arrange
-        $quantity = 5;
-        $grossAmount = 200;
-        $netAmount = 123;
+        $quantity = static::VOLUME_QUANTITY;
+        $grossAmount = static::GROSS_AMOUNT;
+        $netAmount = static::NET_AMOUNT;
         $basePriceProductTransfer = $this->tester->createBasePriceProductTransfer();
         $newVolumePriceProductTransfer = $this->tester->createVolumePriceProductTransfer($quantity, $grossAmount, $netAmount);
         $expectedJson = sprintf(
@@ -85,6 +89,66 @@ class PriceProductVolumeServiceTest extends Unit
         $basePriceProductTransfer = $this->priceProductVolumeService->deleteVolumePrice(
             $basePriceProductTransfer,
             $volumePriceProductTransferToDelete
+        );
+
+        // Assert
+        $this->assertSame($expectedJson, $basePriceProductTransfer->getMoneyValueOrFail()->getPriceData());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceVolumePriceReplacesVolumePrice(): void
+    {
+        // Arrange
+        $quantity = static::VOLUME_QUANTITY;
+        $grossAmount = static::GROSS_AMOUNT;
+        $netAmount = static::NET_AMOUNT;
+        $basePriceProductTransfer = $this->tester->createBasePriceProductTransfer();
+        $volumePriceProductTransferToReplace = $this->tester->createVolumePriceProductTransfer(1);
+        $newVolumePriceProductTransfer = $this->tester->createVolumePriceProductTransfer($quantity, $grossAmount, $netAmount);
+        $expectedJson = sprintf(
+            '{"volume_prices":[{"quantity":%d,"net_price":%d,"gross_price":%d},{"quantity":100,"net_price":80,"gross_price":100}]}',
+            $quantity,
+            $netAmount,
+            $grossAmount
+        );
+
+        // Act
+        $basePriceProductTransfer = $this->priceProductVolumeService->replaceVolumePrice(
+            $basePriceProductTransfer,
+            $volumePriceProductTransferToReplace,
+            $newVolumePriceProductTransfer
+        );
+
+        // Assert
+        $this->assertSame($expectedJson, $basePriceProductTransfer->getMoneyValueOrFail()->getPriceData());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceVolumePriceAddsVolumePriceWithNonExistingQuantity(): void
+    {
+        // Arrange
+        $quantity = static::VOLUME_QUANTITY;
+        $grossAmount = static::GROSS_AMOUNT;
+        $netAmount = static::NET_AMOUNT;
+        $basePriceProductTransfer = $this->tester->createBasePriceProductTransfer();
+        $volumePriceProductTransferToReplace = $this->tester->createVolumePriceProductTransfer(999);
+        $newVolumePriceProductTransfer = $this->tester->createVolumePriceProductTransfer($quantity, $grossAmount, $netAmount);
+        $expectedJson = sprintf(
+            '{"volume_prices":[{"quantity":1,"net_price":110,"gross_price":120},{"quantity":%d,"net_price":%d,"gross_price":%d},{"quantity":100,"net_price":80,"gross_price":100}]}',
+            $quantity,
+            $netAmount,
+            $grossAmount
+        );
+
+        // Act
+        $basePriceProductTransfer = $this->priceProductVolumeService->replaceVolumePrice(
+            $basePriceProductTransfer,
+            $volumePriceProductTransferToReplace,
+            $newVolumePriceProductTransfer
         );
 
         // Assert

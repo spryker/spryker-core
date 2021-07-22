@@ -350,6 +350,7 @@ interface PriceProductFacadeInterface
      * - Filters results by currency when provided in criteria.
      * - Concrete prices overwrites abstracts for matching price types.
      * - Extracts additional prices array from price data.
+     * - Returns only concrete product prices if PriceProductCriteriaTransfer.onlyConcretePrices set to true.
      *
      * @api
      *
@@ -484,6 +485,7 @@ interface PriceProductFacadeInterface
      * - Filters results by store when provided in criteria.
      * - Filters results by currency when provided in criteria.
      * - Concrete prices overwrites abstracts for matching price types.
+     * - Returns only concrete product prices if PriceProductCriteriaTransfer.onlyConcretePrices set to true.
      *
      * @api
      *
@@ -610,6 +612,7 @@ interface PriceProductFacadeInterface
      * - Validates product prices collection.
      * - Checks if there are duplicated prices for store-currency-gross-net combinations.
      * - Checks that currency is assigned to a store for each price.
+     * - Executes PriceProductValidatorPluginInterface plugins.
      * - Returns ValidationResponseTransfer transfer object.
      *
      * @api

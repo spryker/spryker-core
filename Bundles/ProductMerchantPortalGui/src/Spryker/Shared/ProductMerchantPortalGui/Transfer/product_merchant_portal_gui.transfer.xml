@@ -195,6 +195,7 @@
         <property name="priceProductDefaultIds" type="string"/>
         <property name="idProductAbstract" type="int"/>
         <property name="idProductConcrete" type="int"/>
+        <property name="volumeQuantity" type="int"/>
     </transfer>
 
     <transfer name="PriceProduct">
@@ -240,6 +241,8 @@
 
     <transfer name="PriceProductCriteria">
         <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+        <property name="onlyConcretePrices" type="bool"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 
     <transfer name="ValidationResponse">

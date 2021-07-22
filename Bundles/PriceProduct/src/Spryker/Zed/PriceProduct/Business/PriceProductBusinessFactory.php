@@ -368,8 +368,17 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductValidator(
             $this->createPriceProductConstraintProvider(),
-            $this->getValidationAdapter()
+            $this->getValidationAdapter(),
+            $this->getPriceProductValidatorPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface[]
+     */
+    public function getPriceProductValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_VALIDATOR);
     }
 
     /**

@@ -86,6 +86,7 @@
         <property name="quantity" type="int"/>
         <property name="sku" type="string"/>
         <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+        <property name="onlyConcretePrices" type="bool"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">

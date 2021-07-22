@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductVolume;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\PriceProductVolume\Dependency\External\PriceProductVolumeToValidationAdapter;
 use Spryker\Zed\PriceProductVolume\Dependency\Facade\PriceProductVolumeToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEncodingServiceBridge;
 
@@ -17,6 +18,8 @@ class PriceProductVolumeDependencyProvider extends AbstractBundleDependencyProvi
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+
+    public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +30,7 @@ class PriceProductVolumeDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addValidationAdapter($container);
         $container = $this->addPriceProductFacade($container);
 
         return $container;
@@ -59,6 +63,20 @@ class PriceProductVolumeDependencyProvider extends AbstractBundleDependencyProvi
             return new PriceProductVolumeToPriceProductFacadeBridge(
                 $container->getLocator()->priceProduct()->facade()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addValidationAdapter(Container $container): Container
+    {
+        $container->set(static::ADAPTER_VALIDATION, function () {
+            return new PriceProductVolumeToValidationAdapter();
         });
 
         return $container;
