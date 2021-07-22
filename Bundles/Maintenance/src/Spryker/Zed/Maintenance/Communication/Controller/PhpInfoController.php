@@ -10,6 +10,8 @@ namespace Spryker\Zed\Maintenance\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\Maintenance\Communication\MaintenanceCommunicationFactory getFactory()
  * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacadeInterface getFacade()
  */
@@ -32,6 +34,10 @@ class PhpInfoController extends AbstractController
      */
     protected function getPhpInfoHtml()
     {
+        if (!$this->getFactory()->getConfig()->isDebugModeEnabled()) {
+            return '';
+        }
+
         ob_start();
         phpinfo();
         $phpInfo = ob_get_clean();
