@@ -143,6 +143,9 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
      */
     protected function executeExitLogicTransaction(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
+        $isPriceProductScheduleForSwitchExists = $this->priceProductScheduleRepository
+            ->isScheduledPriceForSwitchExists($priceProductScheduleTransfer);
+
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
         $fallbackPriceProduct = $this->priceProductFallbackFinder->findFallbackPriceProduct($priceProductTransfer);
@@ -151,7 +154,7 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
         $this->priceProductScheduleEntityManager->savePriceProductSchedule($priceProductScheduleTransfer);
 
-        if ($fallbackPriceProduct !== null) {
+        if ($fallbackPriceProduct !== null && !$isPriceProductScheduleForSwitchExists) {
             if ($priceProductTransfer->getSkuProductAbstract() !== null) {
                 $fallbackPriceProduct->setSkuProductAbstract($priceProductTransfer->getSkuProductAbstract());
             }
