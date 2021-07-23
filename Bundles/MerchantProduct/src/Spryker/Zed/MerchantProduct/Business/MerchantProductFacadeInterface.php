@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
@@ -131,6 +132,36 @@ interface MerchantProductFacadeInterface
      */
     public function isProductConcreteOwnedByMerchant(
         ProductConcreteTransfer $productConcreteTransfer,
+        MerchantTransfer $merchantTransfer
+    ): bool;
+
+    /**
+     * Specification:
+     * - Creates a new merchant product abstract entity.
+     * - Requires MerchantProductTransfer.idMerchant and MerchantProductTransfer.idProductAbstract.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer
+     */
+    public function create(MerchantProductTransfer $merchantProductTransfer): MerchantProductTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if abstract product belongs to merchant, false otherwise.
+     * - Requires MerchantTransfer.idMerchant and ProductAbstractTransfer.idProductAbstract.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractOwnedByMerchant(
+        ProductAbstractTransfer $productAbstractTransfer,
         MerchantTransfer $merchantTransfer
     ): bool;
 }

@@ -7,16 +7,21 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PriceProductTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer;
 use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\PriceProductTableViewSorterInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface;
 
 abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDataProvider
 {
@@ -24,9 +29,19 @@ abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDat
     protected const INDEX_AMOUNT_TYPE = 2;
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface
      */
-    protected $productMerchantPortalGuiRepository;
+    protected $priceProductTableDataMapper;
+
+    /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\PriceProductTableViewSorterInterface
+     */
+    protected $priceProductTableViewSorter;
+
+    /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface
+     */
+    protected $priceProductReader;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
@@ -39,16 +54,22 @@ abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDat
     protected $moneyFacade;
 
     /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface $priceProductReader
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface $priceProductTableDataMapper
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\PriceProductTableViewSorterInterface $priceProductTableViewSorter
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
-        ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository,
+        PriceProductReaderInterface $priceProductReader,
+        PriceProductTableDataMapperInterface $priceProductTableDataMapper,
+        PriceProductTableViewSorterInterface $priceProductTableViewSorter,
         ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
     ) {
-        $this->productMerchantPortalGuiRepository = $productMerchantPortalGuiRepository;
+        $this->priceProductReader = $priceProductReader;
+        $this->priceProductTableDataMapper = $priceProductTableDataMapper;
+        $this->priceProductTableViewSorter = $priceProductTableViewSorter;
         $this->merchantUserFacade = $merchantUserFacade;
         $this->moneyFacade = $moneyFacade;
     }
@@ -73,8 +94,22 @@ abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDat
     {
         $criteriaTransfer = $this->replacePriceSortingFields($criteriaTransfer);
 
-        $priceProductTableViewCollectionTransfer = $this->productMerchantPortalGuiRepository
-            ->getPriceProductTableData($criteriaTransfer);
+        $priceProductTransfers = $this->priceProductReader->getPriceProducts($criteriaTransfer);
+
+        $priceProductTableViewCollectionTransfer = $this->priceProductTableDataMapper
+            ->mapPriceProductTransfersToPriceProductTableViewCollectionTransfer(
+                $priceProductTransfers,
+                new PriceProductTableViewCollectionTransfer()
+            );
+        $priceProductTableViewCollectionTransfer = $this->priceProductTableViewSorter
+            ->sortPriceProductTableViews($priceProductTableViewCollectionTransfer, $criteriaTransfer);
+
+        $paginationTransfer = $this->updatePaginationTransfer(
+            $priceProductTableViewCollectionTransfer,
+            $criteriaTransfer
+        );
+        $priceProductTableViewCollectionTransfer = $this->applyPagination($priceProductTableViewCollectionTransfer);
+
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
         foreach ($priceProductTableViewCollectionTransfer->getPriceProductTableViews() as $priceProductTableViewTransfer) {
@@ -87,12 +122,57 @@ abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDat
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        $paginationTransfer = $priceProductTableViewCollectionTransfer->getPaginationOrFail();
-
         return $guiTableDataResponseTransfer
             ->setPage($paginationTransfer->getPage())
             ->setPageSize($paginationTransfer->getMaxPerPage())
             ->setTotal($paginationTransfer->getNbResults());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer $priceProductTableViewCollectionTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $criteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaginationTransfer
+     */
+    protected function updatePaginationTransfer(
+        PriceProductTableViewCollectionTransfer $priceProductTableViewCollectionTransfer,
+        PriceProductTableCriteriaTransfer $criteriaTransfer
+    ): PaginationTransfer {
+        $count = $priceProductTableViewCollectionTransfer->getPriceProductTableViews()->count();
+
+        return $priceProductTableViewCollectionTransfer->getPaginationOrFail()
+            ->setPage($criteriaTransfer->getPage())
+            ->setMaxPerPage($criteriaTransfer->getPageSize())
+            ->setLastPage((int)($count / $criteriaTransfer->getPageSize()));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer $priceProductTableViewCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer
+     */
+    protected function applyPagination(
+        PriceProductTableViewCollectionTransfer $priceProductTableViewCollectionTransfer
+    ): PriceProductTableViewCollectionTransfer {
+        $priceProductOfferTableViews = $priceProductTableViewCollectionTransfer
+            ->getPriceProductTableViews()
+            ->getArrayCopy();
+
+        $paginationTransfer = $priceProductTableViewCollectionTransfer->getPaginationOrFail();
+
+        $positionStart = ($paginationTransfer->getPage() - 1) * $paginationTransfer->getMaxPerPage();
+
+        $priceProductTableViewsOnCurrentPage = array_slice(
+            $priceProductOfferTableViews,
+            $positionStart,
+            $paginationTransfer->getMaxPerPage()
+        );
+
+        $priceProductTableViewCollectionTransfer->setPriceProductTableViews(
+            new ArrayObject($priceProductTableViewsOnCurrentPage)
+        );
+
+        return $priceProductTableViewCollectionTransfer;
     }
 
     /**

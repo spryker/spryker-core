@@ -30,7 +30,7 @@ class CustomerCompanyAttachForm extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'company_user_to_company';
+        return 'company-user';
     }
 
     /**

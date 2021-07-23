@@ -29,6 +29,9 @@ class PriceProductOfferStorageUnpublishListener extends AbstractPlugin implement
         $priceProductOfferIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         $productOfferIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyPriceProductOfferTableMap::COL_FK_PRODUCT_OFFER);
 
-        $this->getFacade()->unpublish(array_combine($priceProductOfferIds, $productOfferIds));
+        /** @var array $priceProductOfferIdsWithOfferIds */
+        $priceProductOfferIdsWithOfferIds = array_combine($priceProductOfferIds, $productOfferIds);
+
+        $this->getFacade()->unpublish($priceProductOfferIdsWithOfferIds);
     }
 }

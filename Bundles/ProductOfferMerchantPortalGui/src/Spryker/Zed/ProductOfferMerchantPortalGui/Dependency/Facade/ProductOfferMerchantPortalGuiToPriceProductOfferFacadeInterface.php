@@ -50,5 +50,7 @@ interface ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject;
+    public function getProductOfferPrices(
+        PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+    ): ArrayObject;
 }

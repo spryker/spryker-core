@@ -15,8 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilDateTimeService extends AbstractService implements UtilDateTimeServiceInterface
 {
     /**
-     * Specification:
-     * - Formats a given datetime string into a configured date
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,8 +29,7 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
     }
 
     /**
-     * Specification:
-     * - Formats a given datetime string into a configured datetime
+     * {@inheritDoc}
      *
      * @api
      *
@@ -59,8 +57,7 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
     }
 
     /**
-     * Specification:
-     * - Formats a given datetime string into a configured time
+     * {@inheritDoc}
      *
      * @api
      *

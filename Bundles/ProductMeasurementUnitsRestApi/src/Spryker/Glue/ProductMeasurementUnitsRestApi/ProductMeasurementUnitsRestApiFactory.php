@@ -17,6 +17,8 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasur
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitBySalesUnitResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\QuoteRequestItemExpander;
+use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\QuoteRequestItemExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpander;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitByProductConcreteResourceRelationshipExpanderInterface;
 use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\SalesUnitsByCartItemResourceRelationshipExpander;
@@ -153,6 +155,14 @@ class ProductMeasurementUnitsRestApiFactory extends AbstractFactory
     public function createSalesUnitMapper(): SalesUnitMapperInterface
     {
         return new SalesUnitMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Expander\QuoteRequestItemExpanderInterface
+     */
+    public function createQuoteRequestItemExpander(): QuoteRequestItemExpanderInterface
+    {
+        return new QuoteRequestItemExpander();
     }
 
     /**

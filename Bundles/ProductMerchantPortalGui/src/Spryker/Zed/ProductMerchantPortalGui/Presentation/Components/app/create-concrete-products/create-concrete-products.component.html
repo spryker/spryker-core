@@ -1,0 +1,28 @@
+<mp-concrete-product-attributes-selector
+    [attributes]="attributes"
+    [(selectedAttributes)]="selectedAttributes"
+    [name]="attributesName"
+    [placeholder]="attributesPlaceholder"
+    [errors]="attributeErrors"
+>
+</mp-concrete-product-attributes-selector>
+
+<div class="mp-create-concrete-products__preview-title">
+    <ng-content select="[preview-text]"></ng-content>
+</div>
+
+<mp-concrete-products-preview
+    [(attributes)]="selectedAttributes"
+    [generatedProducts]="generatedProducts"
+    [errors]="generatedProductErrors"
+    [existingProducts]="existingProducts"
+    [name]="productsName"
+>
+    <ng-content select="[preview-total-text]" total-text></ng-content>
+    <ng-content select="[preview-auto-sku-text]" auto-sku-text></ng-content>
+    <ng-content select="[preview-auto-name-text]" auto-name-text></ng-content>
+    <ng-content select="[preview-col-attr-name]" col-attr-name></ng-content>
+    <ng-content select="[preview-col-sku-name]" col-sku-name></ng-content>
+    <ng-content select="[preview-col-name-name]" col-name-name></ng-content>
+    <ng-content select="[preview-no-data-text]" no-data-text></ng-content>
+</mp-concrete-products-preview>

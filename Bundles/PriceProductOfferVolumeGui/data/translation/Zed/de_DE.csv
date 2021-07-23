@@ -6,5 +6,7 @@ Currency,Währung
 "Price Type",Preistyp
 Quantity,Menge
 Store,Geschäft
-"View Offer Volume Price","Staffelpreise anzeigen"
+"View Offer Volume Price:","Staffelpreise anzeigen:"
 "Volume Prices for Offer","Staffelpreise für Angebot"
+DEFAULT,DEFAULT
+ORIGINAL,URSPRUNG

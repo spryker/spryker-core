@@ -16,7 +16,6 @@ use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductTableDataMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductAbstractTableDataMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductTableDataMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PropelModelPagerMapper;
@@ -34,14 +33,6 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     public function createProductAbstractTableDataMapper(): ProductAbstractTableDataMapper
     {
         return new ProductAbstractTableDataMapper($this->getUtilEncodingService());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\PriceProductTableDataMapper
-     */
-    public function createPriceProductTableDataMapper(): PriceProductTableDataMapper
-    {
-        return new PriceProductTableDataMapper($this->getPriceProductFacade());
     }
 
     /**

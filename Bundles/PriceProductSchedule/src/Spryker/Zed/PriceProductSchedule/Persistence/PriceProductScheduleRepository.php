@@ -29,6 +29,18 @@ class PriceProductScheduleRepository extends AbstractRepository implements Price
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isScheduledPriceForSwitchExists(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool
+    {
+        return $this->getFactory()
+            ->createPriceProductScheduleDisableFinder()
+            ->isScheduledPriceForSwitchExists($priceProductScheduleTransfer);
+    }
+
+    /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]

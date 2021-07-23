@@ -1,0 +1,71 @@
+{% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
+
+{% block body %}
+    {% set mainClass = 'mp-create-single-concrete-product' %}
+    {% set backButtonAttrs = '{
+        "name": "back",
+        "value": true
+    }' %}
+
+    {% block createSingleConcreteProduct %}
+        <web-mp-create-single-concrete-product>
+            {{ form_start(form, { attr: { excludeFormTag: true } }) }}
+                {% block title %}
+                    <span title>{{ 'Create an Abstract Product with 1 Concrete Product' | trans }}</span>
+                {% endblock %}
+
+                {% block actions %}
+                    <div action class="{{ mainClass }}__actions-row">
+                        <web-spy-button cloak size="lg" type="submit" variant="secondary" attrs="{{ backButtonAttrs }}" class="{{ mainClass }}__action">
+                            {{ 'Back' | trans }}
+                        </web-spy-button>
+                        <web-spy-button cloak size="lg" type="submit" class="{{ mainClass }}__action">
+                            {{ 'Create' | trans }}
+                        </web-spy-button>
+                    </div>
+                {% endblock %}
+
+                <web-spy-card
+                    cloak
+                    spy-title="{{ form.concreteSku.vars.label | trans }} {{ form.concreteSku.vars.required ? '*' }}"
+                    class="{{ mainClass }}__card">
+                    <web-mp-autogenerate-input
+                        is-field-has-half-width="true"
+                        name="{{ form.concreteSku.vars.full_name }}"
+                        value="{{ form.concreteSku.vars.value }}"
+                        original-value="{{ form.sku.vars.value }}-1"
+                        placeholder="{{ form.concreteSku.vars.attr.placeholder }}"
+                        is-autogenerate="{{ form.vars.value.autogenerateSku | json_encode }}"
+                        error="{% if form.concreteSku.vars.errors %}{{ form.concreteSku.vars.errors[0].message | default | trans }}{% endif %}"
+                        checkbox-name="{{ form.autogenerateSku.vars.full_name }}"
+                    >
+                        {{ 'Autogenerate SKU' | trans }}
+                    </web-mp-autogenerate-input>
+
+                    {% do form.concreteSku.setRendered %}
+                    {% do form.autogenerateSku.setRendered %}
+                </web-spy-card>
+
+                <web-spy-card
+                    cloak
+                    spy-title="{{ form.concreteName.vars.label | trans }} {{ form.concreteName.vars.required ? '*' }}"
+                    class="{{ mainClass }}__card">
+                    <web-mp-autogenerate-input
+                        name="{{ form.concreteName.vars.full_name }}"
+                        value="{{ form.concreteName.vars.value }}"
+                        original-value="{{ form.name.vars.value }}"
+                        placeholder="{{ form.concreteName.vars.attr.placeholder }}"
+                        is-autogenerate="{{ form.vars.value.useAbstractProductName | json_encode }}"
+                        error="{% if form.concreteName.vars.errors %}{{ form.concreteName.vars.errors[0].message | default | trans }}{% endif %}"
+                        checkbox-name="{{ form.useAbstractProductName.vars.full_name }}"
+                    >
+                        {{ 'Same as Abstract Product' | trans }}
+                    </web-mp-autogenerate-input>
+
+                    {% do form.concreteName.setRendered %}
+                    {% do form.useAbstractProductName.setRendered %}
+                </web-spy-card>
+            {{ form_end(form) }}
+        </web-mp-create-single-concrete-product>
+    {% endblock %}
+{% endblock %}

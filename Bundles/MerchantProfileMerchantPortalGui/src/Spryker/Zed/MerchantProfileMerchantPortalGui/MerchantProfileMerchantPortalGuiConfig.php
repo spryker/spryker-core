@@ -39,4 +39,23 @@ class MerchantProfileMerchantPortalGuiConfig extends AbstractBundleConfig
     {
         return static::PREFIX_MERCHANT_PROFILE_URL;
     }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getHtmlTagWhitelist(): array
+    {
+        return [
+            '<h1>',
+            '<h2>',
+            '<h3>',
+            '<h4>',
+            '<h5>',
+            '<h6>',
+            '<br>',
+            '<p>',
+        ];
+    }
 }

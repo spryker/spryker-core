@@ -69,6 +69,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const PLUGIN_PRODUCT_PAGE_DATA_EXPANDER = 'PLUGIN_PRODUCT_PAGE_DATA_EXPANDER';
     public const PLUGIN_PRODUCT_PAGE_DATA_LOADER = 'PLUGIN_PRODUCT_PAGE_DATA_LOADER';
+    public const PLUGINS_PRODUCT_PAGE_REFRESH = 'PLUGINS_PRODUCT_PAGE_REFRESH';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_MAP_EXPANDER} instead.
@@ -190,6 +191,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addProductAbstractMapExpanderPlugins($container);
         $container = $this->addPriceProductFacade($container);
         $container = $this->addProductAbstractAddToCartPlugins($container);
+        $container = $this->addProductPageRefreshPlugins($container);
 
         return $container;
     }
@@ -454,6 +456,20 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPageRefreshPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_PAGE_REFRESH, function () {
+            return $this->getProductPageRefreshPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface[]
      */
     protected function getProductAbstractAddToCartPlugins(): array
@@ -487,5 +503,13 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         });
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface[]
+     */
+    protected function getProductPageRefreshPlugins(): array
+    {
+        return [];
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\QuoteRequestAgent;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer;
@@ -112,6 +113,8 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\QuoteRequestAgent\QuoteRequestAgentClient::findQuoteRequest()} instead.
+     *
      * @param string $quoteRequestReference
      *
      * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
@@ -121,6 +124,22 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
         return $this->getFactory()
             ->createQuoteRequestReader()
             ->findQuoteRequestByReference($quoteRequestReference);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestTransfer|null
+     */
+    public function findQuoteRequest(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): ?QuoteRequestTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestReader()
+            ->findQuoteRequest($quoteRequestFilterTransfer);
     }
 
     /**
@@ -209,5 +228,21 @@ class QuoteRequestAgentClient extends AbstractClient implements QuoteRequestAgen
     protected function getZedStub(): QuoteRequestAgentStubInterface
     {
         return $this->getFactory()->createQuoteRequestAgentStub();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
+     */
+    public function getQuoteRequestCollectionByFilter(QuoteRequestFilterTransfer $quoteRequestFilterTransfer): QuoteRequestCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createQuoteRequestReader()
+            ->getQuoteRequestCollectionByFilter($quoteRequestFilterTransfer);
     }
 }

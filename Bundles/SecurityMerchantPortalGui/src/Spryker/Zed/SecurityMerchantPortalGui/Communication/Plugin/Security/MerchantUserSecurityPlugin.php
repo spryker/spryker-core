@@ -28,6 +28,11 @@ class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPlugi
     protected const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
     /**
+     * @see \Symfony\Component\Form\Extension\Csrf\CsrfExtension::loadTypeExtensions()
+     */
+    protected const FORM_FIELD_CSRF_TOKEN = '_token';
+
+    /**
      * {@inheritDoc}
      * - Extends security service with Merchant Portal firewall.
      *
@@ -64,6 +69,9 @@ class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPlugi
                 'check_path' => '/security-merchant-portal-gui/login_check',
                 'username_parameter' => MerchantLoginForm::FORM_NAME . '[' . MerchantLoginForm::FIELD_USERNAME . ']',
                 'password_parameter' => MerchantLoginForm::FORM_NAME . '[' . MerchantLoginForm::FIELD_PASSWORD . ']',
+                'csrf_parameter' => MerchantLoginForm::FORM_NAME . '[' . static::FORM_FIELD_CSRF_TOKEN . ']',
+                'csrf_token_id' => MerchantLoginForm::FORM_NAME,
+                'with_csrf' => true,
             ],
             'logout' => [
                 'logout_path' => static::PATH_LOGOUT,

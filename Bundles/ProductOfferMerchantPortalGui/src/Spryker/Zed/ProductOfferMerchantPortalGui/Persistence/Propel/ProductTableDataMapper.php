@@ -86,9 +86,7 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableDataArray
-     *
-     * @param array $productTableDataArray
+     * @param mixed[] $productTableDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
@@ -118,13 +116,9 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableRowDataArray
+     * @param mixed[] $productTableRowDataArray
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productTableRowDataArray
-     *
-     * @return array
+     * @return mixed[]
      */
     protected function prepareProductStoresTableData(array $productTableRowDataArray): array
     {
@@ -142,13 +136,9 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableRowDataArray
+     * @param mixed[] $productTableRowDataArray
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productTableRowDataArray
-     *
-     * @return array
+     * @return mixed[]
      */
     protected function prepareProductAttributesTableData(array $productTableRowDataArray): array
     {
@@ -175,9 +165,7 @@ class ProductTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productTableRowDataArray
-     *
-     * @param array $productTableRowDataArray
+     * @param mixed[] $productTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

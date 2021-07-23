@@ -106,7 +106,7 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
         RestRequestInterface $restRequest,
         RestErrorCollectionTransfer $restErrorCollectionTransfer
     ): ?RestErrorCollectionTransfer {
-        if ($restRequest->getUser() === null) {
+        if ($restRequest->getRestUser() === null) {
             $resErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
                 ->setCode(CheckoutRestApiConfig::RESPONSE_CODE_USER_IS_NOT_SPECIFIED)

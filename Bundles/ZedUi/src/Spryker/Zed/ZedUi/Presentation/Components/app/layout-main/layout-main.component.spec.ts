@@ -13,6 +13,7 @@ describe('LayoutMainComponent', () => {
         template: `
             <mp-layout-main [navigationConfig]="navigationConfig">
                 <div header>Header Slot</div>
+                <span logo>Header Logo Slot</span>
                 Main Slot
             </mp-layout-main>
         `,
@@ -50,10 +51,10 @@ describe('LayoutMainComponent', () => {
             expect(headerElem).toBeTruthy();
         });
 
-        it('should render <spy-logo> component', () => {
-            const logoElem = fixture.debugElement.query(By.css('spy-logo'));
+        it('should render `logo` slot to the `.mp-layout-main-cnt__logo` element', () => {
+            const logoSlot = fixture.debugElement.query(By.css('.mp-layout-main-cnt__logo [logo]'));
 
-            expect(logoElem).toBeTruthy();
+            expect(logoSlot).toBeTruthy();
         });
 
         it('should render <spy-navigation> inside <spy-sidebar> component', () => {

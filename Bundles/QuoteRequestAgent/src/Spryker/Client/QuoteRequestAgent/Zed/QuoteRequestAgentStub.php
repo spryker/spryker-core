@@ -30,6 +30,8 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\QuoteRequestAgent\Communication\Controller\GatewayController::createQuoteRequestAction()
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -46,6 +48,8 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\QuoteRequestAgent\Communication\Controller\GatewayController::updateQuoteRequestAction()
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -64,6 +68,8 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\QuoteRequestAgent\Communication\Controller\GatewayController::cancelQuoteRequestAction()
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -80,6 +86,8 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\QuoteRequestAgent\Communication\Controller\GatewayController::reviseQuoteRequestAction()
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -96,6 +104,8 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\QuoteRequestAgent\Communication\Controller\GatewayController::sendQuoteRequestToCustomerAction()
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
@@ -112,6 +122,8 @@ class QuoteRequestAgentStub implements QuoteRequestAgentStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\QuoteRequestAgent\Communication\Controller\GatewayController::getQuoteRequestOverviewCollectionAction()
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer

@@ -26,16 +26,16 @@ class CategoryPageDataLoaderPlugin extends AbstractPlugin implements ProductPage
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
-        $payloadTransfers = $this->setProductCategories($loadTransfer->getProductAbstractIds(), $loadTransfer->getPayloadTransfers());
-        $loadTransfer->setPayloadTransfers($payloadTransfers);
+        $payloadTransfers = $this->setProductCategories($productPageLoadTransfer->getProductAbstractIds(), $productPageLoadTransfer->getPayloadTransfers());
+        $productPageLoadTransfer->setPayloadTransfers($payloadTransfers);
 
-        return $loadTransfer;
+        return $productPageLoadTransfer;
     }
 
     /**

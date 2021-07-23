@@ -12,6 +12,7 @@
 
     <transfer name="PriceProduct">
         <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceType" type="PriceType"/>
     </transfer>
 
     <transfer name="MoneyValue">
@@ -26,6 +27,10 @@
 
     <transfer name="Currency">
         <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="PriceType">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

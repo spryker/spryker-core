@@ -29,7 +29,6 @@ class CustomerPasswordResourceController extends AbstractController
      *          "isEmptyResponse": true,
      *          "responses": {
      *              "400": "Passwords don't match.",
-     *              "404": "Customer not found.",
      *              "403": "Customer unauthorized.",
      *              "406": "Invalid password.",
      *              "422": "Unprocessable entity"

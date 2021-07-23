@@ -42,17 +42,15 @@ class ValidCurrencyAssignedToStoreConstraintValidator extends AbstractConstraint
         $idStore = $moneyValueTransfer->requireFkStore()->getFkStore();
         /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
         $storeTransfer = $constraint->getStoreFacade()->getStoreById($idStore);
-        /** @var string $storeName */
         $storeName = $storeTransfer->getName();
         /** @var \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer */
         $currencyTransfer = $moneyValueTransfer->requireCurrency()->getCurrency();
-        /** @var string $currencyName */
         $currencyName = $currencyTransfer->getName();
 
         if (!in_array($moneyValueTransfer->getCurrencyOrFail()->getCode(), $storeTransfer->getAvailableCurrencyIsoCodes(), true)) {
             $this->context->buildViolation($constraint->getMessage())
-                ->setParameter('{{ currency }}', $currencyName)
-                ->setParameter('{{ store }}', $storeName)
+                ->setParameter('{{ currency }}', $this->formatValue($currencyName))
+                ->setParameter('{{ store }}', $this->formatValue($storeName))
                 ->addViolation();
         }
     }

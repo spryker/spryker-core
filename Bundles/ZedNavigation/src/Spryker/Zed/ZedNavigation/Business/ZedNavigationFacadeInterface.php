@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ZedNavigation\Business;
 
+use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
+
 /**
  * @method \Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory getFactory()
  */
@@ -49,4 +51,20 @@ interface ZedNavigationFacadeInterface
      * @return void
      */
     public function removeNavigationCache(): void;
+
+    /**
+     * Specification:
+     * - Iterates through the navigation items collection.
+     * - Checks if the navigation element has a route.
+     * - Returns the navigation items collection without non-existing route items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
+     */
+    public function filterNavigationItemCollectionByBackofficeRouteAccessibility(
+        NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+    ): NavigationItemCollectionTransfer;
 }

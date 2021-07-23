@@ -9,6 +9,8 @@ namespace Spryker\Zed\Shipment\Dependency\Facade;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
 {
@@ -26,6 +28,8 @@ class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeBridge::getOrder()} instead.
+     *
      * @param int $idSalesOrder
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -33,6 +37,16 @@ class ShipmentToSalesFacadeBridge implements ShipmentToSalesFacadeInterface
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrder(OrderFilterTransfer $orderFilterTransfer): OrderTransfer
+    {
+        return $this->salesFacade->getOrder($orderFilterTransfer);
     }
 
     /**

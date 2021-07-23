@@ -99,10 +99,10 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
             ->setActionButtons(new ArrayObject([
                 (new MerchantDashboardActionButtonTransfer())
                     ->setTitle('Manage Offers')
-                    ->setUrl($this->routerFacade->getRouter()->generate('product-offer-merchant-portal-gui:product-offers')),
+                    ->setUrl($this->routerFacade->getMerchantPortalRouter()->generate('product-offer-merchant-portal-gui:product-offers')),
                 (new MerchantDashboardActionButtonTransfer())
                     ->setTitle('Add Offer')
-                    ->setUrl($this->routerFacade->getRouter()->generate('product-offer-merchant-portal-gui:product-list')),
+                    ->setUrl($this->routerFacade->getMerchantPortalRouter()->generate('product-offer-merchant-portal-gui:product-list')),
             ]));
     }
 }

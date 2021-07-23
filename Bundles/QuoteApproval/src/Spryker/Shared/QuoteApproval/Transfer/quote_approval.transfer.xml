@@ -174,4 +174,12 @@
         <property name="iso2Code" type="string"/>
     </transfer>
 
+    <transfer name="QuoteRequest">
+        <property name="latestVersion" type="QuoteRequestVersion"/>
+    </transfer>
+
+    <transfer name="QuoteRequestVersion">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
 </transfers>

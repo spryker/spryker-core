@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
@@ -254,5 +255,29 @@ class ProductBusinessTester extends Actor
         $localizedAttributeTransfer->setLocale($this->getLocaleFacade()->getCurrentLocale());
 
         return $localizedAttributeTransfer;
+    }
+
+    /**
+     * @param array $skus
+     *
+     * @return void
+     */
+    public function deleteConcreteProductBySkus(array $skus): void
+    {
+        (new SpyProductQuery())->filterBySku_In($skus)->delete();
+    }
+
+    /**
+     * @param array $skus
+     *
+     * @return int
+     */
+    public function countProductLocalizedAttributesByProductBySkus(array $skus): int
+    {
+        return (new SpyProductLocalizedAttributesQuery())
+            ->useSpyProductQuery()
+                ->filterBySku_In($skus)
+            ->endUse()
+            ->count();
     }
 }

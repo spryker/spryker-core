@@ -60,7 +60,7 @@ class ProductCategoryFilterController extends AbstractController
 
         if ($productCategoryFilterForm->isSubmitted() && $productCategoryFilterForm->isValid()) {
             $productCategoryFilterTransfer = $productCategoryFilterFormatter->generateTransferFromJson(
-                $savedProductCategoryFilters->getIdProductCategoryFilterOrFail(),
+                $savedProductCategoryFilters->getIdProductCategoryFilter(),
                 $idCategory,
                 $productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS]
             );

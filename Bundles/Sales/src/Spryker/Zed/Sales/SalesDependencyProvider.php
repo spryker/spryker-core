@@ -13,9 +13,11 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToSequenceNumberBridge;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToStoreBridge;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToUserBridge;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeBridge;
 
@@ -31,6 +33,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_STORE = 'FACADE_STORE';
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const STORE = 'STORE';
@@ -47,13 +51,12 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_SEARCH_ORDER_EXPANDER = 'PLUGINS_SEARCH_ORDER_EXPANDER';
     public const PLUGINS_ORDER_SEARCH_QUERY_EXPANDER = 'PLUGINS_ORDER_SEARCH_QUERY_EXPANDER';
     public const PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK = 'PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK';
-
     public const PLUGINS_ORDER_ITEMS_TABLE_EXPANDER = 'PLUGINS_ORDER_ITEMS_TABLE_EXPANDER';
+    public const PLUGINS_ORDER_ITEMS_POST_SAVE = 'PLUGINS_ORDER_ITEMS_POST_SAVE';
 
     /**
      * @deprecated Will be removed in the next major version.
      */
-    public const FACADE_LOCALE = 'LOCALE_FACADE';
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
 
     /**
@@ -64,8 +67,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addSequenceNumberFacade($container);
         $container = $this->addCountryFacade($container);
+        $container = $this->addLocaleFacade($container);
+        $container = $this->addStoreFacade($container);
+        $container = $this->addSequenceNumberFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addStore($container);
         $container = $this->addLocaleQueryContainer($container);
@@ -82,6 +87,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSearchOrderExpanderPlugins($container);
         $container = $this->addOrderSearchQueryExpanderPlugins($container);
         $container = $this->addCustomerOrderAccessCheckPlugins($container);
+        $container = $this->addOrderItemsPostSavePlugins($container);
 
         return $container;
     }
@@ -242,6 +248,34 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_USER, function (Container $container) {
             return new SalesToUserBridge($container->getLocator()->user()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new SalesToLocaleBridge($container->getLocator()->locale()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new SalesToStoreBridge($container->getLocator()->store()->facade());
         });
 
         return $container;
@@ -444,6 +478,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderItemsPostSavePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_ITEMS_POST_SAVE, function () {
+            return $this->getOrderItemsPostSavePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -543,6 +591,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsTableExpanderPluginInterface[]
      */
     protected function getOrderItemsTableExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface[]
+     */
+    protected function getOrderItemsPostSavePlugins(): array
     {
         return [];
     }

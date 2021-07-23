@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
+/**
+ * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
+ */
 class ValidProductOfferPriceIdsOwnByMerchantConstraintValidator extends AbstractConstraintValidator
 {
     /**
@@ -39,7 +42,6 @@ class ValidProductOfferPriceIdsOwnByMerchantConstraintValidator extends Abstract
         $normalizedDataCollection = [];
         /** @var \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer */
         foreach ($value->getPriceProductOffers() as $priceProductOfferTransfer) {
-            /** @var \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer */
             $productOfferTransfer = $priceProductOfferTransfer->getProductOfferOrFail();
             /** @var int $idPriceProductOffer */
             $idPriceProductOffer = $priceProductOfferTransfer->getIdPriceProductOffer();
@@ -51,8 +53,13 @@ class ValidProductOfferPriceIdsOwnByMerchantConstraintValidator extends Abstract
             $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($priceProductOfferIds)
                 ->setProductOfferCriteria((new ProductOfferCriteriaTransfer())->setMerchantIds());
 
-            $validProductOfferPriceIdsConstraint->getPriceProductOfferFacade()->count($priceProductOfferCriteriaTransfer) === count($priceProductOfferIds)
-                ?: $this->context->addViolation($validProductOfferPriceIdsConstraint->getMessage());
+            $validCount = $this->getFactory()
+                ->getPriceProductOfferFacade()
+                ->count($priceProductOfferCriteriaTransfer);
+
+            if ($validCount !== count($priceProductOfferIds)) {
+                $this->context->addViolation($validProductOfferPriceIdsConstraint->getMessage());
+            }
         }
     }
 }

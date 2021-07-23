@@ -8,12 +8,8 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use ArrayObject;
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
-use Laminas\Filter\StringToUpper;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\WrongRequestBodyContentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -72,20 +68,31 @@ abstract class AbstractSavePriceProductController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $typePriceProductStoreIds = $this->parseTypePriceProductStoreIds($request->get(PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS));
+        $typePriceProductStoreIds = $this->getFactory()
+            ->getUtilEncodingService()
+            ->decodeJson((string)$request->get(PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS), true);
 
-        $requestBodyContent = $this->getFactory()->getUtilEncodingService()->decodeJson((string)$request->getContent(), true);
+        $requestBodyContent = $this->getFactory()
+            ->getUtilEncodingService()
+            ->decodeJson((string)$request->getContent(), true);
 
         if (!isset($requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_DATA])) {
             throw new WrongRequestBodyContentException(static::REQUEST_BODY_CONTENT_KEY_DATA);
         }
 
         $data = $requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_DATA];
+        $volumeQuantity = (int)$request->get(PriceProductTableViewTransfer::VOLUME_QUANTITY);
 
-        $priceProductTransfers = $this->getPriceProductTransfers($request, $typePriceProductStoreIds, $data);
+        $priceProductTransfers = $this->findPriceProductTransfers($typePriceProductStoreIds, $request);
+        $priceProductTransfers = $this->getFactory()
+            ->createSingleFieldPriceProductMapper()
+            ->mapPriceProductTransfers($data, $volumeQuantity, new ArrayObject($priceProductTransfers));
         $priceProductTransfers = $this->expandPriceProductTransfersWithProductId($priceProductTransfers, $request);
 
-        $validationResponseTransfer = $this->getFactory()->getPriceProductFacade()->validatePrices($priceProductTransfers);
+        $validationResponseTransfer = $this->getFactory()
+            ->getPriceProductFacade()
+            ->validatePrices($priceProductTransfers);
+
         if (!$validationResponseTransfer->getIsSuccess()) {
             return $this->createErrorJsonResponse($validationResponseTransfer);
         }
@@ -95,78 +102,6 @@ abstract class AbstractSavePriceProductController extends AbstractController
         }
 
         return $this->createSuccessJsonResponse();
-    }
-
-    /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param int[] $typePriceProductStoreIds
-     * @param string[] $data
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    protected function getPriceProductTransfers(
-        Request $request,
-        array $typePriceProductStoreIds,
-        array $data
-    ): ArrayObject {
-        $key = (string)key($data);
-        $priceTypeName = (new StringToUpper())->filter((string)strstr($key, '[', true));
-        $priceProductStoreIds = $this->getPriceProductStoreIds($key, $priceTypeName, $typePriceProductStoreIds);
-
-        if (!$priceProductStoreIds) {
-            $priceProductTransfers = new ArrayObject();
-            $priceProductTransfer = $this->createNewPriceProduct($typePriceProductStoreIds, $priceTypeName, $request);
-            $priceProductTransfers->append($priceProductTransfer);
-
-            return $priceProductTransfers;
-        }
-
-        $priceProductTransfers = $this->findPriceProductTransfers($priceProductStoreIds, $request);
-
-        if ($priceProductTransfers && (isset($data[MoneyValueTransfer::STORE]) || isset($data[MoneyValueTransfer::CURRENCY]))) {
-            $priceProductTransfers = $this->expandPriceProductTransfersWithTypes($priceProductTransfers);
-        }
-
-        $priceProductTransfers = $this->getFactory()->createPriceProductMapper()->mapDataToPriceProductTransfers(
-            $data,
-            new ArrayObject($priceProductTransfers)
-        );
-
-        return $priceProductTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    protected function expandPriceProductTransfersWithTypes(array $priceProductTransfers): array
-    {
-        $priceTypeIds = [];
-
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceTypeIds[] = $priceProductTransfer->getFkPriceType();
-        }
-
-        $moneyValueTransfer = $priceProductTransfers[0]->getMoneyValueOrFail();
-
-        foreach ($this->getFactory()->getPriceProductFacade()->getPriceTypeValues() as $priceTypeTransfer) {
-            if (in_array($priceTypeTransfer->getIdPriceType(), $priceTypeIds)) {
-                continue;
-            }
-
-            $priceProductTransfers[] = (new PriceProductTransfer())
-                ->setFkPriceType($priceTypeTransfer->getIdPriceType())
-                ->setPriceType($priceTypeTransfer)
-                ->setPriceDimension(
-                    (new PriceProductDimensionTransfer())->setType(static::PRICE_DIMENSION_TYPE_DEFAULT)
-                )
-                ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer));
-        }
-
-        return $priceProductTransfers;
     }
 
     /**
@@ -210,105 +145,5 @@ abstract class AbstractSavePriceProductController extends AbstractController
         ];
 
         return new JsonResponse($response);
-    }
-
-    /**
-     * @param string $requestedTypePriceProductStoreIds
-     *
-     * @return int[]
-     */
-    protected function parseTypePriceProductStoreIds(string $requestedTypePriceProductStoreIds): array
-    {
-        $requestedTypePriceProductStoreIds = explode(',', $requestedTypePriceProductStoreIds);
-        $typePriceProductStoreIds = [];
-
-        foreach ($requestedTypePriceProductStoreIds as $requestedTypePriceProductStoreId) {
-            $typePriceProductStoreId = explode(':', $requestedTypePriceProductStoreId);
-            $typePriceProductStoreIds[$typePriceProductStoreId[0]] = (int)$typePriceProductStoreId[1];
-        }
-
-        return $typePriceProductStoreIds;
-    }
-
-    /**
-     * @param string $key
-     * @param string $priceTypeName
-     * @param int[] $typePriceProductStoreIds
-     *
-     * @return int[]
-     */
-    protected function getPriceProductStoreIds(string $key, string $priceTypeName, array $typePriceProductStoreIds): array
-    {
-        $priceProductStoreIds = [];
-        if (strpos($key, '[') !== false) {
-            if (array_key_exists($priceTypeName, $typePriceProductStoreIds)) {
-                $priceProductStoreIds[] = $typePriceProductStoreIds[$priceTypeName];
-            }
-
-            return $priceProductStoreIds;
-        }
-
-        return $typePriceProductStoreIds;
-    }
-
-    /**
-     * @param int[] $typePriceProductStoreIds
-     * @param string $priceTypeName
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function createNewPriceProduct(
-        array $typePriceProductStoreIds,
-        string $priceTypeName,
-        Request $request
-    ): PriceProductTransfer {
-        $priceProductTransfers = $this->findPriceProductTransfers($typePriceProductStoreIds, $request);
-
-        $priceProductTransfer = $priceProductTransfers[0];
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
-
-        $priceProductTransfer = (new PriceProductTransfer())
-            ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer));
-
-        return $this->setPriceTypeToPriceProduct($priceTypeName, $priceProductTransfer);
-    }
-
-    /**
-     * @param string $priceTypeName
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function setPriceTypeToPriceProduct(
-        string $priceTypeName,
-        PriceProductTransfer $priceProductTransfer
-    ): PriceProductTransfer {
-        $priceTypes = $this->getFactory()->getPriceProductFacade()->getPriceTypeValues();
-        foreach ($priceTypes as $priceTypeTransfer) {
-            if ($priceTypeTransfer->getName() === $priceTypeName) {
-                return $priceProductTransfer->setPriceType($priceTypeTransfer)
-                    ->setFkPriceType($priceTypeTransfer->getIdPriceType())
-                    ->setPriceDimension(
-                        (new PriceProductDimensionTransfer())->setType(static::PRICE_DIMENSION_TYPE_DEFAULT)
-                    );
-            }
-        }
-
-        return $priceProductTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
-     */
-    protected function recreateMoneyValueTransfer(MoneyValueTransfer $moneyValueTransfer): MoneyValueTransfer
-    {
-        return (new MoneyValueTransfer())
-            ->setCurrency($moneyValueTransfer->getCurrency())
-            ->setFkStore($moneyValueTransfer->getFkStore())
-            ->setStore($moneyValueTransfer->getStore())
-            ->setFkCurrency($moneyValueTransfer->getFkCurrency());
     }
 }

@@ -29,7 +29,7 @@ class ElasticsearchHelper extends Module
     public const DEFAULT_MAPPING_TYPE = '_doc';
 
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
-    protected const REPOSITORY_TYPE_FILESYSTEM = 'fs';
+    public const REPOSITORY_TYPE_FILESYSTEM = 'fs';
 
     /**
      * @var array

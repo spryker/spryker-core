@@ -8,7 +8,9 @@
 namespace Spryker\Zed\PriceProduct\Business\Validator\Constraint;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -52,9 +54,14 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             ->setIdProductConcrete($value->getIdProduct())
             ->setIdCurrency($moneyValueTransfer->getFkCurrency())
             ->setIdStore($moneyValueTransfer->getFkStore())
-            ->setPriceType($priceTypeTransfer->getNameOrFail());
+            ->setPriceType($priceTypeTransfer->getNameOrFail())
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+            );
 
-        $priceProductTransfers = $constraint->getPriceProductRepository()->getProductPricesByCriteria($priceProductCriteriaTransfer);
+        $priceProductTransfers = $constraint->getPriceProductRepository()
+            ->getProductPricesByCriteria($priceProductCriteriaTransfer);
 
         if (!$priceProductTransfers->count()) {
             return;

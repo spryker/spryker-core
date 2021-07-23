@@ -11,7 +11,7 @@ interface UtilNetworkServiceInterface
 {
     /**
      * Specification:
-     *  - Get current running script hostname
+     *  - Gets current running script hostname.
      *
      * @api
      *
@@ -21,7 +21,9 @@ interface UtilNetworkServiceInterface
 
     /**
      * Specification:
-     *  - Get string to follow requests between applications
+     *  - Get string to follow requests between applications.
+     *
+     * @api
      *
      * @return string
      */

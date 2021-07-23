@@ -1,0 +1,9 @@
+<div class="mp-content-toggle__control">
+    <spy-checkbox [checked]="isContentHidden" [name]="name" (checkedChange)="handleCheckChange($event)">
+        <ng-content select="[toggle-text]"></ng-content>
+    </spy-checkbox>
+</div>
+
+<div [hidden]="isContentHidden" class="mp-content-toggle__content">
+    <ng-content></ng-content>
+</div>

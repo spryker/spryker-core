@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
-use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\ProductOfferNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -26,7 +29,9 @@ class DeletePriceProductOfferController extends AbstractController
     protected const SUCCESS_MESSAGE = 'Success! The Price is deleted.';
     protected const ERROR_MESSAGE = 'Something went wrong, please try again.';
 
+    protected const PARAM_PRODUCT_OFFER_ID = 'product-offer-id';
     protected const PARAM_PRICE_PRODUCT_OFFER_IDS = 'price-product-offer-ids';
+    protected const PARAM_QUANTITY = 'quantity';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -35,17 +40,31 @@ class DeletePriceProductOfferController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
+        $productOfferId = $this->castId($request->get(static::PARAM_PRODUCT_OFFER_ID));
+        $quantity = $this->castId($request->get(static::PARAM_QUANTITY));
         $priceProductOfferIds = array_map(
             'intval',
             $this->getFactory()->getUtilEncodingService()->decodeJson($request->get(static::PARAM_PRICE_PRODUCT_OFFER_IDS), true)
         );
-        $priceProductOfferCollectionTransfer = $this->createPriceProductOfferCollectionTransferByPriceProductOfferIds($priceProductOfferIds);
-        $response = $this->validatePriceProductOfferIds($priceProductOfferCollectionTransfer);
+
+        $priceProductOfferCollectionTransfer = $this->createPriceProductOfferCollectionTransferByPriceProductOfferIds(
+            $productOfferId,
+            $priceProductOfferIds
+        );
+
+        if (!$this->validatePriceProductOfferIds($priceProductOfferCollectionTransfer)) {
+            $responseData['notifications'][] = [
+                'type' => static::NOTIFICATION_TYPE_ERROR,
+                'message' => static::ERROR_MESSAGE,
+            ];
+
+            return new JsonResponse($responseData);
+        }
+
+        $response = $this->deleteProductOfferPrices($priceProductOfferCollectionTransfer, $quantity);
         if ($response) {
             return $response;
         }
-
-        $this->getFactory()->getPriceProductOfferFacade()->deleteProductOfferPrices($priceProductOfferCollectionTransfer);
 
         $responseData = [
             'postActions' => [
@@ -67,9 +86,9 @@ class DeletePriceProductOfferController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse|null
+     * @return bool
      */
-    protected function validatePriceProductOfferIds(PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer): ?JsonResponse
+    protected function validatePriceProductOfferIds(PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer): bool
     {
         $constraintViolationList = $this->getFactory()
             ->getValidationAdapter()
@@ -79,36 +98,97 @@ class DeletePriceProductOfferController extends AbstractController
                 $this->getFactory()->createValidProductOfferPriceIdsOwnByMerchantConstraint()
             );
 
-        if ($constraintViolationList->count()) {
-            $responseData['notifications'][] = [
-                'type' => static::NOTIFICATION_TYPE_ERROR,
-                'message' => static::ERROR_MESSAGE,
-            ];
-
-            return new JsonResponse($responseData);
-        }
-
-        return null;
+        return $constraintViolationList->count() === 0;
     }
 
     /**
+     * @param int $idProductOffer
      * @param int[] $priceProductOfferIds
+     *
+     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\ProductOfferNotFoundException
      *
      * @return \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer
      */
-    protected function createPriceProductOfferCollectionTransferByPriceProductOfferIds(array $priceProductOfferIds): PriceProductOfferCollectionTransfer
-    {
+    protected function createPriceProductOfferCollectionTransferByPriceProductOfferIds(
+        int $idProductOffer,
+        array $priceProductOfferIds
+    ): PriceProductOfferCollectionTransfer {
         $priceProductOfferCollectionTransfer = new PriceProductOfferCollectionTransfer();
-        $currentMerchantUser = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
+
+        $currentMerchantReference = $this->getFactory()->getMerchantUserFacade()
+            ->getCurrentMerchantUser()
+            ->getMerchantOrFail()
+            ->getMerchantReferenceOrFail();
+
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
+            ->setIdProductOffer($idProductOffer)
+            ->addMerchantReference($currentMerchantReference);
+
+        $productOfferTransfer = $this->getFactory()
+            ->getProductOfferFacade()
+            ->findOne($productOfferCriteriaTransfer);
+
+        if (!$productOfferTransfer) {
+            throw new ProductOfferNotFoundException();
+        }
+
+        $productOfferTransfer->setPrices(
+            (new ArrayObject(
+                $this->getFactory()->createPriceProductFilter()->filterPriceProductTransfers(
+                    $productOfferTransfer->getPrices()->getArrayCopy(),
+                    (new PriceProductOfferCriteriaTransfer())
+                        ->addVolumeQuantity(1)
+                        ->setPriceProductOfferIds($priceProductOfferIds)
+                )
+            ))
+        );
+
+        $idConcreteProduct = $this->getFactory()
+            ->getProductFacade()
+            ->findProductConcreteIdBySku($productOfferTransfer->getConcreteSkuOrFail());
+
+        $productOfferTransfer->setIdProductConcrete($idConcreteProduct);
 
         foreach ($priceProductOfferIds as $idPriceProductOffer) {
-            $priceProductOfferTransfer = (new PriceProductOfferTransfer())->setIdPriceProductOffer($idPriceProductOffer)
-                ->setProductOffer(
-                    (new ProductOfferTransfer())->setMerchantReference($currentMerchantUser->getMerchantOrFail()->getMerchantReference())
-                );
+            $priceProductOfferTransfer = (new PriceProductOfferTransfer())
+                ->setIdPriceProductOffer($idPriceProductOffer)
+                ->setProductOffer($productOfferTransfer);
+
             $priceProductOfferCollectionTransfer->addPriceProductOffer($priceProductOfferTransfer);
         }
 
         return $priceProductOfferCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
+     * @param int $quantity
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|null
+     */
+    protected function deleteProductOfferPrices(
+        PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer,
+        int $quantity
+    ): ?JsonResponse {
+        $validationResponseTransfer = $this->getFactory()
+            ->createPriceDeleter()
+            ->deletePriceByQuantity($priceProductOfferCollectionTransfer, $quantity);
+
+        if ($validationResponseTransfer->getIsSuccess()) {
+            return null;
+        }
+
+        $responseData = [];
+
+        foreach ($validationResponseTransfer->getValidationErrors() as $validationErrorTransfer) {
+            $responseData['notifications'][] = [
+                'type' => static::NOTIFICATION_TYPE_ERROR,
+                'message' => $validationErrorTransfer->getMessage(),
+            ];
+
+            break;
+        }
+
+        return new JsonResponse($responseData);
     }
 }

@@ -35,4 +35,32 @@ class ProductMerchantPortalGuiToProductAttributeFacadeBridge implements ProductM
     ): ProductManagementAttributeCollectionTransfer {
         return $this->productAttributeFacade->getProductManagementAttributes($productManagementAttributeFilterTransfer);
     }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getProductAttributeCollection()
+    {
+        return $this->productAttributeFacade->getProductAttributeCollection();
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array
+     */
+    public function getProductAbstractAttributeValues(int $idProductAbstract)
+    {
+        return $this->productAttributeFacade->getProductAbstractAttributeValues((int)$idProductAbstract);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     */
+    public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array
+    {
+        return $this->productAttributeFacade->getUniqueSuperAttributesFromConcreteProducts($productConcreteTransfers);
+    }
 }

@@ -29,7 +29,7 @@ function companyBusinessUnitFieldHandler() {
     var $companyBusinessUnitField = $(companyBusinessUnitFieldPath);
 
     function toogleCompanyBusinessUnitVisibility() {
-        var isDisabled = Boolean($companyField.val());
+        var isDisabled = !$companyField.val();
 
         $(companyBusinessUnitFieldPath).prop('disabled', isDisabled);
     }

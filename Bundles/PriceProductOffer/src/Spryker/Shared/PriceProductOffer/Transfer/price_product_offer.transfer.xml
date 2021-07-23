@@ -10,11 +10,13 @@
 
     <transfer name="PriceProductOfferCriteria">
         <property name="idProductOffer" type="int"/>
+        <property name="withExtractedPrices" type="bool"/>
         <property name="priceProductOfferIds" type="int[]" singular="idPriceProductOffer"/>
         <property name="productOfferCriteria" type="ProductOfferCriteria"/>
         <property name="currencyIds" type="int[]" singular="idCurrency"/>
         <property name="storeIds" type="int[]" singular="idStore"/>
         <property name="priceTypeIds" type="int[]" singular="idPriceType"/>
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
     </transfer>
 
     <transfer name="ProductOfferCriteria">

@@ -216,12 +216,29 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface::saveSalesOrderShipment()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
     public function saveOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+
+    /**
+     * Specification:
+     * - Expands shipment expense with a stack of ShipmentExpenseExpanderPluginInterface
+     * - Creates sales shipments for sales order.
+     * - Creates sales shipping addresses for each item level shipment.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderShipment(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 
     /**
      * Specification:

@@ -43,11 +43,7 @@ class ReturnReasonSearchResultFormatterPlugin extends AbstractElasticsearchResul
             );
         }
 
-        $returnReasonSearchCollection->setNbResults(
-            $searchResult->getResponse()->getData()['hits']['total'] ?? 0
-        );
-
-        return $returnReasonSearchCollection;
+        return $returnReasonSearchCollection->setNbResults($searchResult->getTotalHits());
     }
 
     /**

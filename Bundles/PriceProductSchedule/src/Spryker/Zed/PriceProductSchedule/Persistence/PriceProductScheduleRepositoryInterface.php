@@ -20,6 +20,13 @@ interface PriceProductScheduleRepositoryInterface
     public function findPriceProductSchedulesToDisable(): array;
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return bool
+     */
+    public function isScheduledPriceForSwitchExists(PriceProductScheduleTransfer $priceProductScheduleTransfer): bool;
+
+    /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]

@@ -15,6 +15,7 @@ use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\ProductOfferGui\ProductOfferGuiConfig as SharedProductOfferGuiConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -176,6 +177,8 @@ class ProductOfferTable extends AbstractTable
             $this->buildQueryCriteriaTransfer()
         );
 
+        $this->total = $this->productOfferQuery->count();
+
         $this->productOfferQuery
             ->groupByIdProductOffer()
             ->useSpyProductOfferStoreQuery(null, Criteria::LEFT_JOIN)
@@ -335,5 +338,17 @@ class ProductOfferTable extends AbstractTable
         }
 
         return $queryCriteriaTransfer;
+    }
+
+    /**
+     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
+     *
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     *
+     * @return int
+     */
+    protected function countTotal(ModelCriteria $query): int
+    {
+        return $this->total;
     }
 }

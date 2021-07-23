@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Application\Communication\Bootstrap\BackofficeBootstrap} instead.
+ *
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
  */
 class ZedBootstrap

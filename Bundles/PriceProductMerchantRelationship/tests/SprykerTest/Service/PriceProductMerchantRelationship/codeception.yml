@@ -1,0 +1,21 @@
+namespace: SprykerTest\Service\PriceProductMerchantRelationship
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: .
+        class_name: PriceProductMerchantRelationshipTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Service\Testify\Helper\ServiceHelper

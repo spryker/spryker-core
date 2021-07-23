@@ -20,6 +20,7 @@ interface QuoteRequestFacadeInterface
 {
     /**
      * Specification:
+     * - Executes `QuoteRequestValidatorPluginInterface` plugin stack for request validation.
      * - Creates "Request for Quote" for the provided company user with "draft" status.
      * - Generates unique reference number.
      * - Generates version for the "Request for Quote" entity.
@@ -38,8 +39,23 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
+     *  - Returns false if current logged in customer is not company user.
+     *  - Returns false if logged in customer is not quote owner and doesn't have "WriteSharedCartPermissionPlugin" permission.
+     *  - Executes `QuoteRequestQuoteCheckPluginInterface` returns false if at least one plugin returns false - true otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
+     */
+    public function isQuoteApplicableForQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer;
+
+    /**
+     * Specification:
      * - Finds a "Request for Quote" by QuoteRequestTransfer::idQuoteRequest in the transfer.
      * - Expects "Request for Quote" status to be "draft".
+     * - Executes `QuoteRequestValidatorPluginInterface` plugin stack for request validation.
      * - Updates metadata in latest version.
      * - Updates quote in latest version.
      * - Clears quote item source prices.
@@ -116,6 +132,7 @@ interface QuoteRequestFacadeInterface
 
     /**
      * Specification:
+     * - Executes `QuoteRequestUserValidatorPluginInterface` plugin stack for request validation.
      * - Creates "Request for Quote" for the provided company user with "in-progress" status.
      * - Generates unique reference number.
      * - Generates version for the "Request for Quote" entity.
@@ -136,6 +153,7 @@ interface QuoteRequestFacadeInterface
      * Specification:
      * - Finds a "Request for Quote" by QuoteRequestTransfer::idQuoteRequest in the transfer.
      * - Expects "Request for Quote" status to be "draft", "in-progress".
+     * - Executes `QuoteRequestUserValidatorPluginInterface` plugin stack for request validation.
      * - Updates valid_until, is_latest_version_visible fields in RfQ entity.
      * - Updates metadata in latest version.
      * - Updates quote in latest version.

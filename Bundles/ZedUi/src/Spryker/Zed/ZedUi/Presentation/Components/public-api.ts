@@ -24,3 +24,5 @@ export * from './app/merchant-layout-centered/merchant-layout-centered.component
 export * from './app/merchant-layout-centered/merchant-layout-centered.module';
 export * from './app/merchant-layout-main/merchant-layout-main.component';
 export * from './app/merchant-layout-main/merchant-layout-main.module';
+export * from './app/content-toggle/content-toggle.component';
+export * from './app/content-toggle/content-toggle.module';

@@ -41,6 +41,7 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractCons
             if (!$priceProductTransfer instanceof PriceProductTransfer) {
                 throw new UnexpectedTypeException($priceProductTransfer, PriceProductTransfer::class);
             }
+
             $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
 
             if (!$moneyValueTransfer->getFkCurrency() || !$moneyValueTransfer->getFkStore()) {

@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\MerchantProduct\Business\Exception\EmptyRequiredPropertyException;
@@ -135,6 +136,25 @@ class MerchantProductReader implements MerchantProductReaderInterface
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
             ->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
             ->addIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail());
+
+        $merchantTransfer = $this->merchantProductRepository->findMerchant($merchantProductCriteriaTransfer);
+
+        return $merchantTransfer !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractOwnedByMerchant(
+        ProductAbstractTransfer $productAbstractTransfer,
+        MerchantTransfer $merchantTransfer
+    ): bool {
+        $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
+            ->addIdMerchant($merchantTransfer->getIdMerchantOrFail())
+            ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail());
 
         $merchantTransfer = $this->merchantProductRepository->findMerchant($merchantProductCriteriaTransfer);
 

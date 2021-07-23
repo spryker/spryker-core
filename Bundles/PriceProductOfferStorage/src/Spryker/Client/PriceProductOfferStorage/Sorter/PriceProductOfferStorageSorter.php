@@ -30,7 +30,7 @@ class PriceProductOfferStorageSorter implements PriceProductOfferStorageSorterIn
                 return + 1;
             }
 
-            return $firstProductOffer->getPrice()->getPrice() <=> $secondProductOffer->getPrice()->getPrice();
+            return $firstProductOffer->getPriceOrFail()->getPrice() <=> $secondProductOffer->getPriceOrFail()->getPrice();
         });
 
         return $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOffers));

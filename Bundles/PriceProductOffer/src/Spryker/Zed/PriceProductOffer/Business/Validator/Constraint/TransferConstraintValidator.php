@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 class TransferConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param mixed $value
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null $abstractTransfer
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
@@ -25,20 +25,20 @@ class TransferConstraintValidator extends ConstraintValidator
      *
      * @return void
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($abstractTransfer, Constraint $constraint)
     {
         if (!$constraint instanceof TransferConstraint) {
             throw new UnexpectedTypeException($constraint, TransferConstraint::class);
         }
-        if ($value === null) {
+        if ($abstractTransfer === null) {
             return;
         }
-        if (!$value instanceof AbstractTransfer) {
-            throw new UnexpectedValueException($value, AbstractTransfer::class);
+        if (!$abstractTransfer instanceof AbstractTransfer) {
+            throw new UnexpectedValueException($abstractTransfer, AbstractTransfer::class);
         }
 
-        if ($value instanceof PriceProductOfferTransfer) {
-            $priceProductTransfers = $value->getProductOfferOrFail()->getPrices();
+        if ($abstractTransfer instanceof PriceProductOfferTransfer) {
+            $priceProductTransfers = $abstractTransfer->getProductOfferOrFail()->getPrices();
 
             foreach ($priceProductTransfers as $priceProductTransfer) {
                 $this->checkFields($priceProductTransfer, $constraint);
@@ -47,26 +47,26 @@ class TransferConstraintValidator extends ConstraintValidator
             return;
         }
 
-        $this->checkFields($value, $constraint);
+        $this->checkFields($abstractTransfer, $constraint);
     }
 
     /**
-     * @param mixed $value
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $abstractTransfer
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
      * @return void
      */
-    protected function checkFields($value, Constraint $constraint)
+    protected function checkFields($abstractTransfer, Constraint $constraint)
     {
         if (!$constraint instanceof TransferConstraint) {
             throw new UnexpectedTypeException($constraint, TransferConstraint::class);
         }
 
-        $value = $value->toArray(false, true);
+        $transferData = $abstractTransfer->toArray(false, true);
         foreach ($constraint->fields as $field => $fieldConstraint) {
-            $existsInArray = is_array($value) && array_key_exists($field, $value);
+            $existsInArray = is_array($transferData) && array_key_exists($field, $transferData);
 
             if (!$existsInArray) {
                 $this->context->buildViolation($constraint->getMissingFieldsMessage())
@@ -81,7 +81,7 @@ class TransferConstraintValidator extends ConstraintValidator
                 $this->context->getValidator()
                     ->inContext($this->context)
                     ->atPath('[' . $field . ']')
-                    ->validate($value[$field], $fieldConstraint);
+                    ->validate($transferData[$field], $fieldConstraint);
             }
         }
     }

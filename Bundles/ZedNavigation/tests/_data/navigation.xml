@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+    <test-navigation-first>
+        <label>Test</label>
+        <title>Test</title>
+        <bundle>test</bundle>
+        <controller>index</controller>
+        <action>index</action>
+        <icon>fa-th-large</icon>
+    </test-navigation-first>
+    <test-navigation-second>
+        <label>Non Existed Route</label>
+        <title>Non Existed Route</title>
+        <icon>test</icon>
+        <bundle>non-existing-bundle</bundle>
+        <controller>non-existing</controller>
+        <action>index</action>
+    </test-navigation-second>
+</config>

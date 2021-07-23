@@ -9,9 +9,11 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvid
 
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\PriceProductTableViewSorterInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface;
 
 class PriceProductAbstractTableDataProvider extends AbstractPriceProductTableDataProvider
 {
@@ -21,20 +23,30 @@ class PriceProductAbstractTableDataProvider extends AbstractPriceProductTableDat
     protected $idProductAbstract;
 
     /**
-     * @param int $idProductAbstract
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository
+     * @param int $idProductConcrete
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface $priceProductReader
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface $priceProductTableDataMapper
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\PriceProductTableViewSorterInterface $priceProductTableViewSorter
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
-        int $idProductAbstract,
-        ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository,
+        int $idProductConcrete,
+        PriceProductReaderInterface $priceProductReader,
+        PriceProductTableDataMapperInterface $priceProductTableDataMapper,
+        PriceProductTableViewSorterInterface $priceProductTableViewSorter,
         ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
     ) {
-        $this->idProductAbstract = $idProductAbstract;
+        $this->idProductAbstract = $idProductConcrete;
 
-        parent::__construct($productMerchantPortalGuiRepository, $merchantUserFacade, $moneyFacade);
+        parent::__construct(
+            $priceProductReader,
+            $priceProductTableDataMapper,
+            $priceProductTableViewSorter,
+            $merchantUserFacade,
+            $moneyFacade
+        );
     }
 
     /**

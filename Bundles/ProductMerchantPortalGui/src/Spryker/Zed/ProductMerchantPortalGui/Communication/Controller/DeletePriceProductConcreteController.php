@@ -26,6 +26,7 @@ class DeletePriceProductConcreteController extends AbstractDeletePriceProductCon
     public function indexAction(Request $request): JsonResponse
     {
         $idProductConcrete = (int)$request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE);
+        $volumeQuantity = (int)$request->get(PriceProductTableViewTransfer::VOLUME_QUANTITY);
 
         if (!$idProductConcrete) {
             return $this->createErrorResponse();
@@ -42,10 +43,18 @@ class DeletePriceProductConcreteController extends AbstractDeletePriceProductCon
             return $this->createErrorResponse();
         }
 
-        $this->deletePrices(
+        $validationResponseTransfer = $this->deletePrices(
             $productConcreteTransfer->getPrices(),
-            $this->getDefaultPriceProductIds($request)
+            $this->getDefaultPriceProductIds($request),
+            $volumeQuantity
         );
+
+        if (!$validationResponseTransfer->getIsSuccess()) {
+            /** @var \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer */
+            $validationErrorTransfer = $validationResponseTransfer->getValidationErrors()->offsetGet(0);
+
+            return $this->createErrorResponse($validationErrorTransfer->getMessageOrFail());
+        }
 
         return $this->createSuccessResponse();
     }

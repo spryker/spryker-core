@@ -467,7 +467,8 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
-     *  - Hydrates sales discount data for current order to OrderTransfer
+     *  - Hydrates sales discount data for current order to `OrderTransfer`.
+     *  - If discount has voucher code, it is added to `OrderTransfer.voucherDiscounts`.
      *
      * @api
      *

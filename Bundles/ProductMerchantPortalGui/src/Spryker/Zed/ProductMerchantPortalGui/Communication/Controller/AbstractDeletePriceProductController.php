@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
+use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,21 +37,23 @@ abstract class AbstractDeletePriceProductController extends AbstractController
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param int[] $priceProductDefaultIds
+     * @param int $volumeQuantity
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    protected function deletePrices(ArrayObject $priceProductTransfers, array $priceProductDefaultIds): void
-    {
+    protected function deletePrices(
+        ArrayObject $priceProductTransfers,
+        array $priceProductDefaultIds,
+        int $volumeQuantity
+    ): ValidationResponseTransfer {
         $priceProductTransfersToRemove = $this->filterPriceProductTransfersByPriceProductDefaultIds(
             $priceProductTransfers,
             $priceProductDefaultIds
         );
 
-        foreach ($priceProductTransfersToRemove as $priceProductTransfer) {
-            $this->getFactory()
-                ->getPriceProductFacade()
-                ->removePriceProductDefaultForPriceProduct($priceProductTransfer);
-        }
+        return $this->getFactory()
+            ->createPriceDeleter()
+            ->deletePrices($priceProductTransfersToRemove, $volumeQuantity);
     }
 
     /**
@@ -68,7 +71,7 @@ abstract class AbstractDeletePriceProductController extends AbstractController
         $priceProductTransfersToRemove = [];
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $idPriceProductDefault = $priceProductTransfer
+            $idPriceProductDefault = (int)$priceProductTransfer
                 ->getPriceDimensionOrFail()
                 ->getIdPriceProductDefault();
 
@@ -130,13 +133,19 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     }
 
     /**
+     * @param string|null $messageError
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function createErrorResponse(): JsonResponse
+    protected function createErrorResponse(?string $messageError = null): JsonResponse
     {
+        if ($messageError === null) {
+            $messageError = static::RESPONSE_MESSAGE_ERROR;
+        }
+
         $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
             static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
+            static::RESPONSE_KEY_MESSAGE => $messageError,
         ];
 
         return new JsonResponse($responseData);

@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Persistence\Mapper;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
@@ -17,6 +18,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
 use Orm\Zed\Store\Persistence\SpyStore;
+use Propel\Runtime\Collection\Collection;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 use Spryker\Zed\Product\Persistence\ProductRepository;
 
@@ -197,5 +199,63 @@ class ProductMapper implements ProductMapperInterface
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductAbstractTransfer {
         return $productAbstractTransfer->fromArray($productAbstractEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct
+     */
+    public function mapProductConcreteTransferToProductEntity(
+        ProductConcreteTransfer $productConcreteTransfer,
+        SpyProduct $productEntity
+    ): SpyProduct {
+        $encodedAttributes = $this->utilEncodingService->encodeJson($productConcreteTransfer->getAttributes());
+        $productConcreteData = $productConcreteTransfer->toArray();
+        unset($productConcreteData[ProductConcreteTransfer::ATTRIBUTES]);
+
+        $productEntity->fromArray($productConcreteData);
+        $productEntity->setAttributes($encodedAttributes);
+
+        return $productEntity;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\Product\Persistence\SpyProduct[] $productEntityCollection
+     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function mapProductEntityCollectionPrimaryKeysToProductConcreteCollectionTransfer(
+        Collection $productEntityCollection,
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): ProductConcreteCollectionTransfer {
+        $productEntitiesIndexedBySku = $this->getProductEntitiesIndexedBySku($productEntityCollection);
+
+        foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
+            if (isset($productEntitiesIndexedBySku[$productConcreteTransfer->getSku()])) {
+                $productConcreteTransfer->setIdProductConcrete(
+                    $productEntitiesIndexedBySku[$productConcreteTransfer->getSku()]->getPrimaryKey()
+                );
+            }
+        }
+
+        return $productConcreteCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\Product\Persistence\SpyProduct[] $productEntityCollection
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     */
+    protected function getProductEntitiesIndexedBySku(Collection $productEntityCollection): array
+    {
+        $productEntitiesIndexedBySku = [];
+        foreach ($productEntityCollection as $productEntity) {
+            $productEntitiesIndexedBySku[$productEntity->getSku()] = $productEntity;
+        }
+
+        return $productEntitiesIndexedBySku;
     }
 }

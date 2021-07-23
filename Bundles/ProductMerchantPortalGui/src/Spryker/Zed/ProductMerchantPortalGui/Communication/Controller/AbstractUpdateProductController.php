@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
-use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
@@ -57,18 +56,19 @@ abstract class AbstractUpdateProductController extends AbstractController
     }
 
     /**
+     * @param string $tableViewName
      * @param array|null $requestTableData
      *
      * @return mixed[]
      */
-    protected function getDefaultInitialData(?array $requestTableData): array
+    protected function getDefaultInitialData(string $tableViewName, ?array $requestTableData): array
     {
         if (!$requestTableData) {
             return static::DEFAULT_INITIAL_DATA;
         }
 
         $requestTableData = $this->getFactory()->getUtilEncodingService()->decodeJson(
-            $requestTableData[PriceProductTableViewTransfer::PRICES],
+            $requestTableData[$tableViewName],
             true
         );
 

@@ -15,8 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilNetworkService extends AbstractService implements UtilNetworkServiceInterface
 {
     /**
-     * Specification:
-     *  - Get current running script hostname
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,8 +29,9 @@ class UtilNetworkService extends AbstractService implements UtilNetworkServiceIn
     }
 
     /**
-     * Specification:
-     *  - Get string to follow requests between applications
+     * {@inheritDoc}
+     *
+     * @api
      *
      * @return string
      */

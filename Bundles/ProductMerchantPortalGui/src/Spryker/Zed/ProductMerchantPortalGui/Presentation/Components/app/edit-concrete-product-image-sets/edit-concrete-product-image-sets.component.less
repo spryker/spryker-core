@@ -1,0 +1,46 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@edit-concrete-product-image-sets-padding: 20px;
+@edit-concrete-product-image-sets-radius: 10px;
+@edit-concrete-product-image-sets-title-padding-bottom: 20px;
+@edit-concrete-product-image-sets-images-padding: 5px;
+@edit-concrete-product-image-sets-images-size: 60px + @edit-concrete-product-image-sets-images-padding * 2;
+
+.mp-edit-concrete-product-image-sets {
+    display: block;
+    padding: @edit-concrete-product-image-sets-padding;
+    border-radius: @edit-concrete-product-image-sets-radius;
+    background: @white;
+
+    &__title {
+        display: block;
+        font: @font-size-sm @font-family;
+        color: @gray-darker;
+        padding-bottom: @edit-concrete-product-image-sets-title-padding-bottom;
+    }
+
+    &__name {
+        color: @ink;
+    }
+
+    &__images {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -@edit-concrete-product-image-sets-images-padding;
+    }
+
+    &__image-container {
+        width: @edit-concrete-product-image-sets-images-size;
+        height: @edit-concrete-product-image-sets-images-size;
+        padding: @edit-concrete-product-image-sets-images-padding;
+        text-align: center;
+    }
+
+    &__image {
+        max-width: 100%;
+        max-height: 100%;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

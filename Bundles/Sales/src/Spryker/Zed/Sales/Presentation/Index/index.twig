@@ -4,6 +4,10 @@
     {{ 'Overview of Orders' | trans }}
 {% endblock %}
 
+{% block action %}
+    {{ createActionButton('/sales/download', 'Download as CSV' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'List of orders' | trans } %}

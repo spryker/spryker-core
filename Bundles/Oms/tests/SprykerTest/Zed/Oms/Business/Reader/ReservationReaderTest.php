@@ -78,8 +78,10 @@ class ReservationReaderTest extends Unit
             $totalQuantity += $orderItem->getQuantity();
         }
 
+        $currentStore = $this->getStoreFacade()->getCurrentStore();
         $reservationRequestTransfer = (new ReservationRequestTransfer())
-            ->setSku($itemSku);
+            ->setSku($itemSku)
+            ->setStore($currentStore);
 
         $reservationReader = (new OmsBusinessFactory())->createReservationReader();
         $reservedSubprocessItemStateEntity = $this->tester->haveOmsOrderItemStateEntity(static::RESERVED_SUBPROCESS_ITEM_STATE);

@@ -45,4 +45,12 @@ class PriceProductOfferStorageConfig
      * @api
      */
     public const RESOURCE_PRICE_PRODUCT_OFFER_OFFER_NAME = 'product_concrete_product_offer_price';
+
+    /**
+     * Specification:
+     * - This events will be used for spy_price_product_store entity changes.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE = 'Entity.spy_price_product_store.update';
 }

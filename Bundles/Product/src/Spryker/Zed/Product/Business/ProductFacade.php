@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
@@ -22,6 +23,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Product\Business\ProductBusinessFactory getFactory()
  * @method \Spryker\Zed\Product\Persistence\ProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Product\Persistence\ProductEntityManagerInterface getEntityManager()
  */
 class ProductFacade extends AbstractFacade implements ProductFacadeInterface
 {
@@ -1156,5 +1158,22 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array
     {
         return $this->getRepository()->getProductConcretesByCriteria($productCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+     *
+     * @return void
+     */
+    public function createProductConcreteCollection(
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): void {
+        $this->getFactory()
+            ->createProductConcreteWriter()
+            ->createProductConcreteCollection($productConcreteCollectionTransfer);
     }
 }

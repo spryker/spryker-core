@@ -78,8 +78,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Converts a camel cased string into a string where every word is linked with the other by specified separator.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,8 +93,7 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     }
 
     /**
-     * Specification:
-     * - Converts a camel cased string into a string where every word is linked with the other by a dash (-) separator.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -167,5 +165,20 @@ class UtilTextService extends AbstractService implements UtilTextServiceInterfac
     public function checkToken($rawToken, $hash)
     {
         return $this->getFactory()->createToken()->check($rawToken, $hash);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $prefix
+     * @param bool $moreEntropy
+     *
+     * @return string
+     */
+    public function generateUniqueId(string $prefix = '', bool $moreEntropy = false): string
+    {
+        return $this->getFactory()->createUniqueIdGenerator()->generateUniqueId($prefix, $moreEntropy);
     }
 }

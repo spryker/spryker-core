@@ -195,9 +195,13 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function isNeverOutOfStock(SpyProductAbstract $productAbstractEntity): bool
     {
-        return $this->availabilityHelper->isNeverOutOfStock(
-            $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET) ?? ''
-        );
+        $neverOutOfStockSet = '';
+
+        if ($productAbstractEntity->hasVirtualColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET)) {
+            $neverOutOfStockSet = $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET);
+        }
+
+        return $this->availabilityHelper->isNeverOutOfStock($neverOutOfStockSet);
     }
 
     /**
@@ -283,8 +287,14 @@ class AvailabilityAbstractTable extends AbstractTable
      */
     protected function calculateReservation(SpyProductAbstract $productAbstractEntity): Decimal
     {
+        $reservationQuantity = '';
+
+        if ($productAbstractEntity->hasVirtualColumn(AvailabilityHelperInterface::RESERVATION_QUANTITY)) {
+            $reservationQuantity = $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::RESERVATION_QUANTITY) ?? '';
+        }
+
         return $this->availabilityHelper->calculateReservation(
-            $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::RESERVATION_QUANTITY) ?? '',
+            $reservationQuantity,
             $this->storeFacade->getStoreById($this->idStore)
         );
     }

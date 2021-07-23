@@ -25,16 +25,16 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $loadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
     {
-        $payloadTransfers = $this->setProductImages($loadTransfer->getProductAbstractIds(), $loadTransfer->getPayloadTransfers());
-        $loadTransfer->setPayloadTransfers($payloadTransfers);
+        $payloadTransfers = $this->setProductImages($productPageLoadTransfer->getProductAbstractIds(), $productPageLoadTransfer->getPayloadTransfers());
+        $productPageLoadTransfer->setPayloadTransfers($payloadTransfers);
 
-        return $loadTransfer;
+        return $productPageLoadTransfer;
     }
 
     /**

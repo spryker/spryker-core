@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\MerchantProfileGlossary;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Constraint\HtmlTagWhitelistConstraint;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -43,6 +44,11 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
     protected const PLACEHOLDER_DATA_PRIVACY_GLOSSARY = 'Provide Data Privacy';
 
     /**
+     * @see \Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Constraint\HtmlTagWhitelistConstraint::$allowedHtmlTags
+     */
+    protected const CONSTRAINT_OPTION_ALLOWED_HTML_TAGS = 'allowedHtmlTags';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      *
@@ -72,6 +78,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'placeholder' => static::PLACEHOLDER_DESCRIPTION_GLOSSARY,
             ],
             'required' => false,
+            'constraints' => $this->getTextareaConstrains(),
         ]);
 
         return $this;
@@ -108,6 +115,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'placeholder' => static::PLACEHOLDER_DELIVERY_TIME_GLOSSARY,
             ],
             'required' => false,
+            'constraints' => $this->getTextareaConstrains(),
         ]);
 
         return $this;
@@ -127,6 +135,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'class' => 'html-editor',
                 'placeholder' => static::PLACEHOLDER_TERMS_CONDITIONS_GLOSSARY,
             ],
+            'constraints' => $this->getTextareaConstrains(),
         ]);
 
         return $this;
@@ -146,6 +155,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'class' => 'html-editor',
                 'placeholder' => static::PLACEHOLDER_CANCELLATION_POLICY_GLOSSARY,
             ],
+            'constraints' => $this->getTextareaConstrains(),
         ]);
 
         return $this;
@@ -165,6 +175,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'class' => 'html-editor',
                 'placeholder' => static::PLACEHOLDER_IMPRINT_GLOSSARY,
             ],
+            'constraints' => $this->getTextareaConstrains(),
         ]);
 
         return $this;
@@ -184,8 +195,21 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'class' => 'html-editor',
                 'placeholder' => static::PLACEHOLDER_DATA_PRIVACY_GLOSSARY,
             ],
+            'constraints' => $this->getTextareaConstrains(),
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint[]
+     */
+    protected function getTextareaConstrains(): array
+    {
+        return [
+            new HtmlTagWhitelistConstraint([
+                static::CONSTRAINT_OPTION_ALLOWED_HTML_TAGS => $this->getConfig()->getHtmlTagWhitelist(),
+            ]),
+        ];
     }
 }

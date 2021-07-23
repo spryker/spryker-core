@@ -75,7 +75,7 @@ class PaymentDataHelper extends Module
     {
         $paymentMethodTransfer = (new PaymentMethodBuilder())->seed($override)->build();
         $paymentMethodEntity = SpyPaymentMethodQuery::create()
-            ->filterByPaymentMethodKey($paymentMethodTransfer->getMethodName())
+            ->filterByPaymentMethodKey($paymentMethodTransfer->getPaymentMethodKey() ?? $paymentMethodTransfer->getMethodName())
             ->filterByName($paymentMethodTransfer->getName())
             ->findOneOrCreate();
         $paymentMethodEntity->setFkPaymentProvider($paymentMethodTransfer->getIdPaymentProvider());

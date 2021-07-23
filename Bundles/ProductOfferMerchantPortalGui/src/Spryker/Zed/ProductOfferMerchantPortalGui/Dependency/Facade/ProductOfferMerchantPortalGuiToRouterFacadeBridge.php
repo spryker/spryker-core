@@ -27,8 +27,8 @@ class ProductOfferMerchantPortalGuiToRouterFacadeBridge implements ProductOfferM
     /**
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
-    public function getRouter(): ChainRouter
+    public function getMerchantPortalRouter(): ChainRouter
     {
-        return $this->routerFacade->getRouter();
+        return $this->routerFacade->getMerchantPortalChainRouter();
     }
 }

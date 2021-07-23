@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProduct\Business\Reader;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
@@ -50,6 +51,17 @@ interface MerchantProductReaderInterface
      */
     public function isProductConcreteOwnedByMerchant(
         ProductConcreteTransfer $productConcreteTransfer,
+        MerchantTransfer $merchantTransfer
+    ): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractOwnedByMerchant(
+        ProductAbstractTransfer $productAbstractTransfer,
         MerchantTransfer $merchantTransfer
     ): bool;
 }

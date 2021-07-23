@@ -12,10 +12,8 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 interface PriceProductOfferUpdateGuiTableConfigurationProviderInterface
 {
     /**
-     * @phpstan-param array<mixed> $initialData
-     *
      * @param int $idProductOffer
-     * @param array $initialData
+     * @param mixed[] $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */

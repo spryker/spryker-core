@@ -13,6 +13,7 @@
     <transfer name="PriceProductDimension">
         <property name="productOfferReference" type="string"/>
         <property name="type" type="string"/>
+        <property name="idPriceProductOffer" type="int"/>
     </transfer>
 
     <transfer name="PriceProductFilter">
@@ -71,5 +72,9 @@
 
     <transfer name="ProductOfferStorageCollection">
         <property name="productOffers" type="ProductOfferStorage[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="PriceProductOfferCriteria">
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
     </transfer>
 </transfers>

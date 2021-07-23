@@ -2,6 +2,9 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
+    excludes_analyse:
+            - '%rootDir%/../../../vendor/spryker/spryker/Bundles/ProductPageSearch/src/Spryker/Zed/ProductPageSearch/Persistence/ProductPageSearchQueryContainer.php'
     ignoreErrors:
         - '#Cannot access offset .+ on .+SpyCategoryNode.#'
         - '#Parameter \#2 \$pageMapBuilder of method .+ProductConcretePageMapExpanderPluginInterface::expand\(\) expects .+ProductPageSearchExtension\\Dependency\\PageMapBuilderInterface, .+Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface given.#'
+        - '#Parameter \#1 \$categoryNodeData of method Spryker\\Zed\\ProductPageSearch\\Communication\\Plugin\\PageDataExpander\\ProductCategoryPageDataLoaderExpanderPlugin::mapCategoryNodesWithLocaleIdAndNodeId\(\) expects array, iterable<Orm\\Zed\\Category\\Persistence\\SpyCategoryNode>&Propel\\Runtime\\Collection\\ObjectCollection given\.#'

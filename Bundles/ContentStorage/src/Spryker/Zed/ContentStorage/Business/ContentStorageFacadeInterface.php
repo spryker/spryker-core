@@ -14,7 +14,7 @@ interface ContentStorageFacadeInterface
     /**
      * Specification:
      * - Fetches content by IDs.
-     * - Stores data as json encoded to storage table.
+     * - Stores data as json encoded to storage table for current store locales and locales of stores that share persistence with the current store.
      * - Sends a copy of data to queue based on module config.
      *
      * @api

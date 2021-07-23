@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage;
 
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferStorageTransfer;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
@@ -20,7 +21,9 @@ use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeInterface;
+use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToPriceProductOfferFacadeInterface;
 
 class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterInterface
 {
@@ -36,11 +39,28 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     protected $eventFacade;
 
     /**
-     * @param \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeInterface $eventFacade
+     * @var \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToPriceProductOfferFacadeInterface
      */
-    public function __construct(PriceProductOfferStorageToEventFacadeInterface $eventFacade)
-    {
+    protected $priceProductOfferFacade;
+
+    /**
+     * @var \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventBehaviorFacadeInterface
+     */
+    protected $eventBehaviorFacade;
+
+    /**
+     * @param \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeInterface $eventFacade
+     * @param \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToPriceProductOfferFacadeInterface $priceProductOfferFacade
+     * @param \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
+     */
+    public function __construct(
+        PriceProductOfferStorageToEventFacadeInterface $eventFacade,
+        PriceProductOfferStorageToPriceProductOfferFacadeInterface $priceProductOfferFacade,
+        PriceProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
+    ) {
         $this->eventFacade = $eventFacade;
+        $this->priceProductOfferFacade = $priceProductOfferFacade;
+        $this->eventBehaviorFacade = $eventBehaviorFacade;
     }
 
     /**
@@ -226,6 +246,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
             $groupedProductOffersByStoreAndProductSku[$productOffer[SpyStoreTableMap::COL_NAME]][$productOffer[SpyProductOfferTableMap::COL_CONCRETE_SKU]][] = $priceProductOfferStorageTransfer->modifiedToArray();
         }
 
+        /** @var string $storeName */
         foreach ($groupedProductOffersByStoreAndProductSku as $storeName => $groupedProductOffersByProductSku) {
             foreach ($groupedProductOffersByProductSku as $productSku => $priceProductOffers) {
                 if (isset($productSkuToIdMap[$productSku])) {
@@ -291,5 +312,26 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
             ->select(SpyProductTableMap::COL_ID_PRODUCT)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByPriceProductStoreEvents(array $eventEntityTransfers): void
+    {
+        $priceProductStoreIds = $this->eventBehaviorFacade->getEventTransferIds($eventEntityTransfers);
+
+        $priceProductTransfers = $this->priceProductOfferFacade->getProductOfferPrices(
+            (new PriceProductOfferCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds)
+        );
+
+        $priceProductOfferIds = [];
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductOfferIds[] = $priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductOfferOrFail();
+        }
+
+        $this->publish($priceProductOfferIds);
     }
 }

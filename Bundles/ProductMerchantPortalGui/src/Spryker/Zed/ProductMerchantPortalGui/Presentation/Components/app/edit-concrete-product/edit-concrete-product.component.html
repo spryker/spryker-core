@@ -1,14 +1,19 @@
 <div class="mp-edit-concrete-product__header">
     <spy-headline>
-        <h3 class="mp-edit-concrete-product__title">
+        <div class="mp-edit-concrete-product__title">
             <ng-content select="[title]"></ng-content>
-        </h3>
-        <div class="mp-edit-concrete-product__sub-title">
-            <ng-content select="[sub-title]"></ng-content>
         </div>
+        <h3 class="mp-edit-concrete-product__name">
+            <ng-content select="[name]"></ng-content>
+        </h3>
         <ng-content actions select="[action]"></ng-content>
     </spy-headline>
+
+    <div class="mp-edit-concrete-product__sub-title">
+        <ng-content select="[sub-title]"></ng-content>
+    </div>
 </div>
+
 <div class="mp-edit-concrete-product__content">
     <ng-content></ng-content>
 </div>

@@ -134,7 +134,7 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
             $productAbstractSkuList[] = $this->findProductAbstractSkuInAttributes($resource);
         }
 
-        return array_filter($productAbstractSkuList);
+        return array_unique(array_filter($productAbstractSkuList));
     }
 
     /**

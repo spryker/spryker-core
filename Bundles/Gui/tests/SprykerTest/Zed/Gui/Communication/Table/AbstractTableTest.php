@@ -8,9 +8,15 @@
 namespace SprykerTest\Zed\Gui\Communication\Table;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\Gui\Communication\Exception\TableException;
+use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use SprykerTest\Zed\Gui\Communication\Fixture\DownloadTable;
+use SprykerTest\Zed\Gui\Communication\Fixture\DownloadTableWithOrderedHeadersAndFormatting;
+use SprykerTest\Zed\Gui\Communication\Fixture\DownloadTableWithoutGetDownloadQueryMethod;
 use SprykerTest\Zed\Gui\Communication\Fixture\FooTable;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Auto-generated group annotations
@@ -151,5 +157,96 @@ class AbstractTableTest extends Unit
             ],
         ];
         $this->assertSame($expected, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCSVHeadersThrowsExceptionWhenMethodNotImplemented(): void
+    {
+        // Assert
+        $this->expectException(TableException::class);
+        $this->expectExceptionMessage(sprintf(
+            'You need to implement `%s::getCsvHeaders()` in your `%s`',
+            AbstractTable::class,
+            FooTable::class
+        ));
+
+        // Act
+        $this->table->streamDownload();
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDownloadQueryThrowsExceptionWhenNotImplemented(): void
+    {
+        // Arrange
+        $table = new DownloadTableWithoutGetDownloadQueryMethod();
+
+        // Assert
+        $this->expectException(TableException::class);
+        $this->expectExceptionMessage(sprintf(
+            'You need to implement `%s::getDownloadQuery()` in your `%s`',
+            AbstractTable::class,
+            DownloadTableWithoutGetDownloadQueryMethod::class
+        ));
+
+        // Act
+        $table->streamDownload()->send();
+    }
+
+    /**
+     * @return void
+     */
+    public function testStreamDownloadReturnsStreamedResponseWithCSV(): void
+    {
+        // Arrange
+        $table = new DownloadTable();
+
+        // Act
+        $streamedResponse = $table->streamDownload();
+        ob_start();
+        $streamedResponse->send();
+        $streamedResponseOutput = ob_get_contents();
+        ob_end_clean();
+
+        // Assert
+        $this->assertInstanceOf(StreamedResponse::class, $streamedResponse);
+
+        $expectedCsvStreamData = implode(PHP_EOL, [
+            '"Header column 1","Header column 2"',
+            '"Row 1 column 1","Row 1 column 2"',
+            '"Row 2 column 1","Row 2 column 2"',
+        ]) . PHP_EOL;
+
+        $this->assertSame($expectedCsvStreamData, $streamedResponseOutput);
+    }
+
+    /**
+     * @return void
+     */
+    public function testStreamDownloadReturnsStreamedResponseWithOrderedAndFormattedCSV(): void
+    {
+        // Arrange
+        $table = new DownloadTableWithOrderedHeadersAndFormatting();
+
+        // Act
+        $streamedResponse = $table->streamDownload();
+        ob_start();
+        $streamedResponse->send();
+        $streamedResponseOutput = ob_get_contents();
+        ob_end_clean();
+
+        // Assert
+        $this->assertInstanceOf(StreamedResponse::class, $streamedResponse);
+
+        $expectedCsvStreamData = implode(PHP_EOL, [
+            '"Header column 1","Header column 2"',
+            '"Row 1 column 2","Formatted Row 1 column 1"',
+            '"Row 2 column 2","Formatted Row 2 column 1"',
+        ]) . PHP_EOL;
+
+        $this->assertSame($expectedCsvStreamData, $streamedResponseOutput);
     }
 }

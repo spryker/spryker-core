@@ -182,4 +182,16 @@ interface QuoteApprovalFacadeInterface
      * @return bool
      */
     public function isQuoteInApprovalProcess(QuoteTransfer $quoteTransfer): bool;
+
+    /**
+     * Specification:
+     * - Returns true if quote status is `waiting`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteWaitingForApproval(QuoteTransfer $quoteTransfer): bool;
 }

@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
  * Auto-generated group annotations
@@ -613,5 +614,134 @@ class CompanyUserFacadeTest extends Test
         // Assert
         $this->assertNotEmpty($foundCompanyUserTransfer);
         $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandCustomerWithIsActiveCompanyUserExistsSuccess(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer();
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer($companyUserTransfer->getFkCustomerOrFail());
+
+        // Act
+        $result = $this->tester->getFacade()
+            ->expandCustomerWithIsActiveCompanyUserExists($customerTransfer);
+
+        // Assert
+        $this->assertTrue($result->getIsActiveCompanyUserExists());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandCustomerWithIsActiveCompanyUserExistsWithNotActiveUser(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [
+                CompanyUserTransfer::IS_ACTIVE => false,
+            ],
+        );
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer($companyUserTransfer->getFkCustomerOrFail());
+
+        // Act
+        $result = $this->tester->getFacade()
+            ->expandCustomerWithIsActiveCompanyUserExists($customerTransfer);
+
+        // Assert
+        $this->assertFalse($result->getIsActiveCompanyUserExists());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandCustomerWithIsActiveCompanyUserExistsWithNotActiveCompany(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [
+                CompanyUserTransfer::IS_ACTIVE => true,
+            ],
+            [
+                CompanyTransfer::IS_ACTIVE => false,
+                CompanyTransfer::STATUS => 'approved',
+            ]
+        );
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer($companyUserTransfer->getFkCustomerOrFail());
+
+        // Act
+        $result = $this->tester->getFacade()
+            ->expandCustomerWithIsActiveCompanyUserExists($customerTransfer);
+
+        // Assert
+        $this->assertFalse($result->getIsActiveCompanyUserExists());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandCustomerWithIsActiveCompanyUserExistsWithPendingCompany(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [
+                CompanyUserTransfer::IS_ACTIVE => true,
+            ],
+            [
+                CompanyTransfer::IS_ACTIVE => true,
+                CompanyTransfer::STATUS => 'pending',
+            ]
+        );
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer($companyUserTransfer->getFkCustomerOrFail());
+
+        // Act
+        $result = $this->tester->getFacade()
+            ->expandCustomerWithIsActiveCompanyUserExists($customerTransfer);
+
+        // Assert
+        $this->assertFalse($result->getIsActiveCompanyUserExists());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandCustomerWithIsActiveCompanyUserExistsWithDeniedCompany(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->tester->createCompanyUserTransfer(
+            [
+                CompanyUserTransfer::IS_ACTIVE => true,
+            ],
+            [
+                CompanyTransfer::IS_ACTIVE => true,
+                CompanyTransfer::STATUS => 'pending',
+            ]
+        );
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer($companyUserTransfer->getFkCustomerOrFail());
+
+        // Act
+        $result = $this->tester->getFacade()
+            ->expandCustomerWithIsActiveCompanyUserExists($customerTransfer);
+
+        // Assert
+        $this->assertFalse($result->getIsActiveCompanyUserExists());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandCustomerWithIsActiveCompanyUserExistsWithoutCompanyUsers(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+
+        // Act
+        $result = $this->tester->getFacade()
+            ->expandCustomerWithIsActiveCompanyUserExists($customerTransfer);
+
+        // Assert
+        $this->assertNull($result->getIsActiveCompanyUserExists());
     }
 }

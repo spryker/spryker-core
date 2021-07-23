@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Queue\Business\Task;
 
+use Generated\Shared\Transfer\QueueTaskResponseTransfer;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Shared\Queue\QueueConfig as SharedConfig;
 use Spryker\Zed\Queue\Business\Exception\MissingQueuePluginException;
@@ -45,23 +46,48 @@ class TaskManager implements TaskManagerInterface
      * @param string $queueName
      * @param array $options
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\QueueTaskResponseTransfer
      */
-    public function run($queueName, array $options = [])
+    public function run($queueName, array $options = []): QueueTaskResponseTransfer
     {
+        $queueTaskResponseTransfer = new QueueTaskResponseTransfer();
+        $queueTaskResponseTransfer->setIsSuccesful(false);
+
         $processorPlugin = $this->getQueueProcessorPlugin($queueName);
         $queueOptions = $this->getQueueReceiverOptions($queueName);
         $messages = $this->receiveMessages($queueName, $processorPlugin->getChunkSize(), $queueOptions);
+
         if (!$messages) {
-            return;
+            $queueTaskResponseTransfer->setMessage(sprintf('No messages received from the queue "%s".', $queueName));
+
+            return $queueTaskResponseTransfer;
         }
+
+        $queueTaskResponseTransfer->setReceivedMessageCount(count($messages));
 
         $processedMessages = $processorPlugin->processMessages($messages);
+
         if (!$processedMessages) {
-            return;
+            $queueTaskResponseTransfer->setMessage(sprintf(
+                'No messages processed from the queue "%s". Wether there is nothing to process or something failed while processing.',
+                $queueName
+            ));
+
+            return $queueTaskResponseTransfer;
         }
 
+        $queueTaskResponseTransfer->setProcessedMessageCount(count($processedMessages));
+
         $this->postProcessMessages($processedMessages, $options);
+
+        $queueTaskResponseTransfer->setIsSuccesful(true);
+        $queueTaskResponseTransfer->setMessage(sprintf(
+            'Received messages: "%s", Processed messages: "%s"',
+            count($messages),
+            count($processedMessages)
+        ));
+
+        return $queueTaskResponseTransfer;
     }
 
     /**

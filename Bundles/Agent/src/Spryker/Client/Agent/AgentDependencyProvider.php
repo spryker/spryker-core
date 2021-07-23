@@ -15,6 +15,9 @@ use Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
+/**
+ * @method \Spryker\Client\Agent\AgentConfig getConfig()
+ */
 class AgentDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';

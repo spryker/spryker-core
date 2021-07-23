@@ -23,6 +23,16 @@ abstract class AbstractBuilderTester extends Unit
     protected const TESTING_TABLE_NAMESPACE = __NAMESPACE__ . '\\Fixtures';
     protected const TESTING_COLUMN_NAME = 'id_foo';
     protected const TESTING_COLUMN_TYPE = PropelTypes::INTEGER;
+    protected const TESTING_COLUMN_BOOLEAN_NAME = 'flag_foo';
+    protected const TESTING_COLUMN_BOOLEAN_TYPE = PropelTypes::BOOLEAN;
+    protected const TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE_NAME = 'flag_default_foo';
+    protected const TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE_TYPE = PropelTypes::BOOLEAN;
+    protected const TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE = true;
+    protected const TESTING_COLUMN_VARCHAR_NAME = 'string_foo';
+    protected const TESTING_COLUMN_VARCHAR_TYPE = PropelTypes::VARCHAR;
+    protected const TESTING_COLUMN_VARCHAR_DEFAULT_VALUE_NAME = 'string_default_foo';
+    protected const TESTING_COLUMN_VARCHAR_DEFAULT_VALUE_TYPE = PropelTypes::VARCHAR;
+    protected const TESTING_COLUMN_VARCHAR_DEFAULT_VALUE = 'lorem impsum';
 
     protected const FOO_MAP_BUILDER_CLASS = TableMapBuilder::class;
     protected const FOO_BUILDER_CLASS = ObjectBuilder::class;
@@ -32,10 +42,31 @@ abstract class AbstractBuilderTester extends Unit
      */
     protected function _before(): void
     {
+        /**
+         * Each column can use additional Domain setters.
+         *
+         * @see \Propel\Generator\Model\Domain
+         */
         $columns = [[
-            'name' => static::TESTING_COLUMN_NAME,
-            'type' => static::TESTING_COLUMN_TYPE,
-        ]];
+                'name' => static::TESTING_COLUMN_NAME,
+                'type' => static::TESTING_COLUMN_TYPE,
+            ], [
+                'name' => static::TESTING_COLUMN_BOOLEAN_NAME,
+                'type' => static::TESTING_COLUMN_BOOLEAN_TYPE,
+            ], [
+                'name' => static::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE_NAME,
+                'type' => static::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE_TYPE,
+                'defaultValue' => static::TESTING_COLUMN_BOOLEAN_DEFAULT_VALUE,
+            ], [
+                'name' => static::TESTING_COLUMN_VARCHAR_NAME,
+                'type' => static::TESTING_COLUMN_VARCHAR_TYPE,
+                'size' => 64,
+            ], [
+                'name' => static::TESTING_COLUMN_VARCHAR_DEFAULT_VALUE_NAME,
+                'type' => static::TESTING_COLUMN_VARCHAR_DEFAULT_VALUE_TYPE,
+                'defaultValue' => static::TESTING_COLUMN_VARCHAR_DEFAULT_VALUE,
+                'size' => 64,
+            ]];
 
         $table = $this->tester->createTable(
             static::TESTING_TABLE_NAME,

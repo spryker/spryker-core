@@ -100,10 +100,29 @@ class ResponseRelationship implements ResponseRelationshipInterface
                     $this->processRelationships($resource->getRelationships(), $restRequest, $included);
                 }
 
-                $resourceIdentifier = $resourceType . ':' . $resource->getId();
-                $included[$resourceIdentifier] = $resource;
+                $resourceId = $resourceType . ':' . $resource->getId();
+                if ($this->isResourceCanBeIncluded($included, $resourceId)) {
+                    $included[$resourceId] = $resource;
+                }
             }
         }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $included
+     * @param string $resourceId
+     *
+     * @return bool
+     */
+    protected function isResourceCanBeIncluded(array $included, string $resourceId): bool
+    {
+        if (!isset($included[$resourceId])) {
+            return true;
+        }
+
+        $resource = $included[$resourceId];
+
+        return !$resource->getRelationships();
     }
 
     /**

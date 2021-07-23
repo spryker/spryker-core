@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EditConcreteProductAttributesComponent } from './edit-concrete-product-attributes.component';
 import { TableModule } from '@spryker/table';
+import { EditConcreteProductAttributesComponent } from './edit-concrete-product-attributes.component';
 
 @NgModule({
     imports: [CommonModule, TableModule],

@@ -7,4 +7,5 @@ parameters:
         - '#Strict comparison using === between 2 and 1 will always evaluate to false.#'
         - '#Else branch is unreachable because previous condition is always true#'
         - '#Call to an undefined method .+HandlerInterface::close\(\)#'
+        - '#Parameter \#2 \$level of class .+StreamHandler constructor expects .+, int given#'
     reportUnmatchedIgnoredErrors: false

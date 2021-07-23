@@ -28,6 +28,23 @@ class UpdateProductOfferController extends AbstractProductOfferController
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
 
     /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL
+     */
+    protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
+
+    /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     */
+    protected const APPROVAL_STATUS_APPROVED = 'approved';
+
+    /**
+     * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
+     */
+    protected const APPROVAL_STATUS_DENIED = 'denied';
+
+    protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL_CHIP_TITLE = 'Pending';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -44,15 +61,13 @@ class UpdateProductOfferController extends AbstractProductOfferController
             throw new NotFoundHttpException(sprintf('Product offer is not found for id %d.', $idProductOffer));
         }
 
-        /** @var int $idProductConcrete */
-        $idProductConcrete = $productOfferTransfer->requireIdProductConcrete()->getIdProductConcrete();
+        $idProductConcrete = $productOfferTransfer->getIdProductConcreteOrFail();
         $productConcreteTransfer = $this->getFactory()->getProductFacade()->findProductConcreteById($idProductConcrete);
         if (!$productConcreteTransfer) {
             throw new NotFoundHttpException(sprintf('Product is not found for id %d.', $idProductConcrete));
         }
 
-        /** @var int $idProductAbstract */
-        $idProductAbstract = $productConcreteTransfer->requireFkProductAbstract()->getFkProductAbstract();
+        $idProductAbstract = $productConcreteTransfer->getFkProductAbstractOrFail();
         /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
         $productAbstractTransfer = $this->getFactory()->getProductFacade()->findProductAbstractById($idProductAbstract);
 
@@ -84,14 +99,15 @@ class UpdateProductOfferController extends AbstractProductOfferController
             ->addPriceProductOffer($priceProductOfferTransfer);
 
         $validationResponseTransfer = $this->getFactory()
-            ->getPriceProductOfferFacade()
-            ->validateProductOfferPrices($priceProductOfferCollectionTransfer);
+            ->createPriceProductOfferValidator()
+            ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 
         if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
             $initialData = $this->getFactory()
                 ->createPriceProductOfferMapper()
                 ->mapValidationResponseTransferToInitialDataErrors(
                     $validationResponseTransfer,
+                    $priceProductOfferCollectionTransfer,
                     $initialData
                 );
 
@@ -119,14 +135,13 @@ class UpdateProductOfferController extends AbstractProductOfferController
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
-     * @phpstan-param array<mixed> $initialData
      *
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer $productOfferResponseTransfer
      * @param int $idProductOffer
-     * @param array $initialData
+     * @param mixed[] $initialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -144,6 +159,9 @@ class UpdateProductOfferController extends AbstractProductOfferController
 
         $productOfferTransfer = $productOfferResponseTransfer->getProductOffer();
         $productOfferReference = $productOfferTransfer ? $productOfferTransfer->getProductOfferReference() : null;
+        $approvalStatus = $productOfferResponseTransfer->getProductOfferOrFail()->getApprovalStatus() === static::APPROVAL_STATUS_WAITING_FOR_APPROVAL
+            ? static::APPROVAL_STATUS_WAITING_FOR_APPROVAL_CHIP_TITLE
+            : $productOfferResponseTransfer->getProductOfferOrFail()->getApprovalStatus();
 
         $priceProductOfferTableConfiguration = $this->getFactory()
             ->createPriceProductOfferUpdateGuiTableConfigurationProvider()
@@ -157,6 +175,12 @@ class UpdateProductOfferController extends AbstractProductOfferController
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
                 'productOfferReference' => $productOfferReference,
                 'priceProductOfferTableConfiguration' => $priceProductOfferTableConfiguration,
+                'approvalStatus' => $approvalStatus,
+                'approvalStatusChipColors' => [
+                    static::APPROVAL_STATUS_APPROVED => 'green',
+                    static::APPROVAL_STATUS_DENIED => 'red',
+                    static::APPROVAL_STATUS_WAITING_FOR_APPROVAL_CHIP_TITLE => 'yellow',
+                ],
             ])->getContent(),
         ];
 

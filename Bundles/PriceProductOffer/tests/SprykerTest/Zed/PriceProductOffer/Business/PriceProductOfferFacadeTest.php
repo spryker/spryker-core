@@ -221,7 +221,7 @@ class PriceProductOfferFacadeTest extends Unit
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
         $this->assertCount(1, $collectionValidationResponseTransfer->getValidationErrors());
         $this->assertSame(
-            'The set of inputs Store and Currency needs to be unique.',
+            'The set of Store and Currency needs to be unique.',
             $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
                 ->getMessage()
@@ -256,7 +256,7 @@ class PriceProductOfferFacadeTest extends Unit
         $this->assertFalse($collectionValidationResponseTransfer->getIsSuccess());
         $this->assertCount(1, $collectionValidationResponseTransfer->getValidationErrors());
         $this->assertSame(
-            'Currency "FAKE_CURRENCY" is not assigned to the store "DE"',
+            'Currency FAKE_CURRENCY is not assigned to the store DE',
             $collectionValidationResponseTransfer->getValidationErrors()
                 ->offsetGet(0)
                 ->getMessage()
@@ -335,7 +335,7 @@ class PriceProductOfferFacadeTest extends Unit
             $validationError->getMessage()
         );
         $this->assertSame(
-            '[0][default][moneyValue][fkCurrency]',
+            '[priceProductOffers][0][productOffer][prices][0][moneyValue:default][fkCurrency]',
             $validationError->getPropertyPath()
         );
     }
@@ -368,7 +368,7 @@ class PriceProductOfferFacadeTest extends Unit
             $validationError->getMessage()
         );
         $this->assertSame(
-            '[0][default][moneyValue][fkStore]',
+            '[priceProductOffers][0][productOffer][prices][0][moneyValue:default][fkStore]',
             $validationError->getPropertyPath()
         );
     }

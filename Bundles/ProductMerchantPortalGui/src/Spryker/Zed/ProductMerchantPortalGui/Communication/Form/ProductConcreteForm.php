@@ -8,17 +8,22 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form;
 
 use DateTime;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ValidFromRangeConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ValidToRangeConstraint;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\EventSubscriber\ProductImageSetsEventSubscriber;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Type\ProductImageSetFormType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig getConfig()
@@ -28,6 +33,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductConcreteForm extends AbstractType
 {
     protected const BLOCK_PREFIX = 'productConcrete';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_NAME
+     */
+    protected const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductLocalizedAttributesForm::NAME_VALIDATION_GROUP
+     */
+    protected const NAME_VALIDATION_GROUP = 'name_validation_group';
 
     protected const LABEL_VALID_FROM = 'From';
     protected const LABEL_VALID_TO = 'To';
@@ -53,6 +68,21 @@ class ProductConcreteForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ProductConcreteTransfer::class,
+            'validation_groups' => function (FormInterface $form) {
+                $validationGroups = [Constraint::DEFAULT_GROUP];
+
+                $parentForm = $form->getParent();
+
+                if ($parentForm) {
+                    $useAbstractProductName = $parentForm->get(static::FIELD_USE_ABSTRACT_PRODUCT_NAME)->getData();
+
+                    if (!$useAbstractProductName) {
+                        $validationGroups[] = static::NAME_VALIDATION_GROUP;
+                    }
+                }
+
+                return $validationGroups;
+            },
         ]);
     }
 
@@ -72,7 +102,54 @@ class ProductConcreteForm extends AbstractType
             ->addStockSubform($builder)
             ->addValidFromField($builder)
             ->addValidToField($builder)
-            ->addPricesField($builder);
+            ->addPricesField($builder)
+            ->addProductImageSetsField($builder)
+            ->addAttributesField($builder);
+
+        $builder->addEventSubscriber(new ProductImageSetsEventSubscriber());
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addProductImageSetsField(FormBuilderInterface $builder)
+    {
+        $builder->add(ProductConcreteTransfer::IMAGE_SETS, CollectionType::class, [
+            'label' => false,
+            'entry_type' => ProductImageSetFormType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'allow_extra_fields' => true,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAttributesField(FormBuilderInterface $builder)
+    {
+        $builder->add(ProductAbstractTransfer::ATTRIBUTES, HiddenType::class, [
+            'required' => false,
+            'label' => false,
+            'constraints' => [
+                $this->getFactory()->createProductAttributesNotBlankConstraint(),
+                $this->getFactory()->createAbstractProductAttributeUniqueCombinationConstraint(),
+            ],
+        ]);
+
+        $attributeProductTransformer = $this->getFactory()->createAttributeProductTransformer();
+
+        $builder->get(ProductAbstractTransfer::ATTRIBUTES)->addModelTransformer($attributeProductTransformer);
+
+        return $this;
     }
 
     /**

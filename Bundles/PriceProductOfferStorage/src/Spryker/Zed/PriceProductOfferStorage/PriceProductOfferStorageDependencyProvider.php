@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventFacadeBridge;
+use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToPriceProductOfferFacadeBridge;
 
 /**
  * @method \Spryker\Zed\PriceProductOfferStorage\PriceProductOfferStorageConfig getConfig()
@@ -19,6 +20,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractBundleDependenc
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_EVENT = 'FACADE_EVENT';
+    public const FACADE_PRICE_PRODUCT_OFFER = 'FACADE_PRICE_PRODUCT_OFFER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -30,6 +32,8 @@ class PriceProductOfferStorageDependencyProvider extends AbstractBundleDependenc
         parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addEventFacade($container);
+        $container = $this->addPriceProductOfferFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }
@@ -74,6 +78,22 @@ class PriceProductOfferStorageDependencyProvider extends AbstractBundleDependenc
         $container->set(static::FACADE_EVENT, function (Container $container) {
             return new PriceProductOfferStorageToEventFacadeBridge(
                 $container->getLocator()->event()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductOfferFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRICE_PRODUCT_OFFER, function (Container $container) {
+            return new PriceProductOfferStorageToPriceProductOfferFacadeBridge(
+                $container->getLocator()->priceProductOffer()->facade()
             );
         });
 

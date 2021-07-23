@@ -1,29 +1,22 @@
 import { NgModule } from '@angular/core';
-import { TableModule, TableConfig, TableDefaultConfig, TableDataRow } from '@spryker/table';
+import { TableConfig, TableDefaultConfig, TableModule } from '@spryker/table';
 import {
     TableFormOverlayActionHandlerModule,
     TableFormOverlayActionHandlerService,
 } from '@spryker/table.action-handler.form-overlay';
 import {
-    TableHtmlOverlayActionHandlerService,
     TableHtmlOverlayActionHandlerModule,
+    TableHtmlOverlayActionHandlerService,
 } from '@spryker/table.action-handler.html-overlay';
 import { TableUrlActionHandlerModule, TableUrlActionHandlerService } from '@spryker/table.action-handler.url';
+import { TableColumnAutocompleteComponent, TableColumnAutocompleteModule } from '@spryker/table.column.autocomplete';
 import { TableColumnChipComponent, TableColumnChipModule } from '@spryker/table.column.chip';
 import { TableColumnDateComponent, TableColumnDateModule } from '@spryker/table.column.date';
+import { TableColumnDynamicComponent, TableColumnDynamicModule } from '@spryker/table.column.dynamic';
 import { TableColumnImageComponent, TableColumnImageModule } from '@spryker/table.column.image';
-import { TableColumnTextComponent, TableColumnTextModule } from '@spryker/table.column.text';
 import { TableColumnInputComponent, TableColumnInputModule } from '@spryker/table.column.input';
 import { TableColumnSelectComponent, TableColumnSelectModule } from '@spryker/table.column.select';
-import { TableDatasourceHttpService } from '@spryker/table.datasource.http';
-import {
-    TableDatasourceInlineService,
-    TableDatasourceInlineModule,
-    TableDatasourceEqualsFilter,
-    TableDatasourceRangeFilter,
-    TableDatasourceTextFilter,
-    TableDatasourceDateProcessor,
-} from '@spryker/table.datasource.inline';
+import { TableColumnTextComponent, TableColumnTextModule } from '@spryker/table.column.text';
 import { TableFiltersFeatureModule } from '@spryker/table.feature.filters';
 import { TableFilterDateRangeComponent, TableFilterDateRangeModule } from '@spryker/table.filter.date-range';
 import { TableFilterSelectComponent, TableFilterSelectModule } from '@spryker/table.filter.select';
@@ -64,28 +57,18 @@ class TableDefaultConfigData implements Partial<TableConfig> {
             chip: TableColumnChipComponent,
             input: TableColumnInputComponent,
             select: TableColumnSelectComponent,
+            dynamic: TableColumnDynamicComponent,
+            autocomplete: TableColumnAutocompleteComponent,
         } as any),
         TableFiltersFeatureModule.withFilterComponents({
             select: TableFilterSelectComponent,
             'date-range': TableFilterDateRangeComponent,
             'tree-select': TableFilterTreeSelectComponent,
         } as any),
-        TableModule.withDatasourceTypes({
-            http: TableDatasourceHttpService,
-            inline: TableDatasourceInlineService,
-        }),
         TableModule.withActions({
             'form-overlay': TableFormOverlayActionHandlerService,
             'html-overlay': TableHtmlOverlayActionHandlerService,
             url: TableUrlActionHandlerService,
-        }),
-        TableDatasourceInlineModule.withFilters({
-            equals: TableDatasourceEqualsFilter,
-            text: TableDatasourceTextFilter,
-            range: TableDatasourceRangeFilter,
-        }),
-        TableDatasourceInlineModule.withProcessors({
-            date: TableDatasourceDateProcessor,
         }),
 
         // Table Column Type Modules
@@ -95,6 +78,8 @@ class TableDefaultConfigData implements Partial<TableConfig> {
         TableColumnDateModule,
         TableColumnInputModule,
         TableColumnSelectModule,
+        TableColumnDynamicModule,
+        TableColumnAutocompleteModule,
 
         // Table Filter Modules
         TableFilterSelectModule,

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 
 class SalesOrderAddressMapper implements SalesOrderAddressMapperInterface
@@ -23,5 +24,25 @@ class SalesOrderAddressMapper implements SalesOrderAddressMapperInterface
         $salesOrderAddressEntity->fromArray($addressTransfer->toArray());
 
         return $salesOrderAddressEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function mapAddressEntityToAddressTransfer(
+        AddressTransfer $addressTransfer,
+        SpySalesOrderAddress $salesOrderAddressEntity
+    ): AddressTransfer {
+        $addressTransfer->fromArray($salesOrderAddressEntity->toArray(), true);
+
+        $countryEntity = $salesOrderAddressEntity->getCountry();
+        $addressTransfer->setIso2Code($countryEntity->getIso2Code());
+        $countryTransfer = (new CountryTransfer())->fromArray($countryEntity->toArray(), true);
+        $addressTransfer->setCountry($countryTransfer);
+
+        return $addressTransfer;
     }
 }

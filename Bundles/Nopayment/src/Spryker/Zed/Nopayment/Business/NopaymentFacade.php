@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Nopayment\Business;
 
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -60,5 +61,22 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
         return $this->getFactory()
             ->createNopaymentMethodFilter()
             ->filterPaymentMethods($paymentMethodsTransfer, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function checkOrderPreSaveConditions(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $this->getFactory()
+            ->createNopaymentCheckoutPreConditionChecker()
+            ->checkCondition($quoteTransfer, $checkoutResponseTransfer);
     }
 }

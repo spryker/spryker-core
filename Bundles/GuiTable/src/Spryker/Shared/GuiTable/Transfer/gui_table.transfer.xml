@@ -90,6 +90,7 @@
 
     <transfer name="GuiTableEditableConfiguration">
         <property name="enabled" type="bool"/>
+        <property name="disableRowKey" type="string"/>
         <property name="columns" type="GuiTableColumnConfiguration[]" singular="column" description="The configuration for columns are in editable mode."/>
         <property name="create" type="GuiTableEditableCreateConfiguration"/>
         <property name="update" type="GuiTableEditableUpdateConfiguration"/>
@@ -106,6 +107,7 @@
         <property name="saveButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button look and wording or disable save button."/>
         <property name="cancelButton" type="GuiTableEditableButton" description="Optional. Only if you need to customize button look and wording or disable cancel button."/>
         <property name="url" type="GuiTableEditableUrl"/>
+        <property name="disableForCols" type="string[]" singular="disableForCol"/>
     </transfer>
 
     <transfer name="GuiTableEditableButton">

@@ -287,6 +287,12 @@ class RestApiError implements RestApiErrorInterface
     protected function processKnownCustomerError(RestResponseInterface $restResponse, CustomerResponseTransfer $customerResponseTransfer): RestResponseInterface
     {
         foreach ($customerResponseTransfer->getErrors() as $customerErrorTransfer) {
+            if ($customerErrorTransfer->getMessage() === static::ERROR_CUSTOMER_TOKEN_INVALID) {
+                $restResponse = $this->addInvalidTokenError($restResponse);
+
+                continue;
+            }
+
             if ($customerErrorTransfer->getMessage() === static::ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED) {
                 $restResponse = $this->addCustomerAlreadyExistsError($restResponse);
 
@@ -408,6 +414,28 @@ class RestApiError implements RestApiErrorInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     * @param \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function processCustomerErrorOnPasswordReset(
+        RestResponseInterface $restResponse,
+        CustomerResponseTransfer $customerResponseTransfer
+    ): RestResponseInterface {
+        $restResponse = $this->processKnownCustomerError($restResponse, $customerResponseTransfer);
+
+        if (!count($restResponse->getErrors())) {
+            return $this->addPasswordChangeError(
+                $restResponse,
+                CustomersRestApiConfig::RESPONSE_DETAILS_PASSWORD_CHANGE_FAILED
+            );
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -477,6 +505,21 @@ class RestApiError implements RestApiErrorInterface
             ->setCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_PASSWORD_DENY_LIST)
             ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setDetail(CustomersRestApiConfig::RESPONSE_MESSAGE_CUSTOMER_PASSWORD_DENY_LIST);
+
+        return $restResponse->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    protected function addInvalidTokenError(RestResponseInterface $restResponse): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(CustomersRestApiConfig::RESPONSE_CODE_RESTORE_PASSWORD_KEY_INVALID)
+            ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
+            ->setDetail(CustomersRestApiConfig::RESPONSE_DETAILS_RESTORE_PASSWORD_KEY_INVALID);
 
         return $restResponse->addError($restErrorMessageTransfer);
     }

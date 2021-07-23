@@ -34,9 +34,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
     public const OPTION_DRY_RUN = 'dry-run';
     public const OPTION_VERBOSE = 'verbose';
     public const OPTION_MODULE = 'module';
-
-    protected const PROGRESS_BAR_FREQUENCY = 50;
-    protected const PROGRESS_BAR_SECONDS_FORCE_REDRAW = 5 * 60;
+    public const OPTION_LEVEL = 'level';
+    public const OPTION_OFFSET = 'offset';
 
     protected const SUCCESS_EXIT_CODE = 0;
     protected const ERROR_EXIT_CODE = 1;
@@ -104,8 +103,12 @@ class PhpstanRunner implements PhpstanRunnerInterface
         asort($paths);
 
         foreach ($paths as $path => $configFilePath) {
-            $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
             $count++;
+            if ($this->skip($count, $input)) {
+                continue;
+            }
+
+            $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
 
             if ($input->getOption(static::OPTION_VERBOSE)) {
                 $output->writeln(sprintf('Finished %s/%s.', $count, $total));
@@ -217,7 +220,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
     protected function getLevel(InputInterface $input, string $path, string $configFilePath): int
     {
         $defaultLevel = $this->getDefaultLevel($path, $configFilePath);
-        $level = $input->getOption('level');
+        $level = $input->getOption(static::OPTION_LEVEL);
 
         if (preg_match('/^([+])(\d)$/', $level, $matches)) {
             return $defaultLevel + (int)$matches[2];
@@ -508,5 +511,36 @@ class PhpstanRunner implements PhpstanRunnerInterface
             return;
         }
         $this->errorCount += (int)$matches[1];
+    }
+
+    /**
+     * Determines 1-based skipping as per `offset[,limit]` config.
+     *
+     * @param int $count
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return bool
+     */
+    protected function skip(int $count, InputInterface $input): bool
+    {
+        $limit = null;
+        $offset = (string)$input->getOption(static::OPTION_OFFSET) ?: null;
+        if ($offset && strpos($offset, ',') !== false) {
+            [$offset, $limit] = explode(',', $offset);
+        }
+        $limit = (int)$limit;
+        $offset = (int)$offset;
+        if (!$limit && !$offset) {
+            return false;
+        }
+
+        if ($offset && $count <= $offset) {
+            return true;
+        }
+        if ($limit && $count > ($limit + $offset)) {
+            return true;
+        }
+
+        return false;
     }
 }

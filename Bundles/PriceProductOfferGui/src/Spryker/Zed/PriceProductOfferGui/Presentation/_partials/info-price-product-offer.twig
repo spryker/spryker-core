@@ -10,6 +10,7 @@
             {% set priceModeBoth = 'BOTH' %}
 
             {% set priceModeCollection = priceTable | first | first %}
+            {% set priceTypes = priceModeCollection | first | keys %}
 
             <table id="price-table-collection" class="table table-bordered">
                 <thead>
@@ -59,12 +60,19 @@
                             <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold">
                                 {{ currencies[currencyIsoCode].symbol }}
 
-                                {% include '@PriceProductOfferVolumeGui/_partials/volume_price_action_button.twig' with {
-                                    idProductOffer: productOffer.idProductOffer,
-                                    storeName: storeName,
-                                    currencyCode: currencyIsoCode,
-                                    priceData: priceData[storeName][currencyIsoCode]
-                                } only %}
+                            {% for priceType in priceTypes %}
+                                {% set priceData = priceDataByPriceType[storeName][currencyIsoCode][priceType] %}
+
+                                {% if priceData is not empty %}
+                                    {% include '@PriceProductOfferVolumeGui/_partials/volume_price_action_button.twig' with {
+                                        idProductOffer: productOffer.idProductOffer,
+                                        storeName: storeName,
+                                        currencyCode: currencyIsoCode,
+                                        priceData: priceData,
+                                        priceTypeName: priceType,
+                                    } only %}
+                                {% endif %}
+                            {% endfor %}
 
                             </td>
 

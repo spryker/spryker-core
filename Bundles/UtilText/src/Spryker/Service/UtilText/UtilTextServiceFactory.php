@@ -8,6 +8,8 @@
 namespace Spryker\Service\UtilText;
 
 use Spryker\Service\Kernel\AbstractServiceFactory;
+use Spryker\Service\UtilText\Generator\UniqueIdGenerator;
+use Spryker\Service\UtilText\Generator\UniqueIdGeneratorInterface;
 use Spryker\Service\UtilText\Model\Filter\CamelCaseToSeparator;
 use Spryker\Service\UtilText\Model\Filter\SeparatorToCamelCase;
 use Spryker\Service\UtilText\Model\Hash;
@@ -71,5 +73,13 @@ class UtilTextServiceFactory extends AbstractServiceFactory
     public function createUrl()
     {
         return new Token();
+    }
+
+    /**
+     * @return \Spryker\Service\UtilText\Generator\UniqueIdGeneratorInterface
+     */
+    public function createUniqueIdGenerator(): UniqueIdGeneratorInterface
+    {
+        return new UniqueIdGenerator();
     }
 }

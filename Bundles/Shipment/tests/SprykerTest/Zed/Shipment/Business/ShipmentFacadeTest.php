@@ -531,4 +531,42 @@ class ShipmentFacadeTest extends Test
         // Assert
         $this->assertCount(1, $shipmentMethodsTransfer->getMethods());
     }
+
+    /**
+     * @return void
+     */
+    public function testGetAvailableMethodsByShipmentShouldReturnAvailableShipmentMethodsWithMultiplePrices(): void
+    {
+        // Arrange
+        $this->tester->disableAllShipmentMethods();
+
+        $quoteTransfer = (new QuoteBuilder())->build();
+        $quoteTransfer->setStore($this->store)
+            ->setPriceMode(ShipmentConstants::PRICE_MODE_GROSS)
+            ->setCurrency((new CurrencyTransfer())->setCode('EUR'));
+
+        $priceList = $this->createDefaultPriceList();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod(
+            [],
+            [],
+            $priceList,
+            [$this->store->getIdStore()]
+        );
+
+        $quoteTransfer = $this->tester->addNewItemIntoQuoteTransfer($quoteTransfer, 'XX', $shipmentMethodTransfer);
+
+        // Act
+        $shipmentMethodsCollectionTransfer = $this->tester->getShipmentFacade()->getAvailableMethodsByShipment($quoteTransfer);
+
+        // Assert
+        $this->assertCount(1, $shipmentMethodsCollectionTransfer->getShipmentMethods());
+
+        /** @var \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer */
+        $shipmentMethodsTransfer = $shipmentMethodsCollectionTransfer->getShipmentMethods()->getIterator()->current();
+        $this->assertCount(1, $shipmentMethodsTransfer->getMethods());
+
+        /** @var \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer */
+        $shipmentMethodTransfer = $shipmentMethodsTransfer->getMethods()->getIterator()->current();
+        $this->assertCount(2, $shipmentMethodTransfer->getPrices());
+    }
 }

@@ -6,6 +6,11 @@
         <property name="defaultPrecision" type="int"/>
     </transfer>
 
+    <transfer name="RestQuoteRequestItem">
+        <property name="salesUnit" type="RestQuoteRequestSalesUnit"/>
+        <property name="groupKey" type="string"/>
+    </transfer>
+
     <transfer name="RestSalesUnitsAttributes">
         <property name="conversion" type="int"/>
         <property name="precision" type="int"/>
@@ -58,6 +63,7 @@
 
     <transfer name="Item">
         <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
         <property name="quantity" type="int"/>
         <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
         <property name="amount" type="decimal"/>
@@ -87,6 +93,37 @@
         <property name="status" type="int"/>
         <property name="code" type="string"/>
         <property name="detail" type="string"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestSalesUnit">
+        <property name="id" type="int"/>
+        <property name="amount" type="decimal"/>
+    </transfer>
+
+    <transfer name="QuoteRequest">
+        <property name="quoteRequestReference" type="string"/>
+        <property name="latestVersion" type="QuoteRequestVersion"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsAttributes">
+        <property name="shownVersion" type="RestQuoteRequestVersion"/>
+        <property name="quoteRequestReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequestVersion">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestVersion">
+        <property name="cart" type="RestQuoteRequestsCart"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsCart">
+        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
     </transfer>
 
 </transfers>

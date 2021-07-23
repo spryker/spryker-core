@@ -95,7 +95,7 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
         $tabItemTransfer = new TabItemTransfer();
 
         return $tabItemTransfer->setName($priceTypeTransfer->getName())
-            ->setTitle(sprintf('%s: ', $this->translate(static::DEFAULT_TITLE)))
+            ->setTitle(sprintf('%s: %s', $this->translate(static::DEFAULT_TITLE), $priceTypeTransfer->getName()))
             ->setTemplate(static::PRICE_TYPE_TEMPLATE);
     }
 

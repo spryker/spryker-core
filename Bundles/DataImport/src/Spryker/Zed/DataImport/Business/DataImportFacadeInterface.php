@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DataImport\Business;
 
 use Generated\Shared\Transfer\DataImportConfigurationActionTransfer;
+use Generated\Shared\Transfer\DataImportConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 
@@ -56,9 +57,24 @@ interface DataImportFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\DataImport\Business\DataImportFacadeInterface::getImportersDumpByConfiguration()} instead.
+     *
      * @return string[]
      */
     public function listImporters(): array;
+
+    /**
+     * Specification:
+     * - Requires `DataImportConfiguration.actions.dataImportConfigurationAction.dataEntity` to be set.
+     * - Returns a list of applied data importers where key is a data import type and value is an importer's class name.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
+     *
+     * @return string[]
+     */
+    public function getImportersDumpByConfiguration(DataImportConfigurationTransfer $dataImportConfigurationTransfer): array;
 
     /**
      * Specification:

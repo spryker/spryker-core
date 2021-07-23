@@ -8,10 +8,13 @@
 namespace Spryker\Zed\Sales\Communication\Table;
 
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToMoneyInterface;
 use Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface;
@@ -107,6 +110,85 @@ class OrdersTable extends AbstractTable
         $this->persistFilters($config);
 
         return $config;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCsvHeaders(): array
+    {
+        return [
+            SpySalesOrderTableMap::COL_ID_SALES_ORDER => '#',
+            SpySalesOrderTableMap::COL_ORDER_REFERENCE => 'Order Reference',
+            SpySalesOrderTableMap::COL_CREATED_AT => 'Created',
+            SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE => 'Customer Full Name',
+            SpySalesOrderTableMap::COL_EMAIL => 'Email',
+            static::ITEM_STATE_NAMES_CSV => 'Order State',
+            static::GRAND_TOTAL => 'Grand Total',
+            static::NUMBER_OF_ORDER_ITEMS => 'Number of Items',
+        ];
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function getDownloadQuery(): ModelCriteria
+    {
+        $salesOrderQuery = $this->queryBuilder->buildQuery();
+        $salesOrderQuery->orderBy(SpySalesOrderTableMap::COL_ID_SALES_ORDER, Criteria::DESC);
+
+        return $salesOrderQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $entity
+     *
+     * @return array
+     */
+    protected function formatCsvRow(ActiveRecordInterface $entity): array
+    {
+        $salesOrderRow = $entity->toArray(SpySalesOrderTableMap::TYPE_COLNAME);
+        $grandTotal = $salesOrderRow[OrdersTableQueryBuilder::FIELD_ORDER_GRAND_TOTAL] ?? 0;
+        $customer = sprintf(
+            '%s%s %s',
+            $entity->getSalutation() ? $entity->getSalutation() . ' ' : '',
+            $entity->getFirstName(),
+            $entity->getLastName(),
+        );
+
+        $stateNames = $salesOrderRow[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV] ?? '';
+
+        $salesOrderRow[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE] = $customer;
+        $salesOrderRow[SpySalesOrderTableMap::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime($entity->getCreatedAt());
+        $salesOrderRow[static::ITEM_STATE_NAMES_CSV] = $this->groupItemStateNamesForCsv($stateNames);
+        $salesOrderRow[static::GRAND_TOTAL] = $this->formatGrandTotal((int)$grandTotal, $entity->getCurrencyIsoCode());
+
+        return $salesOrderRow;
+    }
+
+    /**
+     * @param int $grandTotal
+     * @param string $currencyIsoCode
+     *
+     * @return string
+     */
+    protected function formatGrandTotal(int $grandTotal, string $currencyIsoCode): string
+    {
+        return $this->formatPrice($grandTotal, true, $currencyIsoCode);
+    }
+
+    /**
+     * @param string $itemStateNamesCsv
+     *
+     * @return string
+     */
+    protected function groupItemStateNamesForCsv(string $itemStateNamesCsv): string
+    {
+        $itemStateNames = explode(',', $itemStateNamesCsv);
+        $itemStateNames = array_map('trim', $itemStateNames);
+        $distinctItemStateNames = array_unique($itemStateNames);
+
+        return implode(' ', $distinctItemStateNames);
     }
 
     /**

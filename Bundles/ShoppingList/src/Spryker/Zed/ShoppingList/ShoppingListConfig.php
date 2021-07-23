@@ -42,6 +42,19 @@ class ShoppingListConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Controls whether shopping lists overview loads all shopping lists.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isShoppingListOverviewWithShoppingLists(): bool
+    {
+        return true;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
      */
     protected function getReadOnlyPermissionGroup(): ShoppingListPermissionGroupTransfer

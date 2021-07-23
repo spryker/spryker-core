@@ -106,9 +106,11 @@
     </transfer>
 
     <transfer name="ProductCriteria">
+        <property name="idProductAbstract" type="int"/>
         <property name="idStore" type="int"/>
         <property name="isActive" type="bool"/>
         <property name="skus" type="string[]" singular="sku"/>
+        <property name="attributes" type="string[]" associative="true" singular="attribute"/>
     </transfer>
 
     <transfer name="Filter">
@@ -117,6 +119,10 @@
     <transfer name="ProductUrlCriteriaFilter">
         <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
         <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCollection">
+        <property name="products" type="ProductConcrete[]" singular="product"/>
     </transfer>
 
 </transfers>

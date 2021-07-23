@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\ValidationResponseTransfer;
 interface PriceProductOfferValidatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfers
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
-    public function validateProductOfferPrices(PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfers): ValidationResponseTransfer;
+    public function validateProductOfferPrices(PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer): ValidationResponseTransfer;
 }

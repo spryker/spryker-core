@@ -30,6 +30,8 @@ use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPu
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisherInterface;
 use Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReader;
 use Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReaderInterface;
+use Spryker\Zed\ProductPageSearch\Business\Refresher\ProductAbstractPageRefresher;
+use Spryker\Zed\ProductPageSearch\Business\Refresher\ProductPageRefresherInterface;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisher;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProductInterface;
@@ -123,6 +125,25 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function getProductConcretePageDataExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Refresher\ProductPageRefresherInterface
+     */
+    public function createProductAbstractPageRefresher(): ProductPageRefresherInterface
+    {
+        return new ProductAbstractPageRefresher(
+            $this->createProductAbstractPagePublisher(),
+            $this->getProductPageRefreshPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface[]
+     */
+    public function getProductPageRefreshPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_PAGE_REFRESH);
     }
 
     /**

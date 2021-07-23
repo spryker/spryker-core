@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Persistence;
 
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityQuery;
+use Spryker\Service\Availability\AvailabilityServiceInterface;
 use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Dependency\QueryContainer\AvailabilityToProductQueryContainerInterface;
 use Spryker\Zed\Availability\Persistence\Mapper\AvailabilityMapper;
@@ -45,7 +46,7 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createAvailabilityMapper(): AvailabilityMapperInterface
     {
-        return new AvailabilityMapper();
+        return new AvailabilityMapper($this->getAvailabilityService());
     }
 
     /**
@@ -62,5 +63,13 @@ class AvailabilityPersistenceFactory extends AbstractPersistenceFactory
     public function getProductQueryContainer(): AvailabilityToProductQueryContainerInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::QUERY_CONTAINER_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Service\Availability\AvailabilityServiceInterface
+     */
+    public function getAvailabilityService(): AvailabilityServiceInterface
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::SERVICE_AVAILABILITY);
     }
 }

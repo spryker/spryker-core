@@ -27,6 +27,8 @@ use Spryker\Client\SearchElasticsearch\Config\SearchConfigBuilderInterface;
 use Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface;
 use Spryker\Client\SearchElasticsearch\Config\SortConfig;
 use Spryker\Client\SearchElasticsearch\Config\SortConfigInterface;
+use Spryker\Client\SearchElasticsearch\Connection\Connection;
+use Spryker\Client\SearchElasticsearch\Connection\ConnectionInterface;
 use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToMoneyClientInterface;
 use Spryker\Client\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
 use Spryker\Client\SearchElasticsearch\Index\IndexNameResolver\IndexNameResolver;
@@ -86,6 +88,16 @@ class SearchElasticsearchFactory extends AbstractFactory
     public function createSearchClient(): SearchInterface
     {
         return new Search(
+            $this->getElasticaClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Connection\ConnectionInterface
+     */
+    public function createConnection(): ConnectionInterface
+    {
+        return new Connection(
             $this->getElasticaClient()
         );
     }
