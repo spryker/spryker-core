@@ -25,6 +25,8 @@ class CreateProductOfferController extends AbstractProductOfferController
 {
     protected const PARAM_ID_PRODUCT = 'product-id';
 
+    protected const RESPONSE_ACTION_REDIRECT_URL = '/product-offer-merchant-portal-gui/product-offers';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -145,18 +147,31 @@ class CreateProductOfferController extends AbstractProductOfferController
         }
 
         if ($productOfferForm->isValid() && $isPriceProductOffersValid) {
-            $responseData['postActions'] = [[
-                'type' => 'redirect',
-                'url' => '/product-offer-merchant-portal-gui/product-offers',
-            ]];
-
             $this->addSuccessMessage('The Offer is saved.');
+
+            $this->addSuccessResponseDataToResponse($responseData);
 
             return new JsonResponse($responseData);
         }
 
-        $responseData = $this->addValidationNotifications($responseData);
+        $responseData = $this->addErrorResponseDataToResponse($responseData);
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param mixed[] $responseData
+     *
+     * @return mixed[]
+     */
+    protected function addSuccessResponseDataToResponse(array $responseData): array
+    {
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addActionRedirect(static::RESPONSE_ACTION_REDIRECT_URL)
+            ->createResponse();
+
+        return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
     }
 }

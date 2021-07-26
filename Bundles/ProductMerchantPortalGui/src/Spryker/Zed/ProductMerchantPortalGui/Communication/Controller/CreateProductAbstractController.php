@@ -20,17 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateProductAbstractController extends AbstractController
 {
-    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
-    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
-    protected const RESPONSE_KEY_TYPE = 'type';
-    protected const RESPONSE_KEY_MESSAGE = 'message';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Product successfully created!';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'Please resolve all errors.';
 
-    protected const RESPONSE_TYPE_SUCCESS = 'success';
-    protected const RESPONSE_TYPE_ERROR = 'error';
-    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
-    protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
-    protected const RESPONSE_MESSAGE_SUCCESS = 'Product successfully created!';
-    protected const RESPONSE_MESSAGE_ERROR = 'Please resolve all errors.';
     protected const REQUEST_PARAM_NAME = 'name';
     protected const REQUEST_PARAM_SKU = 'sku';
     protected const REQUEST_PARAM_BACK = 'back';
@@ -56,6 +48,7 @@ class CreateProductAbstractController extends AbstractController
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU
      */
     protected const FIELD_CONCRETE_SKU = 'concreteSku';
+
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm::FIELD_IS_SINGLE_CONCRETE
      */
@@ -82,7 +75,7 @@ class CreateProductAbstractController extends AbstractController
         }
 
         if (!$createProductAbstractForm->isValid()) {
-            $responseData = $this->addErrorNotification($responseData, static::RESPONSE_MESSAGE_ERROR);
+            $responseData = $this->addErrorNotification($responseData, static::RESPONSE_NOTIFICATION_MESSAGE_ERROR);
 
             return new JsonResponse($responseData);
         }
@@ -135,7 +128,7 @@ class CreateProductAbstractController extends AbstractController
         }
 
         if (!$createProductAbstractWithSingleConcreteForm->isValid()) {
-            $responseData = $this->addErrorNotification($responseData, static::RESPONSE_MESSAGE_ERROR);
+            $responseData = $this->addErrorNotification($responseData, static::RESPONSE_NOTIFICATION_MESSAGE_ERROR);
 
             return new JsonResponse($responseData);
         }
@@ -214,7 +207,7 @@ class CreateProductAbstractController extends AbstractController
             $viewData['errors'] = $this->extractErrors($tableValidationResponseTransfer);
 
             $responseData = $this->createMultiConcreteResponse($viewData, $formData);
-            $responseData = $this->addErrorNotification($responseData, static::RESPONSE_MESSAGE_ERROR);
+            $responseData = $this->addErrorNotification($responseData, static::RESPONSE_NOTIFICATION_MESSAGE_ERROR);
 
             return new JsonResponse($responseData);
         }
@@ -236,14 +229,13 @@ class CreateProductAbstractController extends AbstractController
      */
     protected function addErrorNotification(array $responseData, string $errorMessage): array
     {
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [
-            [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-                static::RESPONSE_KEY_MESSAGE => $errorMessage,
-            ],
-        ];
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addErrorNotification($errorMessage)
+            ->createResponse();
 
-        return $responseData;
+        return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
     }
 
     /**
@@ -251,24 +243,15 @@ class CreateProductAbstractController extends AbstractController
      */
     protected function getSuccessResponseAndCloseOverlay(): JsonResponse
     {
-        $responseData = [
-            static::RESPONSE_KEY_POST_ACTIONS => [
-                [
-                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
-                ],
-                [
-                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
-                ],
-            ],
-            static::RESPONSE_KEY_NOTIFICATIONS => [
-                [
-                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
-                    static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
-                ],
-            ],
-        ];
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addSuccessNotification(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+            ->addActionCloseDrawer()
+            ->addActionRefreshTable()
+            ->createResponse();
 
-        return new JsonResponse($responseData);
+        return new JsonResponse($zedUiFormResponseTransfer->toArray());
     }
 
     /**

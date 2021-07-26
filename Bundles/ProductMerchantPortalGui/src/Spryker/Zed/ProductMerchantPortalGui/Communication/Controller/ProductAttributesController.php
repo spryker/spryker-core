@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Response\ResponseBuilder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,8 +22,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ProductAttributesController extends AbstractController
 {
-    protected const RESPONSE_DELETE_MESSAGE_SUCCESS = 'Success! The Attribute is deleted.';
-    protected const RESPONSE_MESSAGE_SUCCESS = 'Product attributes updated successfully.';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_DELETE_SUCCESS = 'Success! The Attribute is deleted.';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_UPDATE_SUCCESS = 'Product attributes updated successfully.';
+
     protected const ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME = 'The attribute name must be not empty';
     protected const ERROR_MESSAGE_EMPTY_ATTRIBUTES = 'Please fill in at least one value';
     protected const ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND = 'Abstract Product cannot be found';
@@ -43,16 +43,6 @@ class ProductAttributesController extends AbstractController
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT
      */
     protected const PARAM_ATTRIBUTE_DEFAULT = 'attribute_default';
-
-    /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Response\ResponseFactory
-     */
-    protected $responseFactory;
-
-    public function __construct()
-    {
-        $this->responseFactory = $this->getFactory()->createResponseFactory();
-    }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -95,13 +85,13 @@ class ProductAttributesController extends AbstractController
         $attributeName = $request->get(static::PARAM_ATTRIBUTE_NAME);
 
         if (empty($attributeName)) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
         }
 
         $productAbstractTransfer = $this->findProductAbstract($request);
 
         if (!$productAbstractTransfer) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
         }
 
         $attributes = $this->getAttributes($request);
@@ -110,13 +100,13 @@ class ProductAttributesController extends AbstractController
         $localizedAttributes = $this->updateLocalizedAttributes($attributes, $productAbstractTransfer->getLocalizedAttributes(), $attributeName);
 
         if ($this->isAllAttributesEmpty($productAttributes, $localizedAttributes, $attributeName)) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTES);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTES);
         }
 
         $productAbstractTransfer->setAttributes($productAttributes)->setLocalizedAttributes($localizedAttributes);
         $this->getFactory()->getProductFacade()->saveProductAbstract($productAbstractTransfer);
 
-        return $this->responseFactory->createSuccessJsonResponse(ResponseBuilder::POST_ACTION_REFRESH_TABLE, static::RESPONSE_MESSAGE_SUCCESS);
+        return $this->createSuccessJsonResponse(static::RESPONSE_NOTIFICATION_MESSAGE_UPDATE_SUCCESS);
     }
 
     /**
@@ -129,7 +119,7 @@ class ProductAttributesController extends AbstractController
         $attributeName = $request->get(static::PARAM_ATTRIBUTE_NAME);
 
         if (!$attributeName) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
         }
 
         $idProductConcrete = $this->castId(
@@ -141,7 +131,7 @@ class ProductAttributesController extends AbstractController
             ->findProductConcreteById($idProductConcrete);
 
         if (!$productConcreteTransfer) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
         }
 
         $attributes = $this->getAttributes($request);
@@ -150,13 +140,13 @@ class ProductAttributesController extends AbstractController
         $localizedAttributes = $this->updateLocalizedAttributes($attributes, $productConcreteTransfer->getLocalizedAttributes(), $attributeName);
 
         if ($this->isAllAttributesEmpty($productAttributes, $localizedAttributes, $attributeName)) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTES);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTES);
         }
 
         $productConcreteTransfer->setAttributes($productAttributes)->setLocalizedAttributes($localizedAttributes);
         $this->getFactory()->getProductFacade()->saveProductConcrete($productConcreteTransfer);
 
-        return $this->responseFactory->createSuccessJsonResponse(ResponseBuilder::POST_ACTION_REFRESH_TABLE, static::RESPONSE_MESSAGE_SUCCESS);
+        return $this->createSuccessJsonResponse(static::RESPONSE_NOTIFICATION_MESSAGE_UPDATE_SUCCESS);
     }
 
     /**
@@ -169,13 +159,13 @@ class ProductAttributesController extends AbstractController
         $attributeName = $request->get(static::PARAM_ATTRIBUTE_NAME);
 
         if (!$attributeName) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
         }
 
         $productAbstractTransfer = $this->findProductAbstract($request);
 
         if (!$productAbstractTransfer) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
         }
 
         $productAttributes = $productAbstractTransfer->getAttributes();
@@ -186,7 +176,7 @@ class ProductAttributesController extends AbstractController
         $productAbstractTransfer->setAttributes($productAttributes)->setLocalizedAttributes($localizedAttributes);
         $this->getFactory()->getProductFacade()->saveProductAbstract($productAbstractTransfer);
 
-        return $this->responseFactory->createSuccessJsonResponse(ResponseBuilder::POST_ACTION_REFRESH_TABLE, static::RESPONSE_DELETE_MESSAGE_SUCCESS);
+        return $this->createSuccessJsonResponse(static::RESPONSE_NOTIFICATION_MESSAGE_DELETE_SUCCESS);
     }
 
     /**
@@ -199,7 +189,7 @@ class ProductAttributesController extends AbstractController
         $attributeName = $request->get(static::PARAM_ATTRIBUTE_NAME);
 
         if (!$attributeName) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME);
         }
 
         $idProductConcrete = $this->castId(
@@ -211,7 +201,7 @@ class ProductAttributesController extends AbstractController
             ->findProductConcreteById($idProductConcrete);
 
         if (!$productConcreteTransfer) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_CONCRETE_PRODUCT_CANNOT_BE_FOUND);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_CONCRETE_PRODUCT_CANNOT_BE_FOUND);
         }
 
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
@@ -224,7 +214,7 @@ class ProductAttributesController extends AbstractController
             );
 
         if (isset($superAttributeNames[$attributeName])) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_SUPER_ATTRIBUTE_WAS_NOT_DELETED);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_SUPER_ATTRIBUTE_WAS_NOT_DELETED);
         }
 
         $productAttributes = $productConcreteTransfer->getAttributes();
@@ -235,7 +225,7 @@ class ProductAttributesController extends AbstractController
         $productConcreteTransfer->setAttributes($productAttributes)->setLocalizedAttributes($localizedAttributes);
         $this->getFactory()->getProductFacade()->saveProductConcrete($productConcreteTransfer);
 
-        return $this->responseFactory->createSuccessJsonResponse(ResponseBuilder::POST_ACTION_REFRESH_TABLE, static::RESPONSE_DELETE_MESSAGE_SUCCESS);
+        return $this->createSuccessJsonResponse(static::RESPONSE_NOTIFICATION_MESSAGE_DELETE_SUCCESS);
     }
 
     /**
@@ -248,7 +238,7 @@ class ProductAttributesController extends AbstractController
         $productAbstractTransfer = $this->findProductAbstract($request);
 
         if (!$productAbstractTransfer) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND);
         }
 
         $idProductAbstract = $productAbstractTransfer->getIdProductAbstractOrFail();
@@ -279,7 +269,7 @@ class ProductAttributesController extends AbstractController
             ->findProductConcreteById($idProductConcrete);
 
         if (!$productConcreteTransfer) {
-            return $this->responseFactory->createErrorJsonResponse(static::ERROR_MESSAGE_CONCRETE_PRODUCT_CANNOT_BE_FOUND);
+            return $this->createErrorJsonResponse(static::ERROR_MESSAGE_CONCRETE_PRODUCT_CANNOT_BE_FOUND);
         }
 
         $idProductConcrete = $productConcreteTransfer->getIdProductConcreteOrFail();
@@ -508,5 +498,38 @@ class ProductAttributesController extends AbstractController
         }
 
         return false;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createSuccessJsonResponse(string $message): JsonResponse
+    {
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addSuccessNotification($message)
+            ->addActionRefreshTable()
+            ->createResponse();
+
+        return new JsonResponse($zedUiFormResponseTransfer->toArray());
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createErrorJsonResponse(string $message): JsonResponse
+    {
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addErrorNotification($message)
+            ->createResponse();
+
+        return new JsonResponse($zedUiFormResponseTransfer->toArray());
     }
 }

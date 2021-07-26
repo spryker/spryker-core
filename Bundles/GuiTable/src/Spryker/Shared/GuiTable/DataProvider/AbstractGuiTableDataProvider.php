@@ -112,7 +112,7 @@ abstract class AbstractGuiTableDataProvider implements GuiTableDataProviderInter
         $criteriaTransfer->$orderSetter($guiTableDataRequestTransfer->getOrderBy());
         $criteriaTransfer->$orderDirectionSetter(
             $guiTableDataRequestTransfer->getOrderDirection()
-                ? strtoupper($guiTableDataRequestTransfer->getOrderDirection())
+                ? strtoupper($guiTableDataRequestTransfer->getOrderDirectionOrFail())
                 : null
         );
 

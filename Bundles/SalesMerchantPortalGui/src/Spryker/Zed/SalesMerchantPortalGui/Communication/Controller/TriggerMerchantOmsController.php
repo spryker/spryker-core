@@ -26,7 +26,7 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
     protected const PARAM_MERCHANT_ORDER_IDS = 'merchant-order-ids';
     protected const PARAM_EVENT_NAME = 'event-name';
 
-    protected const MESSAGE_STATUS_CHANGED_SUCCESSFULLY = 'The state is updated successfully.';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'The state is updated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -39,7 +39,7 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
         $eventName = $request->get(static::PARAM_EVENT_NAME);
 
         if (!$eventName) {
-            return $this->getErrorResponse('Event name is empty.');
+            return $this->createErrorJsonResponse('Event name is empty.');
         }
 
         $merchantOrderTransfer = $this->getFactory()
@@ -51,31 +51,12 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
             );
 
         if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
-            return $this->getErrorResponse(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
+            return $this->createErrorJsonResponse(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
         }
 
         $this->triggerEventFormMerchantOrderItems($eventName, $merchantOrderTransfer->getMerchantOrderItems());
 
-        $responseData = [
-            'postActions' => [
-                [
-                    'type' => 'refresh_drawer',
-                ],
-                [
-                    'type' => 'refresh_table',
-                ],
-            ],
-            'notifications' => [
-                [
-                    'type' => 'success',
-                    'message' => $this->getFactory()
-                        ->getTranslatorFacade()
-                        ->trans(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY),
-                ],
-            ],
-        ];
-
-        return new JsonResponse($responseData);
+        return $this->createSuccessJsonResponse();
     }
 
     /**
@@ -87,18 +68,18 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
     {
         $eventName = $request->get(static::PARAM_EVENT_NAME);
         if (!$eventName) {
-            return $this->getErrorResponse('Event name is empty.');
+            return $this->createErrorJsonResponse('Event name is empty.');
         }
 
         try {
             $idMerchantOrder = $this->castId($request->get(static::PARAM_ID_MERCHANT_ORDER));
         } catch (InvalidIdException $exception) {
-            return $this->getErrorResponse($exception->getMessage());
+            return $this->createErrorJsonResponse($exception->getMessage());
         }
 
         $merchantOrderIds = $request->get(static::PARAM_MERCHANT_ORDER_IDS);
         if (!$merchantOrderIds) {
-            return $this->getErrorResponse('Merchant order ids are empty.');
+            return $this->createErrorJsonResponse('Merchant order ids are empty.');
         }
 
         $merchantOrderIds = array_map(function ($value) {
@@ -113,7 +94,7 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
             );
 
         if (!$merchantOrderTransfer || !$this->isMerchantOrderBelongsCurrentMerchant($merchantOrderTransfer)) {
-            return $this->getErrorResponse(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
+            return $this->createErrorJsonResponse(sprintf('Merchant order is not found for id %d.', $idMerchantOrder));
         }
 
         $merchantOrderItemCollectionTransfer = $this->getFactory()
@@ -125,24 +106,7 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
 
         $this->triggerEventFormMerchantOrderItems($eventName, $this->filterMerchantOrderItems($merchantOrderItemCollectionTransfer, $idMerchantOrder));
 
-        $responseData = [
-            'postActions' => [
-                [
-                    'type' => 'refresh_drawer',
-                ],
-                [
-                    'type' => 'refresh_table',
-                ],
-            ],
-            'notifications' => [
-                [
-                    'type' => 'success',
-                    'message' => static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY,
-                ],
-            ],
-        ];
-
-        return new JsonResponse($responseData);
+        return $this->createSuccessJsonResponse();
     }
 
     /**
@@ -165,22 +129,39 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function createSuccessJsonResponse(): JsonResponse
+    {
+        $message = $this->getFactory()
+            ->getTranslatorFacade()
+            ->trans(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS);
+
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addSuccessNotification($message)
+            ->addActionRefreshDrawer()
+            ->addActionRefreshTable()
+            ->createResponse();
+
+        return new JsonResponse($zedUiFormResponseTransfer->toArray());
+    }
+
+    /**
      * @param string $errorMessage
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    protected function getErrorResponse(string $errorMessage): JsonResponse
+    protected function createErrorJsonResponse(string $errorMessage): JsonResponse
     {
-        return new JsonResponse([
-            'notifications' => [
-                [
-                    'type' => 'error',
-                    'message' => $this->getFactory()
-                        ->getTranslatorFacade()
-                        ->trans($errorMessage),
-                ],
-            ],
-        ]);
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addErrorNotification($errorMessage)
+            ->createResponse();
+
+        return new JsonResponse($zedUiFormResponseTransfer->toArray());
     }
 
     /**

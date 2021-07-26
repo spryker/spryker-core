@@ -162,7 +162,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
             'Edit',
             'Bulk edit',
             static::BULK_EDIT_URL,
-            GuiTableConfigurationBuilderInterface::ACTION_TYPE_FORM_OVERLAY
+            GuiTableConfigurationBuilderInterface::ACTION_TYPE_DRAWER
         );
 
         $guiTableConfigurationBuilder->setBatchActionRowIdPath(ProductConcreteTransfer::ID_PRODUCT_CONCRETE);
@@ -177,7 +177,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
      */
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
+        $guiTableConfigurationBuilder->addRowActionDrawerAjaxForm(
             static::ROW_EDIT_ID,
             static::TITLE_ROW_ACTION_UPDATE_PRODUCT,
             sprintf(

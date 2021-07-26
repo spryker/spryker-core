@@ -26,16 +26,7 @@ abstract class AbstractSavePriceProductController extends AbstractController
      */
     protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 
-    protected const RESPONSE_MESSAGE_SUCCESS = 'Product prices saved successfully.';
-
-    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
-    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
-    protected const RESPONSE_KEY_TYPE = 'type';
-    protected const RESPONSE_KEY_MESSAGE = 'message';
-
-    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
-    protected const RESPONSE_TYPE_SUCCESS = 'success';
-    protected const RESPONSE_TYPE_ERROR = 'error';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Product prices saved successfully.';
 
     protected const REQUEST_BODY_CONTENT_KEY_DATA = 'data';
 
@@ -109,21 +100,14 @@ abstract class AbstractSavePriceProductController extends AbstractController
      */
     protected function createSuccessJsonResponse(): JsonResponse
     {
-        $response = [
-            static::RESPONSE_KEY_NOTIFICATIONS => [
-                [
-                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
-                    static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
-                ],
-            ],
-            static::RESPONSE_KEY_POST_ACTIONS => [
-                [
-                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
-                ],
-            ],
-        ];
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addSuccessNotification(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+            ->addActionRefreshTable()
+            ->createResponse();
 
-        return new JsonResponse($response);
+        return new JsonResponse($zedUiFormResponseTransfer->toArray());
     }
 
     /**
@@ -133,17 +117,15 @@ abstract class AbstractSavePriceProductController extends AbstractController
      */
     protected function createErrorJsonResponse(ValidationResponseTransfer $validationResponseTransfer): JsonResponse
     {
-        $notifications = [];
         /** @var \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer */
         $validationErrorTransfer = $validationResponseTransfer->getValidationErrors()->offsetGet(0);
-        $notifications[] = [
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-            static::RESPONSE_KEY_MESSAGE => $validationErrorTransfer->getMessage(),
-        ];
-        $response = [
-            static::RESPONSE_KEY_NOTIFICATIONS => $notifications,
-        ];
 
-        return new JsonResponse($response);
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addErrorNotification($validationErrorTransfer->getMessageOrFail())
+            ->createResponse();
+
+        return new JsonResponse($zedUiFormResponseTransfer->toArray());
     }
 }

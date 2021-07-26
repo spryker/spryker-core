@@ -25,7 +25,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class UpdateProductOfferController extends AbstractProductOfferController
 {
     protected const PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
-    protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL
@@ -195,34 +194,32 @@ class UpdateProductOfferController extends AbstractProductOfferController
             && $productOfferResponseTransfer->getIsSuccessful()
             && $isPriceProductOffersValid
         ) {
-            $responseData = [
-                'postActions' => [
-                    ['type' => 'close_overlay'],
-                    ['type' => 'refresh_table'],
-                ],
-                'notifications' => [
-                    [
-                        'type' => 'success',
-                        'message' => 'The Offer is saved.',
-                    ],
-                ],
-            ];
+            $responseData = $this->addSuccessResponseDataToResponse($responseData);
 
             return new JsonResponse($responseData);
         }
 
-        if ($productOfferResponseTransfer->getErrors()->count()) {
-            foreach ($productOfferResponseTransfer->getErrors() as $productOfferErrorTransfer) {
-                $responseData['notifications'][] = [
-                    'type' => 'error',
-                    'message' => $productOfferErrorTransfer->getMessage(),
-                ];
-            }
-        }
-
-        $responseData = $this->addValidationNotifications($responseData);
+        $responseData = $this->addErrorResponseDataToResponse($responseData, $productOfferResponseTransfer);
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param mixed[] $responseData
+     *
+     * @return mixed[]
+     */
+    protected function addSuccessResponseDataToResponse(array $responseData): array
+    {
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addSuccessNotification(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+            ->addActionCloseDrawer()
+            ->addActionRefreshTable()
+            ->createResponse();
+
+        return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
     }
 
     /**

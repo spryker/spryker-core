@@ -124,7 +124,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
             static::REQUEST_PARAM_QUANTITY
         );
 
-        $guiTableConfigurationBuilder->addRowActionUrl(
+        $guiTableConfigurationBuilder->addRowActionHttp(
             static::ID_ROW_ACTION_DELETE,
             static::TITLE_ROW_ACTION_DELETE,
             $url

@@ -91,7 +91,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
         $formInputName = sprintf('%s[%s]', ProductAbstractForm::BLOCK_PREFIX, ProductAbstractTransfer::PRICES);
 
         $guiTableConfigurationBuilder->setDataSourceUrl($dataSourceUrl)
-            ->addRowActionUrl(static::ID_ROW_ACTION_URL_DELETE_PRICE, static::TITLE_ROW_ACTION_DELETE, $deletePriceUrl)
+            ->addRowActionHttp(static::ID_ROW_ACTION_URL_DELETE_PRICE, static::TITLE_ROW_ACTION_DELETE, $deletePriceUrl)
             ->enableInlineDataEditing($savePricesUrl, 'POST')
             ->enableAddingNewRows($formInputName, $initialData, [
                 GuiTableEditableButtonTransfer::TITLE => static::TITLE_EDITABLE_BUTTON,

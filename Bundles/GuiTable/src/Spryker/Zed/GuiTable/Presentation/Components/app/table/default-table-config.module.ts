@@ -1,14 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TableConfig, TableDefaultConfig, TableModule } from '@spryker/table';
-import {
-    TableFormOverlayActionHandlerModule,
-    TableFormOverlayActionHandlerService,
-} from '@spryker/table.action-handler.form-overlay';
-import {
-    TableHtmlOverlayActionHandlerModule,
-    TableHtmlOverlayActionHandlerService,
-} from '@spryker/table.action-handler.html-overlay';
-import { TableUrlActionHandlerModule, TableUrlActionHandlerService } from '@spryker/table.action-handler.url';
+import { TableModule, TableConfig, TableDefaultConfig } from '@spryker/table';
 import { TableColumnAutocompleteComponent, TableColumnAutocompleteModule } from '@spryker/table.column.autocomplete';
 import { TableColumnChipComponent, TableColumnChipModule } from '@spryker/table.column.chip';
 import { TableColumnDateComponent, TableColumnDateModule } from '@spryker/table.column.date';
@@ -65,11 +56,6 @@ class TableDefaultConfigData implements Partial<TableConfig> {
             'date-range': TableFilterDateRangeComponent,
             'tree-select': TableFilterTreeSelectComponent,
         } as any),
-        TableModule.withActions({
-            'form-overlay': TableFormOverlayActionHandlerService,
-            'html-overlay': TableHtmlOverlayActionHandlerService,
-            url: TableUrlActionHandlerService,
-        }),
 
         // Table Column Type Modules
         TableColumnChipModule,
@@ -85,11 +71,6 @@ class TableDefaultConfigData implements Partial<TableConfig> {
         TableFilterSelectModule,
         TableFilterDateRangeModule,
         TableFilterTreeSelectModule,
-
-        // Table Action Handler Modules
-        TableFormOverlayActionHandlerModule,
-        TableHtmlOverlayActionHandlerModule,
-        TableUrlActionHandlerModule,
     ],
     providers: [
         {

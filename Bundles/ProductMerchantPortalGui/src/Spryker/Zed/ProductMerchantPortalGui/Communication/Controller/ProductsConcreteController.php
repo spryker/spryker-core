@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ProductsConcreteController extends AbstractController
 {
+    protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = '%s Variants are updated';
+
     protected const PARAM_ACTIVATION_NAME_STATUS = 'activationNameStatus';
     protected const PARAM_ACTIVATION_NAME_VALIDITY = 'activationNameValidity';
     protected const PARAM_PRODUCT_IDS = 'product-ids';
@@ -64,18 +66,19 @@ class ProductsConcreteController extends AbstractController
         if ($productConcreteBulkForm->isSubmitted() && $productConcreteBulkForm->isValid()) {
             $this->saveConcreteProducts($request, $productConcreteBulkForm, $productConcreteCollectionTransfer);
 
-            $responseData['postActions'] = [
-                [
-                    'type' => 'close_overlay',
-                ],
-                [
-                    'type' => 'refresh_table',
-                ],
-            ];
-            $responseData['notifications'] = [[
-                'type' => 'success',
-                'message' => sprintf('%s Variants are updated', $productConcreteCollectionTransfer->getProducts()->count()),
-            ]];
+            $responseData = $this->getFactory()
+                ->getZedUiFactory()
+                ->createZedUiFormResponseBuilder()
+                ->addSuccessNotification(
+                    sprintf(
+                        static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS,
+                        $productConcreteCollectionTransfer->getProducts()->count()
+                    )
+                )
+                ->addActionCloseDrawer()
+                ->addActionRefreshTable()
+                ->createResponse()
+                ->toArray();
         }
 
         $responseData['form'] = $this->renderView('@ProductMerchantPortalGui/Partials/product_concrete_bulk_form.twig', [

@@ -196,7 +196,7 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
      */
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
+        $guiTableConfigurationBuilder->addRowActionDrawerAjaxForm(
             'update-offer',
             'Manage Offer',
             sprintf(

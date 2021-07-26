@@ -205,7 +205,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
      */
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addRowActionUrl(
+        $guiTableConfigurationBuilder->addRowActionHttp(
             static::ID_ROW_ACTION_DELETE,
             static::TITLE_ROW_ACTION_DELETE,
             $this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_DELETE_URL)

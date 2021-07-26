@@ -35,4 +35,7 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="ZedUiFormResponse">
+    </transfer>
+
 </transfers>

@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
@@ -17,43 +18,13 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 abstract class AbstractUpdateProductController extends AbstractController
 {
-    protected const RESPONSE_TYPE_SUCCESS = 'success';
-    protected const RESPONSE_TYPE_ERROR = 'error';
-    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
-    protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
-
-    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
-    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
-    protected const RESPONSE_KEY_TYPE = 'type';
-    protected const RESPONSE_KEY_MESSAGE = 'message';
-
-    protected const RESPONSE_MESSAGE_SUCCESS = 'The Product is saved.';
-    protected const RESPONSE_MESSAGE_ERROR = 'Please resolve all errors.';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'The Product is saved.';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'Please resolve all errors.';
 
     protected const DEFAULT_INITIAL_DATA = [
         GuiTableEditableInitialDataTransfer::DATA => [],
         GuiTableEditableInitialDataTransfer::ERRORS => [],
     ];
-
-    /**
-     * @param mixed[] $responseData
-     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     *
-     * @return mixed[]
-     */
-    protected function addValidationResponseMessagesToResponse(
-        array $responseData,
-        ValidationResponseTransfer $validationResponseTransfer
-    ): array {
-        foreach ($validationResponseTransfer->getValidationErrors() as $validationErrorTransfer) {
-            $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-                static::RESPONSE_KEY_MESSAGE => $validationErrorTransfer->getMessage(),
-            ];
-        }
-
-        return $responseData;
-    }
 
     /**
      * @param string $tableViewName
@@ -89,34 +60,43 @@ abstract class AbstractUpdateProductController extends AbstractController
      */
     protected function addSuccessResponseDataToResponse(array $responseData): array
     {
-        $responseData[static::RESPONSE_KEY_POST_ACTIONS] = [
-            [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
-            ],
-            [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
-            ],
-        ];
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
-            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
-        ]];
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addSuccessNotification(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+            ->addActionCloseDrawer()
+            ->addActionRefreshTable()
+            ->createResponse();
 
-        return $responseData;
+        return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
     }
 
     /**
-     * @param mixed[] $responseData
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
+     * @param array $responseData
      *
-     * @return mixed[]
+     * @return array
      */
-    protected function addErrorResponseDataToResponse(array $responseData): array
-    {
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
-        ];
+    protected function addErrorResponseDataToResponse(
+        FormInterface $form,
+        ValidationResponseTransfer $validationResponseTransfer,
+        array $responseData
+    ): array {
+        $zedUiFormResponseBuilder = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder();
 
-        return $responseData;
+        if (!$form->isValid() || !$validationResponseTransfer->getIsSuccess()) {
+            $zedUiFormResponseBuilder->addErrorNotification(static::RESPONSE_NOTIFICATION_MESSAGE_ERROR);
+        }
+
+        if (!$validationResponseTransfer->getIsSuccess()) {
+            foreach ($validationResponseTransfer->getValidationErrors() as $validationErrorTransfer) {
+                $zedUiFormResponseBuilder->addErrorNotification($validationErrorTransfer->getMessageOrFail());
+            }
+        }
+
+        return array_merge($responseData, $zedUiFormResponseBuilder->createResponse()->toArray());
     }
 }

@@ -148,7 +148,7 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
      */
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
+        $guiTableConfigurationBuilder->addRowActionDrawerAjaxForm(
             'update-product',
             static::TITLE_ROW_ACTION_UPDATE_PRODUCT,
             sprintf(

@@ -25,9 +25,11 @@ interface GuiTableConfigurationBuilderInterface
     public const FILTER_TYPE_TREE_SELECT = 'tree-select';
     public const FILTER_TYPE_DATE_RANGE = 'date-range';
 
-    public const ACTION_TYPE_FORM_OVERLAY = 'form-overlay';
-    public const ACTION_TYPE_HTML_OVERLAY = 'html-overlay';
-    public const ACTION_TYPE_URL = 'url';
+    public const ACTION_TYPE_DRAWER = 'drawer';
+    public const ACTION_TYPE_HTTP = 'http';
+
+    public const ACTION_DRAWER_COMPONENT_TYPE_AJAX_FORM = 'ajax-form';
+    public const ACTION_DRAWER_COMPONENT_TYPE_URL_HTML_RENDERER = 'url-html-renderer';
 
     public const DATA_SOURCE_TYPE_INLINE = 'inline';
     public const DATA_SOURCE_TYPE_DEPENDABLE = 'dependable';
@@ -180,13 +182,15 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addRowActionOpenFormOverlay(
+    public function addRowActionDrawerAjaxForm(
         string $id,
         string $title,
-        string $url
+        string $url,
+        ?string $method = null
     );
 
     /**
@@ -197,13 +201,15 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addRowActionOpenPageOverlay(
+    public function addRowActionDrawerUrlHtmlRenderer(
         string $id,
         string $title,
-        string $url
+        string $url,
+        ?string $method = null
     );
 
     /**
@@ -214,13 +220,15 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param string $url
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addRowActionUrl(
+    public function addRowActionHttp(
         string $id,
         string $title,
-        string $url
+        string $url,
+        ?string $method = null
     );
 
     /**
@@ -433,7 +441,7 @@ interface GuiTableConfigurationBuilderInterface
      * @phpstan-param array<mixed> $cancelButton
      *
      * @param string $url
-     * @param string|null $method
+     * @param string $method
      * @param array|null $saveButton
      * @param array|null $cancelButton
      *
@@ -441,7 +449,7 @@ interface GuiTableConfigurationBuilderInterface
      */
     public function enableInlineDataEditing(
         string $url,
-        ?string $method = 'POST',
+        string $method = 'POST',
         ?array $saveButton = null,
         ?array $cancelButton = null
     );
@@ -454,11 +462,11 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param string $inputType
-     * @param array|null $options
+     * @param array $options
      *
      * @return $this
      */
-    public function addEditableColumnInput(string $id, string $title, string $inputType = 'text', ?array $options = []);
+    public function addEditableColumnInput(string $id, string $title, string $inputType = 'text', array $options = []);
 
     /**
      * @api
