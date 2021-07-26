@@ -23,6 +23,8 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiation;
 use Spryker\Glue\GlueApplication\Rest\Language\LanguageNegotiationInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\CorsHttpRequestValidator;
+use Spryker\Glue\GlueApplication\Rest\Request\CorsHttpRequestValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeAction;
 use Spryker\Glue\GlueApplication\Rest\Request\FormattedControllerBeforeActionInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidator;
@@ -396,6 +398,14 @@ class GlueApplicationFactory extends AbstractFactory
             $this->getConfig(),
             $this->createRestResourceRouteLoader()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\Request\CorsHttpRequestValidatorInterface
+     */
+    public function createCorsHttpRequestValidator(): CorsHttpRequestValidatorInterface
+    {
+        return new CorsHttpRequestValidator();
     }
 
     /**

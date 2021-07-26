@@ -177,7 +177,7 @@ class ControllerFilter implements ControllerFilterInterface
     ): RestResponseInterface {
         if (!$restErrorCollectionTransfer || !$restErrorCollectionTransfer->getRestErrors()->count()) {
             $restRequest = $this->userProvider->setUserToRestRequest($restRequest);
-            $restUserValidationRestErrorCollectionTransfer = $this->validateRestUser($restRequest);
+            $restUserValidationRestErrorCollectionTransfer = $this->restUserValidator->validate($restRequest);
             if ($restUserValidationRestErrorCollectionTransfer) {
                 return $this->createErrorResponse($restUserValidationRestErrorCollectionTransfer);
             }
@@ -269,21 +269,22 @@ class ControllerFilter implements ControllerFilterInterface
     protected function validateRequest(AbstractController $controller, Request $httpRequest, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
         $restErrorCollectionTransfer = null;
+
+        /**
+         * @description Skip validation for the OPTION method to not invalidate CORS requests.
+         * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+         * @link https://developer.mozilla.org/en-US/docs/Glossary/Preflight_request
+         * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS#preflighted_requests_in_cors
+         */
+        if ($httpRequest->getMethod() === Request::METHOD_OPTIONS) {
+            return null;
+        }
+
         if (!$controller instanceof ErrorControllerInterface) {
             $restErrorCollectionTransfer = $this->restRequestValidator->validate($httpRequest, $restRequest);
         }
 
         return $restErrorCollectionTransfer;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
-     */
-    protected function validateRestUser(RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
-    {
-        return $this->restUserValidator->validate($restRequest);
     }
 
     /**
