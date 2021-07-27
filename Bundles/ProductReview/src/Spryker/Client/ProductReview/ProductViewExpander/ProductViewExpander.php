@@ -105,12 +105,8 @@ class ProductViewExpander implements ProductViewExpanderInterface
                 $this->createRatingAggregationTransfer($productReviews)
             );
 
-            foreach ($productViewTransfers as $productViewId => $productViewTransfer) {
-                if ($productViewId === $productId) {
-                    $productViewTransfer->setRating($productReviewSummaryTransfer);
-
-                    break;
-                }
+            if(isset($productViewTransfers[$productId])) {
+                $productViewTransfers[$productId] = $productViewTransfers[$productId]->setRating($productReviewSummaryTransfer)
             }
         }
 
