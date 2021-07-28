@@ -134,16 +134,19 @@ class CategoryType extends CommonCategoryType
      */
     protected function addStoreRelationForm(FormBuilderInterface $builder, array $options)
     {
+        /** @phpstan-var array<string, mixed> $options */
+        $options = [
+            'label' => false,
+            'required' => false,
+            static::OPTION_ATTRIBUTE_ACTION_FIELD => $options[static::OPTION_ATTRIBUTE_ACTION_FIELD],
+            static::OPTION_ATTRIBUTE_ACTION_URL => $options[static::OPTION_ATTRIBUTE_ACTION_URL],
+            static::OPTION_ATTRIBUTE_ACTION_EVENT => $options[static::OPTION_ATTRIBUTE_ACTION_EVENT],
+        ];
+
         $builder->add(
             static::FIELD_STORE_RELATION,
             $this->getFactory()->getStoreRelationFormTypePlugin()->getType(),
-            [
-                'label' => false,
-                'required' => false,
-                static::OPTION_ATTRIBUTE_ACTION_FIELD => $options[static::OPTION_ATTRIBUTE_ACTION_FIELD],
-                static::OPTION_ATTRIBUTE_ACTION_URL => $options[static::OPTION_ATTRIBUTE_ACTION_URL],
-                static::OPTION_ATTRIBUTE_ACTION_EVENT => $options[static::OPTION_ATTRIBUTE_ACTION_EVENT],
-            ]
+            $options
         );
 
         return $this;
