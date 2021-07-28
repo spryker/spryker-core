@@ -36,7 +36,7 @@ class RemoveTableButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getIcon(): string
     {
-        return '<i class="fa fa-trash"></i> ';
+        return '';
     }
 
     /**

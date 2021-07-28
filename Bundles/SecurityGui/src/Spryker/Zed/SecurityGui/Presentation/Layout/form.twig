@@ -12,19 +12,23 @@
 {% block email_widget %}
     {%- set type = type|default('email') -%}
     <div class="form-group">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-envelope-o fa-inverse"></i></span>
-            {{ block('form_widget_simple') }}
-        </div>
+        {{ form_label(form, 'Email') }}
+        {{ block('form_widget_simple') }}
     </div>
 {% endblock %}
 
 {% block password_widget %}
     {%- set type = type|default('password') -%}
     <div class="form-group">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-key fa-inverse"></i></span>
-            {{ block('form_widget_simple') }}
-        </div>
+        {{ form_label(form, 'password') }}
+        {{ block('form_widget_simple') }}
     </div>
 {% endblock %}
+
+{% block submit_widget  %}
+    <div class="form-group">
+        {% set type = type | default('submit') %}
+        {% set attr = attr | merge({class: 'btn btn-block'}) %}
+        {{ block('button_widget') }}
+    </div>
+{% endblock submit_widget %}

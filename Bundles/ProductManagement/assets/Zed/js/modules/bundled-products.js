@@ -14,6 +14,10 @@ $(document).ready(function () {
         destroy: true,
         scrollX: 'auto',
         autoWidth: false,
+        dom:
+            "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'alt-row'<'alt-row__left'l><'alt-row__center'p>>",
         fnDrawCallback: function (settings) {
             $('.product_assign_checkbox').off('change');
             $('.product_assign_checkbox').on('change', function () {

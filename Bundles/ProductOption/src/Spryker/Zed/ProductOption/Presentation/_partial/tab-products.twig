@@ -1,12 +1,12 @@
 <div class="row ">
     <div class="col-md-8 btn-group select-all-btn" id="product-selectors">
-        <button class="btn btn-white active" type="button" id="products-to-assign">{{ 'All products' | trans }}</button>
+        <button class="btn active" type="button" id="products-to-assign">{{ 'All products' | trans }}</button>
         {% if productOptionsTable is defined %}
-            <button class="btn btn-white" type="button" id="assigned">{{ 'Assigned products' | trans }}</button>
+            <button class="btn" type="button" id="assigned">{{ 'Assigned products' | trans }}</button>
         {% endif %}
-        <button class="btn btn-white" type="button" id="products-to-be-assigned">{{ 'Products to be assigned' | trans }}</button>
+        <button class="btn" type="button" id="products-to-be-assigned">{{ 'Products to be assigned' | trans }}</button>
         {% if productOptionsTable is defined %}
-            <button class="btn btn-white" type="button" id="to-be-deassigned">{{ 'Products to be deassigned' | trans }}</button>
+            <button class="btn" type="button" id="to-be-deassigned">{{ 'Products to be deassigned' | trans }}</button>
         {% endif %}
     </div>
 

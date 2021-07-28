@@ -36,7 +36,7 @@ class EditActionButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getIcon(): string
     {
-        return '<i class="fa fa-pencil-square-o"></i> ';
+        return '<i class="fa fa-edit"></i> ';
     }
 
     /**

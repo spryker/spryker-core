@@ -167,7 +167,7 @@ class ProductReviewTable extends AbstractTable
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_REJECTED:
                 return $this->generateLabel('Rejected', 'label-danger');
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_APPROVED:
-                return $this->generateLabel('Approved', 'label-info');
+                return $this->generateLabel('Approved', 'label-success');
             case ProductReviewTableConstants::COL_PRODUCT_REVIEW_STATUS_PENDING:
             default:
                 return $this->generateLabel('Pending', 'label-secondary');
@@ -244,7 +244,10 @@ class ProductReviewTable extends AbstractTable
                 ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
             ]),
             'Approve',
-            StatusProductReviewForm::class
+            StatusProductReviewForm::class,
+            [
+                static::BUTTON_CLASS => 'btn-outline',
+            ]
         );
     }
 
@@ -262,7 +265,7 @@ class ProductReviewTable extends AbstractTable
             'Reject',
             StatusProductReviewForm::class,
             [
-                static::BUTTON_CLASS => 'btn-warning',
+                static::BUTTON_CLASS => 'btn-view',
             ]
         );
     }

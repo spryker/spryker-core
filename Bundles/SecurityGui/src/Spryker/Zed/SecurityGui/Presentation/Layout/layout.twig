@@ -9,23 +9,27 @@
 
     {% block head_css %}
         <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-gui-commons.css') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     {% endblock %}
 
 </head>
 <body class="login">
 
-<div class="row">
-    <div class="spryker-login">
-        <div class="login-spryker-logo">
-            <span class="zed-logo"></span>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="spryker-login">
-        <div class="wrapper wrapper-content loginColumns">
-            {% include '@Messenger/Partials/flash-messages.twig' %}
-            {% block content %}{% endblock %}
+<div class="login__wrapper">
+    <div class="login__container">
+        <div class="login__logo zed-logo"></div>
+
+        {% include '@Messenger/Partials/flash-messages.twig' %}
+
+        <div class="login-box">
+            {% block login_heading %}
+                <div class="login-box__heading">
+                    <h1 class="login-box__title">{{ 'Login' | trans }}</h1>
+                </div>
+            {% endblock %}
+            <div class="login-box__content">
+                {% block content %}{% endblock %}
+            </div>
         </div>
     </div>
 </div>

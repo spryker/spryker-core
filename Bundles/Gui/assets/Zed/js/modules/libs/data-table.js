@@ -14,10 +14,20 @@ function getTranslation(locale) {
 
 var locale = getLocale();
 
+var translationObj = getTranslation(locale);
+
+if (translationObj.sSearch) {
+    translationObj.searchPlaceholder = translationObj.sSearch.replace(/\&nbsp;|:/gi, '');
+}
+
 var defaultConfiguration = {
     scrollX: 'auto',
     autoWidth: false,
-    language: getTranslation(locale),
+    language: translationObj,
+    dom:
+        "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'f>>" +
+        "<'row'<'col-sm-12'tr>>" +
+        "<'alt-row'<'alt-row__left'l><'alt-row__center'p>>",
 };
 
 var noSearchConfiguration = {

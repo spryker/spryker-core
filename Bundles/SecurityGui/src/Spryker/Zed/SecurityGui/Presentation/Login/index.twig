@@ -14,9 +14,9 @@
             {{ form_row(form.username) }}
             {{ form_row(form.password) }}
 
-            <div class="form-group"><button class="btn btn-success btn-block btn-outline btn" type="submit">{{ 'Login' | trans }}</button></div>
-            <div class="form-group forgot">
-                <a href="/security-gui/password/reset-request">{{ 'Forgot password?' | trans }}</a>
+            <div class="form-group"><button class="btn btn-block" type="submit">{{ 'Login' | trans }}</button></div>
+            <div class="form-group text-center">
+                <a href="/security-gui/password/reset-request" class="login-box__link">{{ 'Forgot password?' | trans }}</a>
             </div>
 
             {% include '@SecurityGui/Partial/authentication-links.twig' %}

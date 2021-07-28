@@ -36,7 +36,7 @@ class CreateActionButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getIcon(): string
     {
-        return '<i class="fa fa-plus"></i> ';
+        return '';
     }
 
     /**
@@ -44,6 +44,6 @@ class CreateActionButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getButtonDefaultClass(): string
     {
-        return 'btn-sm btn-outline safe-submit';
+        return 'btn-sm safe-submit';
     }
 }
