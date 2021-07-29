@@ -592,8 +592,7 @@ class CompanyUserFacadeTest extends Test
         // Act
         $companyUserTransfersCollection = $this->tester->getFacade()
             ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer)
-            ->getCompanyUsers()
-            ->offsetGet(0);
+            ->getCompanyUsers();
 
         // Assert
         $companyUserTransferIds = array_map(
