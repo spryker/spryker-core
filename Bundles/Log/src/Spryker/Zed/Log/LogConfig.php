@@ -103,6 +103,8 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @phpstan-return 100|200|250|300|400|500|550|600|non-empty-string
+     *
      * @return int|string Level or level name
      */
     public function getLogLevel()

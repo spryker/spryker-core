@@ -16,6 +16,8 @@ class QueueHandler extends AbstractQueueHandler
     /**
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      *
+     * @phpstan-param 100|200|250|300|400|500|550|600|non-empty-string $level
+     *
      * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
      * @param string $queueName
      * @param int|string $level Level or level name
