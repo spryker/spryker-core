@@ -590,7 +590,7 @@ class CompanyUserFacadeTest extends Test
             ->setPattern($companyUserTransfer->getCustomer()->getLastName());
 
         // Act
-        $foundCompanyUserTransfer = $this->tester->getFacade()
+        $companyUserTransfersCollection = $this->tester->getFacade()
             ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer)
             ->getCompanyUsers()
             ->offsetGet(0);
