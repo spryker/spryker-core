@@ -155,7 +155,7 @@ interface RouterFacadeInterface
      *
      * @internal
      *
-     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterFacadeInterface::getBackofficeRouter()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\Business\RouterFacadeInterface::getBackofficeChainRouter()} instead.
      *
      * Specification:
      * - Returns a ChainRouter which is added to the Application.
