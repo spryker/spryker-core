@@ -11,16 +11,12 @@ use Monolog\Logger;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Shared\Log\Handler\AbstractQueueHandler;
 
-/**
- * @phpstan-import-type Level from \Monolog\Logger
- * @phpstan-import-type LevelName from \Monolog\Logger
- */
 class QueueHandler extends AbstractQueueHandler
 {
     /**
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      *
-     * @phpstan-param Level|LevelName|\Psr\Log\LogLevel::* $level
+     * @phpstan-param 100|200|250|300|400|500|550|600|non-empty-string $level
      *
      * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
      * @param string $queueName

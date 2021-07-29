@@ -10,10 +10,6 @@ namespace Spryker\Yves\Log;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 
-/**
- * @phpstan-import-type Level from \Monolog\Logger
- * @phpstan-import-type LevelName from \Monolog\Logger
- */
 class LogConfig extends AbstractBundleConfig
 {
     /**
@@ -78,7 +74,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @phpstan-return Level|LevelName|\Psr\Log\LogLevel::*
+     * @phpstan-return 100|200|250|300|400|500|550|600|non-empty-string
      *
      * @return int|string
      */
