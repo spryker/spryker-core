@@ -40,6 +40,16 @@
                                             </a>
                                         {% endblock %}
                                     {% endfor %}
+
+                                    {% block logoutLink %}
+                                        <a href="/security-merchant-portal-gui/logout">
+                                            {% block logoutLinkInner %}
+                                                <web-spy-user-menu-link type="danger">
+                                                    {{ 'Logout' | trans }}
+                                                </web-spy-user-menu-link>
+                                            {% endblock %}
+                                        </a>
+                                    {% endblock %}
                                 {% endblock %}
                             </web-mp-header-menu>
                         {% endblock %}
