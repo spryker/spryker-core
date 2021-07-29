@@ -10,6 +10,10 @@ namespace Spryker\Zed\Log;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @phpstan-import-type Level from \Monolog\Logger
+ * @phpstan-import-type LevelName from \Monolog\Logger
+ */
 class LogConfig extends AbstractBundleConfig
 {
     /**
@@ -104,6 +108,8 @@ class LogConfig extends AbstractBundleConfig
      * @api
      *
      * @return int|string Level or level name
+     *
+     * @phpstan-return Level|LevelName|\Psr\Log\LogLevel::*
      */
     public function getLogLevel()
     {

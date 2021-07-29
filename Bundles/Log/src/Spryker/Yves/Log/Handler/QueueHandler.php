@@ -11,6 +11,10 @@ use Monolog\Logger;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Shared\Log\Handler\AbstractQueueHandler;
 
+/**
+ * @phpstan-import-type Level from \Monolog\Logger
+ * @phpstan-import-type LevelName from \Monolog\Logger
+ */
 class QueueHandler extends AbstractQueueHandler
 {
     /**
@@ -20,6 +24,8 @@ class QueueHandler extends AbstractQueueHandler
      * @param string $queueName
      * @param int|string $level Level or level name
      * @param bool $bubble
+     *
+     * @phpstan-param Level|LevelName|\Psr\Log\LogLevel::*|array<Level|LevelName|LogLevel::*> $level
      */
     public function __construct(QueueClientInterface $queueClient, $queueName, $level = Logger::DEBUG, $bubble = true)
     {

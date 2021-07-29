@@ -10,6 +10,10 @@ namespace Spryker\Glue\Log;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Log\LogConstants;
 
+/**
+ * @phpstan-import-type Level from \Monolog\Logger
+ * @phpstan-import-type LevelName from \Monolog\Logger
+ */
 class LogConfig extends AbstractBundleConfig
 {
     /**
@@ -75,6 +79,8 @@ class LogConfig extends AbstractBundleConfig
      * @api
      *
      * @return int|string
+     *
+     * @phpstan-return Level|LevelName|\Psr\Log\LogLevel::*
      */
     public function getLogLevel()
     {
