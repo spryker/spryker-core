@@ -107,9 +107,9 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return int|string Level or level name
-     *
      * @phpstan-return Level|LevelName|\Psr\Log\LogLevel::*
+     *
+     * @return int|string Level or level name
      */
     public function getLogLevel()
     {

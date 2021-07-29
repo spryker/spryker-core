@@ -20,12 +20,12 @@ class QueueHandler extends AbstractQueueHandler
     /**
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      *
+     * @phpstan-param Level|LevelName|\Psr\Log\LogLevel::*|array<Level|LevelName|LogLevel::*> $level
+     *
      * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
      * @param string $queueName
      * @param int|string $level Level or level name
      * @param bool $bubble
-     *
-     * @phpstan-param Level|LevelName|\Psr\Log\LogLevel::*|array<Level|LevelName|LogLevel::*> $level
      */
     public function __construct(QueueClientInterface $queueClient, $queueName, $level = Logger::DEBUG, $bubble = true)
     {
