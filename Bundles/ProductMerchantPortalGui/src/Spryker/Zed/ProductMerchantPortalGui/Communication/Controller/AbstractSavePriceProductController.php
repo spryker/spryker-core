@@ -53,12 +53,23 @@ abstract class AbstractSavePriceProductController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @return bool
+     */
+    abstract protected function isProductOwnedByCurrentMerchant(Request $request): bool;
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\WrongRequestBodyContentException
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function indexAction(Request $request): JsonResponse
     {
+        if (!$this->isProductOwnedByCurrentMerchant($request)) {
+            return new JsonResponse(['success' => false]);
+        }
+
         $typePriceProductStoreIds = $this->getFactory()
             ->getUtilEncodingService()
             ->decodeJson((string)$request->get(PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS), true);

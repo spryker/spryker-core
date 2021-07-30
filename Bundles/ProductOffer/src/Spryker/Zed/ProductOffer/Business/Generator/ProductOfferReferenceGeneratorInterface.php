@@ -10,7 +10,9 @@ namespace Spryker\Zed\ProductOffer\Business\Generator;
 interface ProductOfferReferenceGeneratorInterface
 {
     /**
+     * @param int $idProductOffer
+     *
      * @return string
      */
-    public function generateProductOfferReference(): string;
+    public function generateProductOfferReferenceById(int $idProductOffer): string;
 }

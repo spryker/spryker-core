@@ -38,6 +38,7 @@ class GroupTableQueryTest extends Unit
     public function testFetchDataCollectsCorrectAclGroups(): void
     {
         // Arrange
+        $this->tester->ensureAclGroupTableIsEmpty();
         $aclGroupTransfer1 = $this->tester->haveGroup();
         $aclGroupTransfer2 = $this->tester->haveGroup();
         $groupTableMock = new GroupTableMock(

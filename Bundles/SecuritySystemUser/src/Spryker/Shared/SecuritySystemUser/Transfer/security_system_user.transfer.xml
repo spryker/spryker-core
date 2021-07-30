@@ -9,6 +9,7 @@
         <property name="lastLogin" type="string"/>
         <property name="username" type="string"/>
         <property name="password" type="string"/>
+        <property name="isSystemUser" type="bool"/>
     </transfer>
 
     <transfer name="HttpRequest">

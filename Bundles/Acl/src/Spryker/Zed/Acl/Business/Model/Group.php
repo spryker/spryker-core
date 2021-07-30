@@ -37,6 +37,8 @@ class Group implements GroupInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Acl\Business\Writer\GroupWriter::createGroup()} instead.
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\GroupTransfer

@@ -8,7 +8,7 @@
         "spryker/gui": "^3.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.2.0",
-        "spryker/merchant-user": "^0.7.1",
+        "spryker/merchant-user": "^0.7.1 || ^0.8.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.25.0",
         "spryker/translator": "^1.1.0",

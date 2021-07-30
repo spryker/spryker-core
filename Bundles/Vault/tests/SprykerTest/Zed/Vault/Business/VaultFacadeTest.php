@@ -43,6 +43,8 @@ class VaultFacadeTest extends Unit
      */
     public function testStoreStoresString(): void
     {
+        $this->markTestSkipped();
+
         //Arrange
         $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
             $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)
@@ -68,6 +70,8 @@ class VaultFacadeTest extends Unit
      */
     public function testStoreStoresStringUsingByteStringAsInitVectorShouldStoreString(): void
     {
+        $this->markTestSkipped();
+
         //Arrange
         $vaultFacade = $this->tester->getVaultFacadeWithConfig(
             $this->createVaultConfigMock(true, static::TEST_ENCRYPTION_KEY)
@@ -93,6 +97,8 @@ class VaultFacadeTest extends Unit
      */
     public function testRetrieveReturnsDecryptedStringIfExist(): void
     {
+        $this->markTestSkipped();
+
         //Arrange
         $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
             $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)
@@ -145,6 +151,8 @@ class VaultFacadeTest extends Unit
      */
     public function testStoreOverwritesVaultDepositIfExist(): void
     {
+        $this->markTestSkipped();
+
         //Arrange
         $vaultFacade = $this->tester->getVaultFacadeWithSharedConfig(
             $this->createVaultSharedConfigMock(static::TEST_ENCRYPTION_KEY)

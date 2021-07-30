@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\RoleTransfer;
 interface RoleInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\Acl\Business\Writer\RoleWriterInterface::createRole()} instead.
+     *
      * @param string $name
      *
      * @throws \Spryker\Zed\Acl\Business\Exception\RoleNameExistsException

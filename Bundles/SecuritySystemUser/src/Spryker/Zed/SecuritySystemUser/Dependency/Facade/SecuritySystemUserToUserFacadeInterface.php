@@ -17,4 +17,14 @@ interface SecuritySystemUserToUserFacadeInterface
      * @return mixed
      */
     public function setCurrentUser(UserTransfer $user);
+
+    /**
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    public function getCurrentUser();
+
+    /**
+     * @return bool
+     */
+    public function hasCurrentUser();
 }

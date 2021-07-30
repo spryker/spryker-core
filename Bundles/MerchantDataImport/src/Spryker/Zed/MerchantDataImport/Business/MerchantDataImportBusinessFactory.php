@@ -15,6 +15,8 @@ use Spryker\Zed\MerchantDataImport\Business\MerchantStore\Step\MerchantStoreWrit
 use Spryker\Zed\MerchantDataImport\Business\MerchantStore\Step\StoreNameToIdStoreStep;
 use Spryker\Zed\MerchantDataImport\Business\Model\DataSet\MerchantDataSetInterface;
 use Spryker\Zed\MerchantDataImport\Business\Model\MerchantWriterStep;
+use Spryker\Zed\MerchantDataImport\Dependency\Facade\MerchantDataImportToMerchantFacadeInterface;
+use Spryker\Zed\MerchantDataImport\MerchantDataImportDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantDataImport\MerchantDataImportConfig getConfig()
@@ -37,7 +39,8 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
                 MerchantDataSetInterface::URL,
             ]))
             ->addStep(new MerchantWriterStep(
-                $this->getEventFacade()
+                $this->getEventFacade(),
+                $this->getMerchantFacade()
             ));
 
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
@@ -78,5 +81,13 @@ class MerchantDataImportBusinessFactory extends DataImportBusinessFactory
     public function createStoreNameToIdStoreStep(): DataImportStepInterface
     {
         return new StoreNameToIdStoreStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantDataImport\Dependency\Facade\MerchantDataImportToMerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantDataImportToMerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantDataImportDependencyProvider::FACADE_MERCHANT);
     }
 }

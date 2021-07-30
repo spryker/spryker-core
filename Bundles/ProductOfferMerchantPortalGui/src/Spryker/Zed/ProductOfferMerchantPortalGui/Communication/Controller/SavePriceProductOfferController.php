@@ -10,9 +10,11 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
@@ -31,6 +33,8 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function indexAction(Request $request): JsonResponse
@@ -38,6 +42,24 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
         $typePriceProductOfferIds = $this->parseTypePriceProductOfferIds($request->get(static::PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS));
         $volumeQuantity = $this->castId($request->get(static::PARAM_VOLUME_QUANTITY));
         $idProductOffer = $this->castId($request->get(static::PARAM_PRODUCT_OFFER_ID));
+
+        $productOfferTransfer = $this->getFactory()->getProductOfferFacade()->findOne(
+            (new ProductOfferCriteriaTransfer())->setIdProductOffer($idProductOffer)
+        );
+
+        if (!$productOfferTransfer) {
+            throw new NotFoundHttpException(sprintf('Product offer is not found for id %d.', $idProductOffer));
+        }
+
+        $currentMerchantReference = $this->getFactory()
+            ->getMerchantUserFacade()
+            ->getCurrentMerchantUser()
+            ->getMerchantOrFail()
+            ->getMerchantReferenceOrFail();
+
+        if ($productOfferTransfer->getMerchantReferenceOrFail() !== $currentMerchantReference) {
+            return new JsonResponse(['success' => false]);
+        }
 
         $requestData = $this->getFactory()->getUtilEncodingService()->decodeJson((string)$request->getContent(), true)['data'];
 

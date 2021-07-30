@@ -46,15 +46,16 @@ class BusinessHelper extends Module
 
     /**
      * @param iterable|array $itemTransfers
+     * @param array $salesOrderOverride
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    public function haveSalesOrderEntity(iterable $itemTransfers = []): SpySalesOrder
+    public function haveSalesOrderEntity(iterable $itemTransfers = [], array $salesOrderOverride = []): SpySalesOrder
     {
         $salesOrderAddressEntity = $this->createSalesOrderAddress();
         $omsStateEntity = $this->createOmsState();
         $omsProcessEntity = $this->createOmsProcess();
-        $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity);
+        $salesOrderEntity = $this->createSpySalesOrderEntity($salesOrderAddressEntity, $salesOrderOverride);
         $salesExpenseEntity = $this->createSalesExpense($salesOrderEntity);
 
         $this->createOrderItems(
@@ -201,14 +202,16 @@ class BusinessHelper extends Module
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderAddress $salesOrderAddressEntity
+     * @param array $salesOrderOverride
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function createSpySalesOrderEntity(SpySalesOrderAddress $salesOrderAddressEntity): SpySalesOrder
+    protected function createSpySalesOrderEntity(SpySalesOrderAddress $salesOrderAddressEntity, array $salesOrderOverride): SpySalesOrder
     {
         $customerEntity = $this->createCustomer();
 
         $salesOrderEntity = new SpySalesOrder();
+        $salesOrderEntity->fromArray($salesOrderOverride);
         $salesOrderEntity->setCustomer($customerEntity);
         $salesOrderEntity->setBillingAddress($salesOrderAddressEntity);
         $salesOrderEntity->setShippingAddress(clone $salesOrderAddressEntity);

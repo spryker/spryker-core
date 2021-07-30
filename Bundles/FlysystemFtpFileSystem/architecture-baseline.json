@@ -1,9 +1,1 @@
-[
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/FlysystemFtpFileSystem/src/Spryker/Service/FlysystemFtpFileSystem/FlysystemFtpFileSystemDependencyProvider.php",
-        "description": "\n      Access: Class Spryker\\Service\\FlysystemFtpFileSystem\\FlysystemFtpFileSystemDependencyProvider accesses Spryker\\Zed\\Kernel\\AbstractBundleDependencyProvider which violates rule \"No call from Service to Zed\"\n    ",
-        "rule": "LayerAccessRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    }
-]
+[]

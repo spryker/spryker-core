@@ -165,10 +165,12 @@ class AttributeMapWriter implements AttributeMapWriterInterface
      */
     protected function cleanProductSearchAttributeMap($idProductAttributeKey)
     {
-        $this
+        $productSearchAttributeMapQuery = $this
             ->productSearchQueryContainer
-            ->queryProductSearchAttributeMapByFkProductAttributeKey($idProductAttributeKey)
-            ->delete();
+            ->queryProductSearchAttributeMapByFkProductAttributeKey($idProductAttributeKey);
+        if ($productSearchAttributeMapQuery->count()) {
+            $productSearchAttributeMapQuery->delete();
+        }
     }
 
     /**

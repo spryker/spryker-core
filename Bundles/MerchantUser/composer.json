@@ -5,11 +5,10 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.3",
-        "spryker/acl": "^3.4.0",
-        "spryker/acl-extension": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/merchant": "^3.0.0",
         "spryker/merchant-extension": "^1.1.0",
+        "spryker/merchant-user-extension": "^0.1.0",
         "spryker/propel-orm": "^1.5.0",
         "spryker/transfer": "^3.25.0",
         "spryker/user": "^3.13.3",

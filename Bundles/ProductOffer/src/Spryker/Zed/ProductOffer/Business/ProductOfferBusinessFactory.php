@@ -108,7 +108,7 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductOfferReferenceGenerator(): ProductOfferReferenceGeneratorInterface
     {
-        return new ProductOfferReferenceGenerator($this->getRepository());
+        return new ProductOfferReferenceGenerator();
     }
 
     /**

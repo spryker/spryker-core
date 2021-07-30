@@ -17,12 +17,17 @@ use Spryker\Zed\Acl\Business\Model\Installer;
 use Spryker\Zed\Acl\Business\Model\Role;
 use Spryker\Zed\Acl\Business\Model\Rule;
 use Spryker\Zed\Acl\Business\Model\RuleValidator;
+use Spryker\Zed\Acl\Business\Writer\GroupWriter;
+use Spryker\Zed\Acl\Business\Writer\GroupWriterInterface;
+use Spryker\Zed\Acl\Business\Writer\RoleWriter;
+use Spryker\Zed\Acl\Business\Writer\RoleWriterInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Acl\Persistence\AclRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Acl\Persistence\AclEntityManagerInterface getEntityManager()
  */
 class AclBusinessFactory extends AbstractBusinessFactory
 {
@@ -41,7 +46,9 @@ class AclBusinessFactory extends AbstractBusinessFactory
     {
         return new Role(
             $this->createGroupModel(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getAclRolesExpanderPlugins(),
+            $this->getAclRolePostSavePlugins()
         );
     }
 
@@ -102,6 +109,28 @@ class AclBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Acl\Business\Writer\GroupWriterInterface
+     */
+    public function createGroupWriter(): GroupWriterInterface
+    {
+        return new GroupWriter(
+            $this->getEntityManager(),
+            $this->getRepository()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Acl\Business\Writer\RoleWriterInterface
+     */
+    public function createRoleWriter(): RoleWriterInterface
+    {
+        return new RoleWriter(
+            $this->getEntityManager(),
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface
      */
     public function getUserFacade()
@@ -115,5 +144,21 @@ class AclBusinessFactory extends AbstractBusinessFactory
     public function getAclInstallerPlugins(): array
     {
         return $this->getProvidedDependency(AclDependencyProvider::ACL_INSTALLER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolesExpanderPluginInterface[]
+     */
+    public function getAclRolesExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(AclDependencyProvider::PLUGINS_ACL_ROLES_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface[]
+     */
+    public function getAclRolePostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(AclDependencyProvider::PLUGINS_ACL_ROLE_POST_SAVE);
     }
 }

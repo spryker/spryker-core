@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\AclEntity\Persistence" package="src.Orm.Zed.AclEntity.Persistence">
+
+    <table name="spy_acl_entity_segment">
+        <column name="id_acl_entity_segment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" required="true" size="255" type="VARCHAR"/>
+        <column name="reference" required="true" size="255" type="VARCHAR"/>
+        <id-method-parameter value="spy_acl_entity_segment_pk_seq"/>
+        <unique name="spy_acl_entity_segment_reference">
+            <unique-column name="reference"/>
+        </unique>
+    </table>
+
+    <table name="spy_acl_entity_rule">
+        <column name="id_acl_entity_rule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_acl_role" type="INTEGER" required="true"/>
+        <column name="fk_acl_entity_segment" type="INTEGER"/>
+        <column name="entity" required="true" size="255" type="VARCHAR"/>
+        <column name="scope" required="true" type="ENUM" valueSet="global, segment, inherited"/>
+        <column name="permission_mask" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_acl_entity_rule-fk_acl_role" foreignTable="spy_acl_role" onDelete="CASCADE">
+            <reference local="fk_acl_role" foreign="id_acl_role"/>
+        </foreign-key>
+        <foreign-key name="spy_acl_entity_rule-fk_acl_entity_segment" foreignTable="spy_acl_entity_segment" onDelete="CASCADE">
+            <reference local="fk_acl_entity_segment" foreign="id_acl_entity_segment"/>
+        </foreign-key>
+
+        <id-method-parameter value="spy_acl_entity_rule_pk_seq"/>
+    </table>
+
+</database>

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Acl\Persistence;
 
+use Generated\Shared\Transfer\AclRoleCriteriaTransfer;
 use Generated\Shared\Transfer\GroupCriteriaTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
+use Generated\Shared\Transfer\RoleTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -36,5 +38,27 @@ class AclRepository extends AbstractRepository implements AclRepositoryInterface
         return $this->getFactory()
             ->createAclMapper()
             ->mapAclGroupEntityToGroupTransfer($aclGroupEntity, new GroupTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclRoleCriteriaTransfer $aclRoleCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
+     */
+    public function findRole(AclRoleCriteriaTransfer $aclRoleCriteriaTransfer): ?RoleTransfer
+    {
+        $aclRoleQuery = $this->getFactory()
+            ->createRoleQuery()
+            ->filterByArray($aclRoleCriteriaTransfer->modifiedToArrayNotRecursiveCamelCased());
+
+        $aclRoleEntity = $aclRoleQuery->findOne();
+
+        if (!$aclRoleEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createAclMapper()
+            ->mapAclRoleEntityToRoleTransfer($aclRoleEntity, new RoleTransfer());
     }
 }
