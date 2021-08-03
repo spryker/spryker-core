@@ -106,7 +106,7 @@ class ProductViewExpander implements ProductViewExpanderInterface
             );
 
             if(isset($productViewTransfers[$productId])) {
-                $productViewTransfers[$productId] = $productViewTransfers[$productId]->setRating($productReviewSummaryTransfer)
+                $productViewTransfers[$productId]->setRating($productReviewSummaryTransfer)
             }
         }
 
