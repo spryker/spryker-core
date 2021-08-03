@@ -17,6 +17,14 @@ interface ProductBundleCacheInterface
     public function cacheProductForBundleTransfersBySku(array $productForBundleTransfers): void;
 
     /**
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param string[] $skus
+     *
+     * @return void
+     */
+    public function cacheProductForBundleTransfersBySkus(array $productForBundleTransfers, array $skus): void;
+
+    /**
      * @param string $sku
      *
      * @return bool
