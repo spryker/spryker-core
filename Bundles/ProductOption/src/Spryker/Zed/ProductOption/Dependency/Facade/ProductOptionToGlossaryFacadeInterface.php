@@ -12,37 +12,43 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface ProductOptionToGlossaryFacadeInterface
 {
     /**
+     * @phpstan-param array<mixed> $data
+     *
      * @param string $keyName
      * @param array $data
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return string
      */
-    public function translate($keyName, array $data = []);
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
-     *
-     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $locale
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $locale = null);
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
+     * @param bool $isActive
+     *
+     * @throws \Spryker\Zed\Glossary\Business\Exception\MissingKeyException
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     * @throws \Spryker\Zed\Glossary\Business\Exception\TranslationExistsException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value);
+    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      * @param string $value
      * @param bool $isActive
      *
@@ -50,14 +56,14 @@ interface ProductOptionToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
     /**
-     * @param string $glossaryKey
+     * @param string $keyName
      *
      * @return bool
      */
-    public function hasKey($glossaryKey);
+    public function hasKey($keyName);
 
     /**
      * @param string $keyName
@@ -68,13 +74,13 @@ interface ProductOptionToGlossaryFacadeInterface
 
     /**
      * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $localeTransfer);
+    public function getTranslation($keyName, LocaleTransfer $locale);
 
     /**
      * @param string $keyName

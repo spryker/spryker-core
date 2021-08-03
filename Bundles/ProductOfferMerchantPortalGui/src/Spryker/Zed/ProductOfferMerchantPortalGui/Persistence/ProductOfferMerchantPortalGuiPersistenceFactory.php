@@ -14,9 +14,7 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Mapper\PriceProductOfferTableDataMapper;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Propel\ProductOfferTableDataMapper;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Propel\ProductTableDataMapper;
 use Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiDependencyProvider;
@@ -45,14 +43,6 @@ class ProductOfferMerchantPortalGuiPersistenceFactory extends AbstractPersistenc
         return new ProductOfferTableDataMapper(
             $this->getUtilEncodingService()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Mapper\PriceProductOfferTableDataMapper
-     */
-    public function createPriceProductOfferTableDataMapper(): PriceProductOfferTableDataMapper
-    {
-        return new PriceProductOfferTableDataMapper($this->getPriceProductFacade());
     }
 
     /**
@@ -109,13 +99,5 @@ class ProductOfferMerchantPortalGuiPersistenceFactory extends AbstractPersistenc
     public function getPriceProductStorePropelQuery(): SpyPriceProductStoreQuery
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
-     */
-    public function getPriceProductFacade(): ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::FACADE_PRICE_PRODUCT);
     }
 }

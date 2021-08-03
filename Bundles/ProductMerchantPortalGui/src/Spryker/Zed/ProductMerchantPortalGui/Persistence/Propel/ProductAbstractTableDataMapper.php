@@ -59,6 +59,11 @@ class ProductAbstractTableDataMapper
     protected const COL_KEY_VISIBILITY = 'visibility';
 
     /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepository::COL_NAME_FALLBACK
+     */
+    protected const COL_NAME_FALLBACK = 'name_fallback';
+
+    /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
@@ -110,6 +115,10 @@ class ProductAbstractTableDataMapper
 
             $productAbstractTransfer = (new ProductAbstractTransfer())->fromArray($productAbstractTableRowDataArray, true);
             $productAbstractTransfer = $this->mapImageToProductAbstract($productAbstractTableRowDataArray, $productAbstractTransfer);
+
+            if ($productAbstractTableRowDataArray[static::COL_NAME_FALLBACK]) {
+                $productAbstractTransfer->setName($productAbstractTableRowDataArray[static::COL_NAME_FALLBACK]);
+            }
 
             $productAbstractTransfers[] = $productAbstractTransfer;
         }

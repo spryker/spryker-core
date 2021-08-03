@@ -1,35 +1,67 @@
-{% extends '@ZedUi/Layout/layout.twig' %}
+{% extends '@ZedUi/Layout/merchant-layout.twig' %}
 
 {% block body %}
     {% if app.twig.getFunction('navigation') != false %}
         {% set navigationConfig = render_navigation_component_config(navigation('main').menu) %}
         {% set userMenuNavigationItems = navigation('secondary').menu %}
 
-        <web-mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
-            <web-mp-header header>
-                <web-mp-header-menu menu>
-                    {% if username is not empty %}
-                        <span info-primary>{{ username }}</span>
-                    {% endif %}
+        {% block merchantLayoutMain %}
+            <web-mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
+                {% block logo %}
+                    <web-spy-logo logo></web-spy-logo>
+                {% endblock %}
 
-                    {% if userEmail is not empty %}
-                        <span info-secondary>{{ userEmail }}</span>
-                    {% endif %}
+                {% block header %}
+                    <web-mp-header header>
+                        {% block headerMenu %}
+                            <web-mp-header-menu menu>
+                                {% block infoPrimary %}
+                                    {% if username is not empty %}
+                                        <span info-primary>{{ username }}</span>
+                                    {% endif %}
+                                {% endblock %}
 
-                    {% for userMenuNavigationItem in userMenuNavigationItems %}
-                        <a href="{{ userMenuNavigationItem.uri }}">
-                            <web-spy-user-menu-link
-                                {% if userMenuNavigationItem.type is not empty %}type="{{ userMenuNavigationItem.type }}"{% endif %}>
-                                {{ userMenuNavigationItem.title }}
-                            </web-spy-user-menu-link>
-                        </a>
-                    {% endfor %}
-                </web-mp-header-menu>
-            </web-mp-header>
+                                {% block infoSecondary %}
+                                    {% if userEmail is not empty %}
+                                        <span info-secondary>{{ userEmail }}</span>
+                                    {% endif %}
+                                {% endblock %}
 
-            {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
+                                {% block userMenuList %}
+                                    {% for userMenuNavigationItem in userMenuNavigationItems %}
+                                        {% block userMenuLink %}
+                                            <a href="{{ userMenuNavigationItem.uri }}">
+                                                {% block userMenuLinkInner %}
+                                                    <web-spy-user-menu-link
+                                                        {% if userMenuNavigationItem.type is not empty %}type="{{ userMenuNavigationItem.type }}"{% endif %}>
+                                                        {{ userMenuNavigationItem.title }}
+                                                    </web-spy-user-menu-link>
+                                                {% endblock %}
+                                            </a>
+                                        {% endblock %}
+                                    {% endfor %}
 
-            {% block content %}{% endblock %}
-        </web-mp-merchant-layout-main>
+                                    {% block logoutLink %}
+                                        <a href="/security-merchant-portal-gui/logout">
+                                            {% block logoutLinkInner %}
+                                                <web-spy-user-menu-link type="danger">
+                                                    {{ 'Logout' | trans }}
+                                                </web-spy-user-menu-link>
+                                            {% endblock %}
+                                        </a>
+                                    {% endblock %}
+                                {% endblock %}
+                            </web-mp-header-menu>
+                        {% endblock %}
+                    </web-mp-header>
+                {% endblock %}
+
+                {% block flashMessages %}
+                    {% include '@ZedUi/Partials/FlashMessages/flash-messages.twig' %}
+                {% endblock %}
+
+                {% block content %}{% endblock %}
+            </web-mp-merchant-layout-main>
+        {% endblock %}
     {% endif %}
 {% endblock %}

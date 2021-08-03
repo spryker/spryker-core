@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\GroupTransfer;
 interface GroupInterface
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\Acl\Business\Writer\GroupWriterInterface::createGroup()} instead.
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\GroupTransfer

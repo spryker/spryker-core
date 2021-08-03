@@ -38,6 +38,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFin
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck\ProductBundleCartActiveCheckInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PriceReaderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PriceReaderWithCache;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleWriter;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouper;
@@ -86,6 +88,16 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Price\PriceReaderInterface
+     */
+    public function createPriceReader(): PriceReaderInterface
+    {
+        return new PriceReaderWithCache(
+            $this->getPriceFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpanderInterface
      */
     public function createProductBundleCartExpander()
@@ -94,8 +106,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getProductFacade(),
             $this->getLocaleFacade(),
-            $this->getPriceFacade(),
-            $this->createProductBundleReader()
+            $this->createProductBundleReader(),
+            $this->createPriceReader()
         );
     }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ZedNavigation\Business;
 
+use Generated\Shared\Transfer\NavigationItemCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -51,5 +52,22 @@ class ZedNavigationFacade extends AbstractFacade implements ZedNavigationFacadeI
     public function removeNavigationCache(): void
     {
         $this->getFactory()->createNavigationCacheRemover()->removeNavigationCache();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\NavigationItemCollectionTransfer
+     */
+    public function filterNavigationItemCollectionByBackofficeRouteAccessibility(
+        NavigationItemCollectionTransfer $navigationItemCollectionTransfer
+    ): NavigationItemCollectionTransfer {
+        return $this->getFactory()
+            ->createBackofficeNavigationItemCollectionRouterFilter()
+            ->filterNavigationItemCollectionByRouteAccessibility($navigationItemCollectionTransfer);
     }
 }

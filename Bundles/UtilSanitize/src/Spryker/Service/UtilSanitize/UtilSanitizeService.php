@@ -15,8 +15,7 @@ use Spryker\Service\Kernel\AbstractService;
 class UtilSanitizeService extends AbstractService implements UtilSanitizeServiceInterface
 {
     /**
-     * Specification:
-     *  - Escapes any string for safe output in HTML.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,5 +60,21 @@ class UtilSanitizeService extends AbstractService implements UtilSanitizeService
         return $this->getFactory()
             ->createArrayFilter()
             ->filterOutBlankValuesRecursively($array);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $value
+     *
+     * @return string
+     */
+    public function sanitizeString(string $value): string
+    {
+        return $this->getFactory()
+            ->createStringSanitizer()
+            ->sanitize($value);
     }
 }

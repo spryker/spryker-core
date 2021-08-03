@@ -183,9 +183,8 @@ class ReservationReader implements ReservationReaderInterface
     public function sumReservedProductQuantities(ReservationRequestTransfer $reservationRequestTransfer): Decimal
     {
         $reservedStates = $this->getOmsReservedStateCollection();
+        $reservationRequestTransfer->setReservedStates($reservedStates);
 
-        $reservationRequestTransfer->setReservedStates($reservedStates)
-            ->setStore($this->storeFacade->getCurrentStore());
         $salesOrderItemStateAggregationTransfers = $this->aggregateReservations($reservationRequestTransfer);
 
         return $this->calculateReservationQuantity(

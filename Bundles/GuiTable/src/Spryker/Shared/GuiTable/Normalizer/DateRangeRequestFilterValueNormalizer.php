@@ -21,7 +21,7 @@ class DateRangeRequestFilterValueNormalizer implements DateRangeRequestFilterVal
      *
      * @return \Generated\Shared\Transfer\CriteriaRangeFilterTransfer|null
      */
-    public function normalizeFilterValue($value)
+    public function normalizeFilterValue($value): ?CriteriaRangeFilterTransfer
     {
         if (!$value || !is_array($value) || (!isset($value['from']) && !isset($value['to']))) {
             return null;

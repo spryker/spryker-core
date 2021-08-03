@@ -140,7 +140,10 @@ class DiscountCreatePage
 
         $this->tab('tab-content-conditions');
         $i->click('#btn-condition-get');
+
+        $i->waitForElement('#discount_discountCondition_decision_rule_query_string');
         $i->fillField('#discount_discountCondition_decision_rule_query_string', $data['applyWhen']);
+
         $i->click('#create-discount-button');
     }
 

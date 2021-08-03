@@ -13,6 +13,8 @@ use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpenin
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapper;
 use Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface;
+use Spryker\Client\MerchantOpeningHoursStorage\Reader\Filter\DateScheduleFilter;
+use Spryker\Client\MerchantOpeningHoursStorage\Reader\Filter\DateScheduleFilterInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Reader\MerchantOpeningHoursStorageReader;
 use Spryker\Client\MerchantOpeningHoursStorage\Reader\MerchantOpeningHoursStorageReaderInterface;
 
@@ -27,8 +29,17 @@ class MerchantOpeningHoursStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->createMerchantOpeningHoursMapper(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->createDateScheduleFilter()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\MerchantOpeningHoursStorage\Reader\Filter\DateScheduleFilterInterface
+     */
+    public function createDateScheduleFilter(): DateScheduleFilterInterface
+    {
+        return new DateScheduleFilter();
     }
 
     /**

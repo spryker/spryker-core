@@ -24,6 +24,8 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
     public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
 
     public const PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR = 'PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR';
+    public const PLUGINS_PRICE_PRODUCT_OFFER_EXPANDER = 'PLUGINS_PRICE_PRODUCT_OFFER_EXPANDER';
+    public const PLUGINS_PRICE_PRODUCT_OFFER_VALIDATOR = 'PLUGINS_PRICE_PRODUCT_OFFER_VALIDATOR';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,7 +37,10 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addPriceProductFacade($container);
         $container = $this->addValidationAdapter($container);
         $container = $this->addStoreFacadeFacade($container);
+
         $container = $this->addPriceProductOfferExtractorPlugins($container);
+        $container = $this->addPriceProductOfferExpanderPlugins($container);
+        $container = $this->addPriceProductOfferValidatorPlugins($container);
 
         return $container;
     }
@@ -101,9 +106,53 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductOfferValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRICE_PRODUCT_OFFER_VALIDATOR, function () {
+            return $this->getPriceProductOfferValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductOfferExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRICE_PRODUCT_OFFER_EXPANDER, function () {
+            return $this->getPriceProductOfferExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExtractorPluginInterface[]
      */
     protected function getPriceProductOfferExtractorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExpanderPluginInterface[]
+     */
+    protected function getPriceProductOfferExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferValidatorPluginInterface[]
+     */
+    protected function getPriceProductOfferValidatorPlugins(): array
     {
         return [];
     }

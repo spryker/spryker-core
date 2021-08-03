@@ -9,17 +9,14 @@ namespace Spryker\Glue\QuoteRequestsRestApi;
 
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToCartsRestApiClientBridge;
 use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQuoteRequestClientBridge;
-use Spryker\Glue\QuoteRequestsRestApi\Dependency\Service\QuoteRequestsRestApiToShipmentServiceBridge;
 
 /**
  * @method \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiConfig getConfig()
  */
 class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
-    public const CLIENT_CARTS_REST_API = 'CLIENT_CARTS_REST_API';
+    public const PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER = 'PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER';
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
 
     /**
@@ -30,8 +27,7 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
-        $container = $this->addShipmentService($container);
-        $container = $this->addCartsRestApiClient($container);
+        $container = $this->addRestQuoteRequestAttributesExpanderPlugins($container);
         $container = $this->addQuoteRequestClient($container);
 
         return $container;
@@ -42,31 +38,21 @@ class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addShipmentService(Container $container): Container
+    protected function addRestQuoteRequestAttributesExpanderPlugins(Container $container): Container
     {
-        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
-            return new QuoteRequestsRestApiToShipmentServiceBridge(
-                $container->getLocator()->shipment()->service()
-            );
+        $container->set(static::PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER, function () {
+            return $this->getRestQuoteRequestAttributesExpanderPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
+     * @return \Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface[]
      */
-    protected function addCartsRestApiClient(Container $container): Container
+    protected function getRestQuoteRequestAttributesExpanderPlugins(): array
     {
-        $container->set(static::CLIENT_CARTS_REST_API, function (Container $container) {
-            return new QuoteRequestsRestApiToCartsRestApiClientBridge(
-                $container->getLocator()->cartsRestApi()->client()
-            );
-        });
-
-        return $container;
+        return [];
     }
 
     /**

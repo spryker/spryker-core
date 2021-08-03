@@ -132,7 +132,7 @@ interface FlysystemServiceInterface
     public function read($filesystemName, $path);
 
     /**
-     * Specification
+     * Specification:
      * - Select pre-configured filesystem
      * - List contents under a path
      * - Return array of FileSystemResourceTransfer objects located under given path

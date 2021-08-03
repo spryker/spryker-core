@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesProductConnector\Persistence;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface;
 use Spryker\Zed\SalesProductConnector\Persistence\Propel\Mapper\ProductMapper;
@@ -24,9 +25,17 @@ class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery
      */
-    public function createProductMetadataQuery()
+    public function createProductMetadataQuery(): SpySalesOrderItemMetadataQuery
     {
         return SpySalesOrderItemMetadataQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function createSalesOrderItemQuery(): SpySalesOrderItemQuery
+    {
+        return SpySalesOrderItemQuery::create();
     }
 
     /**

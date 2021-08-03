@@ -126,6 +126,7 @@ class FullyStrictTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => true,
         ],
         self::PROP_DECIMAL => [
             'type' => 'Spryker\DecimalObject\Decimal',
@@ -137,6 +138,7 @@ class FullyStrictTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => true,
         ],
         self::PROP_SIMPLE_ARRAY => [
             'type' => 'array',
@@ -148,6 +150,7 @@ class FullyStrictTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => true,
         ],
         self::PROP_ARRAY_SINGULAR => [
             'type' => 'array',
@@ -159,6 +162,7 @@ class FullyStrictTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => true,
         ],
         self::PROP_DUMMY_ITEM => [
             'type' => 'Generated\Shared\Transfer\DummyItemTransfer',
@@ -170,6 +174,7 @@ class FullyStrictTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => true,
         ],
         self::PROP_DUMMY_ITEM_COLLECTION => [
             'type' => 'Generated\Shared\Transfer\DummyItemTransfer',
@@ -181,6 +186,7 @@ class FullyStrictTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => true,
         ],
         self::PROP_TYPED_ARRAY => [
             'type' => 'string[]',
@@ -192,6 +198,7 @@ class FullyStrictTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => false,
             'is_nullable' => false,
+            'is_strict' => true,
         ],
         self::PROP_TYPED_ARRAY_ASSOC => [
             'type' => 'string[]',
@@ -203,6 +210,7 @@ class FullyStrictTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => true,
             'is_nullable' => false,
+            'is_strict' => true,
         ],
         self::PROP_DUMMY_ITEM_COLLECTION_ASSOC => [
             'type' => 'Generated\Shared\Transfer\DummyItemTransfer',
@@ -214,6 +222,7 @@ class FullyStrictTransfer extends AbstractTransfer
             'rest_request_parameter' => 'no',
             'is_associative' => true,
             'is_nullable' => false,
+            'is_strict' => true,
         ],
     ];
 
@@ -237,7 +246,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return int|null
      */
-    public function getPropScalar(): ?int 
+    public function getPropScalar(): ?int
     {
         return $this->propScalar;
     }
@@ -247,7 +256,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return int
      */
-    public function getPropScalarOrFail(): int 
+    public function getPropScalarOrFail(): int
     {
         if ($this->propScalar === null) {
             $this->throwNullValueException(static::PROP_SCALAR);
@@ -292,7 +301,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return \Spryker\DecimalObject\Decimal|null
      */
-    public function getPropDecimal(): ?Decimal 
+    public function getPropDecimal(): ?Decimal
     {
         return $this->propDecimal;
     }
@@ -302,7 +311,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
      */
-    public function getPropDecimalOrFail(): Decimal 
+    public function getPropDecimalOrFail(): Decimal
     {
         if ($this->propDecimal === null) {
             $this->throwNullValueException(static::PROP_DECIMAL);
@@ -343,7 +352,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return array|null
      */
-    public function getPropSimpleArray(): ?array 
+    public function getPropSimpleArray(): ?array
     {
         return $this->propSimpleArray;
     }
@@ -353,7 +362,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return array
      */
-    public function getPropSimpleArrayOrFail(): array 
+    public function getPropSimpleArrayOrFail(): array
     {
         if ($this->propSimpleArray === null) {
             $this->throwNullValueException(static::PROP_SIMPLE_ARRAY);
@@ -413,7 +422,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return array
      */
-    public function getPropArraySingular(): array 
+    public function getPropArraySingular(): array
     {
         return $this->propArraySingular;
     }
@@ -465,7 +474,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return \Generated\Shared\Transfer\DummyItemTransfer|null
      */
-    public function getPropDummyItem(): ?DummyItemTransfer 
+    public function getPropDummyItem(): ?DummyItemTransfer
     {
         return $this->propDummyItem;
     }
@@ -475,7 +484,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return \Generated\Shared\Transfer\DummyItemTransfer
      */
-    public function getPropDummyItemOrFail(): DummyItemTransfer 
+    public function getPropDummyItemOrFail(): DummyItemTransfer
     {
         if ($this->propDummyItem === null) {
             $this->throwNullValueException(static::PROP_DUMMY_ITEM);
@@ -527,7 +536,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\DummyItemTransfer[]
      */
-    public function getPropDummyItemCollection(): ArrayObject 
+    public function getPropDummyItemCollection(): ArrayObject
     {
         return $this->propDummyItemCollection;
     }
@@ -594,7 +603,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return string[]
      */
-    public function getPropTypedArray(): array 
+    public function getPropTypedArray(): array
     {
         return $this->propTypedArray;
     }
@@ -661,7 +670,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return string[]
      */
-    public function getPropTypedArrayAssoc(): array 
+    public function getPropTypedArrayAssoc(): array
     {
         return $this->propTypedArrayAssoc;
     }
@@ -738,7 +747,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\DummyItemTransfer[]
      */
-    public function getPropDummyItemCollectionAssoc(): ArrayObject 
+    public function getPropDummyItemCollectionAssoc(): ArrayObject
     {
         return $this->propDummyItemCollectionAssoc;
     }
@@ -808,6 +817,10 @@ class FullyStrictTransfer extends AbstractTransfer
                         $type = $this->transferMetadata[$normalizedPropertyName]['type'];
                         /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                         $value = (new $type())->fromArray($value, $ignoreMissingProperty);
+                    }
+
+                    if ($this->isPropertyStrict($normalizedPropertyName)) {
+                        $this->assertInstanceOfTransfer($normalizedPropertyName, $value);
                     }
                     $this->$normalizedPropertyName = $value;
                     $this->modifiedProperties[$normalizedPropertyName] = true;

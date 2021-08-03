@@ -12,8 +12,8 @@ interface UtilGlobServiceInterface
     /**
      * Specification:
      * - Find pathnames matching a pattern.
-     * - PHP's `glob` doesn't work with stream wrapper this method works with stream wrapper.
-     * - Falls back to PHP's `glob` when no stream wrapper is used.
+     * - PHP's `glob()` doesn't work with stream wrapper this method works with stream wrapper.
+     * - Falls back to PHP's `glob()` when no stream wrapper is used.
      *
      * @api
      *

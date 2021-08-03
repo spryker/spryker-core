@@ -63,6 +63,11 @@ class ProductOfferTableDataMapper
     protected const COL_KEY_VISIBILITY = 'visibility';
 
     /**
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_APPROVAL_STATUS
+     */
+    protected const COL_KEY_APPROVAL_STATUS = 'approvalStatus';
+
+    /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_VALID_FROM
      */
     protected const COL_KEY_VALID_FROM = 'validFrom';
@@ -91,6 +96,7 @@ class ProductOfferTableDataMapper
         self::COL_KEY_STORES => ProductOfferTransfer::STORES,
         self::COL_KEY_STOCK => SpyProductOfferStockTableMap::COL_QUANTITY,
         self::COL_KEY_VISIBILITY => SpyProductOfferTableMap::COL_IS_ACTIVE,
+        self::COL_KEY_APPROVAL_STATUS => SpyProductOfferTableMap::COL_APPROVAL_STATUS,
         self::COL_KEY_VALID_FROM => SpyProductOfferValidityTableMap::COL_VALID_FROM,
         self::COL_KEY_VALID_TO => SpyProductOfferValidityTableMap::COL_VALID_TO,
         self::COL_KEY_CREATED_AT => SpyProductOfferTableMap::COL_CREATED_AT,
@@ -111,9 +117,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableDataArray
-     *
-     * @param array $productOfferTableDataArray
+     * @param mixed[] $productOfferTableDataArray
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
@@ -145,13 +149,9 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
+     * @param mixed[] $productOfferTableRowDataArray
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productOfferTableRowDataArray
-     *
-     * @return array
+     * @return mixed[]
      */
     protected function prepareProductOfferStoresTableData(array $productOfferTableRowDataArray): array
     {
@@ -169,13 +169,9 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
+     * @param mixed[] $productOfferTableRowDataArray
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param array $productOfferTableRowDataArray
-     *
-     * @return array
+     * @return mixed[]
      */
     protected function prepareProductOfferAttributesTableData(array $productOfferTableRowDataArray): array
     {
@@ -202,9 +198,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
-     *
-     * @param array $productOfferTableRowDataArray
+     * @param mixed[] $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
@@ -222,9 +216,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
-     *
-     * @param array $productOfferTableRowDataArray
+     * @param mixed[] $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
@@ -242,9 +234,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @phpstan-param array<mixed> $productOfferTableRowDataArray
-     *
-     * @param array $productOfferTableRowDataArray
+     * @param mixed[] $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer

@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="ItemState">
         <property name="idSalesOrder" type="int"/>
@@ -47,14 +45,12 @@
     </transfer>
 
     <transfer name="OmsStateCollection">
-        <property name="states" type="OmsState[]" associative="true" singular="state"
-                  description="State name is used as a key"/>
+        <property name="states" type="OmsState[]" associative="true" singular="state" description="State name is used as a key"/>
     </transfer>
 
     <transfer name="OmsState">
         <property name="name" type="string"/>
-        <property name="processes" type="OmsProcess[]" associative="true" singular="process"
-                  description="Process name is used as a key"/>
+        <property name="processes" type="OmsProcess[]" associative="true" singular="process" description="Process name is used as a key"/>
     </transfer>
 
     <transfer name="OmsProcess">
@@ -185,4 +181,3 @@
     </transfer>
 
 </transfers>
-

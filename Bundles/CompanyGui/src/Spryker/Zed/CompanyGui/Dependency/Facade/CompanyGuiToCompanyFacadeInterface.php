@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CompanyGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CompanyCollectionTransfer;
+use Generated\Shared\Transfer\CompanyCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 
@@ -39,4 +41,11 @@ interface CompanyGuiToCompanyFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyTransfer|null
      */
     public function findCompanyById(int $idCompany): ?CompanyTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
+     */
+    public function getCompanyCollection(CompanyCriteriaFilterTransfer $companyCriteriaFilterTransfer): CompanyCollectionTransfer;
 }

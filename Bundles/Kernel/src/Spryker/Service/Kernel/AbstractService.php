@@ -17,8 +17,6 @@ class AbstractService
     protected $factory;
 
     /**
-     * @api
-     *
      * @param \Spryker\Service\Kernel\AbstractServiceFactory $factory
      *
      * @return $this

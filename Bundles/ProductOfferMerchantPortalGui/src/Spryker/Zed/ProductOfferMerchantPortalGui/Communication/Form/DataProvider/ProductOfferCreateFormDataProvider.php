@@ -9,25 +9,9 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvi
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface;
 
 class ProductOfferCreateFormDataProvider extends AbstractProductOfferFormDataProvider implements ProductOfferCreateFormDataProviderInterface
 {
-    /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade
-     */
-    public function __construct(
-        ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade,
-        ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade
-    ) {
-        parent::__construct($productFacade, $merchantUserFacade, $merchantStockFacade);
-    }
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
@@ -49,7 +33,7 @@ class ProductOfferCreateFormDataProvider extends AbstractProductOfferFormDataPro
         $productOfferTransfer = new ProductOfferTransfer();
         $productOfferTransfer->setConcreteSku($productConcreteTransfer->getSku());
         $productOfferTransfer->setIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
-        $productOfferTransfer->setFkMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());
+        $productOfferTransfer->setMerchantReference($this->merchantUserFacade->getCurrentMerchantUser()->getMerchantOrFail()->getMerchantReference());
         $productOfferTransfer = $this->setDefaultMerchantStock($productOfferTransfer);
 
         return $productOfferTransfer;

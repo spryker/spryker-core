@@ -13,7 +13,7 @@ interface QuoteRequestQuoteCheckPluginInterface
 {
     /**
      * Specification:
-     * - Returns if quote is applicable for quote request creation.
+     * - Returns true if quote is applicable for quote request creation.
      *
      * @api
      *

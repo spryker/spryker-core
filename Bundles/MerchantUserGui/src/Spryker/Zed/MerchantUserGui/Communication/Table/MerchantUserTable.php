@@ -214,7 +214,7 @@ class MerchantUserTable extends AbstractTable
      */
     protected function createActionColumn(array $item): array
     {
-        $router = $this->routerFacade->getRouter();
+        $router = $this->routerFacade->getBackofficeChainRouter();
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(

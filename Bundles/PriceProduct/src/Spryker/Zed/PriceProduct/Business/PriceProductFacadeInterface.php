@@ -262,7 +262,8 @@ interface PriceProductFacadeInterface
      * Specification:
      *  - Reads prices same as findPricesBySkuForCurrentStore, then groups by currency, price mode, price type for current store.
      *  - Delegates call to findPricesBySkuForCurrentStore and groups result after by currency, price mode and price type.
-     *  - Groups provided transfers `priceData` by currency only.
+     *  - Groups provided transfers `priceData` by currency only for BC reasons.
+     *  - Groups provided transfers `priceData` by currency and price type.
      *
      * For example:
      *   $result = [
@@ -271,7 +272,11 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
-     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceDataByPriceType' => [
+     *            'DEFAULT' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *            'ORIGINAL' => '{"volume_prices":[{"quantity":"2","net_price":700,"gross_price":850}]}'
+     *        ],
      *     ]
      *  ];
      *
@@ -289,7 +294,8 @@ interface PriceProductFacadeInterface
     /**
      * Specification:
      * - Groups provided transfers by currency, price mode and price type.
-     * - Groups provided transfers `priceData` by currency only.
+     * - Groups provided transfers `priceData` by currency only for BC reasons.
+     * - Groups provided transfers `priceData` by currency and price type.
      *
      * Example:
      *   $result = [
@@ -298,7 +304,11 @@ interface PriceProductFacadeInterface
      *           'DEFAULT' => 1000,
      *           'ORIGINAL' => 2000,
      *        ],
-     *      'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceData' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *        'priceDataByPriceType' => [
+     *            'DEFAULT' => '{"volume_prices":[{"quantity":"2","net_price":900,"gross_price":1000}]}',
+     *            'ORIGINAL' => '{"volume_prices":[{"quantity":"2","net_price":700,"gross_price":850}]}'
+     *        ],
      *     ]
      *  ];
      *
@@ -340,6 +350,7 @@ interface PriceProductFacadeInterface
      * - Filters results by currency when provided in criteria.
      * - Concrete prices overwrites abstracts for matching price types.
      * - Extracts additional prices array from price data.
+     * - Returns only concrete product prices if PriceProductCriteriaTransfer.onlyConcretePrices set to true.
      *
      * @api
      *
@@ -474,6 +485,7 @@ interface PriceProductFacadeInterface
      * - Filters results by store when provided in criteria.
      * - Filters results by currency when provided in criteria.
      * - Concrete prices overwrites abstracts for matching price types.
+     * - Returns only concrete product prices if PriceProductCriteriaTransfer.onlyConcretePrices set to true.
      *
      * @api
      *
@@ -600,6 +612,7 @@ interface PriceProductFacadeInterface
      * - Validates product prices collection.
      * - Checks if there are duplicated prices for store-currency-gross-net combinations.
      * - Checks that currency is assigned to a store for each price.
+     * - Executes PriceProductValidatorPluginInterface plugins.
      * - Returns ValidationResponseTransfer transfer object.
      *
      * @api

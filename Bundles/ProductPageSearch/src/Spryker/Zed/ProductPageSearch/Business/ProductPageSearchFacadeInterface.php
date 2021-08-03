@@ -202,4 +202,15 @@ interface ProductPageSearchFacadeInterface
         FilterTransfer $filterTransfer,
         array $productIds = []
     ): array;
+
+    /**
+     * Specification:
+     * - Updates `spy_product_abstract_page_search` by product abstract IDs provided by plugins `ProductPageRefreshPluginInterface`. If the list of IDs is empty nothing will be updated.
+     * - Stores the data as json encoded to storage table.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function refreshProductAbstractPage(): void;
 }

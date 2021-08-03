@@ -22,4 +22,19 @@ interface SalesProductConnectorRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param int $interval
+     *
+     * @return array
+     */
+    public function getRawProductPopularityByProductAbstractIdsAndInterval(array $productAbstractIds, int $interval): array;
+
+    /**
+     * @param int $interval
+     *
+     * @return array
+     */
+    public function getProductAbstractIdsForRefreshByInterval(int $interval): array;
 }

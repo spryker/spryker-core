@@ -31,16 +31,36 @@ class Role implements RoleInterface
     protected $group;
 
     /**
+     * @var \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolesExpanderPluginInterface[]
+     */
+    protected $aclRolesExpanderPlugins;
+
+    /**
+     * @var \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface[]
+     */
+    protected $aclRolePostSavePlugins;
+
+    /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolesExpanderPluginInterface[] $aclRolesExpanderPlugins
+     * @param \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface[] $aclRolePostSavePlugins
      */
-    public function __construct(GroupInterface $group, AclQueryContainerInterface $queryContainer)
-    {
+    public function __construct(
+        GroupInterface $group,
+        AclQueryContainerInterface $queryContainer,
+        array $aclRolesExpanderPlugins,
+        array $aclRolePostSavePlugins
+    ) {
         $this->group = $group;
         $this->queryContainer = $queryContainer;
+        $this->aclRolesExpanderPlugins = $aclRolesExpanderPlugins;
+        $this->aclRolePostSavePlugins = $aclRolePostSavePlugins;
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Acl\Business\Writer\RoleWriter::createRole()} instead.
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -86,11 +106,13 @@ class Role implements RoleInterface
             );
         }
 
-        $aclRoleEntity->setName($roleTransfer->getName());
+        $aclRoleEntity->fromArray($roleTransfer->toArray());
         $aclRoleEntity->save();
 
         $roleTransfer = new RoleTransfer();
         $roleTransfer->fromArray($aclRoleEntity->toArray(), true);
+
+        $roleTransfer = $this->executeAclRolPostSavePlugins($roleTransfer);
 
         return $roleTransfer;
     }
@@ -133,6 +155,8 @@ class Role implements RoleInterface
             $this->addGroupRoles($rolesTransfer, $groupTransfer->getIdAclGroup());
         }
 
+        $rolesTransfer = $this->executeAclRolesExpanderPlugins($rolesTransfer);
+
         return $rolesTransfer;
     }
 
@@ -168,6 +192,8 @@ class Role implements RoleInterface
 
             $rolesTransfer->addRole($roleTransfer);
         }
+
+        $rolesTransfer = $this->executeAclRolesExpanderPlugins($rolesTransfer);
 
         return $rolesTransfer;
     }
@@ -260,5 +286,33 @@ class Role implements RoleInterface
         }
 
         return $this->getByName($name);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RolesTransfer
+     */
+    protected function executeAclRolesExpanderPlugins(RolesTransfer $rolesTransfer): RolesTransfer
+    {
+        foreach ($this->aclRolesExpanderPlugins as $aclRolesExpanderPlugin) {
+            $rolesTransfer = $aclRolesExpanderPlugin->expand($rolesTransfer);
+        }
+
+        return $rolesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer
+     */
+    protected function executeAclRolPostSavePlugins(RoleTransfer $roleTransfer): RoleTransfer
+    {
+        foreach ($this->aclRolePostSavePlugins as $aclRolePostSavePlugin) {
+            $roleTransfer = $aclRolePostSavePlugin->postSave($roleTransfer);
+        }
+
+        return $roleTransfer;
     }
 }

@@ -10,14 +10,17 @@ namespace SprykerTest\Zed\Cart\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CartChangeBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
+use InvalidArgumentException;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
@@ -34,6 +37,7 @@ use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Communication\Plugin\CartItemPricePlugin;
 use Spryker\Zed\PriceProduct\PriceProductDependencyProvider;
 use Spryker\Zed\PriceProductVolume\Communication\Plugin\PriceProductExtension\PriceProductVolumeExtractorPlugin;
+use Spryker\Zed\ProductCartConnector\Communication\Plugin\ProductExistsCartPreCheckPlugin;
 
 /**
  * Auto-generated group annotations
@@ -386,6 +390,44 @@ class CartFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testAddValidAddsValidItemsAndIgnoresInvalidOnes(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            CartDependencyProvider::CART_PRE_CHECK_PLUGINS,
+            [new ProductExistsCartPreCheckPlugin()]
+        );
+
+        $activeProductConcreteTransfer = $this->tester->haveFullProduct();
+
+        $inactiveProductConcreteTransfer = $this->tester->haveFullProduct([
+            ProductConcreteTransfer::IS_ACTIVE => false,
+        ]);
+
+        $activeItemTransfer = (new ItemTransfer())
+            ->setSku($activeProductConcreteTransfer->getSku())
+            ->setQuantity(1);
+
+        $inactiveItemTransfer = (new ItemTransfer())
+            ->setSku($inactiveProductConcreteTransfer->getSku())
+            ->setQuantity(1);
+
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setQuote(new QuoteTransfer())
+            ->addItem($activeItemTransfer)
+            ->addItem($inactiveItemTransfer);
+
+        // Act
+        $quoteTransfer = $this->getCartFacade()->addValid($cartChangeTransfer);
+
+        // Assert
+        $this->assertCount(1, $quoteTransfer->getItems());
+        $this->assertSame($activeItemTransfer->getSku(), $quoteTransfer->getItems()->getIterator()->current()->getSku());
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface
      */
     protected function getQuoteFacadeMock(): CartToQuoteFacadeInterface
@@ -481,8 +523,8 @@ class CartFacadeTest extends Unit
     {
         // Arrange
         $itemForRemove = (new ItemBuilder([
-                ItemTransfer::SKU => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
-                ItemTransfer::QUANTITY => 1,
+            ItemTransfer::SKU => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
+            ItemTransfer::QUANTITY => 1,
         ]))->build();
 
         $quoteTransfer = new QuoteTransfer();
@@ -629,5 +671,42 @@ class CartFacadeTest extends Unit
             ->findOneOrCreate()
             ->setPrice(100)
             ->save();
+    }
+
+    /**
+     * @return void
+     */
+    public function testQuoteTransferIsDeepClonedDuringValidation(): void
+    {
+        // Arrange
+        $this->expectNotToPerformAssertions();
+
+        $checkChangesCallback = $this->getQuoteChangeObserverPluginCheckChangesCallback();
+        $quoteChangeObserverPluginMock = $this->tester->getQuoteChangeObserverPluginMock($checkChangesCallback);
+        $this->tester->setDependency(
+            CartDependencyProvider::PLUGINS_QUOTE_CHANGE_OBSERVER,
+            [
+                $quoteChangeObserverPluginMock,
+            ]
+        );
+
+        $quoteTransfer = (new QuoteBuilder())->withItem()->build();
+
+        // Act
+        $this->tester->getFacade()->validateQuote($quoteTransfer);
+    }
+
+    /**
+     * @return callable
+     */
+    protected function getQuoteChangeObserverPluginCheckChangesCallback(): callable
+    {
+        return function (QuoteTransfer $resultQuoteTransfer, QuoteTransfer $sourceQuoteTransfer) {
+            $resultObjectHash = spl_object_hash($resultQuoteTransfer->getItems()[0]);
+            $sourceObjectHash = spl_object_hash($sourceQuoteTransfer->getItems()[0]);
+            if ($resultObjectHash === $sourceObjectHash) {
+                throw new InvalidArgumentException('Quote transfer was not deep cloned.');
+            }
+        };
     }
 }

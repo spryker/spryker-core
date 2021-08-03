@@ -657,15 +657,33 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         if ($productCriteriaTransfer->getSkus()) {
             $productQuery->filterBySku_In($productCriteriaTransfer->getSkus());
         }
+
         if ($productCriteriaTransfer->getIsActive() !== null) {
             $productQuery->filterByIsActive($productCriteriaTransfer->getIsActive());
         }
+
         if ($productCriteriaTransfer->getIdStore()) {
             $productQuery->useSpyProductAbstractQuery()
                 ->useSpyProductAbstractStoreQuery()
                     ->filterByFkStore($productCriteriaTransfer->getIdStore())
                 ->endUse()
             ->endUse();
+        }
+
+        if ($productCriteriaTransfer->getIdProductAbstract()) {
+            $productQuery->filterByFkProductAbstract($productCriteriaTransfer->getIdProductAbstract());
+        }
+
+        if (count($productCriteriaTransfer->getAttributes()) > 0) {
+            $criteria = new Criteria();
+            foreach ($productCriteriaTransfer->getAttributes() as $key => $value) {
+                $attributesLikeCriteria = $criteria->getNewCriterion(
+                    SpyProductTableMap::COL_ATTRIBUTES,
+                    sprintf('%%"%s":"%s"%%', $key, $value),
+                    Criteria::LIKE
+                );
+                $productQuery->addAnd($attributesLikeCriteria);
+            }
         }
 
         return $productQuery;

@@ -1,5 +1,5 @@
 # FileManagerGui Module
-[![Build Status](https://travis-ci.org/spryker/file-manager-gui.svg)](https://travis-ci.org/spryker/file-manager-gui)
+[![Latest Stable Version](https://poser.pugx.org/spryker/file-manager-gui/v/stable.svg)](https://packagist.org/packages/spryker/file-manager-gui)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 FileManagerGui is a user interface module to manage FileManager functionality in the Zed Administration Interface.

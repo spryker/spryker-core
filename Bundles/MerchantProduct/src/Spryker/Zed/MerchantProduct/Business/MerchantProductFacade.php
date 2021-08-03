@@ -13,12 +13,15 @@ use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\MerchantProduct\Business\MerchantProductBusinessFactory getFactory()
  */
 class MerchantProductFacade extends AbstractFacade implements MerchantProductFacadeInterface
@@ -109,5 +112,74 @@ class MerchantProductFacade extends AbstractFacade implements MerchantProductFac
         MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
     ): ProductConcreteCollectionTransfer {
         return $this->getFactory()->createMerchantProductReader()->getProductConcreteCollection($merchantProductCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
+     */
+    public function findProductConcrete(
+        MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+    ): ?ProductConcreteTransfer {
+        return $this->getFactory()->createMerchantProductReader()->findProductConcrete($merchantProductCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return bool
+     */
+    public function isProductConcreteOwnedByMerchant(
+        ProductConcreteTransfer $productConcreteTransfer,
+        MerchantTransfer $merchantTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createMerchantProductReader()
+            ->isProductConcreteOwnedByMerchant($productConcreteTransfer, $merchantTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer
+     */
+    public function create(MerchantProductTransfer $merchantProductTransfer): MerchantProductTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantProductWriter()
+            ->create($merchantProductTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return bool
+     */
+    public function isProductAbstractOwnedByMerchant(
+        ProductAbstractTransfer $productAbstractTransfer,
+        MerchantTransfer $merchantTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createMerchantProductReader()
+            ->isProductAbstractOwnedByMerchant($productAbstractTransfer, $merchantTransfer);
     }
 }

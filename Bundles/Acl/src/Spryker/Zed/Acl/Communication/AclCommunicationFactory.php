@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
  * @method \Spryker\Zed\Acl\Business\AclFacadeInterface getFacade()
  * @method \Spryker\Zed\Acl\Persistence\AclRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Acl\Persistence\AclEntityManagerInterface getEntityManager()
  */
 class AclCommunicationFactory extends AbstractCommunicationFactory
 {

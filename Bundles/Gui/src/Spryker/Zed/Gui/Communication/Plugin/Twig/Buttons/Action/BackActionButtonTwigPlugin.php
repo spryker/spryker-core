@@ -36,7 +36,7 @@ class BackActionButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getIcon(): string
     {
-        return '<i class="fa fa-angle-double-left"></i> ';
+        return '<i class="fa fa-angle-left"></i> ';
     }
 
     /**
@@ -44,6 +44,6 @@ class BackActionButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getButtonDefaultClass(): string
     {
-        return 'btn-sm btn-outline safe-submit';
+        return 'btn-sm btn-view btn-outline safe-submit';
     }
 }

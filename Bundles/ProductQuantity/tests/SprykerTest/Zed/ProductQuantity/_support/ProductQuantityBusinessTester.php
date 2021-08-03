@@ -101,11 +101,11 @@ class ProductQuantityBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param string $sku
-     * @param int $quantity
+     * @param int|float|string $quantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function addSkuToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer, string $sku, int $quantity): CartChangeTransfer
+    public function addSkuToCartChangeTransfer(CartChangeTransfer $cartChangeTransfer, string $sku, $quantity): CartChangeTransfer
     {
         $cartChangeTransfer->addItem(
             (new ItemTransfer())

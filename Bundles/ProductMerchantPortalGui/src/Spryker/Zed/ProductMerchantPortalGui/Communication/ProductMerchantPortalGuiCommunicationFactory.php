@@ -12,51 +12,145 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
+use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilder;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreator;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreatorInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\AttributesDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\AttributesDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Deleter\PriceDeleter;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Deleter\PriceDeleterInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\MerchantDataExpander;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\MerchantDataExpanderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductAbstractLocalizedAttributesExpander;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductAbstractLocalizedAttributesExpanderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductConcreteLocalizedAttributesExpander;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductConcreteLocalizedAttributesExpanderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductStockExpander;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductStockExpanderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractor;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractorInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAbstractAttributeUniqueCombinationConstraint;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAttributesNotBlankConstraint;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductConcreteOwnedByMerchantConstraint;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithMultiConcreteForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\CreateProductAbstractWithSingleConcreteFormDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\CreateProductAbstractWithSingleConcreteFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteBulkForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\EmptyStringTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\LocaleTransformer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\PriceProductTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\ProductAttributeTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\ProductConcreteEditFormDataTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\StockTransformer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGenerator;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGeneratorInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CategoryFilterOptionsProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CurrencyFilterConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CurrencyFilterConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductAbstractGuiTableConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductAbstractGuiTableConfigurationProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductConcreteGuiTableConfigurationProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductConcreteGuiTableConfigurationProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractAttributeGuiTableConfigurationProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractAttributeGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductConcreteAttributeGuiTableConfigurationProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductConcreteAttributeGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\StoreFilterOptionsProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\StoreFilterOptionsProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\PriceProductAbstractTableDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\PriceProductConcreteTableDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAbstractAttributeTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAbstractTableDataProvider;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProvider;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductConcreteAttributeTableDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductTableDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\DefaultFieldSortingComparisonStrategy;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceFieldSortingComparisonStrategy;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceProductSortingComparisonStrategyInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\PriceProductTableViewSorter;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\PriceProductTableViewSorterInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\CurrencyAndStoreFieldMapperStrategy;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\PriceFieldMapperStrategy;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\VolumeQuantityFieldMapperStrategy;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FormErrorsMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FormErrorsMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ImageSetMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ImageSetMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductAlreadyAddedMergeStrategy;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\VolumePriceForExistingPriceProductMergeStrategy;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\VolumePriceForNonExistingPriceProductMergeStrategy;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\PriceProductMerger;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\PriceProductMergerInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductValidationMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductValidationMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAttributesMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAttributesMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductFormTransferMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductFormTransferMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\SingleFieldPriceProductMapper;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\SingleFieldPriceProductMapperInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Matcher\PriceProductTableRowMatcher;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Matcher\PriceProductTableRowMatcherInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReader;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Validator\ProductConcreteValidator;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Validator\ProductConcreteValidatorInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantStockFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToOmsFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductValidityFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiDependencyProvider;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
@@ -86,16 +180,9 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getRepository(),
             $this->getLocaleFacade(),
             $this->getMerchantUserFacade(),
-            $this->getTranslatorFacade()
+            $this->getTranslatorFacade(),
+            $this->createLocalizedAttributesExtractor()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Builder\ProductAbstractNameBuilderInterface
-     */
-    public function createProductAbstractNameBuilder(): ProductAbstractNameBuilderInterface
-    {
-        return new ProductAbstractNameBuilder();
     }
 
     /**
@@ -111,18 +198,55 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-param array<mixed> $options
-     *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $data
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createProductAbstractForm(?ProductAbstractTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ProductAbstractForm::class, $data, $options);
+    }
+
+    /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param mixed[]|null $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCreateProductAbstractForm(?array $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CreateProductAbstractForm::class, $data, $options);
+    }
+
+    /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param mixed[]|null $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCreateProductAbstractWithSingleConcreteForm(?array $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CreateProductAbstractWithSingleConcreteForm::class, $data, $options);
+    }
+
+    /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param mixed[]|null $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCreateProductAbstractWithMultiConcreteForm(?array $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(CreateProductAbstractWithMultiConcreteForm::class, $data, $options);
     }
 
     /**
@@ -141,15 +265,20 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\CreateProductAbstractWithSingleConcreteFormDataProviderInterface
+     */
+    public function createCreateProductAbstractWithSingleConcreteFormDataProvider(): CreateProductAbstractWithSingleConcreteFormDataProviderInterface
+    {
+        return new CreateProductAbstractWithSingleConcreteFormDataProvider();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductAbstractGuiTableConfigurationProviderInterface
      */
     public function createPriceProductAbstractGuiTableConfigurationProvider(): PriceProductAbstractGuiTableConfigurationProviderInterface
     {
         return new PriceProductAbstractGuiTableConfigurationProvider(
-            $this->getGuiTableFactory(),
-            $this->getPriceProductFacade(),
-            $this->createStoreFilterOptionsProvider(),
-            $this->createCurrencyFilterConfigurationProvider()
+            $this->createPriceProductGuiTableConfigurationBuilderProvider()
         );
     }
 
@@ -162,7 +291,62 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     {
         return new PriceProductAbstractTableDataProvider(
             $idProductAbstract,
-            $this->getRepository(),
+            $this->createPriceProductReader(),
+            $this->createPriceProductTableDataMapper(),
+            $this->createPriceProductTableViewSorter(),
+            $this->getMerchantUserFacade(),
+            $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
+     */
+    public function createProductAbstractAttributesTableDataProvider(int $idProductAbstract): GuiTableDataProviderInterface
+    {
+        return new ProductAbstractAttributeTableDataProvider(
+            $this->getProductFacade(),
+            $idProductAbstract
+        );
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
+     */
+    public function createProductConcreteAttributesTableDataProvider(int $idProductConcrete): GuiTableDataProviderInterface
+    {
+        return new ProductConcreteAttributeTableDataProvider(
+            $this->getProductFacade(),
+            $this->getLocaleFacade(),
+            $this->createLocalizedAttributesExtractor(),
+            $idProductConcrete
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider
+     */
+    public function createProductAttributeDataProvider(): ProductAttributeDataProvider
+    {
+        return new ProductAttributeDataProvider();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
+     */
+    public function createPriceProductConcreteTableDataProvider(int $idProductConcrete): GuiTableDataProviderInterface
+    {
+        return new PriceProductConcreteTableDataProvider(
+            $idProductConcrete,
+            $this->createPriceProductReader(),
+            $this->createPriceProductTableDataMapper(),
+            $this->createPriceProductTableViewSorter(),
             $this->getMerchantUserFacade(),
             $this->getMoneyFacade()
         );
@@ -185,19 +369,66 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return \Symfony\Component\Form\DataTransformerInterface
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer\PriceProductTransformer
      */
-    public function createPriceProductTransformer(int $idProductAbstract): DataTransformerInterface
+    public function createPriceProductTransformer(): DataTransformerInterface
     {
         return new PriceProductTransformer(
-            $idProductAbstract,
             $this->getPriceProductFacade(),
-            $this->getCurrencyFacade(),
-            $this->getMoneyFacade(),
+            $this->createPriceProductMapper(),
+            $this->createPriceProductTableDataMapper(),
             $this->getUtilEncodingService()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createAttributeProductTransformer(): DataTransformerInterface
+    {
+        return new ProductAttributeTransformer(
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createStockTransformer(): DataTransformerInterface
+    {
+        return new StockTransformer();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createQuantityTransformer(): DataTransformerInterface
+    {
+        return new QuantityTransformer();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createEmptyStringTransformer(): DataTransformerInterface
+    {
+        return new EmptyStringTransformer();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FormErrorsMapperInterface
+     */
+    public function createFormErrorsMapper(): FormErrorsMapperInterface
+    {
+        return new FormErrorsMapper();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createProductConcreteEditFormDataTransformer(): DataTransformerInterface
+    {
+        return new ProductConcreteEditFormDataTransformer();
     }
 
     /**
@@ -207,7 +438,249 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     {
         return new PriceProductMapper(
             $this->getPriceProductFacade(),
+            $this->getCurrencyFacade(),
+            $this->getMoneyFacade(),
+            $this->createPriceProductMerger()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\PriceProductMergerInterface
+     */
+    public function createPriceProductMerger(): PriceProductMergerInterface
+    {
+        return new PriceProductMerger(
+            $this->getPriceProductMergeStrategies()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface[]
+     */
+    public function getPriceProductMergeStrategies(): array
+    {
+        return [
+            $this->createPriceProductAlreadyAddedMergeStrategy(),
+            $this->createVolumePriceForExistingPriceProductMergeStrategy(),
+            $this->createVolumePriceForNonExistingPriceProductMergeStrategy(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface
+     */
+    public function createVolumePriceForNonExistingPriceProductMergeStrategy(): PriceProductMergeStrategyInterface
+    {
+        return new VolumePriceForNonExistingPriceProductMergeStrategy(
+            $this->getPriceProductVolumeService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface
+     */
+    public function createVolumePriceForExistingPriceProductMergeStrategy(): PriceProductMergeStrategyInterface
+    {
+        return new VolumePriceForExistingPriceProductMergeStrategy(
+            $this->getPriceProductVolumeService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface
+     */
+    public function createPriceProductAlreadyAddedMergeStrategy(): PriceProductMergeStrategyInterface
+    {
+        return new PriceProductAlreadyAddedMergeStrategy();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface
+     */
+    public function createPriceProductTableDataMapper(): PriceProductTableDataMapperInterface
+    {
+        return new PriceProductTableDataMapper(
+            $this->getPriceProductFacade(),
+            $this->getStoreFacade(),
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface
+     */
+    public function createPriceProductReader(): PriceProductReaderInterface
+    {
+        return new PriceProductReader(
+            $this->getPriceProductFacade(),
+            $this->getProductFacade(),
+            $this->getPriceProductVolumeFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Deleter\PriceDeleterInterface
+     */
+    public function createPriceDeleter(): PriceDeleterInterface
+    {
+        return new PriceDeleter(
+            $this->getPriceProductFacade(),
+            $this->getPriceProductVolumeService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\PriceProductTableViewSorterInterface
+     */
+    public function createPriceProductTableViewSorter(): PriceProductTableViewSorterInterface
+    {
+        return new PriceProductTableViewSorter(
+            [
+                $this->createPriceFieldSortingComparisonStrategy(),
+            ],
+            $this->createDefaultFieldSortingComparisonStrategy()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceProductSortingComparisonStrategyInterface
+     */
+    public function createDefaultFieldSortingComparisonStrategy(): PriceProductSortingComparisonStrategyInterface
+    {
+        return new DefaultFieldSortingComparisonStrategy();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceProductSortingComparisonStrategyInterface
+     */
+    public function createPriceFieldSortingComparisonStrategy(): PriceProductSortingComparisonStrategyInterface
+    {
+        return new PriceFieldSortingComparisonStrategy();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreatorInterface
+     */
+    public function createPriceProductTableColumnCreator(): PriceProductTableColumnCreatorInterface
+    {
+        return new PriceProductTableColumnCreator();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductValidationMapperInterface
+     */
+    public function createPriceProductValidationMapper(): PriceProductValidationMapperInterface
+    {
+        return new PriceProductValidationMapper(
+            $this->createPriceProductTableColumnCreator(),
+            $this->createPriceProductTableRowMatcher()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Matcher\PriceProductTableRowMatcherInterface
+     */
+    public function createPriceProductTableRowMatcher(): PriceProductTableRowMatcherInterface
+    {
+        return new PriceProductTableRowMatcher(
+            $this->createPriceProductTableColumnCreator(),
+            $this->getPriceProductVolumeFacade(),
             $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapperInterface
+     */
+    public function createProductConcreteMapper(): ProductConcreteMapperInterface
+    {
+        return new ProductConcreteMapper();
+    }
+
+    /***
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductAbstractLocalizedAttributesExpanderInterface
+     */
+    public function createProductAbstractLocalizedAttributesExpander(): ProductAbstractLocalizedAttributesExpanderInterface
+    {
+        return new ProductAbstractLocalizedAttributesExpander(
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductConcreteLocalizedAttributesExpanderInterface
+     */
+    public function createProductConcreteLocalizedAttributesExpander(): ProductConcreteLocalizedAttributesExpanderInterface
+    {
+        return new ProductConcreteLocalizedAttributesExpander(
+            $this->getLocaleFacade(),
+            $this->getProductAttributeFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\MerchantDataExpanderInterface
+     */
+    public function createMerchantDataExpander(): MerchantDataExpanderInterface
+    {
+        return new MerchantDataExpander(
+            $this->getMerchantUserFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\SingleFieldPriceProductMapperInterface
+     */
+    public function createSingleFieldPriceProductMapper(): SingleFieldPriceProductMapperInterface
+    {
+        return new SingleFieldPriceProductMapper(
+            $this->getFieldMapperStrategies()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface[]
+     */
+    public function getFieldMapperStrategies(): array
+    {
+        return [
+            $this->createCurrencyAndStoreFieldMapperStrategy(),
+            $this->createPriceFieldMapperStrategy(),
+            $this->createVolumeQuantityFieldMapperStrategy(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface
+     */
+    public function createCurrencyAndStoreFieldMapperStrategy(): FieldMapperStrategyInterface
+    {
+        return new CurrencyAndStoreFieldMapperStrategy(
+            $this->getPriceProductFacade(),
+            $this->getPriceProductVolumeService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface
+     */
+    public function createPriceFieldMapperStrategy(): FieldMapperStrategyInterface
+    {
+        return new PriceFieldMapperStrategy(
+            $this->getPriceProductFacade(),
+            $this->getPriceProductVolumeService(),
+            $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface
+     */
+    public function createVolumeQuantityFieldMapperStrategy(): FieldMapperStrategyInterface
+    {
+        return new VolumeQuantityFieldMapperStrategy(
+            $this->getPriceProductFacade(),
+            $this->getPriceProductVolumeService()
         );
     }
 
@@ -218,16 +691,55 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     {
         return new ProductAttributeGuiTableConfigurationProvider(
             $this->getGuiTableFactory(),
-            $this->createProductAttributeTableDataProvider()
+            $this->createProductAttributeDataProvider()
         );
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\DataProvider\ProductAttributeTableDataProviderInterface
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractAttributeGuiTableConfigurationProviderInterface
      */
-    public function createProductAttributeTableDataProvider(): ProductAttributeTableDataProviderInterface
+    public function createProductAbstractAttributeGuiTableConfigurationProvider(): ProductAbstractAttributeGuiTableConfigurationProviderInterface
     {
-        return new ProductAttributeTableDataProvider();
+        return new ProductAbstractAttributeGuiTableConfigurationProvider(
+            $this->getGuiTableFactory(),
+            $this->getProductAttributeFacade(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\PriceProductConcreteGuiTableConfigurationProviderInterface
+     */
+    public function createPriceProductConcreteGuiTableConfigurationProvider(): PriceProductConcreteGuiTableConfigurationProviderInterface
+    {
+        return new PriceProductConcreteGuiTableConfigurationProvider(
+            $this->createPriceProductGuiTableConfigurationBuilderProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface
+     */
+    public function createPriceProductGuiTableConfigurationBuilderProvider(): PriceProductGuiTableConfigurationBuilderProviderInterface
+    {
+        return new PriceProductGuiTableConfigurationBuilderProvider(
+            $this->getGuiTableFactory(),
+            $this->getPriceProductFacade(),
+            $this->createStoreFilterOptionsProvider(),
+            $this->createCurrencyFilterConfigurationProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductConcreteAttributeGuiTableConfigurationProviderInterface
+     */
+    public function createProductConcreteAttributeGuiTableConfigurationProvider(): ProductConcreteAttributeGuiTableConfigurationProviderInterface
+    {
+        return new ProductConcreteAttributeGuiTableConfigurationProvider(
+            $this->getGuiTableFactory(),
+            $this->getProductAttributeFacade(),
+            $this->getProductFacade()
+        );
     }
 
     /**
@@ -255,23 +767,148 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getLocaleFacade(),
             $this->getMerchantUserFacade(),
             $this->getTranslatorFacade(),
+            $this->createLocalizedAttributesExtractor(),
             $this->getProductConcreteTableExpanderPlugins()
         );
     }
 
     /**
-     * @phpstan-param array<mixed> $options
-     *
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $data
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createProductConcreteBulkForm(?ProductConcreteTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ProductConcreteBulkForm::class, $data, $options);
+    }
+
+    /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param mixed[]|null $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductConcreteEditForm(?array $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(ProductConcreteEditForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProviderInterface
+     */
+    public function createProductConcreteEditFormDataProvider(): ProductConcreteEditFormDataProviderInterface
+    {
+        return new ProductConcreteEditFormDataProvider(
+            $this->getMerchantUserFacade(),
+            $this->getMerchantProductFacade(),
+            $this->getLocaleFacade(),
+            $this->getProductFacade(),
+            $this->createProductAttributeDataProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractorInterface
+     */
+    public function createLocalizedAttributesExtractor(): LocalizedAttributesExtractorInterface
+    {
+        return new LocalizedAttributesExtractor($this->getProductAttributeFacade());
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createProductConcreteOwnedByMerchantConstraint(): Constraint
+    {
+        return new ProductConcreteOwnedByMerchantConstraint(
+            $this->getMerchantUserFacade(),
+            $this->getMerchantProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\SuperAttributesDataProviderInterface
+     */
+    public function createSuperAttributesDataProvider(): SuperAttributesDataProviderInterface
+    {
+        return new SuperAttributesDataProvider(
+            $this->getProductAttributeFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Validator\ProductConcreteValidatorInterface
+     */
+    public function createProductConcreteValidator(): ProductConcreteValidatorInterface
+    {
+        return new ProductConcreteValidator(
+            $this->getValidationAdapter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Generator\CreateProductUrlGeneratorInterface
+     */
+    public function createCreateProductUrlGenerator(): CreateProductUrlGeneratorInterface
+    {
+        return new CreateProductUrlGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\LocaleDataProviderInterface
+     */
+    public function createLocaleDataProvider(): LocaleDataProviderInterface
+    {
+        return new LocaleDataProvider(
+            $this->getStoreFacade(),
+            $this->getLocaleFacade(),
+            $this->getStore()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\AttributesDataProviderInterface
+     */
+    public function createAttributesDataProvider(): AttributesDataProviderInterface
+    {
+        return new AttributesDataProvider($this->createLocalizedAttributesExtractor());
+    }
+
+    /**
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param mixed[]|null $data
+     * @param mixed[] $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createAddProductConcreteForm(?array $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(AddProductConcreteForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductFormTransferMapperInterface
+     */
+    public function createProductFormTransferMapper(): ProductFormTransferMapperInterface
+    {
+        return new ProductFormTransferMapper($this->getLocaleFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Expander\ProductStockExpanderInterface
+     */
+    public function createProductStockExpander(): ProductStockExpanderInterface
+    {
+        return new ProductStockExpander(
+            $this->getMerchantStockFacade(),
+            $this->getMerchantUserFacade()
+        );
     }
 
     /**
@@ -323,6 +960,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
+     */
+    public function getZedUiFactory(): ZedUiFactoryInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::SERVICE_ZED_UI_FACTORY);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface
      */
     public function getCategoryFacade(): ProductMerchantPortalGuiToCategoryFacadeInterface
@@ -371,6 +1016,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface
+     */
+    public function getPriceProductVolumeFacade(): ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_PRICE_PRODUCT_VOLUME);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
      */
     public function getProductFacade(): ProductMerchantPortalGuiToProductFacadeInterface
@@ -379,11 +1032,35 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface
+     */
+    public function getProductAttributeFacade(): ProductMerchantPortalGuiToProductAttributeFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_PRODUCT_ATTRIBUTE);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductValidityFacadeInterface
      */
     public function getProductValidityFacade(): ProductMerchantPortalGuiToProductValidityFacadeInterface
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_PRODUCT_VALIDITY);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToOmsFacadeInterface
+     */
+    public function getOmsFacade(): ProductMerchantPortalGuiToOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantStockFacadeInterface
+     */
+    public function getMerchantStockFacade(): ProductMerchantPortalGuiToMerchantStockFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::FACADE_MERCHANT_STOCK);
     }
 
     /**
@@ -403,10 +1080,85 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface
+     */
+    public function getPriceProductVolumeService(): ProductMerchantPortalGuiToPriceProductVolumeServiceInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::SERVICE_PRICE_PRODUCT_VOLUME);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface[]
      */
     public function getProductConcreteTableExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PLUGINS_PRODUCT_CONCRETE_TABLE_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface
+     */
+    public function getValidationAdapter(): ProductMerchantPortalGuiToValidationAdapterInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::ADAPTER_VALIDATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAttributesNotBlankConstraint
+     */
+    public function createProductAttributesNotBlankConstraint(): Constraint
+    {
+        return new ProductAttributesNotBlankConstraint(
+            $this->getProductAttributeFacade(),
+            $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAbstractAttributeUniqueCombinationConstraint
+     */
+    public function createAbstractProductAttributeUniqueCombinationConstraint(): Constraint
+    {
+        return new ProductAbstractAttributeUniqueCombinationConstraint(
+            $this->getProductAttributeFacade(),
+            $this->getProductFacade(),
+            $this->getTranslatorFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductAttributesMapperInterface
+     */
+    public function createProductAttributesMapper(): ProductAttributesMapperInterface
+    {
+        return new ProductAttributesMapper(
+            $this->createProductAttributeDataProvider()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ImageSetMapperInterface
+     */
+    public function createImageSetMapper(): ImageSetMapperInterface
+    {
+        return new ImageSetMapper();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createLocaleTransformer(): DataTransformerInterface
+    {
+        return new LocaleTransformer(
+            $this->getLocaleFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Store
+     */
+    public function getStore(): Store
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::STORE);
     }
 }

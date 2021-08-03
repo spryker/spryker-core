@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductOffer\Business\Writer;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferErrorTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
@@ -101,7 +101,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     {
         if (
             !$productOfferTransfer->getIdProductOffer()
-            || !$this->productOfferRepository->findOne((new ProductOfferCriteriaFilterTransfer())->setIdProductOffer($productOfferTransfer->getIdProductOffer()))
+            || !$this->productOfferRepository->findOne((new ProductOfferCriteriaTransfer())->setIdProductOffer($productOfferTransfer->getIdProductOffer()))
         ) {
             return (new ProductOfferResponseTransfer())
                 ->setIsSuccessful(false)
@@ -129,6 +129,11 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         $productOfferTransfer = $this->productOfferEntityManager->createProductOffer($productOfferTransfer);
         $productOfferTransfer = $this->productOfferEntityManager->createProductOfferStores($productOfferTransfer);
         $productOfferTransfer = $this->executeProductOfferPostCreatePlugins($productOfferTransfer);
+        $productOfferTransfer->setProductOfferReference(
+            $this->productOfferReferenceGenerator
+                ->generateProductOfferReferenceById($productOfferTransfer->getIdProductOffer())
+        );
+        $productOfferTransfer = $this->productOfferEntityManager->updateProductOffer($productOfferTransfer);
 
         return $productOfferTransfer;
     }
@@ -216,9 +221,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
      */
     protected function setDefaultValues(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        if ($productOfferTransfer->getProductOfferReference() === null) {
-            $productOfferTransfer->setProductOfferReference($this->productOfferReferenceGenerator->generateProductOfferReference());
-        }
+        $productOfferTransfer->setProductOfferReference('');
 
         if ($productOfferTransfer->getApprovalStatus() === null) {
             $productOfferTransfer->setApprovalStatus($this->productOfferConfig->getDefaultApprovalStatus());

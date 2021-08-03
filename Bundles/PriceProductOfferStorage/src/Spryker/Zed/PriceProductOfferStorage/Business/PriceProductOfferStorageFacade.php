@@ -69,4 +69,20 @@ class PriceProductOfferStorageFacade extends AbstractFacade implements PriceProd
     {
         $this->getFactory()->createPriceProductOfferStorageWriter()->unpublishByProductIds($productIds);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByPriceProductStoreEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createPriceProductOfferStorageWriter()
+            ->writeCollectionByPriceProductStoreEvents($eventEntityTransfers);
+    }
 }

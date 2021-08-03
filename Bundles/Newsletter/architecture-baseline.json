@@ -1,0 +1,16 @@
+[
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Business/NewsletterFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Newsletter\\Business\\NewsletterFacade::subscribeWithSingleOptIn() has 2 factory calls and violates the rule \"Every Facade method should have no more than one factory call.\".\n    ",
+        "rule": "FacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "/vendor/spryker/spryker/Bundles/Newsletter/src/Spryker/Zed/Newsletter/Business/NewsletterFacade.php",
+        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\Newsletter\\Business\\NewsletterFacade::subscribeWithDoubleOptIn() has 2 factory calls and violates the rule \"Every Facade method should have no more than one factory call.\".\n    ",
+        "rule": "FacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    }
+]

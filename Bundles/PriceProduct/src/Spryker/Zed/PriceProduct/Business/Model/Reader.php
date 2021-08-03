@@ -184,11 +184,15 @@ class Reader implements ReaderInterface
         int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ): array {
-        $abstractPriceProductTransfers = $this->priceProductAbstractReader
-            ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
-
         $concretePriceProductTransfers = $this->priceProductConcreteReader
             ->findProductConcretePricesById($idProductConcrete, $priceProductCriteriaTransfer);
+
+        if ($priceProductCriteriaTransfer !== null && $priceProductCriteriaTransfer->getOnlyConcretePrices()) {
+            return $concretePriceProductTransfers;
+        }
+
+        $abstractPriceProductTransfers = $this->priceProductAbstractReader
+            ->findProductAbstractPricesById($idProductAbstract, $priceProductCriteriaTransfer);
 
         return $this->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
     }
@@ -503,11 +507,15 @@ class Reader implements ReaderInterface
         int $idProductAbstract,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
     ): array {
-        $abstractPriceProductTransfers = $this->priceProductAbstractReader
-            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
-
         $concretePriceProductTransfers = $this->priceProductConcreteReader
             ->findProductConcretePricesWithoutPriceExtraction($idProductConcrete, $priceProductCriteriaTransfer);
+
+        if ($priceProductCriteriaTransfer !== null && $priceProductCriteriaTransfer->getOnlyConcretePrices()) {
+            return $concretePriceProductTransfers;
+        }
+
+        $abstractPriceProductTransfers = $this->priceProductAbstractReader
+            ->findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, $priceProductCriteriaTransfer);
 
         return $this->mergeConcreteAndAbstractPrices($abstractPriceProductTransfers, $concretePriceProductTransfers);
     }
@@ -603,9 +611,9 @@ class Reader implements ReaderInterface
 
         $resolvedPriceProductTransfers = [];
         foreach ($priceProductCriteriaTransfers as $index => $priceProductCriteriaTransfer) {
-            $priceProductCriteriaIdentifier = $this->buildPriceProductFilterIdentifier($priceProductFilterTransfers[$index]);
+            $priceProductFilterTransfer = $this->fillPriceProductFilterIdentifier($priceProductFilterTransfers[$index]);
             $resolvedItemPrice = $this->resolveProductPriceByPriceProductCriteria(
-                $priceProductCriteriaIdentifier,
+                $priceProductFilterTransfer->getIdentifierOrFail(),
                 $priceProductTransfers,
                 $priceProductCriteriaTransfer
             );
@@ -710,7 +718,8 @@ class Reader implements ReaderInterface
         $priceProductTransfersGroupedByFilterIdentifier = [];
 
         foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
-            $priceProductFilterIdentifier = $this->buildPriceProductFilterIdentifier($priceProductFilterTransfer);
+            $priceProductFilterTransfer = $this->fillPriceProductFilterIdentifier($priceProductFilterTransfer);
+            $priceProductFilterIdentifier = $priceProductFilterTransfer->getIdentifierOrFail();
             $priceProductTransfersGroupedByFilterIdentifier[$priceProductFilterIdentifier] = $this->priceProductService->resolveProductPricesByPriceProductFilter(
                 $priceProductTransfers,
                 $priceProductFilterTransfer
@@ -800,6 +809,22 @@ class Reader implements ReaderInterface
         );
         $priceProductFilterIdentifierTransfer->setQuantity((int)$priceProductFilterTransfer->getQuantity());
 
-        return md5(serialize($priceProductFilterIdentifierTransfer->toArray()));
+        return md5(json_encode($priceProductFilterIdentifierTransfer->toArray(), JSON_THROW_ON_ERROR));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
+     */
+    protected function fillPriceProductFilterIdentifier(PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductFilterTransfer
+    {
+        if ($priceProductFilterTransfer->getIdentifier() !== null) {
+            return $priceProductFilterTransfer;
+        }
+
+        return $priceProductFilterTransfer->setIdentifier(
+            $this->buildPriceProductFilterIdentifier($priceProductFilterTransfer)
+        );
     }
 }

@@ -1,18 +1,5 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 49,
-            "line_to": 55,
-            "type": "InvalidArgument",
-            "message": "Argument 2 of array_filter expects callable(mixed, mixed=):scalar, Closure(Generated\\Shared\\Transfer\\PriceProductTransfer):(null|string|true) provided",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferStorage/src/Spryker/Service/PriceProductOfferStorage/Plugin/PriceProduct/ProductOfferPriceProductFilterPlugin.php",
-            "snippet": "        $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($selectedOfferHasPrice) {\n            if ($selectedOfferHasPrice) {\n                return $priceProductTransfer->getPriceDimension()->getProductOfferReference();\n            }\n\n            return true;\n        });",
-            "selected_text": "function (PriceProductTransfer $priceProductTransfer) use ($selectedOfferHasPrice) {\n            if ($selectedOfferHasPrice) {\n                return $priceProductTransfer->getPriceDimension()->getProductOfferReference();\n            }\n\n            return true;\n        }",
-            "error_level": 6,
-            "shortcode": 4
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
@@ -33,7 +20,7 @@
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOfferStorageTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferStorage/src/Spryker/Client/PriceProductOfferStorage/Sorter/PriceProductOfferStorageSorter.php",
-            "snippet": "        $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();",
+            "snippet": "        $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffers()->getArrayCopy();",
             "selected_text": "getArrayCopy",
             "error_level": 3,
             "shortcode": 113
@@ -85,54 +72,6 @@
             "selected_text": "static::$storeName",
             "error_level": 5,
             "shortcode": 139
-        },
-        {
-            "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "LessSpecificImplementedReturnType",
-            "message": "The inherited return type 'array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer>' for Spryker\\Service\\PriceProductExtension\\Dependency\\Plugin\\PriceProductFilterPluginInterface::filter is more specific than the implemented return type for Spryker\\Service\\PriceProductOfferStorage\\Plugin\\PriceProduct\\ProductOfferPriceProductFilterPlugin::filter 'array<array-key, mixed>'",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferStorage/src/Spryker/Service/PriceProductOfferStorage/Plugin/PriceProduct/ProductOfferPriceProductFilterPlugin.php",
-            "snippet": "     * @return array",
-            "selected_text": "array",
-            "error_level": 5,
-            "shortcode": 166
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getProductOfferReference on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferStorage/src/Spryker/Service/PriceProductOfferStorage/Plugin/PriceProduct/ProductOfferPriceProductFilterPlugin.php",
-            "snippet": "            $productOfferReference = $priceProductTransfer->getPriceDimension()->getProductOfferReference();",
-            "selected_text": "getProductOfferReference",
-            "error_level": 3,
-            "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getProductOfferReference on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferStorage/src/Spryker/Service/PriceProductOfferStorage/Plugin/PriceProduct/ProductOfferPriceProductFilterPlugin.php",
-            "snippet": "            if ($priceProductTransfer->getPriceDimension()->getProductOfferReference()) {",
-            "selected_text": "getProductOfferReference",
-            "error_level": 3,
-            "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getProductOfferReference on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductOfferStorage/src/Spryker/Service/PriceProductOfferStorage/Plugin/PriceProduct/ProductOfferPriceProductFilterPlugin.php",
-            "snippet": "                return $priceProductTransfer->getPriceDimension()->getProductOfferReference();",
-            "selected_text": "getProductOfferReference",
-            "error_level": 3,
-            "shortcode": 83
         },
         {
             "severity": "info",

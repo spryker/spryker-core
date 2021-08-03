@@ -40,7 +40,7 @@ class HttpRequestValidatorTest extends Unit
         $request = $this->createRequestWithHeaders([
             'HTTP_CONTENT-TYPE' => 'application/vnd.api+json; version=1.0',
             'HTTP_ACCEPT' => 'application/vnd.api+json; version=1.0',
-            'HTTP_' . RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_HEADER => 'INVALID',
+            'HTTP_' . RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_HEADERS => 'INVALID',
         ]);
 
         $httpRequestValidator = $this->createHttpRequestValidator();

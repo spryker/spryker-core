@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\MerchantProductOption\Persistence" package="src.Orm.Zed.MerchantProductOption.Persistence">
+
+    <table name="spy_merchant_product_option_group" idMethod="native">
+        <column name="id_merchant_product_option_group" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_product_option_group" type="integer" required="true"/>
+        <column name="merchant_reference" required="true" size="255" type="VARCHAR"/>
+        <column name="approval_status" type="VARCHAR" size="64" required="true"/>
+        <column name="merchant_sku" type="VARCHAR" size="255"/>
+
+        <foreign-key name="spy_merchant_product_option_group-fk_product_option_group" foreignTable="spy_product_option_group" onDelete="CASCADE">
+            <reference local="fk_product_option_group" foreign="id_product_option_group"/>
+        </foreign-key>
+
+        <unique name="spy_merchant_product_option_group-unique-f_p_o_g-m_r">
+            <unique-column name="fk_product_option_group"/>
+            <unique-column name="merchant_reference"/>
+        </unique>
+
+        <index name="spy_merchant_product_option_group-merchant_reference">
+            <index-column name="merchant_reference"/>
+        </index>
+
+        <index name="spy_merchant_product_option_group-merchant_sku">
+            <index-column name="merchant_sku"/>
+        </index>
+
+        <index name="spy_merchant_product_option_group-approval_status">
+            <index-column name="approval_status"/>
+        </index>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_merchant_product_option_group_pk_seq"/>
+    </table>
+</database>

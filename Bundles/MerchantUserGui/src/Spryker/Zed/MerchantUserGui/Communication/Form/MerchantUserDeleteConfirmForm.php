@@ -35,7 +35,7 @@ class MerchantUserDeleteConfirmForm extends AbstractType
     {
         $actionUrl = $this->getFactory()
             ->getRouterFacade()
-            ->getRouter()
+            ->getBackofficeChainRouter()
             ->generate('merchant-user-gui:delete-merchant-user:delete');
 
         $builder->setAction($actionUrl);

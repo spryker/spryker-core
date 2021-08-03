@@ -154,7 +154,10 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
             static::$storeName = $this->storeClient->getCurrentStore()->getName();
         }
 
-        return static::$storeName;
+        /** @var string $storeName */
+        $storeName = static::$storeName;
+
+        return $storeName;
     }
 
     /**

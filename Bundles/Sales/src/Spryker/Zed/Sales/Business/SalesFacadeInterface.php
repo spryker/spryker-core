@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderCancelResponseTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -73,7 +74,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link saveSalesOrder()} instead
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::saveSalesOrder()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -92,12 +93,59 @@ interface SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::saveOrderRaw()} instead
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
      *
      * @return void
      */
     public function saveSalesOrder(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer);
+
+    /**
+     * Specification:
+     * - Saves order to Persistence.
+     * - Sets "is test" flag.
+     * - Updates checkout response with saved order data.
+     * - Sets initial state for state machine.
+     * - Executes `OrderPostSavePluginInterface` stack of plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveOrderRaw(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+
+    /**
+     * Specification:
+     * - Saves order items to Persistence.
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPreSavePluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface} plugin stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderItems(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
+
+    /**
+     * Specification:
+     * - Saves order totals to Persistence.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\SaveOrderTransfer $saveOrderTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderTotals(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void;
 
     /**
      * Specification:
@@ -231,6 +279,8 @@ interface SalesFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::getOrder()} instead.
+     *
      * @param int $idSalesOrder
      *
      * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
@@ -238,6 +288,22 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder);
+
+    /**
+     * Specification:
+     *  - Returns persisted order information for the given sales order id.
+     *  - Hydrates order by calling HydrateOrderPlugins registered in project dependency provider.
+     *  - Hydrates order using quote level (BC) or item level shipping addresses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @throws \Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrder(OrderFilterTransfer $orderFilterTransfer): OrderTransfer;
 
     /**
      * Specification:
@@ -327,7 +393,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link getUniqueItemsFromOrder()} instead.
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacadeInterface::getUniqueItemsFromOrder()} instead.
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *

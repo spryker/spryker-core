@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestCheckoutRequestAttributes">
         <property name="shipment" type="RestShipment"/>
@@ -234,6 +232,42 @@
 
     <transfer name="GiftCardMetadata">
         <property name="isGiftCard" type="bool"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestShipment">
+        <property name="method" type="string"/>
+        <property name="shippingAddress" type="RestQuoteRequestsAddress"/>
+        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsCart">
+        <property name="shipments" type="RestQuoteRequestShipment[]" singular="shipment"/>
+        <property name="items" type="RestQuoteRequestItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="QuoteRequest">
+        <property name="quoteRequestReference" type="string"/>
+        <property name="latestVersion" type="QuoteRequestVersion"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsAttributes">
+        <property name="shownVersion" type="RestQuoteRequestVersion"/>
+        <property name="quoteRequestReference" type="string"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestsAddress">
+    </transfer>
+
+    <transfer name="RestQuoteRequestItem">
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteRequestVersion">
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="RestQuoteRequestVersion">
+        <property name="cart" type="RestQuoteRequestsCart"/>
     </transfer>
 
 </transfers>

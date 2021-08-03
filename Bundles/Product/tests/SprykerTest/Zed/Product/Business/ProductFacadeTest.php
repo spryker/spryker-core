@@ -8,10 +8,13 @@
 namespace SprykerTest\Zed\Product\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
+use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
 use Spryker\Zed\Product\Business\ProductFacade;
 
@@ -37,6 +40,10 @@ class ProductFacadeTest extends Unit
      * @var \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
     protected $productFacade;
+
+    protected const SKU_1 = 'test-sku1';
+    protected const SKU_2 = 'test-sku2';
+    protected const LOCALIZED_ATTRIBUTE_NAME = 'name';
 
     /**
      * @return void
@@ -222,5 +229,85 @@ class ProductFacadeTest extends Unit
         // Assert
         $this->assertCount(1, $productConcreteTransfersWithStore);
         $this->assertCount(0, $productConcreteTransfersWithoutStore);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateProductConcreteCollectionCreatesConcreteProducts(): void
+    {
+        // Arrange
+        $this->tester->deleteConcreteProductBySkus([static::SKU_1, static::SKU_2]);
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $expectedProductsNumber = $this->tester->getProductConcreteDatabaseEntriesCount() + 2;
+        $productConcreteCollectionTransfer = (new ProductConcreteCollectionTransfer())
+            ->addProduct(
+                (new ProductConcreteTransfer())
+                    ->setSku(static::SKU_1)
+                    ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail())
+            )->addProduct(
+                (new ProductConcreteTransfer())
+                    ->setSku(static::SKU_2)
+                    ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail())
+            );
+
+        // Act
+        $this->productFacade->createProductConcreteCollection($productConcreteCollectionTransfer);
+
+        // Assert
+        $this->assertEquals($expectedProductsNumber, $this->tester->getProductConcreteDatabaseEntriesCount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateProductConcreteCollectionCreatesLocalizedAttributes(): void
+    {
+        // Arrange
+        $localeTransfer1 = $this->tester->haveLocale();
+        $localeTransfer2 = $this->tester->haveLocale();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $expectedLocalizedAttributesNumber = $this->tester->countProductLocalizedAttributesByProductBySkus([static::SKU_1]) + 2;
+        $productConcreteCollectionTransfer = (new ProductConcreteCollectionTransfer())
+            ->addProduct(
+                (new ProductConcreteTransfer())
+                    ->setSku(static::SKU_1)
+                    ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail())
+                    ->addLocalizedAttributes(
+                        (new LocalizedAttributesTransfer())->setLocale($localeTransfer1)->setName(static::LOCALIZED_ATTRIBUTE_NAME)
+                    )->addLocalizedAttributes(
+                        (new LocalizedAttributesTransfer())->setLocale($localeTransfer2)->setName(static::LOCALIZED_ATTRIBUTE_NAME)
+                    )
+            );
+
+        // Act
+        $this->productFacade->createProductConcreteCollection($productConcreteCollectionTransfer);
+
+        // Assert
+        $this->assertEquals(
+            $expectedLocalizedAttributesNumber,
+            $this->tester->countProductLocalizedAttributesByProductBySkus([static::SKU_1])
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateProductConcreteCollectionThrowsExceptionIfConcreteProductWithTheSameSkuExists(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $productConcreteCollectionTransfer = (new ProductConcreteCollectionTransfer())
+            ->addProduct(
+                (new ProductConcreteTransfer())
+                    ->setSku($productConcreteTransfer->getSku())
+                    ->setFkProductAbstract($productConcreteTransfer->getFkProductAbstractOrFail())
+            );
+
+        // Assert
+        $this->expectException(ProductConcreteExistsException::class);
+
+        // Act
+        $this->productFacade->createProductConcreteCollection($productConcreteCollectionTransfer);
     }
 }

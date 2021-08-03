@@ -73,6 +73,11 @@ class QuoteRequestFacadeTest extends Unit
     protected const GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS = 'quote_request.validation.error.empty_quote_items';
 
     /**
+     * @see \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY
+     */
+    protected const GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY = 'quote_request.validation.error.cart_is_empty';
+
+    /**
      * @var \SprykerTest\Zed\QuoteRequest\QuoteRequestBusinessTester
      */
     protected $tester;
@@ -230,11 +235,15 @@ class QuoteRequestFacadeTest extends Unit
             ->setCompanyUser($this->companyUserTransfer)
             ->setLatestVersion($this->tester->createQuoteRequestVersion($this->quoteTransfer));
 
-        // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
-
         // Act
-        $this->tester->getFacade()->createQuoteRequest($quoteRequestTransfer);
+        $quoteRequestResponseTransfer = $this->tester->getFacade()->createQuoteRequest($quoteRequestTransfer);
+
+        // Assert
+        $this->assertFalse($quoteRequestResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            static::GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY,
+            $quoteRequestResponseTransfer->getMessages()[0]->getValue()
+        );
     }
 
     /**

@@ -68,7 +68,8 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
 
         foreach ($restProductOfferPricesAttributesTransfer->getPrices() as $restProductOfferPriceAttributesTransfer) {
             $restProductPriceVolumesAttributesTransfers = $this->getRestProductPriceVolumesAttributesTransfers(
-                $currentProductPriceTransfer
+                $currentProductPriceTransfer,
+                $restProductOfferPriceAttributesTransfer->getPriceTypeNameOrFail()
             );
 
             $restProductOfferPriceAttributesTransfer->setVolumePrices($restProductPriceVolumesAttributesTransfers);
@@ -81,15 +82,17 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
      * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer>
      *
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
+     * @param string $priceTypeName
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer[]
      */
     protected function getRestProductPriceVolumesAttributesTransfers(
-        CurrentProductPriceTransfer $currentProductPriceTransfer
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
+        string $priceTypeName
     ): ArrayObject {
         $restProductPriceVolumesAttributesTransfers = new ArrayObject();
 
-        $volumePricesData = $this->getVolumePricesData($currentProductPriceTransfer);
+        $volumePricesData = $this->getVolumePricesData($currentProductPriceTransfer, $priceTypeName);
         if ($volumePricesData === null) {
             return $restProductPriceVolumesAttributesTransfers;
         }
@@ -104,14 +107,17 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
      * @phpstan-return array<int, array> $volumePriceData
      *
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
+     * @param string $priceTypeName
      *
      * @return array|null
      */
     protected function getVolumePricesData(
-        CurrentProductPriceTransfer $currentProductPriceTransfer
+        CurrentProductPriceTransfer $currentProductPriceTransfer,
+        string $priceTypeName
     ): ?array {
+        $priceData = $currentProductPriceTransfer->getPriceDataByPriceType()[$priceTypeName] ?? $currentProductPriceTransfer->getPriceDataOrFail();
         $moneyValueTransfer = (new MoneyValueTransfer())
-            ->setPriceData($currentProductPriceTransfer->getPriceDataOrFail());
+            ->setPriceData($priceData);
 
         $priceData = $this->utilEncodingService->decodeJson($moneyValueTransfer->getPriceDataOrFail(), true);
         if (!array_key_exists(static::VOLUME_PRICE_KEY, $priceData)) {

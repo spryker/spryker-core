@@ -1,5 +1,7 @@
 namespace: PriceProductVolume
 include:
+    - tests/SprykerTest/Client/PriceProductVolume
+    - tests/SprykerTest/Service/PriceProductVolume
     - tests/SprykerTest/Zed/PriceProductVolume
 paths:
     tests: tests

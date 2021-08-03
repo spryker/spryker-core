@@ -455,4 +455,26 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
             ->createCompanyUserMapper()
             ->mapCompanyUserCollection($companyUserEntityTransferCollection);
     }
+
+    /**
+     * @module Company
+     *
+     * @param int $idCustomer
+     *
+     * @return bool
+     */
+    public function isActiveCompanyUserExists(int $idCustomer): bool
+    {
+        $companyUserQuery = $this->getFactory()
+            ->createCompanyUserQuery()
+            ->filterByFkCustomer($idCustomer)
+            ->filterByIsActive(true)
+            ->joinCompany()
+            ->useCompanyQuery()
+                ->filterByIsActive(true)
+                ->filterByStatus(SpyCompanyTableMap::COL_STATUS_APPROVED)
+            ->endUse();
+
+        return $companyUserQuery->exists();
+    }
 }

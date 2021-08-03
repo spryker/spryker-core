@@ -31,19 +31,13 @@ class UserProvider implements UserProviderInterface
      */
     public function setUserToRestRequest(RestRequestInterface $restRequest): RestRequestInterface
     {
-        if ($restRequest->getUser() || $restRequest->getRestUser()) {
+        if ($restRequest->getRestUser()) {
             return $restRequest;
         }
 
         foreach ($this->restUserFinderPlugins as $restUserFinderPlugin) {
             $restUserTransfer = $restUserFinderPlugin->findUser($restRequest);
             if ($restUserTransfer) {
-                $restRequest->setUser(
-                    (string)$restUserTransfer->getSurrogateIdentifier(),
-                    (string)$restUserTransfer->getNaturalIdentifier(),
-                    $restUserTransfer->getScopes()
-                );
-
                 $restRequest->setRestUser($restUserTransfer);
 
                 return $restRequest;

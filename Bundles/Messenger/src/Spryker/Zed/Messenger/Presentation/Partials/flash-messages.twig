@@ -1,11 +1,26 @@
 <div class="flash-messages">
     {% for message in app.session.flashbag.get('flash.messages.success') %}
-        <div class="alert alert-success">{{ message | trans }}</div>
+        <div class="alert alert-success">
+            <i class="far fa-check-circle alert__icon"></i>
+            <div class="alert__text">
+                {{ message | trans }}
+            </div>
+        </div>
     {% endfor %}
     {% for message in app.session.flashbag.get('flash.messages.info') %}
-        <div class="alert alert-info">{{ message | trans }}</div>
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle alert__icon"></i>
+            <div class="alert__text">
+                {{ message | trans }}
+            </div>
+        </div>
     {% endfor %}
     {% for message in app.session.flashbag.get('flash.messages.error') %}
-        <div class="alert alert-danger">{{ message | trans }}</div>
+        <div class="alert alert-danger">
+            <i class="fas fa-ban alert__icon"></i>
+            <div class="alert__text">
+                {{ message | trans }}
+            </div>
+        </div>
     {% endfor %}
 </div>

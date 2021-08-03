@@ -18,6 +18,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackofficeConsole} instead.
+ * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackendGatewayConsole} instead.
+ * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackendApiConsole} instead.
+ *
  * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */

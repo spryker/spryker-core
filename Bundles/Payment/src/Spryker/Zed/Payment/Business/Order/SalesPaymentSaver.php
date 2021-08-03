@@ -15,6 +15,9 @@ use Orm\Zed\Payment\Persistence\SpySalesPayment;
 use Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
+/**
+ * @deprecated The functionality moved to SalesPayment module.
+ */
 class SalesPaymentSaver implements SalesPaymentSaverInterface
 {
     use DatabaseTransactionHandlerTrait;
@@ -63,23 +66,25 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer>
+     *
      * @deprecated To be removed when the single payment property on the quote is removed
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject
      */
-    protected function getPaymentCollection(QuoteTransfer $quoteTransfer)
+    protected function getPaymentCollection(QuoteTransfer $quoteTransfer): ArrayObject
     {
         $result = new ArrayObject();
         foreach ($quoteTransfer->getPayments() as $payment) {
-            $result[] = $payment;
+            $result->append($payment);
         }
 
         $singlePayment = $quoteTransfer->getPayment();
 
         if ($singlePayment) {
-            $result[] = $singlePayment;
+            $result->append($singlePayment);
         }
 
         return $result;
@@ -104,6 +109,8 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
     }
 
     /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentCollection
+     *
      * @param \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject $paymentCollection
      * @param int $idSalesOrder
      *

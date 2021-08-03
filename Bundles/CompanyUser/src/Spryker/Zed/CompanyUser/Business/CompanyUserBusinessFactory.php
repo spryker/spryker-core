@@ -9,6 +9,8 @@ namespace Spryker\Zed\CompanyUser\Business;
 
 use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandler;
 use Spryker\Zed\CompanyUser\Business\CompanyUser\CompanyUserStatusHandlerInterface;
+use Spryker\Zed\CompanyUser\Business\Expander\CustomerExpander;
+use Spryker\Zed\CompanyUser\Business\Expander\CustomerExpanderInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUser;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserInterface;
 use Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutor;
@@ -117,5 +119,13 @@ class CompanyUserBusinessFactory extends AbstractBusinessFactory
     public function getCompanyUserSavePreCheckPlugins(): array
     {
         return $this->getProvidedDependency(CompanyUserDependencyProvider::PLUGINS_COMPANY_USER_SAVE_PRE_CHECK);
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyUser\Business\Expander\CustomerExpanderInterface
+     */
+    public function createCustomerExpander(): CustomerExpanderInterface
+    {
+        return new CustomerExpander($this->getRepository());
     }
 }

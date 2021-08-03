@@ -86,7 +86,7 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
 
         $paymentSelections = [];
         foreach ($paymentMethods as $paymentMethod) {
-            $paymentSelections[] = $paymentMethod->getMethodName();
+            $paymentSelections[] = $paymentMethod->getPaymentMethodKey();
         }
 
         return $paymentSelections;

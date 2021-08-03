@@ -9,21 +9,21 @@ namespace Spryker\Zed\PriceProductOffer\Business\Expander;
 
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface;
+use Spryker\Zed\PriceProductOffer\Business\Reader\PriceProductOfferReaderInterface;
 
 class ProductOfferExpander implements ProductOfferExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface
+     * @var \Spryker\Zed\PriceProductOffer\Business\Reader\PriceProductOfferReaderInterface
      */
-    protected $priceProductOfferRepository;
+    protected $priceProductOfferReader;
 
     /**
-     * @param \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface $priceProductOfferRepository
+     * @param \Spryker\Zed\PriceProductOffer\Business\Reader\PriceProductOfferReaderInterface $priceProductOfferReader
      */
-    public function __construct(PriceProductOfferRepositoryInterface $priceProductOfferRepository)
+    public function __construct(PriceProductOfferReaderInterface $priceProductOfferReader)
     {
-        $this->priceProductOfferRepository = $priceProductOfferRepository;
+        $this->priceProductOfferReader = $priceProductOfferReader;
     }
 
     /**
@@ -36,8 +36,10 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
         $productOfferTransfer->requireIdProductOffer();
 
         $productOfferTransfer->setPrices(
-            $this->priceProductOfferRepository->getProductOfferPrices(
-                (new PriceProductOfferCriteriaTransfer())->setIdProductOffer($productOfferTransfer->getIdProductOffer())
+            $this->priceProductOfferReader->getProductOfferPrices(
+                (new PriceProductOfferCriteriaTransfer())
+                    ->setIdProductOffer($productOfferTransfer->getIdProductOffer())
+                    ->setWithExtractedPrices(false)
             )
         );
 

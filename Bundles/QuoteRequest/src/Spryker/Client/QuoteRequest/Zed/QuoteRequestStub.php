@@ -113,6 +113,8 @@ class QuoteRequestStub implements QuoteRequestStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\QuoteRequest\Communication\Controller\GatewayController::getQuoteRequestCollectionByFilterAction()
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestCollectionTransfer
@@ -146,6 +148,8 @@ class QuoteRequestStub implements QuoteRequestStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\QuoteRequest\Communication\Controller\GatewayController::getQuoteRequestAction()
+     *
      * @param \Generated\Shared\Transfer\QuoteRequestFilterTransfer $quoteRequestFilterTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer

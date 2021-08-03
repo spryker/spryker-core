@@ -46,7 +46,7 @@ class OmsTriggerController extends AbstractController
      */
     public function submitTriggerEventAction(Request $request): RedirectResponse
     {
-        $redirect = $request->query->get('redirect', static::URL_PARAM_REDIRECT);
+        $redirect = (string)$request->query->get('redirect', static::URL_PARAM_REDIRECT);
 
         if (!$redirect) {
             $this->addErrorMessage(static::MESSAGE_REDIRECT_NOT_FOUND_ERROR);
@@ -65,7 +65,7 @@ class OmsTriggerController extends AbstractController
             return $this->redirectResponse($redirect);
         }
 
-        $event = $request->query->get(static::URL_PARAM_EVENT);
+        $event = (string)$request->query->get(static::URL_PARAM_EVENT);
         $returnReference = $request->get(static::URL_PARAM_RETURN_REFERENCE);
 
         $returnTransfer = $this->findReturn($returnReference);
@@ -106,7 +106,7 @@ class OmsTriggerController extends AbstractController
      */
     public function submitTriggerEventItemAction(Request $request): RedirectResponse
     {
-        $redirect = $request->query->get('redirect', static::URL_PARAM_REDIRECT);
+        $redirect = (string)$request->query->get('redirect', static::URL_PARAM_REDIRECT);
 
         if (!$redirect) {
             $this->addErrorMessage(static::MESSAGE_REDIRECT_NOT_FOUND_ERROR);
@@ -125,8 +125,8 @@ class OmsTriggerController extends AbstractController
             return $this->redirectResponse($redirect);
         }
 
-        $event = $request->query->get(static::URL_PARAM_EVENT);
-        $merchantSalesOrderItemReference = $request->query->get(static::URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE);
+        $event = (string)$request->query->get(static::URL_PARAM_EVENT);
+        $merchantSalesOrderItemReference = (string)$request->query->get(static::URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE);
 
         $merchantOmsTriggerResponseTransfer = $this->getFactory()
             ->getMerchantOmsFacade()

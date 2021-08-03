@@ -27,7 +27,7 @@ class ProductCategoryFilterTransferGenerator implements ProductCategoryFilterTra
     }
 
     /**
-     * @param int $idProductCategoryFilter
+     * @param int|null $idProductCategoryFilter
      * @param int $idCategory
      * @param string $jsonData
      *

@@ -22,7 +22,7 @@ class ZedUiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addUtilEncodingService($container);
         $container = $this->addTranslatorFacade($container);

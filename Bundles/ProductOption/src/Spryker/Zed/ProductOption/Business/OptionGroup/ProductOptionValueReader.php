@@ -124,6 +124,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
         $productOptionTransfer->setUnitGrossPrice($this->productOptionValuePriceReader->getCurrentGrossPrice($productOptionValueEntity, $currencyCode));
         $productOptionTransfer->setUnitNetPrice($this->productOptionValuePriceReader->getCurrentNetPrice($productOptionValueEntity, $currencyCode));
         $productOptionTransfer->setUnitPrice($this->productOptionValuePriceReader->resolveUnitPrice($productOptionTransfer, $priceMode));
+        $productOptionTransfer->setIdGroup($productOptionValueEntity->getFkProductOptionGroup());
 
         return $productOptionTransfer;
     }

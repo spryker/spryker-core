@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
 
 class PriceProductMatcher implements PriceProductMatcherInterface
 {
@@ -61,9 +62,55 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->fromArray($priceProductCriteriaTransfer->toArray(false), true);
         $priceProductFilterTransfer->setPriceTypeName($priceProductCriteriaTransfer->getPriceType());
 
-        $priceProductTransfers = $this->applyPriceProductFilterPlugins($priceProductTransfers, $priceProductFilterTransfer);
+        $priceProductTransfers = $this->filterProductPrices($priceProductTransfers, $priceProductFilterTransfer);
 
         return $this->singlePriceProductFilterStrategy->findOne($priceProductTransfers, $priceProductFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function filterProductPrices(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
+    {
+        $priceProductTransfers = $this->filterProductPricesByPriceMode(
+            $priceProductTransfers,
+            $priceProductFilterTransfer->getPriceModeOrFail()
+        );
+
+        return $this->applyPriceProductFilterPlugins(
+            $priceProductTransfers,
+            $priceProductFilterTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param string $priceMode
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function filterProductPricesByPriceMode(array $priceProductTransfers, string $priceMode): array
+    {
+        $filteredPriceProductTransfers = [];
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
+
+            if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE && $moneyValueTransfer->getGrossAmount() === null) {
+                continue;
+            }
+
+            if ($priceMode !== PriceProductConfig::PRICE_GROSS_MODE && $moneyValueTransfer->getNetAmount() === null) {
+                continue;
+            }
+
+            $filteredPriceProductTransfers[] = $priceProductTransfer;
+        }
+
+        return $filteredPriceProductTransfers;
     }
 
     /**
@@ -172,7 +219,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             ->requirePriceMode();
 
         $priceProductTransfers = $this->findPricesByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
-        $priceProductTransfers = $this->applyPriceProductFilterPlugins($priceProductTransfers, $priceProductFilterTransfer);
+        $priceProductTransfers = $this->filterProductPrices($priceProductTransfers, $priceProductFilterTransfer);
 
         return $this->singlePriceProductFilterStrategy->findOne($priceProductTransfers, $priceProductFilterTransfer);
     }
@@ -214,7 +261,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
             }
         }
 
-        return $this->applyPriceProductFilterPlugins($matchedPriceProductTransfers, $priceProductFilterTransfer);
+        return $this->filterProductPrices($matchedPriceProductTransfers, $priceProductFilterTransfer);
     }
 
     /**

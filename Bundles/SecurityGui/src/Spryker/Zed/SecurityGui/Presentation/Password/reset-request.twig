@@ -2,12 +2,16 @@
 
 {% form_theme form '@SecurityGui/Layout/form.twig' %}
 
+{% block login_heading %}{% endblock %}
+
 {% block content %}
 
     {% include '@SecurityGui/Partial/form-message.twig' %}
 
-    {{ form(form) }}
-    <div class="form-group text-center small">
-        <a href="/security-gui/login">{{ 'Login' | trans }}</a>
+    {{ form_label(form, 'email') }}
+    {{ form(form, { 'attr' : { 'class': 'myClass' } }) }}
+
+    <div class="text-center">
+        <a href="/security-gui/login" class="login-box__link">{{ 'Login' | trans }}</a>
     </div>
 {% endblock %}

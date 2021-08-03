@@ -3,51 +3,55 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
+            "line_from": 59,
+            "line_to": 59,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Yves\\DiscountPromotion\\Mapper\\PromotionProductMapper::getSelectedAttributes cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
             "snippet": "            $selectedAttributes = $this->getSelectedAttributes($request, $promotionItemTransfer->getAbstractSku());",
             "selected_text": "$promotionItemTransfer->getAbstractSku()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
+            "line_from": 102,
+            "line_to": 102,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Yves\\DiscountPromotion\\Dependency\\Client\\DiscountPromotionToProductInterface::getProductAbstractFromStorageByIdForCurrentLocale cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
             "snippet": "        return $this->productClient->getProductAbstractFromStorageByIdForCurrentLocale($promotionItemTransfer->getIdProductAbstract());",
             "selected_text": "$promotionItemTransfer->getIdProductAbstract()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
+            "line_from": 122,
+            "line_to": 122,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null null|string",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
             "snippet": "        return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();",
             "selected_text": "$promotionItemTransfer->getAbstractSku()",
             "error_level": 1,
-            "shortcode": 80
+            "shortcode": 80,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
+            "line_from": 122,
+            "line_to": 122,
             "type": "PossiblyNullOperand",
             "message": "Cannot concatenate with a possibly null int|null",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Yves/DiscountPromotion/Mapper/PromotionProductMapper.php",
             "snippet": "        return $promotionItemTransfer->getAbstractSku() . '-' . $promotionItemTransfer->getIdDiscountPromotion();",
             "selected_text": "$promotionItemTransfer->getIdDiscountPromotion()",
             "error_level": 1,
-            "shortcode": 80
+            "shortcode": 80,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -59,7 +63,8 @@
             "snippet": "        foreach ($cartChangeTransfer->getQuote()->getPromotionItems() as $promotionItemTransfer) {",
             "selected_text": "getPromotionItems",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -71,7 +76,8 @@
             "snippet": "            $groupedByIdAvailablePromotionItemTransfers[$promotionItemTransfer->getIdDiscountPromotion()][] = $promotionItemTransfer;",
             "selected_text": "$groupedByIdAvailablePromotionItemTransfers",
             "error_level": 3,
-            "shortcode": 125
+            "shortcode": 125,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -83,7 +89,8 @@
             "snippet": "            $quoteTransfer->getStore()",
             "selected_text": "$quoteTransfer->getStore()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -95,7 +102,8 @@
             "snippet": "     * @return int",
             "selected_text": "int",
             "error_level": 5,
-            "shortcode": 144
+            "shortcode": 144,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -107,7 +115,8 @@
             "snippet": "        return $currentQuantity;",
             "selected_text": "$currentQuantity",
             "error_level": 5,
-            "shortcode": 139
+            "shortcode": 139,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -119,7 +128,8 @@
             "snippet": "            ->queryDiscountPromotionByIdDiscount($discountTransfer->getIdDiscount())",
             "selected_text": "$discountTransfer->getIdDiscount()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -131,7 +141,8 @@
             "snippet": "        if ($productAbstractAvailabilityTransfer->getAvailability()->lessThanOrEquals(0)) {",
             "selected_text": "lessThanOrEquals",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -143,7 +154,8 @@
             "snippet": "        if ($productAbstractAvailabilityTransfer->getAvailability()->lessThan($maxQuantity)) {",
             "selected_text": "lessThan",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -155,43 +167,47 @@
             "snippet": "            return $productAbstractAvailabilityTransfer->getAvailability()->toInt();",
             "selected_text": "toInt",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
+            "line_from": 49,
+            "line_to": 49,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdDiscount on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Business/Model/DiscountPromotionReader.php",
             "snippet": "        $idDiscount = $discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount();",
             "selected_text": "getIdDiscount",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 51,
+            "line_to": 51,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\DiscountPromotion\\Business\\Model\\DiscountPromotionReader::findDiscountPromotionByIdDiscount cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Business/Model/DiscountPromotionReader.php",
             "snippet": "        $discountPromotionTransfer = $this->findDiscountPromotionByIdDiscount($idDiscount);",
             "selected_text": "$idDiscount",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
+            "line_from": 57,
+            "line_to": 57,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setCollectorStrategyType on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Business/Model/DiscountPromotionReader.php",
             "snippet": "        $discountCalculatorTransfer->setCollectorStrategyType(DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY);",
             "selected_text": "setCollectorStrategyType",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -203,7 +219,8 @@
             "snippet": "        return $itemTransfer->getGroupKey() . '-' . DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY . '-' . $itemTransfer->getIdDiscountPromotion();",
             "selected_text": "$itemTransfer->getGroupKey()",
             "error_level": 1,
-            "shortcode": 80
+            "shortcode": 80,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -215,7 +232,8 @@
             "snippet": "        return $itemTransfer->getGroupKey() . '-' . DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY . '-' . $itemTransfer->getIdDiscountPromotion();",
             "selected_text": "$itemTransfer->getIdDiscountPromotion()",
             "error_level": 1,
-            "shortcode": 80
+            "shortcode": 80,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -227,7 +245,8 @@
             "snippet": "        return $discountConfiguratorTransfer->getDiscountCalculator()->getCollectorStrategyType() === DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY;",
             "selected_text": "getCollectorStrategyType",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -239,7 +258,8 @@
             "snippet": "        $discountGeneralTransfer->requireIdDiscount();",
             "selected_text": "requireIdDiscount",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -251,7 +271,8 @@
             "snippet": "        $discountPromotionTransfer = $discountConfiguratorTransfer->getDiscountCalculator()->getDiscountPromotion() ?? new DiscountPromotionTransfer();",
             "selected_text": "getDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -263,7 +284,8 @@
             "snippet": "            $this->getFacade()->removePromotionByIdDiscount($discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount());",
             "selected_text": "$discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -275,7 +297,8 @@
             "snippet": "            $this->getFacade()->removePromotionByIdDiscount($discountConfiguratorTransfer->getDiscountGeneral()->getIdDiscount());",
             "selected_text": "getIdDiscount",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -287,7 +310,8 @@
             "snippet": "            $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion(new DiscountPromotionTransfer());",
             "selected_text": "setDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -299,7 +323,8 @@
             "snippet": "        return $this->getFacade()->isDiscountWithPromotion($discountTransfer->getIdDiscount());",
             "selected_text": "$discountTransfer->getIdDiscount()",
             "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -311,7 +336,8 @@
             "snippet": "        $discountPromotionTransfer = $collectedDiscountTransfer->getDiscount()->getDiscountPromotion();",
             "selected_text": "getDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -323,7 +349,8 @@
             "snippet": "            if ($itemTransfer->getOriginalItem() && $itemTransfer->getOriginalItem()->getIdDiscountPromotion()) {",
             "selected_text": "getIdDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -335,7 +362,8 @@
             "snippet": "        $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion($discountPromotionTransfer);",
             "selected_text": "setDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -347,7 +375,8 @@
             "snippet": "        $discountConfiguratorTransfer->getDiscountCalculator()->setDiscountPromotion($discountPromotionTransfer);",
             "selected_text": "setDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -359,7 +388,8 @@
             "snippet": "        return $collectedDiscountTransfer->getDiscount()->getDiscountPromotion() !== null;",
             "selected_text": "getDiscountPromotion",
             "error_level": 3,
-            "shortcode": 83
+            "shortcode": 83,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -371,19 +401,8 @@
             "snippet": "            ->findOneByIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());",
             "selected_text": "$discountPromotionTransfer->getIdDiscountPromotion()",
             "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of Spryker\\Zed\\DiscountPromotion\\Persistence\\Propel\\Mapper\\DiscountPromotionMapper::mapDiscountPromotionTransferToEntity cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Persistence/DiscountPromotionEntityManager.php",
-            "snippet": "            $discountPromotionEntity",
-            "selected_text": "$discountPromotionEntity",
-            "error_level": 3,
-            "shortcode": 78
+            "shortcode": 78,
+            "other_references": null
         }
     ],
     "deprecation": [
@@ -397,7 +416,8 @@
             "snippet": "            ->setUnitGrossPrice($promotionItemTransfer->getUnitGrossPrice());",
             "selected_text": "setUnitGrossPrice",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 1,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -409,7 +429,8 @@
             "snippet": "class RemovePromotionItemsCalculatorPlugin extends AbstractPlugin implements CalculationPluginInterface",
             "selected_text": "RemovePromotionItemsCalculatorPlugin",
             "error_level": 2,
-            "shortcode": 152
+            "shortcode": 152,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -421,7 +442,8 @@
             "snippet": "class CartGroupPromotionItems extends AbstractPlugin implements ItemExpanderPluginInterface",
             "selected_text": "CartGroupPromotionItems",
             "error_level": 2,
-            "shortcode": 152
+            "shortcode": 152,
+            "other_references": null
         },
         {
             "severity": "info",
@@ -433,7 +455,8 @@
             "snippet": "            $this->getFactory()->createDiscountFormPromotionType(),",
             "selected_text": "createDiscountFormPromotionType",
             "error_level": 2,
-            "shortcode": 1
+            "shortcode": 1,
+            "other_references": null
         }
     ]
 }

@@ -143,10 +143,10 @@ class ProductListTable extends AbstractTable
     protected function generateTypeLabels(array $item): string
     {
         if ($item[SpyProductListTableMap::COL_TYPE] === SpyProductListTableMap::COL_TYPE_WHITELIST) {
-            return $this->generateLabel('Whitelist', 'label-info');
+            return $this->generateLabel('Whitelist', 'label-success');
         }
 
-        return $this->generateLabel('Blacklist', 'label-warning');
+        return $this->generateLabel('Blacklist', 'label-danger');
     }
 
     /**

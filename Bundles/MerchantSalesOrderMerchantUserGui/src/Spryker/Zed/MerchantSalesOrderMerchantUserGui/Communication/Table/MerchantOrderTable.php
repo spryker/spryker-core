@@ -21,10 +21,13 @@ use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSale
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMoneyFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilSanitizeInterface;
-use Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUserGuiConfig;
 
 class MerchantOrderTable extends AbstractTable
 {
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER
+     */
+    protected const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
     protected const COL_FULL_CUSTOMER_NAME = 'fullCustomerName';
     protected const COL_ITEM_COUNT = 'itemCount';
     protected const COL_ORDER_STATE = 'orderState';
@@ -113,6 +116,7 @@ class MerchantOrderTable extends AbstractTable
         $config->setRawColumns([
             SpySalesOrderTableMap::COL_EMAIL,
             static::COL_FULL_CUSTOMER_NAME,
+            static::COL_ORDER_STATE,
             static::COL_ACTIONS,
         ]);
         $config->setDefaultSortField(SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER, TableConfiguration::SORT_DESC);
@@ -233,7 +237,7 @@ class MerchantOrderTable extends AbstractTable
                 SpyMerchantSalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpyMerchantSalesOrderTableMap::COL_CREATED_AT]),
                 static::COL_FULL_CUSTOMER_NAME => $this->formatFullCustomerName($item),
                 SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
-                static::COL_ORDER_STATE => $item[static::COL_ORDER_STATE],
+                static::COL_ORDER_STATE => $this->formatItemStatuses($item[static::COL_ORDER_STATE]),
                 SpyMerchantSalesOrderTotalsTableMap::COL_GRAND_TOTAL => $this->formatGrandTotal($item),
                 static::COL_ITEM_COUNT => $item[static::COL_ITEM_COUNT],
                 static::COL_ACTIONS => $this->buildLinks($item),
@@ -258,7 +262,7 @@ class MerchantOrderTable extends AbstractTable
         $buttons[] = $this->generateViewButton(
             Url::generate(
                 static::ROUTE_REDIRECT,
-                [MerchantSalesOrderMerchantUserGuiConfig::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
+                [static::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
             ),
             'View'
         );
@@ -352,5 +356,24 @@ class MerchantOrderTable extends AbstractTable
         }
 
         return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
+    }
+
+    /**
+     * @param string $itemStatuses
+     *
+     * @return string
+     */
+    protected function formatItemStatuses(string $itemStatuses): string
+    {
+        $itemStatusLabelCollection = [];
+
+        $itemStatusCollection = explode(',', $itemStatuses);
+
+        foreach ($itemStatusCollection as $itemStatus) {
+            $itemStatus = trim($itemStatus);
+            $itemStatusLabelCollection[] = $this->generateLabel($itemStatus, null);
+        }
+
+        return implode(' ', $itemStatusLabelCollection);
     }
 }

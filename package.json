@@ -8,8 +8,9 @@
         "url": "https://spryker.com/"
     },
     "scripts": {
-        "formatter": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --check '**/*.(scss|css|less|js|ts|json|html)'",
-        "formatter:fix": "npx prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json --write '**/*.(scss|css|less|js|ts|json|html)'",
+        "formatter": "npm run formatter:run -- --check",
+        "formatter:fix": "npm run formatter:run -- --write",
+        "formatter:run": "prettier --config node_modules/@spryker/frontend-config.prettier/.prettierrc.json \"**/*.(scss|css|less|js|ts|json|html|yml|yaml|xml)\"",
         "mp:tslint": "tslint -p tsconfig.json -c tslint.json",
         "mp:tslint:fix": "tslint -p tsconfig.json -c tslint.json --fix"
     },
@@ -20,7 +21,8 @@
     "devDependencies": {
         "@angular/compiler": "~9.1.12",
         "@angular/core": "~9.1.12",
-        "@spryker/frontend-config.prettier": "~0.0.2",
+        "@prettier/plugin-xml": "^0.13.1",
+        "@spryker/frontend-config.prettier": "~0.0.5",
         "@spryker/frontend-config.tslint": "~0.0.5",
         "codelyzer": "~5.1.2",
         "prettier": "~2.0.5",

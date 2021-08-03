@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Agent;
 
+use Spryker\Client\Agent\Configurator\AgentAccessConfigurator;
+use Spryker\Client\Agent\Configurator\AgentAccessConfiguratorInterface;
 use Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientInterface;
 use Spryker\Client\Agent\Dependency\Client\AgentToSessionClientInterface;
 use Spryker\Client\Agent\Dependency\Client\AgentToZedRequestClientInterface;
@@ -18,6 +20,9 @@ use Spryker\Client\Agent\Zed\AgentStub;
 use Spryker\Client\Agent\Zed\AgentStubInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Client\Agent\AgentConfig getConfig()
+ */
 class AgentFactory extends AbstractFactory
 {
     /**
@@ -49,6 +54,14 @@ class AgentFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getImpersonationSessionFinisherPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\Agent\Configurator\AgentAccessConfiguratorInterface
+     */
+    public function createAgentAccessConfigurator(): AgentAccessConfiguratorInterface
+    {
+        return new AgentAccessConfigurator($this->getConfig());
     }
 
     /**

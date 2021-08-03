@@ -20,6 +20,7 @@ class CompanyBusinessUnitFormExpanderPlugin extends AbstractPlugin implements Co
 {
     /**
      * {@inheritDoc}
+     * - Expands Company User form with CompanyBusinessUnit subform.
      *
      * @api
      *
@@ -35,9 +36,11 @@ class CompanyBusinessUnitFormExpanderPlugin extends AbstractPlugin implements Co
         $dataProvider = $this->getFactory()
             ->createCompanyUserBusinessUnitFormDataProvider();
 
+        $idCompanyBusinessUnit = $builder->getData()->getFkCompanyBusinessUnit();
+
         $formType->buildForm(
             $builder,
-            $dataProvider->getOptions()
+            $dataProvider->getOptions($idCompanyBusinessUnit)
         );
 
         return $builder;

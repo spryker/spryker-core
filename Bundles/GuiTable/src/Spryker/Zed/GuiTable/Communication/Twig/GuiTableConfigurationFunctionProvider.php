@@ -84,7 +84,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
                 GuiTableConfigurationTransfer::ITEM_SELECTION => $this->prepareItemSelectionData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::SYNC_STATE_URL => $this->prepareSyncStateUrlData($guiTableConfigurationTransfer),
                 GuiTableConfigurationTransfer::EDITABLE => $this->prepareEditableData($guiTableConfigurationTransfer),
-                GuiTableConfigurationTransfer::COLUMN_CONFIGURATOR => $guiTableConfigurationTransfer->getColumnConfigurator()->toArray(),
+                GuiTableConfigurationTransfer::COLUMN_CONFIGURATOR => $guiTableConfigurationTransfer->getColumnConfiguratorOrFail()->toArray(),
             ];
 
             if (count($overwrite)) {
@@ -310,7 +310,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
             ];
         }
 
-        $editable = $guiTableConfigurationTransfer->getEditable()->toArray(true, true);
+        $editable = $guiTableConfigurationTransfer->getEditableOrFail()->toArray(true, true);
         $editable[GuiTableEditableConfigurationTransfer::COLUMNS] = array_values($editable[GuiTableEditableConfigurationTransfer::COLUMNS]);
 
         return $editable;

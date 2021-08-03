@@ -212,6 +212,18 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getStoresAvailableForCurrentPersistence(): array
+    {
+        $currentStoreTransfer = $this->getCurrentStore();
+
+        return array_merge([
+            $currentStoreTransfer,
+        ], $this->getStoresWithSharedPersistence($currentStoreTransfer));
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
      *
      * @return void

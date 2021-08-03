@@ -15,6 +15,8 @@ use Spryker\Zed\MerchantProduct\Business\Validator\MerchantProductCartValidator;
 use Spryker\Zed\MerchantProduct\Business\Validator\MerchantProductCartValidatorInterface;
 use Spryker\Zed\MerchantProduct\Business\Validator\MerchantProductValidator;
 use Spryker\Zed\MerchantProduct\Business\Validator\MerchantProductValidatorInterface;
+use Spryker\Zed\MerchantProduct\Business\Writer\MerchantProductWriter;
+use Spryker\Zed\MerchantProduct\Business\Writer\MerchantProductWriterInterface;
 use Spryker\Zed\MerchantProduct\Dependency\External\MerchantProductToValidationAdapterInterface;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface;
 use Spryker\Zed\MerchantProduct\MerchantProductDependencyProvider;
@@ -23,6 +25,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantProduct\MerchantProductConfig getConfig()
+ * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductEntityManagerInterface getEntityManager()
  */
 class MerchantProductBusinessFactory extends AbstractBusinessFactory
 {
@@ -44,6 +47,17 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
         return new MerchantProductReader(
             $this->getRepository(),
             $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Business\Writer\MerchantProductWriterInterface
+     */
+    public function createMerchantProductWriter(): MerchantProductWriterInterface
+    {
+        return new MerchantProductWriter(
+            $this->getEntityManager(),
+            $this->getRepository()
         );
     }
 

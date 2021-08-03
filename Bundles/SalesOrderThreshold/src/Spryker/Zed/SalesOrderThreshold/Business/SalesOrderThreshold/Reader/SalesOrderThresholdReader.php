@@ -26,6 +26,11 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
     protected $translationHydrator;
 
     /**
+     * @var \Generated\Shared\Transfer\SalesOrderThresholdTransfer[][]
+     */
+    protected static $salesOrderThresholdTransfersCache = [];
+
+    /**
      * @param \Spryker\Zed\SalesOrderThreshold\Persistence\SalesOrderThresholdRepositoryInterface $salesOrderThresholdRepository
      * @param \Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator\SalesOrderThresholdTranslationHydratorInterface $translationHydrator
      */
@@ -47,16 +52,69 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
         StoreTransfer $storeTransfer,
         CurrencyTransfer $currencyTransfer
     ): array {
+        $currencyTransferAndStoreTransferCacheKey = $this->generateSalesOrderThresholdTransfersCacheKey($currencyTransfer, $storeTransfer);
+
+        if ($this->hasSalesOrderThresholdTransfersByCacheKey($currencyTransferAndStoreTransferCacheKey)) {
+            return $this->getSalesOrderThresholdTransfersByCacheKey($currencyTransferAndStoreTransferCacheKey);
+        }
+
         $salesOrderThresholdTransfers = $this->salesOrderThresholdRepository
             ->getSalesOrderThresholds(
                 $storeTransfer,
                 $currencyTransfer
             );
 
-        foreach ($salesOrderThresholdTransfers as $salesOrderThresholdTransfer) {
-            $this->translationHydrator->hydrateLocalizedMessages($salesOrderThresholdTransfer);
-        }
+        $salesOrderThresholdTransfers = $this->translationHydrator->expandWithLocalizedMessagesCollection($salesOrderThresholdTransfers);
+        $this->cacheSalesOrderThresholdTransfersByCacheKey($salesOrderThresholdTransfers, $currencyTransferAndStoreTransferCacheKey);
 
         return $salesOrderThresholdTransfers;
+    }
+
+    /**
+     * @param string $currencyTransferAndStoreTransferCacheKey
+     *
+     * @return bool
+     */
+    protected function hasSalesOrderThresholdTransfersByCacheKey(string $currencyTransferAndStoreTransferCacheKey): bool
+    {
+        return isset(static::$salesOrderThresholdTransfersCache[$currencyTransferAndStoreTransferCacheKey]);
+    }
+
+    /**
+     * @param string $currencyTransferAndStoreTransferCacheKey
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     */
+    protected function getSalesOrderThresholdTransfersByCacheKey(string $currencyTransferAndStoreTransferCacheKey): array
+    {
+        return static::$salesOrderThresholdTransfersCache[$currencyTransferAndStoreTransferCacheKey];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return string
+     */
+    protected function generateSalesOrderThresholdTransfersCacheKey(CurrencyTransfer $currencyTransfer, StoreTransfer $storeTransfer): string
+    {
+        return sprintf(
+            '`%s`|`%s`',
+            ($currencyTransfer->getIdCurrency() ?? $currencyTransfer->getCode()),
+            ($storeTransfer->getIdStore() ?? $storeTransfer->getName())
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer[] $salesOrderThresholdTransfers
+     * @param string $currencyTransferAndStoreTransferCacheKey
+     *
+     * @return void
+     */
+    protected function cacheSalesOrderThresholdTransfersByCacheKey(
+        array $salesOrderThresholdTransfers,
+        string $currencyTransferAndStoreTransferCacheKey
+    ): void {
+        static::$salesOrderThresholdTransfersCache[$currencyTransferAndStoreTransferCacheKey] = $salesOrderThresholdTransfers;
     }
 }

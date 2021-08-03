@@ -52,7 +52,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
         foreach ($cartQuantityMapByGroupKey as $productGroupKey => $productQuantity) {
             $productSku = $changedSkuMapByGroupKey[$productGroupKey];
-            if (!$this->validateQuantityIsPositive($productSku, $productQuantity, $responseTransfer)) {
+            if (!$this->validateQuantityIsPositiveNumber($productSku, $productQuantity, $responseTransfer)) {
                 continue;
             }
             $this->validateItem($productSku, $productQuantity, $productQuantityTransferMapBySku[$productSku], $responseTransfer);
@@ -63,14 +63,14 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
     /**
      * @param string $sku
-     * @param int $quantity
+     * @param int|float|string $quantity
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return bool
      */
-    protected function validateQuantityIsPositive(string $sku, int $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
+    protected function validateQuantityIsPositiveNumber(string $sku, $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
     {
-        if ($quantity <= 0) {
+        if ($quantity <= 0 || !ctype_digit((string)$quantity)) {
             $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 1, $quantity, $responseTransfer);
 
             return false;

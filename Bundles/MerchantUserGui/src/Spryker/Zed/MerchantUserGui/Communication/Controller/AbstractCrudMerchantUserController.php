@@ -23,7 +23,7 @@ abstract class AbstractCrudMerchantUserController extends AbstractController
     {
         return $this->getFactory()
             ->getRouterFacade()
-            ->getRouter()
+            ->getBackofficeChainRouter()
             ->generate(
                 'merchant-gui:edit-merchant',
                 [
@@ -40,7 +40,7 @@ abstract class AbstractCrudMerchantUserController extends AbstractController
     {
         return $this->getFactory()
             ->getRouterFacade()
-            ->getRouter()
+            ->getBackofficeChainRouter()
             ->generate('merchant-gui:list-merchant');
     }
 }

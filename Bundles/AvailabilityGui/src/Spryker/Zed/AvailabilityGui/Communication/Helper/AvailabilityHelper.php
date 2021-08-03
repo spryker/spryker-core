@@ -19,6 +19,7 @@ use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterfac
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface;
+use Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToAvailabilityServiceInterface;
 
 class AvailabilityHelper implements AvailabilityHelperInterface
 {
@@ -48,24 +49,32 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     protected $omsFacade;
 
     /**
+     * @var \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToAvailabilityServiceInterface
+     */
+    protected $availabilityService;
+
+    /**
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToAvailabilityQueryContainerInterface $availabilityQueryContainer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\QueryContainer\AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface $stockFacade
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToOmsFacadeInterface $omsFacade
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Service\AvailabilityGuiToAvailabilityServiceInterface $availabilityService
      */
     public function __construct(
         AvailabilityGuiToAvailabilityQueryContainerInterface $availabilityQueryContainer,
         AvailabilityGuiToProductBundleQueryContainerInterface $productBundleQueryContainer,
         AvailabilityToStoreFacadeInterface $storeFacade,
         AvailabilityGuiToStockInterface $stockFacade,
-        AvailabilityGuiToOmsFacadeInterface $omsFacade
+        AvailabilityGuiToOmsFacadeInterface $omsFacade,
+        AvailabilityGuiToAvailabilityServiceInterface $availabilityService
     ) {
         $this->availabilityQueryContainer = $availabilityQueryContainer;
         $this->productBundleQueryContainer = $productBundleQueryContainer;
         $this->storeFacade = $storeFacade;
         $this->stockFacade = $stockFacade;
         $this->omsFacade = $omsFacade;
+        $this->availabilityService = $availabilityService;
     }
 
     /**
@@ -88,28 +97,43 @@ class AvailabilityHelper implements AvailabilityHelperInterface
             return null;
         }
 
+        $neverOutOfStockSet = '';
+        $stockQuantity = 0;
+        $reservationQuantity = '';
+
+        if ($productAbstractAvailabilityEntity->hasVirtualColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET)) {
+            $neverOutOfStockSet = $productAbstractAvailabilityEntity->getVirtualColumn(static::CONCRETE_NEVER_OUT_OF_STOCK_SET) ?? '';
+        }
+
+        if ($productAbstractAvailabilityEntity->hasVirtualColumn(static::STOCK_QUANTITY)) {
+            $stockQuantity = $productAbstractAvailabilityEntity->getVirtualColumn(static::STOCK_QUANTITY) ?? 0;
+        }
+
+        if ($productAbstractAvailabilityEntity->hasVirtualColumn(static::RESERVATION_QUANTITY)) {
+            $reservationQuantity = $productAbstractAvailabilityEntity->getVirtualColumn(static::RESERVATION_QUANTITY) ?? '';
+        }
+
         return (new ProductAbstractAvailabilityTransfer())
             ->setProductName($productAbstractAvailabilityEntity->getVirtualColumn(static::PRODUCT_NAME))
             ->setSku($productAbstractAvailabilityEntity->getSku())
             ->setAvailability((new Decimal($productAbstractAvailabilityEntity->getVirtualColumn(static::AVAILABILITY_QUANTITY) ?? 0))->trim())
-            ->setIsNeverOutOfStock(stripos($productAbstractAvailabilityEntity->getVirtualColumn(static::CONCRETE_NEVER_OUT_OF_STOCK_SET), 'true') !== false)
-            ->setStockQuantity((new Decimal($productAbstractAvailabilityEntity->getVirtualColumn(static::STOCK_QUANTITY) ?? 0))->trim())
-            ->setReservationQuantity(
-                $this->calculateReservation(
-                    $productAbstractAvailabilityEntity->getVirtualColumn(static::RESERVATION_QUANTITY) ?? '',
-                    $storeTransfer
-                )->trim()
-            );
+            ->setIsNeverOutOfStock($this->isNeverOutOfStock($neverOutOfStockSet))
+            ->setStockQuantity((new Decimal($stockQuantity))->trim())
+            ->setReservationQuantity($this->calculateReservation($reservationQuantity, $storeTransfer)->trim());
     }
 
     /**
-     * @param string $neverOutOfStockSet
+     * @param string|null $neverOutOfStockSet
      *
      * @return bool
      */
-    public function isNeverOutOfStock(string $neverOutOfStockSet): bool
+    public function isNeverOutOfStock(?string $neverOutOfStockSet): bool
     {
-        return stripos($neverOutOfStockSet, 'true') !== false;
+        if ($neverOutOfStockSet === null) {
+            return false;
+        }
+
+        return $this->availabilityService->isAbstractProductNeverOutOfStock($neverOutOfStockSet);
     }
 
     /**

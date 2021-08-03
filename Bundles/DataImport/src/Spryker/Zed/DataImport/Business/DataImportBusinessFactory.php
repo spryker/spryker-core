@@ -37,6 +37,7 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverIn
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware;
+use Spryker\Zed\DataImport\Business\Model\Dump\DataImporterAccessFactoryInterface;
 use Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumper;
 use Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumperInterface;
 use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
@@ -49,7 +50,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\DataImport\DataImportConfig getConfig()
  */
-class DataImportBusinessFactory extends AbstractBusinessFactory
+class DataImportBusinessFactory extends AbstractBusinessFactory implements DataImporterAccessFactoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
@@ -80,8 +81,9 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|null
      */
-    public function getDataImporterByType(DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer): ?DataImporterInterface
-    {
+    public function getDataImporterByType(
+        DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+    ): ?DataImporterInterface {
         return null;
     }
 
@@ -333,7 +335,9 @@ class DataImportBusinessFactory extends AbstractBusinessFactory
     public function createImportDumper(): ImporterDumperInterface
     {
         return new ImporterDumper(
-            $this->getImporter()
+            $this->getImporter(),
+            $this,
+            $this->getDataImporterPlugins()
         );
     }
 

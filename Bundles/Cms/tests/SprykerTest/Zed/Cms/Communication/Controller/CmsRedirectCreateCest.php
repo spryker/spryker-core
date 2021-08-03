@@ -30,6 +30,8 @@ class CmsRedirectCreateCest
      */
     public function breadcrumbIsVisible(CmsCommunicationTester $i): void
     {
+        $i->markTestSkipped();
+
         $i->amOnPage(CmsRedirectCreatePage::URL);
         $i->seeBreadcrumbNavigation('Content / Redirects / Create new CMS Redirect');
     }

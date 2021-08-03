@@ -1,5 +1,5 @@
 # MultiCartDataImport Module
-[![Build Status](https://travis-ci.org/spryker/multi-cart-data-import.svg)](https://travis-ci.org/spryker/multi-cart-data-import)
+[![Latest Stable Version](https://poser.pugx.org/spryker/multi-cart-data-import/v/stable.svg)](https://packagist.org/packages/spryker/multi-cart-data-import)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 Module for importing quotes from .csv file.

@@ -12,6 +12,11 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class MaintenanceConfig extends AbstractBundleConfig
 {
     /**
+     * @see \Spryker\Shared\Application\ApplicationConstants::ENABLE_APPLICATION_DEBUG
+     */
+    protected const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
+
+    /**
      * Specification:
      * - Directory to which the marker file will be written.
      *
@@ -35,5 +40,18 @@ class MaintenanceConfig extends AbstractBundleConfig
     public function getMaintenanceMarkerDirYves()
     {
         return APPLICATION_ROOT_DIR . '/public/Yves/maintenance';
+    }
+
+    /**
+     * Specification:
+     * - Checks if debug mode is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugModeEnabled(): bool
+    {
+        return $this->get(static::ENABLE_APPLICATION_DEBUG, false);
     }
 }

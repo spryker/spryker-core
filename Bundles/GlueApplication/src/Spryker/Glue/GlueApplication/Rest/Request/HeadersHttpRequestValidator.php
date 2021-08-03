@@ -79,14 +79,14 @@ class HeadersHttpRequestValidator implements HeadersHttpRequestValidatorInterfac
      */
     protected function validateAccessControlRequestHeader(Request $request): ?RestErrorMessageTransfer
     {
-        $requestedHeaders = strtolower((string)$request->headers->get(RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_HEADER));
+        $requestedHeaders = strtolower((string)$request->headers->get(RequestConstantsInterface::HEADER_ACCESS_CONTROL_REQUEST_HEADERS));
         if (!$requestedHeaders) {
             return null;
         }
 
         $requestedHeaders = explode(',', $requestedHeaders);
 
-        $allowedHeaders = $this->config->getCorsAllowedHeaders();
+        $allowedHeaders = array_map('strtolower', $this->config->getCorsAllowedHeaders());
 
         foreach ($requestedHeaders as $requestedHeader) {
             if (in_array($requestedHeader, $allowedHeaders, false)) {

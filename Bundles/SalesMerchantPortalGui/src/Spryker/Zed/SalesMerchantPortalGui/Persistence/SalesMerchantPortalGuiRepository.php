@@ -32,6 +32,7 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\LikeCriterion;
+use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -263,11 +264,12 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         SpyMerchantSalesOrderQuery $merchantSalesOrderQuery,
         int $idMerchant
     ): SpyMerchantSalesOrderQuery {
-        $merchantSalesOrderQuery->addJoin(
+        $merchantSalesOrderQuery
+        ->addJoinObject(new Join(
             SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
-            SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-            Criteria::INNER_JOIN
-        );
+            SpyMerchantTableMap::COL_MERCHANT_REFERENCE
+        ), 'SpyMerchant');
+
         $merchantSalesOrderQuery->addAnd(
             SpyMerchantTableMap::COL_ID_MERCHANT,
             $idMerchant

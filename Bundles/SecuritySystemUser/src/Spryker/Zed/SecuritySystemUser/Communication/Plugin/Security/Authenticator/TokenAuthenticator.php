@@ -107,6 +107,7 @@ class TokenAuthenticator extends AbstractPlugin implements AuthenticatorInterfac
         $user = $token->getUser();
         $this->getFactory()->getUserFacade()->setCurrentUser(
             (new UserTransfer())->setUsername($user->getUsername())
+                ->setIsSystemUser(true)
         );
 
         return null;

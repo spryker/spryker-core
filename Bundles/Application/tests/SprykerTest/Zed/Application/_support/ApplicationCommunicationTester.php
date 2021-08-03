@@ -25,6 +25,8 @@ use Symfony\Component\HttpFoundation\Request;
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ *
  * @SuppressWarnings(PHPMD)
  */
 class ApplicationCommunicationTester extends Actor

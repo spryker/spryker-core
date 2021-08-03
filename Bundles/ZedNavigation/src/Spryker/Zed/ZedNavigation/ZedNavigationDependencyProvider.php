@@ -10,6 +10,7 @@ namespace Spryker\Zed\ZedNavigation;
 use Spryker\Shared\Url\UrlBuilder;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ZedNavigation\Dependency\Facade\ZedNavigationToRouterFacadeBridge;
 use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingBridge;
 
 /**
@@ -19,6 +20,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const URL_BUILDER = 'url builder';
     public const SERVICE_ENCODING = 'util encoding service';
+    public const FACADE_ROUTER = 'FACADE_ROUTER';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER} instead.
@@ -37,6 +39,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilEncodingService($container);
         $container = $this->addNavigationItemFilterPlugins($container);
         $container = $this->addNavigationItemCollectionFilterPlugins($container);
+        $container = $this->addRouterFacade($container);
 
         return $container;
     }
@@ -117,5 +120,19 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getNavigationItemCollectionFilterPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRouterFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_ROUTER, function (Container $container) {
+            return new ZedNavigationToRouterFacadeBridge($container->getLocator()->router()->facade());
+        });
+
+        return $container;
     }
 }

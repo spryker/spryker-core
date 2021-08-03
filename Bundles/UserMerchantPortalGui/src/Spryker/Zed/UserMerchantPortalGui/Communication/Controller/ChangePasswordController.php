@@ -17,9 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ChangePasswordController extends AbstractController
 {
-    protected const URL_CHANGE_PASSWORD = '/user-merchant-portal-gui/change-password';
-
-    protected const MESSAGE_CHANGE_PASSWORD_SUCCESS = 'Success! The Password is updated.';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Success! The Password is updated.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -54,15 +52,18 @@ class ChangePasswordController extends AbstractController
                     $formData[ChangePasswordForm::FIELD_NEW_PASSWORD]
                 );
 
-            $responseData['postActions'] = [[
-                'type' => 'close_overlay',
-            ]];
-            $responseData['notifications'] = [[
-                'type' => 'success',
-                'message' => $this->getFactory()
-                    ->getTranslatorFacade()
-                    ->trans(static::MESSAGE_CHANGE_PASSWORD_SUCCESS),
-            ]];
+            $zedUiFormResponseTransfer = $this->getFactory()
+                ->getZedUiFactory()
+                ->createZedUiFormResponseBuilder()
+                ->addSuccessNotification(
+                    $this->getFactory()
+                        ->getTranslatorFacade()
+                        ->trans(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+                )
+                ->addActionCloseDrawer()
+                ->createResponse();
+
+            $responseData = array_merge($responseData, $zedUiFormResponseTransfer->toArray());
         }
 
         return new JsonResponse($responseData);

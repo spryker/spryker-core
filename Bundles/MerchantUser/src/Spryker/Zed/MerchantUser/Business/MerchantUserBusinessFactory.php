@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantUser\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdder;
-use Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface;
 use Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticator;
 use Spryker\Zed\MerchantUser\Business\Authenticator\MerchantUserAuthenticatorInterface;
 use Spryker\Zed\MerchantUser\Business\Creator\MerchantUserCreator;
@@ -22,7 +20,6 @@ use Spryker\Zed\MerchantUser\Business\Reader\MerchantUserReader;
 use Spryker\Zed\MerchantUser\Business\Reader\MerchantUserReaderInterface;
 use Spryker\Zed\MerchantUser\Business\Updater\MerchantUserUpdater;
 use Spryker\Zed\MerchantUser\Business\Updater\MerchantUserUpdaterInterface;
-use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToMerchantFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
@@ -44,19 +41,11 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
         return new MerchantUserCreator(
             $this->getUtilTextService(),
             $this->getUserFacade(),
-            $this->createAclGroupAdder(),
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getMerchantUserPostCreatePlugins()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantUser\Business\AclGroup\AclGroupAdderInterface
-     */
-    public function createAclGroupAdder(): AclGroupAdderInterface
-    {
-        return new AclGroupAdder($this->getAclFacade());
     }
 
     /**
@@ -129,14 +118,6 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToAclFacadeInterface
-     */
-    public function getAclFacade(): MerchantUserToAclFacadeInterface
-    {
-        return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_ACL);
-    }
-
-    /**
      * @return \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface
      */
     public function getUserPasswordResetFacade(): MerchantUserToUserPasswordResetFacadeInterface
@@ -150,5 +131,13 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
     public function getMerchantFacade(): MerchantUserToMerchantFacadeInterface
     {
         return $this->getProvidedDependency(MerchantUserDependencyProvider::FACADE_MERCHANT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePluginInterface[]
+     */
+    public function getMerchantUserPostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantUserDependencyProvider::PLUGINS_MERCHANT_USER_POST_CREATE);
     }
 }

@@ -10,7 +10,6 @@ namespace Spryker\Glue\QuoteRequestsRestApi\Dependency\Client;
 use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestFilterTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
-use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 class QuoteRequestsRestApiToQuoteRequestClientBridge implements QuoteRequestsRestApiToQuoteRequestClientInterface
 {
@@ -25,16 +24,6 @@ class QuoteRequestsRestApiToQuoteRequestClientBridge implements QuoteRequestsRes
     public function __construct($quoteRequestClient)
     {
         $this->quoteRequestClient = $quoteRequestClient;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteRequestResponseTransfer
-     */
-    public function createQuoteRequest(QuoteRequestTransfer $quoteRequestTransfer): QuoteRequestResponseTransfer
-    {
-        return $this->quoteRequestClient->createQuoteRequest($quoteRequestTransfer);
     }
 
     /**

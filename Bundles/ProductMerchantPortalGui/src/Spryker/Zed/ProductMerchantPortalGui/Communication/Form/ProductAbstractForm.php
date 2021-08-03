@@ -9,11 +9,15 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\EventSubscriber\ProductImageSetsEventSubscriber;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Type\ProductImageSetFormType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * @method \Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig getConfig()
@@ -27,6 +31,12 @@ class ProductAbstractForm extends AbstractType
 
     public const BLOCK_PREFIX = 'productAbstract';
 
+    public const GROUP_WITH_STORES = self::FIELD_STORES;
+
+    /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductLocalizedAttributesForm::NAME_VALIDATION_GROUP
+     */
+    protected const NAME_VALIDATION_GROUP = 'name_validation_group';
     protected const FIELD_STORES = 'stores';
 
     protected const LABEL_STORES = 'Stores';
@@ -34,6 +44,9 @@ class ProductAbstractForm extends AbstractType
 
     protected const PLACEHOLDER_STORES = 'Select';
     protected const PLACEHOLDER_CATEGORIES = 'Select';
+
+    protected const KEY_OPTIONS_DATA = 'data';
+    protected const KEY_OPTIONS_ATTRIBUTES = 'attributes';
 
     /**
      * @return string
@@ -52,6 +65,15 @@ class ProductAbstractForm extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ProductAbstractTransfer::class,
+            'validation_groups' => function (FormInterface $form) {
+                $validationGroups = [Constraint::DEFAULT_GROUP, static::NAME_VALIDATION_GROUP];
+
+                if ($form->get(static::FIELD_STORES)->getData()) {
+                    $validationGroups[] = static::GROUP_WITH_STORES;
+                }
+
+                return $validationGroups;
+            },
         ]);
 
         $resolver->setRequired(static::OPTION_STORE_CHOICES);
@@ -60,10 +82,9 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return void
      */
@@ -72,9 +93,33 @@ class ProductAbstractForm extends AbstractType
         $this->addLocalizedAttributesSubform($builder)
             ->addStoresField($builder, $options)
             ->addPrices($builder, $options)
-            ->addCategories($builder, $options);
+            ->addCategories($builder, $options)
+            ->addProductImageSets($builder)
+            ->addAttributes($builder);
+
+        $builder->addEventSubscriber(new ProductImageSetsEventSubscriber());
 
         $this->executeProductAbstractFormExpanderPlugins($builder, $options);
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     *
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addProductImageSets(FormBuilderInterface $builder)
+    {
+        $builder->add(ProductAbstractTransfer::IMAGE_SETS, CollectionType::class, [
+            'label' => false,
+            'entry_type' => ProductImageSetFormType::class,
+            'allow_add' => true,
+            'allow_delete' => true,
+            'allow_extra_fields' => true,
+        ]);
+
+        return $this;
     }
 
     /**
@@ -98,10 +143,9 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return $this
      */
@@ -115,7 +159,7 @@ class ProductAbstractForm extends AbstractType
                 'multiple' => true,
                 'label' => static::LABEL_STORES,
                 'required' => false,
-                'empty_data' => $builder->getData()->getStoreRelation()->getIdStores(),
+                'empty_data' => [],
                 'attr' => [
                     'placeholder' => static::PLACEHOLDER_STORES,
                 ],
@@ -128,10 +172,9 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return $this
      */
@@ -142,8 +185,11 @@ class ProductAbstractForm extends AbstractType
             'label' => false,
         ]);
 
-        $idProductAbstract = $options['data']->getIdProductAbstract();
-        $priceProductTransformer = $this->getFactory()->createPriceProductTransformer($idProductAbstract);
+        $idProductAbstract = $options[self::KEY_OPTIONS_DATA]->getIdProductAbstract();
+
+        $priceProductTransformer = $this->getFactory()
+            ->createPriceProductTransformer()
+            ->setIdProductAbstract($idProductAbstract);
 
         $builder->get(ProductAbstractTransfer::PRICES)->addModelTransformer($priceProductTransformer);
 
@@ -151,11 +197,33 @@ class ProductAbstractForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function addAttributes(FormBuilderInterface $builder)
+    {
+        $builder->add(ProductAbstractTransfer::ATTRIBUTES, HiddenType::class, [
+            'required' => false,
+            'label' => false,
+            'constraints' => [
+                $this->getFactory()->createProductAttributesNotBlankConstraint(),
+                $this->getFactory()->createAbstractProductAttributeUniqueCombinationConstraint(),
+            ],
+        ]);
+
+        $attributeProductTransformer = $this->getFactory()->createAttributeProductTransformer();
+
+        $builder->get(ProductAbstractTransfer::ATTRIBUTES)->addModelTransformer($attributeProductTransformer);
+
+        return $this;
+    }
+
+    /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return $this
      */
@@ -169,7 +237,7 @@ class ProductAbstractForm extends AbstractType
                 'multiple' => true,
                 'label' => static::LABEL_CATEGORIES,
                 'required' => false,
-                'empty_data' => $builder->getData()->getCategoryIds(),
+                'empty_data' => [],
                 'attr' => [
                     'placeholder' => static::PLACEHOLDER_CATEGORIES,
                 ],
@@ -181,10 +249,9 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @phpstan-param array<mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return $this
      */

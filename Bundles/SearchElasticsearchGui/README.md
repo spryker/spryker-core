@@ -1,5 +1,5 @@
 # SearchElasticsearchGui Module
-[![Build Status](https://travis-ci.org/spryker/search-elasticsearch-gui.svg)](https://travis-ci.org/spryker/search-elasticsearch-gui)
+[![Latest Stable Version](https://poser.pugx.org/spryker/search-elasticsearch-gui/v/stable.svg)](https://packagist.org/packages/spryker/search-elasticsearch-gui)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
 
 SearchElasticsearchGui module adds Zed GUI for Elasticsearch exploration.

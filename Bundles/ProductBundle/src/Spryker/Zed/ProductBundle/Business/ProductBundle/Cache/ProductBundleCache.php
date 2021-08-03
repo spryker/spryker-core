@@ -14,7 +14,7 @@ class ProductBundleCache implements ProductBundleCacheInterface
     protected const ERROR_MESSAGE_CACHE_NOT_FOUND = 'Cache value for ProductForBundleTransfer by provided sku wasn\'t found';
 
     /**
-     * @var \Generated\Shared\Transfer\ProductForBundleTransfer[][]
+     * @var \Generated\Shared\Transfer\ProductForBundleTransfer[][]|null
      */
     protected static $groupedBySkuProductForBundleTransfers = [];
 
@@ -27,6 +27,21 @@ class ProductBundleCache implements ProductBundleCacheInterface
     {
         foreach ($productForBundleTransfers as $productForBundleTransfer) {
             static::$groupedBySkuProductForBundleTransfers[$productForBundleTransfer->getBundleSku()][] = $productForBundleTransfer;
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param string[] $skus
+     *
+     * @return void
+     */
+    public function cacheProductForBundleTransfersBySkus(array $productForBundleTransfers, array $skus): void
+    {
+        $this->cacheProductForBundleTransfersBySku($productForBundleTransfers);
+
+        foreach ($skus as $sku) {
+            $this->cacheEmptyProductForBundleTransfersBySku($sku);
         }
     }
 
@@ -62,5 +77,17 @@ class ProductBundleCache implements ProductBundleCacheInterface
     public function cleanCache(): void
     {
         static::$groupedBySkuProductForBundleTransfers = [];
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return void
+     */
+    protected function cacheEmptyProductForBundleTransfersBySku(string $sku): void
+    {
+        if (!isset(static::$groupedBySkuProductForBundleTransfers[$sku])) {
+            static::$groupedBySkuProductForBundleTransfers[$sku] = null;
+        }
     }
 }

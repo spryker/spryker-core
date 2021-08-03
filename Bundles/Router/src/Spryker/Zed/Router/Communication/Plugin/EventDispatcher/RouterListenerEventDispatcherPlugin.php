@@ -12,7 +12,6 @@ use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Router\Business\Router\ChainRouter;
-use Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
 
@@ -23,6 +22,11 @@ use Symfony\Component\HttpKernel\EventListener\RouterListener;
  */
 class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    /**
+     * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     */
+    protected const SERVICE_ROUTER = 'routers';
+
     protected const BC_FEATURE_FLAG_ROUTER_LISTENER = 'BC_FEATURE_FLAG_ROUTER_LISTENER';
 
     /**
@@ -82,7 +86,7 @@ class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements Even
      */
     protected function getChainRouter(ContainerInterface $container): ChainRouter
     {
-        return $container->get(RouterApplicationPlugin::SERVICE_ROUTER);
+        return $container->get(static::SERVICE_ROUTER);
     }
 
     /**

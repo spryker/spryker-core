@@ -142,4 +142,30 @@ class AvailabilityQueryContainerTest extends Unit
         $this->assertCount(1, $queryResult);
         $this->assertEquals($productQuantity * 2, $queryResult[0][AvailabilityQueryContainer::STOCK_QUANTITY]);
     }
+
+    /**
+     * @return void
+     */
+    public function testQuerySpyProductAbstractAvailabilityWithStockWillReturnCorrectDataWhenStoreDoesNotHaveAssignedStocks(): void
+    {
+        // Arrange
+        $storeName = 'Store without stocks';
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => $storeName]);
+
+        $productQuantity = random_int(1, 25);
+        $this->tester->haveProductWithStockAndAvailability(
+            $storeTransfer,
+            $this->localeTransfer,
+            $this->stockTransfers,
+            $productQuantity
+        );
+
+        // Act
+        $queryResult = $this->availabilityQueryContainer->querySpyProductAbstractAvailabilityWithStock([])
+            ->find()
+            ->getData();
+
+        // Assert
+        $this->assertNotEmpty($queryResult);
+    }
 }

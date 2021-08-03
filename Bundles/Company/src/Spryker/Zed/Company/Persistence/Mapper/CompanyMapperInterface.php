@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Company\Persistence\Mapper;
 
+use Generated\Shared\Transfer\CompanyCollectionTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Orm\Zed\Company\Persistence\SpyCompany;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface CompanyMapperInterface
 {
@@ -33,4 +35,13 @@ interface CompanyMapperInterface
         SpyCompany $spyCompany,
         CompanyTransfer $companyTransfer
     ): CompanyTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $companyEntities
+     *
+     * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
+     */
+    public function mapCompanyEntityCollectionToCompanyCollectionTransfer(
+        ObjectCollection $companyEntities
+    ): CompanyCollectionTransfer;
 }

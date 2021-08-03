@@ -11,4 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CheckoutRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function deleteCartAfterOrderCreation()
+    {
+        return true;
+    }
 }

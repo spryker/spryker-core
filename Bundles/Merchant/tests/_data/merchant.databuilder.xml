@@ -8,7 +8,7 @@
         <property name="merchantReference" dataBuilderRule="unique()->sentence"/>
         <property name="name" dataBuilderRule="word"/>
         <property name="registrationNumber" dataBuilderRule="word"/>
-        <property name="status" dataBuilderRule="=waiting_for_approval"/>
+        <property name="status" dataBuilderRule="=waiting-for-approval"/>
         <property name="email" dataBuilderRule="email"/>
         <property name="isActive" dataBuilderRule="boolean(100)"/>
     </transfer>

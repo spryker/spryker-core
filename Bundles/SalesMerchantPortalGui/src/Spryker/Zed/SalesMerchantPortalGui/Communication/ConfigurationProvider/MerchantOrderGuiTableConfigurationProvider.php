@@ -118,7 +118,7 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
      */
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addRowActionOpenPageOverlay(
+        $guiTableConfigurationBuilder->addRowActionDrawerUrlHtmlRenderer(
             static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL,
             'Details',
             sprintf(

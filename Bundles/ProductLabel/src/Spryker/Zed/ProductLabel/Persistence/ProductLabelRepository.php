@@ -254,4 +254,42 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->createProductLabelProductAbstractMapper()
             ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
     }
+
+    /**
+     * @param int $idProductLabel
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     */
+    public function getProductAbstractRelationsByIdProductLabelAndProductAbstractIds(int $idProductLabel, array $productAbstractIds): array
+    {
+        $productLabelProductAbstractEntities = $this->getFactory()
+            ->createProductRelationQuery()
+            ->filterByFkProductLabel($idProductLabel)
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find();
+
+        if (!$productLabelProductAbstractEntities->count()) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->createProductLabelProductAbstractMapper()
+            ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return bool
+     */
+    public function checkProductLabelProductAbstractByIdProductAbstractExists(int $idProductAbstract): bool
+    {
+        return $this->getFactory()
+            ->createProductLabelQuery()
+            ->useSpyProductLabelProductAbstractQuery()
+                ->filterByFkProductAbstract($idProductAbstract)
+            ->endUse()
+            ->exists();
+    }
 }

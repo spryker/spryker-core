@@ -7,11 +7,16 @@
 
 namespace Spryker\Zed\PriceProductOfferVolumeGui\Communication\Reader;
 
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Service\PriceProductOfferVolumeGuiToUtilEncodingServiceInterface;
 
 class PriceProductOfferVolumeReader implements PriceProductOfferVolumeReaderInterface
 {
+    protected const KEY_PRICE_DATA_VOLUME_PRICES = 'volume_prices';
+    protected const KEY_VOLUME_PRICES = 'volumePrices';
+    protected const KEY_PRICE_PRODUCT = 'priceProduct';
+
     /**
      * @var \Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Service\PriceProductOfferVolumeGuiToUtilEncodingServiceInterface
      */
@@ -31,35 +36,66 @@ class PriceProductOfferVolumeReader implements PriceProductOfferVolumeReaderInte
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      * @param string $storeName
      * @param string $currencyCode
+     * @param string|null $priceType
      *
      * @return array
      */
     public function getVolumePricesData(
         ProductOfferTransfer $productOfferTransfer,
         string $storeName,
-        string $currencyCode
+        string $currencyCode,
+        ?string $priceType = null
     ): array {
         $data = [];
 
         foreach ($productOfferTransfer->getPrices() as $priceProductTransfer) {
-            if (!$priceProductTransfer->getMoneyValue()) {
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            if ($moneyValueTransfer === null) {
                 continue;
             }
 
-            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
             $priceData = $this->utilEncodingService
-                ->decodeJson($priceProductTransfer->getMoneyValue()->getPriceData(), true);
+                ->decodeJson($moneyValueTransfer->getPriceData(), true);
 
-            if (
-                $moneyValueTransfer->getCurrency()->getCode() === $currencyCode
-                && $moneyValueTransfer->getStore()->getName() === $storeName
-                && isset($priceData['volume_prices'])
-            ) {
-                $data['priceProduct'] = $priceProductTransfer;
-                $data['volumePrices'] = $priceData['volume_prices'];
+            if (!isset($priceData[static::KEY_PRICE_DATA_VOLUME_PRICES])) {
+                continue;
             }
+
+            if (!$this->isMoneyValueTransferSatisfiedByParameters($moneyValueTransfer, $storeName, $currencyCode)) {
+                continue;
+            }
+
+            if ($priceType !== null && $priceProductTransfer->getPriceTypeOrFail()->getName() !== $priceType) {
+                continue;
+            }
+
+            $data[static::KEY_PRICE_PRODUCT] = $priceProductTransfer;
+            $data[static::KEY_VOLUME_PRICES] = $priceData[static::KEY_PRICE_DATA_VOLUME_PRICES];
         }
 
         return $data;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param string $storeName
+     * @param string $currencyCode
+     *
+     * @return bool
+     */
+    protected function isMoneyValueTransferSatisfiedByParameters(
+        MoneyValueTransfer $moneyValueTransfer,
+        string $storeName,
+        string $currencyCode
+    ): bool {
+        if ($moneyValueTransfer->getStoreOrFail()->getName() !== $storeName) {
+            return false;
+        }
+
+        if ($moneyValueTransfer->getCurrencyOrFail()->getCode() !== $currencyCode) {
+            return false;
+        }
+
+        return true;
     }
 }

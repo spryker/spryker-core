@@ -11,20 +11,25 @@ use ArrayObject;
 use Generated\Shared\Transfer\GuiTableEditableDataErrorTransfer;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
+use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\PriceProductNotFoundException;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\PriceProductOfferNotFoundException;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\VolumePriceNotFoundException;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\PropertyPath\PriceProductOfferPropertyPathAnalyzerInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferVolumeFacadeInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToPriceProductVolumeServiceInterface;
 
 class PriceProductOfferMapper
 {
-    protected const MAP_FIELD_NAMES = [
-        MoneyValueTransfer::FK_STORE => PriceProductOfferTableViewTransfer::STORE,
-        MoneyValueTransfer::FK_CURRENCY => PriceProductOfferTableViewTransfer::CURRENCY,
-    ];
+    protected const REQUEST_DATA_KEY_VOLUME_QUANTITY = 'volume_quantity';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
@@ -37,89 +42,134 @@ class PriceProductOfferMapper
     protected $moneyFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferVolumeFacadeInterface
+     */
+    protected $priceProductOfferVolumeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToPriceProductVolumeServiceInterface
+     */
+    protected $priceProductVolumeService;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\PropertyPath\PriceProductOfferPropertyPathAnalyzerInterface
+     */
+    protected $propertyPathAnalyzer;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface
+     */
+    protected $columnIdCreator;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferVolumeFacadeInterface $priceProductOfferVolumeFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\PropertyPath\PriceProductOfferPropertyPathAnalyzerInterface $propertyPathAnalyzer
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface $columnIdCreator
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
-        ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
+        ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
+        ProductOfferMerchantPortalGuiToPriceProductOfferVolumeFacadeInterface $priceProductOfferVolumeFacade,
+        ProductOfferMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService,
+        PriceProductOfferPropertyPathAnalyzerInterface $propertyPathAnalyzer,
+        ColumnIdCreatorInterface $columnIdCreator
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->moneyFacade = $moneyFacade;
+        $this->priceProductOfferVolumeFacade = $priceProductOfferVolumeFacade;
+        $this->priceProductVolumeService = $priceProductVolumeService;
+        $this->propertyPathAnalyzer = $propertyPathAnalyzer;
+        $this->columnIdCreator = $columnIdCreator;
     }
 
     /**
-     * @phpstan-param array<mixed> $initialData
-     *
-     * @phpstan-return array<mixed>
-     *
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param array $initialData
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
+     * @param mixed[] $initialData
      *
-     * @return array
+     * @return mixed[]
      */
     public function mapValidationResponseTransferToInitialDataErrors(
         ValidationResponseTransfer $validationResponseTransfer,
+        PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer,
         array $initialData
     ): array {
         $validationErrorTransfers = $validationResponseTransfer->getValidationErrors();
+
+        if ($validationErrorTransfers->count() > 0) {
+            $initialData = $this->initializeErrorData($initialData);
+        }
 
         foreach ($validationErrorTransfers as $validationErrorTransfer) {
             if (!$validationErrorTransfer->getPropertyPath()) {
                 continue;
             }
 
-            $initialData = $this->addInitialDataErrors($validationErrorTransfer, $initialData);
+            $initialData = $this->addInitialDataErrors(
+                $validationErrorTransfer,
+                $priceProductOfferCollectionTransfer,
+                $initialData
+            );
         }
 
         return $initialData;
     }
 
     /**
-     * @phpstan-param array<mixed> $requestData
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @param array $requestData
+     * @param mixed[] $requestData
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function mapRequestDataToPriceProductTransfers(array $requestData, ArrayObject $priceProductTransfers)
-    {
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+    public function mapRequestDataToPriceProductTransfers(
+        array $requestData,
+        ArrayObject $priceProductTransfers
+    ): ArrayObject {
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $this->mapRequestDataToMoneyValueTransfer($requestData, $priceProductTransfer->getMoneyValueOrFail());
+            $this->mapRequestDataToPriceProductTransfer($requestData, $priceProductTransfer);
         }
 
         return $priceProductTransfers;
     }
 
     /**
-     * @phpstan-param array<mixed> $requestData
+     * @param mixed[] $requestData
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @param array $requestData
-     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     *
-     * @return \Generated\Shared\Transfer\MoneyValueTransfer
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function mapRequestDataToMoneyValueTransfer(array $requestData, MoneyValueTransfer $moneyValueTransfer): MoneyValueTransfer
-    {
+    protected function mapRequestDataToPriceProductTransfer(
+        array $requestData,
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer {
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
         foreach ($requestData as $key => $value) {
-            if (strpos($key, MoneyValueTransfer::NET_AMOUNT) !== false) {
-                $value = $this->convertDecimalToInteger($value);
-                $moneyValueTransfer->setNetAmount($value);
+            if (strpos($key, static::REQUEST_DATA_KEY_VOLUME_QUANTITY) !== false) {
+                $netAmount = $moneyValueTransfer->getNetAmount();
+                $grossAmount = $moneyValueTransfer->getGrossAmount();
+                $moneyValueTransfer->setNetAmount(null)->setGrossAmount(null);
+                $priceProductTransfer
+                    ->setVolumeQuantity((int)$value)
+                    ->setIdPriceProduct(null)
+                    ->setMoneyValue($moneyValueTransfer);
+                $this->priceProductVolumeService->addVolumePrice(
+                    $priceProductTransfer,
+                    (new PriceProductTransfer())->setVolumeQuantity((int)$value)->setMoneyValue(
+                        (new MoneyValueTransfer())->setNetAmount($netAmount)->setGrossAmount($grossAmount)
+                    )
+                );
 
                 continue;
             }
 
-            if (strpos($key, MoneyValueTransfer::GROSS_AMOUNT) !== false) {
-                $value = $this->convertDecimalToInteger($value);
-                $moneyValueTransfer->setGrossAmount($value);
-
-                continue;
-            }
+            $priceProductTransfer = $this->mapMoneyValuesToPriceProductTransfer($key, $value, $priceProductTransfer);
 
             if ($key === MoneyValueTransfer::STORE) {
                 $value = (int)$value;
@@ -137,93 +187,224 @@ class PriceProductOfferMapper
             }
         }
 
-        return $moneyValueTransfer;
+        return $priceProductTransfer->setMoneyValue($moneyValueTransfer);
     }
 
     /**
-     * @phpstan-param array<mixed> $initialData
+     * @param mixed[] $initialData
      *
-     * @phpstan-return array<mixed>
-     *
-     * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
-     * @param array $initialData
-     *
-     * @return array
+     * @return mixed[]
      */
-    protected function addInitialDataErrors(ValidationErrorTransfer $validationErrorTransfer, array $initialData): array
+    protected function initializeErrorData(array $initialData): array
     {
-        $propertyPath = $this->extractPropertyPathValues((string)$validationErrorTransfer->getPropertyPath());
-
-        if (!$propertyPath || !is_array($propertyPath)) {
-            return $initialData;
+        foreach ($initialData[GuiTableEditableInitialDataTransfer::DATA] as $index => $value) {
+            $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$index][GuiTableEditableDataErrorTransfer::ROW_ERROR] = null;
         }
-
-        $priceTypes = $this->priceProductFacade->getPriceTypeValues();
-        $rowNumber = (int)$propertyPath[0] === 0 ? 0 : round(((int)$propertyPath[0] - 1) / count($priceTypes));
-
-        $isRowError = count($propertyPath) < 3;
-        $errorMessage = $validationErrorTransfer->getMessage();
-
-        if ($isRowError) {
-            $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::ROW_ERROR] = $errorMessage;
-            $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductOfferTableViewTransfer::STORE] = true;
-            $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][PriceProductOfferTableViewTransfer::CURRENCY] = true;
-
-            return $initialData;
-        }
-
-        $idColumn = $this->transformPropertyPathToColumnId($propertyPath);
-
-        if (!$idColumn) {
-            return $initialData;
-        }
-
-        $initialData[GuiTableEditableInitialDataTransfer::ERRORS][$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$idColumn] = $errorMessage;
 
         return $initialData;
     }
 
     /**
-     * @param string $propertyPath
+     * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
+     * @param mixed[] $initialData
      *
-     * @return string[]
+     * @return mixed[]
      */
-    protected function extractPropertyPathValues(string $propertyPath): array
-    {
-        $propertyPath = str_replace('[', '', $propertyPath);
-        $propertyPathValues = explode(']', $propertyPath);
-
-        if (!is_array($propertyPathValues)) {
-            return [];
+    protected function addInitialDataErrors(
+        ValidationErrorTransfer $validationErrorTransfer,
+        PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer,
+        array $initialData
+    ): array {
+        $propertyPath = $validationErrorTransfer->getPropertyPath();
+        if (!$propertyPath) {
+            return $initialData;
         }
 
-        return $propertyPathValues;
+        $isRowError = $this->propertyPathAnalyzer->isRowViolation($propertyPath);
+        $isVolumePriceViolation = $this->propertyPathAnalyzer->isVolumePriceViolation($propertyPath);
+        $idColumn = !$isRowError
+            ? $this->propertyPathAnalyzer->transformPropertyPathToColumnId($propertyPath)
+            : null;
+
+        $priceProductTransfer = $this->extractInvalidPriceProduct(
+            $priceProductOfferCollectionTransfer,
+            $propertyPath,
+            $isVolumePriceViolation
+        );
+
+        $errorMessage = $validationErrorTransfer->getMessage();
+        $initialDataErrors = $initialData[GuiTableEditableInitialDataTransfer::ERRORS] ?? [];
+
+        foreach ($initialData[GuiTableEditableInitialDataTransfer::DATA] as $rowNumber => $initialDataRow) {
+            if (!$this->isValidationMatchingPriceProduct($initialDataRow, $priceProductTransfer)) {
+                continue;
+            }
+
+            if ($this->propertyPathAnalyzer->isVolumePriceRowError($propertyPath)) {
+                $initialDataErrors[$rowNumber][GuiTableEditableDataErrorTransfer::ROW_ERROR] = $errorMessage;
+
+                continue;
+            }
+
+            if ($this->propertyPathAnalyzer->isPriceRowError($propertyPath)) {
+                $initialDataErrors[$rowNumber][GuiTableEditableDataErrorTransfer::ROW_ERROR] = $errorMessage;
+                $initialDataErrors[$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$this->columnIdCreator->createStoreColumnId()] = true;
+                $initialDataErrors[$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$this->columnIdCreator->createCurrencyColumnId()] = true;
+
+                if ($isVolumePriceViolation) {
+                    $initialDataErrors[$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$this->columnIdCreator->createVolumeQuantityColumnId()] = true;
+                }
+
+                continue;
+            }
+
+            if ($idColumn) {
+                $initialDataErrors[$rowNumber][GuiTableEditableDataErrorTransfer::COLUMN_ERRORS][$idColumn] = $errorMessage;
+            }
+        }
+
+        $initialData[GuiTableEditableInitialDataTransfer::ERRORS] = $initialDataErrors;
+
+        return $initialData;
     }
 
     /**
-     * @param string[] $propertyPath
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
+     * @param string $propertyPath
+     * @param bool $isVolumePriceViolation
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function transformPropertyPathToColumnId(array $propertyPath): string
-    {
-        [$rowNumber, $entityNumber, $entityName, $fieldName] = $propertyPath;
+    protected function extractInvalidPriceProduct(
+        PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer,
+        string $propertyPath,
+        bool $isVolumePriceViolation
+    ): PriceProductTransfer {
+        $priceProductOfferTransfer = $this->extractMatchingPriceProductOfferFromCollection(
+            $priceProductOfferCollectionTransfer,
+            $propertyPath
+        );
 
-        if (!$entityName || !$fieldName) {
-            return '';
+        $priceProductTransfer = $this->extractMatchingPriceProductFromPriceProductOffer(
+            $priceProductOfferTransfer,
+            $propertyPath
+        );
+
+        if (!$isVolumePriceViolation) {
+            return $priceProductTransfer;
         }
 
-        if (!empty(static::MAP_FIELD_NAMES[$fieldName])) {
-            return static::MAP_FIELD_NAMES[$fieldName];
+        return $this->extractMatchingVolumePrice($priceProductTransfer, $propertyPath);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
+     * @param string $propertyPath
+     *
+     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\PriceProductOfferNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferTransfer
+     */
+    protected function extractMatchingPriceProductOfferFromCollection(
+        PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer,
+        string $propertyPath
+    ): PriceProductOfferTransfer {
+        $priceProductOfferIndex = $this->propertyPathAnalyzer->getPriceProductOfferIndex($propertyPath);
+        if (!$priceProductOfferCollectionTransfer->getPriceProductOffers()->offsetExists($priceProductOfferIndex)) {
+            throw new PriceProductOfferNotFoundException();
         }
 
-        if ($entityName === PriceProductTransfer::MONEY_VALUE) {
-            $priceTypeName = $entityNumber;
+        return $priceProductOfferCollectionTransfer
+            ->getPriceProductOffers()
+            ->offsetGet($priceProductOfferIndex);
+    }
 
-            return sprintf('%s[%s][%s]', $priceTypeName, $entityName, (string)$fieldName);
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer
+     * @param string $propertyPath
+     *
+     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\PriceProductNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function extractMatchingPriceProductFromPriceProductOffer(
+        PriceProductOfferTransfer $priceProductOfferTransfer,
+        string $propertyPath
+    ): PriceProductTransfer {
+        $priceProductIndex = $this->propertyPathAnalyzer->getPriceProductIndex($propertyPath);
+        $prices = $priceProductOfferTransfer->getProductOfferOrFail()->getPrices();
+
+        if (!$prices->offsetExists($priceProductIndex)) {
+            throw new PriceProductNotFoundException();
         }
 
-        return (string)$entityName;
+        return $prices->offsetGet($priceProductIndex);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param string $propertyPath
+     *
+     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\VolumePriceNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function extractMatchingVolumePrice(
+        PriceProductTransfer $priceProductTransfer,
+        string $propertyPath
+    ): PriceProductTransfer {
+        $volumePriceIndex = $this->propertyPathAnalyzer->getVolumePriceIndex($propertyPath);
+        $volumePrices = $this->priceProductOfferVolumeFacade
+            ->extractVolumePrices([$priceProductTransfer]);
+
+        if (!array_key_exists($volumePriceIndex, $volumePrices)) {
+            throw new VolumePriceNotFoundException();
+        }
+
+        return $volumePrices[$volumePriceIndex];
+    }
+
+    /**
+     * @param mixed[] $initialDataRow
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return bool
+     */
+    protected function isValidationMatchingPriceProduct(
+        array $initialDataRow,
+        PriceProductTransfer $priceProductTransfer
+    ): bool {
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
+        $volumeQuantityColumnId = $this->columnIdCreator->createVolumeQuantityColumnId();
+        $isSameVolumeQuantity = (
+            empty($priceProductTransfer->getVolumeQuantity())
+            || (int)$initialDataRow[$volumeQuantityColumnId] === $priceProductTransfer->getVolumeQuantityOrFail()
+        );
+
+        if (!$isSameVolumeQuantity) {
+            return false;
+        }
+
+        $isSameStore = $initialDataRow[$this->columnIdCreator->createStoreColumnId()] == $moneyValueTransfer->getFkStore();
+        $isSameCurrency = $initialDataRow[$this->columnIdCreator->createCurrencyColumnId()] == $moneyValueTransfer->getFkCurrency();
+        if (!$isSameStore || !$isSameCurrency) {
+            return false;
+        }
+
+        $priceTypeName = $priceProductTransfer->getPriceTypeOrFail()->getNameOrFail();
+
+        $grossPrice = $this->convertDecimalToInteger(
+            $initialDataRow[$this->columnIdCreator->createGrossAmountColumnId($priceTypeName)]
+        );
+        $netPrice = $this->convertDecimalToInteger(
+            $initialDataRow[$this->columnIdCreator->createNetAmountColumnId($priceTypeName)]
+        );
+
+        return (
+            $netPrice === $moneyValueTransfer->getNetAmount()
+            && $grossPrice === $moneyValueTransfer->getGrossAmount()
+        );
     }
 
     /**
@@ -238,5 +419,30 @@ class PriceProductOfferMapper
         }
 
         return $this->moneyFacade->convertDecimalToInteger((float)$value);
+    }
+
+    /**
+     * @param string $requestDataKey
+     * @param string $requestDataValue
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function mapMoneyValuesToPriceProductTransfer(
+        string $requestDataKey,
+        string $requestDataValue,
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer {
+        if (strpos($requestDataKey, MoneyValueTransfer::NET_AMOUNT) !== false) {
+            $requestDataValue = $this->convertDecimalToInteger($requestDataValue);
+            $priceProductTransfer->getMoneyValueOrFail()->setNetAmount($requestDataValue);
+        }
+
+        if (strpos($requestDataKey, MoneyValueTransfer::GROSS_AMOUNT) !== false) {
+            $requestDataValue = $this->convertDecimalToInteger($requestDataValue);
+            $priceProductTransfer->getMoneyValueOrFail()->setGrossAmount($requestDataValue);
+        }
+
+        return $priceProductTransfer;
     }
 }

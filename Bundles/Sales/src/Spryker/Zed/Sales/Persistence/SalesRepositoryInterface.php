@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderFilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface SalesRepositoryInterface
 {
@@ -70,4 +72,25 @@ interface SalesRepositoryInterface
      * @return string[]
      */
     public function getCurrencyIsoCodesBySalesOrderIds(array $salesOrderIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getSalesOrderDetails(OrderFilterTransfer $orderFilterTransfer): OrderTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return int
+     */
+    public function getTotalCustomerOrderCount(OrderTransfer $orderTransfer): int;
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return int
+     */
+    public function countUniqueProductsForOrder(int $idSalesOrder): int;
 }

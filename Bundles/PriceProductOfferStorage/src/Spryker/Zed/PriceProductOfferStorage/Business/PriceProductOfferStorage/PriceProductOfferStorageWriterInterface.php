@@ -36,4 +36,11 @@ interface PriceProductOfferStorageWriterInterface
      * @return void
      */
     public function unpublishByProductIds(array $productIds): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByPriceProductStoreEvents(array $eventEntityTransfers): void;
 }

@@ -39,4 +39,10 @@
         <property name="collectorQueryString" dataBuilderRule="=item-quantity > '1'"/>
     </transfer>
 
+    <transfer name="DiscountVoucher">
+        <property name="quantity" dataBuilderRule="=1"/>
+        <property name="code" dataBuilderRule="unique()->word"/>
+        <property name="randomGeneratedCodeLength" dataBuilderRule="=5"/>
+    </transfer>
+
 </transfers>

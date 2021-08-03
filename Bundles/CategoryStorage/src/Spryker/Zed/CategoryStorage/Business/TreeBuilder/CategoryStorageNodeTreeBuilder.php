@@ -88,7 +88,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     protected function getLocaleNameMapByStoreName(): array
     {
         $localeNameMapByStoreName = [];
-        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+        foreach ($this->storeFacade->getStoresAvailableForCurrentPersistence() as $storeTransfer) {
             $localeNameMapByStoreName[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
         }
 
@@ -114,6 +114,11 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
             }
 
             $categoryNodeStorageTransfer = $this->cloneCategoryNodeStorageTransfer($indexedCategoryNodeStorageTransfers[$idCategoryNode]);
+
+            if (!$categoryNodeStorageTransfer->getIsActive()) {
+                continue;
+            }
+
             $categoryNodeStorageTransfer = $this->buildChildrenTree(
                 $categoryNodeStorageTransfer,
                 $indexedNodeTransfers,

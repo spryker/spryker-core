@@ -17,6 +17,8 @@ class UtilMeasurementUnitConversionService extends AbstractService implements Ut
     /**
      * {@inheritDoc}
      *
+     * @api
+     *
      * @param string $fromCode
      * @param string $toCode
      *

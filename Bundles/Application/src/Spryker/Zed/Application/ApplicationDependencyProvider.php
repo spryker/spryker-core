@@ -34,7 +34,14 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::PLUGINS_BACKOFFICE_APPLICATION} instead.
+     */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+    public const PLUGINS_BACKOFFICE_APPLICATION = 'PLUGINS_BACKOFFICE_APPLICATION';
+    public const PLUGINS_BACKEND_GATEWAY_APPLICATION = 'PLUGINS_BACKEND_GATEWAY_APPLICATION';
+    public const PLUGINS_BACKEND_API_APPLICATION = 'PLUGINS_BACKEND_API_APPLICATION';
 
     /**
      * @deprecated Will be removed without replacement.
@@ -65,6 +72,10 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = $this->addBackofficeApplicationPlugins($container);
+        $container = $this->addBackendGatewayApplicationPlugins($container);
+        $container = $this->addBackendApiApplicationPlugins($container);
+
         $container = $this->addApplicationPlugins($container);
         $container = $this->addServiceProviders($container);
         $container = $this->addApiServiceProviders($container);
@@ -79,6 +90,74 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addBackofficeApplicationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKOFFICE_APPLICATION, function (Container $container): array {
+            return $this->getBackofficeApplicationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    protected function getBackofficeApplicationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackendGatewayApplicationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKEND_GATEWAY_APPLICATION, function (Container $container): array {
+            return $this->getBackendGatewayApplicationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    protected function getBackendGatewayApplicationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addBackendApiApplicationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_BACKEND_API_APPLICATION, function (Container $container): array {
+            return $this->getBackendApiApplicationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    protected function getBackendApiApplicationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::addBackofficeApplicationPlugins()} instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addApplicationPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
@@ -89,6 +168,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::getBackofficeApplicationPlugins()} instead.
+     *
      * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
     protected function getApplicationPlugins(): array

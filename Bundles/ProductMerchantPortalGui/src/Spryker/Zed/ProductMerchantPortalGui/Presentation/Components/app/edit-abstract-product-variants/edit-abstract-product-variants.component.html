@@ -1,1 +1,11 @@
-<spy-table [tableId]="tableId" [config]="config"></spy-table>
+<spy-card [spyTitle]="title" [extra]="extra">
+    <spy-table [tableId]="tableId" [config]="config"></spy-table>
+</spy-card>
+
+<ng-template #title>
+    <ng-content select="[title]"></ng-content>
+</ng-template>
+
+<ng-template #extra>
+    <ng-content></ng-content>
+</ng-template>

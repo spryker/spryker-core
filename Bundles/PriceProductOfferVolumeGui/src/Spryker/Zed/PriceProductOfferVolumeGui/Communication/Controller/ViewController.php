@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductOfferVolumeGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\PriceProductOfferVolumeGui\PriceProductOfferVolumeGuiConfig;
@@ -21,6 +21,7 @@ class ViewController extends AbstractController
     protected const PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
     protected const PARAM_STORE_NAME = 'store-name';
     protected const PARAM_CURRENCY_CODE = 'currency-code';
+    protected const PARAM_PRICE_TYPE_NAME = 'price-type-name';
 
     /**
      * @phpstan-return array<string, mixed>
@@ -36,13 +37,14 @@ class ViewController extends AbstractController
         ));
         $storeName = $request->get(static::PARAM_STORE_NAME);
         $currencyCode = $request->get(static::PARAM_CURRENCY_CODE);
+        $priceTypeName = $request->get(static::PARAM_PRICE_TYPE_NAME);
 
-        $productOfferCriteriaFilter = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteria = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($idProductOffer);
 
         $productOfferTransfer = $this->getFactory()
             ->getProductOfferFacade()
-            ->findOne($productOfferCriteriaFilter);
+            ->findOne($productOfferCriteria);
 
         $response = [
             'backUrl' => $this->generateUrl(PriceProductOfferVolumeGuiConfig::PRODUCT_OFFER_URL_VIEW, [
@@ -55,7 +57,7 @@ class ViewController extends AbstractController
             $response,
             $this->getFactory()
                 ->createPriceProductOfferVolumeReader()
-                ->getVolumePricesData($productOfferTransfer, $storeName, $currencyCode)
+                ->getVolumePricesData($productOfferTransfer, $storeName, $currencyCode, $priceTypeName)
         );
 
         return $this->viewResponse($response);

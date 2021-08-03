@@ -36,7 +36,7 @@ class BackTableButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getIcon(): string
     {
-        return '<i class="fa fa-angle-double-left"></i> ';
+        return '<i class="fa fa-angle-left"></i> ';
     }
 
     /**

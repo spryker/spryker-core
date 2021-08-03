@@ -77,7 +77,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function extractPriceProductVolumeTransfersFromArray(array $priceProductTransfers): array
+    public function extractPriceProductVolumeTransfersFromArray(array $priceProductTransfers): array
     {
         $extractedPrices = [];
 

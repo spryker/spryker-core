@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\ProductOffer\ProductOfferConfig getConfig()
  * @method \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOffer\Communication\ProductOfferCommunicationFactory getFactory()
  */
 class ProductOfferGroupKeyItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {

@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Generated\\Zed\\Ide\\AutoCompletion::aclEntity does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/AclMerchantPortal/src/Spryker/Zed/AclMerchantPortal/AclMerchantPortalDependencyProvider.php",
+            "snippet": "                $container->getLocator()->aclEntity()->facade()",
+            "selected_text": "aclEntity",
+            "error_level": 3,
+            "shortcode": 108,
+            "other_references": null
+        }
+    ],
+    "deprecation": []
+}

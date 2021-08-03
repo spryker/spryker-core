@@ -13,12 +13,23 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class PaymentConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Returns a map of the payment methods and state machine's processes names.
+     *
      * @api
      *
-     * @return array
+     * @example The format of returned array is:
+     * [
+     *    'PAYMENT_METHOD_A' => 'StateMachineProcess01',
+     *    'PAYMENT_METHOD_B' => 'StateMachineProcess02',
+     * ]
+     *
+     * @phpstan-return array<string, string>
+     *
+     * @return string[]
      */
     public function getPaymentStatemachineMappings()
     {
-        return $this->get(PaymentConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING);
+        return $this->get(PaymentConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING, []);
     }
 }

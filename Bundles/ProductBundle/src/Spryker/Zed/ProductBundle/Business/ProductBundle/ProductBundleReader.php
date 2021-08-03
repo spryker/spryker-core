@@ -162,7 +162,7 @@ class ProductBundleReader implements ProductBundleReaderInterface
 
         if ($notCachedSkus) {
             $productForBundleTransfers = $this->productBundleRepository->getProductForBundleTransfersByProductConcreteSkus($notCachedSkus);
-            $this->productBundleCache->cacheProductForBundleTransfersBySku($productForBundleTransfers);
+            $this->productBundleCache->cacheProductForBundleTransfersBySkus($productForBundleTransfers, $notCachedSkus);
         }
 
         $productForBundlesBySku = [];

@@ -10,13 +10,14 @@ namespace SprykerTest\Zed\MerchantProductOfferStorage\Communication\Plugin\Event
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProvider;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Writer\ProductOfferStorageWriter;
 use Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Event\Listener\ProductOfferStoragePublishListener;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
@@ -188,28 +189,30 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             ->method('saveProductOfferStorage')
             ->with($productOfferTransfer);
 
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
-            ->setProductOfferReferences([$productOfferTransfer->getProductOfferReference()])
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
+            ->setProductOfferReferences([$productOfferTransfer->getProductOfferReference(), 'wrong_reference'])
             ->setIsActive(true)
             ->setIsActiveConcreteProduct(true)
+            ->setIsActiveMerchant(true)
             ->addApprovalStatus(static::STATUS_APPROVED);
 
         $productOfferCollectionTransfer = (new ProductOfferCollectionTransfer())->addProductOffer($productOfferTransfer);
 
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject $merchantProductOfferStorageRepository */
         $merchantProductOfferStorageRepository = $this->getMockBuilder(MerchantProductOfferStorageRepositoryInterface::class)->getMock();
-        $merchantProductOfferStorageRepository->expects($this->once())
-            ->method('getProductOffersByFilterCriteria')
-            ->with($productOfferCriteriaFilterTransfer)
+        $merchantProductOfferStorageRepository->expects($this->exactly(1))
+            ->method('getProductOffers')
+            ->with($productOfferCriteriaTransfer)
             ->willReturn($productOfferCollectionTransfer);
 
         /** @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface|\PHPUnit\Framework\MockObject\MockObject $productOfferStorageDeleter */
         $productOfferStorageDeleter = $this->getMockBuilder(ProductOfferStorageDeleterInterface::class)->getMock();
-        $productOfferStorageDeleter->expects($this->exactly(2))
+        $productOfferStorageDeleter->expects($this->exactly(3))
             ->method('deleteCollectionByProductOfferReferences')
             ->withConsecutive(
                 [[$productOfferTransfer->getProductOfferReference()], 'AT'],
-                [[$productOfferTransfer->getProductOfferReference()], 'US']
+                [[$productOfferTransfer->getProductOfferReference()], 'US'],
+                [[1 => 'wrong_reference'], null]
             );
 
         $productOfferStorageWriter = new ProductOfferStorageWriter(
@@ -217,7 +220,8 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
             $merchantProductOfferStorageEntityManager,
             $merchantProductOfferStorageRepository,
             $productOfferStorageDeleter,
-            $this->getMerchantProductOfferStorageToStoreFacadeInterfaceMock()
+            $this->getMerchantProductOfferStorageToStoreFacadeInterfaceMock(),
+            new ProductOfferCriteriaTransferProvider()
         );
 
         //Act

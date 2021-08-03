@@ -13,6 +13,7 @@ use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReader;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserReaderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserValidator;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\CompanyUserValidatorInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyUserByQuoteRequestResourceRelationshipExpander;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyUserByShareDetailResourceRelationshipExpander;
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyUserResourceRelationshipExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpander;
@@ -77,6 +78,17 @@ class CompanyUsersRestApiFactory extends AbstractFactory
     public function createCompanyUserByShareDetailResourceRelationshipExpander(): CompanyUserResourceRelationshipExpanderInterface
     {
         return new CompanyUserByShareDetailResourceRelationshipExpander(
+            $this->createCompanyUserRestResponseBuilder(),
+            $this->createCompanyUserMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyUserResourceRelationshipExpanderInterface
+     */
+    public function createCompanyUserByQuoteRequestResourceRelationshipExpander(): CompanyUserResourceRelationshipExpanderInterface
+    {
+        return new CompanyUserByQuoteRequestResourceRelationshipExpander(
             $this->createCompanyUserRestResponseBuilder(),
             $this->createCompanyUserMapper()
         );

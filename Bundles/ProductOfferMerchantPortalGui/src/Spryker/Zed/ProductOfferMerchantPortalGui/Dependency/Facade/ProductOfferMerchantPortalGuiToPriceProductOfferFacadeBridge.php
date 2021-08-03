@@ -75,8 +75,9 @@ class ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge implements Pr
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject
-    {
+    public function getProductOfferPrices(
+        PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+    ): ArrayObject {
         return $this->priceProductOfferFacade->getProductOfferPrices($priceProductOfferCriteriaTransfer);
     }
 }

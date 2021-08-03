@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ZedUi\Communication;
 
 use Spryker\Shared\Twig\TwigFunctionProvider;
+use Spryker\Shared\ZedUi\ZedUiFactory;
+use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ZedUi\Communication\Twig\NavigationComponentConfigFunctionProvider;
 use Spryker\Zed\ZedUi\Dependency\Facade\ZedUiToTranslatorFacadeInterface;
@@ -56,5 +58,13 @@ class ZedUiCommunicationFactory extends AbstractCommunicationFactory
     public function getTranslatorFacade(): ZedUiToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(ZedUiDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
+     */
+    public function createZedUiFactory(): ZedUiFactoryInterface
+    {
+        return new ZedUiFactory();
     }
 }

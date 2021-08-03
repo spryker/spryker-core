@@ -7,16 +7,22 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer;
 use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Mapper\PriceProductOfferTableDataMapperInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Reader\PriceProductReaderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\PriceProductOfferTableViewSorterInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface;
 
 class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
@@ -31,31 +37,47 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
     protected $merchantUserFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
-     */
-    protected $productOfferMerchantPortalGuiRepository;
-
-    /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface
      */
     protected $moneyFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Mapper\PriceProductOfferTableDataMapperInterface
+     */
+    protected $priceProductOfferTableDataMapper;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Reader\PriceProductReaderInterface
+     */
+    protected $priceProductReader;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\PriceProductOfferTableViewSorterInterface
+     */
+    protected $priceProductOfferTableViewSorter;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Mapper\PriceProductOfferTableDataMapperInterface $priceProductOfferTableDataMapper
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Reader\PriceProductReaderInterface $priceProductReader
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\PriceProductOfferTableViewSorterInterface $priceProductOfferTableViewSorter
      * @param int|null $idProductOffer
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
-        ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
         ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
+        PriceProductOfferTableDataMapperInterface $priceProductOfferTableDataMapper,
+        PriceProductReaderInterface $priceProductReader,
+        PriceProductOfferTableViewSorterInterface $priceProductOfferTableViewSorter,
         ?int $idProductOffer = null
     ) {
         $this->merchantUserFacade = $merchantUserFacade;
         $this->idProductOffer = $idProductOffer;
-        $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
         $this->moneyFacade = $moneyFacade;
+        $this->priceProductOfferTableDataMapper = $priceProductOfferTableDataMapper;
+        $this->priceProductReader = $priceProductReader;
+        $this->priceProductOfferTableViewSorter = $priceProductOfferTableViewSorter;
     }
 
     /**
@@ -65,7 +87,6 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function createCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer): AbstractTransfer
     {
-        /** @var int $idMerchant */
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchantOrFail();
 
         return (new PriceProductOfferTableCriteriaTransfer())
@@ -86,8 +107,8 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
 
         $criteriaTransfer = $this->replaceSortingFields($criteriaTransfer);
 
-        $priceProductOfferTableViewCollectionTransfer = $this->productOfferMerchantPortalGuiRepository
-            ->getProductOfferPriceTableData($criteriaTransfer);
+        $priceProductOfferTableViewCollectionTransfer = $this
+            ->createPriceProductOfferTableViewCollectionTransfer($criteriaTransfer);
 
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
@@ -107,6 +128,90 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
             ->setPage($paginationTransfer->getPage())
             ->setPageSize($paginationTransfer->getMaxPerPage())
             ->setTotal($paginationTransfer->getNbResults());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer $criteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer
+     */
+    protected function createPriceProductOfferTableViewCollectionTransfer(
+        PriceProductOfferTableCriteriaTransfer $criteriaTransfer
+    ): PriceProductOfferTableViewCollectionTransfer {
+        $priceProductTransfers = $this->priceProductReader
+            ->getPriceProductTransfers((
+                (new PriceProductOfferCriteriaTransfer())
+                    ->setStoreIds($criteriaTransfer->getFilterInStores())
+                    ->setCurrencyIds($criteriaTransfer->getFilterInCurrencies())
+                    ->setIdProductOffer($criteriaTransfer->getIdProductOffer())
+            ));
+
+        $priceProductOfferTableViewCollectionTransfer = $this->priceProductOfferTableDataMapper
+            ->mapPriceProductTransfersToPriceProductOfferTableViewCollectionTransfer(
+                $priceProductTransfers,
+                new PriceProductOfferTableViewCollectionTransfer()
+            );
+
+        $this->priceProductOfferTableViewSorter->sortPriceProductOfferTableViews(
+            $priceProductOfferTableViewCollectionTransfer,
+            $criteriaTransfer
+        );
+
+        $this->updatePaginationTransfer(
+            $priceProductOfferTableViewCollectionTransfer,
+            $criteriaTransfer
+        );
+
+        $this->applyPagination($priceProductOfferTableViewCollectionTransfer);
+
+        return $priceProductOfferTableViewCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer $priceProductOfferTableViewCollectionTransfer
+     * @param \Generated\Shared\Transfer\PriceProductOfferTableCriteriaTransfer $criteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaginationTransfer
+     */
+    protected function updatePaginationTransfer(
+        PriceProductOfferTableViewCollectionTransfer $priceProductOfferTableViewCollectionTransfer,
+        PriceProductOfferTableCriteriaTransfer $criteriaTransfer
+    ): PaginationTransfer {
+        $count = $priceProductOfferTableViewCollectionTransfer->getPriceProductOfferTableViews()->count();
+
+        return $priceProductOfferTableViewCollectionTransfer->getPaginationOrFail()
+            ->setPage($criteriaTransfer->getPage())
+            ->setMaxPerPage($criteriaTransfer->getPageSize())
+            ->setLastPage((int)($count / $criteriaTransfer->getPageSize()));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer $priceProductOfferTableViewCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer
+     */
+    protected function applyPagination(
+        PriceProductOfferTableViewCollectionTransfer $priceProductOfferTableViewCollectionTransfer
+    ): PriceProductOfferTableViewCollectionTransfer {
+        $priceProductOfferTableViews = $priceProductOfferTableViewCollectionTransfer
+            ->getPriceProductOfferTableViews()
+            ->getArrayCopy();
+
+        $paginationTransfer = $priceProductOfferTableViewCollectionTransfer->getPaginationOrFail();
+
+        $positionStart = ($paginationTransfer->getPage() - 1) * $paginationTransfer->getMaxPerPage();
+
+        $priceProductOfferTableViewsOnCurrentPage = array_slice(
+            $priceProductOfferTableViews,
+            $positionStart,
+            $paginationTransfer->getMaxPerPage()
+        );
+
+        $priceProductOfferTableViewCollectionTransfer->setPriceProductOfferTableViews(
+            new ArrayObject($priceProductOfferTableViewsOnCurrentPage)
+        );
+
+        return $priceProductOfferTableViewCollectionTransfer;
     }
 
     /**

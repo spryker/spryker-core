@@ -13,4 +13,32 @@ interface ProductMerchantPortalGuiToLocaleFacadeInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getCurrentLocale();
+
+    /**
+     * @return string[]
+     */
+    public function getAvailableLocales();
+
+    /**
+     * @param string $localeName
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocale($localeName);
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     */
+    public function getLocaleCollection();
+
+    /**
+     * @param int $idLocale
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocaleById($idLocale);
 }

@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
-<transfers xmlns="spryker:transfer-01"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="ProductOfferCriteriaFilter">
+    <transfer name="ProductOfferCriteria">
         <property name="idProductOffer" type="int"/>
     </transfer>
 
@@ -14,6 +12,7 @@
 
     <transfer name="PriceProduct">
         <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceType" type="PriceType"/>
     </transfer>
 
     <transfer name="MoneyValue">
@@ -28,6 +27,10 @@
 
     <transfer name="Currency">
         <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="PriceType">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

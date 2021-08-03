@@ -27,4 +27,3 @@ suites:
                 - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper
                 - \SprykerTest\Zed\Offer\Helper\OfferDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
-

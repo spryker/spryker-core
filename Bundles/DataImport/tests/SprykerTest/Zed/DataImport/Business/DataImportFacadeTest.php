@@ -131,7 +131,11 @@ class DataImportFacadeTest extends Unit
      */
     public function testDumpImporterDumpsAListOfAppliedImporter(): void
     {
+        // Act
         $dumpedImporter = $this->getFacade()->listImporters();
+
+        // Assert
         $this->assertIsArray($dumpedImporter);
+        $this->assertEmpty($dumpedImporter);
     }
 }

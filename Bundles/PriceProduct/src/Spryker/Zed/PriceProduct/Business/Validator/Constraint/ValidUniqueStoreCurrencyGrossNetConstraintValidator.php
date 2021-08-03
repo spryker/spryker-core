@@ -8,7 +8,9 @@
 namespace Spryker\Zed\PriceProduct\Business\Validator\Constraint;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -36,7 +38,11 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
         /** @var \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer */
         $moneyValueTransfer = $value->getMoneyValueOrFail();
 
-        if (!$value->getIdProductAbstract() || !$moneyValueTransfer->getFkStore() || !$moneyValueTransfer->getFkCurrency()) {
+        if (!$value->getIdProductAbstract() && !$value->getIdProduct()) {
+            return;
+        }
+
+        if (!$moneyValueTransfer->getFkStore() || !$moneyValueTransfer->getFkCurrency()) {
             return;
         }
 
@@ -45,11 +51,22 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
 
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setIdProductAbstract($value->getIdProductAbstract())
+            ->setIdProductConcrete($value->getIdProduct())
             ->setIdCurrency($moneyValueTransfer->getFkCurrency())
             ->setIdStore($moneyValueTransfer->getFkStore())
-            ->setPriceType($priceTypeTransfer->getNameOrFail());
+            ->setPriceType($priceTypeTransfer->getNameOrFail())
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT)
+            );
 
-        $priceProductTransfers = $constraint->getPriceProductRepository()->getProductPricesByCriteria($priceProductCriteriaTransfer);
+        $priceProductTransfers = $constraint->getPriceProductRepository()
+            ->getProductPricesByCriteria($priceProductCriteriaTransfer);
+
+        if (!$priceProductTransfers->count()) {
+            return;
+        }
+
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
         $priceProductTransfer = $priceProductTransfers->offsetGet(0);
         /** @var \Generated\Shared\Transfer\MoneyValueTransfer $priceProductMoneyValueTransfer */
