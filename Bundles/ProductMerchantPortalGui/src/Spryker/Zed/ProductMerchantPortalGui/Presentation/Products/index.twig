@@ -3,6 +3,7 @@
 #}
 
 {% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
 
 {% block headTitle %}
     {{ 'Products' | trans }}
@@ -36,7 +37,6 @@
 {% endblock %}
 
 {% block footerJs %}
-    <script src="{{ assetsPath('js/mp/spy/product-merchant-portal-gui-es2015.js') }}" type="module"></script>
-    <script src="{{ assetsPath('js/mp/spy/product-merchant-portal-gui-es5.js') }}" nomodule defer></script>
+    {{ view.importJsBundle('product-merchant-portal-gui', importConfig) }}
     {{ parent() }}
 {% endblock %}

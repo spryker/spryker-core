@@ -2,6 +2,7 @@
 @var dashboardCard \Generated\Shared\Transfer\MerchantDashboardCardTransfer
 #}
 {% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+{% import _self as view %}
 
 {% block headTitle %}
     {{ 'Dashboard' | trans }}
@@ -39,7 +40,6 @@
 {% endblock %}
 
 {% block footerJs %}
-    <script src="{{ assetsPath('js/mp/spy/dashboard-merchant-portal-gui-es2015.js') }}" type="module"></script>
-    <script src="{{ assetsPath('js/mp/spy/dashboard-merchant-portal-gui-es5.js') }}" nomodule defer></script>
+    {{ view.importJsBundle('dashboard-merchant-portal-gui', importConfig) }}
     {{ parent() }}
 {% endblock %}
