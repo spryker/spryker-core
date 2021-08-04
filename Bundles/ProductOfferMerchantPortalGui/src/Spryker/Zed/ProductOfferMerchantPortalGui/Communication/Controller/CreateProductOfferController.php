@@ -149,7 +149,7 @@ class CreateProductOfferController extends AbstractProductOfferController
         if ($productOfferForm->isValid() && $isPriceProductOffersValid) {
             $this->addSuccessMessage('The Offer is saved.');
 
-            $this->addSuccessResponseDataToResponse($responseData);
+            $responseData = $this->addSuccessResponseDataToResponse($responseData);
 
             return new JsonResponse($responseData);
         }
