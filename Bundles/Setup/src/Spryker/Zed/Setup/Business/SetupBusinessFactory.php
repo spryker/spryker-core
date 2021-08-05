@@ -69,7 +69,6 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     public function getConsoleCommands()
     {
         return [
-            $this->createRunnerConsole(),
             $this->createRemoveGeneratedDirectoryConsole(),
             $this->createInstallConsole(),
             $this->createJenkinsEnableConsole(),
@@ -77,16 +76,6 @@ class SetupBusinessFactory extends AbstractBusinessFactory
             $this->createJenkinsGenerateConsole(),
             $this->createDeployPreparePropelConsole(),
         ];
-    }
-
-    /**
-     * @deprecated Will be removed with next major release
-     *
-     * @return \Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole
-     */
-    protected function createRunnerConsole()
-    {
-        return new RunnerConsole();
     }
 
     /**
