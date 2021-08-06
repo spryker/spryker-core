@@ -41,10 +41,12 @@
                 1
             </td>
             <td>
-                {{ priceProduct.moneyValue.grossAmount | money(true, priceProduct.moneyValue.currency.code)  }}
+                {% set grossAmount = priceProduct.moneyValue.grossAmount %}
+                {{ grossAmount is not empty ? grossAmount | money(true, priceProduct.moneyValue.currency.code) }}
             </td>
             <td>
-                {{ priceProduct.moneyValue.netAmount | money(true, priceProduct.moneyValue.currency.code)  }}
+                {% set netAmount = priceProduct.moneyValue.netAmount %}
+                {{ netAmount is not empty ? netAmount | money(true, priceProduct.moneyValue.currency.code) }}
             </td>
         </tr>
 
@@ -54,10 +56,10 @@
                     {{ volume.quantity }}
                 </td>
                 <td>
-                    {{ volume.gross_price | money(true, priceProduct.moneyValue.currency.code) }}
+                    {{ volume.gross_price is not empty ? volume.gross_price | money(true, priceProduct.moneyValue.currency.code) }}
                 </td>
                 <td>
-                    {{ volume.net_price | money(true, priceProduct.moneyValue.currency.code) }}
+                    {{ volume.net_price is not empty ? volume.net_price | money(true, priceProduct.moneyValue.currency.code) }}
                 </td>
             </tr>
         {% endfor %}
