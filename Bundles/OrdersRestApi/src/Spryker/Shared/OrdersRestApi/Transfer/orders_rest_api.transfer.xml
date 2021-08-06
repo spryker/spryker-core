@@ -233,4 +233,11 @@
     <transfer name="ItemCollection">
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
+
+    <transfer name="RouteAuthorizationConfig">
+        <property name="strategy" type="string"/>
+        <property name="apiCode" type="string"/>
+        <property name="apiMessage" type="string"/>
+        <property name="httpStatusCode" type="int"/>
+    </transfer>
 </transfers>

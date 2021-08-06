@@ -34,6 +34,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_CONTROLLER_AFTER_ACTION = 'PLUGIN_CONTROLLER_AFTER_ACTION';
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
     public const PLUGINS_REST_USER_FINDER = 'PLUGINS_REST_USER_FINDER';
+    public const PLUGINS_ROUTER_PARAMETER_EXPANDER = 'PLUGINS_ROUTER_PARAMETER_EXPANDER';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const CLIENT_STORE = 'CLIENT_STORE';
@@ -64,6 +65,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addControllerAfterActionPlugins($container);
         $container = $this->addApplicationPlugins($container);
         $container = $this->addRestUserFinderPlugins($container);
+        $container = $this->addRouterParameterExpanderPlugins($container);
 
         return $container;
     }
@@ -307,6 +309,20 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRouterParameterExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ROUTER_PARAMETER_EXPANDER, function (Container $container) {
+            return $this->getRouterParameterExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
      */
     protected function getApplicationPlugins(): array
@@ -435,6 +451,14 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserFinderPluginInterface[]
      */
     protected function getRestUserFinderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface[]
+     */
+    protected function getRouterParameterExpanderPlugins(): array
     {
         return [];
     }

@@ -155,14 +155,16 @@ class ResourceRouteLoaderTest extends Unit
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $plugins
      * @param \Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface $versionResolverMock
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface[] $routerParameterExpanderPlugins
      *
      * @return \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface
      */
     protected function createResourceLoader(
         array $plugins,
-        VersionResolverInterface $versionResolverMock
+        VersionResolverInterface $versionResolverMock,
+        array $routerParameterExpanderPlugins = []
     ): ResourceRouteLoaderInterface {
-        return new ResourceRouteLoader($plugins, $versionResolverMock);
+        return new ResourceRouteLoader($plugins, $versionResolverMock, $routerParameterExpanderPlugins);
     }
 
     /**
