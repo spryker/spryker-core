@@ -23,5 +23,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\AclEntity\Helper\AclEntityHelper
                 - \SprykerTest\Zed\Acl\Helper\AclHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper

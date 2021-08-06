@@ -26,6 +26,9 @@ class AclEntityDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ACL_ENTITY_DISABLER = 'PLUGINS_ACL_ENTITY_DISABLER';
     public const PLUGINS_ACL_ENTITY_ENABLER = 'PLUGINS_ACL_ENTITY_ENABLER';
 
+    public const IS_ACL_ENTITY_ENABLED = 'IS_ACL_ENTITY_ENABLED';
+    public const PARAM_IS_ACL_ENTITY_ENABLED = 'PARAM_IS_ACL_ENTITY_ENABLED';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -36,8 +39,8 @@ class AclEntityDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addAclEntityMetadataCollectionExpanderPlugins($container);
         $container = $this->addAclEntityDisablerPlugins($container);
-        $container = $this->addAclEntityEnablerPlugins($container);
         $container = $this->addAclEntityService($container);
+        $container = $this->addIsAclEntityEnabled($container);
 
         return $container;
     }
@@ -149,20 +152,12 @@ class AclEntityDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAclEntityEnablerPlugins(Container $container): Container
+    protected function addIsAclEntityEnabled(Container $container): Container
     {
-        $container->set(static::PLUGINS_ACL_ENTITY_ENABLER, function () {
-            return $this->getAclEntityEnablerPlugins();
+        $container->set(static::PARAM_IS_ACL_ENTITY_ENABLED, function (Container $container): bool {
+            return $container->has(static::IS_ACL_ENTITY_ENABLED) && $container->get(static::IS_ACL_ENTITY_ENABLED);
         });
 
         return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityEnablerPluginInterface[]
-     */
-    protected function getAclEntityEnablerPlugins(): array
-    {
-        return [];
     }
 }
