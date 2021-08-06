@@ -16,6 +16,7 @@ use Spryker\Zed\Setup\Communication\Console\InstallConsole;
 use Spryker\Zed\Setup\Communication\Console\JenkinsDisableConsole;
 use Spryker\Zed\Setup\Communication\Console\JenkinsEnableConsole;
 use Spryker\Zed\Setup\Communication\Console\JenkinsGenerateConsole;
+use Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole;
 use Spryker\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
 use Spryker\Zed\Setup\SetupDependencyProvider;
 
@@ -68,6 +69,7 @@ class SetupBusinessFactory extends AbstractBusinessFactory
     public function getConsoleCommands()
     {
         return [
+            $this->createRunnerConsole(),
             $this->createRemoveGeneratedDirectoryConsole(),
             $this->createInstallConsole(),
             $this->createJenkinsEnableConsole(),
@@ -75,6 +77,16 @@ class SetupBusinessFactory extends AbstractBusinessFactory
             $this->createJenkinsGenerateConsole(),
             $this->createDeployPreparePropelConsole(),
         ];
+    }
+
+    /**
+     * @deprecated Will be removed with next major release
+     *
+     * @return \Spryker\Zed\Setup\Communication\Console\Npm\RunnerConsole
+     */
+    protected function createRunnerConsole()
+    {
+        return new RunnerConsole();
     }
 
     /**
