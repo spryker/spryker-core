@@ -11,6 +11,9 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
+/**
+ * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
+ */
 class BatchProductRatingAggregationQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
