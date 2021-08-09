@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductOfferGuiConfig extends AbstractBundleConfig
 {
     public const REQUEST_PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
+    public const REQUEST_PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
     public const REQUEST_PARAM_APPROVAL_STATUS = 'approval-status';
 
     /**

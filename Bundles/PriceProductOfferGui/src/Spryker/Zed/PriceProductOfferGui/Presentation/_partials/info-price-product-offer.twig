@@ -61,7 +61,8 @@
                                 {{ currencies[currencyIsoCode].symbol }}
 
                             {% for priceType in priceTypes %}
-                                {% set priceData = priceDataByPriceType[storeName][currencyIsoCode][priceType] %}
+
+                                {% set priceData = priceDataByPriceType[storeName][currencyIsoCode][priceType] ?? [] %}
 
                                 {% if priceData is not empty %}
                                     {% include '@PriceProductOfferVolumeGui/_partials/volume_price_action_button.twig' with {
