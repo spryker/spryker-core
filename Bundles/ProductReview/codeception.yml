@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/ProductReview
+    - tests/SprykerTest/Client/ProductReview
 paths:
     tests: tests
     support: .
