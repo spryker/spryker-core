@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\Vault;
 
 use Codeception\Actor;
 use Spryker\Shared\Vault\VaultConfig as SharedVaultConfig;
+use Spryker\Zed\Vault\Business\VaultBusinessFactory;
+use Spryker\Zed\Vault\Business\VaultFacade;
 use Spryker\Zed\Vault\Business\VaultFacadeInterface;
 use Spryker\Zed\Vault\VaultConfig;
 
@@ -41,13 +43,11 @@ class VaultBusinessTester extends Actor
         $vaultConfig = (new VaultConfig())
             ->setSharedConfig($sharedVaultConfig);
 
-        $vaultBusinessFactory = $this->getFactory()
+        $vaultBusinessFactory = $this->createVaultBusinessFactory()
             ->setConfig($vaultConfig);
 
-        $vaultFacade = $this->getFacade()
+        return $this->createVaultFacade()
             ->setFactory($vaultBusinessFactory);
-
-        return $vaultFacade;
     }
 
     /**
@@ -57,12 +57,26 @@ class VaultBusinessTester extends Actor
      */
     public function getVaultFacadeWithConfig(VaultConfig $vaultConfig): VaultFacadeInterface
     {
-        $vaultBusinessFactory = $this->getFactory()
+        $vaultBusinessFactory = $this->createVaultBusinessFactory()
             ->setConfig($vaultConfig);
 
-        $vaultFacade = $this->getFacade()
+        return $this->createVaultFacade()
             ->setFactory($vaultBusinessFactory);
+    }
 
-        return $vaultFacade;
+    /**
+     * @return \Spryker\Zed\Vault\Business\VaultFacade
+     */
+    protected function createVaultFacade(): VaultFacade
+    {
+        return new VaultFacade();
+    }
+
+    /**
+     * @return \Spryker\Zed\Vault\Business\VaultBusinessFactory
+     */
+    protected function createVaultBusinessFactory(): VaultBusinessFactory
+    {
+        return new VaultBusinessFactory();
     }
 }

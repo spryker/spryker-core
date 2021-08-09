@@ -55,8 +55,6 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
      */
     public function testImportImportsAclEntitySegmentConnectorDataSuccessfully(): void
     {
-        $this->markTestSkipped();
-
         // Arrange
         $this->tester->generateAclEntitySegments();
         $this->tester->haveMerchant([MerchantTransfer::MERCHANT_REFERENCE => static::MERCHANT_REFERENCE_1]);
@@ -138,8 +136,6 @@ class AclEntitySegmentConnectorDataImportPluginTest extends Unit
      */
     public function testImportThrowsDataImportExceptionWhenImportDataContainsInvalidSegmentReference(): void
     {
-        $this->markTestSkipped();
-
         // Assert
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage(

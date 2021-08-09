@@ -41,8 +41,6 @@ class PriceProductOfferDataImportPluginTest extends Unit
      */
     public function testPriceProductOfferDataImportFacade(): void
     {
-        $this->markTestSkipped();
-
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $this->tester->haveProductOffer([
