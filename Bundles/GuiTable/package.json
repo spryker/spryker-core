@@ -24,7 +24,7 @@
         "@spryker/table.feature.settings": "^0.0.2-next.8",
         "@spryker/table.feature.sync-state": "^0.0.2-next.1",
         "@spryker/table.feature.title": "^0.0.2-next.2",
-        "@spryker/table.feature.total": "^0.0.2-next.6",
+        "@spryker/table.feature.total": "^0.0.5-next.1",
         "@spryker/table.filter.date-range": "^0.0.2-next.3",
         "@spryker/table.filter.select": "^0.0.2-next.2",
         "@spryker/table.filter.tree-select": "^0.0.2-next.2"

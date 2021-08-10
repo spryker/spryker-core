@@ -81,7 +81,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
 
     protected const PLACEHOLDER_SELECT_ATTRIBUTE = 'Select';
 
-    protected const COLOR_GREY = 'grey';
+    protected const COLOR_GREY = 'gray';
     protected const COLOR_BLUE = 'blue';
 
     /**

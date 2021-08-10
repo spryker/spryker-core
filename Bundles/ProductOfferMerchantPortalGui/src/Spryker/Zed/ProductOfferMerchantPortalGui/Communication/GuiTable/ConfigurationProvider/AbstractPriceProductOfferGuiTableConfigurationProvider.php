@@ -179,7 +179,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
             static::TITLE_COLUMN_STORE,
             true,
             false,
-            'grey',
+            'gray',
             []
         )->addColumnChip(
             PriceProductOfferTableViewTransfer::CURRENCY,

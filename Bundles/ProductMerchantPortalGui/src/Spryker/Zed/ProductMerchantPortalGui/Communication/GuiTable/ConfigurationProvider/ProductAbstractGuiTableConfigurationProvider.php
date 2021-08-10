@@ -108,11 +108,11 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_SKU, 'SKU', true, false)
             ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
             ->addColumnText(static::COL_KEY_NAME, 'Name', true, false)
-            ->addColumnListChip(static::COL_KEY_SUPER_ATTRIBUTES, 'Super Attributes', false, true, 2, 'grey')
-            ->addColumnChip(static::COL_KEY_VARIANTS, 'Variants', true, true, 'grey')
-            ->addColumnListChip(static::COL_KEY_CATEGORIES, 'Categories', false, true, 2, 'grey')
-            ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'grey')
-            ->addColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, 'grey', [
+            ->addColumnListChip(static::COL_KEY_SUPER_ATTRIBUTES, 'Super Attributes', false, true, 2, 'gray')
+            ->addColumnChip(static::COL_KEY_VARIANTS, 'Variants', true, true, 'gray')
+            ->addColumnListChip(static::COL_KEY_CATEGORIES, 'Categories', false, true, 2, 'gray')
+            ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'gray')
+            ->addColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, 'gray', [
                 $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_ONLINE) => 'green',
             ]);
 
