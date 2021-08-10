@@ -159,7 +159,7 @@ class ProductAbstractSelectedTable extends AbstractProductAbstractTable
             '#',
             static::BUTTON_MOVE_UP,
             [
-                'class' => 'js-reorder-product-abstract btn-create',
+                'class' => 'js-reorder-product-abstract btn-view',
                 'data-id' => $idProductAbstract,
                 'data-direction' => 'up',
                 'icon' => 'fa-arrow-up',
@@ -170,7 +170,7 @@ class ProductAbstractSelectedTable extends AbstractProductAbstractTable
             '#',
             static::BUTTON_MOVE_DOWN,
             [
-                'class' => 'js-reorder-product-abstract btn-create',
+                'class' => 'js-reorder-product-abstract btn-view',
                 'data-id' => $idProductAbstract,
                 'data-direction' => 'down',
                 'icon' => 'fa-arrow-down',

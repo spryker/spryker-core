@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
+use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
@@ -624,6 +625,14 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function getGuiTableFactory(): GuiTableFactoryInterface
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_FACTORY);
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
+     */
+    public function getZedUiFactory(): ZedUiFactoryInterface
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::SERVICE_ZED_UI_FACTORY);
     }
 
     /**

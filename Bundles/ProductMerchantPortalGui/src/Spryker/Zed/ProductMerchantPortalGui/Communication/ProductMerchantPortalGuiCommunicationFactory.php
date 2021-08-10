@@ -13,6 +13,7 @@ use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreator;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreatorInterface;
@@ -125,7 +126,6 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Matcher\PriceProductTable
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Matcher\PriceProductTableRowMatcherInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReader;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\Response\ResponseFactory;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Validator\ProductConcreteValidator;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Validator\ProductConcreteValidatorInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface;
@@ -960,6 +960,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
+     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
+     */
+    public function getZedUiFactory(): ZedUiFactoryInterface
+    {
+        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::SERVICE_ZED_UI_FACTORY);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface
      */
     public function getCategoryFacade(): ProductMerchantPortalGuiToCategoryFacadeInterface
@@ -1126,14 +1134,6 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
         return new ProductAttributesMapper(
             $this->createProductAttributeDataProvider()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Response\ResponseFactory
-     */
-    public function createResponseFactory(): ResponseFactory
-    {
-        return new ResponseFactory();
     }
 
     /**

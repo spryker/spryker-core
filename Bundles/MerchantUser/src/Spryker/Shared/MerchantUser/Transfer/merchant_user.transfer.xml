@@ -1,23 +1,9 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="Group">
-        <property name="name" type="string"/>
-        <property name="reference" type="string"/>
-        <property name="idAclGroup" type="int"/>
-    </transfer>
-
-    <transfer name="GroupCriteria">
-        <property name="reference" type="string"/>
-    </transfer>
-
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
         <property name="status" type="string"/>
-    </transfer>
-
-    <transfer name="MerchantError">
-        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="MerchantResponse">
@@ -55,19 +41,6 @@
         <property name="value" type="string"/>
     </transfer>
 
-    <transfer name="Role">
-        <property name="name" type="string"/>
-        <property name="aclGroup" type="Group"/>
-        <property name="aclRules" type="Rule[]" singular="aclRule"/>
-    </transfer>
-
-    <transfer name="Rule">
-        <property name="bundle" type="string"/>
-        <property name="controller" type="string"/>
-        <property name="action" type="string"/>
-        <property name="type" type="string"/>
-    </transfer>
-
     <transfer name="User">
         <property name="idUser" type="int"/>
         <property name="password" type="string"/>
@@ -89,6 +62,9 @@
 
     <transfer name="UserPasswordResetRequest">
         <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantError">
     </transfer>
 
 </transfers>

@@ -8,11 +8,10 @@ import { PersistenceModule } from '@spryker/persistence';
 import { DefaultContextSerializationModule } from '@spryker/utils';
 import { DateFnsDateAdapterModule } from '@spryker/utils.date.adapter.date-fns';
 import { WebComponentsModule } from '@spryker/web-components';
+import { AjaxActionModule } from '@spryker/ajax-action';
 import { DefaultActionsConfigModule } from './actions/default-actions-config.module';
-import { DefaultAjaxActionConfigModule } from './ajax-action/default-ajax-action-config.module';
 import { DefaultCacheConfigModule } from './cache/default-cache-config.module';
 import { DefaultDatasourcesConfigModule } from './datasources/default-datasources-config.module';
-import { DefaultTableConfigModule } from './table/default-table-config.module';
 import { DefaultUnsavedChangesConfigModule } from './unsaved-changes/default-unsaved-changes-config.module';
 
 @NgModule({
@@ -21,9 +20,8 @@ import { DefaultUnsavedChangesConfigModule } from './unsaved-changes/default-uns
         LocaleModule.forRoot({ defaultLocale: EN_LOCALE }),
         EnLocaleModule,
         DeLocaleModule,
-        DefaultTableConfigModule,
         NotificationModule.forRoot(),
-        DefaultAjaxActionConfigModule,
+        AjaxActionModule,
         DefaultContextSerializationModule,
         DefaultUnsavedChangesConfigModule,
         DefaultActionsConfigModule,

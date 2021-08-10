@@ -33,12 +33,27 @@ interface AclFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Acl\Business\AclFacadeInterface::createGroup()} instead.
+     *
      * @param string $groupName
      * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
      * @return \Generated\Shared\Transfer\GroupTransfer
      */
     public function addGroup($groupName, RolesTransfer $rolesTransfer);
+
+    /**
+     * Specification:
+     * - Creates ACL group for provided roles.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GroupTransfer $groupTransfer
+     * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
+     *
+     * @return \Generated\Shared\Transfer\GroupTransfer
+     */
+    public function createGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer): GroupTransfer;
 
     /**
      * Specification:
@@ -174,6 +189,8 @@ interface AclFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Acl\Business\AclFacadeInterface::createRole()} instead.
+     *
      * @param string $name
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
@@ -182,7 +199,20 @@ interface AclFacadeInterface
 
     /**
      * Specification:
+     * - Creates ACL role.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer
+     */
+    public function createRole(RoleTransfer $roleTransfer): RoleTransfer;
+
+    /**
+     * Specification:
      * - TODO: Add method specification.
+     * - Executes post save plugins.
      *
      * @api
      *
@@ -282,6 +312,7 @@ interface AclFacadeInterface
     /**
      * Specification:
      * - TODO: Add method specification.
+     * - Executes ACL roles expander plugins.
      *
      * @api
      *
@@ -334,6 +365,7 @@ interface AclFacadeInterface
     /**
      * Specification:
      * - TODO: Add method specification.
+     * - Executes ACL roles expander plugins.
      *
      * @api
      *

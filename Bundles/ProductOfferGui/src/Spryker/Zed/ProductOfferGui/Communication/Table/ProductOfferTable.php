@@ -31,6 +31,7 @@ class ProductOfferTable extends AbstractTable
     protected const COL_STORES = 'stores';
     protected const COL_ACTIONS = 'actions';
     protected const COL_PRODUCT_NAME = 'product_name';
+    protected const COL_ID_PRODUCT_CONCRETE = 'id_product_concrete';
     protected const STORE_CLASS_LABEL = 'label-info';
 
     protected const APPROVAL_STATUS_CLASS_LABEL_MAPPING = [
@@ -191,7 +192,11 @@ class ProductOfferTable extends AbstractTable
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT, Criteria::INNER_JOIN)
             ->where(sprintf('%s = (%s)', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $this->localeFacade->getCurrentLocale()->getIdLocale()))
-            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_NAME);
+            ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_NAME)
+            ->withColumn(
+                SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,
+                static::COL_ID_PRODUCT_CONCRETE
+            );
 
         return $this->productOfferQuery;
     }
@@ -264,7 +269,9 @@ class ProductOfferTable extends AbstractTable
                     ProductOfferGuiConfig::URL_UPDATE_APPROVAL_STATUS,
                     [
                         ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
-                        ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS => $availableApprovalStatus]
+                        ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS => $availableApprovalStatus,
+                        ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_CONCRETE => $item[static::COL_ID_PRODUCT_CONCRETE],
+                    ]
                 ),
                 $availableApprovalStatus . '_offer_button',
                 ApprovalStatusForm::class,

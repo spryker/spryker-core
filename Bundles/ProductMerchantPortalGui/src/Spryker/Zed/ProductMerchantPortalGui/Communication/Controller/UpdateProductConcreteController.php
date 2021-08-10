@@ -313,15 +313,13 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             return new JsonResponse($responseData);
         }
 
-        if (!$productConcreteEditForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
-            $responseData = $this->addErrorResponseDataToResponse($responseData);
-        }
-
-        if (!$validationResponseTransfer->getIsSuccess()) {
-            $responseData = $this->addValidationResponseMessagesToResponse($responseData, $validationResponseTransfer);
-        }
-
-        return new JsonResponse($responseData);
+        return new JsonResponse(
+            $this->addErrorResponseDataToResponse(
+                $productConcreteEditForm,
+                $validationResponseTransfer,
+                $responseData
+            )
+        );
     }
 
     /**

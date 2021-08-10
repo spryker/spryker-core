@@ -40,8 +40,16 @@ class AclConfigReader implements AclConfigReaderInterface
         foreach ($this->aclConfig->getInstallerRoles() as $roleData) {
             $groupTransfer = (new GroupTransfer())->setName($roleData[static::GROUP_KEY]);
             $roleTransfers[$roleData[RoleTransfer::NAME]] = (new RoleTransfer())
-                ->setName($roleData[RoleTransfer::NAME])
+                ->fromArray($roleData, true)
                 ->setAclGroup($groupTransfer);
+
+            if (isset($roleData[RoleTransfer::ACL_ENTITY_RULES])) {
+                $roleTransfers[$roleData[RoleTransfer::NAME]]->setAclEntityRules($roleData[RoleTransfer::ACL_ENTITY_RULES]);
+            }
+
+            if (isset($roleData[RoleTransfer::ACL_RULES])) {
+                $roleTransfers[$roleData[RoleTransfer::NAME]]->setAclRules($roleData[RoleTransfer::ACL_RULES]);
+            }
         }
         foreach ($this->aclConfig->getInstallerRules() as $ruleData) {
             if (!isset($roleTransfers[$ruleData[static::ROLE_KEY]])) {
@@ -76,10 +84,13 @@ class AclConfigReader implements AclConfigReaderInterface
     {
         $userTransfers = [];
         foreach ($this->aclConfig->getInstallerUsers() as $username => $userData) {
-            $groupTransfer = (new GroupTransfer())->setName($userData[static::GROUP_KEY]);
-            $userTransfers[] = (new UserTransfer())
-                ->setUsername($username)
-                ->addAclGroup($groupTransfer);
+            $userTransfer = (new UserTransfer())
+                ->setUsername($username);
+            if (isset($userData[static::GROUP_KEY])) {
+                $groupTransfer = (new GroupTransfer())->setName($userData[static::GROUP_KEY]);
+                $userTransfer->addAclGroup($groupTransfer);
+            }
+            $userTransfers[] = $userTransfer;
         }
 
         return $userTransfers;

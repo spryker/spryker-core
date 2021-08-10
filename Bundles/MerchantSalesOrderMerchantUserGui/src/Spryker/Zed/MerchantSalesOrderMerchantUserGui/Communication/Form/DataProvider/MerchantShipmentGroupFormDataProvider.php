@@ -369,9 +369,6 @@ class MerchantShipmentGroupFormDataProvider
         }
 
         $combinedSalutation = array_combine($salutation, $salutation);
-        if ($combinedSalutation === false) {
-            return [];
-        }
 
         return $combinedSalutation;
     }

@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -56,5 +57,25 @@ class SavePriceProductAbstractController extends AbstractSavePriceProductControl
                 $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT)),
                 $priceProductCriteriaTransfer
             );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return bool
+     */
+    protected function isProductOwnedByCurrentMerchant(Request $request): bool
+    {
+        $idProductAbstract = $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT));
+        $merchantTransfer = $this->getFactory()
+            ->getMerchantUserFacade()
+            ->getCurrentMerchantUser()
+            ->getMerchantOrFail();
+
+        $productAbstractTransfer = (new ProductAbstractTransfer())->setIdProductAbstract($idProductAbstract);
+
+        return $this->getFactory()
+            ->getMerchantProductFacade()
+            ->isProductAbstractOwnedByMerchant($productAbstractTransfer, $merchantTransfer);
     }
 }

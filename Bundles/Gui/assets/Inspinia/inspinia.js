@@ -23,7 +23,7 @@ $(document).ready(function () {
         var button = $(this).find('i');
         var content = ibox.children('.ibox-content');
         content.slideToggle(200);
-        button.toggleClass('fa-chevron-up').toggleClass('fa-chevron-down');
+        button.toggleClass('fa-minus').toggleClass('fa-plus');
         ibox.toggleClass('').toggleClass('border-bottom');
         setTimeout(function () {
             ibox.resize();

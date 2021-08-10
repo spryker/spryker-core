@@ -10,6 +10,8 @@ namespace Spryker\Service\UtilText\Model\Filter;
 class SeparatorToCamelCase implements SeparatorToCamelCaseInterface
 {
     /**
+     * @phpstan-param non-empty-string $separator
+     *
      * @param string $string
      * @param string $separator
      * @param bool $upperCaseFirst

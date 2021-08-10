@@ -149,7 +149,7 @@ class ProductOptionPresentationTester extends Actor
      */
     public function selectProductTab(): void
     {
-        $this->click('//*[@id="page-wrapper"]/div[3]/div[2]/ul/li[2]/a');
+        $this->waitAndClick('//*[@id="page-wrapper"]/div[3]/div[2]/ul/li[2]/a');
     }
 
     /**
@@ -157,7 +157,7 @@ class ProductOptionPresentationTester extends Actor
      */
     public function submitProductGroupForm(): void
     {
-        $this->click('#create-product-option-button');
+        $this->waitAndClick('#create-product-option-button');
     }
 
     /**
@@ -254,5 +254,16 @@ class ProductOptionPresentationTester extends Actor
             $productOptionTranslationTransfer = $this->createTranslation($productOptionGroupTransfer->getName(), $locale);
             $productOptionGroupTransfer->addGroupNameTranslation($productOptionTranslationTransfer);
         }
+    }
+
+    /**
+     * @param string $element
+     *
+     * @return void
+     */
+    public function waitAndClick(string $element): void
+    {
+        $this->waitForElement($element);
+        $this->click($element);
     }
 }

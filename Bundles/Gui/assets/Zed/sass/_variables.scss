@@ -1,6 +1,55 @@
 /**
- * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved. 
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file. 
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 $zed-logo: url(https://static.spryker.com/logo.svg) !default;
+
+$green-default: #17b497;
+$green-dark: #138671;
+$green-base: #1bbea0;
+$green-light: #a0e1d5;
+$green-lighter: #f1f8f7;
+
+$grey-dark: #71747c;
+$grey-base: #9ea1a7;
+$grey-light: #f1f1f1;
+$grey-light2: #efeeee;
+$grey-lighter: #f8f8f8;
+$grey: #d4d5d7;
+$grey2: #2b2c2d;
+$grey3: #eee;
+
+$red-dark: #b82124;
+$red-default: #f2392e;
+$red-lighter: #ff3b21;
+$red-light: #f9d3ce;
+$red-lightest: #ebccd1;
+
+$brown: #a94442;
+
+$blue: #2480f2;
+$blue2: #0088cc;
+$blue-dark: #156698;
+$blue-light: #eaf1fa;
+
+$orange: #ff6800;
+$orange-dark: #b7540f;
+$orange-light: #fef0e6;
+
+$ink-base: #121212;
+
+$white: #fff;
+$white-red: #f2dede;
+$black: #000;
+
+$box-shadow-green-hover: 0px 4px 12px 0px rgba($black, 0.15);
+$box-shadow-green-focused: 0 0 0 1px $white, 0 0 3px 1px $green-base;
+
+$box-shadow-red-hover: 0px 4px 12px 0px rgba($black, 0.15);
+$box-shadow-red-focused: 0 0 0 1px $white, 0 0 3px 1px $red-default;
+
+$main-font: 'Montserrat', 'Lato', sans-serif;
+
+$desktop: 1199px;
+$tablet: 1023px;

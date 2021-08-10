@@ -42,6 +42,7 @@ class ProductOfferValidityDataImportPluginTest extends Unit
         parent::setUp();
 
         $this->tester->ensureProductOfferValidityTableIsEmpty();
+        $this->tester->ensureProductOfferTableIsEmpty();
     }
 
     /**

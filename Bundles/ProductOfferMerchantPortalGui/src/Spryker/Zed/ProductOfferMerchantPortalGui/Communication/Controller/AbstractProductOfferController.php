@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,9 @@ class AbstractProductOfferController extends AbstractController
         GuiTableEditableInitialDataTransfer::DATA => [],
         GuiTableEditableInitialDataTransfer::ERRORS => [],
     ];
+
+    protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'The Offer is saved.';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'To save an Offer please resolve all errors.';
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
@@ -113,23 +117,44 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
+     * @param mixed[] $responseData
+     *
+     * @return mixed[]
+     */
+    protected function addSuccessResponseDataToResponse(array $responseData): array
+    {
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addSuccessNotification(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+            ->createResponse();
+
+        return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
+    }
+
+    /**
      * @phpstan-param array<string, mixed> $responseData
      *
      * @phpstan-return array<string, mixed>
      *
-     * @param array $responseData
+     * @param mixed[] $responseData
+     * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer|null $productOfferResponseTransfer
      *
-     * @return array
+     * @return mixed[]
      */
-    protected function addValidationNotifications(array $responseData): array
+    protected function addErrorResponseDataToResponse(array $responseData, ?ProductOfferResponseTransfer $productOfferResponseTransfer = null): array
     {
-        $responseData['notifications'] = [
-            [
-                'type' => 'error',
-                'message' => 'To save an Offer please resolve all errors.',
-            ],
-        ];
+        $zedUiFormResponseBuilder = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addErrorNotification(static::RESPONSE_NOTIFICATION_MESSAGE_ERROR);
 
-        return $responseData;
+        if ($productOfferResponseTransfer) {
+            foreach ($productOfferResponseTransfer->getErrors() as $productOfferErrorTransfer) {
+                $zedUiFormResponseBuilder->addErrorNotification($productOfferErrorTransfer->getMessageOrFail());
+            }
+        }
+
+        return array_merge($responseData, $zedUiFormResponseBuilder->createResponse()->toArray());
     }
 }

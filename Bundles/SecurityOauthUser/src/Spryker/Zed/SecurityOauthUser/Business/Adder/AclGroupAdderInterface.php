@@ -15,7 +15,7 @@ interface AclGroupAdderInterface
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      * @param string $groupName
      *
-     * @throws \Spryker\Zed\MerchantUser\Business\Exception\AclGroupNotFoundException
+     * @throws \Spryker\Zed\SecurityOauthUser\Business\Exception\AclGroupNotFoundException
      *
      * @return void
      */

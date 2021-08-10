@@ -1,5 +1,21 @@
 {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
 
+{% macro langIcon(localeName) -%}
+    {%- if localeName == 'en_US' -%}united-states
+    {%- elseif localeName == 'de_DE' -%}germany
+    {%- endif -%}
+{% endmacro %}
+
+{% macro langFullName(localeName) -%}
+    {%- if localeName == 'en_US' -%}English
+    {%- elseif localeName == 'de_DE' -%}German
+    {%- endif -%}
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% set defaultLocaleCode = defaultLocaleCode | default %}
+
 {% block body %}
     {% set mainClass = 'mp-create-abstract-product' %}
 
@@ -32,11 +48,11 @@
                         class="{{ mainClass }}__card">
                         <div class="{{ mainClass }}__card-name-input-header">
                             <web-spy-icon
-                                name="united-states"
+                                name="{{ macros.langIcon(defaultLocaleCode) }}"
                                 class="{{ mainClass }}__card-name-input-header-icon">
                             </web-spy-icon>
-                            {{ 'English' | trans }}
-                            ({{ defaultLocaleCode | default }})
+                            {{ macros.langFullName(defaultLocaleCode) | trans }}
+                            ({{ defaultLocaleCode }})
                         </div>
 
                         {{ form_row(form.name, { label: false, row_attr: { 'no-spaces': 'true' } }) }}

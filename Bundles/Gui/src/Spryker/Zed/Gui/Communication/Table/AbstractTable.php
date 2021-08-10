@@ -1107,7 +1107,7 @@ abstract class AbstractTable
     {
         $defaultOptions = [
             'class' => 'btn-edit',
-            'icon' => 'fa-pencil-square-o',
+            'icon' => 'fa-edit',
         ];
 
         return $this->generateButton($url, $title, $defaultOptions, $options);
@@ -1124,7 +1124,7 @@ abstract class AbstractTable
     {
         $defaultOptions = [
             'class' => 'btn-view',
-            'icon' => 'fa-caret-right',
+            'icon' => 'fa-eye',
         ];
 
         return $this->generateButton($url, $title, $defaultOptions, $options);
@@ -1159,7 +1159,7 @@ abstract class AbstractTable
     {
         $defaultOptions = [
             'class' => 'btn-view',
-            'icon' => 'fa-caret-right',
+            'icon' => 'fa-eye',
         ];
 
         return $this->generateButtonGroupHtml($buttonGroupItems, $title, $defaultOptions, $options);

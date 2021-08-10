@@ -17,6 +17,7 @@
         <property name="rules" type="string"/>
         <property name="aclGroup" type="Group"/>
         <property name="aclRules" type="Rule[]" singular="aclRule"/>
+        <property name="aclEntityRules" type="AclEntityRule[]" singular="aclEntityRule"/>
     </transfer>
 
     <transfer name="Roles">
@@ -42,8 +43,15 @@
         <property name="aclGroups" type="Group[]" singular="aclGroup"/>
     </transfer>
 
+    <transfer name="AclRoleCriteria">
+        <property name="names" type="string[]" singular="name"/>
+        <property name="name" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
     <transfer name="GroupCriteria">
         <property name="idAclGroup" type="int"/>
+        <property name="names" type="string[]" singular="name"/>
     </transfer>
 
     <transfer name="NavigationItem">
@@ -54,6 +62,9 @@
 
     <transfer name="NavigationItemCollection">
         <property name="navigationItems" type="NavigationItem[]" associative="true" singular="navigationItem"/>
+    </transfer>
+
+    <transfer name="AclEntityRule">
     </transfer>
 
 </transfers>

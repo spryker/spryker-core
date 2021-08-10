@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductOfferValidityDataImport;
 
 use Codeception\Actor;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery;
 
 /**
@@ -41,6 +42,16 @@ class ProductOfferValidityDataImportCommunicationTester extends Actor
     /**
      * @return void
      */
+    public function ensureProductOfferTableIsEmpty(): void
+    {
+        $query = $this->getProductOfferQuery();
+        $this->ensureDatabaseTableIsEmpty($query);
+        $query->deleteAll();
+    }
+
+    /**
+     * @return void
+     */
     public function assertProductOfferValidityDatabaseTablesContainsData(): void
     {
         $configurableBundleTemplateQuery = $this->getProductOfferValidityQuery();
@@ -57,5 +68,13 @@ class ProductOfferValidityDataImportCommunicationTester extends Actor
     protected function getProductOfferValidityQuery(): SpyProductOfferValidityQuery
     {
         return SpyProductOfferValidityQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function getProductOfferQuery(): SpyProductOfferQuery
+    {
+        return SpyProductOfferQuery::create();
     }
 }

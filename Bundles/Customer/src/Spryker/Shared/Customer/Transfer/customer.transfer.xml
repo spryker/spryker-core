@@ -195,4 +195,16 @@
         <property name="customerReference" type="string"/>
         <property name="withExpanders" type="bool"/>
     </transfer>
+
+    <transfer name="AuthorizationRequest">
+        <property name="identity" type="AuthorizationIdentity"/>
+        <property name="entity" type="AuthorizationEntity"/>
+    </transfer>
+
+    <transfer name="AuthorizationIdentity">
+        <property name="identifier" type="string"/>
+    </transfer>
+
+    <transfer name="AuthorizationEntity">
+    </transfer>
 </transfers>

@@ -163,7 +163,14 @@
         <property name="id" type="string"/>
         <property name="title" type="string"/>
         <property name="type" type="string"/>
-        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
+        <property name="url" type="string"/>
+        <property name="method" type="string"/>
+        <property name="component" type="string"/>
+        <property name="options" type="GuiTableRowActionOptions" singular="option"/>
+    </transfer>
+
+    <transfer name="GuiTableRowActionOptions">
+        <property name="inputs" type="array" singular="input" associative="true"/>
     </transfer>
 
     <transfer name="DateRangeGuiTableFilterTypeOptions">

@@ -10,30 +10,30 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\ValidationResponseTransfer;
-use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface getRepository()
  */
-class SavePriceProductOfferController extends AbstractController
+class SavePriceProductOfferController extends AbstractPriceProductOfferController
 {
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
     protected const PARAM_VOLUME_QUANTITY = 'volume_quantity';
     protected const PARAM_PRODUCT_OFFER_ID = 'product_offer_id';
 
-    protected const NOTIFICATION_TYPE_SUCCESS = 'success';
-    protected const NOTIFICATION_TYPE_ERROR = 'error';
-    protected const NOTIFICATION_SUCCESS_MESSAGE = 'Offer prices saved successfully.';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Offer prices saved successfully.';
 
     protected const POST_ACTION_REFRESH_TABLE = 'refresh_table';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -42,6 +42,24 @@ class SavePriceProductOfferController extends AbstractController
         $typePriceProductOfferIds = $this->parseTypePriceProductOfferIds($request->get(static::PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS));
         $volumeQuantity = $this->castId($request->get(static::PARAM_VOLUME_QUANTITY));
         $idProductOffer = $this->castId($request->get(static::PARAM_PRODUCT_OFFER_ID));
+
+        $productOfferTransfer = $this->getFactory()->getProductOfferFacade()->findOne(
+            (new ProductOfferCriteriaTransfer())->setIdProductOffer($idProductOffer)
+        );
+
+        if (!$productOfferTransfer) {
+            throw new NotFoundHttpException(sprintf('Product offer is not found for id %d.', $idProductOffer));
+        }
+
+        $currentMerchantReference = $this->getFactory()
+            ->getMerchantUserFacade()
+            ->getCurrentMerchantUser()
+            ->getMerchantOrFail()
+            ->getMerchantReferenceOrFail();
+
+        if ($productOfferTransfer->getMerchantReferenceOrFail() !== $currentMerchantReference) {
+            return new JsonResponse(['success' => false]);
+        }
 
         $requestData = $this->getFactory()->getUtilEncodingService()->decodeJson((string)$request->getContent(), true)['data'];
 
@@ -63,7 +81,12 @@ class SavePriceProductOfferController extends AbstractController
             ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 
         if (!$validationResponseTransfer->getIsSuccess()) {
-            return $this->errorJsonResponse($validationResponseTransfer);
+            return $this->createErrorJsonResponse(
+                $validationResponseTransfer
+                    ->getValidationErrors()
+                    ->offsetGet(0)
+                    ->getMessage()
+            );
         }
 
         foreach ($priceProductTransfers as $priceProductTransfer) {
@@ -75,50 +98,7 @@ class SavePriceProductOfferController extends AbstractController
             $this->getFactory()->getPriceProductOfferFacade()->saveProductOfferPrices($productOfferTransfer);
         }
 
-        return $this->successJsonResponse();
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    protected function successJsonResponse(): JsonResponse
-    {
-        $response = [
-            'notifications' => [
-                [
-                    'type' => static::NOTIFICATION_TYPE_SUCCESS,
-                    'message' => static::NOTIFICATION_SUCCESS_MESSAGE,
-                ],
-            ],
-            'postActions' => [
-                [
-                    'type' => static::POST_ACTION_REFRESH_TABLE,
-                ],
-            ],
-        ];
-
-        return new JsonResponse($response);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    protected function errorJsonResponse(ValidationResponseTransfer $validationResponseTransfer): JsonResponse
-    {
-        $notifications = [];
-        /** @var \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer */
-        $validationErrorTransfer = $validationResponseTransfer->getValidationErrors()->offsetGet(0);
-        $notifications[] = [
-            'type' => static::NOTIFICATION_TYPE_ERROR,
-            'message' => $validationErrorTransfer->getMessage(),
-        ];
-        $response = [
-            'notifications' => $notifications,
-        ];
-
-        return new JsonResponse($response);
+        return $this->createSuccessJsonResponse();
     }
 
     /**

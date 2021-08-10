@@ -123,8 +123,8 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_SKU, 'SKU', true, false)
             ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
             ->addColumnText(static::COL_KEY_NAME, 'Name', true, false)
-            ->addColumnListChip(static::COL_KEY_SUPER_ATTRIBUTES, 'Super Attributes', false, true, 1, 'grey')
-            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, true, 'grey', [
+            ->addColumnListChip(static::COL_KEY_SUPER_ATTRIBUTES, 'Super Attributes', false, true, 1, 'gray')
+            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, true, 'gray', [
                 $this->translatorFacade->trans(static::COLUMN_DATA_STATUS_ACTIVE) => 'green',
             ])
             ->addColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true)
@@ -162,7 +162,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
             'Edit',
             'Bulk edit',
             static::BULK_EDIT_URL,
-            GuiTableConfigurationBuilderInterface::ACTION_TYPE_FORM_OVERLAY
+            GuiTableConfigurationBuilderInterface::ACTION_TYPE_DRAWER
         );
 
         $guiTableConfigurationBuilder->setBatchActionRowIdPath(ProductConcreteTransfer::ID_PRODUCT_CONCRETE);
@@ -177,7 +177,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
      */
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
+        $guiTableConfigurationBuilder->addRowActionDrawerAjaxForm(
             static::ROW_EDIT_ID,
             static::TITLE_ROW_ACTION_UPDATE_PRODUCT,
             sprintf(

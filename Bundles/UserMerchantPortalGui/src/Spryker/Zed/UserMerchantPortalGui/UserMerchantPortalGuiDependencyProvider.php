@@ -19,6 +19,11 @@ class UserMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyPr
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
+    /**
+     * @uses \Spryker\Zed\ZedUi\Communication\Plugin\Application\ZedUiApplicationPlugin::SERVICE_ZED_UI_FACTORY
+     */
+    public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
+
     public const PLUGINS_MERCHANT_USER_POST_CHANGE_PLUGINS = 'PLUGINS_MERCHANT_USER_POST_CHANGE_PLUGINS';
 
     /**
@@ -33,6 +38,7 @@ class UserMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addLocaleFacade($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addTranslatorFacade($container);
+        $container = $this->addZedUiFactory($container);
 
         $container = $this->addMerchantUserPostChangePlugin($container);
 
@@ -90,6 +96,20 @@ class UserMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::PLUGINS_MERCHANT_USER_POST_CHANGE_PLUGINS, function () {
             return $this->getMerchantUserPostChangePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addZedUiFactory(Container $container): Container
+    {
+        $container->set(static::SERVICE_ZED_UI_FACTORY, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_ZED_UI_FACTORY);
         });
 
         return $container;

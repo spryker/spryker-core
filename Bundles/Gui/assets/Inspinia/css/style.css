@@ -46,13 +46,14 @@ h5 {
 .nav.navbar-right > li > a {
     color: #999c9e;
 }
-.nav > li.active > a {
-    color: #ffffff;
-}
 .navbar-default .nav > li > a:hover,
 .navbar-default .nav > li > a:focus {
-    background-color: #293846;
-    color: white;
+    background-color: #f8f8f8;
+    color: #676a6c;
+}
+.navbar-default .nav > li > a:hover .fa,
+.navbar-default .nav > li > a:focus .fa {
+    color: #19aa8d;
 }
 .nav .open > a,
 .nav .open > a:hover,
@@ -168,19 +169,20 @@ h5 {
     font-size: 12px;
 }
 .nav-header {
-    padding: 33px 25px;
-    background-color: #2f4050;
-    background-image: url('../img/patterns/header-profile.png');
+    padding: 10px;
 }
 .pace-done .nav-header {
     transition: all 0.4s;
 }
-ul.nav-second-level {
-    background: #293846;
-}
 .nav > li.active {
     border-left: 4px solid #19aa8d;
-    background: #293846;
+    background: #f8f8f8;
+}
+.nav > li.active a {
+    color: #676a6c;
+}
+.nav > li.active .fa {
+    color: #19aa8d;
 }
 .nav.nav-second-level > li.active {
     border: none;
@@ -272,7 +274,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
     position: absolute;
     left: 70px;
     top: 0;
-    background-color: #2f4050;
+    background-color: #ffffff;
     padding: 10px 10px 10px 10px;
     font-size: 12px;
 }
@@ -332,7 +334,7 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
 }
 .navbar-fixed-top,
 .navbar-static-top {
-    background: #f3f3f4;
+    background: #f8f8f8;
 }
 .fixed-nav #wrapper {
     margin-top: 0;
@@ -620,7 +622,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
     }
 }
 .btn {
-    border-radius: 3px;
+    border-radius: 10px;
 }
 .float-e-margins .btn {
     margin-bottom: 5px;
@@ -651,8 +653,8 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
     color: #fff;
 }
 .btn-primary {
-    background-color: #1ab394;
-    border-color: #1ab394;
+    background-color: #1bbea0;
+    border-color: #1bbea0;
     color: #ffffff;
 }
 .btn-primary:hover,
@@ -664,8 +666,9 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
 .btn-primary:active:hover,
 .btn-primary.active:hover,
 .btn-primary.active:focus {
-    background-color: #18a689;
-    border-color: #18a689;
+    background-color: #1bbea0;
+    border-color: #1bbea0;
+    box-shadow: 0 4px 18px 0 rgba(27, 190, 160, 0.4);
     color: #ffffff;
 }
 .btn-primary:active,
@@ -3489,7 +3492,7 @@ body.tour-open .animated {
 }
 body {
     font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #2f4050;
+    background-color: #f8f8f8;
     font-size: 13px;
     color: #676a6c;
     overflow-x: hidden;
@@ -4040,7 +4043,7 @@ table.table-mail tr td {
 /* BACKGROUNDS */
 .gray-bg,
 .bg-muted {
-    background-color: #f3f3f4;
+    background-color: #f8f8f8;
 }
 .white-bg {
     background-color: #ffffff;
@@ -7842,8 +7845,8 @@ body.skin-1 {
 }
 .skin-1 .navbar-default .nav > li > a:hover,
 .skin-1 .navbar-default .nav > li > a:focus {
-    background: #3a4459;
-    color: #fff;
+    background: #f8f8f8;
+    color: #676a6c;
 }
 .skin-1 .nav.nav-tabs > li.active > a {
     color: #555;

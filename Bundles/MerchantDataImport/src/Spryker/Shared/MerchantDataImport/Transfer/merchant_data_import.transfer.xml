@@ -9,7 +9,38 @@
         <property name="readerConfiguration" type="DataImporterReaderConfiguration"/>
     </transfer>
 
+    <transfer name="MerchantCriteria">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantResponse">
+        <property name="merchant" type="Merchant"/>
+        <property name="errors" type="MerchantError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="MerchantError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
+        <property name="name" type="string"/>
+        <property name="registrationNumber" type="string"/>
+        <property name="email" type="string"/>
+        <property name="status" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="merchantReference" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
+        <property name="merchantProfile" type="MerchantProfile"/>
+    </transfer>
+
     <transfer name="DataImporterReport">
+    </transfer>
+
+    <transfer name="StoreRelation">
+    </transfer>
+
+    <transfer name="MerchantProfile">
     </transfer>
 
 </transfers>

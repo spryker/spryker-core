@@ -30,13 +30,23 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     protected $versionResolver;
 
     /**
+     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface[]
+     */
+    protected $routerParameterExpanderPlugins;
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $resourcePlugins
      * @param \Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface $versionResolver
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface[] $routerParameterExpanderPlugins
      */
-    public function __construct(array $resourcePlugins, VersionResolverInterface $versionResolver)
-    {
+    public function __construct(
+        array $resourcePlugins,
+        VersionResolverInterface $versionResolver,
+        array $routerParameterExpanderPlugins
+    ) {
         $this->resourcePlugins = $resourcePlugins;
         $this->versionResolver = $versionResolver;
+        $this->routerParameterExpanderPlugins = $routerParameterExpanderPlugins;
     }
 
     /**
@@ -75,6 +85,10 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
 
         if ($resourcePlugin instanceof ResourceVersionableInterface) {
             $resourceConfiguration[RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION] = $resourcePlugin->getVersion();
+        }
+
+        foreach ($this->routerParameterExpanderPlugins as $routerParameterExpanderPlugin) {
+            $resourceConfiguration = $routerParameterExpanderPlugin->expandResourceConfiguration($resourcePlugin, $resourceConfiguration);
         }
 
         return $resourceConfiguration;

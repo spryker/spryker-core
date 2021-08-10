@@ -71,6 +71,11 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
      */
     public const SERVICE_GUI_TABLE_FACTORY = 'gui_table_factory';
 
+    /**
+     * @uses \Spryker\Zed\ZedUi\Communication\Plugin\Application\ZedUiApplicationPlugin::SERVICE_ZED_UI_FACTORY
+     */
+    public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
+
     public const PROPEL_QUERY_MERCHANT_PRODUCT_ABSTRACT = 'PROPEL_QUERY_MERCHANT_PRODUCT_ABSTRACT';
     public const PROPEL_QUERY_PRODUCT_IMAGE = 'PROPEL_QUERY_PRODUCT_IMAGE';
     public const PROPEL_QUERY_PRODUCT_CONCRETE = 'PROPEL_QUERY_PRODUCT_CONCRETE';
@@ -98,6 +103,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addStoreFacade($container);
         $container = $this->addGuiTableHttpDataRequestHandler($container);
         $container = $this->addGuiTableFactory($container);
+        $container = $this->addZedUiFactory($container);
         $container = $this->addCategoryFacade($container);
         $container = $this->addMerchantProductFacade($container);
         $container = $this->addProductCategoryFacade($container);
@@ -444,6 +450,20 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::SERVICE_GUI_TABLE_FACTORY, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_GUI_TABLE_FACTORY);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addZedUiFactory(Container $container): Container
+    {
+        $container->set(static::SERVICE_ZED_UI_FACTORY, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_ZED_UI_FACTORY);
         });
 
         return $container;

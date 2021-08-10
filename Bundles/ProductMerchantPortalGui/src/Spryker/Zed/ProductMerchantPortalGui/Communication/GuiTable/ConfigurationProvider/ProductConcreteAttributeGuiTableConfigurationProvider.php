@@ -81,7 +81,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
 
     protected const PLACEHOLDER_SELECT_ATTRIBUTE = 'Select';
 
-    protected const COLOR_GREY = 'grey';
+    protected const COLOR_GREY = 'gray';
     protected const COLOR_BLUE = 'blue';
 
     /**
@@ -224,7 +224,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
      */
     protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationBuilder->addRowActionUrl(
+        $guiTableConfigurationBuilder->addRowActionHttp(
             static::ID_ROW_ACTION_DELETE,
             static::TITLE_ROW_ACTION_DELETE,
             $this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_DELETE_URL)

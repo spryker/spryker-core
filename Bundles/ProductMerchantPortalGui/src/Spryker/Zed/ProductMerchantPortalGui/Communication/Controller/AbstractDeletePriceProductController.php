@@ -20,17 +20,8 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractDeletePriceProductController extends AbstractController
 {
-    protected const RESPONSE_MESSAGE_SUCCESS = 'Success! The Price is deleted.';
-    protected const RESPONSE_MESSAGE_ERROR = 'Something went wrong, please try again.';
-
-    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
-    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
-    protected const RESPONSE_KEY_TYPE = 'type';
-    protected const RESPONSE_KEY_MESSAGE = 'message';
-
-    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
-    protected const RESPONSE_TYPE_SUCCESS = 'success';
-    protected const RESPONSE_TYPE_ERROR = 'error';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Success! The Price is deleted.';
+    protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'Something went wrong, please try again.';
 
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
@@ -115,21 +106,14 @@ abstract class AbstractDeletePriceProductController extends AbstractController
      */
     protected function createSuccessResponse(): JsonResponse
     {
-        $responseData = [
-            static::RESPONSE_KEY_POST_ACTIONS => [
-                [
-                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
-                ],
-            ],
-            static::RESPONSE_KEY_NOTIFICATIONS => [
-                [
-                    static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
-                    static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_SUCCESS,
-                ],
-            ],
-        ];
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addSuccessNotification(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+            ->addActionRefreshTable()
+            ->createResponse();
 
-        return new JsonResponse($responseData);
+        return new JsonResponse($zedUiFormResponseTransfer->toArray());
     }
 
     /**
@@ -140,14 +124,15 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     protected function createErrorResponse(?string $messageError = null): JsonResponse
     {
         if ($messageError === null) {
-            $messageError = static::RESPONSE_MESSAGE_ERROR;
+            $messageError = static::RESPONSE_NOTIFICATION_MESSAGE_ERROR;
         }
 
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-            static::RESPONSE_KEY_MESSAGE => $messageError,
-        ];
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addErrorNotification($messageError)
+            ->createResponse();
 
-        return new JsonResponse($responseData);
+        return new JsonResponse($zedUiFormResponseTransfer->toArray());
     }
 }

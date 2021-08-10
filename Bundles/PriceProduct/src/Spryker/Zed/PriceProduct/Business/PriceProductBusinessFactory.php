@@ -9,6 +9,8 @@ namespace Spryker\Zed\PriceProduct\Business;
 
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderInterface;
+use Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderWithCache;
 use Spryker\Zed\PriceProduct\Business\Expander\Wishlist\PriceProductWishlistItemExpander;
 use Spryker\Zed\PriceProduct\Business\Expander\Wishlist\PriceProductWishlistItemExpanderInterface;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
@@ -139,6 +141,16 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderInterface
+     */
+    public function createCurrencyReader(): CurrencyReaderInterface
+    {
+        return new CurrencyReaderWithCache(
+            $this->getCurrencyFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface
      */
     public function createPriceProductMapper(): PriceProductMapperInterface
@@ -205,7 +217,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function createProductCriteriaBuilder(): PriceProductCriteriaBuilderInterface
     {
         return new PriceProductCriteriaBuilder(
-            $this->getCurrencyFacade(),
+            $this->createCurrencyReader(),
             $this->getPriceFacade(),
             $this->getStoreFacade(),
             $this->createPriceTypeReader(),

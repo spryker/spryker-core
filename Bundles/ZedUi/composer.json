@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.3",
+        "spryker/application-extension": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/translator": "^1.1.0",
         "spryker/twig": "^3.13.0",

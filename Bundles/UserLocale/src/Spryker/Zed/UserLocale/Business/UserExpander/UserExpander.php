@@ -44,7 +44,7 @@ class UserExpander implements UserExpanderInterface
             return $userTransfer;
         }
 
-        if (!$idLocale && $localeName) {
+        if (!$idLocale) {
             $localeTransfer = $this->localeFacade->getLocale($localeName);
             $userTransfer->setFkLocale($localeTransfer->getIdLocale())
                 ->setLocaleName($localeName);
@@ -52,7 +52,7 @@ class UserExpander implements UserExpanderInterface
             return $userTransfer;
         }
 
-        if ($idLocale && !$localeName) {
+        if (!$localeName) {
             $localeTransfer = $this->localeFacade->getLocaleById($idLocale);
             $userTransfer->setLocaleName($localeTransfer->getLocaleName());
 

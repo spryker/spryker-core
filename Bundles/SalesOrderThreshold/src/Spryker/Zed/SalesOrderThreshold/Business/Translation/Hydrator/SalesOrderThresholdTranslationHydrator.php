@@ -61,6 +61,30 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
     }
 
     /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer[] $salesOrderThresholdTransfers
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     */
+    public function expandWithLocalizedMessagesCollection(array $salesOrderThresholdTransfers): array
+    {
+        $glossaryKeys = $this->getGlossaryKeys($salesOrderThresholdTransfers);
+        if (!$glossaryKeys) {
+            return $salesOrderThresholdTransfers;
+        }
+
+        $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
+        $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers($glossaryKeys, $availableLocaleTransfers);
+
+        $salesOrderThresholdTransfers = $this->expandSalesOrderThresholdTransferWithLocalizedMessagesCollection(
+            $salesOrderThresholdTransfers,
+            $translationTransfers,
+            $availableLocaleTransfers
+        );
+
+        return $salesOrderThresholdTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
      * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocaleTransfers
@@ -84,6 +108,25 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
         $salesOrderThresholdTransfer->setLocalizedMessages($localizedMessages);
 
         return $salesOrderThresholdTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer[] $salesOrderThresholdTransfers
+     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
+     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocaleTransfers
+     *
+     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     */
+    protected function expandSalesOrderThresholdTransferWithLocalizedMessagesCollection(
+        array $salesOrderThresholdTransfers,
+        array $translationTransfers,
+        array $availableLocaleTransfers
+    ): array {
+        foreach ($salesOrderThresholdTransfers as $salesOrderThresholdTransfer) {
+            $salesOrderThresholdTransfer = $this->extendSalesOrderThresholdTransferWithLocalizedMessages($salesOrderThresholdTransfer, $translationTransfers, $availableLocaleTransfers);
+        }
+
+        return $salesOrderThresholdTransfers;
     }
 
     /**
@@ -131,5 +174,21 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
         }
 
         return $salesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey() ?: null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer[] $salesOrderThresholdTransfers
+     *
+     * @return string[]
+     */
+    protected function getGlossaryKeys(array $salesOrderThresholdTransfers): array
+    {
+        $glossaryKeys = [];
+
+        foreach ($salesOrderThresholdTransfers as $salesOrderThresholdTransfer) {
+            $glossaryKeys[] = $this->getGlossaryKey($salesOrderThresholdTransfer);
+        }
+
+        return $glossaryKeys;
     }
 }

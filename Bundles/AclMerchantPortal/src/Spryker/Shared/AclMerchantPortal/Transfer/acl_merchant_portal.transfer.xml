@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Rule">
+        <property name="bundle" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="type" type="string"/>
+        <property name="action" type="string"/>
+        <property name="fkAclRole" type="int"/>
+    </transfer>
+
+    <transfer name="AclEntityRule">
+        <property name="entity" type="string"/>
+        <property name="scope" type="string"/>
+        <property name="permissionMask" type="int"/>
+        <property name="idAclRole" type="int"/>
+        <property name="idAclEntitySegment" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantResponse">
+        <property name="merchant" type="Merchant"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="errors" type="MerchantError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Roles">
+        <property name="roles" type="Role[]" singular="role"/>
+        <property name="aclEntityRules" type="AclEntityRule[]" singular="aclEntityRule"/>
+    </transfer>
+
+    <transfer name="Role">
+        <property name="name" type="string"/>
+        <property name="reference" type="string"/>
+        <property name="idAclRole" type="int"/>
+        <property name="aclGroup" type="Group"/>
+        <property name="aclRules" type="Rule[]" singular="aclRule"/>
+        <property name="aclEntityRules" type="AclEntityRule[]" singular="aclEntityRule"/>
+    </transfer>
+
+    <transfer name="AclEntitySegment">
+        <property name="idAclEntitySegment" type="int"/>
+        <property name="name" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntitySegmentRequest">
+        <property name="name" type="string"/>
+        <property name="reference" type="string"/>
+        <property name="entity" type="string"/>
+        <property name="entityIds" type="array" singular="idEntity"/>
+    </transfer>
+
+    <transfer name="AclEntitySegmentResponse">
+        <property name="aclEntitySegment" type="AclEntitySegment"/>
+    </transfer>
+
+    <transfer name="Group">
+        <property name="idAclGroup" type="int"/>
+        <property name="name" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="hasSegmentTable" type="bool"/>
+        <property name="parent" type="AclEntityParentMetadata"/>
+        <property name="defaultGlobalOperationMask" type="int"/>
+        <property name="isSubEntity" type="bool"/>
+    </transfer>
+
+    <transfer name="AclEntityParentMetadata">
+        <property name="entityName" type="string"/>
+        <property name="connection" type="AclEntityParentConnectionMetadata"/>
+    </transfer>
+
+    <transfer name="AclEntityParentConnectionMetadata">
+        <property name="pivotEntityName" type="string"/>
+        <property name="reference" type="string"/>
+        <property name="referencedColumn" type="string"/>
+    </transfer>
+
+    <transfer name="GroupCriteria">
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+        <property name="aclEntityWhitelist" type="string[]" singular="aclEntityWhitelistItem"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="idUser" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idUser" type="int"/>
+        <property name="idMerchantUser" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="merchant" type="Merchant"/>
+        <property name="user" type="User"/>
+    </transfer>
+
+</transfers>

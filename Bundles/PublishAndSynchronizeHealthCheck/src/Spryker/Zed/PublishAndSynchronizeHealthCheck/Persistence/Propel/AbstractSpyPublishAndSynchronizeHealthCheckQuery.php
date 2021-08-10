@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PublishAndSynchronizeHealthCheck\Persistence\Propel;
 
-use Orm\Zed\PublishAndSynchronizeHealthCheck\Persistence\Base\SpyPublishAndSynchronizeHealthCheckQuery;
+use Orm\Zed\PublishAndSynchronizeHealthCheck\Persistence\Base\SpyPublishAndSynchronizeHealthCheckQuery as BaseSpyPublishAndSynchronizeHealthCheckQuery;
 
 /**
  * Skeleton subclass for performing query and update operations on the 'publish_and_synchronize_health_check' table.
@@ -18,6 +18,6 @@ use Orm\Zed\PublishAndSynchronizeHealthCheck\Persistence\Base\SpyPublishAndSynch
  * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpyPublishAndSynchronizeHealthCheckQuery extends SpyPublishAndSynchronizeHealthCheckQuery
+abstract class AbstractSpyPublishAndSynchronizeHealthCheckQuery extends BaseSpyPublishAndSynchronizeHealthCheckQuery
 {
 }

@@ -34,21 +34,23 @@
 
     {% if cmsVersion is not null %}
         <div class="alert alert-info">
-            <p>
-                <i class="fa fa-info-circle" aria-hidden="true"></i>
-                {% apply trans|raw -%}
-                    You are viewing a published page. It was published
-                {%- endapply %}
-                {% if cmsVersion.firstName is not null %}
-                    {{ 'by' | trans }} <b>{{ cmsVersion.firstName }} {{ cmsVersion.lastName }}</b>
-                {% endif %}
+            <i class="fa fa-info-circle alert__icon" aria-hidden="true"></i>
+            <div class="alert__text">
+                <p>
+                    {% apply trans|raw -%}
+                        You are viewing a published page. It was published
+                    {%- endapply %}
+                    {% if cmsVersion.firstName is not null %}
+                        {{ 'by' | trans }} <b>{{ cmsVersion.firstName }} {{ cmsVersion.lastName }}</b>
+                    {% endif %}
                     {{ 'on' | trans }} <b>{{ cmsVersion.createdAt | formatDateTime }}</b>.
-            </p>
-            <p>
-                {% apply trans|raw -%}
-                    You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version
-                {%- endapply %}
-            </p>
+                </p>
+                <p>
+                    {% apply trans|raw -%}
+                        You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version
+                    {%- endapply %}
+                </p>
+            </div>
         </div>
     {% endif %}
 

@@ -256,7 +256,7 @@ class ProductOfferFacadeTest extends Unit
         );
 
         $productOfferRepositoryMock = $this->getMockBuilder(ProductOfferRepositoryInterface::class)
-            ->onlyMethods(['get', 'findOne', 'getProductOfferStores', 'getMaxIdProductOffer', 'isProductOfferReferenceUsed'])
+            ->onlyMethods(['get', 'findOne', 'getProductOfferStores'])
             ->getMock();
         $productOfferRepositoryMock
             ->method('get')

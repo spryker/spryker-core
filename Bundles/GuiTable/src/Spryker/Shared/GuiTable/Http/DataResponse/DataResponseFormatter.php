@@ -87,7 +87,7 @@ class DataResponseFormatter implements DataResponseFormatterInterface
     {
         $indexedColumnTypes = [];
         foreach ($guiTableConfigurationTransfer->getColumns() as $guiTableColumnConfigurationTransfer) {
-            $indexedColumnTypes[$guiTableColumnConfigurationTransfer->getId()] = $guiTableColumnConfigurationTransfer->getType();
+            $indexedColumnTypes[$guiTableColumnConfigurationTransfer->getId()] = $guiTableColumnConfigurationTransfer->getTypeOrFail();
         }
 
         return $indexedColumnTypes;

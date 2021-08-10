@@ -32,7 +32,7 @@
                     <span sub-title>
                         {% for superAttributeName in superAttributeNames %}
                             {% block subTitleChips %}
-                                <web-spy-chips color="grey-lighter" title="{{ superAttributeName }}">{{ superAttributeName }}</web-spy-chips>
+                                <web-spy-chips color="gray-lighter" title="{{ superAttributeName }}">{{ superAttributeName }}</web-spy-chips>
                             {% endblock %}
                         {% endfor %}
                     </span>
@@ -50,7 +50,7 @@
                 {% block stockCard %}
                     <web-spy-card cloak spy-title="{{ 'Stock' | trans }}" class="{{ editConcreteProductClass }}__card {{ editConcreteProductClass }}__stock">
                         {% block reservedStock %}
-                            <web-spy-chips max-width="none" color="grey" class="{{ editConcreteProductClass }}__stock-reserved">
+                            <web-spy-chips max-width="none" color="gray" class="{{ editConcreteProductClass }}__stock-reserved">
                                 {{ 'Reserved Stock' | trans }}: {{ reservedStock }}
                             </web-spy-chips>
                         {% endblock %}

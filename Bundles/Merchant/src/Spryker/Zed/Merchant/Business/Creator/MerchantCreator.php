@@ -77,7 +77,10 @@ class MerchantCreator implements MerchantCreatorInterface
     {
         $this->assertDefaultMerchantRequirements($merchantTransfer);
 
-        $merchantTransfer->setStatus($this->merchantConfig->getDefaultMerchantStatus());
+        if (!$merchantTransfer->getStatus()) {
+            $merchantTransfer->setStatus($this->merchantConfig->getDefaultMerchantStatus());
+        }
+
         $merchantResponseTransfer = $this->createMerchantResponseTransfer();
 
         try {

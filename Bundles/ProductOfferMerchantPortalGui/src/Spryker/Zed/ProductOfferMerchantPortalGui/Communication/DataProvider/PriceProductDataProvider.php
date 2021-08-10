@@ -73,7 +73,7 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
         int $volumeQuantity,
         int $idProductOffer
     ): ArrayObject {
-        $priceProductTransfers = $this->getPriceProductTransfers($typePriceProductOfferIds, $requestData);
+        $priceProductTransfers = $this->getPriceProductTransfers($typePriceProductOfferIds, $requestData, $idProductOffer);
 
         if ($volumeQuantity > 1) {
             $priceProductTransfers = $this->priceProductsVolumeDataExpander
@@ -95,10 +95,11 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
      *
      * @param int[] $typePriceProductOfferIds
      * @param mixed[] $requestData
+     * @param int $idProductOffer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    protected function getPriceProductTransfers(array $typePriceProductOfferIds, array $requestData): ArrayObject
+    protected function getPriceProductTransfers(array $typePriceProductOfferIds, array $requestData, int $idProductOffer): ArrayObject
     {
         $key = (string)key($requestData);
         $priceTypeName = mb_strtoupper((string)strstr($key, '[', true));
@@ -106,7 +107,7 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
 
         if (!$priceProductOfferIds) {
             $priceProductTransfers = new ArrayObject();
-            $priceProductTransfer = $this->createNewPriceForProductOffer($typePriceProductOfferIds, $priceTypeName);
+            $priceProductTransfer = $this->createNewPriceForProductOffer($typePriceProductOfferIds, $priceTypeName, $idProductOffer);
             $priceProductTransfers->append($priceProductTransfer);
 
             return $priceProductTransfers;
@@ -114,7 +115,8 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
 
         $priceProductOfferCriteriaTransfer = (new PriceProductOfferCriteriaTransfer())
             ->setPriceProductOfferIds($priceProductOfferIds)
-            ->setWithExtractedPrices(false);
+            ->setWithExtractedPrices(false)
+            ->setIdProductOffer($idProductOffer);
 
         $priceProductTransfers = $this->priceProductOfferFacade->getProductOfferPrices($priceProductOfferCriteriaTransfer);
 
@@ -124,13 +126,15 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
     /**
      * @param int[] $typePriceProductOfferIds
      * @param string $priceTypeName
+     * @param int $idProductOffer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function createNewPriceForProductOffer(array $typePriceProductOfferIds, string $priceTypeName): PriceProductTransfer
+    protected function createNewPriceForProductOffer(array $typePriceProductOfferIds, string $priceTypeName, int $idProductOffer): PriceProductTransfer
     {
         $priceProductOfferCriteriaTransfer = new PriceProductOfferCriteriaTransfer();
-        $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($typePriceProductOfferIds);
+        $priceProductOfferCriteriaTransfer->setPriceProductOfferIds($typePriceProductOfferIds)
+            ->setIdProductOffer($idProductOffer);
 
         $offerPriceProductTransfers = $this->priceProductOfferFacade
             ->getProductOfferPrices($priceProductOfferCriteriaTransfer);

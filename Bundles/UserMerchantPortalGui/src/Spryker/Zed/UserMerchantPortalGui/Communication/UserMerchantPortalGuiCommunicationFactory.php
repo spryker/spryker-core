@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\UserMerchantPortalGui\Communication;
 
+use Spryker\Shared\ZedUi\ZedUiFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\ChangePasswordForm;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\Constraint\CurrentPasswordConstraint;
@@ -116,5 +117,13 @@ class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFac
     public function getTranslatorFacade(): UserMerchantPortalGuiToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(UserMerchantPortalGuiDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
+     */
+    public function getZedUiFactory(): ZedUiFactoryInterface
+    {
+        return $this->getProvidedDependency(UserMerchantPortalGuiDependencyProvider::SERVICE_ZED_UI_FACTORY);
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="hasSegmentTable" type="bool"/>
+        <property name="defaultGlobalOperationMask" type="int"/>
+        <property name="parent" type="AclEntityParentMetadata"/>
+        <property name="isSubEntity" type="bool"/>
+    </transfer>
+
+    <transfer name="AclEntityParentMetadata">
+        <property name="entityName" type="string"/>
+        <property name="connection" type="AclEntityParentConnectionMetadata"/>
+    </transfer>
+
+    <transfer name="AclEntityParentConnectionMetadata">
+        <property name="pivotEntityName" type="string"/>
+        <property name="referencedColumn" type="string"/>
+        <property name="reference" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+    </transfer>
+
+</transfers>

@@ -69,18 +69,26 @@ class ProductOptionEditCest
 
         $i->submitProductGroupForm();
 
-        $i->selectProductTab();
+        $i->wait(2);
+
+        $i->waitForElement('//*[@id="page-wrapper"]/div[3]/div[2]/ul/li[2]');
 
         $i->wait(2);
 
-        $i->click('#assigned');
+        $i->clickWithLeftButton('//*[@id="page-wrapper"]/div[3]/div[2]/ul/li[2]', 20, 20);
+
+        $i->waitAndClick('#assigned');
+
+        $i->waitForElement('//*[@id="product-option-table"]/tbody/tr/td[1]');
 
         $idsPersisted = $i->grabMultiple('//*[@id="product-option-table"]/tbody/tr/td[1]');
 
         $i->assertGreaterThan(0, (int)$idsPersisted[0]);
         $i->assertGreaterThan(0, (int)$idsPersisted[1]);
 
-        $i->click('//*[@id="page-wrapper"]/div[2]/div[2]/div/form/button');
+        $i->waitAndClick('//*[@id="page-wrapper"]/div[2]/div[2]/div/form/button');
+        $i->waitForElement('//*[@id="page-wrapper"]/div[3]/div[1]/div[1]/div');
+
         $i->canSee(ProductOptionEditPage::PRODUCT_GROUP_EDIT_ACTIVATE_SUCCESS_MESSAGE);
     }
 

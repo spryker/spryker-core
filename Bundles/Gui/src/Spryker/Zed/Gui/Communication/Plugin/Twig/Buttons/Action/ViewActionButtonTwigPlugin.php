@@ -36,7 +36,7 @@ class ViewActionButtonTwigPlugin extends AbstractButtonTwig
      */
     protected function getIcon(): string
     {
-        return '<i class="fa fa-caret-right"></i> ';
+        return '';
     }
 
     /**

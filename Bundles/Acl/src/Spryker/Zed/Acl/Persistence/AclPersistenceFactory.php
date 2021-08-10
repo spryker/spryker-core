@@ -21,6 +21,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Acl\Persistence\AclRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Acl\Persistence\AclEntityManagerInterface getEntityManager()
  */
 class AclPersistenceFactory extends AbstractPersistenceFactory
 {

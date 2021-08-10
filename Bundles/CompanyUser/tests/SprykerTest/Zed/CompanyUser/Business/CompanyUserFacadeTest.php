@@ -564,13 +564,15 @@ class CompanyUserFacadeTest extends Test
             ->setPattern($companyUserTransfer->getCustomer()->getFirstName());
 
         // Act
-        $foundCompanyUserTransfer = $this->tester->getFacade()
+        $companyUserCollectionTransfer = $this->tester->getFacade()
             ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer)
-            ->getCompanyUsers()
-            ->offsetGet(0);
+            ->getCompanyUsers();
 
         // Assert
-        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $companyUserIds = array_map(function (CompanyUserTransfer $collectionItem) {
+            return $collectionItem->getIdCompanyUser();
+        }, $companyUserCollectionTransfer->getArrayCopy());
+        $this->assertContains($companyUserTransfer->getIdCompanyUser(), $companyUserIds);
     }
 
     /**
@@ -585,13 +587,15 @@ class CompanyUserFacadeTest extends Test
             ->setPattern($companyUserTransfer->getCustomer()->getLastName());
 
         // Act
-        $foundCompanyUserTransfer = $this->tester->getFacade()
+        $companyUserCollectionTransfer = $this->tester->getFacade()
             ->getCompanyUserCollectionByCriteria($companyUserCriteriaTransfer)
-            ->getCompanyUsers()
-            ->offsetGet(0);
+            ->getCompanyUsers();
 
         // Assert
-        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $companyUserIds = array_map(function (CompanyUserTransfer $collectionItem) {
+            return $collectionItem->getIdCompanyUser();
+        }, $companyUserCollectionTransfer->getArrayCopy());
+        $this->assertContains($companyUserTransfer->getIdCompanyUser(), $companyUserIds);
     }
 
     /**

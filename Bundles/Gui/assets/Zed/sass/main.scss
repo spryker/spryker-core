@@ -9,7 +9,7 @@ $icon-font-path: '../../fonts/bootstrap/';
 // external dependencies
 @import '~jquery-ui/themes/base/all.css';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
-@import '~font-awesome/scss/font-awesome';
+@import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~animate.css/animate';
 @import '~metismenu/src/metisMenu';
 @import '~datatables.net-bs/css/dataTables.bootstrap';
@@ -23,13 +23,13 @@ $icon-font-path: '../../fonts/bootstrap/';
 
 // inspinia
 @import '../../Inspinia/css/style';
-@import '../../Inspinia/css/fonts';
 
 // spryker customization
 @import 'variables';
+@import 'mixins';
 @import 'inspinia';
-@import 'custom';
 @import 'action-buttons';
+@import 'custom';
 @import 'flags';
 @import 'data-tables';
 @import 'wave-loader';

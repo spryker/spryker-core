@@ -122,10 +122,10 @@ class StockTable extends AbstractTable
     protected function getStatusLabel(bool $isActive): string
     {
         if (!$isActive) {
-            return $this->generateLabel('Inactive', 'label-inactive');
+            return $this->generateLabel('Inactive', 'label-danger');
         }
 
-        return $this->generateLabel('Active', 'label-info');
+        return $this->generateLabel('Active', 'label-success');
     }
 
     /**

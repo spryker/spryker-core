@@ -103,7 +103,7 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
             static::TITLE_COLUMN_STORE,
             true,
             false,
-            'grey'
+            'gray'
         )->addColumnChip(
             PriceProductTableViewTransfer::CURRENCY,
             static::TITLE_COLUMN_CURRENCY,

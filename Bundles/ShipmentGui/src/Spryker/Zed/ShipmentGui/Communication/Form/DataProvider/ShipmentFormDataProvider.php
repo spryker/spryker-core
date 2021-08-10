@@ -317,12 +317,7 @@ class ShipmentFormDataProvider
             return [];
         }
 
-        $combinedSalutation = array_combine($salutation, $salutation);
-        if ($combinedSalutation === false) {
-            return [];
-        }
-
-        return $combinedSalutation;
+        return array_combine($salutation, $salutation);
     }
 
     /**

@@ -83,19 +83,6 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
-     * @return int
-     */
-    public function getMaxIdProductOffer(): int
-    {
-        $idProductOffer = $this->getFactory()->createProductOfferPropelQuery()
-            ->orderByIdProductOffer(Criteria::DESC)
-            ->select(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER)
-            ->findOne();
-
-        return $idProductOffer ?: 0;
-    }
-
-    /**
      * @param int $idProductOffer
      *
      * @return \Generated\Shared\Transfer\StoreTransfer[]
@@ -110,19 +97,6 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         return $this->getFactory()
             ->createProductOfferMapper()
             ->mapProductOfferStoreEntitiesToStoreTransfers($productOfferStoreEntities);
-    }
-
-    /**
-     * @param string $productOfferReference
-     *
-     * @return bool
-     */
-    public function isProductOfferReferenceUsed(string $productOfferReference): bool
-    {
-        return $this->getFactory()
-            ->createProductOfferPropelQuery()
-            ->filterByProductOfferReference($productOfferReference)
-            ->exists();
     }
 
     /**
