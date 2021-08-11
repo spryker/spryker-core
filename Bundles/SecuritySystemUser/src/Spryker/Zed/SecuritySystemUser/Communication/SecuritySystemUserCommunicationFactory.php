@@ -9,8 +9,6 @@ namespace Spryker\Zed\SecuritySystemUser\Communication;
 
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SecuritySystemUser\Business\Reader\SecuritySystemUserReader;
-use Spryker\Zed\SecuritySystemUser\Business\Reader\SecuritySystemUserReaderInterface;
 use Spryker\Zed\SecuritySystemUser\Communication\Plugin\Security\Provider\SystemUserProvider;
 use Spryker\Zed\SecuritySystemUser\Communication\Security\SystemUser;
 use Spryker\Zed\SecuritySystemUser\Communication\Security\SystemUserInterface;
@@ -21,7 +19,6 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @method \Spryker\Zed\SecuritySystemUser\SecuritySystemUserConfig getConfig()
- * @method \Spryker\Zed\SecuritySystemUser\Business\SecuritySystemUserFacadeInterface getFacade()
  */
 class SecuritySystemUserCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -43,16 +40,6 @@ class SecuritySystemUserCommunicationFactory extends AbstractCommunicationFactor
         return new SystemUser(
             $userTransfer,
             [SecuritySystemUserConfig::ROLE_SYSTEM_USER]
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\SecuritySystemUser\Business\Reader\SecuritySystemUserReaderInterface
-     */
-    public function createSecuritySystemUserReader(): SecuritySystemUserReaderInterface
-    {
-        return new SecuritySystemUserReader(
-            $this->getUserFacade()
         );
     }
 
