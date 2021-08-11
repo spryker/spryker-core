@@ -64,4 +64,9 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="RouteAuthorizationConfig">
+        <property name="strategy" type="string"/>
+        <property name="apiCode" type="string"/>
+    </transfer>
+
 </transfers>

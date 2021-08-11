@@ -206,4 +206,9 @@
         <property name="customer" type="Customer"/>
     </transfer>
 
+    <transfer name="RouteAuthorizationConfig">
+        <property name="strategy" type="string"/>
+        <property name="apiCode" type="string"/>
+    </transfer>
+
 </transfers>
