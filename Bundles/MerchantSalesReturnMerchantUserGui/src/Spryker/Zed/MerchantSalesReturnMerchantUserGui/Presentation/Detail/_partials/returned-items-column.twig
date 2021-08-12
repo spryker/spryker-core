@@ -15,7 +15,7 @@
             <div class="header-actions js-return-bulk-trigger-buttons col-md-6">
                 {% include '@MerchantSalesReturnMerchantUserGui/_partials/merchant-order-actions.twig' with {
                     redirectUrl: changeStatusRedirectUrl,
-                    merchantSalesOrderReference: merchantOrder.merchantOrderReference,
+                    returnReference: return.returnReference,
                     events: uniqueOrderItemManualEvents,
                 } only %}
             </div>
@@ -45,7 +45,7 @@
                     {% include '@MerchantSalesReturnMerchantUserGui/Detail/_partials/return-detail-items.twig' with {
                         return: return,
                         order: order,
-                        merchantOrder: merchantOrder,
+                        merchantOrderItems: merchantOrderItems,
                         changeStatusRedirectUrl: changeStatusRedirectUrl,
                     } only %}
                 </tbody>

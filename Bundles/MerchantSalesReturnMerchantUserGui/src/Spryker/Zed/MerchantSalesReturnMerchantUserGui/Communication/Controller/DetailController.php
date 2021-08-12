@@ -7,10 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
 use Generated\Shared\Transfer\ReturnTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -34,7 +31,6 @@ class DetailController extends AbstractController
     protected const MESSAGE_PARAM_ID = '%id%';
     protected const DEFAULT_LABEL_CLASS = 'label-default';
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
-    protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
      * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -60,17 +56,8 @@ class DetailController extends AbstractController
             ]);
         }
 
-        $merchantOrderTransfer = $this->findMerchantOrder($returnTransfer);
-
-        if (!$merchantOrderTransfer) {
-            return $this->redirectToReturnList(static::MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR, [
-                '%d' => $returnTransfer->getMerchantSalesOrderReference(),
-            ]);
-        }
-
         $salesOrderItemIds = $this->extractSalesOrderItemIdsFromReturn($returnTransfer);
         $merchantOrderItemTransfers = $this->getMerchantOrderItems($salesOrderItemIds);
-        $merchantOrderTransfer->setMerchantOrderItems(new ArrayObject($merchantOrderItemTransfers));
 
         return [
             'return' => $returnTransfer,
@@ -78,7 +65,7 @@ class DetailController extends AbstractController
             'uniqueOrderReferences' => $this->extractUniqueOrderReferencesFromReturn($returnTransfer),
             'uniqueItemStateLabels' => $this->extractUniqueItemStateLabelsFromReturn($merchantOrderItemTransfers),
             'uniqueOrderItemManualEvents' => $this->extractUniqueOrderItemManualEvents($merchantOrderItemTransfers),
-            'merchantOrder' => $merchantOrderTransfer,
+            'merchantOrderItems' => $merchantOrderItemTransfers,
         ];
     }
 
@@ -99,23 +86,6 @@ class DetailController extends AbstractController
             ->getReturns()
             ->getIterator()
             ->current();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
-     */
-    protected function findMerchantOrder(ReturnTransfer $returnTransfer): ?MerchantOrderTransfer
-    {
-        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
-            ->setMerchantOrderReference($returnTransfer->getMerchantSalesOrderReference())
-            ->setWithItems(true);
-
-        return $this
-            ->getFactory()
-            ->getMerchantSalesOrderFacade()
-            ->findMerchantOrder($merchantOrderCriteriaTransfer);
     }
 
     /**
