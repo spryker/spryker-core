@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory;
+use Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloader;
+use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeBridge;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeBridge;
@@ -622,6 +624,7 @@ class CartsRestApiFacadeTest extends Unit
                 'getQuoteExpanderPlugins',
                 'getCartItemMapperPlugins',
                 'getQuoteItemReadValidatorPlugins',
+                'createQuoteReloader',
             ]
         );
 
@@ -680,6 +683,9 @@ class CartsRestApiFacadeTest extends Unit
             ->willReturn($this->tester->prepareQuoteResponseTransfer());
         $cartsRestApiBusinessFactoryMock->method('getCartFacade')
             ->willReturn((new CartsRestApiToCartFacadeBridge($cartFacadeMock)));
+
+        $cartsRestApiBusinessFactoryMock->method('createQuoteReloader')
+            ->willReturn((new QuoteReloader(new CartsRestApiToCartFacadeBridge($cartFacadeMock), new CartsRestApiConfig())));
 
         return $cartsRestApiBusinessFactoryMock;
     }

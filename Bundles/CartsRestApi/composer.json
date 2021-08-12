@@ -22,9 +22,13 @@
         "spryker/zed-request": "^3.6.0"
     },
     "require-dev": {
+        "spryker/calculation": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/customer": "*",
+        "spryker/price-cart-connector": "*",
+        "spryker/price-product": "*",
+        "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

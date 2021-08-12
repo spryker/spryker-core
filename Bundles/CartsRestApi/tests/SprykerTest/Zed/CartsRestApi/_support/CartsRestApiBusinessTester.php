@@ -96,7 +96,10 @@ class CartsRestApiBusinessTester extends Actor
      */
     public function prepareQuoteResponseTransfer(): QuoteResponseTransfer
     {
-        return (new QuoteResponseBuilder(['isSuccessful' => true]))->build();
+        return (new QuoteResponseBuilder([
+            'isSuccessful' => true,
+            'quoteTransfer' => (new QuoteBuilder(['customer' => new CustomerTransfer()]))->build(),
+        ]))->build();
     }
 
     /**

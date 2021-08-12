@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
+use Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
 
@@ -35,6 +36,11 @@ class QuoteReader implements QuoteReaderInterface
     protected $quotePermissionChecker;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface
+     */
+    protected $quoteReloader;
+
+    /**
      * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[]
      */
     protected $quoteCollectionExpanderPlugins;
@@ -48,6 +54,7 @@ class QuoteReader implements QuoteReaderInterface
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToQuoteFacadeInterface $quoteFacade
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
+     * @param \Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface $quoteReloader
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[] $quoteCollectionExpanderPlugins
      * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteExpanderPluginInterface[] $quoteExpanderPlugins
      */
@@ -55,12 +62,14 @@ class QuoteReader implements QuoteReaderInterface
         CartsRestApiToQuoteFacadeInterface $quoteFacade,
         CartsRestApiToStoreFacadeInterface $storeFacade,
         QuotePermissionCheckerInterface $quotePermissionChecker,
+        QuoteReloaderInterface $quoteReloader,
         array $quoteCollectionExpanderPlugins,
         array $quoteExpanderPlugins
     ) {
         $this->quoteFacade = $quoteFacade;
         $this->storeFacade = $storeFacade;
         $this->quotePermissionChecker = $quotePermissionChecker;
+        $this->quoteReloader = $quoteReloader;
         $this->quoteCollectionExpanderPlugins = $quoteCollectionExpanderPlugins;
         $this->quoteExpanderPlugins = $quoteExpanderPlugins;
     }
@@ -111,6 +120,24 @@ class QuoteReader implements QuoteReaderInterface
             $quoteCriteriaFilterTransfer,
             $quoteCollectionTransfer
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuidWithQuoteItemReload(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = $this->findQuoteByUuid($quoteTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
+        $quoteTransfer = $this->quoteReloader->reloadQuoteItems($quoteResponseTransfer->getQuoteTransfer());
+
+        return $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
     }
 
     /**
