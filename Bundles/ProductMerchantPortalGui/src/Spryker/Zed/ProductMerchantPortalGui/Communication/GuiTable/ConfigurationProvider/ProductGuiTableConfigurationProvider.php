@@ -158,11 +158,10 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
     protected function addBatchActions(
         GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
     ): GuiTableConfigurationBuilderInterface {
-        $guiTableConfigurationBuilder->addBatchActionUrl(
+        $guiTableConfigurationBuilder->addBatchActionDrawerAjaxForm(
             'Edit',
             'Bulk edit',
-            static::BULK_EDIT_URL,
-            GuiTableConfigurationBuilderInterface::ACTION_TYPE_DRAWER
+            static::BULK_EDIT_URL
         );
 
         $guiTableConfigurationBuilder->setBatchActionRowIdPath(ProductConcreteTransfer::ID_PRODUCT_CONCRETE);

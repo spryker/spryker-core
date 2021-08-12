@@ -232,18 +232,61 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
-     * Adds a new batch action for rows. If $type is not set url type is used as default.
+     * Adds a new action with type `drawer` and component `ajax-form` for batch.
      *
      * @api
      *
      * @param string $id
      * @param string $title
      * @param string $url
-     * @param string|null $type
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addBatchActionUrl(string $id, string $title, string $url, ?string $type = null);
+    public function addBatchActionDrawerAjaxForm(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    );
+
+    /**
+     * Adds a new action with type `drawer` and component `url-html-renderer` for batch.
+     *
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     * @param string|null $method
+     *
+     * @return $this
+     */
+    public function addBatchActionDrawerUrlHtmlRenderer(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    );
+
+    /**
+     * Adds a new action with type http for batch.
+     *
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     * @param string|null $method
+     *
+     * @return $this
+     */
+    public function addBatchActionHttp(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    );
 
     /**
      * Sets an action ID which will be triggered when clicking on a row.
