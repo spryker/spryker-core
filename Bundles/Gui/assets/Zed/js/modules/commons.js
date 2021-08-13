@@ -16,7 +16,13 @@ if (!isImplemented()) {
 }
 
 // external dependencies
-require('jquery');
+var $ = require('jquery');
+require('datatables.net')(window, $);
+require('datatables.net-bs')(window, $);
+require('datatables.net-buttons')(window, $);
+require('datatables.net-buttons-bs')(window, $);
+require('datatables.net-responsive')(window, $);
+require('datatables.net-select')(window, $);
 require('jquery-migrate/dist/jquery-migrate.min');
 require('jquery-ui/ui/core');
 require('jquery-ui/ui/effect');
@@ -30,12 +36,6 @@ require('jquery-ui/ui/widgets/tooltip');
 require('bootstrap-sass');
 require('metismenu');
 require('pace');
-require('datatables.net');
-require('datatables.net-bs');
-require('datatables.net-buttons');
-require('datatables.net-buttons-bs');
-require('datatables.net-responsive');
-require('datatables.net-select');
 require('@spryker/nestable');
 require('select2');
 require('codemirror');
