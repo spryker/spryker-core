@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface;
+use Spryker\Zed\MerchantUser\MerchantUserConfig;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
 class MerchantUserUpdater implements MerchantUserUpdaterInterface
@@ -23,6 +24,8 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
      */
     protected const USER_STATUS_ACTIVE = 'active';
+
+    protected const RESET_RASSWORD_PATH = '/security-merchant-portal-gui/password/reset';
 
     /**
      * @see \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
@@ -45,18 +48,26 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     protected $merchantUserRepository;
 
     /**
+     * @var \Spryker\Zed\MerchantUser\MerchantUserConfig
+     */
+    protected $merchantUserConfig;
+
+    /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserPasswordResetFacadeInterface $userPasswordResetFacade
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
+     * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
      */
     public function __construct(
         MerchantUserToUserFacadeInterface $userFacade,
         MerchantUserToUserPasswordResetFacadeInterface $userPasswordResetFacade,
-        MerchantUserRepositoryInterface $merchantUserRepository
+        MerchantUserRepositoryInterface $merchantUserRepository,
+        MerchantUserConfig $merchantUserConfig
     ) {
         $this->userFacade = $userFacade;
         $this->userPasswordResetFacade = $userPasswordResetFacade;
         $this->merchantUserRepository = $merchantUserRepository;
+        $this->merchantUserConfig = $merchantUserConfig;
     }
 
     /**
@@ -112,7 +123,12 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
             && $originalUserTransfer->getStatus() !== $updatedUserTransfer->getStatus()
         ) {
             $email = $updatedUserTransfer->getUsernameOrFail();
-            $this->userPasswordResetFacade->requestPasswordReset((new UserPasswordResetRequestTransfer())->setEmail($email));
+            $this->userPasswordResetFacade->requestPasswordReset(
+                (new UserPasswordResetRequestTransfer())
+                    ->setEmail($email)
+                    ->setResetPasswordBaseUrl($this->merchantUserConfig->getMerchantPortalBaseUrl())
+                    ->setResetPasswordPath(static::RESET_RASSWORD_PATH)
+            );
         }
     }
 }

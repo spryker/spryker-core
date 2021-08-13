@@ -62,6 +62,8 @@
 
     <transfer name="UserPasswordResetRequest">
         <property name="email" type="string"/>
+        <property name="resetPasswordBaseUrl" type="string"/>
+        <property name="resetPasswordPath" type="string"/>
     </transfer>
 
     <transfer name="MerchantError">
