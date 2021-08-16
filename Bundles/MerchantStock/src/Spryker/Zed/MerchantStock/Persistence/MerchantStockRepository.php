@@ -29,7 +29,7 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
         $merchantStockQuery = $this->getFactory()
             ->createMerchantStockPropelQuery()
             ->leftJoinWithSpyStock()
-            ->filterByFkMerchant($merchantStockCriteriaTransfer->requireIdMerchant()->getIdMerchant());
+            ->filterByFkMerchant($merchantStockCriteriaTransfer->getIdMerchantOrFail());
 
         if ($merchantStockCriteriaTransfer->getIsDefault()) {
             $merchantStockQuery->filterByIsDefault(true);

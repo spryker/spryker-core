@@ -185,7 +185,7 @@ class ProductAbstractForm extends AbstractType
             'label' => false,
         ]);
 
-        $idProductAbstract = $options[self::KEY_OPTIONS_DATA]->getIdProductAbstract();
+        $idProductAbstract = $options[static::KEY_OPTIONS_DATA]->getIdProductAbstract();
 
         $priceProductTransformer = $this->getFactory()
             ->createPriceProductTransformer()

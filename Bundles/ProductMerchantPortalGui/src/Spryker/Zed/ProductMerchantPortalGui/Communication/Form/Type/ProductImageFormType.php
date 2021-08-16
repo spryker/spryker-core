@@ -72,7 +72,7 @@ class ProductImageFormType extends AbstractType
      */
     protected function addIdProductImage(FormBuilderInterface $builder)
     {
-        $builder->add(self::FIELD_ID_PRODUCT_IMAGE, HiddenType::class, []);
+        $builder->add(static::FIELD_ID_PRODUCT_IMAGE, HiddenType::class, []);
 
         return $this;
     }
@@ -88,7 +88,7 @@ class ProductImageFormType extends AbstractType
             'constraints' => [
                 new NotBlank(['message' => static::MESSAGE_VALIDATION_NOT_BLANK_ERROR]),
             ],
-            'label' => self::LABEL_SMALL_IMAGE_URL,
+            'label' => static::LABEL_SMALL_IMAGE_URL,
             'required' => true,
         ]);
 
@@ -106,7 +106,7 @@ class ProductImageFormType extends AbstractType
             'constraints' => [
                 new NotBlank(['message' => static::MESSAGE_VALIDATION_NOT_BLANK_ERROR]),
             ],
-            'label' => self::LABEL_LARGE_IMAGE_URL,
+            'label' => static::LABEL_LARGE_IMAGE_URL,
             'required' => true,
         ]);
 

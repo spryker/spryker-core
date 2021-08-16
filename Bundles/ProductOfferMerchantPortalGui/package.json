@@ -1,6 +1,6 @@
 {
     "name": "mp-product-offer",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "private": true,
     "dependencies": {
         "@angular/animations": "^9.1.12",
@@ -10,15 +10,15 @@
         "@angular/elements": "^9.1.12",
         "@angular/forms": "^9.1.12",
         "@angular/platform-browser": "^9.1.12",
-        "@spryker/button": "^0.2.0-next.10",
-        "@spryker/card": "^0.2.0-next.5",
-        "@spryker/chips": "^0.1.3-next.1",
-        "@spryker/date-picker": "^0.2.0-next.2",
-        "@spryker/headline": "^0.2.0-next.1",
-        "@spryker/styles": "^0.2.0-next.37",
-        "@spryker/table": "^0.2.0-next.38",
-        "@spryker/utils": "^0.2.0-next.17",
-        "@spryker/web-components": "^0.2.1-next.8",
+        "@spryker/button": "^0.2.3",
+        "@spryker/card": "^0.2.3",
+        "@spryker/chips": "^0.1.3",
+        "@spryker/date-picker": "^0.2.3",
+        "@spryker/headline": "^0.2.3",
+        "@spryker/styles": "^0.2.3",
+        "@spryker/table": "^0.3.0",
+        "@spryker/utils": "^0.2.4",
+        "@spryker/web-components": "^0.2.4",
         "rxjs": "^6.5.4"
     }
 }

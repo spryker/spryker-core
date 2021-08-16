@@ -71,6 +71,6 @@ class ProductAttributesNotBlankConstraint extends Constraint
      */
     public function getTargets()
     {
-        return self::CLASS_CONSTRAINT;
+        return static::CLASS_CONSTRAINT;
     }
 }

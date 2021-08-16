@@ -76,8 +76,8 @@ class MerchantStockWriter implements MerchantStockWriterInterface
     {
         return sprintf(
             '%s %s %s %d',
-            $merchantTransfer->requireName()->getName(),
-            $merchantTransfer->requireMerchantReference()->getMerchantReference(),
+            $merchantTransfer->getNameOrFail(),
+            $merchantTransfer->getMerchantReferenceOrFail(),
             'Warehouse',
             $merchantTransfer->getStocks()->count() + 1
         );

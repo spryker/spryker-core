@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductGui\Communication;
 
-use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductQueryCriteriaExpander;
 use Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductQueryCriteriaExpanderInterface;
@@ -40,16 +39,6 @@ class MerchantProductGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createMerchantProductViewDataExpander(): MerchantProductViewDataExpanderInterface
     {
         return new MerchantProductViewDataExpander($this->getMerchantProductFacade());
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return \Spryker\Shared\Kernel\Communication\Application
-     */
-    public function getApplication(): Application
-    {
-        return $this->getProvidedDependency(MerchantProductGuiDependencyProvider::PLUGIN_APPLICATION);
     }
 
     /**
