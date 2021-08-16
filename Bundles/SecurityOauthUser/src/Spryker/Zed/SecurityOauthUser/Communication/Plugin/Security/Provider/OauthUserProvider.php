@@ -26,8 +26,14 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
 {
     /**
+     * @uses \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin::PATH_LOGIN_CHECK
+     */
+    protected const PATH_LOGIN_CHECK = '/login_check';
+
+    /**
      * {@inheritDoc}
      * - Loads the Oauth user for the given username.
+     * - Excludes loading in case of form authentication check.
      *
      * @api
      *
@@ -39,6 +45,10 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
      */
     public function loadUserByUsername(string $username)
     {
+        if (!$this->isLoadingApplicable()) {
+            throw new UnsupportedUserException();
+        }
+
         $userTransfer = $this->resolveOauthUserByName($username);
 
         if ($userTransfer === null) {
@@ -132,5 +142,13 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
         foreach ($oauthUserRestrictionResponseTransfer->getMessages() as $messageTransfer) {
             $messengerFacade->addErrorMessage($messageTransfer);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isLoadingApplicable(): bool
+    {
+        return $this->getFactory()->getRouter()->getContext()->getPathInfo() !== static::PATH_LOGIN_CHECK;
     }
 }

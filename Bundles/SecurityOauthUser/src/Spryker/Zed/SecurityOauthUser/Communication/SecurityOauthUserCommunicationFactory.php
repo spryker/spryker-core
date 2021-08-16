@@ -19,6 +19,7 @@ use Spryker\Zed\SecurityOauthUser\Communication\Security\SecurityOauthUserInterf
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToMessengerFacadeInterface;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface;
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserDependencyProvider;
+use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\Token\GuardTokenInterface;
@@ -103,5 +104,13 @@ class SecurityOauthUserCommunicationFactory extends AbstractCommunicationFactory
     public function getMessengerFacade(): SecurityOauthUserToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(SecurityOauthUserDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Symfony\Cmf\Component\Routing\ChainRouterInterface
+     */
+    public function getRouter(): ChainRouterInterface
+    {
+        return $this->getProvidedDependency(SecurityOauthUserDependencyProvider::SERVICE_ROUTER);
     }
 }

@@ -28,6 +28,11 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     public const PLUGINS_OAUTH_USER_RESTRICTION = 'PLUGINS_OAUTH_USER_RESTRICTION';
 
     /**
+     * @see \Spryker\Shared\Application\Application::SERVICE_ROUTER
+     */
+    public const SERVICE_ROUTER = 'routers';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -38,6 +43,7 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addUserFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addRouter($container);
 
         return $container;
     }
@@ -166,5 +172,19 @@ class SecurityOauthUserDependencyProvider extends AbstractBundleDependencyProvid
     protected function getOauthUserRestrictionPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRouter(Container $container): Container
+    {
+        $container->set(static::SERVICE_ROUTER, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_ROUTER);
+        });
+
+        return $container;
     }
 }
