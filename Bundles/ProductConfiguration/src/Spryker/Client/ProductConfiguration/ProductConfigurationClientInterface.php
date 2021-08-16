@@ -11,75 +11,16 @@ use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductConfigurationClientInterface
 {
     /**
      * Specification:
-     * - Finds and executes the appropriate ProductConfigurationRequestPluginInterface based on the configuratorKey.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
-     */
-    public function prepareProductConfiguratorRedirect(
-        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-    ): ProductConfiguratorRedirectTransfer;
-
-    /**
-     * Specification:
-     * - Expands product configurator request with additional data.
-     * - Sends access token request to configurator.
-     * - Builds product configurator redirect URL from configurator response.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
-     */
-    public function resolveProductConfiguratorAccessTokenRedirect(
-        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-    ): ProductConfiguratorRedirectTransfer;
-
-    /**
-     * Specification:
-     * - Finds and executes the appropriate ProductConfiguratorResponsePluginInterface based on the configuratorKey.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     * @param array $configuratorResponseData
-     *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
-     */
-    public function processProductConfiguratorResponse(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
-        array $configuratorResponseData
-    ): ProductConfiguratorResponseProcessorResponseTransfer;
-
-    /**
-     * Specification:
-     * - Returns false if any item with product configuration is not fully configured, true otherwise.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteProductConfigurationValid(QuoteTransfer $quoteTransfer): bool;
-
-    /**
-     * Specification:
-     * - Requires fields to be set on the ProductConfiguratorResponseProcessorResponseTransfer:
-     *   - productConfiguratorResponse::checkSum
-     *   - productConfiguratorResponse::timestamp
-     *   - productConfiguratorResponse::sourceType
-     *   - productConfiguratorResponse::productConfigurationInstance::configuratorKey.
+     * - Requires fields to be set on the `ProductConfiguratorResponseProcessorResponseTransfer`:
+     *   - `productConfiguratorResponse::checkSum`
+     *   - `productConfiguratorResponse::timestamp`
+     *   - `productConfiguratorResponse::sourceType`
+     *   - `productConfiguratorResponse::productConfigurationInstance::configuratorKey`.
      * - Validates checkSum and timestamp according to provided response data.
      * - Returns `isSuccessful=true` on success or `isSuccessful=false` with error messages otherwise.
      *
@@ -94,4 +35,56 @@ interface ProductConfigurationClientInterface
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ProductConfiguratorRequestTransfer::productConfiguratorRequestData` to be set.
+     * - Expands `ProductConfiguratorRequestTransfer::productConfiguratorRequestData` with customer, store, locale, currency and price data.
+     * - Executes `ProductConfiguratorRequestExpanderPluginInterface` plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer
+     */
+    public function expandProductConfiguratorRequestWithContextData(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRequestTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ProductConfiguratorRequestTransfer::productConfiguratorRequestData` to be set.
+     * - Sends a request to the given product configurator URL with provided data.
+     * - If a request is successful than `isSuccessful` flag equals to true.
+     * - Returns error messages when request failed and `isSuccessful` flag equals to false.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
+     */
+    public function sendProductConfiguratorAccessTokenRequest(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRedirectTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ProductConfiguratorResponseTransfer::productConfigurationInstance` to be set.
+     * - Maps raw product configurator response data to `ProductConfiguratorResponseTransfer`.
+     * - The `ProductConfiguratorResponseTransfer::productConfigurationInstance::prices` is expected to use `PriceProductTransfer` structure.
+     * - Executes `ProductConfigurationPriceExtractorPluginInterface` plugins.
+     *
+     * @api
+     *
+     * @param array $configuratorResponseData
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer
+     */
+    public function mapProductConfiguratorCheckSumResponse(
+        array $configuratorResponseData,
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+    ): ProductConfiguratorResponseTransfer;
 }

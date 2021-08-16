@@ -18,8 +18,8 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
 {
     public const CLIENT_PRODUCT_CONFIGURATION_STORAGE = 'CLIENT_PRODUCT_CONFIGURATION_STORAGE';
 
-    public const PLUGINS_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER = 'PLUGINS_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER';
-    public const PLUGINS_REST_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER = 'PLUGINS_REST_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER';
+    public const PLUGINS_PRODUCT_CONFIGURATION_PRICE_MAPPER = 'PLUGINS_PRODUCT_CONFIGURATION_PRICE_MAPPER';
+    public const PLUGINS_REST_PRODUCT_CONFIGURATION_PRICE_MAPPER = 'PLUGINS_REST_PRODUCT_CONFIGURATION_PRICE_MAPPER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -30,8 +30,8 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
     {
         $container = parent::provideDependencies($container);
         $container = $this->addProductConfigurationStorageClient($container);
-        $container = $this->addCartItemProductConfigurationMapperPlugins($container);
-        $container = $this->addRestCartItemProductConfigurationMapperPlugins($container);
+        $container = $this->addProductConfigurationMapperPlugins($container);
+        $container = $this->addRestProductConfigurationPriceMapperPlugins($container);
 
         return $container;
     }
@@ -57,10 +57,10 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addCartItemProductConfigurationMapperPlugins(Container $container): Container
+    protected function addProductConfigurationMapperPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER, function () {
-            return $this->getCartItemProductConfigurationMapperPlugins();
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATION_PRICE_MAPPER, function () {
+            return $this->getProductConfigurationPriceMapperPlugins();
         });
 
         return $container;
@@ -71,27 +71,27 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
      *
      * @return \Spryker\Glue\Kernel\Container
      */
-    protected function addRestCartItemProductConfigurationMapperPlugins(Container $container): Container
+    protected function addRestProductConfigurationPriceMapperPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_REST_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER, function () {
-            return $this->getRestCartItemProductConfigurationMapperPlugins();
+        $container->set(static::PLUGINS_REST_PRODUCT_CONFIGURATION_PRICE_MAPPER, function () {
+            return $this->getRestProductConfigurationPriceMapperPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\CartItemProductConfigurationMapperPluginInterface[]
+     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationPriceMapperPluginInterface[]
      */
-    protected function getCartItemProductConfigurationMapperPlugins(): array
+    protected function getProductConfigurationPriceMapperPlugins(): array
     {
         return [];
     }
 
     /**
-     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestCartItemProductConfigurationMapperPluginInterface[]
+     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestProductConfigurationPriceMapperPluginInterface[]
      */
-    protected function getRestCartItemProductConfigurationMapperPlugins(): array
+    protected function getRestProductConfigurationPriceMapperPlugins(): array
     {
         return [];
     }

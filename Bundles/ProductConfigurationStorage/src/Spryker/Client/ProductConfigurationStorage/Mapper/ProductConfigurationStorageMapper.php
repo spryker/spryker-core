@@ -23,4 +23,30 @@ class ProductConfigurationStorageMapper implements ProductConfigurationStorageMa
     ): ProductConfigurationStorageTransfer {
         return $productConfigurationStorageTransfer->fromArray($productConfigurationStorageData, true);
     }
+
+    /**
+     * @param array $productConfigurationStoragesData
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationStorageTransfer[]
+     */
+    public function mapProductConfigurationStoragesDataToProductConfigurationStorageTransfers(array $productConfigurationStoragesData): array
+    {
+        $productConfigurationStorageTransfers = [];
+        foreach ($productConfigurationStoragesData as $productConfigurationStorageData) {
+            if ($productConfigurationStorageData === null) {
+                continue;
+            }
+
+            if (is_string($productConfigurationStorageData)) {
+                $productConfigurationStorageData = json_decode($productConfigurationStorageData, true);
+            }
+
+            $productConfigurationStorageTransfers[] = $this->mapProductConfigurationStorageDataToProductConfigurationStorageTransfer(
+                $productConfigurationStorageData,
+                new ProductConfigurationStorageTransfer()
+            );
+        }
+
+        return $productConfigurationStorageTransfers;
+    }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Service\ProductConfiguration;
 
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Spryker\Service\Kernel\AbstractService;
 
@@ -29,5 +30,43 @@ class ProductConfigurationService extends AbstractService implements ProductConf
         return $this->getFactory()
             ->createProductConfigurationInstanceHashGenerator()
             ->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function filterProductConfigurationPrices(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): array {
+        return $this->getFactory()
+            ->createPriceProductConfigurationFilter()
+            ->filterProductConfigurationPrices($priceProductTransfers, $priceProductFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function filterProductConfigurationVolumePrices(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): array {
+        return $this->getFactory()
+            ->createVolumePriceProductConfigurationFilter()
+            ->filterProductConfigurationVolumePrices($priceProductTransfers, $priceProductFilterTransfer);
     }
 }

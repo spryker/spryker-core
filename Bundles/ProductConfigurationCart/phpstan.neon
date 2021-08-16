@@ -1,0 +1,6 @@
+parameters:
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:
+        - '#Call to an undefined method Generated\\Client\\Ide\\AutoCompletion#'
+        - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion#'

@@ -74,7 +74,7 @@ class ProductConfigurationAvailabilityReader implements ProductConfigurationAvai
         }
 
         return $this->productConfigurationInstanceReader
-            ->findProductConfigurationInstanceBySku($productViewTransfer->getSku());
+            ->findProductConfigurationInstanceBySku($productViewTransfer->getSkuOrFail());
     }
 
     /**

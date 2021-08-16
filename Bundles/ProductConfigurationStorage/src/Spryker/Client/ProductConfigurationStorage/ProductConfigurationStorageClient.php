@@ -7,15 +7,10 @@
 
 namespace Spryker\Client\ProductConfigurationStorage;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
-use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
-use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -38,27 +33,6 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
         return $this->getFactory()
             ->createProductConfigurationInstanceReader()
             ->findProductConfigurationInstanceBySku($sku);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $groupKey
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
-     */
-    public function findProductConfigurationInstanceInQuote(
-        string $groupKey,
-        string $sku,
-        QuoteTransfer $quoteTransfer
-    ): ?ProductConfigurationInstanceTransfer {
-        return $this->getFactory()
-            ->createProductConfigurationInstanceQuoteReader()
-            ->findProductConfigurationInstanceInQuote($groupKey, $sku, $quoteTransfer);
     }
 
     /**
@@ -180,71 +154,15 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param string[] $skus
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer[]
      */
-    public function expandCartChangeWithProductConfigurationInstance(
-        CartChangeTransfer $cartChangeTransfer,
-        array $params
-    ): CartChangeTransfer {
+    public function findProductConfigurationInstancesIndexedBySku(
+        array $skus
+    ): array {
         return $this->getFactory()
-            ->createProductConfigurationInstanceCartChangeExpander()
-            ->expandCartChangeWithProductConfigurationInstance($cartChangeTransfer, $params);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
-     * @param array $params
-     *
-     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
-     */
-    public function expandPersistentCartChangeWithProductConfigurationInstance(
-        PersistentCartChangeTransfer $persistentCartChangeTransfer,
-        array $params
-    ): PersistentCartChangeTransfer {
-        return $this->getFactory()
-            ->createProductConfigurationInstanceCartChangeExpander()
-            ->expandPersistentCartChangeWithProductConfigurationInstance($persistentCartChangeTransfer, $params);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     * @param array $configuratorResponseData
-     *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
-     */
-    public function processProductConfiguratorCheckSumResponse(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
-        array $configuratorResponseData
-    ): ProductConfiguratorResponseProcessorResponseTransfer {
-        return $this->getFactory()
-            ->createProductConfiguratorCheckSumResponseProcessor()
-            ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, $configuratorResponseData);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function extractProductConfigurationVolumePrices(array $priceProductTransfers): array
-    {
-        return $this->getFactory()
-            ->createProductConfigurationVolumePriceExtractor()
-            ->extractProductConfigurationVolumePrices($priceProductTransfers);
+            ->createProductConfigurationInstanceReader()
+            ->findProductConfigurationInstancesIndexedBySku($skus);
     }
 }

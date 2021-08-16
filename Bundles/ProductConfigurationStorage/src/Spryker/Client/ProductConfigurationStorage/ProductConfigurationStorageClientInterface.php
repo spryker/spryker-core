@@ -7,15 +7,10 @@
 
 namespace Spryker\Client\ProductConfigurationStorage;
 
-use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
-use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
-use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductConfigurationStorageClientInterface
 {
@@ -32,26 +27,6 @@ interface ProductConfigurationStorageClientInterface
      */
     public function findProductConfigurationInstanceBySku(
         string $sku
-    ): ?ProductConfigurationInstanceTransfer;
-
-    /**
-     * Specification:
-     * - Finds the appropriate item in the quote by groupKey and SKU.
-     * - Returns the found item's ProductConfigurationInstanceTransfer when available.
-     * - Returns NULL otherwise.
-     *
-     * @api
-     *
-     * @param string $groupKey
-     * @param string $sku
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
-     */
-    public function findProductConfigurationInstanceInQuote(
-        string $groupKey,
-        string $sku,
-        QuoteTransfer $quoteTransfer
     ): ?ProductConfigurationInstanceTransfer;
 
     /**
@@ -152,65 +127,16 @@ interface ProductConfigurationStorageClientInterface
 
     /**
      * Specification:
-     * - Expands the provided cart change transfer items with the corresponding product configuration instance.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
-     *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer
-     */
-    public function expandCartChangeWithProductConfigurationInstance(
-        CartChangeTransfer $cartChangeTransfer,
-        array $params
-    ): CartChangeTransfer;
+     * - Reads product configuration instances from session first then from storage if not found.
+     * - Returns empty array if configuration instances is not found neither sources.
 
-    /**
-     * Specification:
-     * - Expands the provided persistent cart change transfer items with the corresponding product configuration instance.
-     *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
-     * @param array $params
+     * @param string[] $skus
      *
-     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer[]
      */
-    public function expandPersistentCartChangeWithProductConfigurationInstance(
-        PersistentCartChangeTransfer $persistentCartChangeTransfer,
-        array $params
-    ): PersistentCartChangeTransfer;
-
-    /**
-     * Specification:
-     * - Validates response trough validators stack.
-     * - Saves product configuration instance to the session storage when source type is pdp.
-     * - Adjusts cart item quantity according to product configuration quantity restrictions.
-     * - Replaces quote item product configuration with new one when source type is cart page.
-     * - Returns `isSuccessful=true` on success or `isSuccessful=false` with error messages otherwise.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     * @param array $configuratorResponseData
-     *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
-     */
-    public function processProductConfiguratorCheckSumResponse(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
-        array $configuratorResponseData
-    ): ProductConfiguratorResponseProcessorResponseTransfer;
-
-    /**
-     * Specification:
-     * - Extracts additional product configuration volume prices from price product data.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function extractProductConfigurationVolumePrices(array $priceProductTransfers): array;
+    public function findProductConfigurationInstancesIndexedBySku(
+        array $skus
+    ): array;
 }

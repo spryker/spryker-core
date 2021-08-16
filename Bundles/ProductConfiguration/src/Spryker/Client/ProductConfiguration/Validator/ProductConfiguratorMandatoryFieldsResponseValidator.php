@@ -11,9 +11,14 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Shared\Log\LoggerTrait;
 
 class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConfiguratorResponseValidatorInterface
 {
+    use LoggerTrait;
+
+    protected const GLOSSARY_KEY_RESPONSE_VALIDATION_ERROR = 'product_configuration.response.validation.error';
+
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
      * @param array $configuratorResponseData
@@ -27,14 +32,19 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
         $productConfiguratorResponseProcessorResponseTransfer->requireProductConfiguratorResponse();
 
         $productConfiguratorResponseTransfer = $productConfiguratorResponseProcessorResponseTransfer
-            ->getProductConfiguratorResponse();
+            ->getProductConfiguratorResponseOrFail();
 
         try {
             $this->assertMandatoryFields($productConfiguratorResponseTransfer);
         } catch (RequiredTransferPropertyException $requiredTransferPropertyException) {
-            return $this->getErrorResponse(
+            $this->getLogger()->error(
+                static::GLOSSARY_KEY_RESPONSE_VALIDATION_ERROR,
+                ['exception' => $requiredTransferPropertyException]
+            );
+
+            return $this->addErrorToResponse(
                 $productConfiguratorResponseProcessorResponseTransfer,
-                $requiredTransferPropertyException->getMessage()
+                static::GLOSSARY_KEY_RESPONSE_VALIDATION_ERROR
             );
         }
 
@@ -47,7 +57,7 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
-    protected function getErrorResponse(
+    protected function addErrorToResponse(
         ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer,
         string $errorMessage
     ): ProductConfiguratorResponseProcessorResponseTransfer {
@@ -68,7 +78,7 @@ class ProductConfiguratorMandatoryFieldsResponseValidator implements ProductConf
             ->requireCheckSum()
             ->requireTimestamp()
             ->requireProductConfigurationInstance()
-            ->getProductConfigurationInstance()
+            ->getProductConfigurationInstanceOrFail()
                 ->requireConfiguratorKey();
     }
 }

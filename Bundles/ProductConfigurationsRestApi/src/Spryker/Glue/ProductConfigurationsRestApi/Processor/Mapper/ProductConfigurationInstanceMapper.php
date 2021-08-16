@@ -21,28 +21,28 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
     protected $productConfigurationInstancePriceMapper;
 
     /**
-     * @var \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\CartItemProductConfigurationMapperPluginInterface[]
+     * @var \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationPriceMapperPluginInterface[]
      */
-    protected $cartItemProductConfigurationMapperPlugins;
+    protected $productConfigurationPriceMapperPlugins;
 
     /**
-     * @var \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestCartItemProductConfigurationMapperPluginInterface[]
+     * @var \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestProductConfigurationPriceMapperPluginInterface[]
      */
-    protected $restCartItemProductConfigurationMapperPlugins;
+    protected $restProductConfigurationPriceMapperPlugins;
 
     /**
      * @param \Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationInstancePriceMapperInterface $productConfigurationInstancePriceMapper
-     * @param \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\CartItemProductConfigurationMapperPluginInterface[] $cartItemProductConfigurationMapperPlugins
-     * @param \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestCartItemProductConfigurationMapperPluginInterface[] $restCartItemProductConfigurationMapperPlugins
+     * @param \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationPriceMapperPluginInterface[] $productConfigurationPriceMapperPlugins
+     * @param \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestProductConfigurationPriceMapperPluginInterface[] $restProductConfigurationPriceMapperPlugins
      */
     public function __construct(
         ProductConfigurationInstancePriceMapperInterface $productConfigurationInstancePriceMapper,
-        array $cartItemProductConfigurationMapperPlugins,
-        array $restCartItemProductConfigurationMapperPlugins
+        array $productConfigurationPriceMapperPlugins,
+        array $restProductConfigurationPriceMapperPlugins
     ) {
         $this->productConfigurationInstancePriceMapper = $productConfigurationInstancePriceMapper;
-        $this->cartItemProductConfigurationMapperPlugins = $cartItemProductConfigurationMapperPlugins;
-        $this->restCartItemProductConfigurationMapperPlugins = $restCartItemProductConfigurationMapperPlugins;
+        $this->productConfigurationPriceMapperPlugins = $productConfigurationPriceMapperPlugins;
+        $this->restProductConfigurationPriceMapperPlugins = $restProductConfigurationPriceMapperPlugins;
     }
 
     /**
@@ -66,8 +66,8 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
         );
         $productConfigurationInstanceTransfer->setPrices(new ArrayObject($priceProductTransfers));
 
-        return $this->executeProductConfigurationMapperPlugins(
-            $restCartItemProductConfigurationInstanceAttributesTransfer,
+        return $this->executeProductConfigurationPriceMapperPlugins(
+            $restCartItemProductConfigurationInstanceAttributesTransfer->getPrices()->getArrayCopy(),
             $productConfigurationInstanceTransfer
         );
     }
@@ -97,29 +97,32 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
                 $productConfigurationInstanceTransfer->getPrices(),
                 new ArrayObject()
             );
-        $restCartItemProductConfigurationInstanceAttributesTransfer->setPrices($restProductConfigurationPriceAttributesTransfers);
 
-        $restCartItemProductConfigurationInstanceAttributesTransfer = $this->executeRestCartItemProductConfigurationMapperPlugins(
+        $restProductConfigurationPriceAttributesTransfers = $this->executeRestProductConfigurationPriceMapperPlugins(
             $productConfigurationInstanceTransfer,
-            $restCartItemProductConfigurationInstanceAttributesTransfer
+            $restProductConfigurationPriceAttributesTransfers->getArrayCopy()
+        );
+
+        $restCartItemProductConfigurationInstanceAttributesTransfer->setPrices(
+            new ArrayObject($restProductConfigurationPriceAttributesTransfers)
         );
 
         return $restItemsAttributesTransfer->setProductConfigurationInstance($restCartItemProductConfigurationInstanceAttributesTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
      */
-    protected function executeProductConfigurationMapperPlugins(
-        RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer,
+    protected function executeProductConfigurationPriceMapperPlugins(
+        array $restProductConfigurationPriceAttributesTransfers,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): ProductConfigurationInstanceTransfer {
-        foreach ($this->cartItemProductConfigurationMapperPlugins as $productConfigurationMapperPlugin) {
+        foreach ($this->productConfigurationPriceMapperPlugins as $productConfigurationMapperPlugin) {
             $productConfigurationInstanceTransfer = $productConfigurationMapperPlugin->map(
-                $restCartItemProductConfigurationInstanceAttributesTransfer,
+                $restProductConfigurationPriceAttributesTransfers,
                 $productConfigurationInstanceTransfer
             );
         }
@@ -129,21 +132,21 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-     * @param \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]
      */
-    protected function executeRestCartItemProductConfigurationMapperPlugins(
+    protected function executeRestProductConfigurationPriceMapperPlugins(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer,
-        RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
-    ): RestCartItemProductConfigurationInstanceAttributesTransfer {
-        foreach ($this->restCartItemProductConfigurationMapperPlugins as $cartItemProductConfigurationMapperPlugin) {
-            $restCartItemProductConfigurationInstanceAttributesTransfer = $cartItemProductConfigurationMapperPlugin->map(
+        array $restProductConfigurationPriceAttributesTransfers
+    ): array {
+        foreach ($this->restProductConfigurationPriceMapperPlugins as $restProductConfigurationPriceMapperPlugin) {
+            $restProductConfigurationPriceAttributesTransfers = $restProductConfigurationPriceMapperPlugin->map(
                 $productConfigurationInstanceTransfer,
-                $restCartItemProductConfigurationInstanceAttributesTransfer
+                $restProductConfigurationPriceAttributesTransfers
             );
         }
 
-        return $restCartItemProductConfigurationInstanceAttributesTransfer;
+        return $restProductConfigurationPriceAttributesTransfers;
     }
 }

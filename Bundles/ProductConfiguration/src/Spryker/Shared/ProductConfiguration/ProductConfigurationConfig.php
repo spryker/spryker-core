@@ -22,22 +22,6 @@ class ProductConfigurationConfig extends AbstractBundleConfig
     public const PRICE_DIMENSION_PRODUCT_CONFIGURATION = 'PRODUCT_CONFIGURATION';
 
     /**
-     * Specification:
-     * - Indicate source type as pdp.
-     *
-     * @api
-     */
-    public const SOURCE_TYPE_PDP = 'SOURCE_TYPE_PDP';
-
-    /**
-     * Specification:
-     * - Indicate source type as cart.
-     *
-     * @api
-     */
-    public const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
-
-    /**
      * @api
      *
      * @throws \Spryker\Shared\ProductConfiguration\Exception\EncryptionKeyNotPreConfigured

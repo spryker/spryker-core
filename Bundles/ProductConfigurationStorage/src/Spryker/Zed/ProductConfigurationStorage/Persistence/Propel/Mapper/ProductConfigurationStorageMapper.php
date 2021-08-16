@@ -23,7 +23,7 @@ class ProductConfigurationStorageMapper
         ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
     ): SpyProductConfigurationStorage {
         $productConfigurationStorageEntity->setData($productConfigurationStorageTransfer->toArray());
-        $productConfigurationStorageEntity->setSku($productConfigurationStorageTransfer->getSku());
+        $productConfigurationStorageEntity->setSku($productConfigurationStorageTransfer->getSkuOrFail());
 
         return $productConfigurationStorageEntity;
     }

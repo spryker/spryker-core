@@ -1,0 +1,19 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Client\\ProductConfigurationPersistentCart\\Plugin\\PersistentCart\\ProductConfigurationPersistentCartRequestExpanderPlugin::extend has wrong name $persistentCartChangeTransfer, expecting $cartChangeTransfer as defined by Spryker\\Client\\PersistentCartExtension\\Dependency\\Plugin\\PersistentCartChangeExpanderPluginInterface::extend",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationPersistentCart/src/Spryker/Client/ProductConfigurationPersistentCart/Plugin/PersistentCart/ProductConfigurationPersistentCartRequestExpanderPlugin.php",
+            "snippet": "    public function extend(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer",
+            "selected_text": "$persistentCartChangeTransfer",
+            "error_level": 7,
+            "shortcode": 230,
+            "other_references": null
+        }
+    ],
+    "warning": [],
+    "deprecation": []
+}

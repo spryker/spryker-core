@@ -46,7 +46,7 @@ class ProductViewExpander implements ProductViewExpanderInterface
         }
 
         $productConfigurationInstanceTransfer = $this->productConfigurationInstanceReader
-            ->findProductConfigurationInstanceBySku($productViewTransfer->getSku());
+            ->findProductConfigurationInstanceBySku($productViewTransfer->getSkuOrFail());
 
         if (!$productConfigurationInstanceTransfer) {
             return $productViewTransfer;
