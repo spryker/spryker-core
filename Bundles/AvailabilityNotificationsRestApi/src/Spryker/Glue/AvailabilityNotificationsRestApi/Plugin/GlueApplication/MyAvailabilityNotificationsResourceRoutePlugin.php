@@ -14,7 +14,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiFactory getFactory()
+ * @method \Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiFactory getFactory()
  */
 class MyAvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {

@@ -206,4 +206,11 @@
         <property name="companyUser" type="CompanyUser"/>
     </transfer>
 
+    <transfer name="RouteAuthorizationConfig">
+        <property name="strategy" type="string"/>
+        <property name="apiCode" type="string"/>
+        <property name="httpStatusCode" type="int"/>
+        <property name="apiMessage" type="string"/>
+    </transfer>
+
 </transfers>

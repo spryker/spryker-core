@@ -15,18 +15,18 @@ class AclEntityReader implements AclEntityReaderInterface
     protected $aclEntityDisablerPlugins;
 
     /**
-     * @var \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityEnablerPluginInterface[]
+     * @var bool
      */
-    protected $aclEntityEnablerPlugins;
+    protected $isAclEntityActive;
 
     /**
+     * @param bool $isAclEntityActive
      * @param \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityDisablerPluginInterface[] $aclEntityDisablerPlugins
-     * @param \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityEnablerPluginInterface[] $aclEntityEnablerPlugins
      */
-    public function __construct(array $aclEntityDisablerPlugins, array $aclEntityEnablerPlugins)
+    public function __construct(bool $isAclEntityActive, array $aclEntityDisablerPlugins)
     {
+        $this->isAclEntityActive = $isAclEntityActive;
         $this->aclEntityDisablerPlugins = $aclEntityDisablerPlugins;
-        $this->aclEntityEnablerPlugins = $aclEntityEnablerPlugins;
     }
 
     /**
@@ -34,12 +34,7 @@ class AclEntityReader implements AclEntityReaderInterface
      */
     public function isActive(): bool
     {
-        $isActive = false;
-        foreach ($this->aclEntityEnablerPlugins as $aclEntityEnablerPlugin) {
-            if ($aclEntityEnablerPlugin->isEnabled()) {
-                $isActive = true;
-            }
-        }
+        $isActive = $this->isAclEntityActive;
 
         foreach ($this->aclEntityDisablerPlugins as $aclEntityDisablerPlugin) {
             if ($aclEntityDisablerPlugin->isDisabled()) {

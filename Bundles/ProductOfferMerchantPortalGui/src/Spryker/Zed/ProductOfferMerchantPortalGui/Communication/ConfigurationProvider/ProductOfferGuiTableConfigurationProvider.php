@@ -118,9 +118,9 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
             ->addColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true)
             ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
             ->addColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true)
-            ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'grey')
+            ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'gray')
             ->addColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, 'green', [0 => 'red'])
-            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, true, 'grey', [
+            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, true, 'gray', [
                 $this->translatorFacade->trans(static::COLUMN_DATA_STATUS_ACTIVE) => 'green',
             ])
             ->addColumnChip(static::COL_KEY_APPROVAL_STATUS, 'Approval Status', true, true, 'green', [

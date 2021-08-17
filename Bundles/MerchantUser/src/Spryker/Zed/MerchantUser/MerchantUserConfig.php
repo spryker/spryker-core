@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantUser;
 
+use Spryker\Shared\MerchantUser\MerchantUserConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantUserConfig extends AbstractBundleConfig
@@ -34,5 +35,18 @@ class MerchantUserConfig extends AbstractBundleConfig
     public function canUserHaveManyMerchants(): bool
     {
         return false;
+    }
+
+    /**
+     * Specification:
+     *  - Returns merchant portal application base url (scheme, host, port).
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getMerchantPortalBaseUrl(): string
+    {
+        return $this->get(MerchantUserConstants::BASE_URL_MP);
     }
 }

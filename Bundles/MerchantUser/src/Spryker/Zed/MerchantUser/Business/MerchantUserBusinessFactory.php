@@ -56,7 +56,8 @@ class MerchantUserBusinessFactory extends AbstractBusinessFactory
         return new MerchantUserUpdater(
             $this->getUserFacade(),
             $this->getUserPasswordResetFacade(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getConfig()
         );
     }
 

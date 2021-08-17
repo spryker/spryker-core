@@ -34,6 +34,21 @@ interface CartsRestApiFacadeInterface
 
     /**
      * Specification:
+     * - Finds customer quote by uuid.
+     * - Uuid and customerReference must be set in the QuoteTransfer taken as parameter.
+     * - Checks user permission to read shared cart if QuoteTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
+     * - Reloads quote items if {@link \Spryker\Zed\CartsRestApi\CartsRestApiConfig::isQuoteReloadEnabled()} set to `true`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuidWithQuoteItemReload(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      * - Retrieves customer quote collection filtered by criteria.
      * - Filters by customer reference when provided.
      * - Filters by current store ID.
@@ -122,6 +137,7 @@ interface CartsRestApiFacadeInterface
      * - Updates cart item quantity.
      * - quoteUuid, CustomerTransfer.customerReference, sku and quantity must be set in the CartItemRequestTransfer.
      * - Checks user permission to update an item of shared cart if CartItemRequestTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
+     * - Reloads quote items if {@link \Spryker\Zed\CartsRestApi\CartsRestApiConfig::isQuoteReloadEnabled()} set to `true`.
      *
      * @api
      *
@@ -152,6 +168,7 @@ interface CartsRestApiFacadeInterface
      * - Adds an item to the cart.
      * - quoteUuid, CustomerTransfer.customerReference and sku must be set in the CartItemRequestTransfer.
      * - Checks user permission to add an item to shared cart if RestCartItemsAttributesTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
+     * - Reloads quote items if {@link \Spryker\Zed\CartsRestApi\CartsRestApiConfig::isQuoteReloadEnabled()} set to `true`.
      *
      * @api
      *
@@ -216,6 +233,7 @@ interface CartsRestApiFacadeInterface
      * - Removes item from cart.
      * - quoteUuid, CustomerTransfer.customerReference, sku must be set in the CartItemRequestTransfer.
      * - Checks user permission to delete an item from shared cart if RestCartItemsAttributesTransfer.Customer.CompanyUserTransfer.idCompanyUser is set.
+     * - Reloads quote items if {@link \Spryker\Zed\CartsRestApi\CartsRestApiConfig::isQuoteReloadEnabled()} set to `true`.
      *
      * @api
      *
@@ -244,6 +262,7 @@ interface CartsRestApiFacadeInterface
   * Specification:
   * - Adds an item to the guest cart.
   * - sku, quantity and CustomerTransfer.customerReference must be set in the CartItemRequestTransfer.
+  * - Reloads quote items if {@link \Spryker\Zed\CartsRestApi\CartsRestApiConfig::isQuoteReloadEnabled()} set to `true`.
   *
   * @api
   *

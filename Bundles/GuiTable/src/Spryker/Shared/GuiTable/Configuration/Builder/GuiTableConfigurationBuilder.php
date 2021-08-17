@@ -9,6 +9,7 @@ namespace Spryker\Shared\GuiTable\Configuration\Builder;
 
 use ArrayObject;
 use Generated\Shared\Transfer\DateRangeGuiTableFilterTypeOptionsTransfer;
+use Generated\Shared\Transfer\GuiTableBatchActionOptionsTransfer;
 use Generated\Shared\Transfer\GuiTableBatchActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableBatchActionTransfer;
 use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
@@ -528,7 +529,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         string $id,
         string $title,
         string $type,
-        ?string $component,
+        ?string $component = null,
         array $options = []
     ): void {
         if (isset($this->rowActions[$id])) {
@@ -540,20 +541,22 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setTitle($title)
             ->setType($type);
 
+        $this->rowActions[$id] = $guiTableRowActionTransfer;
+
         if ($type === static::ACTION_TYPE_HTTP) {
             $guiTableRowActionTransfer
                 ->setUrl($options['url'])
                 ->setMethod($options['method']);
-        } else {
-            $guiTableRowActionTransfer
-                ->setComponent($component)
-                ->setOptions(
-                    (new GuiTableRowActionOptionsTransfer())
-                        ->setInputs($options)
-                );
+
+            return;
         }
 
-        $this->rowActions[$id] = $guiTableRowActionTransfer;
+        $guiTableRowActionTransfer
+            ->setComponent($component)
+            ->setOptions(
+                (new GuiTableRowActionOptionsTransfer())
+                    ->setInputs($options)
+            );
     }
 
     /**
@@ -562,14 +565,88 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $url
-     * @param string|null $type
+     * @param string|null $method
      *
      * @return $this
      */
-    public function addBatchActionUrl(string $id, string $title, string $url, ?string $type = null)
-    {
-        $type = $type ?? static::ACTION_TYPE_HTTP;
-        $this->addBatchAction($id, $title, $type, ['url' => $url]);
+    public function addBatchActionDrawerAjaxForm(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    ) {
+        $this->addBatchAction(
+            $id,
+            $title,
+            static::ACTION_TYPE_DRAWER,
+            static::ACTION_DRAWER_COMPONENT_TYPE_AJAX_FORM,
+            [
+                'action' => $url,
+                'method' => $method,
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     * @param string|null $method
+     *
+     * @return $this
+     */
+    public function addBatchActionHttp(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    ) {
+        $this->addBatchAction(
+            $id,
+            $title,
+            static::ACTION_TYPE_HTTP,
+            null,
+            [
+                'url' => $url,
+                'method' => $method,
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     * @param string|null $method
+     *
+     * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
+     *
+     * @return $this
+     */
+    public function addBatchActionDrawerUrlHtmlRenderer(
+        string $id,
+        string $title,
+        string $url,
+        ?string $method = null
+    ) {
+        $this->addBatchAction(
+            $id,
+            $title,
+            static::ACTION_TYPE_DRAWER,
+            static::ACTION_DRAWER_COMPONENT_TYPE_URL_HTML_RENDERER,
+            [
+                'url' => $url,
+                'method' => $method,
+            ]
+        );
 
         return $this;
     }
@@ -578,14 +655,20 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param string $type
-     * @param string[] $options
+     * @param string|null $component
+     * @param array $options
      *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
      * @return void
      */
-    protected function addBatchAction(string $id, string $title, string $type, array $options): void
-    {
+    protected function addBatchAction(
+        string $id,
+        string $title,
+        string $type,
+        ?string $component = null,
+        array $options = []
+    ): void {
         if (isset($this->batchActions[$id])) {
             throw new InvalidConfigurationException(sprintf('Batch action with id "%s" already exists', $id));
         }
@@ -593,10 +676,24 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         $guiTableBatchActionTransfer = (new GuiTableBatchActionTransfer())
             ->setId($id)
             ->setTitle($title)
-            ->setType($type)
-            ->setTypeOptions($options);
+            ->setType($type);
 
         $this->batchActions[$id] = $guiTableBatchActionTransfer;
+
+        if ($type === static::ACTION_TYPE_HTTP) {
+            $guiTableBatchActionTransfer
+                ->setUrl($options['url'])
+                ->setMethod($options['method']);
+
+            return;
+        }
+
+        $guiTableBatchActionTransfer
+            ->setComponent($component)
+            ->setOptions(
+                (new GuiTableBatchActionOptionsTransfer())
+                    ->setInputs($options)
+            );
     }
 
     /**
@@ -1194,18 +1291,19 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     protected function setBatchActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $guiTableConfigurationTransfer->setBatchActions(
-            (new GuiTableBatchActionsConfigurationTransfer())->setIsEnabled(false)
-        );
+        $guiTableBatchActionsConfigurationTransfer = (new GuiTableBatchActionsConfigurationTransfer())
+            ->setIsEnabled(false);
 
         if ($this->batchActions) {
-            $guiTableConfigurationTransfer->getBatchActionsOrFail()
+            $guiTableBatchActionsConfigurationTransfer
                 ->setIsEnabled(true)
                 ->setActions(new ArrayObject($this->batchActions))
                 ->setRowIdPath($this->batchActionRowIdPath)
                 ->setAvailableActionsPath($this->availableBatchActionsPath)
                 ->setNoActionsMessage($this->noBatchActionsMessage);
         }
+
+        $guiTableConfigurationTransfer->setBatchActions($guiTableBatchActionsConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }

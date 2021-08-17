@@ -21,6 +21,9 @@ class PasswordController extends AbstractController
 {
     protected const PARAM_TOKEN = 'token';
     protected const MESSAGE_USER_REQUEST_PASSWORD_SUCCESS = 'If there is an account associated with this email, you will receive an Email with further instructions.';
+    /**
+     * @uses \Spryker\Zed\MerchantUser\Business\Updater\MerchantUserUpdater::RESET_RASSWORD_PATH
+     */
     protected const RESET_RASSWORD_PATH = '/security-merchant-portal-gui/password/reset';
     protected const MESSAGE_USER_PASSWORD_UPDATE_SUCCESS = 'Success! The password is updated.';
     protected const MESSAGE_USER_PASSWORD_UPDATE_ERROR = 'Could not update password.';

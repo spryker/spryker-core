@@ -52,7 +52,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
         $productConfiguratorResponseProcessorResponseTransfer->requireProductConfiguratorResponse();
 
         $productConfiguratorResponseTransfer = $productConfiguratorResponseProcessorResponseTransfer
-            ->getProductConfiguratorResponse();
+            ->getProductConfiguratorResponseOrFail();
 
         $plainCopyOfConfiguredResponseData = $configuratorResponseData;
 

@@ -33,20 +33,4 @@ class SecuritySystemUserToUserFacadeBridge implements SecuritySystemUserToUserFa
     {
         return $this->userFacade->setCurrentUser($user);
     }
-
-    /**
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getCurrentUser()
-    {
-        return $this->userFacade->getCurrentUser();
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasCurrentUser()
-    {
-        return $this->userFacade->hasCurrentUser();
-    }
 }

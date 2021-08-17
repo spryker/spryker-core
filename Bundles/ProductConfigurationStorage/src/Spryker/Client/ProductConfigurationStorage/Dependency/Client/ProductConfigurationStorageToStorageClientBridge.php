@@ -31,4 +31,14 @@ class ProductConfigurationStorageToStorageClientBridge implements ProductConfigu
     {
         return $this->storageClient->get($key);
     }
+
+    /**
+     * @param array $keys
+     *
+     * @return array
+     */
+    public function getMulti(array $keys): array
+    {
+        return $this->storageClient->getMulti($keys);
+    }
 }

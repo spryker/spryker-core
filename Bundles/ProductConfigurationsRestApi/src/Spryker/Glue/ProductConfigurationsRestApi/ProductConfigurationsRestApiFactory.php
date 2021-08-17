@@ -58,8 +58,8 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
     {
         return new ProductConfigurationInstanceMapper(
             $this->createProductConfigurationInstancePriceMapper(),
-            $this->getCartItemProductConfigurationMapperPlugins(),
-            $this->getRestCartItemProductConfigurationMapperPlugins()
+            $this->getProductConfigurationPriceMapperPlugins(),
+            $this->getRestProductConfigurationPriceMapperPlugins()
         );
     }
 
@@ -90,18 +90,18 @@ class ProductConfigurationsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\CartItemProductConfigurationMapperPluginInterface[]
+     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationPriceMapperPluginInterface[]
      */
-    public function getCartItemProductConfigurationMapperPlugins(): array
+    public function getProductConfigurationPriceMapperPlugins(): array
     {
-        return $this->getProvidedDependency(ProductConfigurationsRestApiDependencyProvider::PLUGINS_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER);
+        return $this->getProvidedDependency(ProductConfigurationsRestApiDependencyProvider::PLUGINS_PRODUCT_CONFIGURATION_PRICE_MAPPER);
     }
 
     /**
-     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestCartItemProductConfigurationMapperPluginInterface[]
+     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestProductConfigurationPriceMapperPluginInterface[]
      */
-    public function getRestCartItemProductConfigurationMapperPlugins(): array
+    public function getRestProductConfigurationPriceMapperPlugins(): array
     {
-        return $this->getProvidedDependency(ProductConfigurationsRestApiDependencyProvider::PLUGINS_REST_CART_ITEM_PRODUCT_CONFIGURATION_MAPPER);
+        return $this->getProvidedDependency(ProductConfigurationsRestApiDependencyProvider::PLUGINS_REST_PRODUCT_CONFIGURATION_PRICE_MAPPER);
     }
 }

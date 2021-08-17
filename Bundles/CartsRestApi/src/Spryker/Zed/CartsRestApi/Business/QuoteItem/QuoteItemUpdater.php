@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface;
+use Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
 
 class QuoteItemUpdater implements QuoteItemUpdaterInterface
@@ -36,18 +37,26 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     protected $quotePermissionChecker;
 
     /**
+     * @var \Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface
+     */
+    protected $quoteReloader;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReaderInterface $quoteItemReader
      * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
+     * @param \Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface $quoteReloader
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         QuoteItemReaderInterface $quoteItemReader,
-        QuotePermissionCheckerInterface $quotePermissionChecker
+        QuotePermissionCheckerInterface $quotePermissionChecker,
+        QuoteReloaderInterface $quoteReloader
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->quoteItemReader = $quoteItemReader;
         $this->quotePermissionChecker = $quotePermissionChecker;
+        $this->quoteReloader = $quoteReloader;
     }
 
     /**
@@ -114,7 +123,11 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
                     ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CART_ITEM));
         }
 
-        return $quoteResponseTransfer;
+        $quoteTransfer = $this->quoteReloader->reloadQuoteItems(
+            $quoteResponseTransfer->getQuoteTransfer()
+        );
+
+        return $quoteResponseTransfer->setQuoteTransfer($quoteTransfer);
     }
 
     /**

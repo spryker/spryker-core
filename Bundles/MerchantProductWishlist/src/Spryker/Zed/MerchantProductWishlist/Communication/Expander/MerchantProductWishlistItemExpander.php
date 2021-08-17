@@ -43,7 +43,7 @@ class MerchantProductWishlistItemExpander implements MerchantProductWishlistItem
      */
     public function expandWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
     {
-        if (!$wishlistItemTransfer->getSku()) {
+        if (!$wishlistItemTransfer->getSku() || $wishlistItemTransfer->getMerchantReference()) {
             return $wishlistItemTransfer;
         }
 

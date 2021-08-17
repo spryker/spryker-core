@@ -187,7 +187,14 @@
         <property name="id" type="string"/>
         <property name="title" type="string"/>
         <property name="type" type="string"/>
-        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
+        <property name="method" type="string"/>
+        <property name="url" type="string"/>
+        <property name="component" type="string"/>
+        <property name="options" type="GuiTableBatchActionOptions" singular="option"/>
+    </transfer>
+
+    <transfer name="GuiTableBatchActionOptions">
+        <property name="inputs" type="array" singular="input" associative="true"/>
     </transfer>
 
     <transfer name="GuiTableColumnConfiguratorConfiguration">

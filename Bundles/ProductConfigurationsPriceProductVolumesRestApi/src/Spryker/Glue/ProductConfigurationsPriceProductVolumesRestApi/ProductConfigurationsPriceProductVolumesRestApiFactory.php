@@ -12,17 +12,17 @@ use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Serv
 use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Service\ProductConfigurationsPriceProductVolumesRestApiToUtilEncodingServiceInterface;
 use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper\ProductConfigurationPriceProductVolumeMapper;
 use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper\ProductConfigurationPriceProductVolumeMapperInterface;
-use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper\RestCartItemProductConfigurationPriceProductVolumeMapper;
-use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper\RestCartItemProductConfigurationPriceProductVolumeMapperInterface;
+use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper\RestProductConfigurationPriceProductVolumeMapper;
+use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper\RestProductConfigurationPriceProductVolumeMapperInterface;
 
 class ProductConfigurationsPriceProductVolumesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper\RestCartItemProductConfigurationPriceProductVolumeMapperInterface
+     * @return \Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor\Mapper\RestProductConfigurationPriceProductVolumeMapperInterface
      */
-    public function createRestCartItemProductConfigurationPriceProductVolumeMapper(): RestCartItemProductConfigurationPriceProductVolumeMapperInterface
+    public function createRestProductConfigurationPriceProductVolumeMapper(): RestProductConfigurationPriceProductVolumeMapperInterface
     {
-        return new RestCartItemProductConfigurationPriceProductVolumeMapper(
+        return new RestProductConfigurationPriceProductVolumeMapper(
             $this->getProductConfigurationService(),
             $this->getUtilEncodingService()
         );

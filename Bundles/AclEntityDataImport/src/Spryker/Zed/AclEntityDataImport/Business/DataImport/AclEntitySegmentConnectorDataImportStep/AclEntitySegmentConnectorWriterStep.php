@@ -49,7 +49,7 @@ class AclEntitySegmentConnectorWriterStep implements DataImportStepInterface
             ->filterByFkAclEntitySegment($dataSet[AclEntitySegmentConnectorDataSetInterface::FK_ACL_ENTITY_SEGMENT])
             ->findOneOrCreate();
 
-        $entity->fromArray($dataSet);
+        $entity->fromArray($dataSet->getArrayCopy());
         $targetEntitySetter = [$entity, $this->aclEntityService->generateSegmentConnectorReferenceSetter($dataEntity)];
         if (is_callable($targetEntitySetter)) {
             call_user_func($targetEntitySetter, $dataSet[AclEntitySegmentConnectorDataSetInterface::FK_TARGET_ENTITY]);

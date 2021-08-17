@@ -8,7 +8,9 @@
 namespace Spryker\Glue\CartsRestApi\Plugin\ResourceRoute;
 
 use Generated\Shared\Transfer\RestCartsAttributesTransfer;
+use Generated\Shared\Transfer\RouteAuthorizationConfigTransfer;
 use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\GlueApplicationAuthorizationConnectorExtension\Dependency\Plugin\DefaultAuthorizationStrategyAwareResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
@@ -17,8 +19,13 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
-class CustomerCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class CustomerCartsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface, DefaultAuthorizationStrategyAwareResourceRoutePluginInterface
 {
+    /**
+     * @uses \Spryker\Client\Customer\Plugin\Authorization\CustomerReferenceMatchingEntityIdAuthorizationStrategyPlugin::STRATEGY_NAME
+     */
+    protected const STRATEGY_NAME = 'CustomerReferenceMatchingEntityId';
+
     /**
      * {@inheritDoc}
      *
@@ -34,6 +41,20 @@ class CustomerCartsResourceRoutePlugin extends AbstractPlugin implements Resourc
             ->addGet('get');
 
         return $resourceRouteCollection;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer
+     */
+    public function getRouteAuthorizationDefaultConfiguration(): RouteAuthorizationConfigTransfer
+    {
+        return (new RouteAuthorizationConfigTransfer())
+            ->setStrategy(static::STRATEGY_NAME)
+            ->setApiCode(CartsRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED);
     }
 
     /**

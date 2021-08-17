@@ -42,6 +42,7 @@ class ProductOfferValidityDataImportPluginTest extends Unit
         parent::setUp();
 
         $this->tester->ensureProductOfferValidityTableIsEmpty();
+        $this->tester->ensureProductOfferTableIsEmpty();
     }
 
     /**
@@ -49,8 +50,6 @@ class ProductOfferValidityDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->markTestSkipped();
-
         $this->tester->haveProductOffer([
             ProductOfferTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE_VALUE,
         ]);

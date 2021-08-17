@@ -20,4 +20,16 @@ interface ProductConfigurationStorageToStorageClientInterface
      * @return mixed
      */
     public function get($key);
+
+    /**
+     * Specification:
+     *  - Get values of all specified keys from storage.
+     *
+     * @api
+     *
+     * @param array $keys
+     *
+     * @return array
+     */
+    public function getMulti(array $keys): array;
 }

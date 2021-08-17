@@ -147,7 +147,8 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRestHttpRequestValidator(),
             $this->getGlueApplication(),
             $this->createRestUriParser(),
-            $this->createRestResourceRouteLoader()
+            $this->createRestResourceRouteLoader(),
+            $this->getRouterParameterExpanderPlugins()
         );
     }
 
@@ -236,7 +237,11 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestResourceRouteLoader(): ResourceRouteLoaderInterface
     {
-        return new ResourceRouteLoader($this->getResourceRoutePlugins(), $this->createRestVersionResolver());
+        return new ResourceRouteLoader(
+            $this->getResourceRoutePlugins(),
+            $this->createRestVersionResolver(),
+            $this->getRouterParameterExpanderPlugins()
+        );
     }
 
     /**
@@ -558,5 +563,13 @@ class GlueApplicationFactory extends AbstractFactory
     public function getApplicationPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_APPLICATION);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface[]
+     */
+    public function getRouterParameterExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_ROUTER_PARAMETER_EXPANDER);
     }
 }

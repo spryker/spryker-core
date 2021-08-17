@@ -182,7 +182,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
         MerchantOrderTransfer $merchantOrderTransfer
     ): GuiTableConfigurationBuilderInterface {
         foreach ($merchantOrderTransfer->getManualEvents() as $manualEvent) {
-            $guiTableConfigurationBuilder->addBatchActionUrl(
+            $guiTableConfigurationBuilder->addBatchActionHttp(
                 $manualEvent,
                 $manualEvent,
                 sprintf(

@@ -10,6 +10,7 @@
         <property name="approvalStatus" type="string"/>
         <property name="concreteSku" type="string"/>
         <property name="idProductOffer" type="int"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="ProductConcrete">

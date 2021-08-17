@@ -69,6 +69,7 @@ Quantity,Menge
 "This concrete product is not owned by this merchant.","Diese Variante gehört nicht diesem Händler."
 "Create Abstract Product","Abstraktes Produkt erstellen"
 English,Englisch
+German,Deutsche
 "The rest of the locales will be defined once the product has been created.","Andere Locales werden definiert, sobald das Produkt erstellt wurde."
 "Create an Abstract Product with 1 Concrete Product","Ein abstraktes Produkt mit der einzigen Variante erstellen"
 "Autogenerate SKU","SKU automatisch generieren"

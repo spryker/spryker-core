@@ -10,7 +10,6 @@ namespace Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Processor
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
-use Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer;
 use Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer;
 use Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer;
 
@@ -18,27 +17,25 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-     * @param \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer
+     * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]
      */
-    public function mapProductConfigurationInstanceToRestCartItemProductConfigurationInstanceAttributes(
+    public function mapProductConfigurationInstanceToRestProductConfigurationPriceAttributes(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer,
-        RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
-    ): RestCartItemProductConfigurationInstanceAttributesTransfer {
+        array $restProductConfigurationPriceAttributesTransfers
+    ): array {
         if ($productConfigurationInstanceTransfer->getPrices()->count() === 0) {
-            return $restCartItemProductConfigurationInstanceAttributesTransfer;
+            return $restProductConfigurationPriceAttributesTransfers;
         }
 
         $volumePriceProductTransfers = $this->extractVolumePriceProductTransfers($productConfigurationInstanceTransfer->getPrices());
 
-        $restProductConfigurationPriceAttributesTransfers = $this->getRestProductConfigurationPriceAttributesTransfers(
+        return $this->getRestProductConfigurationPriceAttributesTransfers(
             $productConfigurationInstanceTransfer,
-            $restCartItemProductConfigurationInstanceAttributesTransfer,
+            $restProductConfigurationPriceAttributesTransfers,
             $volumePriceProductTransfers
         );
-
-        return $restCartItemProductConfigurationInstanceAttributesTransfer->setPrices(new ArrayObject($restProductConfigurationPriceAttributesTransfers));
     }
 
     /**
@@ -99,17 +96,17 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-     * @param \Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $volumePriceProductTransfers
      *
      * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]
      */
     protected function getRestProductConfigurationPriceAttributesTransfers(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer,
-        RestCartItemProductConfigurationInstanceAttributesTransfer $restCartItemProductConfigurationInstanceAttributesTransfer,
+        array $restProductConfigurationPriceAttributesTransfers,
         array $volumePriceProductTransfers
     ): array {
-        $restProductConfigurationPriceAttributesTransfers = [];
+        $mappedRestProductConfigurationPriceAttributesTransfers = [];
 
         foreach ($productConfigurationInstanceTransfer->getPrices() as $priceProductTransfer) {
             if ($priceProductTransfer->getVolumeQuantity() !== null) {
@@ -118,32 +115,32 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
 
             $restProductConfigurationPriceAttributesTransferToMap = $this->extractRestProductConfigurationPriceAttributesTransfer(
                 $priceProductTransfer,
-                $restCartItemProductConfigurationInstanceAttributesTransfer->getPrices()
+                $restProductConfigurationPriceAttributesTransfers
             );
 
             if (!$restProductConfigurationPriceAttributesTransferToMap) {
                 continue;
             }
 
-            $restProductConfigurationPriceAttributesTransfers[] = $this->mapVolumePriceProductTransfersToRestCartItemProductConfigurationInstanceAttributesTransfer(
+            $mappedRestProductConfigurationPriceAttributesTransfers[] = $this->mapVolumePriceProductTransfersToRestCartItemProductConfigurationInstanceAttributesTransfer(
                 $volumePriceProductTransfers,
                 $restProductConfigurationPriceAttributesTransferToMap,
                 $priceProductTransfer
             );
         }
 
-        return $restProductConfigurationPriceAttributesTransfers;
+        return $mappedRestProductConfigurationPriceAttributesTransfers;
     }
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]|\ArrayObject $restProductConfigurationPriceAttributesTransfers
+     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer|null
      */
     protected function extractRestProductConfigurationPriceAttributesTransfer(
         PriceProductTransfer $priceProductTransfer,
-        ArrayObject $restProductConfigurationPriceAttributesTransfers
+        array $restProductConfigurationPriceAttributesTransfers
     ): ?RestProductConfigurationPriceAttributesTransfer {
         foreach ($restProductConfigurationPriceAttributesTransfers as $restProductConfigurationPriceAttributesTransfer) {
             if (

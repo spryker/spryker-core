@@ -39,6 +39,8 @@ use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReader;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemReaderInterface;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemUpdater;
 use Spryker\Zed\CartsRestApi\Business\QuoteItem\QuoteItemUpdaterInterface;
+use Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloader;
+use Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface;
 use Spryker\Zed\CartsRestApi\CartsRestApiDependencyProvider;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToCartFacadeInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface;
@@ -72,6 +74,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->getQuoteFacade(),
             $this->getStoreFacade(),
             $this->createQuotePermissionChecker(),
+            $this->createQuoteReloader(),
             $this->getQuoteCollectionExpanderPlugins(),
             $this->getQuoteExpanderPlugins()
         );
@@ -149,6 +152,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteReader(),
             $this->createQuoteItemMapper(),
             $this->createQuotePermissionChecker(),
+            $this->createQuoteReloader(),
             $this->getCartItemMapperPlugins()
         );
     }
@@ -186,7 +190,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteItemDeleter(
             $this->getPersistentCartFacade(),
             $this->createQuoteItemReader(),
-            $this->createQuotePermissionChecker()
+            $this->createQuotePermissionChecker(),
+            $this->createQuoteReloader()
         );
     }
 
@@ -198,7 +203,8 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteItemUpdater(
             $this->getPersistentCartFacade(),
             $this->createQuoteItemReader(),
-            $this->createQuotePermissionChecker()
+            $this->createQuotePermissionChecker(),
+            $this->createQuoteReloader()
         );
     }
 
@@ -232,6 +238,17 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     public function createQuoteMapper(): QuoteMapperInterface
     {
         return new QuoteMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\CartsRestApi\Business\Reloader\QuoteReloaderInterface
+     */
+    public function createQuoteReloader(): QuoteReloaderInterface
+    {
+        return new QuoteReloader(
+            $this->getCartFacade(),
+            $this->getConfig()
+        );
     }
 
     /**

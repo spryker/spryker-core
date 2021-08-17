@@ -75,7 +75,7 @@ class CartReader implements CartReaderInterface
             ->setCustomer($customerTransfer)
             ->setUuid($uuidCart);
 
-        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuid($quoteTransfer);
+        $quoteResponseTransfer = $this->cartsRestApiClient->findQuoteByUuidWithQuoteItemReload($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $this->cartRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());

@@ -75,8 +75,8 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     public function createAclEntityReader(): AclEntityReaderInterface
     {
         return new AclEntityReader(
-            $this->getAclEntityDisablerPlugins(),
-            $this->getAclEntityEnablerPlugins()
+            $this->getIsAclEntityEnabled(),
+            $this->getAclEntityDisablerPlugins()
         );
     }
 
@@ -101,20 +101,18 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityEnablerPluginInterface[]
-     */
-    public function getAclEntityEnablerPlugins(): array
-    {
-        return $this->getProvidedDependency(
-            AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_ENABLER
-        );
-    }
-
-    /**
      * @return \Spryker\Service\AclEntity\AclEntityServiceInterface
      */
     public function getAclEntityService(): AclEntityServiceInterface
     {
         return $this->getProvidedDependency(AclEntityDependencyProvider::SERVICE_ACL_ENTITY);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsAclEntityEnabled(): bool
+    {
+        return $this->getProvidedDependency(AclEntityDependencyProvider::PARAM_IS_ACL_ENTITY_ENABLED);
     }
 }

@@ -211,8 +211,9 @@ class ResetPassword implements ResetPasswordInterface
         $query = $this->generateResetPasswordLinkQuery($token);
 
         $passwordResetPath = $userPasswordResetRequestTransfer->getResetPasswordPath() ?? $this->resetConfig->getPasswordResetPath();
+        $passwordResetBaseUrl = $userPasswordResetRequestTransfer->getResetPasswordBaseUrl() ?? $this->resetConfig->getBaseUrlZed();
 
-        return sprintf('%s%s?%s', $this->resetConfig->getBaseUrlZed(), $passwordResetPath, $query);
+        return sprintf('%s%s?%s', $passwordResetBaseUrl, $passwordResetPath, $query);
     }
 
     /**

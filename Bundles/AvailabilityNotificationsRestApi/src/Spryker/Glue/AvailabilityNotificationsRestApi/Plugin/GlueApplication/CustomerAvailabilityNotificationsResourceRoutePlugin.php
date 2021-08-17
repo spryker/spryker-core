@@ -8,17 +8,24 @@
 namespace Spryker\Glue\AvailabilityNotificationsRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestAvailabilityNotificationsAttributesTransfer;
+use Generated\Shared\Transfer\RouteAuthorizationConfigTransfer;
 use Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig;
+use Spryker\Glue\GlueApplicationAuthorizationConnectorExtension\Dependency\Plugin\DefaultAuthorizationStrategyAwareResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiFactory getFactory()
+ * @method \Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiFactory getFactory()
  */
-class CustomerAvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class CustomerAvailabilityNotificationsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface, DefaultAuthorizationStrategyAwareResourceRoutePluginInterface
 {
+    /**
+     * @uses \Spryker\Client\Customer\Plugin\Authorization\CustomerReferenceMatchingEntityIdAuthorizationStrategyPlugin::STRATEGY_NAME
+     */
+    protected const STRATEGY_NAME = 'CustomerReferenceMatchingEntityId';
+
     /**
      * {@inheritDoc}
      *
@@ -34,6 +41,20 @@ class CustomerAvailabilityNotificationsResourceRoutePlugin extends AbstractPlugi
             ->addGet('get', true);
 
         return $resourceRouteCollection;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer
+     */
+    public function getRouteAuthorizationDefaultConfiguration(): RouteAuthorizationConfigTransfer
+    {
+        return (new RouteAuthorizationConfigTransfer())
+            ->setStrategy(static::STRATEGY_NAME)
+            ->setApiCode(AvailabilityNotificationsRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED);
     }
 
     /**

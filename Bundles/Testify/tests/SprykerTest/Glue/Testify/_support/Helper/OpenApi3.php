@@ -140,11 +140,11 @@ EOF;
      */
     protected function findPathDefinition(OpenApi $schema, string $url): PathItem
     {
-        $urlWithoutQuery = rtrim(strtok($url, '?'), '/');
+        $urlWithoutQuery = rtrim(strtok(parse_url($url, PHP_URL_PATH), '?'), '/');
 
         foreach ($schema->paths as $path => $pathDefinition) {
             // TODO preg_quote, but it brakes the expression
-            $pathTemplate = '#^.*' . preg_replace('/\{[^\}]+\}/m', '[^/]*', $path) . '((\?.*)|)$#';
+            $pathTemplate = '#^' . preg_replace('/\{[^\}]+\}/m', '[^/]*', $path) . '((\?.*)|)$#';
 
             if (preg_match($pathTemplate, $urlWithoutQuery)) {
                 return $pathDefinition;
