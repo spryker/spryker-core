@@ -16,6 +16,7 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
+use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitException\CompanyBusinessUnitNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -35,6 +36,8 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
     /**
      * @param int $idCompanyBusinessUnit
      *
+     * @throws \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitException\CompanyBusinessUnitNotFoundException
+     *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
      */
     public function getCompanyBusinessUnitById(
@@ -43,6 +46,14 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
         $query = $this->getSpyCompanyBusinessUnitQuery()
             ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit);
         $entityTransfer = $this->buildQueryFromCriteria($query)->findOne();
+        if ($entityTransfer === null) {
+            throw new CompanyBusinessUnitNotFoundException(
+                sprintf(
+                    'Company business unit with ID `%d` not found.',
+                    $idCompanyBusinessUnit
+                )
+            );
+        }
 
         return $this->getFactory()
             ->createCompanyBusinessUnitMapper()
