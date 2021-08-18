@@ -756,9 +756,11 @@ class StateMachineFacadeTest extends Unit
         $stateNames = $stateMachineFacade->getProcessStateNames($stateMachineProcessTransfer);
 
         // Assert
-        $this->assertSame('completed', array_pop($stateNames));
-        $this->assertSame('state with condition', array_pop($stateNames));
         $this->assertSame('new', array_shift($stateNames));
+        $this->assertSame('invoice created', array_shift($stateNames));
+        $this->assertSame('invoice sent', array_shift($stateNames));
+        $this->assertSame('Foo 1 - done', array_pop($stateNames));
+        $this->assertSame('Foo 1 - sub process state 2', array_pop($stateNames));
     }
 
     /**

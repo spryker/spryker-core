@@ -273,7 +273,7 @@ interface StateMachineFacadeInterface
 
     /**
      * Specification:
-     * - Returns array of state names by provided process.
+     * - Returns array of state names of a process and its subprocesses by provided StateMachineProcess transfer.
      *
      * @api
      *

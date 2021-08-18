@@ -293,7 +293,14 @@ class Finder implements FinderInterface
      */
     public function getProcessStates(StateMachineProcessTransfer $stateMachineProcessTransfer): array
     {
-        $states = $this->builder->createProcess($stateMachineProcessTransfer)->getStates();
+        $mainProcess = $this->builder->createProcess($stateMachineProcessTransfer);
+        $states = $mainProcess->getStates();
+        $subProcesses = $mainProcess->getSubProcesses();
+
+        foreach ($subProcesses as $subProcess) {
+            $states = array_merge($states, $subProcess->getStates());
+        }
+
         $statesNames = array_map(function (StateInterface $state) {
             return $state->getName();
         }, $states);
