@@ -95,9 +95,13 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
             (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds)
         );
 
-        return $this->renderView('@SalesMerchantPortalGui/Partials/order_items_list.twig', [
-            'orderItems' => $itemCollectionTransfer->getItems(),
-        ]);
+        $responseData = [
+            'html' => $this->renderView('@SalesMerchantPortalGui/Partials/order_items_list.twig', [
+                'orderItems' => $itemCollectionTransfer->getItems(),
+            ])->getContent(),
+        ];
+
+        return new JsonResponse($responseData);
     }
 
     /**
