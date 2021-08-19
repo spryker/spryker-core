@@ -8,13 +8,13 @@
         {% block merchantLayoutMain %}
             <web-mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
                 {% block logo %}
-                    <web-spy-logo logo></web-spy-logo>
+                    <web-spy-logo cloak logo></web-spy-logo>
                 {% endblock %}
 
                 {% block header %}
-                    <web-mp-header header>
+                    <web-mp-header cloak header>
                         {% block headerMenu %}
-                            <web-mp-header-menu menu>
+                            <web-mp-header-menu cloak menu>
                                 {% block infoPrimary %}
                                     {% if username is not empty %}
                                         <span info-primary>{{ username }}</span>
@@ -33,6 +33,7 @@
                                             <a href="{{ userMenuNavigationItem.uri }}">
                                                 {% block userMenuLinkInner %}
                                                     <web-spy-user-menu-link
+                                                        cloak
                                                         {% if userMenuNavigationItem.type is not empty %}type="{{ userMenuNavigationItem.type }}"{% endif %}>
                                                         {{ userMenuNavigationItem.title }}
                                                     </web-spy-user-menu-link>
@@ -44,7 +45,7 @@
                                     {% block logoutLink %}
                                         <a href="/security-merchant-portal-gui/logout">
                                             {% block logoutLinkInner %}
-                                                <web-spy-user-menu-link type="danger">
+                                                <web-spy-user-menu-link cloak type="danger">
                                                     {{ 'Logout' | trans }}
                                                 </web-spy-user-menu-link>
                                             {% endblock %}
