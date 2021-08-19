@@ -66,25 +66,6 @@ class ProductReviewClientTester extends Actor
     }
 
     /**
-     * @return array
-     */
-    public function expectedResultData(): array
-    {
-        return [
-            1 => [
-                'averageRating' => 4.3,
-            ],
-            2 => [
-                'averageRating' => 1.9,
-            ],
-            3 => [
-                'averageRating' => 4.4,
-            ],
-
-        ];
-    }
-
-    /**
      * @param int $id
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer

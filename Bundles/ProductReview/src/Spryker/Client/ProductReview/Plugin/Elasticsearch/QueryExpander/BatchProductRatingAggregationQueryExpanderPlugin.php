@@ -39,9 +39,9 @@ class BatchProductRatingAggregationQueryExpanderPlugin extends AbstractPlugin im
      */
     protected function addProductRatingAggregation(QueryInterface $searchQuery): QueryInterface
     {
-        $prodcutAggregation = $this->getFactory()->createBatchRatingAggregation()->createAggregation();
+        $productAggregation = $this->getFactory()->createBatchRatingAggregation()->createAggregation();
 
-        $searchQuery->getSearchQuery()->addAggregation($prodcutAggregation);
+        $searchQuery->getSearchQuery()->addAggregation($productAggregation);
 
         return $searchQuery;
     }

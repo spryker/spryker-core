@@ -101,11 +101,11 @@ class ProductViewExpander implements ProductViewExpanderInterface
                 continue;
             }
 
-            $productReviewSummaryTransfer = $this->productReviewSummaryCalculator->calculate(
-                $this->createRatingAggregationTransfer($productReviews)
-            );
-
             if (isset($productViewTransfers[$productId])) {
+                $productReviewSummaryTransfer = $this->productReviewSummaryCalculator->calculate(
+                    $this->createRatingAggregationTransfer($productReviews)
+                );
+
                 $productViewTransfers[$productId]->setRating($productReviewSummaryTransfer);
             }
         }

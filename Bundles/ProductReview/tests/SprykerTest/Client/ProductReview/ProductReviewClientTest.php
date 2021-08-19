@@ -38,13 +38,13 @@ class ProductReviewClientTest extends Unit
         $productViews = $this->tester->createProductViews();
 
         // Act
-        $prductViewsExpended = $this->tester->getClient()
+        $productViewsExpended = $this->tester->getClient()
             ->expandProductViewBatchWithProductReviewData($productViews, $this->tester->createBulkProductReviewSearchRequestTransfer());
 
         // Assert
-        foreach ($this->tester->expectedResultData() as $productId => $testData) {
-            $this->assertEquals($prductViewsExpended[$productId]->getIdProductAbstract(), $productId);
-            $this->assertEquals($prductViewsExpended[$productId]->getRating()->getAverageRating(), $testData['averageRating']);
+        foreach ($this->getExpectedAverageRating() as $productId => $testData) {
+            $this->assertEquals($productViewsExpended[$productId]->getIdProductAbstract(), $productId);
+            $this->assertEquals($productViewsExpended[$productId]->getRating()->getAverageRating(), $testData['averageRating']);
         }
     }
 
@@ -57,7 +57,7 @@ class ProductReviewClientTest extends Unit
     {
         $contentToStorageBridge = $this->getMockBuilder(ProductReviewToSearchInterface::class)->getMock();
         $contentToStorageBridge->method('search')->willReturn($returnedContent);
-        $contentToStorageBridge->method('expandQuery')->willReturn($this->cerateQueryMock());
+        $contentToStorageBridge->method('expandQuery')->willReturn($this->createQueryMock());
 
         $this->tester->setDependency(ProductReviewDependencyProvider::CLIENT_SEARCH, $contentToStorageBridge);
     }
@@ -65,8 +65,26 @@ class ProductReviewClientTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
-    protected function cerateQueryMock(): QueryInterface
+    protected function createQueryMock(): QueryInterface
     {
         return $this->createMock(QueryInterface::class);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getExpectedAverageRating(): array
+    {
+        return [
+            1 => [
+                'averageRating' => 4.3,
+            ],
+            2 => [
+                'averageRating' => 1.9,
+            ],
+            3 => [
+                'averageRating' => 4.4,
+            ],
+        ];
     }
 }
