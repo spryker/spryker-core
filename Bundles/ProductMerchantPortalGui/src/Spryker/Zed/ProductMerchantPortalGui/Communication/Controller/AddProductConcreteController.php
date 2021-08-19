@@ -172,7 +172,7 @@ class AddProductConcreteController extends AbstractController
             return new JsonResponse($responseData);
         }
 
-        $responseData = $this->addErrorResponseDataToResponse($responseData, $addProductConcreteForm);
+        $responseData = $this->addErrorResponseDataToResponse($responseData);
 
         return new JsonResponse($responseData);
     }
@@ -239,43 +239,43 @@ class AddProductConcreteController extends AbstractController
         array $responseData,
         ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
     ): array {
-        $responseData[static::RESPONSE_KEY_POST_ACTIONS] = [
-            [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_CLOSE_OVERLAY,
-            ],
-            [
-                static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_REFRESH_TABLE,
-            ],
-        ];
-
         $productsNumber = $productConcreteCollectionTransfer->getProducts()->count();
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS] = [[
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_SUCCESS,
-            static::RESPONSE_KEY_MESSAGE => sprintf(
-                $productsNumber === 1 ? static::RESPONSE_MESSAGE_SUCCESS_PRODUCT_SAVED : static::RESPONSE_MESSAGE_SUCCESS_PRODUCTS_SAVED,
-                $productsNumber
-            ),
-        ]];
+        $messageTemplate = $productsNumber === 1 ?
+            static::RESPONSE_MESSAGE_SUCCESS_PRODUCT_SAVED :
+            static::RESPONSE_MESSAGE_SUCCESS_PRODUCTS_SAVED;
 
-        return $responseData;
+        $message = sprintf(
+            $this->getFactory()->getTranslatorFacade()->trans($messageTemplate),
+            $productsNumber
+        );
+
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addActionCloseDrawer()
+            ->addActionRefreshTable()
+            ->addSuccessNotification($message)
+            ->createResponse();
+
+        return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
-     *
      * @param mixed[] $responseData
-     * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
      *
      * @return mixed[]
      */
-    protected function addErrorResponseDataToResponse(array $responseData, FormInterface $addProductConcreteForm): array
+    protected function addErrorResponseDataToResponse(array $responseData): array
     {
-        $responseData[static::RESPONSE_KEY_NOTIFICATIONS][] = [
-            static::RESPONSE_KEY_TYPE => static::RESPONSE_TYPE_ERROR,
-            static::RESPONSE_KEY_MESSAGE => static::RESPONSE_MESSAGE_ERROR,
-        ];
+        $message = $this->getFactory()->getTranslatorFacade()->trans(static::RESPONSE_MESSAGE_ERROR);
 
-        return $responseData;
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addErrorNotification($message)
+            ->createResponse();
+
+        return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
     }
 
     /**
