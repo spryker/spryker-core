@@ -7,21 +7,26 @@
         "php": ">=7.3",
         "spryker/application-extension": "^1.0.0",
         "spryker/config": "^3.0.0",
+        "spryker/error-handler-extension": "^1.0.0",
+        "spryker/event-dispatcher-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.0.0",
         "spryker/monitoring": "^1.0.0 || ^2.0.0",
+        "spryker/symfony": "^3.5.0",
         "spryker/util-sanitize": "^2.3.0"
     },
     "require-dev": {
         "filp/whoops": "^2.1",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/event-dispatcher": "*",
         "spryker/silex": "*",
         "spryker/testify": "*"
     },
     "suggest": {
         "filp/whoops": "When you want to use the ErrorHandler plugins.",
         "spryker/container": "If you want to use Container.",
+        "spryker/event-dispatcher": "Use this module when you want to use the ErrorPageEventDispatcherPlugin.",
         "spryker/silex": "If you want to use ServiceProvider."
     },
     "autoload": {

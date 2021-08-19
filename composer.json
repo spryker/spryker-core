@@ -296,6 +296,7 @@
         "spryker/entity-tag": "*",
         "spryker/entity-tags-rest-api": "*",
         "spryker/error-handler": "*",
+        "spryker/error-handler-extension": "*",
         "spryker/event": "*",
         "spryker/event-dispatcher": "*",
         "spryker/event-dispatcher-extension": "*",

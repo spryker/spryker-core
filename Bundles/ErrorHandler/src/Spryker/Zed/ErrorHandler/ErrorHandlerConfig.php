@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ErrorHandler;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Shared\ErrorHandler\ErrorHandlerConfig getSharedConfig()
@@ -62,5 +63,17 @@ class ErrorHandlerConfig extends AbstractBundleConfig
     public function isAjaxRequiredByIde(): bool
     {
         return $this->getSharedConfig()->isAjaxRequiredByIde();
+    }
+
+    /**
+     * @api
+     *
+     * @return int[]
+     */
+    public function getValidSubRequestExceptionStatusCodes(): array
+    {
+        return [
+            Response::HTTP_NOT_FOUND,
+        ];
     }
 }

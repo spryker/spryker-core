@@ -17,6 +17,7 @@ use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
 /**
+ * @method \Spryker\Zed\ErrorHandler\Communication\ErrorHandlerCommunicationFactory getFactory()
  * @method \Spryker\Zed\ErrorHandler\ErrorHandlerConfig getConfig()
  */
 class ErrorHandlerApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
