@@ -102,6 +102,10 @@ class UpdateProductOfferController extends AbstractProductOfferController
             ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 
         if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
+            $validationResponseTransfer = $this->getFactory()
+                ->createValidationResponseTranslator()
+                ->translateValidationResponse($validationResponseTransfer);
+
             $initialData = $this->getFactory()
                 ->createPriceProductOfferMapper()
                 ->mapValidationResponseTransferToInitialDataErrors(
@@ -214,7 +218,9 @@ class UpdateProductOfferController extends AbstractProductOfferController
         $zedUiFormResponseTransfer = $this->getFactory()
             ->getZedUiFactory()
             ->createZedUiFormResponseBuilder()
-            ->addSuccessNotification(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+            ->addSuccessNotification(
+                $this->getFactory()->getTranslatorFacade()->trans(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
+            )
             ->addActionCloseDrawer()
             ->addActionRefreshTable()
             ->createResponse();

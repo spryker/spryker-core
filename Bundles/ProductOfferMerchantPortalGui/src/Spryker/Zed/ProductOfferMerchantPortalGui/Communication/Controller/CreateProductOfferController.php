@@ -71,6 +71,10 @@ class CreateProductOfferController extends AbstractProductOfferController
             ->validatePriceProductOfferCollection($priceProductOfferCollectionTransfer);
 
         if (!$productOfferForm->isValid() || !$validationResponseTransfer->getIsSuccess()) {
+            $validationResponseTransfer = $this->getFactory()
+                ->createValidationResponseTranslator()
+                ->translateValidationResponse($validationResponseTransfer);
+
             $initialData = $this->getFactory()
                 ->createPriceProductOfferMapper()
                 ->mapValidationResponseTransferToInitialDataErrors(

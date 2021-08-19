@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapterInterface;
+use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToTranslatorFacadeInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
 class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
@@ -40,21 +41,29 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
     protected $priceProductOfferValidatorPlugins;
 
     /**
+     * @var \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @param \Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferConstraintProviderInterface $priceProductOfferConstraintProvider
      * @param \Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductConstraintProviderInterface $priceProductConstraintProvider
      * @param \Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapterInterface $validationAdapter
      * @param \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferValidatorPluginInterface[] $priceProductOfferValidatorPlugins
+     * @param \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
         PriceProductOfferConstraintProviderInterface $priceProductOfferConstraintProvider,
         PriceProductConstraintProviderInterface $priceProductConstraintProvider,
         PriceProductOfferToValidationAdapterInterface $validationAdapter,
-        array $priceProductOfferValidatorPlugins
+        array $priceProductOfferValidatorPlugins,
+        PriceProductOfferToTranslatorFacadeInterface $translatorFacade
     ) {
         $this->priceProductOfferConstraintProvider = $priceProductOfferConstraintProvider;
         $this->priceProductConstraintProvider = $priceProductConstraintProvider;
         $this->validator = $validationAdapter->createValidator();
         $this->priceProductOfferValidatorPlugins = $priceProductOfferValidatorPlugins;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -156,7 +165,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
     protected function mapConstraintViolationToValidationErrorTransfer(
         ConstraintViolationInterface $constraintViolation
     ): ValidationErrorTransfer {
-        $message = $constraintViolation->getMessage();
+        $message = $this->translatorFacade->trans($constraintViolation->getMessage());
         $root = $constraintViolation->getRoot();
         if (is_array($root)) {
             $root = reset($root);

@@ -29,6 +29,7 @@ use Spryker\Zed\PriceProductOffer\Business\Writer\PriceProductOfferWriterInterfa
 use Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapterInterface;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFacadeInterface;
+use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToTranslatorFacadeInterface;
 use Spryker\Zed\PriceProductOffer\PriceProductOfferDependencyProvider;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
@@ -78,7 +79,8 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductOfferConstraintProvider(),
             $this->createPriceProductConstraintProvider(),
             $this->getValidationAdapter(),
-            $this->getPriceProductOfferValidatorPlugins()
+            $this->getPriceProductOfferValidatorPlugins(),
+            $this->getTranslatorFacade()
         );
     }
 
@@ -198,5 +200,13 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductOfferValidatorPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductOfferDependencyProvider::PLUGINS_PRICE_PRODUCT_OFFER_VALIDATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): PriceProductOfferToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductOfferDependencyProvider::FACADE_TRANSLATOR);
     }
 }

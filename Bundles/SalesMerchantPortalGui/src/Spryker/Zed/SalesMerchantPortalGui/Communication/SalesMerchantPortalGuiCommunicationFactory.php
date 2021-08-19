@@ -60,6 +60,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getMerchantOmsFacade(),
             $this->getMerchantUserFacade(),
             $this->getGuiTableFactory(),
+            $this->getTranslatorFacade(),
             $this->getMerchantOrderItemTableExpanderPlugins()
         );
     }
