@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AclEntitySegmentRequestTransfer;
 use Generated\Shared\Transfer\AclEntitySegmentResponseTransfer;
 use Propel\Runtime\ActiveQuery\PropelQuery;
 use Spryker\Service\AclEntity\AclEntityServiceInterface;
+use Spryker\Zed\AclEntity\Business\Validator\AclEntitySegmentConnectorValidatorInterface;
 use Spryker\Zed\AclEntity\Persistence\AclEntityEntityManagerInterface;
 
 class AclEntitySegmentWriter implements AclEntitySegmentWriterInterface
@@ -26,15 +27,23 @@ class AclEntitySegmentWriter implements AclEntitySegmentWriterInterface
     protected $aclEntityService;
 
     /**
+     * @var \Spryker\Zed\AclEntity\Business\Validator\AclEntitySegmentConnectorValidatorInterface
+     */
+    protected $aclEntitySegmentConnectorValidator;
+
+    /**
      * @param \Spryker\Zed\AclEntity\Persistence\AclEntityEntityManagerInterface $aclEntityEntityManager
      * @param \Spryker\Service\AclEntity\AclEntityServiceInterface $aclEntityService
+     * @param \Spryker\Zed\AclEntity\Business\Validator\AclEntitySegmentConnectorValidatorInterface $aclEntitySegmentConnectorValidator
      */
     public function __construct(
         AclEntityEntityManagerInterface $aclEntityEntityManager,
-        AclEntityServiceInterface $aclEntityService
+        AclEntityServiceInterface $aclEntityService,
+        AclEntitySegmentConnectorValidatorInterface $aclEntitySegmentConnectorValidator
     ) {
         $this->aclEntityEntityManager = $aclEntityEntityManager;
         $this->aclEntityService = $aclEntityService;
+        $this->aclEntitySegmentConnectorValidator = $aclEntitySegmentConnectorValidator;
     }
 
     /**
@@ -46,6 +55,7 @@ class AclEntitySegmentWriter implements AclEntitySegmentWriterInterface
     {
         /** @var string $entity */
         $entity = $aclEntitySegmentRequestTransfer->getEntity();
+        $this->aclEntitySegmentConnectorValidator->validate($entity);
         $referenceColumnName = $this->aclEntityService->generateSegmentConnectorReferenceColumnName(
             PropelQuery::from($entity)->getTableMap()->getName()
         );

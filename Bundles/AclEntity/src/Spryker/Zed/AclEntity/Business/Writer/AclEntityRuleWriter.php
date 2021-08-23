@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\AclEntityRuleRequestTransfer;
 use Generated\Shared\Transfer\AclEntityRuleResponseTransfer;
 use Generated\Shared\Transfer\AclEntityRuleTransfer;
+use Spryker\Zed\AclEntity\Business\Validator\AclEntityRuleValidatorInterface;
 use Spryker\Zed\AclEntity\Persistence\AclEntityEntityManagerInterface;
 
 class AclEntityRuleWriter implements AclEntityRuleWriterInterface
@@ -21,11 +22,20 @@ class AclEntityRuleWriter implements AclEntityRuleWriterInterface
     protected $aclEntityEntityManager;
 
     /**
-     * @param \Spryker\Zed\AclEntity\Persistence\AclEntityEntityManagerInterface $aclEntityEntityManager
+     * @var \Spryker\Zed\AclEntity\Business\Validator\AclEntityRuleValidatorInterface
      */
-    public function __construct(AclEntityEntityManagerInterface $aclEntityEntityManager)
-    {
+    protected $aclEntityRuleValidator;
+
+    /**
+     * @param \Spryker\Zed\AclEntity\Persistence\AclEntityEntityManagerInterface $aclEntityEntityManager
+     * @param \Spryker\Zed\AclEntity\Business\Validator\AclEntityRuleValidatorInterface $aclEntityRuleValidator
+     */
+    public function __construct(
+        AclEntityEntityManagerInterface $aclEntityEntityManager,
+        AclEntityRuleValidatorInterface $aclEntityRuleValidator
+    ) {
         $this->aclEntityEntityManager = $aclEntityEntityManager;
+        $this->aclEntityRuleValidator = $aclEntityRuleValidator;
     }
 
     /**
@@ -35,6 +45,8 @@ class AclEntityRuleWriter implements AclEntityRuleWriterInterface
      */
     public function create(AclEntityRuleRequestTransfer $aclEntityRuleRequestTransfer): AclEntityRuleResponseTransfer
     {
+        $aclEntityRuleTransfer = $this->getAclEntityRuleTransfer($aclEntityRuleRequestTransfer);
+        $this->aclEntityRuleValidator->validate($aclEntityRuleTransfer);
         $aclEntityRuleTransfer = $this->aclEntityEntityManager->createAclEntityRule($aclEntityRuleRequestTransfer);
 
         return (new AclEntityRuleResponseTransfer())
@@ -52,6 +64,7 @@ class AclEntityRuleWriter implements AclEntityRuleWriterInterface
     public function saveAclEntityRules(ArrayObject $aclEntityRuleTransfers): void
     {
         foreach ($aclEntityRuleTransfers as $aclEntityRuleTransfer) {
+            $this->aclEntityRuleValidator->validate($aclEntityRuleTransfer);
             $aclEntityRuleRequestTransfer = $this->getAclEntityRuleRequestTransfer($aclEntityRuleTransfer);
             $this->aclEntityEntityManager->createAclEntityRule($aclEntityRuleRequestTransfer);
         }
@@ -65,5 +78,15 @@ class AclEntityRuleWriter implements AclEntityRuleWriterInterface
     protected function getAclEntityRuleRequestTransfer(AclEntityRuleTransfer $aclEntityRuleTransfer): AclEntityRuleRequestTransfer
     {
         return (new AclEntityRuleRequestTransfer())->fromArray($aclEntityRuleTransfer->toArray());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityRuleRequestTransfer $aclEntityRuleRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntityRuleTransfer
+     */
+    protected function getAclEntityRuleTransfer(AclEntityRuleRequestTransfer $aclEntityRuleRequestTransfer): AclEntityRuleTransfer
+    {
+        return (new AclEntityRuleTransfer())->fromArray($aclEntityRuleRequestTransfer->toArray());
     }
 }

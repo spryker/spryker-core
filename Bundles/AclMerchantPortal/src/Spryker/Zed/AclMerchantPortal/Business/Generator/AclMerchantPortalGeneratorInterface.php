@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AclMerchantPortal\Business\Generator;
 
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface AclMerchantPortalGeneratorInterface
@@ -17,7 +18,42 @@ interface AclMerchantPortalGeneratorInterface
      *
      * @return string
      */
+    public function generateAclMerchantRoleName(MerchantTransfer $merchantTransfer): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return string
+     */
+    public function generateAclMerchantGroupName(MerchantTransfer $merchantTransfer): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return string
+     */
+    public function generateAclMerchantUserRoleName(MerchantUserTransfer $merchantUserTransfer): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return string
+     */
+    public function generateAclMerchantUserGroupName(MerchantUserTransfer $merchantUserTransfer): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return string
+     */
     public function generateAclMerchantReference(MerchantTransfer $merchantTransfer): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return string
+     */
+    public function generateAclMerchantSegmentName(MerchantTransfer $merchantTransfer): string;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer

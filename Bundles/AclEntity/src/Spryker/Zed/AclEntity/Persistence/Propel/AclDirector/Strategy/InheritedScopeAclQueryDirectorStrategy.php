@@ -15,6 +15,7 @@ use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Shared\AclEntity\AclEntityConstants;
 use Spryker\Zed\AclEntity\Persistence\Exception\FunctionalityNotSupportedException;
 use Spryker\Zed\AclEntity\Persistence\Filter\AclEntityRuleCollectionTransferFilterInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface;
 use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface;
 use Spryker\Zed\AclEntity\Persistence\Sorter\AclEntityRuleCollectionTransferSorterInterface;
@@ -52,11 +53,17 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
     protected $aclQueryDirectorStrategyContainer;
 
     /**
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface
+     */
+    protected $queryMerger;
+
+    /**
      * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
      * @param \Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface $aclEntityMetadataReader
      * @param \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface $relationResolver
      * @param \Spryker\Zed\AclEntity\Persistence\Filter\AclEntityRuleCollectionTransferFilterInterface $aclEntityRuleCollectionTransferFilter
      * @param \Spryker\Zed\AclEntity\Persistence\Sorter\AclEntityRuleCollectionTransferSorterInterface $aclEntityRuleCollectionTransferSorter
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface $queryMerger
      * @param \Closure[] $aclQueryDirectorStrategyContainer
      */
     public function __construct(
@@ -65,6 +72,7 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
         RelationResolverInterface $relationResolver,
         AclEntityRuleCollectionTransferFilterInterface $aclEntityRuleCollectionTransferFilter,
         AclEntityRuleCollectionTransferSorterInterface $aclEntityRuleCollectionTransferSorter,
+        AclEntityQueryMergerInterface $queryMerger,
         array $aclQueryDirectorStrategyContainer
     ) {
         $this->aclEntityRuleCollectionTransfer = $aclEntityRuleCollectionTransferSorter->sortByScopePriority(
@@ -75,6 +83,7 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
         $this->aclEntityRuleCollectionTransferFilter = $aclEntityRuleCollectionTransferFilter;
         $this->aclEntityRuleCollectionTransferSorter = $aclEntityRuleCollectionTransferSorter;
         $this->aclQueryDirectorStrategyContainer = $aclQueryDirectorStrategyContainer;
+        $this->queryMerger = $queryMerger;
     }
 
     /**
@@ -237,7 +246,8 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
         /** @var \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer */
         foreach ($parentAclEntityRules as $parentClass => $aclEntityRuleCollectionTransfer) {
             $segmentScopeStrategy = $this->getSegmentScopeAclQueryDirectorStrategy($aclEntityRuleCollectionTransfer);
-            $query->mergeWith(
+            $query = $this->queryMerger->mergeQueries(
+                $query,
                 $segmentScopeStrategy->applyAclRuleOnSelectQuery(PropelQuery::from($parentClass))
             );
         }
@@ -262,7 +272,8 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
 
         $strategy = $this->getAclQueryDirectorStrategyByAclEntityMetadataTransfer($aclEntityMetadataTransfer);
 
-        return $query->mergeWith(
+        return $this->queryMerger->mergeQueries(
+            $query,
             $strategy->applyAclRuleOnUpdateQuery(
                 PropelQuery::from($aclEntityMetadataTransfer->getEntityNameOrFail())
             )

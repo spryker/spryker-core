@@ -188,7 +188,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
                 ->leftJoinStateMachineItemState()
             ->endUse()
             ->addAsColumn(MerchantOrderTransfer::ID_MERCHANT_ORDER, SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER)
-            ->addAsColumn(MerchantOrderTransfer::MERCHANT_ORDER_ITEM_COUNT, sprintf('COUNT(%s)', SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM))
+            ->addAsColumn(MerchantOrderTransfer::MERCHANT_ORDER_ITEM_COUNT, sprintf('COUNT(DISTINCT %s)', SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM))
             ->addAsColumn(OrderTransfer::ORDER_REFERENCE, SpySalesOrderTableMap::COL_ORDER_REFERENCE)
             ->addAsColumn(MerchantOrderTransfer::MERCHANT_ORDER_REFERENCE, SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE)
             ->addAsColumn(MerchantOrderTransfer::CREATED_AT, SpyMerchantSalesOrderTableMap::COL_CREATED_AT)

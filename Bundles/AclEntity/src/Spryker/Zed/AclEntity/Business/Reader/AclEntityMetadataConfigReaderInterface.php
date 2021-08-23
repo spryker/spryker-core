@@ -12,7 +12,9 @@ use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 interface AclEntityMetadataConfigReaderInterface
 {
     /**
+     * @param bool $runValidation
+     *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    public function getAclEntityMetadataConfig(): AclEntityMetadataConfigTransfer;
+    public function getAclEntityMetadataConfig(bool $runValidation): AclEntityMetadataConfigTransfer;
 }

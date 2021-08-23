@@ -9,6 +9,7 @@ namespace Spryker\Zed\AclEntity\Business\Reader;
 
 use Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
+use Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface;
 
 class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInterface
 {
@@ -18,17 +19,28 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
     protected $aclEntityMetadataCollectionExpandPlugins;
 
     /**
-     * @param \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface[] $aclEntityMetadataCollectionExpandPlugins
+     * @var \Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface
      */
-    public function __construct(array $aclEntityMetadataCollectionExpandPlugins)
-    {
+    protected $aclEntityMetadataConfigValidator;
+
+    /**
+     * @param \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface[] $aclEntityMetadataCollectionExpandPlugins
+     * @param \Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface $aclEntityMetadataConfigValidator
+     */
+    public function __construct(
+        array $aclEntityMetadataCollectionExpandPlugins,
+        AclEntityMetadataConfigValidatorInterface $aclEntityMetadataConfigValidator
+    ) {
         $this->aclEntityMetadataCollectionExpandPlugins = $aclEntityMetadataCollectionExpandPlugins;
+        $this->aclEntityMetadataConfigValidator = $aclEntityMetadataConfigValidator;
     }
 
     /**
+     * @param bool $runValidation
+     *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    public function getAclEntityMetadataConfig(): AclEntityMetadataConfigTransfer
+    public function getAclEntityMetadataConfig(bool $runValidation): AclEntityMetadataConfigTransfer
     {
         $aclEntityMetadataConfigTransfer = new AclEntityMetadataConfigTransfer();
         $aclEntityMetadataConfigTransfer->setAclEntityMetadataCollection(new AclEntityMetadataCollectionTransfer());
@@ -36,6 +48,9 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
             $aclEntityMetadataConfigTransfer = $aclEntityMetadataCollectionExpanderPlugin->expand(
                 $aclEntityMetadataConfigTransfer
             );
+        }
+        if ($runValidation) {
+            $this->aclEntityMetadataConfigValidator->validate($aclEntityMetadataConfigTransfer);
         }
 
         return $aclEntityMetadataConfigTransfer;

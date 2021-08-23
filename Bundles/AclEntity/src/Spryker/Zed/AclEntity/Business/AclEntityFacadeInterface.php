@@ -48,9 +48,11 @@ interface AclEntityFacadeInterface
      *
      * @api
      *
+     * @param bool $runValidation
+     *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    public function getAclEntityMetadataConfig(): AclEntityMetadataConfigTransfer;
+    public function getAclEntityMetadataConfig(bool $runValidation = true): AclEntityMetadataConfigTransfer;
 
     /**
      * Specification:

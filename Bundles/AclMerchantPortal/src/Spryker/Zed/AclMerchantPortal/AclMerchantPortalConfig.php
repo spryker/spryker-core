@@ -11,23 +11,32 @@ use Generated\Shared\Transfer\AclEntityRuleTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservation;
+use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
+use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservation;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceType;
+use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductImage\Persistence\SpyProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore;
+use Orm\Zed\Refund\Persistence\SpyRefund;
+use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Orm\Zed\Store\Persistence\SpyStore;
+use Orm\Zed\Url\Persistence\SpyUrlRedirect;
 use Orm\Zed\User\Persistence\SpyUser;
 use Spryker\Shared\AclEntity\AclEntityConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
@@ -44,6 +53,9 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      */
     protected const RULE_TYPE_ALLOW = 'allow';
     protected const MERCHANT_ACL_REFERENCE_PREFIX = '__MERCHANT_';
+
+    protected const ACL_ROLE_PRODUCT_VIEWER_NAME = 'Product Viewer for Offer creation';
+    protected const ACL_ROLE_PRODUCT_VIEWER_REFERENCE = 'product-viewer-for-offer-creation';
 
     /**
      * Specification:
@@ -96,11 +108,6 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
 
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
             ->setEntity(SpyProductAbstract::class)
-            ->setScope(AclEntityConstants::SCOPE_GLOBAL)
-            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ);
-
-        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
-            ->setEntity(SpyProductAbstract::class)
             ->setScope(AclEntityConstants::SCOPE_INHERITED)
             ->setPermissionMask(AclEntityConstants::OPERATION_MASK_CRUD);
 
@@ -147,12 +154,19 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
             ->setEntity(SpySalesOrder::class)
             ->setScope(AclEntityConstants::SCOPE_INHERITED)
-            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ);
+            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE);
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity(SpySalesOrderTotals::class)
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE
+            );
 
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
             ->setEntity(SpySalesOrderItem::class)
             ->setScope(AclEntityConstants::SCOPE_INHERITED)
-            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ);
+            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE);
 
         $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
             ->setEntity(SpyPriceProduct::class)
@@ -188,6 +202,51 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
             ->setEntity(SpyProductOfferStore::class)
             ->setScope(AclEntityConstants::SCOPE_INHERITED)
             ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_UPDATE);
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity(SpyOmsProductOfferReservation::class)
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE);
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity(SpyOmsProductReservation::class)
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE);
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity(SpyOmsTransitionLog::class)
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity(SpyUrlRedirect::class)
+            ->setScope(AclEntityConstants::SCOPE_GLOBAL)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_DELETE
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity(SpySalesExpense::class)
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_UPDATE
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity(SpyRefund::class)
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ | AclEntityConstants::OPERATION_MASK_CREATE
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity(SpyCustomer::class)
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ
+            );
 
         return $aclEntityRuleTransfers;
     }
@@ -266,5 +325,71 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
     public function getMerchantUserAclReferencePrefix(): string
     {
         return '__MERCHANT_USER_';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getProductViewerForOfferCreationAclRoleName(): string
+    {
+        return static::ACL_ROLE_PRODUCT_VIEWER_NAME;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getProductViewerForOfferCreationAclRoleReference(): string
+    {
+        return static::ACL_ROLE_PRODUCT_VIEWER_REFERENCE;
+    }
+
+    /**
+     * Specification:
+     * - Defines set of AclEntityRules to assign for ProductViewerForOfferCreation.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\AclEntityRuleTransfer[];
+     */
+    public function getProductViewerForOfferCreationAclRoleEntityRules(): array
+    {
+        $aclEntityRuleTransfers = [];
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity(SpyProductAbstract::class)
+            ->setScope(AclEntityConstants::SCOPE_GLOBAL)
+            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ);
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity(SpyProduct::class)
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_READ);
+
+        return $aclEntityRuleTransfers;
+    }
+
+    /**
+     * Specification:
+     * - Defines set of AclRules to assign for ProductViewerForOfferCreation.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\RuleTransfer[];
+     */
+    public function getProductViewerForOfferCreationAclRoleRules(): array
+    {
+        $ruleTransfers = [];
+
+        $ruleTransfers[] = (new RuleTransfer())
+            ->setBundle('product-offer-merchant-portal-gui')
+            ->setController('product-list')
+            ->setAction(static::RULE_VALIDATOR_WILDCARD)
+            ->setType(static::RULE_TYPE_ALLOW);
+
+        return $ruleTransfers;
     }
 }

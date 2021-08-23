@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AclEntity\Persistence;
 
 use Generated\Shared\Transfer\AclEntityRuleCollectionTransfer;
+use Generated\Shared\Transfer\AclEntityRuleCriteriaTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 
 interface AclEntityRepositoryInterface
@@ -18,4 +19,11 @@ interface AclEntityRepositoryInterface
      * @return \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer
      */
     public function getAclEntityRulesByRoles(RolesTransfer $rolesTransfer): AclEntityRuleCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityRuleCriteriaTransfer $aclEntityRuleCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer
+     */
+    public function getAclEntityRules(AclEntityRuleCriteriaTransfer $aclEntityRuleCriteriaTransfer): AclEntityRuleCollectionTransfer;
 }

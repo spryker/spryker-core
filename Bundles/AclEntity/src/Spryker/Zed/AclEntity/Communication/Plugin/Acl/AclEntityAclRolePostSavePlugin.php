@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\AclEntity\Business\AclEntityFacadeInterface getFacade()
+ * @method \Spryker\Zed\AclEntity\Communication\AclEntityCommunicationFactory getFactory()
  * @method \Spryker\Zed\AclEntity\AclEntityConfig getConfig()
  */
 class AclEntityAclRolePostSavePlugin extends AbstractPlugin implements AclRolePostSavePluginInterface
@@ -29,7 +30,10 @@ class AclEntityAclRolePostSavePlugin extends AbstractPlugin implements AclRolePo
      */
     public function postSave(RoleTransfer $roleTransfer): RoleTransfer
     {
-        $this->getFacade()->saveAclEntityRules($roleTransfer->getAclEntityRules());
+        $aclEntityRuleTransfers = $this->getFactory()
+            ->createAclEntityMapper()
+            ->mapRoleTransferToAclEntityRuleTransfers($roleTransfer, $roleTransfer->getAclEntityRules());
+        $this->getFacade()->saveAclEntityRules($aclEntityRuleTransfers);
 
         return $roleTransfer;
     }

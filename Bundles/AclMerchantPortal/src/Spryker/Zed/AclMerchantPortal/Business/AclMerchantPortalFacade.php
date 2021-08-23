@@ -55,79 +55,24 @@ class AclMerchantPortalFacade extends AbstractFacade implements AclMerchantPorta
      *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    public function expandAclEntityMetadataConfigWithMerchantProductComposite(
+    public function expandAclEntityMetadataConfig(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer {
-        return $this->getFactory()
-            ->createAclEntityMetadataConfigExpander()
+        $aclEntityMetadataConfigExpander = $this->getFactory()->createAclEntityMetadataConfigExpander();
+
+        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
+            ->expandAclEntityMetadataConfigWithMerchantOrderComposite($aclEntityMetadataConfigTransfer);
+        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
             ->expandAclEntityMetadataConfigWithMerchantProductComposite($aclEntityMetadataConfigTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithMerchantComposite(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer {
-        return $this->getFactory()
-            ->createAclEntityMetadataConfigExpander()
+        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
             ->expandAclEntityMetadataConfigWithMerchantComposite($aclEntityMetadataConfigTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithProductOfferComposite(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer {
-        return $this->getFactory()
-            ->createAclEntityMetadataConfigExpander()
+        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
             ->expandAclEntityMetadataConfigWithProductOfferComposite($aclEntityMetadataConfigTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithMerchantReadGlobalEntities(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer {
-        return $this->getFactory()
-            ->createAclEntityMetadataConfigExpander()
+        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
             ->expandAclEntityMetadataConfigWithMerchantReadGlobalEntities($aclEntityMetadataConfigTransfer);
-    }
+        $aclEntityMetadataConfigTransfer = $aclEntityMetadataConfigExpander
+            ->expandAclEntityMetadataConfigWithAllowList($aclEntityMetadataConfigTransfer);
 
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithWhitelist(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer {
-        return $this->getFactory()
-            ->createAclEntityMetadataConfigExpander()
-            ->expandAclEntityMetadataConfigWithWhitelist($aclEntityMetadataConfigTransfer);
+        return $aclEntityMetadataConfigTransfer;
     }
 }

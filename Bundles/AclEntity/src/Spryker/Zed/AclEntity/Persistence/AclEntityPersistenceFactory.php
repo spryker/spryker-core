@@ -33,6 +33,8 @@ use Spryker\Zed\AclEntity\Persistence\Propel\Builder\ConnectorTableBuilder;
 use Spryker\Zed\AclEntity\Persistence\Propel\Builder\ConnectorTableBuilderInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Mapper\AclEntityRuleMapper;
 use Spryker\Zed\AclEntity\Persistence\Propel\Mapper\AclEntitySegmentMapper;
+use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMerger;
+use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolver;
 use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\Strategy\AbstractRelationResolverStrategy;
@@ -66,8 +68,17 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
             $this->createAclEntityMetadataReader($aclEntityMetadataCollectionTransfer),
             $this->createRelationResolver($aclEntityMetadataCollectionTransfer),
             $this->getUserFacade(),
-            $this->getAclFacade()
+            $this->getAclFacade(),
+            $this->createAclEntityQueryMerger()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface
+     */
+    public function createAclEntityQueryMerger(): AclEntityQueryMergerInterface
+    {
+        return new AclEntityQueryMerger();
     }
 
     /**
@@ -191,6 +202,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
             $this->createRelationResolver($aclEntityMetadataCollectionTransfer),
             $this->createAclEntityRuleCollectionTransferFilter(),
             $this->createAclEntityRuleCollectionTransferSorter(),
+            $this->createAclEntityQueryMerger(),
             $strategyContainer
         );
     }

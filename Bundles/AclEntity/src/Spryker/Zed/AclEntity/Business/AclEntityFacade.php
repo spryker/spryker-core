@@ -60,11 +60,13 @@ class AclEntityFacade extends AbstractFacade implements AclEntityFacadeInterface
      *
      * @api
      *
+     * @param bool $runValidation
+     *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    public function getAclEntityMetadataConfig(): AclEntityMetadataConfigTransfer
+    public function getAclEntityMetadataConfig(bool $runValidation = true): AclEntityMetadataConfigTransfer
     {
-        return $this->getFactory()->createAclEntityMetadataConfigReader()->getAclEntityMetadataConfig();
+        return $this->getFactory()->createAclEntityMetadataConfigReader()->getAclEntityMetadataConfig($runValidation);
     }
 
     /**

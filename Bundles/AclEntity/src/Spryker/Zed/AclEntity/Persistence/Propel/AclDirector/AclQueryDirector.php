@@ -23,6 +23,7 @@ use Spryker\Zed\AclEntity\Persistence\AclEntityRepositoryInterface;
 use Spryker\Zed\AclEntity\Persistence\Exception\FunctionalityNotSupportedException;
 use Spryker\Zed\AclEntity\Persistence\Exception\OperationNotAuthorizedException;
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolverInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface;
 use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface;
 
@@ -64,12 +65,18 @@ class AclQueryDirector implements AclQueryDirectorInterface
     protected $aclFacade;
 
     /**
+     * @var \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface
+     */
+    protected $queryMerger;
+
+    /**
      * @param \Spryker\Zed\AclEntity\Persistence\AclEntityRepositoryInterface $aclEntityRepository
      * @param \Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclDirectorStrategyResolverInterface $aclDirectorStrategyResolver
      * @param \Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface $aclEntityMetadataReader
      * @param \Spryker\Zed\AclEntity\Persistence\Propel\Resolver\RelationResolverInterface $relationResolver
      * @param \Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToUserFacadeBridgeInterface $userFacade
      * @param \Spryker\Zed\AclEntity\Dependency\Facade\AclEntityToAclFacadeBridgeInterface $aclFacade
+     * @param \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface $queryMerger
      */
     public function __construct(
         AclEntityRepositoryInterface $aclEntityRepository,
@@ -77,7 +84,8 @@ class AclQueryDirector implements AclQueryDirectorInterface
         AclEntityMetadataReaderInterface $aclEntityMetadataReader,
         RelationResolverInterface $relationResolver,
         AclEntityToUserFacadeBridgeInterface $userFacade,
-        AclEntityToAclFacadeBridgeInterface $aclFacade
+        AclEntityToAclFacadeBridgeInterface $aclFacade,
+        AclEntityQueryMergerInterface $queryMerger
     ) {
         $this->recursionCache = new ObjectCollection();
         $this->aclEntityRepository = $aclEntityRepository;
@@ -86,6 +94,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
         $this->relationResolver = $relationResolver;
         $this->userFacade = $userFacade;
         $this->aclFacade = $aclFacade;
+        $this->queryMerger = $queryMerger;
     }
 
     /**
@@ -497,7 +506,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
             AclEntityConstants::OPERATION_MASK_READ
         );
 
-        return $query->mergeWith($aclQueryDirectorStrategy->applyAclRuleOnSelectQuery($rootEntityQuery));
+        return $this->queryMerger->mergeQueries($query, $aclQueryDirectorStrategy->applyAclRuleOnSelectQuery($rootEntityQuery));
     }
 
     /**
@@ -575,7 +584,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
 
             $withQuery = $strategy->applyAclRuleOnSelectQuery($withQuery);
 
-            $query = $query->mergeWith($withQuery);
+            $query = $this->queryMerger->mergeQueries($query, $withQuery);
 
             $with[] = $relation;
         }

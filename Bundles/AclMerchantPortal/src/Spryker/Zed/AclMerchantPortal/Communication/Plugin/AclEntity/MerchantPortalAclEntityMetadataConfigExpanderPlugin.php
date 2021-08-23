@@ -24,6 +24,7 @@ class MerchantPortalAclEntityMetadataConfigExpanderPlugin extends AbstractPlugin
      * - Expands provided `AclEntityMetadataCollection` transfer object with merchant composite data.
      * - Expands provided `AclEntityMetadataCollection` transfer object with product offer composite data.
      * - Expands provided `AclEntityMetadataCollection` transfer object with merchant read global entities.
+     * - Expands provided `AclEntityMetadataCollection` transfer object with allow list entities.
      *
      * @api
      *
@@ -34,21 +35,6 @@ class MerchantPortalAclEntityMetadataConfigExpanderPlugin extends AbstractPlugin
     public function expand(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer {
-        $aclEntityMetadataConfigTransfer = $this->getFacade()
-            ->expandAclEntityMetadataConfigWithMerchantProductComposite($aclEntityMetadataConfigTransfer);
-
-        $aclEntityMetadataConfigTransfer = $this->getFacade()
-            ->expandAclEntityMetadataConfigWithMerchantComposite($aclEntityMetadataConfigTransfer);
-
-        $aclEntityMetadataConfigTransfer = $this->getFacade()
-            ->expandAclEntityMetadataConfigWithProductOfferComposite($aclEntityMetadataConfigTransfer);
-
-        $aclEntityMetadataConfigTransfer = $this->getFacade()
-            ->expandAclEntityMetadataConfigWithMerchantReadGlobalEntities($aclEntityMetadataConfigTransfer);
-
-        $aclEntityMetadataConfigTransfer = $this->getFacade()
-            ->expandAclEntityMetadataConfigWithWhitelist($aclEntityMetadataConfigTransfer);
-
-        return $aclEntityMetadataConfigTransfer;
+        return $this->getFacade()->expandAclEntityMetadataConfig($aclEntityMetadataConfigTransfer);
     }
 }

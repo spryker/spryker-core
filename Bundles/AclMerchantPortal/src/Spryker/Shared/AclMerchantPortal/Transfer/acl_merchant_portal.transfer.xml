@@ -99,7 +99,7 @@
 
     <transfer name="AclEntityMetadataConfig">
         <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
-        <property name="aclEntityWhitelist" type="string[]" singular="aclEntityWhitelistItem"/>
+        <property name="aclEntityAllowList" type="string[]" singular="aclEntityAllowListItem"/>
     </transfer>
 
     <transfer name="User">

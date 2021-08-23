@@ -10,13 +10,13 @@ namespace Spryker\Zed\AclEntityExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 
 /**
- * Implement this interface to expand AclEntityMetadataCollection.
+ * Implement this interface to expand `AclEntityMetadataCollection` transfer object.
  */
 interface AclEntityMetadataConfigExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands AclEntityMetadataConfig with additional data.
+     * - Expands `AclEntityMetadataConfig` transfer object with additional data.
      *
      * @api
      *

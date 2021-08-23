@@ -104,6 +104,7 @@ class AclBusinessFactory extends AbstractBusinessFactory
             $this->createRuleModel(),
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
             $this->createAclConfigReader(),
+            $this->createRoleWriter(),
             $this->getAclInstallerPlugins()
         );
     }
@@ -126,7 +127,8 @@ class AclBusinessFactory extends AbstractBusinessFactory
     {
         return new RoleWriter(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getAclRolePostSavePlugins()
         );
     }
 

@@ -14,7 +14,7 @@ interface AclEntityDisablerPluginInterface
 {
     /**
      * Specification:
-     * - Disables AclEntity behaviour.
+     * - Disables `AclEntity` behaviour.
      *
      * @api
      *

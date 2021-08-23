@@ -38,43 +38,20 @@ interface AclMerchantPortalFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
      */
-    public function createMerchantUserAclData(MerchantUserTransfer $merchantTransfer): MerchantUserTransfer;
+    public function createMerchantUserAclData(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer;
 
     /**
      * Specification:
+     * - Expands provided `AclEntityMetadataConfig` transfer object with merchant order composite data.
      * - Expands provided `AclEntityMetadataConfig` transfer object with merchant product composite data.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithMerchantProductComposite(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer;
-
-    /**
-     * Specification:
      * - Expands provided `AclEntityMetadataConfig` transfer object with merchant composite data.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithMerchantComposite(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer;
-
-    /**
-     * Specification:
      * - Expands provided `AclEntityMetadataConfig` transfer object with product offer composite data.
+     * - Expands provided `AclEntityMetadataConfig` transfer object with global read entities configuration.
+     * - Expands provided `AclEntityMetadataConfig` transfer object with allow list entities.
      *
      * @api
      *
@@ -82,35 +59,7 @@ interface AclMerchantPortalFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    public function expandAclEntityMetadataConfigWithProductOfferComposite(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer;
-
-    /**
-     * Specification:
-     * - Expands provided `AclEntityMetadataConfig` transfer object with merchant read global entities.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithMerchantReadGlobalEntities(
-        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-    ): AclEntityMetadataConfigTransfer;
-
-    /**
-     * Specification:
-     * - Expands provided `AclEntityMetadataConfig` transfer object with whitelisted classes.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
-     */
-    public function expandAclEntityMetadataConfigWithWhitelist(
+    public function expandAclEntityMetadataConfig(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer;
 }
