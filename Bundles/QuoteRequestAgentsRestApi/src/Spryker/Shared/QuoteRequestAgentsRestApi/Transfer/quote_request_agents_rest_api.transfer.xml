@@ -48,9 +48,20 @@
     </transfer>
 
     <transfer name="Pagination">
+        <property name="maxPerPage" type="int"/>
+        <property name="page" type="int"/>
     </transfer>
 
     <transfer name="CompanyUserStorage">
+    </transfer>
+
+    <transfer name="QuoteRequestFilter">
+        <property name="quoteRequestReference" type="string"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="withVersions" type="bool"/>
+    </transfer>
+
+    <transfer name="QuoteRequestCollection">
     </transfer>
 
 </transfers>

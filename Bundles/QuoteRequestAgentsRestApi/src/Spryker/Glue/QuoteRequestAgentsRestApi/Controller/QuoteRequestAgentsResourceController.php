@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\QuoteRequestsRestApi\Controller;
+namespace Spryker\Glue\QuoteRequestAgentsRestApi\Controller;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 
 /**
- * @method \Spryker\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiFactory getFactory()
+ * @method \Spryker\Glue\QuoteRequestAgentsRestApi\QuoteRequestAgentsRestApiFactory getFactory()
  */
-class QuoteRequestsResourceController extends AbstractController
+class QuoteRequestAgentsResourceController extends AbstractController
 {
     /**
      * @Glue({
@@ -25,7 +25,6 @@ class QuoteRequestsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
      *          "responses": {
      *              "404": "Quote request not found.",
      *              "403": "Unauthorized request.",
@@ -39,10 +38,8 @@ class QuoteRequestsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
-     *          "responses": {
-     *              "403": "Unauthorized request.",
-     *              "400": "Bad request."
+     *     "responses": {
+     *              "403": "Unauthorized request."
      *          }
      *     }
      * })
@@ -56,24 +53,23 @@ class QuoteRequestsResourceController extends AbstractController
         if ($restRequest->getResource()->getId()) {
             return $this->getFactory()
                 ->createQuoteRequestReader()
-                ->getQuoteRequest($restRequest);
+                ->findQuoteRequest($restRequest);
         }
 
         return $this->getFactory()
             ->createQuoteRequestReader()
-            ->getQuoteRequestCollection($restRequest);
+            ->getQuoteRequestCollectionByFilter($restRequest);
     }
 
     /**
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Creates a quote request as a company user."
+     *              "Creates a quote request as an agent."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
-     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
      *          "responses": {
      *              "400": "Bad request",
      *              "403": "Unauthorized request.",

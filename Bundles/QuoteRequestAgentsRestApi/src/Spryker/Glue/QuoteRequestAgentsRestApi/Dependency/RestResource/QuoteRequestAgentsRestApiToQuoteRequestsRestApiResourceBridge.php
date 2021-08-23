@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -37,6 +38,22 @@ class QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceBridge implements Q
     ): RestResponseInterface {
         return $this->quoteRequestsRestApiResource->createQuoteRequestRestResponse(
             $quoteRequestResponseTransfer,
+            $localeName
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createQuoteRequestCollectionRestResponse(
+        QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer,
+        string $localeName
+    ): RestResponseInterface {
+        return $this->quoteRequestsRestApiResource->createQuoteRequestCollectionRestResponse(
+            $quoteRequestCollectionTransfer,
             $localeName
         );
     }

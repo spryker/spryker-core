@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\QuoteRequestsRestApi;
 
+use Generated\Shared\Transfer\QuoteRequestCollectionTransfer;
 use Generated\Shared\Transfer\QuoteRequestResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -17,8 +18,7 @@ interface QuoteRequestsRestApiResourceInterface
 {
     /**
      * Specification:
-     * - Creates a rest response.
-     * - Transfers `quoteRequestResponse.quoteRequest` to `RestQuoteRequestsAttributes` with expanders from `Pyz\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiDependencyProvider::getRestQuoteRequestAttributesExpanderPlugins`.
+     * - Transfers `QuoteRequestResponse.quoteRequest` to `RestQuoteRequestsAttributes` with expanders from `Pyz\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiDependencyProvider::getRestQuoteRequestAttributesExpanderPlugins`.
      * - `RestQuoteRequestsAttributes` is passed to response.
      *
      * @api
@@ -30,6 +30,23 @@ interface QuoteRequestsRestApiResourceInterface
      */
     public function createQuoteRequestRestResponse(
         QuoteRequestResponseTransfer $quoteRequestResponseTransfer,
+        string $localeName
+    ): RestResponseInterface;
+
+    /**
+     * Specification:
+     * - Transfers `QuoteRequestCollectionTransfer` to `RestQuoteRequestsAttributes` with expanders from `Pyz\Glue\QuoteRequestsRestApi\QuoteRequestsRestApiDependencyProvider::getRestQuoteRequestAttributesExpanderPlugins`.
+     * - `RestQuoteRequestsAttributes` is passed to response.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createQuoteRequestCollectionRestResponse(
+        QuoteRequestCollectionTransfer $quoteRequestCollectionTransfer,
         string $localeName
     ): RestResponseInterface;
 }

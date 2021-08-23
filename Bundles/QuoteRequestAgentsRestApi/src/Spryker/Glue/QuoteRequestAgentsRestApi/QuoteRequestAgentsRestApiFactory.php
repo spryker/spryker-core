@@ -13,6 +13,8 @@ use Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\Client\QuoteRequestAgentsR
 use Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource\QuoteRequestAgentsRestApiToQuoteRequestsRestApiResourceInterface;
 use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\Creator\QuoteRequestCreator;
 use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\Creator\QuoteRequestCreatorInterface;
+use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\Reader\QuoteRequestAgentReader;
+use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\Reader\QuoteRequestAgentReaderInterface;
 use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilder;
 use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRequestRestResponseBuilderInterface;
 
@@ -29,6 +31,18 @@ class QuoteRequestAgentsRestApiFactory extends AbstractFactory
         return new QuoteRequestCreator(
             $this->getQuoteRequestAgentClient(),
             $this->getCompanyUserStorageClient(),
+            $this->getQuoteRequestsRestApiResource(),
+            $this->createQuoteRequestRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\QuoteRequestAgentsRestApi\Processor\Reader\QuoteRequestAgentReaderInterface
+     */
+    public function createQuoteRequestReader(): QuoteRequestAgentReaderInterface
+    {
+        return new QuoteRequestAgentReader(
+            $this->getQuoteRequestAgentClient(),
             $this->getQuoteRequestsRestApiResource(),
             $this->createQuoteRequestRestResponseBuilder()
         );

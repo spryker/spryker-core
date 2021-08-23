@@ -26,6 +26,9 @@ class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_PROBLEM_CREATING_REQUEST_FOR_QUOTE_BY_AGENT = '4507';
     public const RESPONSE_DETAILS_PROBLEM_CREATING_REQUEST_FOR_QUOTE_BY_AGENT = 'There was a problem adding the quote request for agent.';
 
+    public const RESPONSE_CODE_QUOTE_REQUEST_NOT_FOUND = '4501';
+    public const RESPONSE_DETAIL_QUOTE_REQUEST_NOT_FOUND = 'Quote request not found.';
+
     /**
      * Specification:
      * - Contains mapping from possible `MessageTransfer.value` to Glue error.
