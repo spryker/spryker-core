@@ -37,6 +37,16 @@ use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
  */
 class ProductOfferFacadeTest extends Unit
 {
+    protected const TEST_SKU_1 = 'sku_1';
+    protected const TEST_SKU_2 = 'sku_2';
+    protected const TEST_MERCHANT_REFERENCE_1 = 'merchant_reference_1';
+    protected const TEST_MERCHANT_REFERENCE_2 = 'merchant_reference_2';
+    protected const TEST_MERCHANT_REFERENCE_3 = 'merchant_reference_3';
+    protected const TEST_PRODUCT_REFERENCE_1 = 'product_reference_1';
+    protected const TEST_PRODUCT_REFERENCE_2 = 'product_reference_2';
+    protected const TEST_PRODUCT_REFERENCE_3 = 'product_reference_3';
+    protected const TEST_PRODUCT_REFERENCE_4 = 'product_reference_4';
+
     /**
      * @var \SprykerTest\Zed\ProductOffer\ProductOfferBusinessTester
      */
@@ -536,5 +546,167 @@ class ProductOfferFacadeTest extends Unit
             $isCheckoutProductOfferValid,
             'Expects that quote transfer will be invalid when product offer not approved.'
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountCartItemQuantityForExistingProductOffer(): void
+    {
+        // Arrange
+        $itemsInCart = $this->createCartItems();
+
+        $itemTransfer = $this->createItemTransfer(
+            static::TEST_SKU_1,
+            2,
+            static::TEST_MERCHANT_REFERENCE_1,
+            static::TEST_PRODUCT_REFERENCE_1
+        );
+
+        // Act
+        $cartItemQuantityTransfer = $this->tester->getFacade()
+            ->countCartItemQuantity($itemsInCart, $itemTransfer);
+
+        // Assert
+        $this->assertSame(3, $cartItemQuantityTransfer->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountCartItemQuantityForNonExistingProductOffer(): void
+    {
+        // Arrange
+        $itemsInCart = $this->createCartItems();
+
+        $itemTransfer = $this->createItemTransfer(
+            static::TEST_SKU_1,
+            2,
+            static::TEST_MERCHANT_REFERENCE_1,
+            static::TEST_PRODUCT_REFERENCE_4
+        );
+
+        // Act
+        $cartItemQuantityTransfer = $this->tester->getFacade()
+            ->countCartItemQuantity($itemsInCart, $itemTransfer);
+
+        // Assert
+        $this->assertSame(0, $cartItemQuantityTransfer->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountCartItemQuantityForExistingMerchantProduct(): void
+    {
+        // Arrange
+        $itemsInCart = $this->createCartItems();
+
+        $itemTransfer = $this->createItemTransfer(
+            static::TEST_SKU_1,
+            2,
+            static::TEST_MERCHANT_REFERENCE_3
+        );
+
+        // Act
+        $cartItemQuantityTransfer = $this->tester->getFacade()
+            ->countCartItemQuantity($itemsInCart, $itemTransfer);
+
+        // Assert
+        $this->assertSame(2, $cartItemQuantityTransfer->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCountCartItemQuantityForNonExistingMerchantProduct(): void
+    {
+        // Arrange
+        $itemsInCart = $this->createCartItems();
+
+        $itemTransfer = $this->createItemTransfer(
+            static::TEST_SKU_1,
+            2,
+            static::TEST_MERCHANT_REFERENCE_2
+        );
+
+        // Act
+        $cartItemQuantityTransfer = $this->tester->getFacade()
+            ->countCartItemQuantity($itemsInCart, $itemTransfer);
+
+        // Assert
+        $this->assertSame(0, $cartItemQuantityTransfer->getQuantity());
+    }
+
+    /**
+     * @param string $sku
+     * @param int $quantity
+     * @param string $merchantReference
+     * @param string|null $productOfferReference
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemTransfer(
+        string $sku,
+        int $quantity,
+        string $merchantReference,
+        ?string $productOfferReference = null
+    ): ItemTransfer {
+        return (new ItemTransfer())
+            ->setSku($sku)
+            ->setMerchantReference($merchantReference)
+            ->setQuantity($quantity)
+            ->setProductOfferReference($productOfferReference);
+    }
+
+    /**
+     * @phpstan-return \ArrayObject<string, \Generated\Shared\Transfer\ItemTransfer>
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function createCartItems(): ArrayObject
+    {
+        $itemsInCart = new ArrayObject();
+        $itemsInCart->append(
+            $this->createItemTransfer(
+                static::TEST_SKU_1,
+                1,
+                static::TEST_MERCHANT_REFERENCE_1,
+                static::TEST_PRODUCT_REFERENCE_1
+            )
+        );
+        $itemsInCart->append(
+            $this->createItemTransfer(
+                static::TEST_SKU_1,
+                2,
+                static::TEST_MERCHANT_REFERENCE_1,
+                static::TEST_PRODUCT_REFERENCE_1
+            )
+        );
+        $itemsInCart->append(
+            $this->createItemTransfer(
+                static::TEST_SKU_1,
+                2,
+                static::TEST_MERCHANT_REFERENCE_3
+            )
+        );
+        $itemsInCart->append(
+            $this->createItemTransfer(
+                static::TEST_SKU_1,
+                2,
+                static::TEST_MERCHANT_REFERENCE_1,
+                static::TEST_PRODUCT_REFERENCE_2
+            )
+        );
+        $itemsInCart->append(
+            $this->createItemTransfer(
+                static::TEST_SKU_2,
+                2,
+                static::TEST_MERCHANT_REFERENCE_2,
+                static::TEST_PRODUCT_REFERENCE_3
+            )
+        );
+
+        return $itemsInCart;
     }
 }
