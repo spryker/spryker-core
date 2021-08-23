@@ -48,8 +48,11 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
     public function findProductConcreteAvailability(
         ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
     ): ?ProductConcreteAvailabilityTransfer {
-        /** @var \Generated\Shared\Transfer\ProductOfferStockResultTransfer $productOfferStockResultTransfer */
-        $productOfferStockResultTransfer = $this->getProductOfferStockResultTransfer($productOfferAvailabilityRequestTransfer);
+        $productOfferStockResultTransfer = $this->findProductOfferStockResultTransfer($productOfferAvailabilityRequestTransfer);
+
+        if (!$productOfferStockResultTransfer) {
+            return null;
+        }
 
         $availability = $this->calculateAvailabilityForRequest($productOfferStockResultTransfer, $productOfferAvailabilityRequestTransfer);
 
@@ -94,15 +97,21 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
     /**
      * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer|null
      */
-    protected function getProductOfferStockResultTransfer(
+    protected function findProductOfferStockResultTransfer(
         ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
-    ): ProductOfferStockResultTransfer {
+    ): ?ProductOfferStockResultTransfer {
         $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
             ->setProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReference())
             ->setStore($productOfferAvailabilityRequestTransfer->getStore());
 
-        return $this->productOfferStockFacade->getProductOfferStockResult($productOfferStockRequestTransfer);
+        $productOfferStockResultTransfer = $this->productOfferStockFacade->getProductOfferStockResult($productOfferStockRequestTransfer);
+
+        if (!$productOfferStockResultTransfer->getQuantity() && !$productOfferStockResultTransfer->getIsNeverOutOfStock()) {
+            return null;
+        }
+
+        return $productOfferStockResultTransfer;
     }
 }

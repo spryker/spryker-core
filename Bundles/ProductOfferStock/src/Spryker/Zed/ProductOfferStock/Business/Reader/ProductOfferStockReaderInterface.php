@@ -16,8 +16,6 @@ interface ProductOfferStockReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
-     *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
     public function getProductOfferStockResult(

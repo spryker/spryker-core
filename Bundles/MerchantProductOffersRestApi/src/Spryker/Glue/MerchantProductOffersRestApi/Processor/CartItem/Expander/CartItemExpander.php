@@ -36,20 +36,25 @@ class CartItemExpander implements CartItemExpanderInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
     ): CartItemRequestTransfer {
-        if (!$restCartItemsAttributesTransfer->getProductOfferReference()) {
-            return $cartItemRequestTransfer;
+        $cartItemRequestTransfer
+            ->setProductOfferReference($restCartItemsAttributesTransfer->getProductOfferReference())
+            ->setMerchantReference($restCartItemsAttributesTransfer->getMerchantReference());
+
+        $productOfferStorageTransfer = null;
+
+        if ($restCartItemsAttributesTransfer->getProductOfferReference()) {
+            $productOfferStorageTransfer = $this->merchantProductOfferStorageClient
+                ->findProductOfferStorageByReference(
+                    $restCartItemsAttributesTransfer->getProductOfferReference()
+                );
         }
 
-        $productOfferStorageTransfer = $this->merchantProductOfferStorageClient->findProductOfferStorageByReference(
-            $restCartItemsAttributesTransfer->getProductOfferReference()
-        );
-
-        if (!$productOfferStorageTransfer) {
-            return $cartItemRequestTransfer;
+        if ($productOfferStorageTransfer !== null) {
+            $cartItemRequestTransfer
+                ->setProductOfferReference($productOfferStorageTransfer->getProductOfferReference())
+                ->setMerchantReference($productOfferStorageTransfer->getMerchantReference());
         }
 
-        return $cartItemRequestTransfer
-            ->setProductOfferReference($productOfferStorageTransfer->getProductOfferReference())
-            ->setMerchantReference($productOfferStorageTransfer->getMerchantReference());
+        return $cartItemRequestTransfer;
     }
 }

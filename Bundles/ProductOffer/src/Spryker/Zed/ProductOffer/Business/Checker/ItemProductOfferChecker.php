@@ -66,7 +66,7 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
 
         if (!$productOfferTransfers->count()) {
             $cartPreCheckResponseTransfer->setIsSuccess(false);
-            foreach ($productConcreteSkusByOfferReference as $sku => $productOfferReference) {
+            foreach ($productConcreteSkusByOfferReference as $productOfferReference => $sku) {
                 $cartPreCheckResponseTransfer->addMessage($this->createErrorMessage($sku));
             }
 
