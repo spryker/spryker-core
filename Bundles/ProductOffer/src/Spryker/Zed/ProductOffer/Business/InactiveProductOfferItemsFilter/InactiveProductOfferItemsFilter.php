@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Shared\ProductOffer\ProductOfferConfig;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
@@ -66,6 +67,7 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReferences($productOfferReferences)
             ->setIsActive(true)
+            ->setApprovalStatuses([ProductOfferConfig::STATUS_APPROVED])
             ->setIdStore(
                 $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()
             );
