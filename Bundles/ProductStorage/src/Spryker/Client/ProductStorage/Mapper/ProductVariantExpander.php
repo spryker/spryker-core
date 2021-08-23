@@ -331,7 +331,9 @@ class ProductVariantExpander implements ProductVariantExpanderInterface
     protected function getVariantNodeByAttributeVariantMap(array $selectedAttributes, array $attributeVariantMap): array
     {
         foreach ($attributeVariantMap as $idProductConcrete => $productSuperAttributes) {
-            if ($selectedAttributes != $productSuperAttributes) {
+            $intersectedSelectedAttributes = array_intersect_assoc($selectedAttributes, $productSuperAttributes);
+
+            if (count($intersectedSelectedAttributes) != count($productSuperAttributes)) {
                 continue;
             }
 
