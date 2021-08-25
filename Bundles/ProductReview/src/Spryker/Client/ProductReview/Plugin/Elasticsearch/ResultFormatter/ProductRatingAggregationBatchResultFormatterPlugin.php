@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter;
 
-use Elastica\ResultSet;
 use Spryker\Client\ProductReview\Aggregation\BatchRatingAggregation;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
@@ -31,22 +30,22 @@ class ProductRatingAggregationBatchResultFormatterPlugin extends AbstractElastic
     }
 
     /**
-     * @param \Elastica\ResultSet $searchResult
+     * @param mixed $searchResult
      * @param array $requestParameters
      *
      * @return array
      */
-    protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
+    protected function formatSearchResult($searchResult, array $requestParameters)
     {
         return $this->extractRatingAggregation($searchResult);
     }
 
     /**
-     * @param \Elastica\ResultSet $searchResult
+     * @param mixed $searchResult
      *
      * @return array
      */
-    protected function extractRatingAggregation(ResultSet $searchResult)
+    protected function extractRatingAggregation($searchResult)
     {
         $aggregation = $searchResult->getAggregation(BatchRatingAggregation::PRODUCT_AGGREGATOIN_NAME);
 
