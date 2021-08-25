@@ -37,7 +37,7 @@ class BatchProductRatingAggregationQueryExpanderPlugin extends AbstractPlugin im
         $reviewAggregation = new Terms(static::REVIEW_AGGREGATION_NAME);
         $reviewAggregation->setField(ProductReviewIndexMap::RATING);
 
-        $productAggregation = new Terms((static::PRODUCT_AGGREGATOIN_NAME);
+        $productAggregation = new Terms(static::PRODUCT_AGGREGATOIN_NAME);
         $productAggregation->setField(ProductReviewIndexMap::ID_PRODUCT_ABSTRACT);
         $productAggregation->addAggregation($reviewAggregation);
         $searchQuery->getSearchQuery()->addAggregation($productAggregation);
