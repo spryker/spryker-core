@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace  Spryker\Zed\MerchantProfile\Persistence\Propel;
+namespace Spryker\Zed\MerchantProfile\Persistence\Propel;
 
 use Orm\Zed\MerchantProfile\Persistence\Base\SpyMerchantProfile as BaseSpyMerchantProfile;
 
