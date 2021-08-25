@@ -141,7 +141,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addBatchProductReviewsQueryExpanderPlugins(Container $container): Container
+    protected function addProductReviewsBulkQueryExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_BATCH_PRODUCT_REVIEWS_QUERY_EXPANDER, function () {
             return $this->getBatchProductReviewsQueryExpanderPlugins();

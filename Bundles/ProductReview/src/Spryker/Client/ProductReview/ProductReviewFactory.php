@@ -95,7 +95,7 @@ class ProductReviewFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
-    protected function getBatchProductReviewsQueryExpanderPlugins(): array
+    public function getBatchProductReviewsQueryExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::PLUGINS_BATCH_PRODUCT_REVIEWS_QUERY_EXPANDER);
     }
