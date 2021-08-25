@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter;
 
-use Spryker\Client\ProductReview\Aggregation\BatchRatingAggregation;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 /**
