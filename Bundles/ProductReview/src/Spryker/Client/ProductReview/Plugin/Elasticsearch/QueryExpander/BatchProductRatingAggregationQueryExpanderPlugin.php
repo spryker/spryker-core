@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander;
 
+use Elastica\Aggregation\Terms;
+use Generated\Shared\Search\ProductReviewIndexMap;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
@@ -16,6 +18,9 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class BatchProductRatingAggregationQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    protected const PRODUCT_AGGREGATOIN_NAME = 'product-aggregation';
+    protected const REVIEW_AGGREGATION_NAME = 'rating-aggregation';
+
     /**
      * {@inheritDoc}
      * - Expands base query by aggregations product and rating
@@ -29,18 +34,12 @@ class BatchProductRatingAggregationQueryExpanderPlugin extends AbstractPlugin im
      */
     public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
     {
-        return $this->addProductRatingAggregation($searchQuery);
-    }
+        $reviewAggregation = new Terms(static::REVIEW_AGGREGATION_NAME);
+        $reviewAggregation->setField(ProductReviewIndexMap::RATING);
 
-    /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
-     */
-    protected function addProductRatingAggregation(QueryInterface $searchQuery): QueryInterface
-    {
-        $productAggregation = $this->getFactory()->createBatchRatingAggregation()->createAggregation();
-
+        $productAggregation = new Terms((static::PRODUCT_AGGREGATOIN_NAME);
+        $productAggregation->setField(ProductReviewIndexMap::ID_PRODUCT_ABSTRACT);
+        $productAggregation->addAggregation($reviewAggregation);
         $searchQuery->getSearchQuery()->addAggregation($productAggregation);
 
         return $searchQuery;
