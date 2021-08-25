@@ -121,9 +121,11 @@ interface ZedUiFormResponseBuilderInterface
      *
      * @api
      *
+     * @param string|null $tableId
+     *
      * @return $this
      */
-    public function addActionRefreshTable();
+    public function addActionRefreshTable(?string $tableId = null);
 
     /**
      * Specification:

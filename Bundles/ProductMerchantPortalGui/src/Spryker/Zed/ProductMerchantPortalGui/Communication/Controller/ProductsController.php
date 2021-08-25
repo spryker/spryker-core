@@ -22,6 +22,8 @@ class ProductsController extends AbstractController
      */
     protected const URL_CREATE_PRODUCT_ABSTRACT = '/product-merchant-portal-gui/create-product-abstract';
 
+    protected const ID_TABLE_PRODUCT_LIST = 'product-list';
+
     /**
      * @return mixed[]
      */
@@ -32,6 +34,7 @@ class ProductsController extends AbstractController
                 ->createProductAbstractGuiTableConfigurationProvider()
                 ->getConfiguration(),
             'urlCreateProductAbstract' => static::URL_CREATE_PRODUCT_ABSTRACT,
+            'idTableProductList' => static::ID_TABLE_PRODUCT_LIST,
         ]);
     }
 

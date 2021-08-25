@@ -30,6 +30,11 @@ class CreateProductAbstractController extends AbstractController
     protected const REQUEST_PARAM_SELECTED_ATTRIBUTES = 'selectedAttributes';
 
     /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsController::ID_TABLE_PRODUCT_LIST
+     */
+    protected const ID_TABLE_PRODUCT_LIST = 'product-list';
+
+    /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\ProductConcreteMapper::FIELD_NAME
      */
     protected const FIELD_NAME = 'name';
@@ -248,10 +253,10 @@ class CreateProductAbstractController extends AbstractController
             ->createZedUiFormResponseBuilder()
             ->addSuccessNotification(static::RESPONSE_NOTIFICATION_MESSAGE_SUCCESS)
             ->addActionCloseDrawer()
-            ->addActionRefreshTable()
+            ->addActionRefreshTable(static::ID_TABLE_PRODUCT_LIST)
             ->createResponse();
 
-        return new JsonResponse($zedUiFormResponseTransfer->toArray());
+        return new JsonResponse($zedUiFormResponseTransfer->toArray(true, true));
     }
 
     /**
