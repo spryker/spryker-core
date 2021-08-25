@@ -111,4 +111,19 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail($messageTransfer->getMessage() ?? QuoteRequestAgentsRestApiConfig::RESPONSE_DETAILS_PROBLEM_CREATING_REQUEST_FOR_QUOTE_BY_AGENT);
     }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createQuoteRequestNotFoundErrorResponse(): RestResponseInterface
+    {
+        $restErrorTransfer = (new RestErrorMessageTransfer())
+            ->setCode(QuoteRequestAgentsRestApiConfig::RESPONSE_CODE_QUOTE_REQUEST_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(QuoteRequestAgentsRestApiConfig::RESPONSE_DETAIL_QUOTE_REQUEST_NOT_FOUND);
+
+        return $this->restResourceBuilder
+            ->createRestResponse()
+            ->addError($restErrorTransfer);
+    }
 }

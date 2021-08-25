@@ -205,11 +205,18 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      *
      * @api
      *
+     * @param string|null $tableId
+     *
      * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
      */
-    public function addActionRefreshTable(): ZedUiFormResponseBuilderInterface
+    public function addActionRefreshTable(?string $tableId = null): ZedUiFormResponseBuilderInterface
     {
-        $this->actions[] = $this->createResponseAction(static::RESPONSE_ACTION_TYPE_REFRESH_TABLE);
+        $zedUiFormResponseActionTransfer = $this->createResponseAction(
+            static::RESPONSE_ACTION_TYPE_REFRESH_TABLE
+        );
+        $zedUiFormResponseActionTransfer->setTableId($tableId);
+
+        $this->actions[] = $zedUiFormResponseActionTransfer;
 
         return $this;
     }

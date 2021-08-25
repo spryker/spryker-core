@@ -41,31 +41,19 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
-     *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
     public function getProductOfferStockResult(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockResultTransfer
     {
-        $productOfferStockRequestTransfer->requireProductOfferReference()->requireStore();
-
-        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
-        $storeTransfer = $productOfferStockRequestTransfer->getStore();
-
-        $storeTransfer->requireName();
+        $productOfferStockRequestTransfer
+            ->requireProductOfferReference()
+            ->getStoreOrFail()
+            ->requireName();
 
         $productOfferStockTransfers = $this->productOfferStockRepository->find($productOfferStockRequestTransfer);
 
-        if (!$productOfferStockTransfers->count()) {
-            throw new ProductOfferNotFoundException(
-                sprintf(
-                    'Product offer stock with product reference: %s, not found',
-                    $productOfferStockRequestTransfer->getProductOfferReference()
-                )
-            );
-        }
-         $productOfferStockResultTransfer = $this->productOfferStockResultMapper
-            ->convertProductOfferStockTransfersToProductOfferStockResultTransfer(
+        $productOfferStockResultTransfer = $this->productOfferStockResultMapper
+            ->mapProductOfferStockTransfersToProductOfferStockResultTransfer(
                 $productOfferStockTransfers
             );
 

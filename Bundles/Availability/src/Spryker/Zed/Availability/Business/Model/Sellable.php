@@ -197,12 +197,13 @@ class Sellable implements SellableInterface
             if (!$availabilityStrategyPlugin->isApplicable($concreteSku, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
                 continue;
             }
-            /** @var \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $customProductConcreteAvailability */
+
             $customProductConcreteAvailability = $availabilityStrategyPlugin->findProductConcreteAvailabilityForStore(
                 $concreteSku,
                 $storeTransfer,
                 $productAvailabilityCriteriaTransfer
             );
+
             $sellableItemResponseTransfer = $this->getSellableItemResponseTransfer(
                 $sellableItemRequestTransfer,
                 $customProductConcreteAvailability
@@ -217,18 +218,23 @@ class Sellable implements SellableInterface
 
     /**
      * @param \Generated\Shared\Transfer\SellableItemRequestTransfer $sellableItemRequestTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null $productConcreteAvailabilityTransfer
      *
      * @return \Generated\Shared\Transfer\SellableItemResponseTransfer
      */
     protected function getSellableItemResponseTransfer(
         SellableItemRequestTransfer $sellableItemRequestTransfer,
-        ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
+        ?ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
     ): SellableItemResponseTransfer {
         $sellableItemResponseTransfer = new SellableItemResponseTransfer();
         $availableQuantity = $sellableItemRequestTransfer->getQuantityOrFail() ?? new Decimal(0);
         $sellableItemResponseTransfer->setSku($sellableItemRequestTransfer->getSku());
-        $sellableItemResponseTransfer->setAvailableQuantity($productConcreteAvailabilityTransfer->getAvailability());
+        $sellableItemResponseTransfer->setAvailableQuantity(0);
+
+        if ($productConcreteAvailabilityTransfer) {
+            $sellableItemResponseTransfer->setAvailableQuantity($productConcreteAvailabilityTransfer->getAvailability());
+        }
+
         $sellableItemResponseTransfer->setIsSellable($this->isProductConcreteSellable(
             $productConcreteAvailabilityTransfer,
             $availableQuantity

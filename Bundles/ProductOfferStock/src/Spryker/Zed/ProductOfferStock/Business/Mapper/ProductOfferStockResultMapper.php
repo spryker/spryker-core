@@ -20,7 +20,7 @@ class ProductOfferStockResultMapper implements ProductOfferStockResultMapperInte
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */
-    public function convertProductOfferStockTransfersToProductOfferStockResultTransfer(
+    public function mapProductOfferStockTransfersToProductOfferStockResultTransfer(
         ArrayObject $productOfferStockTransfers
     ): ProductOfferStockResultTransfer {
         $productOfferStockResultTransfer = new ProductOfferStockResultTransfer();

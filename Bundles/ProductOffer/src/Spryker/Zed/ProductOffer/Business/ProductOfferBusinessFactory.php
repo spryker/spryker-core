@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductOffer\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOffer\Business\Checker\ItemProductOfferChecker;
 use Spryker\Zed\ProductOffer\Business\Checker\ItemProductOfferCheckerInterface;
+use Spryker\Zed\ProductOffer\Business\Counter\ProductOfferCartItemQuantityCounter;
+use Spryker\Zed\ProductOffer\Business\Counter\ProductOfferCartItemQuantityCounterInterface;
 use Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGenerator;
 use Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGeneratorInterface;
 use Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactiveProductOfferItemsFilter;
@@ -141,5 +143,13 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createProductOfferCheckoutValidator(): ProductOfferCheckoutValidatorInterface
     {
         return new ProductOfferCheckoutValidator($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Business\Counter\ProductOfferCartItemQuantityCounterInterface
+     */
+    public function createProductOfferCartItemQuantityCounter(): ProductOfferCartItemQuantityCounterInterface
+    {
+        return new ProductOfferCartItemQuantityCounter();
     }
 }

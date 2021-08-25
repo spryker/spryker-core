@@ -17,10 +17,23 @@ use Generated\Shared\Transfer\AclEntitySegmentRequestTransfer;
 use Generated\Shared\Transfer\AclRoleCriteriaTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
+use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
-use Propel\Runtime\Exception\ClassNotFoundException;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Shared\AclEntity\AclEntityConstants;
+use Spryker\Zed\AclEntity\AclEntityDependencyProvider;
+use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigEntityNotFoundException;
+use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigInvalidKeyException;
+use Spryker\Zed\AclEntity\Business\Exception\AclEntityMetadataConfigParentEntityNotFoundException;
+use Spryker\Zed\AclEntity\Business\Exception\AclEntityRuleReferencedEntityNotFoundException;
+use Spryker\Zed\AclEntity\Business\Exception\DuplicatedAclEntityRuleException;
+use Spryker\Zed\AclEntity\Business\Exception\InheritedScopeCanNotBeAssignedException;
+use Spryker\Zed\AclEntity\Business\Exception\ReferencedSegmentConnectorEntityNotFoundException;
+use Spryker\Zed\AclEntity\Business\Exception\SegmentConnectorEntityNotFoundException;
+use SprykerTest\Zed\AclEntity\Plugin\AclEntityMetadataConfigExpanderPluginMock;
+use SprykerTest\Zed\AclEntity\Plugin\AclEntityMetadataConfigWithInvalidKeyExpanderPluginMock;
+use SprykerTest\Zed\AclEntity\Plugin\AclEntityMetadataConfigWithWrongEntityExpanderPluginMock;
+use SprykerTest\Zed\AclEntity\Plugin\AclEntityMetadataConfigWithWrongParentEntityExpanderPluginMock;
 
 /**
  * Auto-generated group annotations
@@ -36,7 +49,6 @@ use Spryker\Shared\AclEntity\AclEntityConstants;
 class AclEntityFacadeTest extends Unit
 {
     protected const ACL_ROLE_TEST_NAME = 'role test';
-    protected const ACL_ENTITY_RULE_ENTITY = 'Foo\Bar\Class';
     protected const TEST_MERCHANT_REFERENCE = 'test merchant segment reference';
 
     /**
@@ -60,6 +72,10 @@ class AclEntityFacadeTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->tester->setDependency(AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER, [
+            new AclEntityMetadataConfigExpanderPluginMock(),
+        ]);
 
         $this->roleTransfer = $this->tester->haveRole([RoleTransfer::NAME => static::ACL_ROLE_TEST_NAME]);
     }
@@ -106,7 +122,7 @@ class AclEntityFacadeTest extends Unit
         $this->tester->haveAclEntityRule(
             [
                 AclEntityRuleTransfer::SCOPE => AclEntityConstants::SCOPE_GLOBAL,
-                AclEntityRuleTransfer::ENTITY => static::ACL_ENTITY_RULE_ENTITY,
+                AclEntityRuleTransfer::ENTITY => SpyMerchant::class,
                 AclEntityRuleTransfer::ID_ACL_ROLE => $this->roleTransfer->getIdAclRoleOrFail(),
                 AclEntityRuleTransfer::PERMISSION_MASK => AclEntityConstants::OPERATION_MASK_CREATE,
             ]
@@ -129,13 +145,13 @@ class AclEntityFacadeTest extends Unit
         // Arrange
         $aclEntityRuleTransfer = (new AclEntityRuleTransfer())
             ->setScope(AclEntityConstants::SCOPE_GLOBAL)
-            ->setEntity(static::ACL_ENTITY_RULE_ENTITY)
+            ->setEntity(SpyMerchant::class)
             ->setIdAclRole($this->roleTransfer->getIdAclRoleOrFail())
             ->setPermissionMask(AclEntityConstants::OPERATION_MASK_CREATE);
 
         $aclEntityRuleTransfer2 = (new AclEntityRuleTransfer())
-            ->setScope(AclEntityConstants::SCOPE_INHERITED)
-            ->setEntity(static::ACL_ENTITY_RULE_ENTITY)
+            ->setScope(AclEntityConstants::SCOPE_SEGMENT)
+            ->setEntity(SpyMerchant::class)
             ->setIdAclRole($this->roleTransfer->getIdAclRoleOrFail())
             ->setPermissionMask(AclEntityConstants::OPERATION_MASK_UPDATE);
 
@@ -146,6 +162,78 @@ class AclEntityFacadeTest extends Unit
 
         // Assert
         $this->assertSame(2, $this->tester->getAclRulesCount($this->roleTransfer->getIdAclRoleOrFail()));
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveAclRulesThrowsAclEntityRuleReferencedEntityNotFoundException(): void
+    {
+        // Arrange
+        $newAclEntityRuleTransfer = (new AclEntityRuleTransfer())
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setEntity('test')
+            ->setIdAclRole($this->roleTransfer->getIdAclRoleOrFail())
+            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_CREATE);
+
+        $aclEntityRuleTransfers = new ArrayObject([$newAclEntityRuleTransfer]);
+
+        // Assert
+        $this->expectException(AclEntityRuleReferencedEntityNotFoundException::class);
+
+        // Act
+        $this->tester->getFacade()->saveAclEntityRules($aclEntityRuleTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveAclRulesThrowsInheritedScopeCanNotBeAssignedException(): void
+    {
+        // Arrange
+        $newAclEntityRuleTransfer = (new AclEntityRuleTransfer())
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setEntity(SpyMerchant::class)
+            ->setIdAclRole($this->roleTransfer->getIdAclRoleOrFail())
+            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_CREATE);
+
+        $aclEntityRuleTransfers = new ArrayObject([$newAclEntityRuleTransfer]);
+
+        // Assert
+        $this->expectException(InheritedScopeCanNotBeAssignedException::class);
+
+        // Act
+        $this->tester->getFacade()->saveAclEntityRules($aclEntityRuleTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveAclRulesThrowsDuplicatedAclEntityRuleException(): void
+    {
+        // Arrange
+        $aclEntityRuleTransfer = $this->tester->haveAclEntityRule(
+            [
+                AclEntityRuleTransfer::SCOPE => AclEntityConstants::SCOPE_SEGMENT,
+                AclEntityRuleTransfer::ENTITY => SpyMerchant::class,
+                AclEntityRuleTransfer::ID_ACL_ROLE => $this->roleTransfer->getIdAclRoleOrFail(),
+                AclEntityRuleTransfer::PERMISSION_MASK => AclEntityConstants::OPERATION_MASK_CREATE,
+            ]
+        );
+
+        $newAclEntityRuleTransfer = (new AclEntityRuleTransfer())
+            ->setScope(AclEntityConstants::SCOPE_SEGMENT)
+            ->setEntity(SpyMerchant::class)
+            ->setIdAclRole($this->roleTransfer->getIdAclRoleOrFail())
+            ->setPermissionMask(AclEntityConstants::OPERATION_MASK_CREATE);
+
+        $aclEntityRuleTransfers = new ArrayObject([$newAclEntityRuleTransfer]);
+
+        // Assert
+        $this->expectException(DuplicatedAclEntityRuleException::class);
+
+        // Act
+        $this->tester->getFacade()->saveAclEntityRules($aclEntityRuleTransfers);
     }
 
     /**
@@ -196,7 +284,7 @@ class AclEntityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateAclEntitySegmentWrongSegmentClassException(): void
+    public function testCreateAclEntitySegmentThrowsAclEntityReferencedSegmentConnectorEntityException(): void
     {
         $reference = static::TEST_MERCHANT_REFERENCE;
 
@@ -207,9 +295,80 @@ class AclEntityFacadeTest extends Unit
             ->setEntityIds([1])
             ->setReference($reference);
 
-        $this->expectException(ClassNotFoundException::class);
+        $this->expectException(ReferencedSegmentConnectorEntityNotFoundException::class);
 
         // Act
         $this->tester->getFacade()->createAclEntitySegment($aclEntitySegmentRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateAclEntitySegmentThrowsAclEntitySegmentConnectorEntityNotFoundException(): void
+    {
+        $reference = static::TEST_MERCHANT_REFERENCE;
+
+        // Arrange
+        $aclEntitySegmentRequestTransfer = (new AclEntitySegmentRequestTransfer())
+            ->setName('Test')
+            ->setEntity(SpyLocale::class)
+            ->setEntityIds([1])
+            ->setReference($reference);
+
+        $this->expectException(SegmentConnectorEntityNotFoundException::class);
+
+        // Act
+        $this->tester->getFacade()->createAclEntitySegment($aclEntitySegmentRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAclEntityMetadataConfigThrowsAclEntityMetadataConfigEntityNotFoundException(): void
+    {
+        // Arrange
+        $aclEntityFacade = $this->tester->getFacade();
+        $this->tester->setDependency(AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER, [
+            new AclEntityMetadataConfigWithWrongEntityExpanderPluginMock(),
+        ]);
+
+        $this->expectException(AclEntityMetadataConfigEntityNotFoundException::class);
+
+        // Act
+        $aclEntityMetadataConfigTransfer = $aclEntityFacade->getAclEntityMetadataConfig();
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAclEntityMetadataConfigThrowsAclEntityMetadataConfigParentEntityNotFoundException(): void
+    {
+        // Arrange
+        $aclEntityFacade = $this->tester->getFacade();
+        $this->tester->setDependency(AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER, [
+            new AclEntityMetadataConfigWithWrongParentEntityExpanderPluginMock(),
+        ]);
+
+        $this->expectException(AclEntityMetadataConfigParentEntityNotFoundException::class);
+
+        // Act
+        $aclEntityMetadataConfigTransfer = $aclEntityFacade->getAclEntityMetadataConfig();
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAclEntityMetadataConfigThrowsAclEntityMetadataConfigInvalidKeyException(): void
+    {
+        // Arrange
+        $aclEntityFacade = $this->tester->getFacade();
+        $this->tester->setDependency(AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER, [
+            new AclEntityMetadataConfigWithInvalidKeyExpanderPluginMock(),
+        ]);
+
+        $this->expectException(AclEntityMetadataConfigInvalidKeyException::class);
+
+        // Act
+        $aclEntityMetadataConfigTransfer = $aclEntityFacade->getAclEntityMetadataConfig();
     }
 }

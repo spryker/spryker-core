@@ -95,8 +95,8 @@ class AclEntityHelper extends Module
     public function deleteAclEntityRules(AclEntityRuleCriteriaTransfer $aclEntityRuleCriteriaTransfer): void
     {
         $query = SpyAclEntityRuleQuery::create();
-        if ($aclEntityRuleCriteriaTransfer->getIdsAclRoles()) {
-            $query->filterByFkAclRole_In($aclEntityRuleCriteriaTransfer->getIdsAclRoles());
+        if ($aclEntityRuleCriteriaTransfer->getAclRoleIds()) {
+            $query->filterByFkAclRole_In($aclEntityRuleCriteriaTransfer->getAclRoleIds());
             $query->delete();
 
             return;

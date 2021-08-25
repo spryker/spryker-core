@@ -28,6 +28,7 @@ class QuoteRequestAgentsResourceRoutePlugin extends AbstractPlugin implements Re
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
         $resourceRouteCollection
+            ->addGet('get', true)
             ->addPost('post', true);
 
         return $resourceRouteCollection;
@@ -54,7 +55,7 @@ class QuoteRequestAgentsResourceRoutePlugin extends AbstractPlugin implements Re
      */
     public function getController(): string
     {
-        return 'agent-quote-requests-resource';
+        return 'quote-request-agents-resource';
     }
 
     /**

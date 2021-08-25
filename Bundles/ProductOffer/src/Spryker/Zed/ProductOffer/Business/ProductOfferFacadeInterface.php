@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\ProductOffer\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemQuantityTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
@@ -133,4 +136,24 @@ interface ProductOfferFacadeInterface
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): bool;
+
+    /**
+     * Specification:
+     * - Finds given product offer item in the cart.
+     * - Counts quantity for the given item.
+     * - Returns counted quantity.
+     *
+     * @api
+     *
+     * @phpstan-param \ArrayObject<string, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartItemQuantityTransfer
+     */
+    public function countCartItemQuantity(
+        ArrayObject $itemsInCart,
+        ItemTransfer $itemTransfer
+    ): CartItemQuantityTransfer;
 }

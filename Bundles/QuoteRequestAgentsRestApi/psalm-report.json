@@ -1,5 +1,32 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\QuoteRequestAgentsRestApi\\Processor\\RestResponseBuilder\\QuoteRequestRestResponseBuilderInterface::createFailedErrorResponse expects ArrayObject<int, Generated\\Shared\\Transfer\\MessageTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MessageTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestAgentsRestApi/src/Spryker/Glue/QuoteRequestAgentsRestApi/Processor/Creator/QuoteRequestCreator.php",
+            "snippet": "            return $this->quoteRequestRestResponseBuilder->createFailedErrorResponse($quoteRequestResponseTransfer->getMessages());",
+            "selected_text": "$quoteRequestResponseTransfer->getMessages()",
+            "error_level": 3,
+            "shortcode": 92,
+            "other_references": null
+        },
+        {
+            "severity": "info",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\PaginationTransfer::setPage expects int|null, float|int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestAgentsRestApi/src/Spryker/Glue/QuoteRequestAgentsRestApi/Processor/Reader/QuoteRequestAgentReader.php",
+            "snippet": "                ->setPage(($page->getOffset() / $page->getLimit()) + 1);",
+            "selected_text": "($page->getOffset() / $page->getLimit()) + 1",
+            "error_level": 4,
+            "shortcode": 12,
+            "other_references": null
+        }
+    ],
     "deprecation": []
 }

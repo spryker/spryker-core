@@ -47,7 +47,11 @@
     </transfer>
 
     <transfer name="AclEntityRuleCriteria">
-        <property name="idsAclRoles" type="array" singular="idAclRole"/>
+        <property name="aclRoleIds" type="int[]" singular="idAclRole"/>
+        <property name="entities" type="string[]" singular="entity"/>
+        <property name="scopes" type="string[]" singular="scope"/>
+        <property name="permissionMasks" type="int[]" singular="permissionMask"/>
+        <property name="aclEntitySegmentIds" type="int[]" singular="idAclEntitySegment"/>
     </transfer>
 
     <transfer name="AclEntityRuleResponse">
@@ -80,7 +84,7 @@
 
     <transfer name="AclEntityMetadataConfig">
         <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
-        <property name="aclEntityWhitelist" type="string[]" singular="aclEntityWhitelistItem"/>
+        <property name="aclEntityAllowList" type="string[]" singular="aclEntityAllowListItem"/>
     </transfer>
 
     <transfer name="User">

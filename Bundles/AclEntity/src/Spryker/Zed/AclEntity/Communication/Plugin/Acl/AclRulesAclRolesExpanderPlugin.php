@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\AclEntity\Business\AclEntityFacadeInterface getFacade()
  * @method \Spryker\Zed\AclEntity\AclEntityConfig getConfig()
+ * @method \Spryker\Zed\AclEntity\Communication\AclEntityCommunicationFactory getFactory()
  */
 class AclRulesAclRolesExpanderPlugin extends AbstractPlugin implements AclRolesExpanderPluginInterface
 {

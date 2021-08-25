@@ -33,6 +33,11 @@
 
     <transfer name="Stock">
         <property name="idStock" type="int"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idStores" type="int[]" singular="idStores"/>
     </transfer>
 
 </transfers>

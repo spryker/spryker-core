@@ -6,7 +6,7 @@
     "require": {
         "php": ">=7.3",
         "spryker/acl": "^3.8.0",
-        "spryker/acl-entity-extension": "^0.2.0",
+        "spryker/acl-entity-extension": "^1.0.0",
         "spryker/acl-extension": "^1.1.0",
         "spryker/application-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
@@ -17,6 +17,7 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/locale": "*",
         "spryker/merchant": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"

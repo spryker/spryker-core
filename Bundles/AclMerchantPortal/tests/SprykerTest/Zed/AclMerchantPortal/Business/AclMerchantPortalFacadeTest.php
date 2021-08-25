@@ -19,6 +19,7 @@ use Orm\Zed\Category\Persistence\SpyCategoryStore;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImage;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImage;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation;
 use Orm\Zed\Merchant\Persistence\SpyMerchant;
 use Orm\Zed\Merchant\Persistence\SpyMerchantStore;
@@ -49,14 +50,19 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity;
+use Orm\Zed\Refund\Persistence\SpyRefund;
+use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Orm\Zed\Stock\Persistence\SpyStockStore;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\User\Persistence\SpyUser;
+use Spryker\Zed\AclEntity\AclEntityDependencyProvider;
+use Spryker\Zed\AclMerchantPortal\Communication\Plugin\AclEntity\MerchantPortalAclEntityMetadataConfigExpanderPlugin;
 
 /**
  * Auto-generated group annotations
@@ -91,6 +97,18 @@ class AclMerchantPortalFacadeTest extends Unit
      * @var \SprykerTest\Zed\AclMerchantPortal\AclMerchantPortalBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->tester->setDependency(
+            AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER,
+            [new MerchantPortalAclEntityMetadataConfigExpanderPlugin()]
+        );
+    }
 
     /**
      * @return void
@@ -179,51 +197,26 @@ class AclMerchantPortalFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandAclEntityMetadataConfigWithMerchantOrderCompositeSuccess(): void
+    public function testExpandAclEntityMetadataConfigSuccess(): void
     {
-        $this->tester->markTestSkipped('Skipped until MerchantOrderComposite enabled');
-
         // Act
         $aclEntityMetadataConfigTransfer = $this->tester->getAclEntityMetadataConfigTransfer();
-        $aclEntityMetadataConfigTransfer = $this->tester->getFacade()
-            ->expandAclEntityMetadataConfigWithMerchantOrderComposite($aclEntityMetadataConfigTransfer);
+        $aclEntityMetadataConfigTransfer = $this->tester->getFacade()->expandAclEntityMetadataConfig(
+            $aclEntityMetadataConfigTransfer
+        );
 
         $aclEntityMetadataCollectionTransfer = $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollection();
 
         // Assert
         $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertSame(6, count($aclEntityMetadataCollectionTransfer->getCollection()));
+        $this->assertSame(103, count($aclEntityMetadataCollectionTransfer->getCollection()));
         $this->assertArrayHasKey(SpyMerchantSalesOrderTotals::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyStateMachineItemState::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyMerchantSalesOrderItem::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpySalesOrderItem::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpySalesOrder::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyMerchantSalesOrder::class, $aclEntityMetadataCollectionTransfer->getCollection());
-
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrderTotals::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyStateMachineItemState::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrderItem::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpySalesOrderItem::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpySalesOrder::class]->getParent());
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrder::class]->getParent());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandAclEntityMetadataConfigWithMerchantProductCompositeSuccess(): void
-    {
-        // Act
-        $aclEntityMetadataConfigTransfer = $this->tester->getAclEntityMetadataConfigTransfer();
-        $aclEntityMetadataConfigTransfer = $this->tester->getFacade()
-            ->expandAclEntityMetadataConfigWithMerchantProductComposite($aclEntityMetadataConfigTransfer);
-        $aclEntityMetadataCollectionTransfer = $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollection();
-
-        // Assert
-        $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertSame(17, count($aclEntityMetadataCollectionTransfer->getCollection()));
         $this->assertArrayHasKey(SpyAvailability::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyAvailabilityAbstract::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyProductImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
@@ -239,9 +232,41 @@ class AclMerchantPortalFacadeTest extends Unit
         $this->assertArrayHasKey(SpyUser::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyMerchantUser::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyMerchant::class, $aclEntityMetadataCollectionTransfer->getCollection());
-
+        $this->assertArrayHasKey(SpyMerchantProfileAddress::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyMerchantProfile::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyMerchantStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyMerchantStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyMerchantCategory::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyPriceProductOffer::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyProductOfferStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyProductOfferValidity::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyCategoryClosureTable::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyCategoryNode::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyCategoryStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyStockStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyProductOfferStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyProductAbstractStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyCategoryImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyCategoryImageSetToCategoryImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyCategoryImageSet::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyProductManagementAttributeValue::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyProductOffer::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyProductManagementAttribute::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyPriceProductDefault::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyPriceProductStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyTaxRate::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyGlossaryTranslation::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyRefund::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpySalesExpense::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpySalesOrderTotals::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyCustomer::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrderTotals::class]->getParent());
+        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrderItem::class]->getParent());
+        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpySalesOrderItem::class]->getParent());
+        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpySalesOrder::class]->getParent());
+        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrder::class]->getParent());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyAvailability::class]->getParent());
-        $this->assertEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductImage::class]->getParent());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProduct::class]->getParent());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductAbstract::class]->getParent());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantProductAbstract::class]->getParent());
@@ -249,105 +274,10 @@ class AclMerchantPortalFacadeTest extends Unit
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductCategory::class]->getParent());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductLocalizedAttributes::class]->getParent());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductImageSetToProductImage::class]->getParent());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandAclEntityMetadataCollectionWithMerchantCompositeSuccess(): void
-    {
-        // Act
-        $aclEntityMetadataConfigTransfer = $this->tester->getAclEntityMetadataConfigTransfer();
-        $aclEntityMetadataConfigTransfer = $this->tester->getFacade()
-            ->expandAclEntityMetadataConfigWithMerchantComposite($aclEntityMetadataConfigTransfer);
-        $aclEntityMetadataCollectionTransfer = $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollection();
-
-        // Assert
-        $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertSame(5, count($aclEntityMetadataCollectionTransfer->getCollection()));
-        $this->assertArrayHasKey(SpyMerchantProfileAddress::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantProfile::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyMerchantCategory::class, $aclEntityMetadataCollectionTransfer->getCollection());
-
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantProfileAddress::class]->getParent());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantProfile::class]->getParent());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantStock::class]->getParent());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandAclEntityMetadataConfigWithProductOfferCompositeSuccess(): void
-    {
-        // Act
-        $aclEntityMetadataConfigTransfer = $this->tester->getAclEntityMetadataConfigTransfer();
-        $aclEntityMetadataConfigTransfer = $this->tester->getFacade()
-            ->expandAclEntityMetadataConfigWithProductOfferComposite($aclEntityMetadataConfigTransfer);
-        $aclEntityMetadataCollectionTransfer = $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollection();
-
-        // Assert
-        $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertSame(21, count($aclEntityMetadataCollectionTransfer->getCollection()));
-        $this->assertArrayHasKey(SpyPriceProductOffer::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOfferStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOfferValidity::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryClosureTable::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryNode::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyStockStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOfferStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductAbstractStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryImageSetToCategoryImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryImageSet::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductManagementAttributeValue::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOffer::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductManagementAttribute::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyPriceProductDefault::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyPriceProductStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyTaxRate::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyGlossaryTranslation::class, $aclEntityMetadataCollectionTransfer->getCollection());
-    }
-
-    /**
-     * @return void
-     */
-    public function testExpandAclEntityMetadataConfigWithMerchantReadGlobalEntitiesSuccess(): void
-    {
-        // Act
-        $aclEntityMetadataConfigTransfer = $this->tester->getAclEntityMetadataConfigTransfer();
-        $aclEntityMetadataConfigTransfer = $this->tester->getFacade()
-            ->expandAclEntityMetadataConfigWithProductOfferComposite($aclEntityMetadataConfigTransfer);
-        $aclEntityMetadataCollectionTransfer = $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollection();
-
-        // Assert
-        $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
-        $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertSame(21, count($aclEntityMetadataCollectionTransfer->getCollection()));
-        $this->assertArrayHasKey(SpyPriceProductOffer::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOfferStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOfferValidity::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryClosureTable::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryNode::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyStockStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOfferStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyStock::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductAbstractStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryImageSetToCategoryImage::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyCategoryImageSet::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductManagementAttributeValue::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductOffer::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyProductManagementAttribute::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyPriceProductDefault::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyPriceProductStore::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyTaxRate::class, $aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertArrayHasKey(SpyGlossaryTranslation::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyStateMachineItemState::class]->getParent());
+        $this->assertEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyProductImage::class]->getParent());
     }
 }

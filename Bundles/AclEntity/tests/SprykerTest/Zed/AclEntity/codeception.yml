@@ -21,6 +21,13 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Zed\AclEntity\Helper\AclEntityHelper
                 - \SprykerTest\Zed\Acl\Helper\AclHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+    Persistence:
+        path: Persistence
+        class_name: AclEntityPersistenceTester
+        modules:
+            enabled:
+                - Asserts

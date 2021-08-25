@@ -16,6 +16,15 @@ interface AclEntityMetadataConfigExpanderInterface
      *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
+    public function expandAclEntityMetadataConfigWithMerchantOrderComposite(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclEntityMetadataConfigTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
+     */
     public function expandAclEntityMetadataConfigWithMerchantProductComposite(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer;
@@ -52,7 +61,7 @@ interface AclEntityMetadataConfigExpanderInterface
      *
      * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
      */
-    public function expandAclEntityMetadataConfigWithWhitelist(
+    public function expandAclEntityMetadataConfigWithAllowList(
         AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
     ): AclEntityMetadataConfigTransfer;
 }

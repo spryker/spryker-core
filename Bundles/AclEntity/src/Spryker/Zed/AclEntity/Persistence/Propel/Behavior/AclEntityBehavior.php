@@ -94,7 +94,7 @@ class AclEntityBehavior extends Behavior
      */
     public function modifyTable(): void
     {
-        $aclEntityMetadataConfigTransfer = $this->getAclEntityFacade()->getAclEntityMetadataConfig();
+        $aclEntityMetadataConfigTransfer = $this->getAclEntityFacade()->getAclEntityMetadataConfig(false);
         /** @var \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer */
         $aclEntityMetadataCollectionTransfer = $aclEntityMetadataConfigTransfer->getAclEntityMetadataCollection();
         $aclEntityMetadataReader = $this->getAclEntityPersistenceFactory()->createAclEntityMetadataReader(

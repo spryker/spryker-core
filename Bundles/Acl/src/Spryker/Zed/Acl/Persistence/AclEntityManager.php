@@ -49,6 +49,6 @@ class AclEntityManager extends AbstractEntityManager implements AclEntityManager
 
         $aclRoleEntity->save();
 
-        return $aclMapper->mapAclRoleEntityToRoleTransfer($aclRoleEntity, new RoleTransfer());
+        return $aclMapper->mapAclRoleEntityToRoleTransfer($aclRoleEntity, $roleTransfer);
     }
 }

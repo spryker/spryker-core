@@ -15,6 +15,12 @@ use Spryker\Zed\AclEntity\Business\Reader\AclEntityMetadataConfigReader;
 use Spryker\Zed\AclEntity\Business\Reader\AclEntityMetadataConfigReaderInterface;
 use Spryker\Zed\AclEntity\Business\Reader\AclEntityReader;
 use Spryker\Zed\AclEntity\Business\Reader\AclEntityReaderInterface;
+use Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidator;
+use Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface;
+use Spryker\Zed\AclEntity\Business\Validator\AclEntityRuleValidator;
+use Spryker\Zed\AclEntity\Business\Validator\AclEntityRuleValidatorInterface;
+use Spryker\Zed\AclEntity\Business\Validator\AclEntitySegmentConnectorValidator;
+use Spryker\Zed\AclEntity\Business\Validator\AclEntitySegmentConnectorValidatorInterface;
 use Spryker\Zed\AclEntity\Business\Writer\AclEntityRuleWriter;
 use Spryker\Zed\AclEntity\Business\Writer\AclEntityRuleWriterInterface;
 use Spryker\Zed\AclEntity\Business\Writer\AclEntitySegmentWriter;
@@ -35,7 +41,8 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     {
         return new AclEntitySegmentWriter(
             $this->getEntityManager(),
-            $this->getAclEntityService()
+            $this->getAclEntityService(),
+            $this->createAclEntitySegmentConnectorValidator()
         );
     }
 
@@ -45,7 +52,8 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     public function createAclEntityRuleWriter(): AclEntityRuleWriterInterface
     {
         return new AclEntityRuleWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->createAclEntityRuleValidator()
         );
     }
 
@@ -65,7 +73,8 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     public function createAclEntityMetadataConfigReader(): AclEntityMetadataConfigReaderInterface
     {
         return new AclEntityMetadataConfigReader(
-            $this->getAclEntityMetadataCollectionExpanderPlugins()
+            $this->getAclEntityMetadataCollectionExpanderPlugins(),
+            $this->createAclEntityMetadataConfigValidator()
         );
     }
 
@@ -114,5 +123,32 @@ class AclEntityBusinessFactory extends AbstractBusinessFactory
     public function getIsAclEntityEnabled(): bool
     {
         return $this->getProvidedDependency(AclEntityDependencyProvider::PARAM_IS_ACL_ENTITY_ENABLED);
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Business\Validator\AclEntityRuleValidatorInterface
+     */
+    public function createAclEntityRuleValidator(): AclEntityRuleValidatorInterface
+    {
+        return new AclEntityRuleValidator(
+            $this->getRepository(),
+            $this->createAclEntityMetadataConfigReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface
+     */
+    public function createAclEntityMetadataConfigValidator(): AclEntityMetadataConfigValidatorInterface
+    {
+        return new AclEntityMetadataConfigValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\AclEntity\Business\Validator\AclEntitySegmentConnectorValidatorInterface
+     */
+    public function createAclEntitySegmentConnectorValidator(): AclEntitySegmentConnectorValidatorInterface
+    {
+        return new AclEntitySegmentConnectorValidator($this->getAclEntityService());
     }
 }

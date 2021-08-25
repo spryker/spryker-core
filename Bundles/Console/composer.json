@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.3",
-        "spryker/acl-entity-extension": "^0.1.0 || ^0.2.0",
+        "spryker/acl-entity-extension": "^0.1.0 || ^0.2.0 || ^1.0.0",
         "spryker/application": "^3.23.0",
         "spryker/application-extension": "^1.0.0",
         "spryker/config": "^3.0.0",

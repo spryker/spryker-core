@@ -41,7 +41,6 @@ class QuoteRequestsResourceController extends AbstractController
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestQuoteRequestsAttributesTransfer",
      *          "responses": {
-     *              "404": "Quote request not found.",
      *              "403": "Unauthorized request.",
      *              "400": "Bad request."
      *          }

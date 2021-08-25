@@ -26,15 +26,23 @@ class RoleWriter implements RoleWriterInterface
     protected $aclRepository;
 
     /**
+     * @var \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface[]
+     */
+    protected $aclRolePostSavePlugins;
+
+    /**
      * @param \Spryker\Zed\Acl\Persistence\AclEntityManagerInterface $aclEntityManager
      * @param \Spryker\Zed\Acl\Persistence\AclRepositoryInterface $aclRepository
+     * @param \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface[] $aclRolePostSavePlugins
      */
     public function __construct(
         AclEntityManagerInterface $aclEntityManager,
-        AclRepositoryInterface $aclRepository
+        AclRepositoryInterface $aclRepository,
+        array $aclRolePostSavePlugins
     ) {
         $this->aclEntityManager = $aclEntityManager;
         $this->aclRepository = $aclRepository;
+        $this->aclRolePostSavePlugins = $aclRolePostSavePlugins;
     }
 
     /**
@@ -57,7 +65,10 @@ class RoleWriter implements RoleWriterInterface
             );
         }
 
-        return $this->aclEntityManager->createRole($roleTransfer);
+        $roleTransfer = $this->aclEntityManager->createRole($roleTransfer);
+        $roleTransfer = $this->executeAclRolPostSavePlugins($roleTransfer);
+
+        return $roleTransfer;
     }
 
     /**
@@ -80,5 +91,19 @@ class RoleWriter implements RoleWriterInterface
         $exceptionMesaage = sprintf('Role with %s already exists', implode(' or ', $exceptionMesaageParameters));
 
         return $exceptionMesaage;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer
+     */
+    protected function executeAclRolPostSavePlugins(RoleTransfer $roleTransfer): RoleTransfer
+    {
+        foreach ($this->aclRolePostSavePlugins as $aclRolePostSavePlugin) {
+            $roleTransfer = $aclRolePostSavePlugin->postSave($roleTransfer);
+        }
+
+        return $roleTransfer;
     }
 }
