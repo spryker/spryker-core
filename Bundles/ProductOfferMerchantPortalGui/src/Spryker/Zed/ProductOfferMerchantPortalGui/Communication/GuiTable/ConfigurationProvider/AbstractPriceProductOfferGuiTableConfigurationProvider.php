@@ -133,7 +133,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
             $priceTypeName = $this->getPriceTypeName($priceTypeTransfer);
-            $titlePriceTypeName = ucfirst($priceTypeName);
+            $titlePriceTypeName = ucfirst(mb_strtolower($priceTypeName));
 
             $fieldOptions = [
                 'attrs' => [
@@ -192,7 +192,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 
         foreach ($priceTypeTransfers as $priceTypeTransfer) {
             $priceTypeName = $this->getPriceTypeName($priceTypeTransfer);
-            $titlePriceTypeName = ucfirst($priceTypeName);
+            $titlePriceTypeName = ucfirst(mb_strtolower($priceTypeName));
 
             $guiTableConfigurationBuilder->addColumnText(
                 $this->columnIdCreator->createNetAmountColumnId($priceTypeName),

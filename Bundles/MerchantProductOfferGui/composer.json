@@ -8,9 +8,9 @@
         "spryker/gui": "^3.33.0",
         "spryker/kernel": "^3.33.0",
         "spryker/merchant": "^3.0.0",
-        "spryker/merchant-product-offer": "^0.8.0",
-        "spryker/product-offer": "^0.7.0",
-        "spryker/product-offer-gui-extension": "^0.1.0",
+        "spryker/merchant-product-offer": "^1.0.0",
+        "spryker/product-offer": "^1.0.0",
+        "spryker/product-offer-gui-extension": "^1.0.0",
         "spryker/propel-orm": "^1.9.0",
         "spryker/symfony": "^3.0.0"
     },

@@ -129,7 +129,6 @@
     </transfer>
 
     <transfer name="StateMachineItem">
-        <property name="idMerchantOrderItem" type="int"/>
     </transfer>
 
     <transfer name="Totals">

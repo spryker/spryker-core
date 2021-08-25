@@ -1,35 +1,35 @@
 Active,Aktiv
 "Add Offer","Angebot hinzufügen"
 Approved,Genehmigt
-"Always in stock","Immer auf lager"
+"Always in stock","Immer auf Lager"
 Created,Erstellt
 "Created from","Erstellt von"
 "Created to","Erstellt bis"
-"At least one store must be selected.","At least one store must be selected."
+"At least one store must be selected.","Es muss mindestens ein Store ausgewählt sein."
 "Create Offer","Angebot erstellen"
 Denied,Abgelehnt
-"Expiring in %daysNumber% days","Expiring in %daysNumber% days"
+"Expiring in %daysNumber% days","Läuft in %daysNumber% Tagen ab"
 From,Von
 "Has stock","Auf Lager"
 Image,Bild
 Inactive,Inaktiv
 "List of Products",Produktliste
-"Low on Stock","Low on Stock"
-"Manage Offers","Manage Offers"
-"Manage Offer","Manage Offer"
-"Merchant SKU",Händler-SKU
+"Low on Stock","Wenig Bestand"
+"Manage Offers","Angebote verwalten"
+"Manage Offer","Angebot verwalten"
+"Merchant SKU",Verkäufer-SKU
 Name,Name
 "Never out of stock","Immer auf Lager"
-"Offer is Active","Angebot ist Aktiv"
+"Offer is online","Angebot ist online"
 Offers,Angebote
 Offline,Offline
-"On Marketplace","On Marketplace"
+"On Marketplace","Auf dem Marktplatz"
 Online,Online
 "Out of stock",Ausverkauft
 Pending,Ausstehend
 Reference,ID
 Search,Suche
-"Offer reference",Angebot-Referenz
+"Offer Reference",Angebot-Referenz
 Price,Preis
 Quantity,Menge
 "Search by SKU, Name","Suche nach SKU, Name"
@@ -44,35 +44,38 @@ Updated,Aktualisiert
 "The Offer is not saved.","Angebot ist nicht gespeichert."
 Valid,Gültig
 "Valid From","Gültig Von"
-"Valid, online & with Stock","Valid, online & with Stock"
+"Valid, online & with Stock","Gültig, online und vorrätig"
 "Valid To","Gültig Bis"
-"With Offers","Mit Angebote"
-"With Stock","With Stock"
+Visibility,Sichtbarkeit
+"With Offers","Mit Angeboten"
+"With Stock",Vorrätig
 "Without Offers","Ohne Angebote"
-"Description & Details","Description & Details"
-"The first date cannot be later than the second one.","The first date cannot be later than the second one."
-"The first date is the same as the second one.","The first date is the same as the second one."
-"The second date cannot be earlier than the first one.","The second date cannot be earlier than the first one."
+"Description & Details","Beschreibung und Details"
+"The first date cannot be later than the second one.","Das erste Datum muss vor dem Zweiten liegen."
+"The first date is the same as the second one.","Das erste Datum ist gleich dem Zweiten."
+"The second date cannot be earlier than the first one.","Das zweite Datum darf nicht vor dem Ersten liegen."
+"This means that the offer does not appear online and noone can see it.","Dies bedeutet, dass das Angebot nicht online angezeigt wird und es niemand sehen kann."
 To,Bis
-"GROSS DEFAULT","GROSS DEFAULT"
-"GROSS ORIGINAL","GROSS ORIGINAL"
-"NET DEFAULT","NET DEFAULT"
-"NET ORIGINAL","NET ORIGINAL"
+"Gross Default","Brutto Default"
+"Gross Original","Brutto Original"
+"Net Default","Netto Default"
+"Net Original","Netto Original"
 Offer,Angebot
 Save,Speichern
 Create,Erstellen
 "Validity Dates",Gültigkeitsdatum
+"Offer visibility",Sichtbarkeit
 select.default.placeholder,Auswählen
-"Enter SKU","Enter SKU"
-"Enter quantity","Enter quantity"
-"To create your offer, choose a product from the list below.","To create your offer, choose a product from the list below."
+"Enter SKU","SKU eingeben"
+"Enter quantity","Anzahl eingeben"
+"To create your offer, choose a product from the list below.","Um ein Angebot zu erstellen, ein Produkt aus der Liste unten auswählen."
 "This value is not valid.","Dieser Wert ist ungültig."
 "This field is missing.","Dieses Feld fehlt."
 "The set of inputs Store and Currency needs to be unique.","Die Kombination aus Store und Währung wird bereits verwendet."
 "Success! The Price is deleted.","Der Preis wurde gelöscht."
 "Something went wrong, please try again.","Etwas ist schief gelaufen, bitte versuchen Sie es noch einmal."
 "Offer prices saved successfully.","Angebotspreise wurden gespeichert."
-Cancel,Stornieren
+Cancel,Abbrechen
 Add,Hinzufügen
 "Approval Status",Genehmigungsstatus
 Product,Produkt
@@ -80,3 +83,5 @@ Product,Produkt
 "Available Stock","Verfügbarer Lagerbestand"
 "Volume Quantity",Menge
 "A Price for Quantity of 2 or above requires a Price for 1 for this set of inputs Store, Currency, and Quantity.","Um einen Mengenpreis für diese Kombination aus Store, Währung und Menge zu erstellen, bitte zuvor den Preis für die Anzahl von 1 defineren."
+"To save an Offer please resolve all errors.","Um das Angebot zu speichern, bitte alle Fehler beheben."
+Currencies,Währungen

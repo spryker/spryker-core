@@ -44,7 +44,7 @@
 
                 <div items-states class="{{ mainClass }}__states">
                     {% for state in merchantOrder.itemStates %}
-                        <web-spy-chips max-width="none" class="{{ mainClass }}__states-col">{{ state }}</web-spy-chips>
+                        <web-spy-chips max-width="none" class="{{ mainClass }}__states-col">{{ state | trans }}</web-spy-chips>
                     {% endfor %}
                 </div>
             {% endblock %}
@@ -241,7 +241,7 @@
                                                         info: fullAddress,
                                                     },
                                                     {
-                                                        name: 'carrier' | trans | upper,
+                                                        name: 'Carrier' | trans | upper,
                                                         info: shipment.carrier.name,
                                                     },
                                                     {

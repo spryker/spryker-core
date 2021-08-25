@@ -40,7 +40,7 @@ Product,Produkt
 Quantity,Menge
 "Unit Price",Stückpreis
 "Item total","Artikel Gesamt"
-State,Zustand
+State,Status
 "Trigger event","Event auslösen"
 "Variant Details",Variantendetails
 "Show less","Weniger anzeigen"
@@ -51,7 +51,7 @@ State,Zustand
 Sku,SKU
 "Shipment has been successfully created.","Sendung wurde erfolgreich erstellt."
 "Shipment has not been created.","Es wurde keine Lieferung erstellt."
-"Merchant sales order #%d not found.","Händler-Bestellnummer %d wurde nicht gefunden."
+"Merchant sales order #%d not found.","Verkäufer-Bestellnummer %d wurde nicht gefunden."
 "Shipment has been successfully updated.","Sendung wurde erfolgreich bearbeitet."
 "Shipment has not been updated.","Die Lieferung wurde nicht aktualisiert."
 "Shipment #%d not found.","Die Lieferung #%d wurde nicht gefunden."

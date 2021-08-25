@@ -10,6 +10,7 @@
         "spryker/carts-rest-api-extension": "^1.6.0",
         "spryker/customers-rest-api-extension": "^1.2.0",
         "spryker/glue-application": "^1.18.0",
+        "spryker/glue-application-authorization-connector-extension": "^1.0.0",
         "spryker/glue-application-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/persistent-cart": "^3.1.0",
@@ -21,9 +22,13 @@
         "spryker/zed-request": "^3.6.0"
     },
     "require-dev": {
+        "spryker/calculation": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/customer": "*",
+        "spryker/price-cart-connector": "*",
+        "spryker/price-product": "*",
+        "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

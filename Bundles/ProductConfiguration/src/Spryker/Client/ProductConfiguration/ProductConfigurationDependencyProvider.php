@@ -16,36 +16,32 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientBridge;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceProductVolumeClientBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientBridge;
 use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToGuzzleHttpClientAdapter;
 use Spryker\Client\ProductConfiguration\Dependency\External\ProductConfigurationToSprykerChecksumGeneratorAdapter;
-use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingBridge;
-use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigurationRequestPluginException;
-use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfiguratorResponsePluginException;
-use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
-use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToPriceProductServiceBridge;
+use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceBridge;
 
 /**
  * @method \Spryker\Client\ProductConfiguration\ProductConfigurationConfig getConfig()
  */
 class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
 {
-    public const PLUGINS_PRODUCT_CONFIGURATOR_REQUEST = 'PLUGINS_PRODUCT_CONFIGURATOR_REQUEST';
-    public const PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_REQUEST = 'PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_REQUEST';
-
-    public const PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE';
-    public const PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE';
-
-    public const PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER = 'PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER';
-
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
     public const CLIENT_HTTP = 'CLIENT_HTTP';
+    public const CLIENT_PRICE_PRODUCT_VOLUME = 'CLIENT_PRICE_PRODUCT_VOLUME';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const SERVICE_PRODUCT_CONFIGURATION = 'SERVICE_PRODUCT_CONFIGURATION';
+    public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+
+    public const PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER = 'PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER';
+    public const PLUGINS_PRODUCT_CONFIGURATION_PRICE_EXTRACTOR = 'PLUGINS_PRODUCT_CONFIGURATION_PRICE_EXTRACTOR';
 
     public const CHECKSUM_GENERATOR = 'CHECKSUM_GENERATOR';
 
@@ -58,19 +54,49 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container = $this->addProductConfiguratorRequestPlugins($container);
-        $container = $this->addDefaultProductConfiguratorRequestPlugin($container);
-        $container = $this->addProductConfiguratorResponsePlugins($container);
-        $container = $this->addDefaultProductConfiguratorResponsePlugin($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addStoreClient($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addPriceClient($container);
         $container = $this->addCurrencyClient($container);
-        $container = $this->addProductConfigurationRequestExpanderPlugins($container);
         $container = $this->addHttpClient($container);
         $container = $this->addUtilEncodingService($container);
+        $container = $this->addProductConfigurationService($container);
+        $container = $this->addPriceProductService($container);
+        $container = $this->addPriceProductConfigurationPriceExtractorPlugins($container);
+        $container = $this->addProductConfigurationRequestExpanderPlugins($container);
         $container = $this->addChecksumGenerator($container);
+        $container = $this->addPriceProductVolumeClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductService(Container $container): Container
+    {
+        $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
+            return new ProductConfigurationToPriceProductServiceBridge(
+                $container->getLocator()->priceProduct()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConfigurationService(Container $container): Container
+    {
+        $container->set(static::SERVICE_PRODUCT_CONFIGURATION, function (Container $container) {
+            return $container->getLocator()->productConfiguration()->service();
+        });
 
         return $container;
     }
@@ -176,11 +202,11 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addUtilEncodingService(Container $container): Container
+    protected function addPriceProductVolumeClient(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new ProductConfigurationToUtilEncodingBridge(
-                $container->getLocator()->utilEncoding()->service()
+        $container->set(static::CLIENT_PRICE_PRODUCT_VOLUME, function (Container $container) {
+            return new ProductConfigurationToPriceProductVolumeClientBridge(
+                $container->getLocator()->priceProductVolume()->client()
             );
         });
 
@@ -192,68 +218,12 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addProductConfiguratorRequestPlugins(Container $container): Container
+    protected function addUtilEncodingService(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST, function () {
-            return $this->getProductConfiguratorRequestPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addProductConfiguratorResponsePlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE, function () {
-            return $this->getProductConfiguratorResponsePlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface[]
-     */
-    protected function getProductConfiguratorRequestPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface[]
-     */
-    protected function getProductConfiguratorResponsePlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addDefaultProductConfiguratorRequestPlugin(Container $container): Container
-    {
-        $container->set(static::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_REQUEST, function () {
-            return $this->getDefaultProductConfiguratorRequestPlugin();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addDefaultProductConfiguratorResponsePlugin(Container $container): Container
-    {
-        $container->set(static::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE, function () {
-            return $this->getDefaultProductConfiguratorResponsePlugin();
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ProductConfigurationToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
         });
 
         return $container;
@@ -300,7 +270,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface[]
+     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderPluginInterface[]
      */
     protected function getProductConfigurationRequestExpanderPlugins(): array
     {
@@ -308,34 +278,24 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @throws \Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigurationRequestPluginException
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface
+     * @return \Spryker\Client\Kernel\Container
      */
-    protected function getDefaultProductConfiguratorRequestPlugin(): ProductConfiguratorRequestPluginInterface
+    protected function addPriceProductConfigurationPriceExtractorPlugins(Container $container): Container
     {
-        throw new MissingDefaultProductConfigurationRequestPluginException(
-            sprintf(
-                "Missing instance of %s! You need to provide default product configurator request plugin
-                      in your own ProductConfigurationDependencyProvider::getDefaultProductConfiguratorRequestPlugin().",
-                ProductConfiguratorRequestPluginInterface::class
-            )
-        );
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATION_PRICE_EXTRACTOR, function () {
+            return $this->getProductConfigurationPriceExtractorPlugins();
+        });
+
+        return $container;
     }
 
     /**
-     * @throws \Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfiguratorResponsePluginException
-     *
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface
+     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationPriceExtractorPluginInterface[]
      */
-    protected function getDefaultProductConfiguratorResponsePlugin(): ProductConfiguratorResponsePluginInterface
+    protected function getProductConfigurationPriceExtractorPlugins(): array
     {
-        throw new MissingDefaultProductConfiguratorResponsePluginException(
-            sprintf(
-                "Missing instance of %s! You need to provide default product configurator response plugin
-                      in your own ProductConfigurationDependencyProvider::getDefaultProductConfiguratorResponsePlugin().",
-                ProductConfiguratorResponsePluginInterface::class
-            )
-        );
+        return [];
     }
 }

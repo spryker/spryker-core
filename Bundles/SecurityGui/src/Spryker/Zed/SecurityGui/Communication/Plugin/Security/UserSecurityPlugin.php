@@ -22,6 +22,7 @@ use Spryker\Zed\SecurityGui\SecurityGuiConfig;
 class UserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
     protected const SECURITY_FIREWALL_NAME = 'User';
+    protected const PATH_LOGIN_CHECK = '/login_check';
 
     protected const ROUTE_LOGIN = 'security-gui:login';
     protected const PATH_LOGOUT = '/auth/logout';
@@ -67,7 +68,7 @@ class UserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterfa
             'pattern' => $this->getConfig()->getBackofficeRoutePattern(),
             'form' => [
                 'login_path' => static::ROUTE_LOGIN,
-                'check_path' => '/login_check',
+                'check_path' => static::PATH_LOGIN_CHECK,
                 'username_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_USERNAME . ']',
                 'password_parameter' => LoginForm::FORM_NAME . '[' . LoginForm::FIELD_PASSWORD . ']',
             ],

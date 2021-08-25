@@ -32,6 +32,20 @@ interface CartsRestApiClientInterface
 
     /**
      * Specification:
+     * - Finds quote by uuid.
+     * - Uuid and customerReference must be set in the QuoteTransfer taken as parameter.
+     * - Reloads quote items if {@link \Spryker\Zed\CartsRestApi\CartsRestApiConfig::isQuoteReloadEnabled()} set to `true`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuidWithQuoteItemReload(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
      * - Finds customer quote collection.
      *
      * @api
@@ -100,6 +114,7 @@ interface CartsRestApiClientInterface
      * Specification:
      * - Updates item quantity in cart.
      * - QuoteTransfer, CustomerTransfer.customerReference, sku and quantity must be set in the CartItemRequestTransfer.
+     * - Reloads quote items if {@link \Spryker\Zed\CartsRestApi\CartsRestApiConfig::isQuoteReloadEnabled()} set to `true`.
      *
      * @api
      *
@@ -128,6 +143,7 @@ interface CartsRestApiClientInterface
      * Specification:
      * - Adds an item to the cart.
      * - quoteUuid, CustomerTransfer.customerReference and sku must be set in the CartItemRequestTransfer.
+     * - Reloads quote items if {@link \Spryker\Zed\CartsRestApi\CartsRestApiConfig::isQuoteReloadEnabled()} set to `true`.
      *
      * @api
      *
@@ -156,6 +172,7 @@ interface CartsRestApiClientInterface
      * Specification:
      * - Removes item from cart.
      * - quoteUuid, CustomerTransfer.customerReference, sku must be set in the CartItemRequestTransfer.
+     * - Reloads quote items if {@link \Spryker\Zed\CartsRestApi\CartsRestApiConfig::isQuoteReloadEnabled()} set to `true`.
      *
      * @api
      *
@@ -184,6 +201,7 @@ interface CartsRestApiClientInterface
      * Specification:
      * - Adds an item to the cart of guest user.
      * - sku, quantity and CustomerTransfer.customerReference must be set in the CartItemRequestTransfer.
+     * - Reloads quote items if {@link \Spryker\Zed\CartsRestApi\CartsRestApiConfig::isQuoteReloadEnabled()} set to `true`.
      *
      * @api
      *

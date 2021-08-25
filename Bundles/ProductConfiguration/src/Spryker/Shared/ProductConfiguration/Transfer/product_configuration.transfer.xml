@@ -117,6 +117,11 @@
     <transfer name="PriceProduct">
         <property name="skuProduct" type="string"/>
         <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="priceTypeName" type="string"/>
+        <property name="isMergeable" type="bool"/>
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="groupKey" type="string"/>
+        <property name="volumeQuantity" type="int"/>
     </transfer>
 
     <transfer name="CartItemQuantity">
@@ -124,6 +129,30 @@
     </transfer>
 
     <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
+        <property name="productConfigurationInstanceHash" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorPageResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="configuratorRedirectUrl" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="priceData" type="string"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="QuoteRequest">

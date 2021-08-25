@@ -14,6 +14,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
 /**
+ * @deprecated Will be removed without replacement.
+ * Use `frontend:yves:build` for build Yves frontend.
+ * Use `frontend:zed:build` for build Zed frontend.
+ *
  * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */

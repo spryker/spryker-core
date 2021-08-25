@@ -13,6 +13,13 @@ namespace Spryker\Shared\MerchantPortalApplication;
 interface MerchantPortalConstants
 {
     /**
+     * Base URL for Merchant Portal including scheme and port (e.g. http://mp.de.demoshop.local:9080)
+     *
+     * @api
+     */
+    public const BASE_URL_MP = 'MERCHANT_PORTAL_APPLICATION:BASE_URL_MP';
+
+    /**
      * - Enables/disables global setting for merchant portal debug mode.
      * - Defaults to false.
      *

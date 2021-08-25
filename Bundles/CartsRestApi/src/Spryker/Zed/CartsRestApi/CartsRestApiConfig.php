@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CartsRestApi;
 
 use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
+use Spryker\Shared\CartsRestApi\CartsRestApiConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CartsRestApiConfig extends AbstractBundleConfig
@@ -45,5 +46,19 @@ class CartsRestApiConfig extends AbstractBundleConfig
             static::MESSAGE_PRICE_MODE_DATA_IS_MISSING => CartsRestApiSharedConfig::ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_MISSING,
             static::MESSAGE_PRICE_MODE_DATA_IS_INCORRECT => CartsRestApiSharedConfig::ERROR_IDENTIFIER_PRICE_MODE_DATA_IS_INCORRECT,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Enables reloading of cart items.
+     * - Enabling leads to performance decreasing.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isQuoteReloadEnabled(): bool
+    {
+        return $this->get(CartsRestApiConstants::IS_QUOTE_RELOAD_ENABLED, false);
     }
 }

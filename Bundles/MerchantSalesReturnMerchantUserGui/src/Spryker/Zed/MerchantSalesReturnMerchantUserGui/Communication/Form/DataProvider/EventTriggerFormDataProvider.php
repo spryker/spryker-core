@@ -12,9 +12,9 @@ class EventTriggerFormDataProvider
     protected const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-event';
 
     /**
-     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_MERCHANT_SALES_ORDER_REFERENCE
+     * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_RETURN_REFERENCE
      */
-    protected const URL_PARAM_MERCHANT_SALES_ORDER_REFERENCE = 'merchant-sales-order-reference';
+    protected const URL_PARAM_RETURN_REFERENCE = 'return-reference';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\OmsTriggerController::URL_PARAM_REDIRECT
@@ -44,21 +44,21 @@ class EventTriggerFormDataProvider
     /**
      * @phpstan-return array<int|string, mixed>
      *
-     * @param string $merchantSalesOrderReference
+     * @param string $returnReference
      * @param string $event
      * @param string $redirect
      *
      * @return array
      */
     public function getOptions(
-        string $merchantSalesOrderReference,
+        string $returnReference,
         string $event,
         string $redirect
     ): array {
         return [
             static::OPTION_EVENT => $event,
             static::OPTION_ACTION_QUERY_PARAMETERS => [
-                static::URL_PARAM_MERCHANT_SALES_ORDER_REFERENCE => $merchantSalesOrderReference,
+                static::URL_PARAM_RETURN_REFERENCE => $returnReference,
                 static::URL_PARAM_EVENT => $event,
                 static::URL_PARAM_REDIRECT => $redirect,
             ],

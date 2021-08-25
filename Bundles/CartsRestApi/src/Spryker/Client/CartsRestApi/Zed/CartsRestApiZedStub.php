@@ -47,6 +47,24 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::findQuoteByUuidAction()
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function findQuoteByUuidWithQuoteItemReload(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call(
+            '/carts-rest-api/gateway/find-quote-by-uuid-with-quote-item-reload',
+            $quoteTransfer
+        );
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
      * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::getQuoteCollectionAction()
      *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer

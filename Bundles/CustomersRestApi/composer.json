@@ -9,6 +9,7 @@
         "spryker/customer": "^7.30.0",
         "spryker/customers-rest-api-extension": "^1.1.0",
         "spryker/glue-application": "^1.15.0",
+        "spryker/glue-application-authorization-connector-extension": "^1.0.0",
         "spryker/glue-application-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/propel-orm": "^1.0.0",

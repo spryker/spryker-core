@@ -74,7 +74,6 @@
         <property name="withOrder" type="bool"/>
         <property name="withUniqueProductsCount" type="bool"/>
         <property name="customerReference" type="string"/>
-        <property name="orderItemUuid" type="string" deprecated="Use orderItemUuids property instead."/>
         <property name="orderItemUuids" type="string[]" singular="orderItemUuid"/>
         <property name="withMerchant" type="bool"/>
     </transfer>

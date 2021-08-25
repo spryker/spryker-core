@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapter;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFacadeBridge;
+use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToTranslatorFacadeBridge;
 
 /**
  * @method \Spryker\Zed\Product\ProductConfig getConfig()
@@ -20,6 +21,7 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
 {
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
 
@@ -37,6 +39,7 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
         $container = $this->addPriceProductFacade($container);
         $container = $this->addValidationAdapter($container);
         $container = $this->addStoreFacadeFacade($container);
+        $container = $this->addTranslatorFacade($container);
 
         $container = $this->addPriceProductOfferExtractorPlugins($container);
         $container = $this->addPriceProductOfferExpanderPlugins($container);
@@ -86,6 +89,22 @@ class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::EXTERNAL_ADAPTER_VALIDATION, function () {
             return new PriceProductOfferToValidationAdapter();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
+            return new PriceProductOfferToTranslatorFacadeBridge(
+                $container->getLocator()->translator()->facade()
+            );
         });
 
         return $container;

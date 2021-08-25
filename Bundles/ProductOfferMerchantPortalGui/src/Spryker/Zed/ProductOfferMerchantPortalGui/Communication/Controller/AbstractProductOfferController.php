@@ -144,10 +144,14 @@ class AbstractProductOfferController extends AbstractController
      */
     protected function addErrorResponseDataToResponse(array $responseData, ?ProductOfferResponseTransfer $productOfferResponseTransfer = null): array
     {
+        $message = $this->getFactory()
+            ->getTranslatorFacade()
+            ->trans(static::RESPONSE_NOTIFICATION_MESSAGE_ERROR);
+
         $zedUiFormResponseBuilder = $this->getFactory()
             ->getZedUiFactory()
             ->createZedUiFormResponseBuilder()
-            ->addErrorNotification(static::RESPONSE_NOTIFICATION_MESSAGE_ERROR);
+            ->addErrorNotification($message);
 
         if ($productOfferResponseTransfer) {
             foreach ($productOfferResponseTransfer->getErrors() as $productOfferErrorTransfer) {

@@ -41,7 +41,7 @@ class ProductConfiguratorTimestampResponseValidator implements ProductConfigurat
         $productConfiguratorResponseProcessorResponseTransfer->requireProductConfiguratorResponse();
 
         $productConfiguratorResponseTransfer = $productConfiguratorResponseProcessorResponseTransfer
-            ->getProductConfiguratorResponse();
+            ->getProductConfiguratorResponseOrFail();
 
         $timestampDiff = time() - $productConfiguratorResponseTransfer->getTimestamp();
 

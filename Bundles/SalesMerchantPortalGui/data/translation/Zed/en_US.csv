@@ -48,3 +48,11 @@ State,State
 "Shipment %index% of %total%","Shipment %index% of %total%"
 "Canceled Amount","Canceled Amount"
 "Discount Amount","Discount Amount"
+"Canceled By Merchant","Canceled by merchant"
+Shipped,Shipped
+Delivered,Delivered
+initiate,initiate
+ship,ship
+deliver,deliver
+close,close
+"cancel by merchant","cancel by merchant"

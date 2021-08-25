@@ -69,6 +69,36 @@ class ProductConfigurationStorageReader implements ProductConfigurationStorageRe
     }
 
     /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationStorageTransfer[]
+     */
+    public function findProductConfigurationStoragesBySkus(array $skus): array
+    {
+        $storageKeys = $this->generateStorageKeys($skus);
+        $productConfigurationStoragesData = $this->storageClient->getMulti($storageKeys);
+
+        return $this->productConfigurationStorageMapper
+            ->mapProductConfigurationStoragesDataToProductConfigurationStorageTransfers($productConfigurationStoragesData);
+    }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return string[]
+     */
+    protected function generateStorageKeys(array $skus): array
+    {
+        $storageKeys = [];
+
+        foreach ($skus as $sku) {
+            $storageKeys[] = $this->generateKey($sku);
+        }
+
+        return $storageKeys;
+    }
+
+    /**
      * @param string $reference
      *
      * @return string

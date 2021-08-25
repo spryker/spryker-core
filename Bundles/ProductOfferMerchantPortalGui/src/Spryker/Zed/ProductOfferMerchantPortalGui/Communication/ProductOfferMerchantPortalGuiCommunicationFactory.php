@@ -67,6 +67,8 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStr
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStrategy\PriceProductOfferTableView\PriceProductOfferTableViewSimpleGetterComparisonStrategy;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\PriceProductOfferTableViewSorter;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\PriceProductOfferTableViewSorterInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Translator\ValidationResponseTranslator;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Translator\ValidationResponseTranslatorInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\Constraint\VolumePriceHasBasePriceProductConstraint;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\PriceProductOfferCollectionConstraintProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\PriceProductOfferConstraintProviderInterface;
@@ -135,7 +137,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
             $this->getCurrencyFacade(),
-            $this->createColumnIdCreator(),
+            $this->createColumnIdCreator()
         );
     }
 
@@ -402,7 +404,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new PriceProductOfferValidator(
             $this->getValidationAdapter(),
             $this->createPriceProductOfferCollectionConstraintProvider(),
-            $this->getPriceProductOfferFacade(),
+            $this->getPriceProductOfferFacade()
         );
     }
 
@@ -553,6 +555,14 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getProductOfferFacade(),
             $this->createPriceProductFilter()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Translator\ValidationResponseTranslatorInterface
+     */
+    public function createValidationResponseTranslator(): ValidationResponseTranslatorInterface
+    {
+        return new ValidationResponseTranslator($this->getTranslatorFacade());
     }
 
     /**

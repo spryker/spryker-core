@@ -43,7 +43,7 @@ Sku,SKU
 State,Status
 "Sub total",Zwischensumme
 Subtotal,Zwischensumme
-Totals,Gesamtsummen
+Totals,Summen
 "Trigger all matching states","Alle passenden Status auslösen"
 "Trigger event","Event auslösen"
 "Unique Product Quantity","Anzahl der Produkte"

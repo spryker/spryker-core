@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -19,75 +18,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductConfigurationClient extends AbstractClient implements ProductConfigurationClientInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
-     */
-    public function prepareProductConfiguratorRedirect(
-        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-    ): ProductConfiguratorRedirectTransfer {
-        return $this->getFactory()
-            ->createProductConfiguratorRedirectResolver()
-            ->prepareProductConfiguratorRedirect($productConfiguratorRequestTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
-     */
-    public function resolveProductConfiguratorAccessTokenRedirect(
-        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
-    ): ProductConfiguratorRedirectTransfer {
-        return $this->getFactory()
-            ->createProductConfiguratorAccessTokenRedirectResolver()
-            ->resolveProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     * @param array $configuratorResponseData
-     *
-     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
-     */
-    public function processProductConfiguratorResponse(
-        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
-        array $configuratorResponseData
-    ): ProductConfiguratorResponseProcessorResponseTransfer {
-        return $this->getFactory()
-            ->createProductConfiguratorResponseProcessor()
-            ->processProductConfiguratorResponse($productConfiguratorResponseTransfer, $configuratorResponseData);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isQuoteProductConfigurationValid(QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->getFactory()
-            ->createQuoteProductConfigurationChecker()
-            ->isQuoteProductConfigurationValid($quoteTransfer);
-    }
-
     /**
      * {@inheritDoc}
      *
@@ -105,5 +35,61 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
         return $this->getFactory()
             ->createProductConfiguratorCheckSumResponseValidatorComposite()
             ->validateProductConfiguratorCheckSumResponse($productConfiguratorResponseProcessorResponseTransfer, $configuratorResponseData);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer
+     */
+    public function expandProductConfiguratorRequestWithContextData(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRequestTransfer {
+        return $this->getFactory()
+            ->createProductConfiguratorRequestExpander()
+            ->expandProductConfiguratorRequestWithContextData($productConfiguratorRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
+     */
+    public function sendProductConfiguratorAccessTokenRequest(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRedirectTransfer {
+        return $this->getFactory()
+            ->createProductConfiguratorRequestSender()
+            ->sendProductConfiguratorAccessTokenRequest($productConfiguratorRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $configuratorResponseData
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer
+     */
+    public function mapProductConfiguratorCheckSumResponse(
+        array $configuratorResponseData,
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+    ): ProductConfiguratorResponseTransfer {
+        return $this->getFactory()
+            ->createProductConfigurationResponseMapper()
+            ->mapConfiguratorResponseDataToProductConfiguratorResponseTransfer(
+                $configuratorResponseData,
+                $productConfiguratorResponseTransfer
+            );
     }
 }

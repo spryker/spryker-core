@@ -6,7 +6,7 @@
 {% endfor %}
 
 {% for message in app.session.flashbag.get('flash.messages.error') %}
-    <web-spy-notification type="error">
+    <web-spy-notification type="error" closeable="true">
         <span title>{{ message | trans }}</span>
     </web-spy-notification>
 {% endfor %}

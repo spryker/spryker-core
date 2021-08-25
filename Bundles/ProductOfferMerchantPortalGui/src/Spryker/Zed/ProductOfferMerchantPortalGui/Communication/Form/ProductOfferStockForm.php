@@ -27,7 +27,7 @@ class ProductOfferStockForm extends AbstractType
     protected const FIELD_IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
 
     protected const LABEL_QUANTITY = 'Quantity';
-    protected const LABEL_IS_NEVER_OUT_OF_STOCK = 'Always in Stock';
+    protected const LABEL_IS_NEVER_OUT_OF_STOCK = 'Always in stock';
 
     protected const PLACEHOLDER_QUANTITY = 'Enter quantity';
 

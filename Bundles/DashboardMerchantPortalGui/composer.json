@@ -5,10 +5,10 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.3",
-        "spryker/dashboard-merchant-portal-gui-extension": "^0.1.0",
+        "spryker/dashboard-merchant-portal-gui-extension": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/symfony": "^3.0.0",
-        "spryker/zed-ui": "^0.7.0"
+        "spryker/zed-ui": "^1.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

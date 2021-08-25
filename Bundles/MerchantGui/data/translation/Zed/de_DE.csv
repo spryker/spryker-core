@@ -1,7 +1,7 @@
-"Add Merchant","Händler hinzufügen"
+"Add Merchant","Verkäufer hinzufügen"
 approved,Genehmigt
 approved_button,Genehmigt
-"Back to Merchants","Zurück zu Händlern"
+"Back to Merchants","Zurück zu Verkäufern"
 "Contact person first name","Vorname des Ansprechpartners"
 "Contact person last name","Nachname des Ansprechpartners"
 "Contact person phone","Ansprechpartner Telefon"
@@ -9,23 +9,23 @@ approved_button,Genehmigt
 denied,Abgelehnt
 denied_button,"Zugang verweigern"
 E-Mail,E-Mail
-"Edit Merchant","Händler bearbeiten"
-"Edit Merchant:","Händler bearbeiten:"
+"Edit Merchant","Verkäufer bearbeiten"
+"Edit Merchant:","Verkäufer bearbeiten:"
 Email,Email
 General,Allgemein
-"List of Merchants","Liste der Händler"
-"Merchant created successfully.","Händler erfolgreich erstellt."
-"Merchant deleted successfully.","Händler erfolgreich gelöscht."
-"Merchant has not been created.","Händler wurde nicht erstellt."
-"Merchant Id",Händler-ID
-"Merchant is not found.","Händler wurde nicht gefunden."
-"Merchant reference is already used.","Händler-Referenznummer wird bereits verwendet."
-"Merchant updated successfully.","Händler erfolgreich aktualisiert."
-"Merchant with id %s doesn't exists.","Händler mit der ID %s existiert nicht."
+"List of Merchants","Liste der Verkäufer"
+"Merchant created successfully.","Verkäufer erfolgreich erstellt."
+"Merchant deleted successfully.","Verkäufer erfolgreich gelöscht."
+"Merchant has not been created.","Verkäufer wurde nicht erstellt."
+"Merchant Id",Verkäufer-ID
+"Merchant is not found.","Verkäufer wurde nicht gefunden."
+"Merchant reference is already used.","Verkäufer-Referenznummer wird bereits verwendet."
+"Merchant updated successfully.","Verkäufer erfolgreich aktualisiert."
+"Merchant with id %s doesn't exists.","Verkäufer mit der ID %s existiert nicht."
 merchant_gui.error_wrong_params,"Status kann nicht aktualisiert werden."
 merchant_gui.success_merchant_status_update,"Status wurde aktualisiert."
 Name,Name
-"Overview of Merchants","Übersicht der Händler"
+"Overview of Merchants","Übersicht der Verkäufer"
 "Registration number",Registrierungsnummer
 Save,Speichern
 "Is Active","Ist Aktiv"
@@ -33,9 +33,9 @@ active,Aktiv
 inactive,Inaktiv
 Activate,Aktivieren
 Deactivate,Deaktivieren
-merchant.activated,"Händlerprofil erfolgreich aktiviert."
-merchant.deactivated,"Händlerprofil erfolgreich deaktiviert."
+merchant.activated,"Verkäuferprofil erfolgreich aktiviert."
+merchant.deactivated,"Verkäuferprofil erfolgreich deaktiviert."
 Stores,Stores
-"Merchant Reference","Händler Referenz"
-"Merchant URL",Händler-URL
-"Create Merchant","Händler Erstellen"
+"Merchant Reference","Verkäufer Referenz"
+"Merchant URL",Verkäufer-URL
+"Create Merchant","Verkäufer Erstellen"

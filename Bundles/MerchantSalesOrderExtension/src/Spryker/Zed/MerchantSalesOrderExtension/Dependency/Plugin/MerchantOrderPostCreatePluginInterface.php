@@ -16,7 +16,7 @@ interface MerchantOrderPostCreatePluginInterface
 {
     /**
      * Specification:
-     * - Executes after a merchant order with its items are created.
+     * - Executes after a merchant order with its items is created.
      *
      * @api
      *

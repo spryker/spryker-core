@@ -33,13 +33,8 @@ class ProductAbstractBelongsToMerchantConstraintValidator extends AbstractConstr
             throw new UnexpectedTypeException($constraint, ProductAbstractBelongsToMerchantConstraint::class);
         }
 
-        /** @var \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer */
-        $productAbstractTransfer = $value->requireProductAbstract()->getProductAbstract();
-
-        /** @var int $idMerchant */
-        $idMerchant = $value->requireIdMerchant()->getIdMerchant();
-        /** @var int $idProductAbstract */
-        $idProductAbstract = $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract();
+        $idMerchant = $value->getIdMerchantOrFail();
+        $idProductAbstract = $value->getProductAbstractOrFail()->getIdProductAbstractOrFail();
 
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
             ->addIdMerchant($idMerchant)

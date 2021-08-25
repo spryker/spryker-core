@@ -49,10 +49,9 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
         foreach ($guiTableDataResponseTransfer->getRows() as $guiTableRowDataResponseTransfer) {
             $responseData = $guiTableRowDataResponseTransfer->getResponseData();
 
-            $responseData[static::COL_KEY_CART_NOTE] = $guiTableRowDataResponseTransfer->requirePayload()
-                ->getPayload()
-                ->requireItem()
-                ->getItem()
+            $responseData[static::COL_KEY_CART_NOTE] = $guiTableRowDataResponseTransfer
+                ->getPayloadOrFail()
+                ->getItemOrFail()
                 ->getCartNote();
 
             $guiTableRowDataResponseTransfer->setResponseData($responseData);

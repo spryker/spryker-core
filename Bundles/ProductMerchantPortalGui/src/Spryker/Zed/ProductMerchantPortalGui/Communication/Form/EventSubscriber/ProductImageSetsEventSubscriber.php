@@ -46,15 +46,15 @@ class ProductImageSetsEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $frontImageSetsData = $product[self::FIELD_IMAGE_SETS_FRONT] ?? [];
+        $frontImageSetsData = $product[static::FIELD_IMAGE_SETS_FRONT] ?? [];
 
         $newImageSets = $this->findNewImageSets($frontImageSetsData);
         $oldImageSets = $this->findOldImageSetsIndexedByOriginalIndex($frontImageSetsData);
 
-        unset($product[self::FIELD_IMAGE_SETS_FRONT]);
+        unset($product[static::FIELD_IMAGE_SETS_FRONT]);
 
         ksort($oldImageSets);
-        $product[self::FIELD_IMAGE_SETS] = array_merge($oldImageSets, $newImageSets);
+        $product[static::FIELD_IMAGE_SETS] = array_merge($oldImageSets, $newImageSets);
 
         $event->setData($product);
     }
@@ -72,14 +72,14 @@ class ProductImageSetsEventSubscriber implements EventSubscriberInterface
             [$idLocale, $localeName, $imageSets] = $this->parseFrontendImageSetsData($imageSets);
 
             foreach ($imageSets as $imageSet) {
-                if (isset($imageSet[self::FIELD_ID_PRODUCT_IMAGE_SET])) {
+                if (isset($imageSet[static::FIELD_ID_PRODUCT_IMAGE_SET])) {
                     continue;
                 }
 
                 $newImageSets[] = [
-                    self::FIELD_IMAGE_SET_NAME => $imageSet[self::FIELD_IMAGE_SET_NAME],
-                    self::FIELD_PRODUCT_IMAGES => $imageSet[self::FIELD_PRODUCT_IMAGES],
-                    self::FIELD_LOCALE => $idLocale,
+                    static::FIELD_IMAGE_SET_NAME => $imageSet[static::FIELD_IMAGE_SET_NAME],
+                    static::FIELD_PRODUCT_IMAGES => $imageSet[static::FIELD_PRODUCT_IMAGES],
+                    static::FIELD_LOCALE => $idLocale,
                 ];
             }
         }
@@ -100,15 +100,15 @@ class ProductImageSetsEventSubscriber implements EventSubscriberInterface
             [$idLocale, $localeName, $imageSets] = $this->parseFrontendImageSetsData($imageSets);
 
             foreach ($imageSets as $imageSet) {
-                if (!isset($imageSet[self::FIELD_ID_PRODUCT_IMAGE_SET])) {
+                if (!isset($imageSet[static::FIELD_ID_PRODUCT_IMAGE_SET])) {
                     continue;
                 }
 
-                $oldImageSets[$imageSet[self::FIELD_ORIGINAL_INDEX]] = [
-                    self::FIELD_IMAGE_SET_NAME => $imageSet[self::FIELD_IMAGE_SET_NAME],
-                    self::FIELD_ID_PRODUCT_IMAGE_SET => $imageSet[self::FIELD_ID_PRODUCT_IMAGE_SET],
-                    self::FIELD_PRODUCT_IMAGES => $imageSet[self::FIELD_PRODUCT_IMAGES],
-                    self::FIELD_LOCALE => $idLocale,
+                $oldImageSets[$imageSet[static::FIELD_ORIGINAL_INDEX]] = [
+                    static::FIELD_IMAGE_SET_NAME => $imageSet[static::FIELD_IMAGE_SET_NAME],
+                    static::FIELD_ID_PRODUCT_IMAGE_SET => $imageSet[static::FIELD_ID_PRODUCT_IMAGE_SET],
+                    static::FIELD_PRODUCT_IMAGES => $imageSet[static::FIELD_PRODUCT_IMAGES],
+                    static::FIELD_LOCALE => $idLocale,
                 ];
             }
         }
@@ -123,10 +123,10 @@ class ProductImageSetsEventSubscriber implements EventSubscriberInterface
      */
     protected function parseFrontendImageSetsData(array $imageSetsData): array
     {
-        $idLocale = $imageSetsData[self::FIELD_ID_LOCALE] ?? '';
-        $localeName = $imageSetsData[self::FIELD_LOCALE_NAME] ?? '';
+        $idLocale = $imageSetsData[static::FIELD_ID_LOCALE] ?? '';
+        $localeName = $imageSetsData[static::FIELD_LOCALE_NAME] ?? '';
 
-        unset($imageSetsData[self::FIELD_ID_LOCALE], $imageSetsData[self::FIELD_LOCALE_NAME]);
+        unset($imageSetsData[static::FIELD_ID_LOCALE], $imageSetsData[static::FIELD_LOCALE_NAME]);
 
         return [$idLocale, $localeName, $imageSetsData];
     }
