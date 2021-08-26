@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace  Spryker\Zed\SearchElasticsearch\Business\Snapshot;
+namespace Spryker\Zed\SearchElasticsearch\Business\Snapshot;
 
 interface SnapshotInterface
 {
