@@ -16,7 +16,7 @@ class ProductRatingAggreagationResultFormatter implements ResultFormatterInterfa
      *
      * @return array
      */
-    public function formatBatch(array $records)
+    public function formatBulk(array $records)
     {
         $result = [];
 

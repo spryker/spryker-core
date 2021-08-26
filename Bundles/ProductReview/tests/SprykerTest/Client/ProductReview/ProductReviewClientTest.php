@@ -31,7 +31,7 @@ class ProductReviewClientTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductViewBatchWithProductReviewData(): void
+    public function testExpandProductViewBulkWithProductReviewData(): void
     {
         // Arrange
         $this->mockSearchResult($this->tester->createClinetSearchMockResponse());
@@ -39,7 +39,7 @@ class ProductReviewClientTest extends Unit
 
         // Act
         $productViewsExpended = $this->tester->getClient()
-            ->expandProductViewBatchWithProductReviewData($productViews, $this->tester->createBulkProductReviewSearchRequestTransfer());
+            ->expandProductViewBulkWithProductReviewData($productViews, $this->tester->createBulkProductReviewSearchRequestTransfer());
 
         // Assert
         foreach ($this->getExpectedAverageRating() as $productId => $testData) {

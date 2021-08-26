@@ -16,9 +16,9 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
  */
-class BatchProductRatingAggregationQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
+class ProductRatingAggregationBulkQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
-    protected const PRODUCT_AGGREGATOIN_NAME = 'product-aggregation';
+    public const PRODUCT_AGGREGATOIN_NAME = 'product-aggregation';
     protected const REVIEW_AGGREGATION_NAME = 'rating-aggregation';
 
     /**

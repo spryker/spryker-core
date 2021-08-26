@@ -7,15 +7,15 @@
 
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter;
 
+use Spryker\Client\ProductReview\Plugin\Elasticsearch\QueryExpander\ProductRatingAggregationBulkQueryExpanderPlugin;
 use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
 /**
  * @method \Spryker\Client\ProductReview\ProductReviewFactory getFactory()
  */
-class ProductRatingAggregationBatchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
+class ProductRatingAggregationBulkResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
     protected const NAME = 'productAggregation';
-    protected const PRODUCT_AGGREGATOIN_NAME = 'product-aggregation';
 
     /**
      * {@inheritDoc}
@@ -39,6 +39,6 @@ class ProductRatingAggregationBatchResultFormatterPlugin extends AbstractElastic
     {
         return $this->getFactory()
             ->createProductRatingAggreagationResultFormatter()
-            ->formatBatch($searchResult->getAggregation(static::PRODUCT_AGGREGATOIN_NAME));
+            ->formatBulk($searchResult->getAggregation(ProductRatingAggregationBulkQueryExpanderPlugin::PRODUCT_AGGREGATOIN_NAME));
     }
 }

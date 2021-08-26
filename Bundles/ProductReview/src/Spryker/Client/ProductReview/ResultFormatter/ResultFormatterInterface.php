@@ -16,5 +16,5 @@ interface ResultFormatterInterface
      *
      * @return mixed The formatted set of records
      */
-    public function formatBatch(array $records);
+    public function formatBulk(array $records);
 }
