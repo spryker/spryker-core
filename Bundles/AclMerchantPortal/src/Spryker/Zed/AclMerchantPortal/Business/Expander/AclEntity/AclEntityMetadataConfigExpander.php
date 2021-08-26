@@ -56,6 +56,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservation;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use Orm\Zed\OmsProductOfferReservation\Persistence\SpyOmsProductOfferReservation;
@@ -1160,6 +1161,14 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpyCmsBlockGlossaryKeyMapping::class)
                 ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ)
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            SpyOmsProductReservationChangeVersion::class,
+            (new AclEntityMetadataTransfer())
+                ->setEntityName(SpyOmsProductReservationChangeVersion::class)
+                ->setDefaultGlobalOperationMask(
+                    AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ
+                )
         );
 
         return $aclEntityMetadataConfigTransfer;

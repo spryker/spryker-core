@@ -32,6 +32,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals;
 use Orm\Zed\MerchantStock\Persistence\SpyMerchantStock;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
+use Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer;
@@ -210,7 +211,7 @@ class AclMerchantPortalFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertSame(103, count($aclEntityMetadataCollectionTransfer->getCollection()));
+        $this->assertSame(104, count($aclEntityMetadataCollectionTransfer->getCollection()));
         $this->assertArrayHasKey(SpyMerchantSalesOrderTotals::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyStateMachineItemState::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyMerchantSalesOrderItem::class, $aclEntityMetadataCollectionTransfer->getCollection());
@@ -261,6 +262,7 @@ class AclMerchantPortalFacadeTest extends Unit
         $this->assertArrayHasKey(SpySalesExpense::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpySalesOrderTotals::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyCustomer::class, $aclEntityMetadataCollectionTransfer->getCollection());
+        $this->assertArrayHasKey(SpyOmsProductReservationChangeVersion::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrderTotals::class]->getParent());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpyMerchantSalesOrderItem::class]->getParent());
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection()[SpySalesOrderItem::class]->getParent());
