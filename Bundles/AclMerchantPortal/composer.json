@@ -49,7 +49,6 @@
         "spryker/sales": "^11.0.0",
         "spryker/sales-invoice": "^1.0.0",
         "spryker/sales-order-threshold": "^1.0.0",
-        "spryker/sales-product-configuration": "^0.1.0",
         "spryker/shipment": "^8.0.0",
         "spryker/state-machine": "^2.0.0",
         "spryker/stock": "^8.0.0",

@@ -211,7 +211,7 @@ class AclMerchantPortalFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertSame(104, count($aclEntityMetadataCollectionTransfer->getCollection()));
+        $this->assertSame(103, count($aclEntityMetadataCollectionTransfer->getCollection()));
         $this->assertArrayHasKey(SpyMerchantSalesOrderTotals::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyStateMachineItemState::class, $aclEntityMetadataCollectionTransfer->getCollection());
         $this->assertArrayHasKey(SpyMerchantSalesOrderItem::class, $aclEntityMetadataCollectionTransfer->getCollection());
