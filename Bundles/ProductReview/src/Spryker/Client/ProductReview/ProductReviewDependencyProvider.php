@@ -151,7 +151,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function getProductReviewsBulkQueryExpanderPlugins(): array
     {
@@ -199,7 +199,7 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     public function getProductReviewsBulkSearchResultFormatterPlugins(): array
     {
