@@ -52,7 +52,7 @@ class CompanyBusinessUnitFormDataProvider
     /**
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return array
+     * @return mixed[]
      */
     public function getOptions(?int $idCompanyBusinessUnit = null): array
     {
@@ -89,8 +89,13 @@ class CompanyBusinessUnitFormDataProvider
     {
         $result = [];
 
-        foreach ($this->companyFacade->getCompanies()->getCompanies() as $company) {
-            $result[$company->getName()] = $company->getIdCompany();
+        foreach ($this->companyFacade->getCompanies()->getCompanies() as $companyTransfer) {
+            $key = sprintf(
+                '%s (ID: %d)',
+                $companyTransfer->getName(),
+                $companyTransfer->getIdCompany()
+            );
+            $result[$key] = $companyTransfer->getIdCompany();
         }
 
         return $result;
@@ -102,7 +107,7 @@ class CompanyBusinessUnitFormDataProvider
      *
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return array [[unitKey => idUnit], [unitKey => ['data-id_company' => idCompany]]]
+     * @return mixed[] [[unitKey => idUnit], [unitKey => ['data-id_company' => idCompany]]]
      *                Where unitKey: "<idUnit> - <unitName>"
      */
     protected function prepareUnitParentAttributeMap(?int $idCompanyBusinessUnit = null): array
