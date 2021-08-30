@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace  Spryker\Zed\MerchantProfileDataImport;
+namespace Spryker\Zed\MerchantProfileDataImport;
 
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Spryker\Zed\DataImport\DataImportConfig;

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace  Spryker\Zed\CmsGui\Communication\Controller;
+namespace Spryker\Zed\CmsGui\Communication\Controller;
 
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Cms\Business\Exception\TemplateFileNotFoundException;
