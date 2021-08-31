@@ -21,13 +21,6 @@
         "priority": "2"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerBridge.php",
-        "description": "\n      Zed Dependency Bridge - Bridge: The 2 is having Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerBridge::__construct() parameters which violates the rule \"A bridge should only have a single argument in constructor. It is also used only on core, not in projects.\"\n    ",
-        "rule": "BridgeConstructorArgumentsRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
         "fileName": "/vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Dependency/Mailer/MailToMailerInterface.php",
         "description": "\n      Bridges: The bridge interface has incorrect method 'setFrom' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
         "rule": "BridgeMethodsRule",
