@@ -1181,7 +1181,8 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
             ->addAclEntityAllowListItem(SpyAclEntitySegment::class)
             ->addAclEntityAllowListItem(SpyAclEntityRule::class)
             // TODO: SpySalesOrder.fkSalesOrderAddressBilling, SpySalesOrder.fkSalesOrderAddressShipping
-            ->addAclEntityAllowListItem(SpySalesOrderAddress::class);
+            ->addAclEntityAllowListItem(SpySalesOrderAddress::class)
+            ->addAclEntityAllowListItem(SpyEventBehaviorEntityChange::class);
 
         return $aclEntityMetadataConfigTransfer;
     }
