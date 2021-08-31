@@ -46,9 +46,9 @@ class CompanyUnitAddressFormDataProvider
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
             'data_class' => CompanyUnitAddressTransfer::class,
@@ -74,21 +74,25 @@ class CompanyUnitAddressFormDataProvider
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function prepareCompanyChoices(): array
     {
         $result = [];
 
-        foreach ($this->companyFacade->getCompanies()->getCompanies() as $company) {
-            $result[$company->getIdCompany()] = $company->getName();
+        foreach ($this->companyFacade->getCompanies()->getCompanies() as $companyTransfer) {
+            $result[$companyTransfer->getIdCompany()] = sprintf(
+                '%s (ID: %d)',
+                $companyTransfer->getName(),
+                $companyTransfer->getIdCompany()
+            );
         }
 
         return $result;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function prepareCountryChoices(): array
     {

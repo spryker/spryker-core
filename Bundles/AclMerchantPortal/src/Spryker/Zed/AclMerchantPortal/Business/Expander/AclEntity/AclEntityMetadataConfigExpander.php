@@ -104,7 +104,6 @@ use Orm\Zed\SalesInvoice\Persistence\SpySalesOrderInvoice;
 use Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThreshold;
 use Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThresholdTaxSet;
 use Orm\Zed\SalesOrderThreshold\Persistence\SpySalesOrderThresholdType;
-use Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfiguration;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrier;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
@@ -280,17 +279,6 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
             SpySalesOrderItemOption::class,
             (new AclEntityMetadataTransfer())
                 ->setEntityName(SpySalesOrderItemOption::class)
-                ->setParent(
-                    (new AclEntityParentMetadataTransfer())
-                        ->setEntityName(SpySalesOrderItem::class)
-                )
-                ->setIsSubEntity(true)
-        );
-
-        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
-            SpySalesOrderItemConfiguration::class,
-            (new AclEntityMetadataTransfer())
-                ->setEntityName(SpySalesOrderItemConfiguration::class)
                 ->setParent(
                     (new AclEntityParentMetadataTransfer())
                         ->setEntityName(SpySalesOrderItem::class)

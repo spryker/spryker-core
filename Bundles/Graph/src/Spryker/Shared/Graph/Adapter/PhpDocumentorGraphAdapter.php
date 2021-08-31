@@ -158,11 +158,10 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
     private function addAttributesTo($attributes, $element)
     {
         foreach ($attributes as $attribute => $value) {
-            $setter = 'set' . ucfirst($attribute);
             if (strip_tags($value) !== $value) {
                 $value = '<' . $value . '>';
             }
-            $element->$setter($value);
+            $element->setAttribute($attribute, $value);
         }
     }
 }

@@ -17,7 +17,7 @@ class CompanyGuiFormatter implements CompanyGuiFormatterInterface
     /**
      * @param \Generated\Shared\Transfer\CompanyCollectionTransfer $companyCollectionTransfer
      *
-     * @return array
+     * @return string[][]
      */
     public function formatCompanyCollectionToSuggestions(CompanyCollectionTransfer $companyCollectionTransfer): array
     {
@@ -26,7 +26,11 @@ class CompanyGuiFormatter implements CompanyGuiFormatterInterface
         foreach ($companyCollectionTransfer->getCompanies() as $companyTransfer) {
             $formattedSuggestCompanyList[] = [
                 static::KEY_ID => $companyTransfer->getIdCompany(),
-                static::KEY_TEXT => $companyTransfer->getName(),
+                static::KEY_TEXT => sprintf(
+                    '%s (ID: %d)',
+                    $companyTransfer->getName(),
+                    $companyTransfer->getIdCompany()
+                ),
             ];
         }
 

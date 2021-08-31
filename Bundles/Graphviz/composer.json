@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.3",
-        "phpdocumentor/graphviz": "^1.0.4"
+        "phpdocumentor/graphviz": "^1.0.4 || ^2.0.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

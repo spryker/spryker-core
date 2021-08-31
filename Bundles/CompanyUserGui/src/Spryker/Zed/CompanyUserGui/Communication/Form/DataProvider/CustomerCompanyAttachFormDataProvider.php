@@ -69,7 +69,7 @@ class CustomerCompanyAttachFormDataProvider
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
     public function getOptions(): array
     {
@@ -87,7 +87,12 @@ class CustomerCompanyAttachFormDataProvider
         $companies = [];
 
         foreach ($this->companyFacade->getCompanies()->getCompanies() as $companyTransfer) {
-            $companies[$companyTransfer->getName()] = $companyTransfer->getIdCompany();
+            $key = sprintf(
+                '%s (ID: %d)',
+                $companyTransfer->getName(),
+                $companyTransfer->getIdCompany()
+            );
+            $companies[$key] = $companyTransfer->getIdCompany();
         }
 
         return $companies;

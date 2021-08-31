@@ -1,3 +1,5 @@
+{# @var company \Generated\Shared\Transfer\CompanyTransfer #}
+
 {% extends '@Gui/layout/layout.twig' %}
 
 {% set widget_title = 'Overview of Merchant relation' | trans %}
@@ -21,7 +23,7 @@
                 <select id="company-select" class="form-control">
                     <option value="">{{ 'Select Company' | trans}}</option>
                     {%  for company in companies  %}
-                        <option value="{{ company.idCompany }}" {{ (company.idCompany == idCompany) ? 'selected' : '' }} >{{ company.name }}</option>
+                        <option value="{{ company.idCompany }}" {{ (company.idCompany == idCompany) ? 'selected' }}>{{ company.name }} ({{ 'ID' | trans }} {{ company.idCompany }})</option>
                     {% endfor %}
                 </select>
             </div>

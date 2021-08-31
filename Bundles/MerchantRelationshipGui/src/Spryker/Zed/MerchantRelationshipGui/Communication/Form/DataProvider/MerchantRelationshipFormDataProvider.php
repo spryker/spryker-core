@@ -82,7 +82,7 @@ class MerchantRelationshipFormDataProvider
      * @param bool $isPersistenceForm
      * @param int|null $idCompany
      *
-     * @return array
+     * @return mixed[]
      */
     public function getOptions(bool $isPersistenceForm, ?int $idCompany = null): array
     {
@@ -99,7 +99,7 @@ class MerchantRelationshipFormDataProvider
     /**
      * @param int|null $idCompany
      *
-     * @return array
+     * @return string[]
      */
     protected function getAssigneeCompanyBusinessUnitChoices(?int $idCompany = null): array
     {
@@ -108,12 +108,16 @@ class MerchantRelationshipFormDataProvider
             $companyBusinessUnitCriteriaFilterTransfer = new CompanyBusinessUnitCriteriaFilterTransfer();
             $companyBusinessUnitCriteriaFilterTransfer->setIdCompany($idCompany);
 
-            $companyBusinessUnits = $this->companyBusinessUnitFacade
+            $companyBusinessUnitTransfers = $this->companyBusinessUnitFacade
                 ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)
                 ->getCompanyBusinessUnits();
 
-            foreach ($companyBusinessUnits as $companyBusinessUnit) {
-                $choices[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit->getName();
+            foreach ($companyBusinessUnitTransfers as $companyBusinessUnitTransfer) {
+                $choices[$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()] = sprintf(
+                    '%s (ID: %d)',
+                    $companyBusinessUnitTransfer->getName(),
+                    $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()
+                );
             }
         }
 
@@ -121,21 +125,25 @@ class MerchantRelationshipFormDataProvider
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getCompanyChoices(): array
     {
         $choices = [];
 
-        foreach ($this->companyFacade->getCompanies()->getCompanies() as $company) {
-            $choices[$company->getIdCompany()] = $company->getName();
+        foreach ($this->companyFacade->getCompanies()->getCompanies() as $companyTransfer) {
+            $choices[$companyTransfer->getIdCompany()] = sprintf(
+                '%s (ID: %d)',
+                $companyTransfer->getName(),
+                $companyTransfer->getIdCompany()
+            );
         }
 
         return $choices;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getMerchantChoices(): array
     {
