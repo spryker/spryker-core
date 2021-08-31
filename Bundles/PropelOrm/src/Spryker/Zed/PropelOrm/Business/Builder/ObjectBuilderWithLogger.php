@@ -83,7 +83,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
         // @see \Spryker\Zed\Kernel\Persistence\EntityManager\TransferToEntityMapper::mapEntity()
         \$hasDefaultValue = $hasDefaultValue;
 
-        if (\$hasDefaultValue || \$this->$clo !== \$v) {
+        if ((\$this->isNew() && \$hasDefaultValue) || \$this->$clo !== \$v) {
             \$this->$clo = \$v;
             \$this->modifiedColumns[" . $this->getColumnConstant($col) . "] = true;
         }
