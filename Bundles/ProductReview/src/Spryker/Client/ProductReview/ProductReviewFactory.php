@@ -60,10 +60,15 @@ class ProductReviewFactory extends AbstractFactory
     public function createBulkProductReviewsQueryPlugin(BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer)
     {
         $bulkProductReviewsQueryPlugin = new BulkProductReviewsQueryPlugin($bulkProductReviewSearchRequestTransfer);
+        $queryExpanderPlugins = $this->getProductReviewsQueryExpanderPlugins();
 
+        if(count($this->getProductReviewsBulkQueryExpanderPlugins()) ) {
+            $queryExpanderPlugins = $this->getProductReviewsBulkQueryExpanderPlugins();
+        }
+        
         return $this->getSearchClient()->expandQuery(
             $bulkProductReviewsQueryPlugin,
-            $this->getProductReviewsBulkQueryExpanderPlugins(),
+            $queryExpanderPlugins,
             $bulkProductReviewSearchRequestTransfer->getFilter()->toArray()
         );
     }
