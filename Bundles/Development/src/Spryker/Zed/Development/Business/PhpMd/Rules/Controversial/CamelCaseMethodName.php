@@ -60,7 +60,7 @@ class CamelCaseMethodName extends AbstractRule implements MethodAware
     public function apply(AbstractNode $node)
     {
         $methodName = $node->getName();
-        if (!in_array($methodName, $this->ignoredMethods)) {
+        if (!in_array($methodName, $this->ignoredMethods, true)) {
             if (!$this->isValid($methodName)) {
                 $this->addViolation(
                     $node,

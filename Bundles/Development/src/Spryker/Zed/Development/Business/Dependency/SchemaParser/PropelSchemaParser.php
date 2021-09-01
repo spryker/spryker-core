@@ -305,7 +305,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
         foreach ($uniqueColumnNames as $uniqueColumnName) {
             if (
                 isset($uniqueFieldToModuleNameMap[$uniqueColumnName]) && $uniqueFieldToModuleNameMap[$uniqueColumnName] !== $module &&
-                in_array($module . '.' . $uniqueColumnName, $requiredColumnNames)
+                in_array($module . '.' . $uniqueColumnName, $requiredColumnNames, true)
             ) {
                 throw new PropelSchemaParserException(sprintf('Unique column "%s" was already found in the module "%s".', $uniqueColumnName, $uniqueFieldToModuleNameMap[$uniqueColumnName]));
             }
@@ -336,7 +336,7 @@ class PropelSchemaParser implements PropelSchemaParserInterface
      */
     protected function hasNamespaceInSchema(SimpleXMLElement $simpleXmlElement): bool
     {
-        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces())) {
+        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces(), true)) {
             return true;
         }
 

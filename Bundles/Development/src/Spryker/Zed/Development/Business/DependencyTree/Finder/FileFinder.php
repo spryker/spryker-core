@@ -44,7 +44,7 @@ class FileFinder implements FinderInterface
         $res = [];
         foreach ($directories as $directory) {
             $finder = new Finder();
-            $finder->files()->in($directory);
+            $finder->files()->ignoreVCSIgnored(true)->in($directory);
 
             $finder->name('*.php');
             $res = array_merge($res, iterator_to_array($finder));
