@@ -136,7 +136,7 @@ class StabilityCalculator implements StabilityCalculatorInterface
 
             $indirectIncomingDependencies = $indirectIncomingDependencies->getArrayCopy();
             $callback = function ($bundle) use ($incomingBundles) {
-                return !in_array($bundle, $incomingBundles);
+                return !in_array($bundle, $incomingBundles, true);
             };
             $indirectIncomingDependencies = array_filter($indirectIncomingDependencies, $callback);
             $this->bundles[$bundle]['indirectIn'] = $indirectIncomingDependencies;

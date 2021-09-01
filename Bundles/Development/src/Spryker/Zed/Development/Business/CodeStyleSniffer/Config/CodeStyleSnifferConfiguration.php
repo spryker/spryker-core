@@ -199,7 +199,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
         $optionLevel = $this->resolveOptionLevel();
         $levelAllowed = $this->getAllowedLevels();
 
-        if (!in_array($optionLevel, $levelAllowed)) {
+        if (!in_array($optionLevel, $levelAllowed, true)) {
             throw new InvalidArgumentException(
                 sprintf('Level should be in [%s] range', implode(', ', $levelAllowed))
             );

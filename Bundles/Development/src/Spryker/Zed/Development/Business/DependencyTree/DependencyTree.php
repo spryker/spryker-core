@@ -90,7 +90,7 @@ class DependencyTree extends AbstractDependencyTree
      */
     private function isEngineBundle($bundle)
     {
-        return (in_array($bundle, $this->engineBundles));
+        return (in_array($bundle, $this->engineBundles, true));
     }
 
     /**

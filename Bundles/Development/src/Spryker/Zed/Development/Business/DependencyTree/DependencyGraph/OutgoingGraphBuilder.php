@@ -185,7 +185,7 @@ class OutgoingGraphBuilder
     protected function filterBundles(array $dependencies)
     {
         $callback = function ($bundle) {
-            return !in_array($bundle, $this->bundlesToFilter);
+            return !in_array($bundle, $this->bundlesToFilter, true);
         };
 
         return array_filter($dependencies, $callback);

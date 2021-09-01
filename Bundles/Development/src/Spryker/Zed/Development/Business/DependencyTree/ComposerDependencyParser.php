@@ -76,11 +76,11 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
                 'composerName' => $composerName,
                 'types' => $this->getDependencyTypes($composerName, $dependencyCollectionTransfer),
                 'isOptional' => $this->getIsOptional($composerName, $dependencyCollectionTransfer),
-                'src' => in_array($composerName, $composerNamesInSrc) ? $composerName : '',
-                'tests' => in_array($composerName, $composerNamesInTests) ? $composerName : '',
-                'composerRequire' => in_array($composerName, $composerRequiredNames) ? $composerName : '',
-                'composerRequireDev' => in_array($composerName, $composerRequiredDevNames) ? $composerName : '',
-                'suggested' => in_array($composerName, $composerSuggestedNames) ? $composerName : '',
+                'src' => in_array($composerName, $composerNamesInSrc, true) ? $composerName : '',
+                'tests' => in_array($composerName, $composerNamesInTests, true) ? $composerName : '',
+                'composerRequire' => in_array($composerName, $composerRequiredNames, true) ? $composerName : '',
+                'composerRequireDev' => in_array($composerName, $composerRequiredDevNames, true) ? $composerName : '',
+                'suggested' => in_array($composerName, $composerSuggestedNames, true) ? $composerName : '',
                 'isOwnExtensionModule' => $this->isOwnExtensionModule($composerName, $dependencyCollectionTransfer),
             ];
         }
@@ -245,7 +245,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
 
         $dependencyCollectionTransfer->setDependencyModules(new ArrayObject());
         foreach ($dependencyModulesCollectionTransfer as $moduleDependencyTransfer) {
-            if (!in_array($moduleDependencyTransfer->getComposerName(), $excluded)) {
+            if (!in_array($moduleDependencyTransfer->getComposerName(), $excluded, true)) {
                 $dependencyCollectionTransfer->addDependencyModule($moduleDependencyTransfer);
             }
         }
