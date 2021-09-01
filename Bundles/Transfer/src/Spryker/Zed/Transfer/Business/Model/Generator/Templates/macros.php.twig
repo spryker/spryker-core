@@ -151,6 +151,8 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @return {{ method.return }}
      */
     public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }}{% endif ~%}
@@ -254,6 +256,8 @@
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      * @return $this
      */
     public function {{ method.name }}()
