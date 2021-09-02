@@ -162,7 +162,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      * @module Test
      *
      * @deprecated scalarField is deprecated.
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return string
@@ -180,7 +180,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      * @module Test
      *
      * @deprecated scalarField is deprecated.
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
@@ -246,7 +246,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      * @module Test
      *
      * @deprecated arrayField is deprecated.
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
@@ -291,7 +291,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      * @module Test
      *
      * @deprecated transferField is deprecated.
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer
@@ -309,7 +309,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      * @module Test
      *
      * @deprecated transferField is deprecated.
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
@@ -371,7 +371,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      * @module Test
      *
      * @deprecated transferCollectionField is deprecated.
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this

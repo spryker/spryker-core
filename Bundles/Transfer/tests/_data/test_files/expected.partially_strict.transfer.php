@@ -363,7 +363,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return int
@@ -418,7 +418,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return int
@@ -477,7 +477,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -536,7 +536,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -649,7 +649,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return array
@@ -719,7 +719,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Generated\Shared\Transfer\DummyItemTransfer
@@ -774,7 +774,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Generated\Shared\Transfer\DummyItemTransfer

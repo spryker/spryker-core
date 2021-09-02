@@ -156,7 +156,7 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @module Test
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
@@ -211,7 +211,7 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @module Test|Test2
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
@@ -270,7 +270,7 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @module Test
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
@@ -324,7 +324,7 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @module Test2
-     * 
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
