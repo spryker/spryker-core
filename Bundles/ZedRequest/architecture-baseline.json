@@ -42,55 +42,6 @@
         "priority": "1"
     },
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractZedClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Shared\\ZedRequest\\Client\\AbstractZedClientInterface::addMetaTransfer() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractZedClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Shared\\ZedRequest\\Client\\AbstractZedClientInterface::hasLastResponse() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractZedClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Shared\\ZedRequest\\Client\\AbstractZedClientInterface::getLastResponse() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractZedClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Shared\\ZedRequest\\Client\\AbstractZedClientInterface::getInfoStatusMessages() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractZedClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Shared\\ZedRequest\\Client\\AbstractZedClientInterface::getErrorStatusMessages() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/AbstractZedClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Shared\\ZedRequest\\Client\\AbstractZedClientInterface::getSuccessStatusMessages() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/HttpClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Shared\\ZedRequest\\Client\\HttpClientInterface::setDefaultTimeout() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    },
-    {
         "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/LoggableZedClient.php",
         "description": "\n      Client: The class Spryker\\Shared\\ZedRequest\\Client\\LoggableZedClient does not implement an interface LoggableZedClientInterface which violates rule: \"Must implement an interface with same name and suffix 'Interface'.\"\n    ",
         "rule": "ClientRule",

@@ -40,19 +40,5 @@
         "rule": "LayerAccessRule",
         "ruleset": "Spryker",
         "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/UtilDataReaderServiceInterface.php",
-        "description": "\n      ServiceInterface: The interface method Spryker\\Service\\UtilDataReader\\UtilDataReaderServiceInterface::getPdoBatchIterator() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ServiceInterfaceRule",
-        "ruleset": "Spryker Service",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/UtilDataReaderServiceInterface.php",
-        "description": "\n      ServiceInterface: The interface method Spryker\\Service\\UtilDataReader\\UtilDataReaderServiceInterface::getPropelBatchIterator() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ServiceInterfaceRule",
-        "ruleset": "Spryker Service",
-        "priority": "1"
     }
 ]

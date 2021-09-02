@@ -8,7 +8,7 @@
 namespace Spryker\Service\Customer;
 
 use Generated\Shared\Transfer\AddressTransfer;
-use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Service\Kernel\AbstractBundleConfig;
 
 class CustomerConfig extends AbstractBundleConfig
 {

@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\FlysystemLocalFileSystem;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 
 /**
  * @method \Spryker\Service\FlysystemLocalFileSystem\FlysystemLocalFileSystemConfig getConfig()
