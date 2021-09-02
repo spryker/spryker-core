@@ -187,6 +187,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @module Deprecated
      *
      * @deprecated scalarField is deprecated.
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return string
      */
@@ -203,6 +205,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @module Deprecated
      *
      * @deprecated scalarField is deprecated.
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -267,6 +271,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @module Deprecated
      *
      * @deprecated arrayField is deprecated.
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -310,6 +316,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @module Deprecated
      *
      * @deprecated transferField is deprecated.
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Generated\Shared\Transfer\DeprecatedFooBarTransfer
      */
@@ -326,6 +334,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @module Deprecated
      *
      * @deprecated transferField is deprecated.
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -386,6 +396,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @module Deprecated
      *
      * @deprecated transferCollectionField is deprecated.
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -429,6 +441,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @module Deprecated
      *
      * @deprecated Deprecated on project level.
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return string
      */
@@ -445,6 +459,8 @@ class MergedDeprecatedFooBarTransfer extends AbstractTransfer
      * @module Deprecated
      *
      * @deprecated Deprecated on project level.
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */

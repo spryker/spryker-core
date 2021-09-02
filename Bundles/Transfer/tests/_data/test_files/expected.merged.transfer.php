@@ -141,6 +141,8 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @return string
      */
     public function getNameOrFail()
@@ -154,6 +156,8 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -192,6 +196,8 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test|Test2
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @return int
      */
     public function getBlaOrFail()
@@ -205,6 +211,8 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @module Test|Test2
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -247,6 +255,8 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @return \Spryker\DecimalObject\Decimal
      */
     public function getStockOrFail()
@@ -260,6 +270,8 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -312,6 +324,8 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @module Test2
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */

@@ -227,6 +227,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return string
      */
@@ -241,6 +243,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -278,6 +282,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
@@ -292,6 +298,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -344,6 +352,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -400,6 +410,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -457,6 +469,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -510,6 +524,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -566,6 +582,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -622,6 +640,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */

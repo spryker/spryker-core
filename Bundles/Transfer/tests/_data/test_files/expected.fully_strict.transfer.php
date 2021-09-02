@@ -253,6 +253,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return int
      */
@@ -267,6 +269,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -308,6 +312,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Spryker\DecimalObject\Decimal
      */
@@ -322,6 +328,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -359,6 +367,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return array
      */
@@ -388,6 +398,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -444,6 +456,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -481,6 +495,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Generated\Shared\Transfer\DummyItemTransfer
      */
@@ -495,6 +511,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -558,6 +576,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -625,6 +645,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -693,6 +715,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -770,6 +794,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     * 
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
