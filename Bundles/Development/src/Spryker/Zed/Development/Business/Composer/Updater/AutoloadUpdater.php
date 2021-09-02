@@ -223,7 +223,7 @@ class AutoloadUpdater implements UpdaterInterface
         $directories = [];
         foreach ($files as $file) {
             $directoryName = dirname(str_replace('//', '/', $file));
-            if (!in_array($directoryName, $directories)) {
+            if (!in_array($directoryName, $directories, true)) {
                 $directories[] = $directoryName;
             }
         }
@@ -456,7 +456,7 @@ class AutoloadUpdater implements UpdaterInterface
                 $relativeDirectory,
             ]);
 
-            if (!$this->pathExists($path) || !in_array($this->getLastPartOfPath($relativeDirectory), $this->autoloadPSR4Whitelist)) {
+            if (!$this->pathExists($path) || !in_array($this->getLastPartOfPath($relativeDirectory), $this->autoloadPSR4Whitelist, true)) {
                 if ($this->isFile($path)) {
                     continue;
                 }

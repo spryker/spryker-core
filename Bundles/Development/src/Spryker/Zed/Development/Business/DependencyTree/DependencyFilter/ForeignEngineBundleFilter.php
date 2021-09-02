@@ -32,6 +32,6 @@ class ForeignEngineBundleFilter implements DependencyFilterInterface
      */
     public function filter(array $dependency)
     {
-        return in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->filterBundles);
+        return in_array($dependency[DependencyTree::META_FOREIGN_BUNDLE], $this->filterBundles, true);
     }
 }

@@ -1,12 +1,5 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Category/src/Spryker/Shared/Category/CategoryConfig.php",
-        "description": "\n      Access: Class Spryker\\Shared\\Category\\CategoryConfig accesses Spryker\\Client\\Kernel\\AbstractBundleConfig which violates rule \"No call from Shared to Client\"\n    ",
-        "rule": "LayerAccessRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
         "fileName": "/vendor/spryker/spryker/Bundles/Category/src/Spryker/Zed/Category/Dependency/Facade/CategoryToTouchInterface.php",
         "description": "\n      Bridges: The bridge interface has incorrect method 'touchActive' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
         "rule": "BridgeMethodsRule",

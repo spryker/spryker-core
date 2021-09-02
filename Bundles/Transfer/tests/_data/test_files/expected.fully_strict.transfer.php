@@ -254,6 +254,8 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @return int
      */
     public function getPropScalarOrFail(): int
@@ -267,6 +269,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -309,6 +313,8 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @return \Spryker\DecimalObject\Decimal
      */
     public function getPropDecimalOrFail(): Decimal
@@ -322,6 +328,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -360,6 +368,8 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @return array
      */
     public function getPropSimpleArrayOrFail(): array
@@ -388,6 +398,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -445,6 +457,8 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      * @return $this
      */
     public function requirePropArraySingular()
@@ -482,6 +496,8 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @return \Generated\Shared\Transfer\DummyItemTransfer
      */
     public function getPropDummyItemOrFail(): DummyItemTransfer
@@ -495,6 +511,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -558,6 +576,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -626,6 +646,8 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      * @return $this
      */
     public function requirePropTypedArray()
@@ -693,6 +715,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -770,6 +794,8 @@ class FullyStrictTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */

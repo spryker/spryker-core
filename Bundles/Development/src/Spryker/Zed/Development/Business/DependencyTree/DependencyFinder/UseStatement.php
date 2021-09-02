@@ -60,7 +60,7 @@ class UseStatement extends AbstractDependencyFinder
         if (preg_match('/\\\/', $relativeClassName)) {
             $classNameParts = explode('\\', $relativeClassName);
             $layer = array_shift($classNameParts);
-            if (in_array($layer, [static::LAYER_BUSINESS, static::LAYER_COMMUNICATION, static::LAYER_PERSISTENCE])) {
+            if (in_array($layer, [static::LAYER_BUSINESS, static::LAYER_COMMUNICATION, static::LAYER_PERSISTENCE], true)) {
                 return $layer;
             }
         }

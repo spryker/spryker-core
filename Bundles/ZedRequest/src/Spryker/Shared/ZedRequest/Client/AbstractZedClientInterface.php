@@ -13,6 +13,11 @@ namespace Spryker\Shared\ZedRequest\Client;
 interface AbstractZedClientInterface
 {
     /**
+     * Specification:
+     * - Adds metadata to a request.
+     *
+     * @api
+     *
      * @param string $name
      * @param mixed $metaTransfer
      *
@@ -21,11 +26,22 @@ interface AbstractZedClientInterface
     public function addMetaTransfer($name, $metaTransfer);
 
     /**
+     * Specification:
+     * - Checks whether last response is available.
+     *
+     * @api
+     *
      * @return bool
      */
     public function hasLastResponse();
 
     /**
+     * Specification:
+     * - Gets last response if available.
+     * - If last response is not available, throws `BadMethodCallException` exception.
+     *
+     * @api
+     *
      * @throws \BadMethodCallException
      *
      * @return \Spryker\Shared\ZedRequest\Client\ResponseInterface
@@ -33,16 +49,31 @@ interface AbstractZedClientInterface
     public function getLastResponse();
 
     /**
+     * Specification:
+     * - Gets info status messages.
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getInfoStatusMessages(): array;
 
     /**
+     * Specification:
+     * - Gets error status messages.
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getErrorStatusMessages(): array;
 
     /**
+     * Specification:
+     * - Gets success status messages.
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
      */
     public function getSuccessStatusMessages(): array;

@@ -52,7 +52,7 @@ class FileInfoExtractor
             return 'tests';
         }
         $layer = $classNameParts[3];
-        if (in_array($layer, ['Business', 'Communication', 'Persistence'])) {
+        if (in_array($layer, ['Business', 'Communication', 'Persistence'], true)) {
             return $layer;
         }
 

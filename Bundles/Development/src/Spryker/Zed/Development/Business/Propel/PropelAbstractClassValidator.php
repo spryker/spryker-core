@@ -172,7 +172,7 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
      */
     protected function hasNamespaceInSchema(SimpleXMLElement $simpleXmlElement): bool
     {
-        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces())) {
+        if (in_array('spryker:schema-01', $simpleXmlElement->getNamespaces(), true)) {
             return true;
         }
 

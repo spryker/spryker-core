@@ -1,16 +1,1 @@
-[
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/CatalogPriceProductConnector/Dependency/CatalogPriceProductConnectorToCurrencyClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Client\\CatalogPriceProductConnector\\Dependency\\CatalogPriceProductConnectorToCurrencyClientInterface::getCurrent() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/CatalogPriceProductConnector/src/Spryker/Client/CatalogPriceProductConnector/Dependency/CatalogPriceProductConnectorToPriceClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Client\\CatalogPriceProductConnector\\Dependency\\CatalogPriceProductConnectorToPriceClientInterface::getCurrentPriceMode() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    }
-]
+[]
