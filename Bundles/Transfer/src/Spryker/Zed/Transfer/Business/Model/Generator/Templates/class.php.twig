@@ -78,7 +78,10 @@ class {{ className }} extends {{ abstractClass }}
     /**
      * @param array $data
      * @param bool $ignoreMissingProperty
-     * @return {{ className }}
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return $this
      */
     public function fromArray(array $data, $ignoreMissingProperty = false)
     {
@@ -98,6 +101,7 @@ class {{ className }} extends {{ abstractClass }}
 {% endfor %}
                     $this->$normalizedPropertyName = $value;
                     $this->modifiedProperties[$normalizedPropertyName] = true;
+
                     break;
 {% endif %}
 {% if transfers is not empty %}
@@ -106,7 +110,7 @@ class {{ className }} extends {{ abstractClass }}
 {% endfor %}
                     if (is_array($value)) {
                         $type = $this->transferMetadata[$normalizedPropertyName]['type'];
-                        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
+                        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $value */
                         $value = (new $type())->fromArray($value, $ignoreMissingProperty);
                     }
 
@@ -125,6 +129,7 @@ class {{ className }} extends {{ abstractClass }}
                     $elementType = $this->transferMetadata[$normalizedPropertyName]['type'];
                     $this->$normalizedPropertyName = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
                     $this->modifiedProperties[$normalizedPropertyName] = true;
+
                     break;
 {% endif %}
 {% if valueObjects is not empty %}
@@ -132,6 +137,7 @@ class {{ className }} extends {{ abstractClass }}
             case '{{ value.name }}':
     {% endfor %}
                 $this->assignValueObject($normalizedPropertyName, $value);
+
                     break;
 {% endif %}
                 default:
@@ -148,10 +154,11 @@ class {{ className }} extends {{ abstractClass }}
     }
 
     /**
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
     {
         if ($isRecursive && !$camelCasedKeys) {
@@ -169,10 +176,11 @@ class {{ className }} extends {{ abstractClass }}
     }
 
     /**
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     public function toArray($isRecursive = true, $camelCasedKeys = false)
     {
         if ($isRecursive && !$camelCasedKeys) {
@@ -190,17 +198,19 @@ class {{ className }} extends {{ abstractClass }}
     }
 
     /**
-    * @param mixed $value
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param mixed $value
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
             if ($arrayElement instanceof AbstractTransfer) {
                 $result[$elementKey] = $arrayElement->modifiedToArray($isRecursive, $camelCasedKeys);
+
                 continue;
             }
             $result[$elementKey] = $arrayElement;
@@ -210,17 +220,19 @@ class {{ className }} extends {{ abstractClass }}
     }
 
     /**
-    * @param mixed $value
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param mixed $value
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
             if ($arrayElement instanceof AbstractTransfer) {
                 $result[$elementKey] = $arrayElement->toArray($isRecursive, $camelCasedKeys);
+
                 continue;
             }
             $result[$elementKey] = $arrayElement;

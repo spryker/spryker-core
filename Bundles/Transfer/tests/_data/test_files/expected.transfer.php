@@ -15,20 +15,44 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class CatFaceTransfer extends AbstractTransfer
 {
+    /**
+     * @var string
+     */
     public const NAME = 'name';
 
+    /**
+     * @var string
+     */
     public const ITEM = 'item';
 
+    /**
+     * @var string
+     */
     public const ITEMS = 'items';
 
+    /**
+     * @var string
+     */
     public const TYPED_ARRAY = 'typedArray';
 
+    /**
+     * @var string
+     */
     public const TYPED_ASSOCIATIVE_STRING_ARRAY = 'typedAssociativeStringArray';
 
+    /**
+     * @var string
+     */
     public const TYPED_ASSOCIATIVE_COLLECTION = 'typedAssociativeCollection';
 
+    /**
+     * @var string
+     */
     public const TYPED_NOT_ASSOCIATIVE_STRING_ARRAY = 'typedNotAssociativeStringArray';
 
+    /**
+     * @var string
+     */
     public const TYPED_NOT_ASSOCIATIVE_ARRAY = 'typedNotAssociativeArray';
 
     /**
@@ -655,7 +679,10 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @param array $data
      * @param bool $ignoreMissingProperty
-     * @return CatFaceTransfer
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return $this
      */
     public function fromArray(array $data, $ignoreMissingProperty = false)
     {
@@ -670,11 +697,12 @@ class CatFaceTransfer extends AbstractTransfer
                 case 'typedNotAssociativeArray':
                     $this->$normalizedPropertyName = $value;
                     $this->modifiedProperties[$normalizedPropertyName] = true;
+
                     break;
                 case 'item':
                     if (is_array($value)) {
                         $type = $this->transferMetadata[$normalizedPropertyName]['type'];
-                        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
+                        /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $value */
                         $value = (new $type())->fromArray($value, $ignoreMissingProperty);
                     }
 
@@ -690,6 +718,7 @@ class CatFaceTransfer extends AbstractTransfer
                     $elementType = $this->transferMetadata[$normalizedPropertyName]['type'];
                     $this->$normalizedPropertyName = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
                     $this->modifiedProperties[$normalizedPropertyName] = true;
+
                     break;
                 default:
                     if (!$ignoreMissingProperty) {
@@ -702,10 +731,11 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
     {
         if ($isRecursive && !$camelCasedKeys) {
@@ -723,10 +753,11 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     public function toArray($isRecursive = true, $camelCasedKeys = false)
     {
         if ($isRecursive && !$camelCasedKeys) {
@@ -744,17 +775,19 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @param mixed $value
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param mixed $value
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
             if ($arrayElement instanceof AbstractTransfer) {
                 $result[$elementKey] = $arrayElement->modifiedToArray($isRecursive, $camelCasedKeys);
+
                 continue;
             }
             $result[$elementKey] = $arrayElement;
@@ -764,17 +797,19 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @param mixed $value
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param mixed $value
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
             if ($arrayElement instanceof AbstractTransfer) {
                 $result[$elementKey] = $arrayElement->toArray($isRecursive, $camelCasedKeys);
+
                 continue;
             }
             $result[$elementKey] = $arrayElement;
@@ -784,8 +819,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayRecursiveCamelCased()
     {
         $values = [];
@@ -796,6 +831,7 @@ class CatFaceTransfer extends AbstractTransfer
 
             if ($value instanceof AbstractTransfer) {
                 $values[$arrayKey] = $value->modifiedToArray(true, true);
+
                 continue;
             }
             switch ($property) {
@@ -805,13 +841,16 @@ class CatFaceTransfer extends AbstractTransfer
                 case 'typedNotAssociativeStringArray':
                 case 'typedNotAssociativeArray':
                     $values[$arrayKey] = $value;
+
                     break;
                 case 'item':
                     $values[$arrayKey] = $value instanceof AbstractTransfer ? $value->modifiedToArray(true, true) : $value;
+
                     break;
                 case 'items':
                 case 'typedAssociativeCollection':
                     $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, true, true) : $value;
+
                     break;
             }
         }
@@ -820,8 +859,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayRecursiveNotCamelCased()
     {
         $values = [];
@@ -832,6 +871,7 @@ class CatFaceTransfer extends AbstractTransfer
 
             if ($value instanceof AbstractTransfer) {
                 $values[$arrayKey] = $value->modifiedToArray(true, false);
+
                 continue;
             }
             switch ($property) {
@@ -841,13 +881,16 @@ class CatFaceTransfer extends AbstractTransfer
                 case 'typedNotAssociativeStringArray':
                 case 'typedNotAssociativeArray':
                     $values[$arrayKey] = $value;
+
                     break;
                 case 'item':
                     $values[$arrayKey] = $value instanceof AbstractTransfer ? $value->modifiedToArray(true, false) : $value;
+
                     break;
                 case 'items':
                 case 'typedAssociativeCollection':
                     $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, true, false) : $value;
+
                     break;
             }
         }
@@ -856,8 +899,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayNotRecursiveNotCamelCased()
     {
         $values = [];
@@ -873,8 +916,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayNotRecursiveCamelCased()
     {
         $values = [];
@@ -890,8 +933,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @return void
-    */
+     * @return void
+     */
     protected function initCollectionProperties()
     {
         $this->items = $this->items ?: new ArrayObject();
@@ -899,8 +942,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayNotRecursiveCamelCased()
     {
         return [
@@ -916,8 +959,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayNotRecursiveNotCamelCased()
     {
         return [
@@ -933,8 +976,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayRecursiveNotCamelCased()
     {
         return [
@@ -950,8 +993,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayRecursiveCamelCased()
     {
         return [

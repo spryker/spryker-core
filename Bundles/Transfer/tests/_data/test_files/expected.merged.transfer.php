@@ -16,12 +16,24 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
  */
 class FooBarTransfer extends AbstractTransfer
 {
+    /**
+     * @var string
+     */
     public const NAME = 'name';
 
+    /**
+     * @var string
+     */
     public const BLA = 'bla';
 
+    /**
+     * @var string
+     */
     public const STOCK = 'stock';
 
+    /**
+     * @var string
+     */
     public const SELF_REFERENCE = 'selfReference';
 
     /**
@@ -339,7 +351,10 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @param array $data
      * @param bool $ignoreMissingProperty
-     * @return FooBarTransfer
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return $this
      */
     public function fromArray(array $data, $ignoreMissingProperty = false)
     {
@@ -351,14 +366,17 @@ class FooBarTransfer extends AbstractTransfer
                 case 'bla':
                     $this->$normalizedPropertyName = $value;
                     $this->modifiedProperties[$normalizedPropertyName] = true;
+
                     break;
                 case 'selfReference':
                     $elementType = $this->transferMetadata[$normalizedPropertyName]['type'];
                     $this->$normalizedPropertyName = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
                     $this->modifiedProperties[$normalizedPropertyName] = true;
+
                     break;
                 case 'stock':
                     $this->assignValueObject($normalizedPropertyName, $value);
+
                     break;
                 default:
                     if (!$ignoreMissingProperty) {
@@ -371,10 +389,11 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
     {
         if ($isRecursive && !$camelCasedKeys) {
@@ -392,10 +411,11 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     public function toArray($isRecursive = true, $camelCasedKeys = false)
     {
         if ($isRecursive && !$camelCasedKeys) {
@@ -413,17 +433,19 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @param mixed $value
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param mixed $value
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
             if ($arrayElement instanceof AbstractTransfer) {
                 $result[$elementKey] = $arrayElement->modifiedToArray($isRecursive, $camelCasedKeys);
+
                 continue;
             }
             $result[$elementKey] = $arrayElement;
@@ -433,17 +455,19 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @param mixed $value
-    * @param bool $isRecursive
-    * @param bool $camelCasedKeys
-    * @return array
-    */
+     * @param mixed $value
+     * @param bool $isRecursive
+     * @param bool $camelCasedKeys
+     *
+     * @return array
+     */
     protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
             if ($arrayElement instanceof AbstractTransfer) {
                 $result[$elementKey] = $arrayElement->toArray($isRecursive, $camelCasedKeys);
+
                 continue;
             }
             $result[$elementKey] = $arrayElement;
@@ -453,8 +477,8 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayRecursiveCamelCased()
     {
         $values = [];
@@ -465,6 +489,7 @@ class FooBarTransfer extends AbstractTransfer
 
             if ($value instanceof AbstractTransfer) {
                 $values[$arrayKey] = $value->modifiedToArray(true, true);
+
                 continue;
             }
             switch ($property) {
@@ -472,9 +497,11 @@ class FooBarTransfer extends AbstractTransfer
                 case 'bla':
                 case 'stock':
                     $values[$arrayKey] = $value;
+
                     break;
                 case 'selfReference':
                     $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, true, true) : $value;
+
                     break;
             }
         }
@@ -483,8 +510,8 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayRecursiveNotCamelCased()
     {
         $values = [];
@@ -495,6 +522,7 @@ class FooBarTransfer extends AbstractTransfer
 
             if ($value instanceof AbstractTransfer) {
                 $values[$arrayKey] = $value->modifiedToArray(true, false);
+
                 continue;
             }
             switch ($property) {
@@ -502,9 +530,11 @@ class FooBarTransfer extends AbstractTransfer
                 case 'bla':
                 case 'stock':
                     $values[$arrayKey] = $value;
+
                     break;
                 case 'selfReference':
                     $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, true, false) : $value;
+
                     break;
             }
         }
@@ -513,8 +543,8 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayNotRecursiveNotCamelCased()
     {
         $values = [];
@@ -530,8 +560,8 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function modifiedToArrayNotRecursiveCamelCased()
     {
         $values = [];
@@ -547,16 +577,16 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return void
-    */
+     * @return void
+     */
     protected function initCollectionProperties()
     {
         $this->selfReference = $this->selfReference ?: new ArrayObject();
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayNotRecursiveCamelCased()
     {
         return [
@@ -568,8 +598,8 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayNotRecursiveNotCamelCased()
     {
         return [
@@ -581,8 +611,8 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayRecursiveNotCamelCased()
     {
         return [
@@ -594,8 +624,8 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function toArrayRecursiveCamelCased()
     {
         return [

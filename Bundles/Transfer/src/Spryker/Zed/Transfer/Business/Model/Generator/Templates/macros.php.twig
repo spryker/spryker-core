@@ -4,6 +4,10 @@
     /**
      * @deprecated {{ constant.deprecationDescription }}
      */
+    {% else -%}
+    /**
+     * @var string
+     */
     {% endif -%}
     public const {{ constant.name }} = '{{ constant.value }}';
 
@@ -147,12 +151,12 @@
      * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      {% if method.deprecationDescription is not null -%}
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
-     *
      * @return {{ method.return }}
      */
     public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }}{% endif ~%}
@@ -252,12 +256,12 @@
      * @module {{ method.bundles|join('|') }}
      *
      {% endif -%}
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      {% if method.deprecationDescription is not null -%}
      * @deprecated {{ method.deprecationDescription }}
      *
      {% endif -%}
-     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
-     *
      * @return $this
      */
     public function {{ method.name }}()
@@ -274,8 +278,8 @@
 
 {%- macro addEntityNamespace(entityNamespace) %}
     /**
-    * @var string
-    */
+     * @var string
+     */
     public static $entityNamespace = '{{ entityNamespace }}';
 {% endmacro -%}
 
@@ -283,8 +287,8 @@
 {%- macro addModifiedToArray(methodName, camelCase, isRecursive, primitives, transfers, collections, valueObjects)-%}
 
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function {{ methodName }}()
     {
         $values = [];
@@ -300,6 +304,7 @@
 {% if isRecursive %}
             if ($value instanceof AbstractTransfer) {
                 $values[$arrayKey] = $value->modifiedToArray({{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }});
+
                 continue;
             }
             switch ($property) {
@@ -311,6 +316,7 @@
                 case '{{ value.name }}':
 {% endfor %}
                     $values[$arrayKey] = $value;
+
                     break;
 {% endif %}
 {% if transfers is not empty %}
@@ -318,6 +324,7 @@
                 case '{{ value.name }}':
 {% endfor %}
                     $values[$arrayKey] = $value instanceof AbstractTransfer ? $value->modifiedToArray({{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }}) : $value;
+
                     break;
 {% endif %}
 {% if collections is not empty %}
@@ -325,6 +332,7 @@
                 case '{{ value.name }}':
 {% endfor %}
                     $values[$arrayKey] = $value ? $this->addValuesToCollectionModified($value, {{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }}) : $value;
+
                     break;
 {% endif %}
             }
@@ -341,8 +349,8 @@
 {%- macro addToArray(methodName, isRecursive, isCamelCamed, primitives, transfers, transferCollections, valueObjects)-%}
 {%- set nameKey = isCamelCamed ? 'name' : 'name_underscore' -%}
     /**
-    * @return array
-    */
+     * @return array
+     */
     public function {{ methodName }}()
     {
         return [
@@ -376,8 +384,8 @@
 
 {%- macro addInitCollections(collections) -%}
     /**
-    * @return void
-    */
+     * @return void
+     */
     protected function initCollectionProperties()
     {
 {% for collection in collections %}
