@@ -20,7 +20,6 @@
     "require-dev": {
         "spryker/catalog": "*",
         "spryker/code-sniffer": "*",
-        "spryker/content": "*",
         "spryker/customer": "*",
         "spryker/elastica": "*",
         "spryker/propel": "^3.0.0",
