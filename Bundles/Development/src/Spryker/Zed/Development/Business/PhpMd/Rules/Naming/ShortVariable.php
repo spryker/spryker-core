@@ -62,7 +62,7 @@ class ShortVariable extends PHPMDShortVariable
     {
         $exceptions = $this->getExceptionsList();
 
-        if (in_array(substr($node->getImage(), 1), $exceptions)) {
+        if (in_array(substr($node->getImage(), 1), $exceptions, true)) {
             return true;
         }
 

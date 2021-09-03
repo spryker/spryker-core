@@ -1,9 +1,1 @@
-[
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductConfiguration/src/Spryker/Client/ProductConfiguration/Dependency/External/ProductConfigurationToHttpClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Client\\ProductConfiguration\\Dependency\\External\\ProductConfigurationToHttpClientInterface::request() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    }
-]
+[]

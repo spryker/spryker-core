@@ -233,6 +233,8 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @return string
      */
     public function getNameOrFail()
@@ -246,6 +248,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -284,6 +288,8 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     public function getItemOrFail()
@@ -297,6 +303,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -349,6 +357,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -409,6 +419,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -471,6 +483,8 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      * @return $this
      */
     public function requireTypedAssociativeStringArray()
@@ -523,6 +537,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */
@@ -584,6 +600,8 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
+     *
      * @return $this
      */
     public function requireTypedNotAssociativeStringArray()
@@ -641,6 +659,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @module Test
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException
      *
      * @return $this
      */

@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\PropelOrm\Business\Builder;
 
 use Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilderWithLogger;
-use SprykerTest\Zed\PropelOrm\Business\Builder\Fixtures\Foo;
 
 /**
  * Auto-generated group annotations
@@ -21,24 +20,7 @@ use SprykerTest\Zed\PropelOrm\Business\Builder\Fixtures\Foo;
  * @group ObjectBuilderWithLoggerTest
  * Add your own group annotations below this line
  */
-class ObjectBuilderWithLoggerTest extends AbstractBuilderTester
+class ObjectBuilderWithLoggerTest extends ObjectBuilderTest
 {
     protected const FOO_BUILDER_CLASS = ObjectBuilderWithLogger::class;
-
-    /**
-     * @return void
-     */
-    public function testSaveShouldNotThrowAnException(): void
-    {
-        // Arrange
-        $foo = new Foo();
-        $foo->setIdFoo(1);
-        $expectedCount = 1;
-
-        // Act
-        $affectedCount = $foo->save();
-
-        // Assert
-        $this->assertSame($expectedCount, $affectedCount);
-    }
 }

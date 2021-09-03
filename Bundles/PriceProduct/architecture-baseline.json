@@ -1,12 +1,5 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/PriceProduct/src/Spryker/Client/PriceProduct/PriceProductClientInterface.php",
-        "description": "\n      ClientInterface: The interface method Spryker\\Client\\PriceProduct\\PriceProductClientInterface::resolveProductPrice() does not contain an @api tag or contract text which violates rule: \"Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "ClientInterfaceRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    },
-    {
         "fileName": "/vendor/spryker/spryker/Bundles/PriceProduct/src/Spryker/Zed/PriceProduct/Dependency/Facade/PriceProductToProductFacadeInterface.php",
         "description": "\n      Bridges: The bridge interface has incorrect method 'getProductConcreteIdBySku' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
         "rule": "BridgeMethodsRule",

@@ -106,7 +106,7 @@ class RequireExternalUpdater implements UpdaterInterface
         foreach ($this->externalDependencyTree as $dependency) {
             if (
                 $dependency[DependencyTree::META_MODULE] === $bundleName
-                && !in_array($dependency[DependencyTree::META_COMPOSER_NAME], $this->ignorableDependencies)
+                && !in_array($dependency[DependencyTree::META_COMPOSER_NAME], $this->ignorableDependencies, true)
             ) {
                 $dependentModule = $this->mapExternalToInternal($dependency[DependencyTree::META_COMPOSER_NAME]);
 

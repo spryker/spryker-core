@@ -50,13 +50,6 @@
     },
     {
         "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The AbstractFacade is missing a \"AbstractFacadeInterface\" which violates the rule \"Must implement an interface with same name and suffix 'Interface'. Every method must also contain the @api tag in docblock and a contract text above.\"\n    ",
-        "rule": "FacadeInterfaceRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Business/AbstractFacade.php",
         "description": "\n      Zed Business Layer - Facade: The are properties in class Spryker\\Zed\\Kernel\\Business\\AbstractFacade which violates rule \"A facade must not have properties. It must also not contain any instantiations, only delegation.\"\n    ",
         "rule": "FacadeRule",
         "ruleset": "Spryker Zed",
@@ -150,34 +143,6 @@
         "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/AbstractCommunicationFactory.php",
         "description": "\n      Factories: The factory method injectExternalDependencies() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
         "rule": "FactoryOnlyGetAndCreateRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/Controller/AbstractGatewayController.php",
-        "description": "\n      Controller: The controller method Spryker\\Zed\\Kernel\\Communication\\Controller\\AbstractGatewayController::isSuccess() is not suffixed with \"Action\" which violates rule \"All public controller methods have the suffix `*Action`.\"\n    ",
-        "rule": "CommunicationControllerRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/Controller/AbstractGatewayController.php",
-        "description": "\n      Controller: The controller method Spryker\\Zed\\Kernel\\Communication\\Controller\\AbstractGatewayController::getErrorMessages() is not suffixed with \"Action\" which violates rule \"All public controller methods have the suffix `*Action`.\"\n    ",
-        "rule": "CommunicationControllerRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/Controller/AbstractGatewayController.php",
-        "description": "\n      Controller: The controller method Spryker\\Zed\\Kernel\\Communication\\Controller\\AbstractGatewayController::getInfoMessages() is not suffixed with \"Action\" which violates rule \"All public controller methods have the suffix `*Action`.\"\n    ",
-        "rule": "CommunicationControllerRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/Communication/Controller/AbstractGatewayController.php",
-        "description": "\n      Controller: The controller method Spryker\\Zed\\Kernel\\Communication\\Controller\\AbstractGatewayController::getSuccessMessages() is not suffixed with \"Action\" which violates rule \"All public controller methods have the suffix `*Action`.\"\n    ",
-        "rule": "CommunicationControllerRule",
         "ruleset": "Spryker",
         "priority": "1"
     },
