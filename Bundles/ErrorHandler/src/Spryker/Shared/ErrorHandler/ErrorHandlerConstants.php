@@ -108,4 +108,12 @@ interface ErrorHandlerConstants
      * @api
      */
     public const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
+
+    /**
+     * Specification:
+     * - Class name of the class which implements `ErrorRendererInterface` and should be used to render a given exception in Glue.
+     *
+     * @api
+     */
+    public const API_ERROR_RENDERER = 'ERROR_HANDLER:API_ERROR_RENDERER';
 }

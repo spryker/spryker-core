@@ -7,11 +7,13 @@
 
 namespace Spryker\Shared\ErrorHandler;
 
+use Exception;
 use Spryker\Service\Kernel\Locator;
 use Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\ApiErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\CliErrorRenderer;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 
 class ErrorHandlerFactory
@@ -62,7 +64,9 @@ class ErrorHandlerFactory
     protected function createErrorRenderer()
     {
         if ($this->isGlueApplication()) {
-            return $this->createApiRenderer();
+            $errorRendererClassName = Config::get(ErrorHandlerConstants::API_ERROR_RENDERER, ApiErrorRenderer::class);
+
+            return $this->createApiRenderer($errorRendererClassName);
         }
 
         if ($this->isCliCall()) {
@@ -107,11 +111,25 @@ class ErrorHandlerFactory
     }
 
     /**
-     * @return \Spryker\Shared\ErrorHandler\ErrorRenderer\ApiErrorRenderer
+     * @param string $errorRenderer
+     *
+     * @throws \Exception
+     *
+     * @return \Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
      */
-    protected function createApiRenderer()
+    protected function createApiRenderer(string $errorRenderer): ErrorRendererInterface
     {
-        return new ApiErrorRenderer();
+        if (!class_exists($errorRenderer)) {
+            throw new Exception(sprintf('Class %s not found', $errorRenderer));
+        }
+
+        $errorRendererObject = new $errorRenderer();
+
+        if (!$errorRendererObject instanceof ErrorRendererInterface) {
+            throw new Exception(sprintf('Api error renderer class is expected to be an instance of %s', ErrorRendererInterface::class));
+        }
+
+        return $errorRendererObject;
     }
 
     /**
