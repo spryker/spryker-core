@@ -41,7 +41,7 @@ class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsea
      * @param \Elastica\ResultSet $searchResult
      * @param array $requestParameters
      *
-     * @return mixed|array
+     * @return array
      */
     protected function formatSearchResult(ResultSet $searchResult, array $requestParameters)
     {
@@ -91,7 +91,7 @@ class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsea
      *
      * @param array $result
      *
-     * @return mixed|array
+     * @return array
      */
     protected function formatSearchResultWithoutPriceDimensions(array $result)
     {

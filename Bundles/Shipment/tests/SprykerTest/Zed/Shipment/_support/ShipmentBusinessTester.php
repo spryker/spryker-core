@@ -94,7 +94,7 @@ class ShipmentBusinessTester extends Actor
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
      * @param int $idShipmentMethod
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|mixed|null
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
     public function findShipmentMethod(ShipmentMethodsTransfer $shipmentMethodsTransfer, int $idShipmentMethod)
     {

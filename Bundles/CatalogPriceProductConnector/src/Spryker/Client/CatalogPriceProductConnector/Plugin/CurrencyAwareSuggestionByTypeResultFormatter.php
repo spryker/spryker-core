@@ -64,7 +64,7 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
      *
      * @param array $result
      *
-     * @return mixed|array
+     * @return array
      */
     protected function formatSearchResultWithoutPriceDimensions(array $result)
     {

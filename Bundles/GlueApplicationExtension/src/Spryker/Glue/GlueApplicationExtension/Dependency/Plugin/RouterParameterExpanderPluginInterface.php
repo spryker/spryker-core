@@ -37,10 +37,10 @@ interface RouterParameterExpanderPluginInterface
      *
      * @phpstan-return array<mixed>
      *
-     * @param mixed|array $resourceConfiguration
-     * @param mixed|array $routeParams
+     * @param array $resourceConfiguration
+     * @param array $routeParams
      *
-     * @return mixed|array
+     * @return array
      */
     public function expandRouteParameters(array $resourceConfiguration, array $routeParams): array;
 }
