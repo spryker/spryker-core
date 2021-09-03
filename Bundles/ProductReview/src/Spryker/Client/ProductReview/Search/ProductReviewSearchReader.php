@@ -56,4 +56,15 @@ class ProductReviewSearchReader implements ProductReviewSearchReaderInterface
             $productReviewSearchRequestTransfer->getRequestParams()
         );
     }
+
+    /**
+     * @return array|\Elastica\ResultSet|mixed
+     */
+    public function searchProductReviews()
+    {
+        return $this->searchClient->search(
+            $this->searchQueryPlugin,
+            $this->searchResultFormatterPlugins
+        );
+    }
 }

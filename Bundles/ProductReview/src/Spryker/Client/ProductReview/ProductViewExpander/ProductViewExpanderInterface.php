@@ -22,4 +22,13 @@ interface ProductViewExpanderInterface
         ProductViewTransfer $productViewTransfer,
         ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
     ): ProductViewTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function expandProductViewsWithProductReviewData(
+        array $productViewTransfers
+    ): array;
 }

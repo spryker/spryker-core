@@ -94,6 +94,22 @@ interface ProductReviewClientInterface
 
     /**
      * Specification:
+     *  - Expands product view data with product review summary data (average rating).
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $productViewTransfers
+     * @param \Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function expandProductViewBulkWithProductReviewData(
+        array $productViewTransfers,
+        BulkProductReviewSearchRequestTransfer $bulkProductReviewSearchRequestTransfer
+    ): array;
+
+    /**
+     * Specification:
      * - Calculates the product review rating aggregation value.
      * - Calculates the product review average rating value.
      * - Calculates the product total review value.

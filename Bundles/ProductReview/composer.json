@@ -23,12 +23,14 @@
         "spryker/customer": "*",
         "spryker/elastica": "*",
         "spryker/propel": "^3.0.0",
+        "spryker/search-elasticsearch": "*",
         "spryker/silex": "^2.0.0",
         "spryker/testify": "*"
     },
     "suggest": {
         "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
         "spryker/elastica": "Allow sending log messages to an Elastic Search server.",
+        "spryker/search-elasticsearch": "If you want to use search plugins.",
         "spryker/silex": "If you want to use ServiceProvider."
     },
     "autoload": {
