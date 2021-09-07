@@ -129,6 +129,10 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
             $localeName = $productAbstractLocalizedEntity->getLocale()->getLocaleName();
 
             if (isset($productAbstractImageSetsBulk[$idProductAbstract][$idLocale])) {
+                $imageSets[$idProductAbstract][$idAbstractAttributes] = $this->generateProductAbstractImageSets(
+                    $productAbstractImageSetsBulk[$idProductAbstract][$idLocale]
+                );
+
                 continue;
             }
 
