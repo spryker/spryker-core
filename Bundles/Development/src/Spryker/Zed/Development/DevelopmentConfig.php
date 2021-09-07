@@ -570,6 +570,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      * @api
      *
      * @phpstan-return array<string, string>
+     *
      * @return string[]
      */
     public function getIdeAutoCompletionSourceDirectoryGlobPatterns()
