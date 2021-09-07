@@ -295,6 +295,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
             foreach (DevelopmentConfig::APPLICATIONS as $layer) {
                 $layerPath = $path . $layer . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR;
+
                 if ($pathSuffix) {
                     $layerPath .= $pathSuffix;
                 }
@@ -303,7 +304,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
                     continue;
                 }
 
-                $paths[$layerPath] = null;
+                $paths[$layerPath] = $pathToRoot;
             }
         }
 
