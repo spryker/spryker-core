@@ -22,15 +22,36 @@ use Symfony\Component\Security\Csrf\CsrfToken;
  */
 class CreateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
 
+    /**
+     * @var string
+     */
     protected const PARAM_IDS_SALES_ORDER_ITEMS = 'id-order-item';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_RECLAMATION = 'id-reclamation';
+    /**
+     * @var string
+     */
     protected const PARAM_TOKEN = '_token';
+    /**
+     * @var string
+     */
     protected const PARAM_CLAIM_FORM_TOKEN_ID = 'reclamation_form_token';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_HEADER_REFERER = 'referer';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_FALLBACK_ERROR_REDIRECT_URL = '/sales-reclamation-gui';
 
     /**

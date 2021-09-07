@@ -13,6 +13,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractTransferFileFinder implements GeneratedFileFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const TRANSFER_NAMESPACE_PATTERN = 'Generated\Shared\Transfer\%s';
 
     /**

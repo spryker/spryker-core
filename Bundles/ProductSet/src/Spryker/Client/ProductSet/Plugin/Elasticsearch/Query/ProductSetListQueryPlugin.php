@@ -20,6 +20,9 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
 
 class ProductSetListQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_IDENTIFIER = 'page';
 
     /**

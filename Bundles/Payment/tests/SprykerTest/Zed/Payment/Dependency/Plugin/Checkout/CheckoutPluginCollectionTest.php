@@ -27,7 +27,13 @@ use Spryker\Zed\Payment\Exception\CheckoutPluginNotFoundException;
  */
 class CheckoutPluginCollectionTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const PROVIDER = 'provider';
+    /**
+     * @var string
+     */
     public const PLUGIN_TYPE = 'plugin type';
 
     /**

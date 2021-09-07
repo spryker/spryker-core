@@ -32,7 +32,13 @@ use Spryker\Client\Kernel\AbstractFactory;
  */
 class CartClientTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PARAM_SEPARATE_PRODUCT = 'separate_product';
+    /**
+     * @var string
+     */
     protected const ITEM_SKU = 'sku';
 
     /**

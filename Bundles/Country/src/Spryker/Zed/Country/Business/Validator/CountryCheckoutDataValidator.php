@@ -15,10 +15,22 @@ use Spryker\Zed\Country\Persistence\CountryRepositoryInterface;
 
 class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_BILLING_ADDRESS_IS_MISSING = 'billing.address.validation.is_missing';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_BILLING_ADDRESS_COUNTRY_NOT_FOUND = 'billing.address.country.validation.not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SHIPPING_ADDRESS_COUNTRY_NOT_FOUND = 'shipping.address.country.validation.not_found';
 
+    /**
+     * @var string
+     */
     protected const COUNTRY_CODE_PARAMETER = '%code%';
 
     /**

@@ -18,8 +18,17 @@ use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 class BasePreCheck
 {
+    /**
+     * @var string
+     */
     protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_TRANSLATION_KEY = 'product_bundle.unavailable';
+    /**
+     * @var string
+     */
     protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_BUNDLE_SKU = '%bundleSku%';
+    /**
+     * @var string
+     */
     protected const ERROR_BUNDLE_ITEM_UNAVAILABLE_PARAMETER_PRODUCT_SKU = '%productSku%';
 
     /**

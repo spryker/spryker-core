@@ -17,6 +17,7 @@ class CmsBlockProductStorageConstants
      * - Queue name as used for processing category messages
      *
      * @api
+     * @var string
      */
     public const CMS_BLOCK_PRODUCT_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
 
@@ -25,6 +26,7 @@ class CmsBlockProductStorageConstants
      * - Queue name as used for error category messages
      *
      * @api
+     * @var string
      */
     public const CMS_BLOCK_PRODUCT_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.cms.error';
 
@@ -33,6 +35,7 @@ class CmsBlockProductStorageConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const CMS_BLOCK_PRODUCT_RESOURCE_NAME = 'cms_block_product';
 }

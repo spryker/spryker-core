@@ -11,9 +11,21 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 
 interface RestResponseInterface
 {
+    /**
+     * @var string
+     */
     public const RESPONSE_ERRORS = 'errors';
+    /**
+     * @var string
+     */
     public const RESPONSE_DATA = 'data';
+    /**
+     * @var string
+     */
     public const RESPONSE_INCLUDED = 'included';
+    /**
+     * @var string
+     */
     public const RESPONSE_LINKS = 'links';
 
     /**

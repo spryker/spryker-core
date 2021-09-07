@@ -11,9 +11,18 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class SessionRedisConfig extends AbstractSharedConfig
 {
+    /**
+     * @var string
+     */
     public const SESSION_HANDLER_REDIS = 'redis';
+    /**
+     * @var string
+     */
     public const SESSION_HANDLER_REDIS_LOCKING = 'redis_locking';
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_REDIS_DATABASE = 0;
 
     /**
@@ -43,7 +52,7 @@ class SessionRedisConfig extends AbstractSharedConfig
      */
     public function getDefaultRedisDatabase(): string
     {
-        return static::DEFAULT_REDIS_DATABASE;
+        return (string)static::DEFAULT_REDIS_DATABASE;
     }
 
     /**

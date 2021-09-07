@@ -28,21 +28,60 @@ use Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationT
  */
 class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    /**
+     * @var string
+     */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+    /**
+     * @var string
+     */
     public const CLIENT_HTTP = 'CLIENT_HTTP';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT_VOLUME = 'CLIENT_PRICE_PRODUCT_VOLUME';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const SERVICE_PRODUCT_CONFIGURATION = 'SERVICE_PRODUCT_CONFIGURATION';
+    /**
+     * @var string
+     */
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER = 'PLUGINS_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONFIGURATION_PRICE_EXTRACTOR = 'PLUGINS_PRODUCT_CONFIGURATION_PRICE_EXTRACTOR';
 
+    /**
+     * @var string
+     */
     public const CHECKSUM_GENERATOR = 'CHECKSUM_GENERATOR';
 
     /**

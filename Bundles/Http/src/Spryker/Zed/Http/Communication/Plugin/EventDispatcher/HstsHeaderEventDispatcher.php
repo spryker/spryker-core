@@ -21,9 +21,21 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const HEADER_HSTS = 'Strict-Transport-Security';
+    /**
+     * @var string
+     */
     protected const HSTS_CONFIG_MAX_AGE = 'max_age';
+    /**
+     * @var string
+     */
     protected const HSTS_CONFIG_INCLUDE_SUBDOMAINS = 'include_sub_domains';
+    /**
+     * @var string
+     */
     protected const HSTS_CONFIG_PRELOAD = 'preload';
 
     /**

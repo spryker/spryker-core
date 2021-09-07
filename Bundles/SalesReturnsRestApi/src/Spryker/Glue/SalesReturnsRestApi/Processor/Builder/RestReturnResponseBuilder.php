@@ -25,6 +25,9 @@ use Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig;
 
 class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_SELF_LINK_RETURN_ITEMS_RESOURCE = '%s/%s/%s/%s';
 
     /**

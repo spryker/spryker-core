@@ -14,6 +14,9 @@ use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
 class PriceProductScheduleCsvValidator implements PriceProductScheduleCsvValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_HEADERS_MISSING = '%s header(s) is missing in uploaded csv file';
 
     /**

@@ -18,10 +18,25 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COUNTRY = 'FACADE_COUNTRY';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+    /**
+     * @var string
+     */
     public const PLUGIN_ADDRESS_POST_SAVE = 'PLUGIN_ADDRESS_POST_SAVE';
+    /**
+     * @var string
+     */
     public const PLUGIN_ADDRESS_TRANSFER_HYDRATING = 'PLUGIN_ADDRESS_TRANSFER_HYDRATING';
 
     /**

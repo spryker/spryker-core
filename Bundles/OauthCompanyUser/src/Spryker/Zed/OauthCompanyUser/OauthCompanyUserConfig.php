@@ -14,8 +14,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class OauthCompanyUserConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const SCOPE_COMPANY_USER = 'company_user';
 
+    /**
+     * @var string
+     */
     public const GRANT_TYPE_ID_COMPANY_USER = 'idCompanyUser';
 
     /**

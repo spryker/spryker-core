@@ -20,10 +20,22 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchCopyIndexConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'search:index:copy';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will copy one index to another.';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_SOURCE = 'source';
+    /**
+     * @var string
+     */
     public const ARGUMENT_TARGET = 'target';
 
     /**

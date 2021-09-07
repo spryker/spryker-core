@@ -31,32 +31,95 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class AclEntityRuleDataImportPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_IMPORT_COUNT = 5;
 
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_REFERENCE_1 = 'GK9rS4jIzVP3Jq71iqNY';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_REFERENCE_2 = 'SIfdvYi3rZwxNKJRehEm';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_REFERENCE_3 = 'sCrVK2mGyV77B7uifjPI';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_REFERENCE_4 = 'rV3aEVTp66WBE46c1tPN';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_REFERENCE_5 = 'e73vG9wnDKI6rzuIJIts';
 
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_NAME_1 = 'Role 1';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_NAME_2 = 'Role 2';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_NAME_3 = 'Role 3';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_NAME_4 = 'Role 4';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_NAME_5 = 'Role 5';
 
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_RULE_ENTITY_1 = 'Orm\Zed\Company\Persistence\SpyCompany';
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_RULE_ENTITY_2 = 'Orm\Zed\Product\Persistence\SpyProductAbstract';
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_RULE_ENTITY_3 = 'Orm\Zed\Product\Persistence\SpyProduct';
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_RULE_ENTITY_4 = 'Orm\Zed\CmsBlock\Persistence\SpyCmsBlock';
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_RULE_ENTITY_5 = 'Orm\Zed\Customer\Persistence\SpyCustomer';
 
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_REFERENCE_1 = 'sH9qLMZtt6sxWqRJVYib';
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_REFERENCE_2 = '5nIYY1SETa50lSDiwxf8';
 
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_NAME_1 = 'Segment 1';
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_NAME_2 = 'Segment 2';
 
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_TARGET_ENTITY = 'Orm\Zed\Merchant\Persistence\SpyMerchant';
 
     /**

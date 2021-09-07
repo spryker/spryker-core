@@ -30,8 +30,17 @@ use Spryker\Zed\MerchantProduct\Business\Exception\MerchantProductExistsExceptio
  */
 class MerchantProductFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_SKU = 'test-sku';
+    /**
+     * @var string
+     */
     protected const TEST_PRODUCT_OFFER_REFERENCE = 'test-product-offer-reference';
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
 
     /**

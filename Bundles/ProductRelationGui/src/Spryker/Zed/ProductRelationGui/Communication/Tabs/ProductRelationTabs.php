@@ -13,14 +13,35 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class ProductRelationTabs extends AbstractTabs
 {
+    /**
+     * @var string
+     */
     protected const RELATION_TAB_NAME = 'relation-type';
+    /**
+     * @var string
+     */
     protected const RELATION_TAB_TEMPLATE = '@ProductRelationGui/_partial/tab-relation-type.twig';
+    /**
+     * @var string
+     */
     protected const RELATION_TAB_TITLE = 'Settings';
 
+    /**
+     * @var string
+     */
     protected const ASSIGN_TAB_NAME = 'assign-products';
+    /**
+     * @var string
+     */
     protected const ASSIGN_TAB_TEMPLATE = '@ProductRelationGui/_partial/tab-assign-products.twig';
+    /**
+     * @var string
+     */
     protected const ASSIGN_TAB_TITLE = 'Products';
 
+    /**
+     * @var string
+     */
     protected const FOOTER_TEMPLATE = '@ProductRelationGui/_partial/form-submit.twig';
 
     /**

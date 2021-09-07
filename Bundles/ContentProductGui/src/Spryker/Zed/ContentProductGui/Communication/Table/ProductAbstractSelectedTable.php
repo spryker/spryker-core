@@ -15,14 +15,35 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ProductAbstractSelectedTable extends AbstractProductAbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_IDENTIFIER = 'product-abstract-selected-table';
+    /**
+     * @var string
+     */
     public const TABLE_CLASS = 'product-abstract-selected-table gui-table-data';
+    /**
+     * @var string
+     */
     public const BASE_URL = '/content-product-gui/product-abstract/';
 
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     public const BUTTON_DELETE = 'Delete';
+    /**
+     * @var string
+     */
     public const BUTTON_MOVE_UP = 'Move Up';
+    /**
+     * @var string
+     */
     public const BUTTON_MOVE_DOWN = 'Move Down';
 
     /**

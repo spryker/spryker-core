@@ -18,6 +18,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      * @api
      *
      * @uses \Spryker\Shared\ProductStorage\ProductStorageConstants::PRODUCT_SYNC_STORAGE_QUEUE
+     * @var string
      */
     public const PRODUCT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
@@ -26,6 +27,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      * - Resource name, this will be used for key generation.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_BUNDLE_RESOURCE_NAME = 'product_bundle';
 
@@ -34,6 +36,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      * - This events will be used for spy_product_bundle publishing.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_BUNDLE_PUBLISH = 'ProductBundle.product_bundle.publish.write';
 
@@ -42,6 +45,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      * - This event is used for spy_product_bundle entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_BUNDLE_CREATE = 'Entity.spy_product_bundle.create';
 
@@ -50,6 +54,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      * - This events will be used for spy_product_bundle entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_BUNDLE_UPDATE = 'Entity.spy_product_bundle.update';
 
@@ -58,6 +63,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      * - This event is used for spy_product_bundle entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_BUNDLE_DELETE = 'Entity.spy_product_bundle.delete';
 
@@ -68,6 +74,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      * @api
      *
      * @uses \Spryker\Zed\Product\Dependency\ProductEvents::ENTITY_SPY_PRODUCT_UPDATE
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_UPDATE = 'Entity.spy_product.update';
 }

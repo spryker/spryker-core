@@ -9,6 +9,9 @@ namespace Spryker\Zed\Tax\Business\Model;
 
 class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_BUCKET_NAME = 'default';
 
     /**

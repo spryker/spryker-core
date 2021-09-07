@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class SalesInvoiceConfig extends AbstractSharedConfig
 {
+    /**
+     * @var string
+     */
     protected const ORDER_INVOICE_SEQUENCE_DEFAULT = 'Invoice';
 
     /**

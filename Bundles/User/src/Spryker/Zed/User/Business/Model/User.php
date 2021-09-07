@@ -24,6 +24,9 @@ class User implements UserInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     public const USER_BUNDLE_SESSION_KEY = 'user';
 
     /**

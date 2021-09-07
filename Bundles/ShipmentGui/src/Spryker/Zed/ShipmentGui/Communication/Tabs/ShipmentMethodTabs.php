@@ -13,18 +13,48 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class ShipmentMethodTabs extends AbstractTabs
 {
+    /**
+     * @var string
+     */
     protected const TAB_CONFIGURATION_NAME = 'configuration';
+    /**
+     * @var string
+     */
     protected const TAB_CONFIGURATION_TITLE = 'Configuration';
+    /**
+     * @var string
+     */
     protected const TAB_CONFIGURATION_TEMPLATE = '@ShipmentGui/_partials/_tabs/tab-configuration.twig';
 
+    /**
+     * @var string
+     */
     protected const TAB_STORE_RELATION_NAME = 'store-relation';
+    /**
+     * @var string
+     */
     protected const TAB_STORE_RELATION_TITLE = 'Store Relation';
+    /**
+     * @var string
+     */
     protected const TAB_STORE_RELATION_TEMPLATE = '@ShipmentGui/_partials/_tabs/tab-store-relation.twig';
 
+    /**
+     * @var string
+     */
     protected const TAB_PRICE_TAX_NAME = 'price-tax';
+    /**
+     * @var string
+     */
     protected const TAB_PRICE_TAX_TITLE = 'Price & Tax';
+    /**
+     * @var string
+     */
     protected const TAB_PRICE_TAX_TEMPLATE = '@ShipmentGui/_partials/_tabs/tab-price-tax.twig';
 
+    /**
+     * @var string
+     */
     protected const FOOTER_TEMPLATE = '@ShipmentGui/_partials/form-submit.twig';
 
     /**

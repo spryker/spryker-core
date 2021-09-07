@@ -9,5 +9,8 @@ namespace Spryker\Zed\AclDataImport\Business\DataSet;
 
 interface AclRoleDataSetInterface
 {
+    /**
+     * @var string
+     */
     public const ACL_ROLE_NAME = 'name';
 }

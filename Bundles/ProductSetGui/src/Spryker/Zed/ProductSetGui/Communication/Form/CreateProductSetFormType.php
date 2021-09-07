@@ -22,9 +22,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CreateProductSetFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_GENERAL_FORM = 'general_form';
+    /**
+     * @var string
+     */
     public const FIELD_SEO_FORM = 'seo_form';
+    /**
+     * @var string
+     */
     public const FIELD_IMAGES_FORM = 'images_form';
+    /**
+     * @var string
+     */
     public const FIELD_PRODUCTS_FORM = 'products_form';
 
     /**

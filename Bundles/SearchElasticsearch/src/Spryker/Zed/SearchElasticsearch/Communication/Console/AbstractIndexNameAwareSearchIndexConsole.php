@@ -13,6 +13,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractIndexNameAwareSearchIndexConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const ARGUMENT_INDEX_NAME = 'index-name';
 
     /**

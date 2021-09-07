@@ -28,8 +28,17 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class CmsSlotDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CMS_SLOT_TEMPLATE_PATH = '@CatalogPage/views/catalog/search.twig';
+    /**
+     * @var string
+     */
     protected const CMS_SLOT_TEMPLATE_NAME = 'Catalog Search';
+    /**
+     * @var string
+     */
     protected const CMS_SLOT_TEMPLATE_DESCRIPTION = 'When you do search by catalog you see this template.';
 
     /**

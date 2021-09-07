@@ -27,7 +27,13 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterfac
  */
 class GetOrderByIdSalesOrderTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    /**
+     * @var string
+     */
     protected const SHIPPED_STATE_NAME = 'shipped';
 
     /**

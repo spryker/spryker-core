@@ -19,9 +19,18 @@ use Spryker\Zed\AclEntity\Persistence\Exception\AclEntityException;
 
 class ForeignKeyRelationResolverStrategy extends AbstractRelationResolverStrategy
 {
+    /**
+     * @var string
+     */
     protected const RELATION_GETTER_TEMPLATE = 'get%s';
+    /**
+     * @var string
+     */
     protected const ENTITY_PREFIX_DEFAULT = 'Spy';
 
+    /**
+     * @var string
+     */
     protected const RELATION_NOT_FOUND_MESSAGE_TEMPLATE = 'Failed to find relation "%s" for "%s"';
 
     /**

@@ -24,14 +24,35 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductLocalizedAttributesForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const NAME_VALIDATION_GROUP = 'name_validation_group';
 
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_NAME = 'Provide a name';
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_DESCRIPTION = 'Provide description';
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_META_TITLE = 'Provide meta title';
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_META_KEYWORDS = 'Provide meta keywords';
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_META_DESCRIPTION = 'Provide meta description';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_MESSAGE_NOT_BLANK = 'The value cannot be empty. Please fill in this input.';
 
     /**

@@ -17,6 +17,9 @@ use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToTranslatorFacadeInterfa
 
 class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
 
     /**

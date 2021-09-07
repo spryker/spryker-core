@@ -22,15 +22,45 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class ProductSupplierTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const TABLE_IDENTIFIER = 'product-suppliers-table';
+    /**
+     * @var string
+     */
     protected const COL_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const COL_SUPPLIER_PRICE = 'supplier_price';
+    /**
+     * @var string
+     */
     protected const COL_DEFAULT_PRICE = 'default_price';
+    /**
+     * @var string
+     */
     protected const PRICE_FORMAT = '%s: %s%s';
+    /**
+     * @var string
+     */
     protected const TABLE_URL_DEFAULT_FORMAT = 'table?%s=%d';
+    /**
+     * @var string
+     */
     protected const PRICE_SEPARATOR = '<br/>';
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_SUPPLIER = 'SUPPLIER';
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_COMPANY = 'id-company';
 
     /**

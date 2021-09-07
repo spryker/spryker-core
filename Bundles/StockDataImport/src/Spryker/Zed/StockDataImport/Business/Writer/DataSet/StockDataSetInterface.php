@@ -9,6 +9,12 @@ namespace Spryker\Zed\StockDataImport\Business\Writer\DataSet;
 
 interface StockDataSetInterface
 {
+    /**
+     * @var string
+     */
     public const COLUMN_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COLUMN_IS_ACTIVE = 'is_active';
 }

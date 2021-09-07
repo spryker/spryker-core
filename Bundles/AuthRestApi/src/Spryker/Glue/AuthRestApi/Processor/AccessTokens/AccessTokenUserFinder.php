@@ -16,7 +16,13 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class AccessTokenUserFinder implements AccessTokenUserFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_CUSTOMER_REFERENCE = 'customer_reference';
+    /**
+     * @var string
+     */
     protected const KEY_ID_CUSTOMER = 'id_customer';
 
     /**

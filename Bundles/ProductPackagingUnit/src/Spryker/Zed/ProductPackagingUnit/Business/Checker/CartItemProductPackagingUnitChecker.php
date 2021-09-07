@@ -14,10 +14,19 @@ use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryI
 
 class CartItemProductPackagingUnitChecker implements CartItemProductPackagingUnitCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_ITEM_PRODUCT_PACKAGING_UNIT_IS_NOT_FOUND = 'cart.item.packaging_unit.not_found';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
+    /**
+     * @var string
+     */
     protected const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**

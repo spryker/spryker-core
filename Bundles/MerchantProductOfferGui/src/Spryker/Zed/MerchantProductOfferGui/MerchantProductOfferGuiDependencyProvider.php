@@ -17,11 +17,18 @@ use Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGu
  */
 class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 

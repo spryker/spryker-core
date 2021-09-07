@@ -17,19 +17,30 @@ use Spryker\Glue\Kernel\Container;
  */
 class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     /**
      * @deprecated Will be removed in the next major.
+     * @var string
      */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
      * @deprecated Will be removed in the next major.
+     * @var string
      */
     public const PLUGINS_CUSTOMER_POST_REGISTER = 'PLUGINS_CUSTOMER_POST_REGISTER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CUSTOMER_EXPANDER = 'PLUGINS_CUSTOMER_EXPANDER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CUSTOMER_POST_CREATE = 'PLUGINS_CUSTOMER_POST_CREATE';
 
     /**

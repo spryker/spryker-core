@@ -13,7 +13,13 @@ use Throwable;
 
 class QueueMessageProcessor implements QueueMessageProcessorInterface
 {
+    /**
+     * @var string
+     */
     protected const TYPE_WRITE = 'write';
+    /**
+     * @var string
+     */
     protected const TYPE_DELETE = 'delete';
 
     /**

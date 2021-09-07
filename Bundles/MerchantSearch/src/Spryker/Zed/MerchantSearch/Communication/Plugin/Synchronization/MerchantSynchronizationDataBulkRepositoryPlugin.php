@@ -19,6 +19,9 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  */
 class MerchantSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAM_TYPE = 'merchant';
 
     /**

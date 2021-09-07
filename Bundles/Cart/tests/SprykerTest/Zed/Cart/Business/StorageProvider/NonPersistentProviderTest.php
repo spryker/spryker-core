@@ -29,7 +29,13 @@ use SprykerTest\Zed\Cart\Business\Mocks\CartItemAddTripleStrategy;
  */
 class NonPersistentProviderTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const COUPON_CODE_1 = 'coupon code 1';
+    /**
+     * @var string
+     */
     public const COUPON_CODE_2 = 'coupon code 2';
 
     /**

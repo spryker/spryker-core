@@ -13,6 +13,7 @@ class PublishAndSynchronizeHealthCheckSearchConfig
      * Defines queue name as used for processing.
      *
      * @api
+     * @var string
      */
     public const SYNC_SEARCH_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK = 'sync.search.publish_and_synchronize_health_check';
 
@@ -21,6 +22,7 @@ class PublishAndSynchronizeHealthCheckSearchConfig
      * - This events will be used for spy_publish_and_synchronize_health_check entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_CREATE = 'Entity.spy_publish_and_synchronize_health_check.create';
 
@@ -29,6 +31,7 @@ class PublishAndSynchronizeHealthCheckSearchConfig
      * - This events will be used for spy_publish_and_synchronize_health_check_key entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_UPDATE = 'Entity.spy_publish_and_synchronize_health_check.update';
 
@@ -37,6 +40,7 @@ class PublishAndSynchronizeHealthCheckSearchConfig
      * - The search key for the data to run validation against.
      *
      * @api
+     * @var string
      */
     public const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_SEARCH_ID = 'publish_and_synchronize_health_check:health-check';
 }

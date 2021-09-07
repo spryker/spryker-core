@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantPr
 class ApprovalStatusValidationStep implements DataImportStepInterface
 {
     protected const APPROVAL_STATUS = MerchantProductOfferDataSetInterface::APPROVAL_STATUS;
+    /**
+     * @var array
+     */
     protected const ALLOWED_APPROVAL_STATUS_LIST = [
         ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL,
         ProductOfferConfig::STATUS_APPROVED,

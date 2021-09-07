@@ -13,6 +13,9 @@ use Spryker\Service\UtilValidate\Dependency\External\UtilValidateToEguliasRfcEma
 
 class UtilValidateDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const EMAIL_VALIDATOR = 'EMAIL_VALIDATOR';
 
     /**

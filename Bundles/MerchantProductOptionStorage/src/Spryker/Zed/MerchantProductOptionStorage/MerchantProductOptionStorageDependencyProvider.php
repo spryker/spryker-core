@@ -19,10 +19,22 @@ use Spryker\Zed\MerchantProductOptionStorage\Dependency\Facade\MerchantProductOp
  */
 class MerchantProductOptionStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_PRODUCT_OPTION = 'FACADE_MERCHANT_PRODUCT_OPTION';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_OPTION_STORAGE = 'FACADE_PRODUCT_OPTION_STORAGE';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_MERCHANT_PRODUCT_OPTION_GROUP = 'PROPEL_QUERY_MERCHANT_PRODUCT_OPTION_GROUP';
 
     /**

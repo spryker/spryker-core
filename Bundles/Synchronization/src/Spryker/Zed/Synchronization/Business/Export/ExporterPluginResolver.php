@@ -13,7 +13,13 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRe
 
 class ExporterPluginResolver implements ExporterPluginResolverInterface
 {
+    /**
+     * @var string
+     */
     public const REPOSITORY_SYNCHRONIZATION_PLUGINS = 'repository';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS = 'query_container';
 
     /**

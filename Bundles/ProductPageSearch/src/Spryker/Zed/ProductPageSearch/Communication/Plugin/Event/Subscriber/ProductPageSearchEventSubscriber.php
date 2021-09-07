@@ -47,11 +47,13 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
 {
     /**
      * @uses \Spryker\Zed\Availability\Dependency\AvailabilityEvents::ENTITY_SPY_AVAILABILITY_UPDATE
+     * @var string
      */
     protected const ENTITY_SPY_AVAILABILITY_UPDATE = 'Entity.spy_availability.update';
 
     /**
      * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_CATEGORY_PUBLISH
+     * @var string
      */
     protected const ENTITY_CATEGORY_PUBLISH = 'Entity.spy_category.publish';
 

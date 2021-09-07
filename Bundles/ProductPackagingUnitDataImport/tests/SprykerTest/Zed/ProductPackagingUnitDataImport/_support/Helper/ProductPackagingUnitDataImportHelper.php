@@ -13,8 +13,14 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitQuery;
 
 class ProductPackagingUnitDataImportHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_FOUND = 'Found at least one entry in the database table but database table `%s` was expected to be empty.';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_EXPECTED_COUNT = 'Expected exactly %d entries in the database table `%s`, but found %d.';
 
     /**

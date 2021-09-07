@@ -12,6 +12,9 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ProductOfferValidityDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PRODUCT_OFFER_VALIDITY = 'product-offer-validity';
 
     /**

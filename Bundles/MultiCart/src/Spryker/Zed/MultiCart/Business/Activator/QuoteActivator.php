@@ -15,6 +15,9 @@ use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeInterface;
 
 class QuoteActivator implements QuoteActivatorInterface
 {
+    /**
+     * @var string
+     */
     public const MULTI_CART_SET_DEFAULT_SUCCESS = 'multi_cart.cart.set_default.success';
 
     /**

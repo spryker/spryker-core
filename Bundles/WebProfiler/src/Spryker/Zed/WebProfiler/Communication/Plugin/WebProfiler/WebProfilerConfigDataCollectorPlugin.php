@@ -14,7 +14,13 @@ use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 
 class WebProfilerConfigDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'config';
+    /**
+     * @var string
+     */
     protected const TEMPLATE = '@WebProfiler/Collector/config.html.twig';
 
     /**

@@ -26,26 +26,57 @@ use Symfony\Component\Validator\Constraint;
  */
 class ProductAbstractForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_STORE_CHOICES = 'OPTION_STORE_CHOICES';
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_CATEGORY_CHOICES = 'OPTION_PRODUCT_CATEGORY_CHOICES';
 
+    /**
+     * @var string
+     */
     public const BLOCK_PREFIX = 'productAbstract';
 
     public const GROUP_WITH_STORES = self::FIELD_STORES;
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductLocalizedAttributesForm::NAME_VALIDATION_GROUP
+     * @var string
      */
     protected const NAME_VALIDATION_GROUP = 'name_validation_group';
+    /**
+     * @var string
+     */
     protected const FIELD_STORES = 'stores';
 
+    /**
+     * @var string
+     */
     protected const LABEL_STORES = 'Stores';
+    /**
+     * @var string
+     */
     protected const LABEL_CATEGORIES = 'Categories';
 
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_STORES = 'Select';
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_CATEGORIES = 'Select';
 
+    /**
+     * @var string
+     */
     protected const KEY_OPTIONS_DATA = 'data';
+    /**
+     * @var string
+     */
     protected const KEY_OPTIONS_ATTRIBUTES = 'attributes';
 
     /**

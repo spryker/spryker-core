@@ -17,6 +17,9 @@ class QuoteValidator implements QuoteValidatorInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_IS_NOT_APPLICABLE = 'quote_request.validation.error.is_not_applicable';
 
     /**

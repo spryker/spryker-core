@@ -18,11 +18,23 @@ use Spryker\Zed\MerchantSearch\Dependency\Service\MerchantSearchToUtilEncodingSe
  */
 class MerchantSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_SEARCH_DATA_EXPANDER = 'PLUGINS_MERCHANT_SEARCH_DATA_EXPANDER';
 
     /**

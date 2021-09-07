@@ -19,10 +19,25 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SessionRemoveLockConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'session:lock:remove';
+    /**
+     * @var string
+     */
     public const OPTION_HELP = 'help';
+    /**
+     * @var string
+     */
     public const OPTION_APPLICATION_YVES = 'yves';
+    /**
+     * @var string
+     */
     public const OPTION_APPLICATION_ZED = 'zed';
+    /**
+     * @var string
+     */
     public const ARGUMENT_SESSION_ID = 'session_id';
 
     /**

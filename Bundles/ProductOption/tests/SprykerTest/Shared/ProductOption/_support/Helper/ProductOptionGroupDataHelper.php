@@ -24,10 +24,22 @@ class ProductOptionGroupDataHelper extends Module
 {
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     public const DEFAULT_STORE = 'DE';
+    /**
+     * @var string
+     */
     public const DEFAULT_CURRENCY = 'EUR';
 
+    /**
+     * @var string
+     */
     public const CURRENCY_CODE = 'currencyCode';
+    /**
+     * @var string
+     */
     public const STORE_NAME = 'storeName';
 
     /**

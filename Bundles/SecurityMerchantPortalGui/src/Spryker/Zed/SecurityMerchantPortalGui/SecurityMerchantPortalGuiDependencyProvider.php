@@ -18,12 +18,22 @@ use Spryker\Zed\SecurityMerchantPortalGui\Dependency\Facade\SecurityMerchantPort
  */
 class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    /**
+     * @var string
+     */
     public const FACADE_SECURITY = 'FACADE_SECURITY';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     * @var string
      */
     public const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 

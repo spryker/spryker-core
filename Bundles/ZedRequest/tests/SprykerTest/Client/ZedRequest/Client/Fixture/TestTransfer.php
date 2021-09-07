@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
 class TestTransfer extends AbstractTransfer
 {
+    /**
+     * @var string
+     */
     public const FOO = 'foo';
 
     /**

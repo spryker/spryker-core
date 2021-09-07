@@ -21,6 +21,9 @@ class CheckLocalizedContentBannerTermStep implements DataImportStepInterface
      */
     protected $contentBanner;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE = 'Failed to import locale id [%s]: %s';
 
     /**

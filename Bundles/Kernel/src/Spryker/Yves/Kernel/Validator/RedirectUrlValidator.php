@@ -15,6 +15,9 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class RedirectUrlValidator implements RedirectUrlValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const HTTP_HEADER_LOCATION = 'Location';
 
     /**

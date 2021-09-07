@@ -30,19 +30,55 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAlternat
 class GlueAnnotationAnalyzerTest extends Unit
 {
     protected const CONTROLLER_SOURCE_DIRECTORY = __DIR__ . '/../Stub/Controller/';
+    /**
+     * @var string
+     */
     protected const CONTROLLER_FILE_NAME = 'TestResourceController.php';
+    /**
+     * @var string
+     */
     protected const CONTROLLER_WITH_INVALID_ANNOTATIONS_FILE_NAME = 'TestResourceWithInvalidAnnotationsController.php';
+    /**
+     * @var string
+     */
     protected const CONTROLLER_WITHOUT_ANNOTATIONS = 'TestResourceWithoutAnnotationsController.php';
+    /**
+     * @var string
+     */
     protected const CONTROLLER_WITH_EMPTY_ANNOTATIONS = 'TestResourceWithEmptyAnnotationsController.php';
+    /**
+     * @var string
+     */
     protected const CONTROLLER_WITH_NULLABLE_ID = 'TestResourceWithNullableIdController.php';
 
+    /**
+     * @var string
+     */
     protected const SUMMARY = 'Summary example';
     protected const ALTERNATIVE_RESPONSE_CLASS = RestTestAlternativeAttributesTransfer::class;
+    /**
+     * @var string
+     */
     protected const HEADER_ACCEPT_LANGUAGE = 'Accept-Language';
+    /**
+     * @var string
+     */
     protected const HEADER_ACCEPT_LANGUAGE_REF = 'acceptLanguage';
+    /**
+     * @var int
+     */
     protected const KEY_RESPONSE_BAD_REQUEST = 400;
+    /**
+     * @var int
+     */
     protected const KEY_RESPONSE_NOT_FOUND = 404;
+    /**
+     * @var string
+     */
     protected const VALUE_RESPONSE_BAD_REQUEST = 'Bad Request';
+    /**
+     * @var string
+     */
     protected const VALUE_RESPONSE_NOT_FOUND = 'Item not found';
 
     /**

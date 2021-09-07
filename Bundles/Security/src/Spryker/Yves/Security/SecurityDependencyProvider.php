@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\Container;
  */
 class SecurityDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_SECURITY = 'PLUGINS_SECURITY';
 
     /**

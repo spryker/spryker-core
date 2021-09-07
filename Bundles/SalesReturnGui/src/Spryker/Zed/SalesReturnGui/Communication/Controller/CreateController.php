@@ -18,22 +18,42 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_RETURN = 'id-return';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_ORDER = 'id-order';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\IndexController::indexAction()
+     * @var string
      */
     protected const ROUTE_RETURN_LIST = '/sales-return-gui';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\DetailController::indexAction()
+     * @var string
      */
     protected const ROUTE_RETURN_DETAIL = '/sales-return-gui/detail';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ORDER_NOT_FOUND = 'Order with id "%id%" was not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_RETURN_CREATED = 'Return was successfully created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_ID = '%id%';
 
     /**

@@ -12,6 +12,9 @@ use Spryker\Yves\Router\Route\RouteCollection;
 
 class HealthCheckRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_HEALTH_CHECK = 'health-check';
 
     /**

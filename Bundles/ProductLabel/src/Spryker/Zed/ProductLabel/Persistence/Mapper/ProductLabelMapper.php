@@ -17,6 +17,9 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductLabelMapper
 {
+    /**
+     * @var string
+     */
     protected const VALIDITY_DATE_FORMAT = 'Y-m-d';
 
     /**

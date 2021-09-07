@@ -16,6 +16,9 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInte
 
 class PriceProductScheduleTableForEditList extends AbstractPriceProductScheduleTable
 {
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'actions';
 
     /**

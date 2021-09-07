@@ -21,6 +21,9 @@ use Throwable;
  */
 class GatewayController extends AbstractGatewayController
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_PLACE_ORDER_ERROR = 'Order can not be processed';
 
     /**

@@ -35,10 +35,22 @@ use Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface;
  */
 class DrawerTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const CONDITION_NAME = 'conditionName';
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'commandName';
 
+    /**
+     * @var string
+     */
     protected const TIMEOUT_PROCESSOR_NAME = 'Test/TimeoutProcessorName';
+    /**
+     * @var string
+     */
     protected const TIMEOUT_PROCESSOR_LABEL = 'TimeoutProcessor test label';
 
     /**

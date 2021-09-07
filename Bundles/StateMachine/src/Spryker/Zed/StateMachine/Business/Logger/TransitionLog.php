@@ -16,6 +16,9 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface;
 
 class TransitionLog implements TransitionLogInterface
 {
+    /**
+     * @var string
+     */
     public const QUERY_STRING = 'QUERY_STRING';
 
     /**

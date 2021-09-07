@@ -22,8 +22,17 @@ use Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet\ProductPac
 
 class ProductPackagingUnitWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var int
+     */
     protected const AMOUNT_INTERVAL_DEFAULT = 1;
+    /**
+     * @var int
+     */
     protected const HEAP_LIMIT = 500;
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_ID = 'PRODUCT_CONCRETE_ID';
 
     /**

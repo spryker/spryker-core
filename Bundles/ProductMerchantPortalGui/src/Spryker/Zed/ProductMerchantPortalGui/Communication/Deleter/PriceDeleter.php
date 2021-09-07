@@ -15,10 +15,14 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPorta
 
 class PriceDeleter implements PriceDeleterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_PRICE_PRODUCT_HAS_VOLUME_PRICES = 'Price product with quantity 1 cannot be deleted when there are volume prices for the same store and currency';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 

@@ -23,6 +23,9 @@ class DataImporterCollection implements
     DataImportBeforeImportHookInterface,
     DataImportAfterImportHookInterface
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE = 'full';
 
     /**

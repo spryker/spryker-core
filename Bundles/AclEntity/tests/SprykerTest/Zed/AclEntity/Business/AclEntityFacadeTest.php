@@ -48,7 +48,13 @@ use SprykerTest\Zed\AclEntity\Plugin\AclEntityMetadataConfigWithWrongParentEntit
  */
 class AclEntityFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_TEST_NAME = 'role test';
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_REFERENCE = 'test merchant segment reference';
 
     /**

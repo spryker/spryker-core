@@ -25,7 +25,13 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInte
 
 class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const BUNDLE_IDENTIFIER_DELIMITER = '_';
+    /**
+     * @var string
+     */
     protected const GROUP_KEY_DELIMITER = '_';
 
     /**

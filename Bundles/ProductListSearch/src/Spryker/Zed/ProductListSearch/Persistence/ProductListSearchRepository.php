@@ -17,9 +17,21 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductListSearchRepository extends AbstractRepository implements ProductListSearchRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const COL_CONCRETE_PRODUCT_COUNT = 'concrete_product_count';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'col_id_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_TYPE = 'col_type';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_LIST = 'col_id_product_list';
 
     /**

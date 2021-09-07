@@ -22,6 +22,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class MessengerBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @var string
+     */
     protected const DUMMY_LOCALE = '';
 
     /**

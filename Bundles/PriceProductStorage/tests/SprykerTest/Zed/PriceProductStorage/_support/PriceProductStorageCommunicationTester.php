@@ -27,8 +27,14 @@ class PriceProductStorageCommunicationTester extends Actor
 {
     use _generated\PriceProductStorageCommunicationTesterActions;
 
+    /**
+     * @var string
+     */
     public const PARAM_PROJECT = 'PROJECT';
 
+    /**
+     * @var string
+     */
     public const PROJECT_SUITE = 'suite';
 
     /**

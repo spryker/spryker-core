@@ -33,7 +33,13 @@ use Spryker\Client\Queue\QueueDependencyProvider;
  */
 class ProductLabelStorageFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME_EN = 'en_US';
 
     /**

@@ -30,15 +30,45 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class DatasetForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_DATASET_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_ID_DATASET = 'idDataset';
+    /**
+     * @var string
+     */
     public const DATASET_DATA_CONTENT = 'spyDatasetRowColumnValues';
+    /**
+     * @var string
+     */
     public const DATASET_FILE_CONTENT = 'contentFile';
+    /**
+     * @var string
+     */
     public const FIELD_USE_REAL_NAME = 'useRealName';
+    /**
+     * @var string
+     */
     public const DATASET_LOCALIZED_ATTRIBUTES = 'getDatasetLocalizedAttributes';
+    /**
+     * @var string
+     */
     public const OPTION_DATA_CLASS = 'data_class';
+    /**
+     * @var string
+     */
     public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+    /**
+     * @var string
+     */
     public const DATASET_HAS_DATA = 'datasetHasData';
+    /**
+     * @var string
+     */
     public const GROUP_UNIQUE_DATASET_NAME_CHECK = 'unique_dataset_name_check';
 
     /**

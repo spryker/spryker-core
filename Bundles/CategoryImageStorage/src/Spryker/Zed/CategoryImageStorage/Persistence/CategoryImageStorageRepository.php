@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CategoryImageStorageRepository extends AbstractRepository implements CategoryImageStorageRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const FK_CATEGORY = 'fkCategory';
 
     /**

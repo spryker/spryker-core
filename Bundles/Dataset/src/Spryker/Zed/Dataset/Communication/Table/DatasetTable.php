@@ -16,17 +16,38 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class DatasetTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const REQUEST_ID_DATASET = 'id-dataset';
     public const COL_ID_DATASET = SpyDatasetTableMap::COL_ID_DATASET;
     public const COL_DATASET_NAME = SpyDatasetTableMap::COL_NAME;
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'Actions';
     public const SORT_DESC = TableConfiguration::SORT_DESC;
     public const COL_IS_ACTIVE = SpyDatasetTableMap::COL_IS_ACTIVE;
 
+    /**
+     * @var string
+     */
     public const DATASET_ACTIVATE_URL = '/dataset/activate';
+    /**
+     * @var string
+     */
     public const DATASET_DEACTIVATE_URL = '/dataset/deactivate';
+    /**
+     * @var string
+     */
     public const DATASET_EDIT_URL = '/dataset/edit';
+    /**
+     * @var string
+     */
     public const DATASET_DOWNLOAD_URL = '/dataset/download';
+    /**
+     * @var string
+     */
     public const DATASET_DELETE_URL = '/dataset/delete';
 
     /**

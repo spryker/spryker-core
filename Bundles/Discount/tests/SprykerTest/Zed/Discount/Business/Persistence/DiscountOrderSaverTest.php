@@ -32,12 +32,30 @@ use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
  */
 class DiscountOrderSaverTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const DISCOUNT_DISPLAY_NAME = 'discount';
+    /**
+     * @var int
+     */
     public const DISCOUNT_AMOUNT = 100;
+    /**
+     * @var string
+     */
     public const DISCOUNT_ACTION = 'action';
 
+    /**
+     * @var int
+     */
     public const ID_SALES_ORDER = 1;
+    /**
+     * @var string
+     */
     public const USED_CODE_1 = 'used code 1';
+    /**
+     * @var string
+     */
     public const USED_CODE_2 = 'used code 2';
 
     /**

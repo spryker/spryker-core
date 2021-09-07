@@ -33,8 +33,14 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
  */
 class ProductOptionTaxRateCalculationWithDefaultTaxRatesTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TAX_SET_NAME = 'test.tax.set';
 
+    /**
+     * @var string
+     */
     protected const PRODUCT_OPTION_VALUE_SKU = 'test.product.option.value.sku';
 
     /**

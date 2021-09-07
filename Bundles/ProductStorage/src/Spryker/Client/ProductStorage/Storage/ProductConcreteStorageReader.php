@@ -24,13 +24,26 @@ use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    /**
+     * @var string
+     */
     protected const KEY_PRICES = 'prices';
+    /**
+     * @var string
+     */
     protected const KEY_IMAGE_SETS = 'imageSets';
+    /**
+     * @var string
+     */
     protected const KEY_ID = 'id';
 
     /**
      * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
+     * @var string
      */
     protected const KV_PREFIX = 'kv:';
 

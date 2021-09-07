@@ -17,6 +17,9 @@ use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface;
 
 class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
 {
+    /**
+     * @var string
+     */
     public const FILE_EXTENSION = '.json';
 
     /**

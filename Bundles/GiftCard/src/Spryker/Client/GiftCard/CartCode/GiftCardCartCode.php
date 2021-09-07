@@ -17,10 +17,22 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 class GiftCardCartCode implements GiftCardCartCodeInterface
 {
+    /**
+     * @var string
+     */
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
+    /**
+     * @var string
+     */
     public const CART_GIFT_CARD_APPLY_FAILED = 'cart.giftcard.apply.failed';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**

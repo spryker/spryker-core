@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PublishController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_IMPORT_PAGE = '/price-product-schedule-gui/import';
 
     /**

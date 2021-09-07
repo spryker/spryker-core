@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SearchController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_CATEGORY_NODE = 'id-category-node';
 
     /**

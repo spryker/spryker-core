@@ -13,7 +13,13 @@ use Spryker\Client\ProductReview\ProductReviewConfig;
 
 class ProductReviewSummaryCalculator implements ProductReviewSummaryCalculatorInterface
 {
+    /**
+     * @var int
+     */
     public const MINIMUM_RATING = 1;
+    /**
+     * @var int
+     */
     public const RATING_PRECISION = 1;
 
     /**

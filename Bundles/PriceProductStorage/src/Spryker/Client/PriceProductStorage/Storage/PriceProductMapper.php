@@ -18,6 +18,9 @@ use Spryker\Shared\PriceProductStorage\PriceProductStorageConstants;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const INDEX_SEPARATOR = '-';
 
     /**

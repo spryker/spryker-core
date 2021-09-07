@@ -17,7 +17,13 @@ use Spryker\Glue\Kernel\Container;
  */
 class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_USER = 'CLIENT_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_USER_STORAGE = 'CLIENT_COMPANY_USER_STORAGE';
 
     /**

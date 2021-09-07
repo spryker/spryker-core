@@ -19,6 +19,9 @@ class GlueRest extends REST implements LastConnectionProviderInterface
 {
     use ModuleLocatorTrait;
 
+    /**
+     * @var string
+     */
     public const DEFAULT_PASSWORD = 'Pass$.123456';
 
     /**

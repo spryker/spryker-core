@@ -12,6 +12,9 @@ use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToGlossaryStor
 
 class ConcreteProductAttributeTranslationExpander implements ConcreteProductAttributeTranslationExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PRODUCT_ATTRIBUTE_NAME_KEY_PREFIX = 'product.attribute.';
 
     /**

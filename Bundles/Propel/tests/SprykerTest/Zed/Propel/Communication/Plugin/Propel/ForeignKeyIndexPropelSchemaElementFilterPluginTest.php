@@ -24,11 +24,29 @@ use Spryker\Zed\Propel\Communication\Plugin\Propel\ForeignKeyIndexPropelSchemaEl
  */
 class ForeignKeyIndexPropelSchemaElementFilterPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const SCHEMA_WITH_INDEX = 'spy_foo.with_index.schema.xml';
+    /**
+     * @var string
+     */
     protected const EXPECTED_SCHEMA_WITH_INDEX = 'expected.spy_foo.with_index.schema.xml';
+    /**
+     * @var string
+     */
     protected const SCHEMA_WITHOUT_INDEX = 'spy_foo.without_index.schema.xml';
+    /**
+     * @var string
+     */
     protected const EXPECTED_SCHEMA_WITHOUT_INDEX = 'expected.spy_foo.without_index.schema.xml';
+    /**
+     * @var string
+     */
     protected const SCHEMA_WITH_UNIQUE_INDEX = 'spy_foo.with_unique_index.schema.xml';
+    /**
+     * @var string
+     */
     protected const EXPECTED_SCHEMA_WITH_UNIQUE_INDEX = 'expected.spy_foo.with_unique_index.schema.xml';
 
     /**

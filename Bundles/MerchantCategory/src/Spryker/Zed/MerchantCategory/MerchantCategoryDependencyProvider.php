@@ -17,7 +17,13 @@ use Spryker\Zed\MerchantCategory\Dependency\Facade\MerchantCategoryToEventFacade
  */
 class MerchantCategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_EVENT = 'FACADE_EVENT';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
     /**

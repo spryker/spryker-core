@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 
 class PriceProductOfferVolumeDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_PRICE_PRODUCT_OFFER_VOLUME = 'SERVICE_PRICE_PRODUCT_OFFER_VOLUME';
 
     /**

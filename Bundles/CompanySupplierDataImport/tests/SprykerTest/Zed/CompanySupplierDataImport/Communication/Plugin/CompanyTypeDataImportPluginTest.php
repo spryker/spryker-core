@@ -27,6 +27,9 @@ use Spryker\Zed\CompanySupplierDataImport\CompanySupplierDataImportConfig;
  */
 class CompanyTypeDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const COMPANY_KEY = 'spryker';
 
     /**

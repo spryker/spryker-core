@@ -17,9 +17,18 @@ use Spryker\Zed\Kernel\Container;
  */
 class CartCodeDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_CODE = 'PLUGINS_CART_CODE';
 
     /**

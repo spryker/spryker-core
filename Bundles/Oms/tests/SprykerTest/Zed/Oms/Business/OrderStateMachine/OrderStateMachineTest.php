@@ -42,7 +42,13 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
  */
 class OrderStateMachineTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const CONDITION_NAME = 'conditionName';
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'commandName';
 
     /**

@@ -12,8 +12,18 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 
 class NestedRangeQuery extends AbstractNestedQuery
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     protected const RANGE_DIVIDER = '-';
+    /**
+     * @var string
+     */
     protected const RANGE_MIN = 'min';
+    /**
+     * @var string
+     */
     protected const RANGE_MAX = 'max';
 
     /**

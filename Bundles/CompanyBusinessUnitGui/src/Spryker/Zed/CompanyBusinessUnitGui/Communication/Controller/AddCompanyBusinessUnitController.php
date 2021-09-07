@@ -16,13 +16,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddCompanyBusinessUnitController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
     /**
      * @see ListCompanyBusinessUnitController::indexAction()
+     * @var string
      */
     protected const URL_BUSINESS_UNIT_LIST = '/company-business-unit-gui/list-company-business-unit';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_COMPANY_BUSINESS_UNIT_CREATE = 'Company Business Unit "%s" has been created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_COMPANY_BUSINESS_UNIT_CREATE = 'Company Business Unit "%s" has not been created.';
 
     /**

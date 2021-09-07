@@ -22,17 +22,50 @@ use Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterfa
 
 class ProductTable extends AbstractProductTable
 {
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_TAX_SET = 'tax_set';
+    /**
+     * @var string
+     */
     public const COL_VARIANT_COUNT = 'variants';
+    /**
+     * @var string
+     */
     public const COL_STATUS = 'status';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
+    /**
+     * @var string
+     */
     public const COL_STORE_RELATION = 'store_relation';
+    /**
+     * @var string
+     */
     public const COL_PRODUCT_TYPES = 'product_types';
 
+    /**
+     * @var string
+     */
     protected const COL_NAME_FALLBACK = 'name_fallback';
+    /**
+     * @var string
+     */
     protected const RELATION_LOCALE_FALLBACK = 'locale_fallback';
 
     /**

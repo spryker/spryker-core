@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const FILTERED_PRODUCTS_LIMIT_DEFAULT = 10;
 
     /**

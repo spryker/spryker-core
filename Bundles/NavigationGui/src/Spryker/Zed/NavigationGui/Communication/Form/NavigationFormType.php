@@ -25,8 +25,17 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class NavigationFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_KEY = 'key';
+    /**
+     * @var string
+     */
     public const FIELD_IS_ACTIVE = 'is_active';
 
     /**

@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DataRequestBuilder implements DataRequestBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_SORT_DIRECTION = 'ASC';
 
     /**

@@ -15,9 +15,21 @@ use Spryker\Zed\Kernel\Container;
  */
 class ApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_ENCODING = 'SERVICE_ENCODING';
+    /**
+     * @var string
+     */
     public const PLUGINS_API = 'PLUGINS_API';
+    /**
+     * @var string
+     */
     public const PLUGINS_API_VALIDATOR = 'PLUGINS_API_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_API_REQUEST_TRANSFER_FILTER = 'PLUGINS_API_REQUEST_TRANSFER_FILTER';
 
     /**

@@ -25,7 +25,13 @@ class MerchantUpdater implements MerchantUpdaterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_MERCHANT_NOT_FOUND = 'Merchant is not found.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_MERCHANT_STATUS_TRANSITION_NOT_VALID = 'Merchant status transition is not valid.';
 
     /**

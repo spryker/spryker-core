@@ -23,20 +23,50 @@ use Symfony\Component\Process\Process;
  */
 class RunnerConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'frontend:npm:run';
 
+    /**
+     * @var string
+     */
     public const NPM_COMMAND_TPL = 'npm run %s';
 
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_ALL = 'build-all';
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_ALL_SHORT = 'a';
 
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_CORE = 'build-core';
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_CORE_SHORT = 'c';
 
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_YVES = 'build-yves';
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_YVES_SHORT = 'y';
 
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_ZED = 'build-zed';
+    /**
+     * @var string
+     */
     public const OPTION_TASK_BUILD_ZED_SHORT = 'z';
 
     /**

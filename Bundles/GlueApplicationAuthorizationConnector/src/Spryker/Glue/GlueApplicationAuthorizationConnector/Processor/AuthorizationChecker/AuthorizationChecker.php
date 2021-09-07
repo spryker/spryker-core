@@ -21,6 +21,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthorizationChecker implements AuthorizationCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_UNAUTHORIZED_REQUEST = 'Unauthorized request.';
 
     /**

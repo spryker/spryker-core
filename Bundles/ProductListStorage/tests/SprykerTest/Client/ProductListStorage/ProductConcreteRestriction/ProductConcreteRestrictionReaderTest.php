@@ -27,6 +27,9 @@ use Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductL
  */
 class ProductConcreteRestrictionReaderTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const CONCRETE_PRODUCT_ID = 1;
 
     /**

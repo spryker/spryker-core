@@ -33,6 +33,9 @@ use Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterfa
  */
 class SchedulerFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_SCHEDULER = 'test';
 
     /**

@@ -14,6 +14,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list publishing.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LIST_PUBLISH = 'ProductList.spy_product_list.publish';
 
@@ -22,6 +23,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list unpublishing.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LIST_UNPUBLISH = 'ProductList.spy_product_list.unpublish';
 
@@ -30,6 +32,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LIST_CREATE = 'Entity.spy_product_list.create';
 
@@ -38,6 +41,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list entity changes
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LIST_UPDATE = 'Entity.spy_product_list.update';
 
@@ -46,6 +50,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LIST_DELETE = 'Entity.spy_product_list.delete';
 
@@ -54,6 +59,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list_product_concrete publishing.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LIST_PRODUCT_CONCRETE_PUBLISH = 'ProductList.spy_product_list_product_concrete.publish';
 
@@ -62,6 +68,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list_product_concrete unpublishing.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LIST_PRODUCT_CONCRETE_UNPUBLISH = 'ProductList.spy_product_list_product_concrete.unpublish';
 
@@ -70,6 +77,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list_product_concrete entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_CREATE = 'Entity.spy_product_list_product_concrete.create';
 
@@ -78,6 +86,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list_product_concrete entity changes
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_UPDATE = 'Entity.spy_product_list_product_concrete.update';
 
@@ -86,6 +95,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list_product_concrete entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LIST_PRODUCT_CONCRETE_DELETE = 'Entity.spy_product_list_product_concrete.delete';
 
@@ -94,6 +104,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list_category publishing.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LIST_CATEGORY_PUBLISH = 'ProductList.spy_product_list_category.publish';
 
@@ -102,6 +113,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list_category unpublishing.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LIST_CATEGORY_UNPUBLISH = 'ProductList.spy_product_list_category.unpublish';
 
@@ -110,6 +122,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list_category entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LIST_CATEGORY_CREATE = 'Entity.spy_product_list_category.create';
 
@@ -118,6 +131,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list_category entity changes
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LIST_CATEGORY_UPDATE = 'Entity.spy_product_list_category.update';
 
@@ -126,6 +140,7 @@ interface ProductListEvents
      * - This event is used for spy_product_list_category entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_LIST_CATEGORY_DELETE = 'Entity.spy_product_list_category.delete';
 }

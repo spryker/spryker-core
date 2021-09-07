@@ -13,6 +13,9 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class ProductAbstractLocalizedAttributesExpander implements ProductAbstractLocalizedAttributesExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_PRODUCT_NAME = '';
 
     /**

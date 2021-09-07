@@ -31,6 +31,9 @@ class OauthBusinessTester extends Actor
 {
     use _generated\OauthBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const TEST_PASSWORD = 'Test password';
 
     /**

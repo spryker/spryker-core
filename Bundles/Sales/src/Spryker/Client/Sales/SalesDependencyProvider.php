@@ -15,6 +15,9 @@ use Spryker\Client\Kernel\Container;
  */
 class SalesDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_ZED = 'zed service';
 
     /**

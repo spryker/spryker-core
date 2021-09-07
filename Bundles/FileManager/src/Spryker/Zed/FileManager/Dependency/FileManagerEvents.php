@@ -14,6 +14,7 @@ interface FileManagerEvents
      * - This events will be used for spy_file entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_FILE_CREATE = 'Entity.spy_file.create';
 
@@ -22,6 +23,7 @@ interface FileManagerEvents
      * - This events will be used for spy_file entity changes
      *
      * @api
+     * @var string
      */
     public const ENTITY_FILE_UPDATE = 'Entity.spy_file.update';
 
@@ -30,6 +32,7 @@ interface FileManagerEvents
      * - This events will be used for spy_file entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_FILE_DELETE = 'Entity.spy_file.delete';
 
@@ -38,6 +41,7 @@ interface FileManagerEvents
      * - This events will be used for spy_file_info entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_FILE_INFO_CREATE = 'Entity.spy_file_info.create';
 
@@ -46,6 +50,7 @@ interface FileManagerEvents
      * - This events will be used for spy_file_info entity changes
      *
      * @api
+     * @var string
      */
     public const ENTITY_FILE_INFO_UPDATE = 'Entity.spy_file_info.update';
 
@@ -54,6 +59,7 @@ interface FileManagerEvents
      * - This events will be used for spy_file_info entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_FILE_INFO_DELETE = 'Entity.spy_file_info.delete';
 
@@ -62,6 +68,7 @@ interface FileManagerEvents
      * - This events will be used for spy_file_localized_attributes entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_FILE_LOCALIZED_ATTRIBUTES_CREATE = 'Entity.spy_file_localized_attributes.create';
 
@@ -70,6 +77,7 @@ interface FileManagerEvents
      * - This events will be used for spy_file_localized_attributes entity changes
      *
      * @api
+     * @var string
      */
     public const ENTITY_FILE_LOCALIZED_ATTRIBUTES_UPDATE = 'Entity.spy_file_localized_attributes.update';
 
@@ -78,6 +86,7 @@ interface FileManagerEvents
      * - This events will be used for spy_file_localized_attributes entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_FILE_LOCALIZED_ATTRIBUTES_DELETE = 'Entity.spy_file_localized_attributes.delete';
 }

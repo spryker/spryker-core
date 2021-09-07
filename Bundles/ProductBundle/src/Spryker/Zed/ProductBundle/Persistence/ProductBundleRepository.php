@@ -20,6 +20,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductBundleRepository extends AbstractRepository implements ProductBundleRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const ALIAS_BUNDLED_PRODUCT = 'aliasBundledProduct';
 
     /**

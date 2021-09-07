@@ -9,7 +9,13 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons;
 
 class ButtonGroupUrlGenerator implements UrlGeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const BUTTON_CLASS = 'class';
+    /**
+     * @var string
+     */
     public const ICON = 'icon';
 
     /**

@@ -9,6 +9,9 @@ namespace Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider;
 
 interface TokenGeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_ALGORITHM = 'sha256';
 
     /**

@@ -12,21 +12,34 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ZedNavigationConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     public const MAX_LEVEL_COUNT = 5;
 
     /**
      * Specification:
      *  - Strategy by which root navigation elements are being merged with core navigation elements.
+     *
+     * @var string
      */
     public const FULL_MERGE_STRATEGY = 'fullMergeStrategy';
 
     /**
      * Specification:
      *  - Strategy by which root navigation elements are being merged with core navigation elements excluding first and second level.
+     *
+     * @var string
      */
     public const BREADCRUMB_MERGE_STRATEGY = 'breadcrumbMergeStrategy';
 
+    /**
+     * @var string
+     */
     protected const NAVIGATION_TYPE_MAIN = 'main';
+    /**
+     * @var string
+     */
     protected const NAVIGATION_TYPE_SECONDARY = 'secondary';
 
     /**

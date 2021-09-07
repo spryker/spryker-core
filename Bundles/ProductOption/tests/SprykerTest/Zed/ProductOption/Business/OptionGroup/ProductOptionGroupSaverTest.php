@@ -34,7 +34,13 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class ProductOptionGroupSaverTest extends MockProvider
 {
+    /**
+     * @var int
+     */
     protected const VALUE_ID_PRODUCT_OPTION_GROUP = 1;
+    /**
+     * @var int
+     */
     protected const VALUE_IS_ACTIVE = 1;
 
     /**

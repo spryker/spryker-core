@@ -32,32 +32,46 @@ class OauthUserSecurityPluginTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin::SERVICE_SESSION
+     * @var string
      */
     protected const SERVICE_SESSION = 'session';
 
     /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
+     * @var string
      */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
 
+    /**
+     * @var string
+     */
     protected const SOME_EMAIL = 'some@email.com';
 
+    /**
+     * @var string
+     */
     protected const SOME_CODE = 'SOME_CODE';
 
+    /**
+     * @var string
+     */
     protected const SOME_STATE = 'SOME_STATE';
 
     /**
      * @uses \Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\OauthUserSecurityPlugin::SECURITY_FIREWALL_NAME
+     * @var string
      */
     protected const SECURITY_FIREWALL_NAME = 'OauthUser';
 
     /**
      * @uses \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin::SECURITY_FIREWALL_NAME
+     * @var string
      */
     protected const SECURITY_USER_FIREWALL_NAME = 'User';
 
     /**
      * @uses \Spryker\Zed\SecurityOauthUser\Communication\Plugin\Security\OauthUserSecurityPlugin::SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR
+     * @var string
      */
     protected const SECURITY_OAUTH_USER_TOKEN_AUTHENTICATOR = 'security.oauth_user.token.authenticator';
 

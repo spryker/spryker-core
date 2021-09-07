@@ -16,11 +16,18 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 
 class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_KEY_MERCHANT_SKU = 'merchantSku';
+    /**
+     * @var string
+     */
     protected const COL_KEY_PRODUCT_OFFER_REFERENCE = 'productOfferReference';
 
     /**
      * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
+     * @var string
      */
     protected const COLUMN_TYPE_TEXT = 'text';
 

@@ -13,7 +13,13 @@ use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryI
 
 class ProductPackagingUnitTypeReader implements ProductPackagingUnitTypeReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_NAME = 'Product packaging unit type was not found for name "%s".';
+    /**
+     * @var string
+     */
     protected const ERROR_NO_PRODUCT_PACKAGING_UNIT_TYPE_BY_ID = 'Product packaging unit type was not found for ID "%d".';
 
     /**

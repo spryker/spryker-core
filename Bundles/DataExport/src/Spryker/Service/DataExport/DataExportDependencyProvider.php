@@ -19,11 +19,23 @@ use Spryker\Service\Kernel\Container;
  */
 class DataExportDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
 
+    /**
+     * @var string
+     */
     public const DATA_EXPORT_CONNECTION_PLUGINS = 'DATA_EXPORT_CONNECTION_PLUGINS';
+    /**
+     * @var string
+     */
     public const DATA_EXPORT_FORMATTER_PLUGINS = 'DATA_EXPORT_FORMATTER_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const CSV_FORMATTER = 'CSV_FORMATTER';
 
     /**

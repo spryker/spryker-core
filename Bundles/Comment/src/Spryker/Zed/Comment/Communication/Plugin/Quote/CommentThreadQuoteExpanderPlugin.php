@@ -23,6 +23,9 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuotePreExpanderPluginInterface
  */
 class CommentThreadQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface, QuotePreExpanderPluginInterface, QuotePostExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
 
     /**

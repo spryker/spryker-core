@@ -19,7 +19,13 @@ use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig as SharedProduc
 
 class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_LABEL_IDS = 'product_label_ids';
 
     /**

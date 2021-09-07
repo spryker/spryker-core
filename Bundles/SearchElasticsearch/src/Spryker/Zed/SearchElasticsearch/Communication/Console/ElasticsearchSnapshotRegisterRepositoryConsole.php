@@ -18,10 +18,22 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ElasticsearchSnapshotRegisterRepositoryConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'elasticsearch:snapshot:register-repository';
+    /**
+     * @var string
+     */
     public const COMMAND_ALIAS = 'search:snapshot:register-repository';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will register an Elasticsearch snapshot repository';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
 
     /**

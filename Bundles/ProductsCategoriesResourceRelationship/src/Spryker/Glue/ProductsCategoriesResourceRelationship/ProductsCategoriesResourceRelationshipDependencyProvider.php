@@ -19,9 +19,21 @@ use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\RestResource\
  */
 class ProductsCategoriesResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_CATEGORY = 'RESOURCE_CATEGORY';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_CATEGORY_STORAGE = 'CLIENT_PRODUCT_CATEGORY_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**

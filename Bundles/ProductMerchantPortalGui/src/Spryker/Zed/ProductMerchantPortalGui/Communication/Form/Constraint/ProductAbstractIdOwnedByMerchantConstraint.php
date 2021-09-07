@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ProductAbstractIdOwnedByMerchantConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'This abstract product is not owned by this merchant.';
 
     /**

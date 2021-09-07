@@ -12,7 +12,13 @@ use Exception;
 
 class Config
 {
+    /**
+     * @var string
+     */
     public const CONFIG_FILE_PREFIX = '/config/Shared/config_';
+    /**
+     * @var string
+     */
     public const CONFIG_FILE_SUFFIX = '.php';
 
     /**

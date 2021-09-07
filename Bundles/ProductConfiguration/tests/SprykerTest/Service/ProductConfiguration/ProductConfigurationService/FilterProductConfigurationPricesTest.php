@@ -27,9 +27,13 @@ class FilterProductConfigurationPricesTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
+    /**
+     * @var string
+     */
     protected const PRICE_DIMENSION_TYPE_TEST = 'PRICE_DIMENSION_TYPE_TEST';
 
     /**

@@ -15,6 +15,9 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeas
 
 class ProductMeasurementUnitByProductConcreteResourceRelationshipExpander implements ProductMeasurementUnitByProductConcreteResourceRelationshipExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
     /**

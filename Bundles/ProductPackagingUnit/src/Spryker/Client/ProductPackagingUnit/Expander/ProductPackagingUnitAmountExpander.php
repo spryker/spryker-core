@@ -14,7 +14,13 @@ use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 
 class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAM_AMOUNT = 'amount';
+    /**
+     * @var string
+     */
     protected const PARAM_AMOUNT_SALES_UNIT = 'amount-id-product-measurement-sales-unit';
 
     /**

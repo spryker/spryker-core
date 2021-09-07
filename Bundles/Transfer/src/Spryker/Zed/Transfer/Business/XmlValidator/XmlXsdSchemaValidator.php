@@ -14,7 +14,13 @@ use Throwable;
 
 class XmlXsdSchemaValidator implements XmlValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const XML_SCHEMA_INSTANCE_NAMESPACE_ATTRIBUTE = 'xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"';
+    /**
+     * @var string
+     */
     protected const XML_SCHEMA_INSTANCE_NAMESPACE_ATTRIBUTE_SHIM = 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
 
     /**

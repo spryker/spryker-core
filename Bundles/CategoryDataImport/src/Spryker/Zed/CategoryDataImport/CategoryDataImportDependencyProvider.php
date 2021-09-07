@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CategoryDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
 
     /**

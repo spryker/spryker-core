@@ -21,9 +21,21 @@ class AclEntityBehavior extends Behavior
 {
     use BundleConfigResolverAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const ACTION_SELECT = 'Select';
+    /**
+     * @var string
+     */
     protected const ACTION_UPDATE = 'Update';
+    /**
+     * @var string
+     */
     protected const ACTION_CREATE = 'Create';
+    /**
+     * @var string
+     */
     protected const ACTION_DELETE = 'Delete';
 
     /**

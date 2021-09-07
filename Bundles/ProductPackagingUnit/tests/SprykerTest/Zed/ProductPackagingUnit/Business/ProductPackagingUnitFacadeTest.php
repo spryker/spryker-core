@@ -50,27 +50,72 @@ use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
  */
 class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
 {
+    /**
+     * @var string
+     */
     protected const PACKAGING_TYPE_DEFAULT = 'item';
+    /**
+     * @var string
+     */
     protected const BOX_PACKAGING_TYPE = 'box';
 
+    /**
+     * @var int
+     */
     protected const ITEM_QUANTITY = 2;
+    /**
+     * @var int
+     */
     protected const PACKAGE_AMOUNT = 4;
 
+    /**
+     * @var string
+     */
     protected const GROUP_KEY = 'GROUP_KEY_DUMMY';
+    /**
+     * @var string
+     */
     protected const GROUP_KEY_FORMAT = '%s_amount_%s_sales_unit_id_%s';
+    /**
+     * @var int
+     */
     protected const AMOUNT_VALUE = 5;
+    /**
+     * @var int
+     */
     protected const SALES_UNIT_ID = 5;
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_PRODUCT_PACKAGING_UNIT_TYPE_NAME = 'packaging_unit_type.item.name';
 
+    /**
+     * @var string
+     */
     protected const PRICE_MODE_NET = 'NET_MODE';
+    /**
+     * @var string
+     */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
+    /**
+     * @var string
+     */
     protected const ABSTRACT_PRODUCT_SKU = 'ABSTRACT_PRODUCT_SKU';
+    /**
+     * @var string
+     */
     protected const CONCRETE_PRODUCT_SKU = 'CONCRETE_PRODUCT_SKU';
 
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
 
+    /**
+     * @var int
+     */
     protected const NON_EXISTING_PRODUCT_PACKAGING_UNIT_ID = 9999;
 
     /**

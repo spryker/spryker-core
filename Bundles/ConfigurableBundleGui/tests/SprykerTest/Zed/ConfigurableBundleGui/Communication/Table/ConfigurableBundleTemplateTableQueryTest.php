@@ -32,17 +32,25 @@ use Twig\Loader\LoaderInterface;
  */
 class ConfigurableBundleTemplateTableQueryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CONFIGURABLE_BUNDLE_TEMPLATE_1 = 'BUNDLE-1';
 
+    /**
+     * @var string
+     */
     protected const CONFIGURABLE_BUNDLE_TEMPLATE_2 = 'BUNDLE-2';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_FACTORY
+     * @var string
      */
     protected const SERVICE_FORM_FACTORY = 'form.factory';
 

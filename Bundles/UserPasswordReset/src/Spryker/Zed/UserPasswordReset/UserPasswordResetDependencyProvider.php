@@ -17,8 +17,17 @@ use Spryker\Zed\UserPasswordReset\Dependency\Service\UserPasswordResetToUtilText
  */
 class UserPasswordResetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_USER = 'FACADE_USER';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+    /**
+     * @var string
+     */
     public const PLUGINS_USER_PASSWORD_RESET_REQUEST_STRATEGY = 'PLUGINS_USER_PASSWORD_RESET_REQUEST_STRATEGY';
 
     /**

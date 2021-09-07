@@ -18,9 +18,18 @@ use Spryker\Glue\ProductBundlesRestApi\Dependency\RestResource\ProductBundlesRes
  */
 class ProductBundlesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_BUNDLE_STORAGE = 'CLIENT_PRODUCT_BUNDLE_STORAGE';
 
+    /**
+     * @var string
+     */
     public const RESOURCE_ORDERS_REST_API = 'RESOURCE_ORDERS_REST_API';
 
     /**

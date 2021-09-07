@@ -9,6 +9,9 @@ namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Formatter;
 
 class ProductLabelFormatter implements ProductLabelFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_LABEL = '%s (SKU: %s)';
 
     /**

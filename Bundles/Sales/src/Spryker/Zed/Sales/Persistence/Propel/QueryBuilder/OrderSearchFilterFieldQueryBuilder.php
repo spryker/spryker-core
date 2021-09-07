@@ -18,46 +18,76 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
 {
     /**
      * Used as a name for `all` search condition group binding to have a hook to extend and bind afterwards.
+     *
+     * @var string
      */
     public const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     * @var string
      */
     public const SEARCH_TYPE_ALL = 'all';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     * @var string
      */
     protected const SEARCH_TYPE_ORDER_REFERENCE = 'orderReference';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     * @var string
      */
     protected const SEARCH_TYPE_ITEM_NAME = 'itemName';
 
     /**
      * @uses \Spryker\Shared\Sales\SalesConfig::ORDER_SEARCH_TYPES
+     * @var string
      */
     protected const SEARCH_TYPE_ITEM_SKU = 'itemSku';
 
+    /**
+     * @var string
+     */
     protected const SEARCH_TYPE_DATE_FROM = 'dateFrom';
+    /**
+     * @var string
+     */
     protected const SEARCH_TYPE_DATE_TO = 'dateTo';
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const ORDER_SEARCH_TYPE_MAPPING = [
         self::SEARCH_TYPE_ORDER_REFERENCE => SpySalesOrderTableMap::COL_ORDER_REFERENCE,
         self::SEARCH_TYPE_ITEM_NAME => SpySalesOrderItemTableMap::COL_NAME,
         self::SEARCH_TYPE_ITEM_SKU => SpySalesOrderItemTableMap::COL_SKU,
     ];
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const ORDER_BY_COLUMN_MAPPING = [
         self::SEARCH_TYPE_ORDER_REFERENCE => SpySalesOrderTableMap::COL_ID_SALES_ORDER,
         'date' => SpySalesOrderTableMap::COL_CREATED_AT,
     ];
 
+    /**
+     * @var string
+     */
     protected const FILTER_FIELD_TYPE_CUSTOMER_REFERENCE = 'customerReference';
+    /**
+     * @var string
+     */
     protected const FILTER_FIELD_TYPE_ORDER_BY = 'orderBy';
 
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     protected const DELIMITER_ORDER_BY = '::';
 
     /**

@@ -23,11 +23,29 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AvailabilityAbstractTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_COL_ACTION = 'Actions';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product';
+    /**
+     * @var string
+     */
     public const AVAILABLE = 'Available';
+    /**
+     * @var string
+     */
     public const NOT_AVAILABLE = 'Not available';
+    /**
+     * @var string
+     */
     public const IS_BUNDLE_PRODUCT = 'Is bundle product';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_STORE = 'id-store';
 
     /**

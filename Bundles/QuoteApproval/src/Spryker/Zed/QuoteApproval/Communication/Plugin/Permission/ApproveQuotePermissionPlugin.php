@@ -12,7 +12,13 @@ use Spryker\Shared\QuoteApproval\QuoteApprovalConfig;
 
 class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'ApproveQuotePermissionPlugin';
+    /**
+     * @var string
+     */
     public const FIELD_STORE_MULTI_CURRENCY = 'store_multi_currency';
 
     /**

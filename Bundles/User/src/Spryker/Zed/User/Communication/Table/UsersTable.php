@@ -19,17 +19,36 @@ use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 
 class UsersTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const ACTION = 'Action';
+    /**
+     * @var string
+     */
     public const UPDATE_USER_URL = '/user/edit/update';
+    /**
+     * @var string
+     */
     public const DEACTIVATE_USER_URL = '/user/edit/deactivate-user';
+    /**
+     * @var string
+     */
     public const ACTIVATE_USER_URL = '/user/edit/activate-user';
+    /**
+     * @var string
+     */
     public const DELETE_USER_URL = '/user/edit/delete';
 
     /**
      * @see \Spryker\Zed\User\Communication\Controller\EditController::confirmDeleteAction()
+     * @var string
      */
     public const CONFIRM_DELETE_USER_URL = '/user/edit/confirm-delete';
 
+    /**
+     * @var string
+     */
     public const PARAM_ID_USER = 'id-user';
 
     /**

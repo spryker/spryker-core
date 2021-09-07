@@ -22,28 +22,57 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantSalesOrderDataExportRepository extends AbstractRepository implements MerchantSalesOrderDataExportRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const FILTER_CRITERIA_KEY_STORE_NAME = 'store_name';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderMapper::KEY_MERCHANT_NAME
+     * @var string
      */
     protected const FILTER_CRITERIA_KEY_MERCHANT_NAME = 'merchant_name';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderMapper::KEY_MERCHANT_ORDER_COMMENTS
+     * @var string
      */
     protected const KEY_MERCHANT_ORDER_COMMENTS = 'merchant_order_comments';
 
+    /**
+     * @var string
+     */
     protected const FILTER_CRITERIA_KEY_MERCHANT_ORDER_CREATED_AT = 'merchant_order_created_at';
+    /**
+     * @var string
+     */
     protected const FILTER_CRITERIA_KEY_MERCHANT_ORDER_UPDATED_AT = 'merchant_order_updated_at';
 
+    /**
+     * @var string
+     */
     protected const FILTER_CRITERIA_PARAM_OFFSET = 'offset';
+    /**
+     * @var string
+     */
     protected const FILTER_CRITERIA_PARAM_LIMIT = 'limit';
 
+    /**
+     * @var string
+     */
     protected const FILTER_CRITERIA_PARAM_DATE_FROM = 'from';
+    /**
+     * @var string
+     */
     protected const FILTER_CRITERIA_PARAM_DATE_TO = 'to';
 
+    /**
+     * @var string
+     */
     protected const PROPEL_CRITERIA_BETWEEN_MIN = 'min';
+    /**
+     * @var string
+     */
     protected const PROPEL_CRITERIA_BETWEEN_MAX = 'max';
 
     /**

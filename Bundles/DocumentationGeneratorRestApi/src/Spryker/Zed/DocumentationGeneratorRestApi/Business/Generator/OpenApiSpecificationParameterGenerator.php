@@ -13,9 +13,21 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\ParameterRendere
 
 class OpenApiSpecificationParameterGenerator implements OpenApiSpecificationParameterGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_ACCEPT_LANGUAGE_REF_NAME = 'acceptLanguage';
+    /**
+     * @var string
+     */
     protected const DEFAULT_ACCEPT_LANGUAGE_NAME = 'Accept-Language';
+    /**
+     * @var string
+     */
     protected const DEFAULT_ACCEPT_LANGUAGE_IN = 'header';
+    /**
+     * @var string
+     */
     protected const DEFAULT_ACCEPT_LANGUAGE_DESCRIPTION = 'Locale value relevant for the store.';
 
     /**

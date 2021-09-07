@@ -26,6 +26,9 @@ use Spryker\Zed\MerchantOmsDataImport\Communication\Plugin\DataImport\MerchantOm
  */
 class MerchantOmsProcessDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const MERCHANT_REFERENCE = 'merchant-profile-data-import-test-reference';
 
     /**

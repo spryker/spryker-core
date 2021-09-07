@@ -20,7 +20,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CompanyForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_ID_COMPANY = 'id_company';
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
 
     /**

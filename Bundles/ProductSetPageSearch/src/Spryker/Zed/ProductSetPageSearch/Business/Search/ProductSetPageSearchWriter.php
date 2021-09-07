@@ -20,6 +20,9 @@ use Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContai
 
 class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
 {
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_SET = 'id_product_set';
 
     /**

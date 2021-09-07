@@ -21,13 +21,37 @@ use Spryker\Zed\Kernel\Container;
  */
 class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const PLUGIN_RESOURCE_ROUTE_PLUGIN_PROVIDERS = 'PLUGIN_RESOURCE_ROUTE_PLUGIN_PROVIDERS';
+    /**
+     * @var string
+     */
     public const PLUGIN_RESOURCE_RELATIONSHIP_COLLECTION_PROVIDER = 'PLUGIN_RESOURCE_RELATIONSHIP_COLLECTION_PROVIDER';
+    /**
+     * @var string
+     */
     public const COLLECTION_RESOURCE_ROUTE = 'COLLECTION_RESOURCE_ROUTE';
+    /**
+     * @var string
+     */
     public const YAML_DUMPER = 'YAML_DUMPER';
+    /**
+     * @var string
+     */
     public const FILESYSTEM = 'FILESYSTEM';
+    /**
+     * @var string
+     */
     public const FINDER = 'FINDER';
+    /**
+     * @var string
+     */
     public const TEXT_INFLECTOR = 'TEXT_INFLECTOR';
 
     /**

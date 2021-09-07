@@ -18,15 +18,20 @@ use Spryker\Zed\Sales\SalesConfig;
 
 class CustomerOrdersTable extends OrdersTable
 {
+    /**
+     * @var string
+     */
     protected const BASE_URL = '/sales/customer/';
 
     /**
      * @uses \Spryker\Zed\Sales\Communication\Controller\CustomerController
+     * @var string
      */
     protected const CUSTOMER_ORDERS_TABLE_BASE_URL = '/sales/customer';
 
     /**
      * @uses \Spryker\Zed\Sales\Communication\Controller\CustomerController::ordersTableAction()
+     * @var string
      */
     protected const CUSTOMER_ORDERS_TABLE_URL = '/orders-table?%s=%s';
 

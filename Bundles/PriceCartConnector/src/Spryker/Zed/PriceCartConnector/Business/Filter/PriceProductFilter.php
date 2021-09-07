@@ -19,6 +19,9 @@ use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 class PriceProductFilter implements PriceProductFilterInterface
 {
+    /**
+     * @var int
+     */
     protected const ZERO_QUANTITY_VALUE = 0;
 
     /**

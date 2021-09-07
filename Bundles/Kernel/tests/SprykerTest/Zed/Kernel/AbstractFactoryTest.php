@@ -28,7 +28,13 @@ use SprykerTest\Zed\Kernel\Fixtures\Factory;
  */
 class AbstractFactoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const CONTAINER_KEY = 'key';
+    /**
+     * @var string
+     */
     public const CONTAINER_VALUE = 'value';
 
     /**

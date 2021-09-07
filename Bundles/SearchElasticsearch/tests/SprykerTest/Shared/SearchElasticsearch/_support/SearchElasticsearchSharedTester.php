@@ -30,8 +30,17 @@ class SearchElasticsearchSharedTester extends Actor
 {
     use _generated\SearchElasticsearchSharedTesterActions;
 
+    /**
+     * @var string
+     */
     public const DEFAULT_ELASTICSEARCH_PROTOCOL = 'http';
+    /**
+     * @var string
+     */
     public const DEFAULT_ELASTICSEARCH_HOST = 'localhost';
+    /**
+     * @var string
+     */
     public const DEFAULT_ELASTICSEARCH_PORT = '9001';
 
     /**

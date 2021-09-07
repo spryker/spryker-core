@@ -20,8 +20,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer implements CmsBlockCategoryStorageQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const POSITION = 'position';
+    /**
+     * @var string
+     */
     public const NAME = 'name';
+    /**
+     * @var string
+     */
     protected const BLOCK_KEY = 'block_key';
 
     /**

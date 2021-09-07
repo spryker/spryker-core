@@ -15,8 +15,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PriceModeSwitchController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_PRICE_MODE = 'price-mode';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REFERRER_URL = 'referrer-url';
+    /**
+     * @var string
+     */
     public const PRICE_MODE_SWITCH_ERROR_TRANSLATION_KEY = 'price.mode.switch.error';
 
     /**

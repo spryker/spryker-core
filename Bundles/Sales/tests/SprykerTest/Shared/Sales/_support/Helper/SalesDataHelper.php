@@ -22,6 +22,9 @@ class SalesDataHelper extends Module
 {
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     public const NAMESPACE_ROOT = '\\';
 
     /**

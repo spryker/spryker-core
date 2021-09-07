@@ -19,8 +19,14 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 
 class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInterface
 {
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY = 'cart.pre.check.price.failed';
 
+    /**
+     * @var string
+     */
     protected const TRANSLATION_PARAMETER_SKU = '%sku%';
 
     /**

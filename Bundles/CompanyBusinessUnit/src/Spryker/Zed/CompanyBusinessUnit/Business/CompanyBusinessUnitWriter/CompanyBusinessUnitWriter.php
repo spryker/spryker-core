@@ -21,13 +21,28 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_HAS_RELATED_USERS = 'company.company_business_unit.delete.error.has_users';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE = 'message.business_unit.update.cycle_dependency_error';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_BUSINESS_UNIT_UPDATE_SUCCESS = 'message.business_unit.update';
+    /**
+     * @var string
+     */
     protected const MESSAGE_BUSINESS_UNIT_DELETE_SUCCESS = 'message.business_unit.delete';
 
+    /**
+     * @var int
+     */
     protected const HIERARCHY_CYCLE_CHECK_DEPTH = 1000;
 
     /**

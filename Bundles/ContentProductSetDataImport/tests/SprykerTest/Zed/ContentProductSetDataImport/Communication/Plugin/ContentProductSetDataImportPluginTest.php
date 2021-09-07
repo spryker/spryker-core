@@ -31,7 +31,13 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class ContentProductSetDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY = 'Please check "product_set_key.default" in the row with key: "ps-1". The wrong product set key passed.';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_SET = 'id_product_set';
 
     /**

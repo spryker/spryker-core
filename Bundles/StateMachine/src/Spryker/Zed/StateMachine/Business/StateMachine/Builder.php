@@ -18,19 +18,52 @@ use Spryker\Zed\StateMachine\StateMachineConfig;
 
 class Builder implements BuilderInterface
 {
+    /**
+     * @var string
+     */
     public const STATE_NAME_ATTRIBUTE = 'name';
+    /**
+     * @var string
+     */
     public const STATE_DISPLAY_ATTRIBUTE = 'display';
 
+    /**
+     * @var string
+     */
     public const PROCESS_NAME_ATTRIBUTE = 'name';
+    /**
+     * @var string
+     */
     public const PROCESS_FILE_ATTRIBUTE = 'file';
+    /**
+     * @var string
+     */
     public const PROCESS_MAIN_FLAG_ATTRIBUTE = 'main';
 
+    /**
+     * @var string
+     */
     public const EVENT_COMMAND_ATTRIBUTE = 'command';
+    /**
+     * @var string
+     */
     public const EVENT_MANUAL_ATTRIBUTE = 'manual';
+    /**
+     * @var string
+     */
     public const EVENT_ON_ENTER_ATTRIBUTE = 'onEnter';
+    /**
+     * @var string
+     */
     public const EVENT_TIMEOUT_ATTRIBUTE = 'timeout';
 
+    /**
+     * @var string
+     */
     public const TRANSITION_CONDITION_ATTRIBUTE = 'condition';
+    /**
+     * @var string
+     */
     public const TRANSITION_HAPPY_PATH_ATTRIBUTE = 'happy';
 
     /**

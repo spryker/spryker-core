@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class DiscountCalculationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_DISCOUNT = 'discount facade';
 
     /**

@@ -18,7 +18,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class MerchantPortalInstallDependenciesConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'frontend:mp:install-dependencies';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will install Merchant Portal dependencies.';
 
     /**

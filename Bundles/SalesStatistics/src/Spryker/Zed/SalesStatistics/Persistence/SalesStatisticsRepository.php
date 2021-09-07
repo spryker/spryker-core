@@ -19,11 +19,29 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class SalesStatisticsRepository extends AbstractRepository implements SalesStatisticsRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const COUNT = 'count';
+    /**
+     * @var string
+     */
     public const DATE = 'date';
+    /**
+     * @var string
+     */
     public const STATUS_NAME = 'status_name';
+    /**
+     * @var string
+     */
     public const TOTAL = 'total';
+    /**
+     * @var string
+     */
     public const ITEM_NAME = 'item_name';
+    /**
+     * @var string
+     */
     public const ITEM_SKU = 'sku';
 
     /**

@@ -21,14 +21,38 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckConditionConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'oms:check-condition';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Check conditions';
 
+    /**
+     * @var string
+     */
     protected const OPTION_STORE_NAME = 'store-name';
+    /**
+     * @var string
+     */
     protected const OPTION_STORE_NAME_SHORT = 's';
+    /**
+     * @var string
+     */
     protected const OPTION_LIMIT = 'limit';
+    /**
+     * @var string
+     */
     protected const OPTION_LIMIT_SHORT = 'l';
+    /**
+     * @var string
+     */
     protected const OPTION_PROCESSOR_ID = 'processor-id';
+    /**
+     * @var string
+     */
     protected const OPTION_PROCESSOR_ID_SHORT = 'p';
 
     /**

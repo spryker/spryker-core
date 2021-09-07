@@ -12,6 +12,9 @@ use Spryker\Glue\Kernel\Container;
 
 class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_EVENT_DISPATCHER = 'PLUGINS_EVENT_DISPATCHER_PLUGINS';
 
     /**

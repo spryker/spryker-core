@@ -26,6 +26,9 @@ use Spryker\Shared\PropelOrm\PropelOrmConstants;
 
 class ObjectBuilder extends PropelObjectBuilder
 {
+    /**
+     * @var string
+     */
     protected const COMMENT_DOC_BLOCK_NULLABLE_PART = '|null';
 
     /**

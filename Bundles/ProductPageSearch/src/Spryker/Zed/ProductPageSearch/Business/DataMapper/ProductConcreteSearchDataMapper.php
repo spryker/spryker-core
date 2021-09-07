@@ -14,6 +14,9 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT = 'id_product';
 
     /**

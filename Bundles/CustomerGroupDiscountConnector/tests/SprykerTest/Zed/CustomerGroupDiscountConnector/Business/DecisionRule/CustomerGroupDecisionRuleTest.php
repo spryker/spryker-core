@@ -31,7 +31,13 @@ use Spryker\Zed\CustomerGroupDiscountConnector\Dependency\Facade\CustomerGroupDi
  */
 class CustomerGroupDecisionRuleTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CUSTOMER_GROUP_NAMES_TEST_GROUP_1 = 'customer_group_names_test_group_1';
+    /**
+     * @var string
+     */
     protected const CUSTOMER_GROUP_NAMES_TEST_GROUP_2 = 'customer_group_names_test_group_2';
 
     /**

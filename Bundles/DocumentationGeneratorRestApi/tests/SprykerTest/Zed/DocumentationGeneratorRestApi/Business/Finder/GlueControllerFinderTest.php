@@ -26,6 +26,9 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResou
  */
 class GlueControllerFinderTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CONTROLLER_FILE_NAME = 'TestResourceController.php';
 
     /**

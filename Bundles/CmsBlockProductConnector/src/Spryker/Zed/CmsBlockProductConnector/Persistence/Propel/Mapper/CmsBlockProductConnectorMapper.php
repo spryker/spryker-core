@@ -14,9 +14,16 @@ class CmsBlockProductConnectorMapper implements CmsBlockProductConnectorMapperIn
 {
     /**
      * @uses \Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap
+     * @var string
      */
     public const PRODUCT_ABSTRACT_VIRTUAL_COLUMN_NAME = 'name';
+    /**
+     * @var string
+     */
     public const PRODUCT_ABSTRACT_COLUMN_SKU = 'Sku';
+    /**
+     * @var string
+     */
     public const PRODUCT_ABSTRACT_COLUMN_ID = 'IdProductAbstract';
 
     /**

@@ -26,7 +26,13 @@ class ClientHelper extends Module
     use ConfigHelperTrait;
     use DependencyProviderHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const CLIENT_CLASS_NAME_PATTERN = '\%1$s\Client\%3$s\%3$sClient';
+    /**
+     * @var string
+     */
     protected const CLIENT_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Client\%3$s\%3$sFactory';
 
     /**

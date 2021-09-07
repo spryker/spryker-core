@@ -25,6 +25,9 @@ use SprykerTest\Zed\ZedNavigation\Business\ZedNavigationBusinessTester;
  */
 class ZedNavigationCollectorCacheDecoratorTest extends ZedNavigationBusinessTester
 {
+    /**
+     * @var string
+     */
     protected const NAVIGATION_TYPE_MAIN = 'main';
 
     /**

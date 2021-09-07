@@ -17,19 +17,52 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SchedulerSuspendConsole extends AbstractSchedulerConsole
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'scheduler:suspend';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Suspends scheduler job(s)';
 
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION = 'roles';
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION_SHORTCUT = 'r';
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION_DESCRIPTION = 'Job roles to include.';
 
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION = 'schedulers';
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION_DESCRIPTION = 'Schedulers that will be executed.';
 
+    /**
+     * @var string
+     */
     protected const JOBS_OPTION = 'jobs';
+    /**
+     * @var string
+     */
     protected const JOBS_OPTION_SHORTCUT = 'j';
+    /**
+     * @var string
+     */
     protected const JOBS_OPTION_DESCRIPTION = 'Scheduler job(s) that will be enabled.';
 
     /**

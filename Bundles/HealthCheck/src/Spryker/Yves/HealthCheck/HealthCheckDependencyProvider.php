@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\Container;
  */
 class HealthCheckDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_HEALTH_CHECK = 'PLUGINS_HEALTH_CHECK';
 
     /**

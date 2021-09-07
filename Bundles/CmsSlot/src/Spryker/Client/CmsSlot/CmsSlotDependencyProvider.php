@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 
 class CmsSlotDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS = 'EXTERNAL_DATA_PROVIDER_STRATEGY_PLUGINS';
 
     /**

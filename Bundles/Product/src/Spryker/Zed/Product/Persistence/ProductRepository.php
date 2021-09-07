@@ -36,7 +36,13 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductRepository extends AbstractRepository implements ProductRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_FILTERED_PRODUCTS_RESULT = 'result';
+    /**
+     * @var string
+     */
     public const KEY_FILTERED_PRODUCTS_PRODUCT_NAME = 'name';
 
     /**

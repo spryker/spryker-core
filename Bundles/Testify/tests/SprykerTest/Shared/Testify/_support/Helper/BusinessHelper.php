@@ -24,6 +24,9 @@ use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
  */
 class BusinessHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const BUSINESS_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
 
     /**

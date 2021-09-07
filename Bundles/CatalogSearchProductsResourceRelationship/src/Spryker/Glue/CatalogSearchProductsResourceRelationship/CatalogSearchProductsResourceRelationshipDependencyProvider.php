@@ -16,6 +16,9 @@ use Spryker\Glue\Kernel\Container;
  */
 class CatalogSearchProductsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_PRODUCTS = 'RESOURCE_PRODUCTS';
 
     /**

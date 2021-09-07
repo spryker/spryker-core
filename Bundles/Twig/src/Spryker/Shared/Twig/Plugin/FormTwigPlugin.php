@@ -14,6 +14,9 @@ use Twig\Environment;
 
 class FormTwigPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_FORM_FACTORY = 'form.factory';
 
     /**

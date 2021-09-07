@@ -14,12 +14,33 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_CATEGORY_NODE_IDS = 'category_node_ids';
+    /**
+     * @var string
+     */
     protected const KEY_ALL_PARENT_CATEGORY_NODE_IDS = 'all_parent_category_ids';
+    /**
+     * @var string
+     */
     protected const KEY_SORTED_CATEGORIES = 'sorted_categories';
+    /**
+     * @var string
+     */
     protected const KEY_ALL_NODE_PARENTS = 'all_node_parents';
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_ORDER = 'product_order';
+    /**
+     * @var string
+     */
     protected const KEY_CATEGORY_NAMES = 'category_names';
+    /**
+     * @var string
+     */
     protected const KEY_BOOSTED_CATEGORY_NAMES = 'boosted_category_names';
 
     /**

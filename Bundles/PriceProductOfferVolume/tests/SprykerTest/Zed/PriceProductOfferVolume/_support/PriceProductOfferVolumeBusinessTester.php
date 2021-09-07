@@ -35,6 +35,9 @@ class PriceProductOfferVolumeBusinessTester extends Actor
 {
     use _generated\PriceProductOfferVolumeBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
     /**

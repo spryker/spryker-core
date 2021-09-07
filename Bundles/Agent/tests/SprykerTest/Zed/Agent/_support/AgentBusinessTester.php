@@ -29,6 +29,9 @@ class AgentBusinessTester extends Actor
 {
     use _generated\AgentBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     public const CUSTOMER_FIRST_NAME = 'customerFirstName';
 
     /**

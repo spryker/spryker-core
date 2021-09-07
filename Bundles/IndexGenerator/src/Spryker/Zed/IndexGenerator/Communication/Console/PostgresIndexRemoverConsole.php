@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PostgresIndexRemoverConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'propel:postgres-indexes:remove';
+    /**
+     * @var string
+     */
     protected const DESCRIPTION = 'Deletes generated index files.';
 
     /**

@@ -23,14 +23,32 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class ProductOfferStockForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_NEVER_OUT_OF_STOCK = 'isNeverOutOfStock';
 
+    /**
+     * @var string
+     */
     protected const LABEL_QUANTITY = 'Quantity';
+    /**
+     * @var string
+     */
     protected const LABEL_IS_NEVER_OUT_OF_STOCK = 'Always in stock';
 
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_QUANTITY = 'Enter quantity';
 
+    /**
+     * @var string
+     */
     protected const DECIMAL_QUANTITY_VALIDATION_PATTERN = '/^\d{1,10}(\.\d{1,10})?$/';
 
     /**

@@ -41,6 +41,9 @@ use SprykerTest\Zed\Event\Stub\TestEventBulkListenerPluginStub;
  */
 class EventFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_EVENT_NAME = 'test.event';
 
     /**

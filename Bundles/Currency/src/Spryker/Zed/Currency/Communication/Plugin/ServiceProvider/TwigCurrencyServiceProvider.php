@@ -22,7 +22,13 @@ use Twig\TwigFunction;
  */
 class TwigCurrencyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const NO_SYMBOL_FOUND = '-';
+    /**
+     * @var string
+     */
     public const CURRENCY_SYMBOL_FUNCTION_NAME = 'currencySymbol';
 
     /**

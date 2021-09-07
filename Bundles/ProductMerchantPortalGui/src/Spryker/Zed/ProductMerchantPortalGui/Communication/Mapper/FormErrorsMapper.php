@@ -11,10 +11,14 @@ use Symfony\Component\Form\FormInterface;
 
 class FormErrorsMapper implements FormErrorsMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const PROPERTY_PATH_PATTERN = '/(?<=\[).+?(?=\])/';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_ATTRIBUTES
+     * @var string
      */
     protected const FIELD_ATTRIBUTES = 'attributes';
 

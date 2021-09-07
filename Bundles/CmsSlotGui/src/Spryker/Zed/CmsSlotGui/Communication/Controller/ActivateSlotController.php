@@ -16,8 +16,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ActivateSlotController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_CMS_SLOT = 'id-cms-slot';
+    /**
+     * @var string
+     */
     protected const RESPONSE_SUCCESS_KEY = 'success';
+    /**
+     * @var string
+     */
     protected const RESPONSE_MESSAGE = 'message';
 
     /**

@@ -15,10 +15,19 @@ use Spryker\Zed\StoreGui\Dependency\Service\StoreGuiToUtilEncodingServiceBridge;
 
 class StoreGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
 
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

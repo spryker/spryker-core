@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class ConsoleConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const SAPI_NAME_CONSOLE = 'cli';
 
     /**

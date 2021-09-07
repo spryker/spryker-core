@@ -28,23 +28,68 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class OnlineProfileMerchantProfileForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_LOGO_URL = 'logo_url';
+    /**
+     * @var string
+     */
     protected const FIELD_PUBLIC_EMAIL = 'public_email';
+    /**
+     * @var string
+     */
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
+    /**
+     * @var string
+     */
     protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
+    /**
+     * @var string
+     */
     protected const FIELD_ADDRESS_COLLECTION = 'addressCollection';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     protected const FIELD_URL_COLLECTION = 'urlCollection';
+    /**
+     * @var string
+     */
     protected const FIELD_FAX_NUMBER = 'fax_number';
 
+    /**
+     * @var string
+     */
     protected const LABEL_LOGO_URL = 'Logo URL';
+    /**
+     * @var string
+     */
     protected const LABEL_PUBLIC_EMAIL = 'Email';
+    /**
+     * @var string
+     */
     protected const LABEL_PUBLIC_PHONE = 'Phone Number';
+    /**
+     * @var string
+     */
     protected const LABEL_IS_ACTIVE = 'Is Active';
+    /**
+     * @var string
+     */
     protected const LABEL_FAX_NUMBER = 'Fax number';
 
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_LOGO_URL = 'Provide a logo URL';
 
+    /**
+     * @var string
+     */
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**

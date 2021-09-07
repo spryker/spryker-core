@@ -16,6 +16,9 @@ use Generated\Shared\Transfer\PathMethodComponentTransfer;
  */
 class PathMethodSpecificationComponent implements PathMethodSpecificationComponentInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_REQUEST_BODY = 'requestBody';
 
     /**

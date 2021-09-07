@@ -18,9 +18,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_RECLAMATION_ITEM = 'id-reclamation-item';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_RECLAMATION = 'id-reclamation';
+    /**
+     * @var string
+     */
     protected const ROUTE_REDIRECT = '/sales-reclamation-gui/detail';
+    /**
+     * @var string
+     */
     protected const ROUTE_RECLAMATION_LIST = '/sales-reclamation-gui';
 
     /**

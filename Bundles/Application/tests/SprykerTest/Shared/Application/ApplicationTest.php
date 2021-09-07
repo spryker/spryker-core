@@ -25,7 +25,13 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPlu
  */
 class ApplicationTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const SERVICE = 'SERVICE';
+    /**
+     * @var string
+     */
     public const SERVICE_PROPERTY = 'SERVICE_PROPERTY';
 
     /**

@@ -15,6 +15,9 @@ use Twig\Environment;
 
 class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
 {
+    /**
+     * @var string
+     */
     protected const FUNCTION_NAME = 'renderCmsBlockAsTwig';
 
     /**

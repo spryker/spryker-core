@@ -33,7 +33,13 @@ use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
  */
 class ProductOptionCartConnectorFacadeTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ID_PRODUCT_OPTION = 5;
+    /**
+     * @var int
+     */
     public const DUMMY_PRICE = 1500;
 
     /**

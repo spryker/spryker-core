@@ -9,19 +9,55 @@ namespace Spryker\Service\AclEntity\SegmentConnectorGenerator;
 
 class SegmentConnectorGenerator implements SegmentConnectorGeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const CONNECTOR_CLASS_TEMPLATE = '%sAclEntitySegment%s';
+    /**
+     * @var string
+     */
     public const ENTITY_PREFIX_DEFAULT = 'Spy';
 
+    /**
+     * @var string
+     */
     protected const CONNECTOR_TABLE_TEMPLATE = '%sacl_entity_segment_%s';
+    /**
+     * @var string
+     */
     protected const CONNECTOR_TABLE_ID_COLUMN_NAME_TEMPLATE = 'id_%s';
+    /**
+     * @var string
+     */
     protected const CONNECTOR_RELATION_TEMPLATE = '%s.%s';
+    /**
+     * @var string
+     */
     protected const CONNECTOR_GETTER_TEMPLATE = 'get%sAclEntitySegment%ss';
+    /**
+     * @var string
+     */
     protected const CONNECTOR_REFERENCE_COLUMN_TEMPLATE = 'fk_%s';
+    /**
+     * @var string
+     */
     protected const CONNECTOR_REFERENCE_GETTER_TEMPLATE = 'getFk%s';
+    /**
+     * @var string
+     */
     protected const CONNECTOR_REFERENCE_SETTER_TEMPLATE = 'setFk%s';
+    /**
+     * @var string
+     */
     protected const CONNECTOR_REFERENCE_FILTER_QUERY_TEMPLATE = 'filterByFk%s';
+    /**
+     * @var string
+     */
     protected const CONNECTOR_UNIQUE_CONTAINT_TEMPLATE = '%s-%s-fk_acl_entity_segment-unique-key';
 
+    /**
+     * @var string
+     */
     protected const TABLE_PREFIX_DEFAULT = 'spy_';
 
     /**

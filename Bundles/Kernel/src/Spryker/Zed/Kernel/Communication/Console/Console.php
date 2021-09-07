@@ -33,7 +33,13 @@ class Console extends SymfonyCommand
 {
     use RepositoryResolverAwareTrait;
 
+    /**
+     * @var int
+     */
     public const CODE_SUCCESS = 0;
+    /**
+     * @var int
+     */
     public const CODE_ERROR = 1;
 
     /**

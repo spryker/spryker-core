@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 
 class DashboardMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_DASHBOARD_CARD = 'PLUGINS_DASHBOARD_CARD';
 
     /**

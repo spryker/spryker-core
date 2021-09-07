@@ -14,6 +14,9 @@ use Spryker\Client\FileManagerStorage\Dependency\Service\FileManagerStorageToSyn
 
 class FileManagerStorage implements FileManagerStorageInterface
 {
+    /**
+     * @var string
+     */
     protected const RESOURCE_NAME = 'file';
 
     /**

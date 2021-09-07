@@ -16,6 +16,9 @@ use Spryker\Shared\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStora
 
 class ProductOfferAvailabilityStorageReader implements ProductOfferAvailabilityStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
 
     /**

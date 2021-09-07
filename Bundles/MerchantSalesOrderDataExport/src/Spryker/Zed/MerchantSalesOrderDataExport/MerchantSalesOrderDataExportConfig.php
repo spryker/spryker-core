@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantSalesOrderDataExportConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
 
     /**

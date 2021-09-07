@@ -16,9 +16,18 @@ use Spryker\Zed\ConfigurableBundleCart\Persistence\ConfigurableBundleCartReposit
 
 class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlotCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_CONFIGURABLE_BUNDLE_TEMPLATE_UUID = 'configurableBundleTemplateUuid';
+    /**
+     * @var string
+     */
     protected const KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS = 'configurableBundleTemplateSlotUuids';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_ADDED = 'configured_bundle_cart.error.configured_bundle_cannot_be_added';
 
     /**

@@ -14,6 +14,9 @@ use Symfony\Component\Yaml\Yaml;
 
 class UtilDataReaderDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const YAML_READER = 'yaml reader';
 
     /**

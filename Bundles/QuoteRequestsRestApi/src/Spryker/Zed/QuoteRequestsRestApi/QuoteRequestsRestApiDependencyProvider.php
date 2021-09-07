@@ -17,7 +17,13 @@ use Spryker\Zed\QuoteRequestsRestApi\Dependency\Facade\QuoteRequestsRestApiToQuo
  */
 class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CARTS_REST_API = 'FACADE_CARTS_REST_API';
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE_REQUEST = 'FACADE_QUOTE_REQUEST';
 
     /**

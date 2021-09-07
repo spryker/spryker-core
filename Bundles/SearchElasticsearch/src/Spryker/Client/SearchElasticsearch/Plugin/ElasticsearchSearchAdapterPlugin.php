@@ -21,6 +21,9 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterfac
  */
 class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchAdapterPluginInterface, ConnectionCheckerAdapterPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'elasticsearch';
 
     /**

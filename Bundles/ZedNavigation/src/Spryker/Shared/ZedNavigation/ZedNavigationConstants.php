@@ -18,8 +18,12 @@ interface ZedNavigationConstants
      * - Default is true, can be set to false in development or for testing.
      *
      * @api
+     * @var string
      */
     public const ZED_NAVIGATION_CACHE_ENABLED = 'ZED_NAVIGATION_CACHE_ENABLED';
 
+    /**
+     * @var string
+     */
     public const ZED_NAVIGATION_ENABLED = 'ZED_NAVIGATION_ENABLED';
 }

@@ -18,12 +18,30 @@ use Spryker\Zed\Propel\PropelConfig;
 
 class CollectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const COLLECTOR_TOUCH_ID = 'collector_touch_id';
+    /**
+     * @var string
+     */
     public const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
+    /**
+     * @var string
+     */
     public const COLLECTOR_STORAGE_KEY = 'collector_storage_key';
+    /**
+     * @var string
+     */
     public const COLLECTOR_SEARCH_KEY = 'collector_search_key';
 
+    /**
+     * @var string
+     */
     public const COLLECTOR_BULK_DELETE_QUERY_CLASS = 'BulkDeleteTouchByIdQuery';
+    /**
+     * @var string
+     */
     public const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'BulkUpdateTouchKeyByIdQuery';
 
     /**

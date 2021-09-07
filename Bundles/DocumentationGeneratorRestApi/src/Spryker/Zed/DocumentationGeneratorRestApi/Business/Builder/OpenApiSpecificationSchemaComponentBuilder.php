@@ -16,12 +16,30 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNam
 
 class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const VALUE_TYPE_ARRAY = 'array';
+    /**
+     * @var string
+     */
     protected const VALUE_TYPE_BOOLEAN = 'boolean';
+    /**
+     * @var string
+     */
     protected const VALUE_TYPE_INTEGER = 'integer';
+    /**
+     * @var string
+     */
     protected const VALUE_TYPE_NUMBER = 'number';
+    /**
+     * @var string
+     */
     protected const VALUE_TYPE_STRING = 'string';
 
+    /**
+     * @var array
+     */
     protected const DATA_TYPES_MAPPING_LIST = [
         'int' => self::VALUE_TYPE_INTEGER,
         'bool' => self::VALUE_TYPE_BOOLEAN,
@@ -29,9 +47,21 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
         'Spryker\DecimalObject\Decimal' => self::VALUE_TYPE_NUMBER,
     ];
 
+    /**
+     * @var string
+     */
     protected const KEY_TYPE = 'type';
+    /**
+     * @var string
+     */
     protected const KEY_IS_COLLECTION = 'is_collection';
+    /**
+     * @var string
+     */
     protected const KEY_IS_NULLABLE = 'is_nullable';
+    /**
+     * @var string
+     */
     protected const PATTERN_SCHEMA_REFERENCE = '#/components/schemas/%s';
 
     /**

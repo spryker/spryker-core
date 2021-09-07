@@ -24,17 +24,44 @@ use Spryker\Zed\ShipmentGui\Dependency\Service\ShipmentGuiToShipmentServiceBridg
  */
 class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
+    /**
+     * @var string
+     */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const FACADE_TAX = 'FACADE_TAX';
 
+    /**
+     * @var string
+     */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SHIPMENT_METHOD = 'PROPEL_QUERY_SHIPMENT_METHOD';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_MONEY_COLLECTION_FORM_TYPE = 'PLUGIN_MONEY_COLLECTION_FORM_TYPE';
+    /**
+     * @var string
+     */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+    /**
+     * @var string
+     */
     public const PLUGIN_SHIPMENT_ORDER_ITEM_TEMPLATE = 'PLUGIN_SHIPMENT_ORDER_ITEM_TEMPLATE';
 
     /**

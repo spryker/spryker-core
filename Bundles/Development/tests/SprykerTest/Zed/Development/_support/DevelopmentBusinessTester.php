@@ -35,6 +35,9 @@ class DevelopmentBusinessTester extends Actor
 {
     use _generated\DevelopmentBusinessTesterActions;
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_PRIORITY = 2;
 
     /**

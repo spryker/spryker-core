@@ -16,6 +16,9 @@ use Spryker\Service\Kernel\Container;
  */
 class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

@@ -17,6 +17,9 @@ use Throwable;
 
 class StockUpdater implements StockUpdaterInterface
 {
+    /**
+     * @var string
+     */
     protected const TOUCH_STOCK_TYPE = 'stock-type';
 
     /**

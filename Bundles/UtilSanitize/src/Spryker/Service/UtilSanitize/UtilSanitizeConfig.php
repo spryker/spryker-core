@@ -11,6 +11,9 @@ use Spryker\Service\Kernel\AbstractBundleConfig;
 
 class UtilSanitizeConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const REPLACEMENT_VALUE = '***';
 
     /**

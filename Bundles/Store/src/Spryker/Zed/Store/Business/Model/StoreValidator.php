@@ -13,7 +13,13 @@ use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 
 class StoreValidator implements StoreValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_STORE_DATA_IS_MISSING = 'Store data is missing';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_STORE_NOT_FOUND = 'Store not found.';
 
     /**

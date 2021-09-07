@@ -16,7 +16,13 @@ use Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartCo
 
 class ProductOptionValidator implements ProductOptionValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_NAME = '%name%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_PRODUCT_OPTION_EXISTS = 'cart.item.option.pre.check.validation.error.exists';
 
     /**

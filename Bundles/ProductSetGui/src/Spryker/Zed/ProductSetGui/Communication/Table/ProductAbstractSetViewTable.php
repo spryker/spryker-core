@@ -19,10 +19,22 @@ use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
 class ProductAbstractSetViewTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_IDENTIFIER = 'product-abstract-set-view-table';
 
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_IMAGE = 'image';
+    /**
+     * @var string
+     */
     public const COL_DETAILS = 'details';
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
     public const COL_POSITION = ProductSetGuiQueryContainer::COL_ALIAS_POSITION;

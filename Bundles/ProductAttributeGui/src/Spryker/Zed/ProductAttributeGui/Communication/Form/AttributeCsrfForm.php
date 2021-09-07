@@ -16,6 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AttributeCsrfForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const CSRF_TOKEN_NAME = 'csrf-token';
 
     /**

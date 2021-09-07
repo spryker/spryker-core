@@ -11,7 +11,13 @@ use Generated\Shared\Transfer\CompanyCollectionTransfer;
 
 class CompanyGuiFormatter implements CompanyGuiFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID = 'id';
+    /**
+     * @var string
+     */
     protected const KEY_TEXT = 'text';
 
     /**

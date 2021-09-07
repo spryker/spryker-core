@@ -22,6 +22,9 @@ use SprykerTest\Zed\Customer\CustomerCommunicationTester;
  */
 class EditControllerCest
 {
+    /**
+     * @var string
+     */
     public const NEW_FIRST_NAME = 'superMan';
 
     /**

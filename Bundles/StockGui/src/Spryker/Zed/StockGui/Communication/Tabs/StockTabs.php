@@ -13,14 +13,35 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class StockTabs extends AbstractTabs
 {
+    /**
+     * @var string
+     */
     protected const TAB_CONFIGURATION_NAME = 'configuration';
+    /**
+     * @var string
+     */
     protected const TAB_CONFIGURATION_TITLE = 'Configuration';
+    /**
+     * @var string
+     */
     protected const TAB_CONFIGURATION_TEMPLATE = '@StockGui/_partials/_tabs/tab-configuration.twig';
 
+    /**
+     * @var string
+     */
     protected const TAB_STORE_RELATION_NAME = 'store-relation';
+    /**
+     * @var string
+     */
     protected const TAB_STORE_RELATION_TITLE = 'Store Relation';
+    /**
+     * @var string
+     */
     protected const TAB_STORE_RELATION_TEMPLATE = '@StockGui/_partials/_tabs/tab-store-relation.twig';
 
+    /**
+     * @var string
+     */
     protected const FOOTER_TEMPLATE = '@StockGui/_partials/form-submit.twig';
 
     /**

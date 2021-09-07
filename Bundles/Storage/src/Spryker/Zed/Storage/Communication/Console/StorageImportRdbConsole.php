@@ -20,9 +20,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageImportRdbConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'storage:redis:import';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will import a rdb file.';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_SOURCE = 'source';
 
     /**

@@ -19,10 +19,22 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class AbstractSchedulerConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const OUTPUT_SUCCESS_COLOR = 'green';
+    /**
+     * @var string
+     */
     protected const OUTPUT_ERROR_COLOR = 'red';
 
+    /**
+     * @var string
+     */
     protected const OUTPUT_SUCCESS_MESSAGE = 'OK';
+    /**
+     * @var string
+     */
     protected const OUTPUT_ERROR_MESSAGE = 'ERROR';
 
     /**

@@ -9,7 +9,13 @@ namespace Spryker\Shared\ProductRelation;
 
 class ProductRelationTypes
 {
+    /**
+     * @var string
+     */
     public const TYPE_RELATED_PRODUCTS = 'related-products';
+    /**
+     * @var string
+     */
     public const TYPE_UP_SELLING = 'up-selling';
 
     /**

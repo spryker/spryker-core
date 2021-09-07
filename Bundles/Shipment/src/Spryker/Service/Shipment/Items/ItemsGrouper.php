@@ -14,6 +14,9 @@ use Spryker\Service\Shipment\ShipmentHash\ShipmentHashGeneratorInterface;
 
 class ItemsGrouper implements ItemsGrouperInterface
 {
+    /**
+     * @var string
+     */
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s';
 
     /**

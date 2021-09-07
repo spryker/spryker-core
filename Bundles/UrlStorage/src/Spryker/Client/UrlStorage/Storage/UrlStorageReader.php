@@ -19,6 +19,9 @@ use Spryker\Shared\Kernel\Store;
 
 class UrlStorageReader implements UrlStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     public const URL = 'url';
 
     /**

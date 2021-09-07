@@ -19,10 +19,22 @@ use Spryker\Glue\Kernel\Container;
  */
 class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_AGENT = 'CLIENT_AGENT';
+    /**
+     * @var string
+     */
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';
 
+    /**
+     * @var string
+     */
     public const SERVICE_OAUTH = 'SERVICE_OAUTH';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

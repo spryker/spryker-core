@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class VaultConfig extends AbstractBundleConfig
 {
+    /**
+     * @var bool
+     */
     protected const USE_BYTE_STRING_FOR_ENCRYPTION_INITIALIZATION_VECTOR = false;
 
     /**

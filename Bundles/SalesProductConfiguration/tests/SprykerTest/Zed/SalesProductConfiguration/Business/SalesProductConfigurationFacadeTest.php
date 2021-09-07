@@ -34,6 +34,9 @@ class SalesProductConfigurationFacadeTest extends Unit
      */
     protected $tester;
 
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONFIGURATION_TEST_KEY = 'product_configuration_test_key';
 
     /**

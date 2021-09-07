@@ -17,8 +17,14 @@ use Spryker\Zed\Kernel\Container;
  */
 class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'STORE_FACADE';
 
+    /**
+     * @var string
+     */
     public const INTERNATIONALIZATION = 'internationalization';
 
     /**

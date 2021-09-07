@@ -13,6 +13,9 @@ use Spryker\Zed\Customer\CustomerConfig;
 
 class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE = 'customer.password.error.sequence';
 
     /**

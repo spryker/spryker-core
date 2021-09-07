@@ -15,6 +15,9 @@ use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterfa
 
 class CategoryUpdater implements CategoryUpdaterInterface
 {
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_CATEGORY_UPDATED = 'The category was updated successfully.';
 
     /**

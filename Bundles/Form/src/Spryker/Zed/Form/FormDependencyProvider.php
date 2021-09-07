@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class FormDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_FORM = 'PLUGINS_FORM';
 
     /**

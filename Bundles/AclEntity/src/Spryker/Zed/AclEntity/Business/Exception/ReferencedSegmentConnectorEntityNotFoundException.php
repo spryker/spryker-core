@@ -11,6 +11,9 @@ use Exception;
 
 class ReferencedSegmentConnectorEntityNotFoundException extends Exception
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TEMPLATE = 'Segment connector was not found for %s referenced entity class.';
 
     /**

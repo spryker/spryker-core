@@ -39,6 +39,9 @@ use SprykerTest\Zed\CmsBlockCategoryStorage\CmsBlockCategoryStorageConfigMock;
  */
 class CmsBlockCategoryStorageListenerTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const FK_CATEGORY = 5;
 
     /**

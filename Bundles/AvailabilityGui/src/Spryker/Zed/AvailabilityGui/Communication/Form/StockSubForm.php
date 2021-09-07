@@ -24,10 +24,22 @@ use Symfony\Component\Validator\Constraints\Type;
  */
 class StockSubForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const FIELD_STOCK_TYPE = 'stockType';
+    /**
+     * @var string
+     */
     public const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
 
+    /**
+     * @var string
+     */
     protected const DECIMAL_QUANTITY_VALIDATION_PATTERN = '/^\d{1,10}(\.\d{1,20})?$/';
 
     /**

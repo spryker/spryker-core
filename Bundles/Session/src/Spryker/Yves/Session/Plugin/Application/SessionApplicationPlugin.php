@@ -22,7 +22,13 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
  */
 class SessionApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface, BootableApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_SESSION = 'session';
+    /**
+     * @var string
+     */
     protected const FLAG_SESSION_TEST = 'session.test';
 
     /**

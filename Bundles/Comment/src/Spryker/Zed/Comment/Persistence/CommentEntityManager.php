@@ -22,6 +22,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class CommentEntityManager extends AbstractEntityManager implements CommentEntityManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_IS_DELETED = 'IsDeleted';
 
     /**

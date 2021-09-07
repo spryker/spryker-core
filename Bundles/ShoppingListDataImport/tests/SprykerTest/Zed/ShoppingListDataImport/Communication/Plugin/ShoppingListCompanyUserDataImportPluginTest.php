@@ -35,7 +35,13 @@ use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
  */
 class ShoppingListCompanyUserDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_SHOPPING_LIST_KEY = 'test-shopping-list';
+    /**
+     * @var string
+     */
     protected const TEST_COMPANY_USER_KEY = 'test-company-user-key';
 
     /**

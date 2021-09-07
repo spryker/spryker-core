@@ -20,12 +20,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CompanyUserCompanyForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_FK_COMPANY = 'fk_company';
 
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH = '@CompanyGui/CompanyUser/company.twig';
 
     /**
      * @uses \Spryker\Zed\CompanyGui\Communication\Controller\SuggestController::indexAction()
+     * @var string
      */
     protected const ROUTE_SUGGEST = '/company-gui/suggest';
 

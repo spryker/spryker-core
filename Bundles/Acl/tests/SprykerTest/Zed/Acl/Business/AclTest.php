@@ -40,6 +40,9 @@ use Spryker\Zed\User\Business\UserFacade;
  */
 class AclTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const NOT_EXISTING_ACL_GROUP_ID = 0;
 
     /**

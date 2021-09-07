@@ -15,6 +15,8 @@ interface OauthCryptographyConstants
     /**
      * Specification:
      *  - Path to public key location.
+     *
+     * @var string
      */
     public const PUBLIC_KEY_PATH = 'OAUTH_CRYPTOGRAPHY:PUBLIC_KEY_PATH';
 }

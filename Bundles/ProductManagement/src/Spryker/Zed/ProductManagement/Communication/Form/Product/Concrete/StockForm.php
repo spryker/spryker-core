@@ -25,11 +25,26 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class StockForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_HIDDEN_STOCK_PRODUCT_ID = 'id_stock_product';
+    /**
+     * @var string
+     */
     public const FIELD_HIDDEN_FK_STOCK = 'fk_stock';
 
+    /**
+     * @var string
+     */
     public const FIELD_TYPE = 'type';
+    /**
+     * @var string
+     */
     public const FIELD_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
 
     /**

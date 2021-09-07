@@ -21,14 +21,35 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class MerchantLoginForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'security-merchant-portal-gui';
 
+    /**
+     * @var string
+     */
     public const FIELD_USERNAME = 'username';
+    /**
+     * @var string
+     */
     public const FIELD_PASSWORD = 'password';
+    /**
+     * @var string
+     */
     public const BUTTON_LOGIN = 'login';
 
+    /**
+     * @var string
+     */
     protected const LABEL_USERNAME = 'Email';
+    /**
+     * @var string
+     */
     protected const LABEL_PASSWORD = 'Password';
+    /**
+     * @var string
+     */
     protected const LABEL_LOGIN = 'Login';
 
     /**

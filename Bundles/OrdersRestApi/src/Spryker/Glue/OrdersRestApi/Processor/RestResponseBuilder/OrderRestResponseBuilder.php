@@ -22,6 +22,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_SELF_LINK_ORDER_ITEMS_RESOURCE = '%s/%s/%s/%s';
 
     /**

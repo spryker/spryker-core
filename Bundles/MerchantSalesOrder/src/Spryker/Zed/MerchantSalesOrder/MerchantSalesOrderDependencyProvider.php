@@ -18,12 +18,30 @@ use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFa
  */
 class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_ORDER_POST_CREATE = 'PLUGINS_MERCHANT_ORDER_POST_CREATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_ORDER_EXPANDER = 'PLUGINS_MERCHANT_ORDER_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_ORDER_FILTER = 'PLUGINS_MERCHANT_ORDER_FILTER';
 
     /**

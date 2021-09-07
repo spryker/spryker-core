@@ -15,6 +15,9 @@ use Spryker\Client\ProductAlternativeStorage\Storage\ProductAlternativeStorageRe
 
 class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
 
     /**

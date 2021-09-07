@@ -24,18 +24,48 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ContentForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_DESCRIPTION = 'description';
+    /**
+     * @var string
+     */
     public const FIELD_CONTENT_TERM_KEY = 'content_term_key';
+    /**
+     * @var string
+     */
     public const FIELD_CONTENT_TYPE_KEY = 'content_type_key';
+    /**
+     * @var string
+     */
     public const FIELD_LOCALES = 'localizedContents';
 
+    /**
+     * @var string
+     */
     public const LABEL_NAME = 'Name';
+    /**
+     * @var string
+     */
     public const LABEL_DESCRIPTION = 'Description';
 
+    /**
+     * @var string
+     */
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
+    /**
+     * @var string
+     */
     public const OPTION_CONTENT_ITEM_FORM_PLUGIN = 'OPTION_CONTENT_ITEM_FORM_PLUGIN';
 
+    /**
+     * @var string
+     */
     public const TYPE_DATA = 'data';
 
     /**

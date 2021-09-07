@@ -14,7 +14,13 @@ use Spryker\Zed\Kernel\Container;
 
 class CompanyMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MAIL = 'FACADE_MAIL';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
 
     /**

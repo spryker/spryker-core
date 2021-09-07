@@ -17,9 +17,21 @@ use Spryker\Zed\CategoryDataImport\Business\Exception\CategoryByKeyNotFoundExcep
 
 class CategoryReader implements CategoryReaderInterface
 {
+    /**
+     * @var string
+     */
     public const ID_CATEGORY_NODE = 'id_category_node';
+    /**
+     * @var string
+     */
     public const ID_LOCALE = 'idLocale';
+    /**
+     * @var string
+     */
     public const URL = 'url';
+    /**
+     * @var string
+     */
     public const ID_CATEGORY = 'id_category';
 
     /**

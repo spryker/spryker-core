@@ -12,8 +12,17 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ConfigurableBundleDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE = 'configurable-bundle-template';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'configurable-bundle-template-slot';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE = 'configurable-bundle-template-image';
 
     /**

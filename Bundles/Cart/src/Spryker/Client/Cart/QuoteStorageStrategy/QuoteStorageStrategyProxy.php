@@ -24,6 +24,9 @@ use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageSt
 
 class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**

@@ -18,11 +18,26 @@ use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToStoreClientB
  */
 class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER = 'PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_ABSTRACT_PRODUCTS_RESOURCE_EXPANDER = 'PLUGINS_ABSTRACT_PRODUCTS_RESOURCE_EXPANDER';
 
     /**

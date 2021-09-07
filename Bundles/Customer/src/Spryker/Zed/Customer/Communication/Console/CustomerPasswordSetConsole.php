@@ -22,9 +22,21 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  */
 class CustomerPasswordSetConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'customer:password:set';
+    /**
+     * @var string
+     */
     protected const OPTION_FORCE = 'force';
+    /**
+     * @var string
+     */
     protected const OPTION_FORCE_SHORT = 'f';
+    /**
+     * @var string
+     */
     protected const OPTION_NO_TOKEN = 'no-token';
 
     /**

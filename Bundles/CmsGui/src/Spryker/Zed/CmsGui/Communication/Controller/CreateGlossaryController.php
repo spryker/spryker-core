@@ -23,6 +23,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CreateGlossaryController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
 
     /**

@@ -27,12 +27,30 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductMeasurementUnitRepository extends AbstractRepository implements ProductMeasurementUnitRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_NO_BASE_UNIT_FOR_ID_PRODUCT = 'Product measurement base unit was not found for product ID "%d".';
+    /**
+     * @var string
+     */
     protected const ERROR_NO_BASE_UNIT_BY_ID = 'Product measurement base unit was not found by its ID "%d".';
+    /**
+     * @var string
+     */
     protected const ERROR_NO_SALES_UNIT_BY_ID = 'Product measurement sales unit was not found by its ID "%d".';
 
+    /**
+     * @var string
+     */
     protected const COL_ID_PRODUCT_MEASUREMENT_UNIT = 'idProductMeasurementUnit';
+    /**
+     * @var string
+     */
     protected const COL_CODE = 'code';
+    /**
+     * @var string
+     */
     protected const COL_COUNT = 'count';
 
     /**

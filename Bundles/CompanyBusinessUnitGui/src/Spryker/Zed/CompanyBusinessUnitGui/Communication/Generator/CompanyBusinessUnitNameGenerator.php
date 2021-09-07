@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 class CompanyBusinessUnitNameGenerator implements CompanyBusinessUnitNameGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME_PATTERN = '%s (id: %s)';
 
     /**

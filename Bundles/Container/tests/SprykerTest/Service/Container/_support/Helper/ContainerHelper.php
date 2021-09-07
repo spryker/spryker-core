@@ -16,6 +16,9 @@ use Spryker\Shared\Kernel\Container\ContainerProxy;
 
 class ContainerHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_DEBUG = 'debug';
 
     /**

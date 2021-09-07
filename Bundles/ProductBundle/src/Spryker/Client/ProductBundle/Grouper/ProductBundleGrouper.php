@@ -14,8 +14,17 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductBundleGrouper implements ProductBundleGrouperInterface
 {
+    /**
+     * @var string
+     */
     public const BUNDLE_ITEMS = 'bundleItems';
+    /**
+     * @var string
+     */
     public const BUNDLE_PRODUCT = 'bundleProduct';
+    /**
+     * @var string
+     */
     protected const GROUP_KEY_FORMAT = '%s_%s';
 
     /**

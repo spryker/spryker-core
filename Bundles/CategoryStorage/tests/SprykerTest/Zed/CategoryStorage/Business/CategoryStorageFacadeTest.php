@@ -34,14 +34,30 @@ class CategoryStorageFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants::CATEGORY_STORE_PUBLISH,
+     * @var string
      */
     protected const CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';
 
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_US = 'US';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_AT = 'AT';
 
+    /**
+     * @var string
+     */
     protected const KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const KEY_CATEGORY_NODE_ID = 'category-node-id';
 
     /**

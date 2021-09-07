@@ -16,6 +16,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ResolvableClassCacheConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'cache:class-resolver:build';
 
     /**

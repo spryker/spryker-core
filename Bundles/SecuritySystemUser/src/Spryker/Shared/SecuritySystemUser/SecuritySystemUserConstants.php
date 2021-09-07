@@ -12,6 +12,12 @@ namespace Spryker\Shared\SecuritySystemUser;
  */
 interface SecuritySystemUserConstants
 {
+    /**
+     * @var string
+     */
     public const AUTH_DEFAULT_CREDENTIALS = 'AUTH_DEFAULT_CREDENTIALS';
+    /**
+     * @var string
+     */
     public const SYSTEM_USER_SESSION_REDIS_LIFE_TIME = 'AUTH:SYSTEM_USER_SESSION_REDIS_LIFE_TIME';
 }

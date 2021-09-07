@@ -11,5 +11,8 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelper as HelperConfigHelper;
 
 class ConfigHelper extends HelperConfigHelper
 {
+    /**
+     * @var string
+     */
     protected const CONFIG_CLASS_NAME_PATTERN = '\%1$s\Client\%3$s\%3$sConfig';
 }

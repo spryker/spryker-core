@@ -12,6 +12,9 @@ use Spryker\Client\ShoppingListSession\Dependency\Client\ShoppingListSessionToSe
 
 class ShoppingListSessionSessionStorage implements ShoppingListSessionStorageInterface
 {
+    /**
+     * @var string
+     */
     protected const SESSION_KEY_SHOPPING_LIST_COLLECTION = 'SESSION_KEY_SHOPPING_LIST_COLLECTION';
 
     /**

@@ -16,7 +16,13 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 
 class ImportErrorListTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const HEADER_ROW_NUMBER = 'Row n°';
+    /**
+     * @var string
+     */
     protected const HEADER_ERROR = 'Error';
 
     /**

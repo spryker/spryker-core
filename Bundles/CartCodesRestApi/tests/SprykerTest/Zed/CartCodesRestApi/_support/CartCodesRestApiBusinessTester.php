@@ -33,12 +33,33 @@ class CartCodesRestApiBusinessTester extends Actor
 {
     use _generated\CartCodesRestApiBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     public const CODE = 'testCode1';
+    /**
+     * @var string
+     */
     public const NON_EXISTENT_CODE = 'testCode2';
+    /**
+     * @var int
+     */
     public const NON_EXISTENT_ID_DISCOUNT = 7777;
+    /**
+     * @var string
+     */
     public const TEST_QUOTE_UUID = 'test-quote-uuid';
+    /**
+     * @var string
+     */
     public const TEST_CUSTOMER_REFERENCE = 'DE--666';
+    /**
+     * @var int
+     */
     public const ID_DISCOUNT = 3446;
+    /**
+     * @var int
+     */
     public const ID_GIFT_CARD = 3447;
 
     /**

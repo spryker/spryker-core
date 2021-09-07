@@ -30,14 +30,35 @@ use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorage
  */
 class DiscontinuedSuperAttributesProductViewExpanderTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const FAKE_ID_PRODUCT_CONCRETE_1 = 6666;
+    /**
+     * @var int
+     */
     protected const FAKE_ID_PRODUCT_CONCRETE_2 = 6667;
+    /**
+     * @var int
+     */
     protected const FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE = 7777;
 
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_1 = 'fake-sku-1';
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_2 = 'fake-sku-2';
+    /**
+     * @var string
+     */
     protected const FAKE_DISCONTINUED_SKU = 'fake-discontinued-sku';
 
+    /**
+     * @var array
+     */
     protected const FAKE_SUPER_ATTRIBUTES = [
         'memory' => [
             '4 GB',

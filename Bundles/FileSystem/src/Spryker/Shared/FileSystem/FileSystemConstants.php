@@ -12,5 +12,8 @@ namespace Spryker\Shared\FileSystem;
  */
 interface FileSystemConstants
 {
+    /**
+     * @var string
+     */
     public const FILESYSTEM_SERVICE = 'FILESYSTEM:FILESYSTEM_SERVICE';
 }

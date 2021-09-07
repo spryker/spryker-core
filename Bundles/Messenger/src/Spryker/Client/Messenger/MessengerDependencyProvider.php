@@ -13,6 +13,9 @@ use Spryker\Client\Messenger\Dependency\Client\MessengerToSessionClientBridge;
 
 class MessengerDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'SESSION CLIENT';
 
     /**

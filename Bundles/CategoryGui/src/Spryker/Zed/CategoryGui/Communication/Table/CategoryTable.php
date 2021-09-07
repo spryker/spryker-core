@@ -19,21 +19,66 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class CategoryTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const COL_CATEGORY_KEY = 'category_key';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_PARENT = 'parent_name';
+    /**
+     * @var string
+     */
     public const COL_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     public const COL_VISIBLE = 'is_in_menu';
+    /**
+     * @var string
+     */
     public const COL_SEARCHABLE = 'is_searchable';
+    /**
+     * @var string
+     */
     public const COL_TEMPLATE = 'template';
+    /**
+     * @var string
+     */
     public const COL_STORE_RELATION = 'store_relation';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
+    /**
+     * @var string
+     */
     public const IDENTIFIER = 'category_data_table';
+    /**
+     * @var string
+     */
     public const COL_ID_CATEGORY_NODE = 'id_category_node';
 
+    /**
+     * @var string
+     */
     protected const COL_IS_ROOT = 'is_root';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_NODE = 'id-node';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
 
     /**

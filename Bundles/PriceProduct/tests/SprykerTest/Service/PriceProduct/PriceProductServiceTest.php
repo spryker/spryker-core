@@ -30,21 +30,35 @@ use Spryker\Service\PriceProduct\PriceProductServiceInterface;
  */
 class PriceProductServiceTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
+    /**
+     * @var string
+     */
     protected const CURRENCY_ISO_CODE = 'EUR';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     * @var string
      */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     * @var string
      */
     protected const PRICE_MODE_NET = 'NET_MODE';
 
+    /**
+     * @var string
+     */
     protected const TEST_DIMENSION = 'TEST_DIMENSION';
+    /**
+     * @var int
+     */
     protected const TEST_ID_CURRENCY = 1;
 
     /**

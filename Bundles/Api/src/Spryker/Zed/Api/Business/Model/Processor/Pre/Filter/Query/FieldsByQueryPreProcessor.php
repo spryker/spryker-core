@@ -12,6 +12,9 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class FieldsByQueryPreProcessor implements PreProcessorInterface
 {
+    /**
+     * @var string
+     */
     public const FIELDS = 'fields';
 
     /**

@@ -16,6 +16,9 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageFacad
 
 class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_IMAGE_SET_NAME = 'default';
 
     /**

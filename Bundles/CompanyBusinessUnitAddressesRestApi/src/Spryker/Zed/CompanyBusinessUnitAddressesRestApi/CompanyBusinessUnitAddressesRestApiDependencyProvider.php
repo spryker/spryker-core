@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyBusinessUnitAddressesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_UNIT_ADDRESS = 'FACADE_COMPANY_UNIT_ADDRESS';
 
     /**

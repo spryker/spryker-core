@@ -17,13 +17,28 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class AddressTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+    /**
+     * @var string
+     */
     public const DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
 
+    /**
+     * @var string
+     */
     public const COL_COMPANY = 'Company';
 
+    /**
+     * @var string
+     */
     protected const URL_EDIT_CUSTOMER_ADDRESS = '/customer/address/edit';
 
     /**

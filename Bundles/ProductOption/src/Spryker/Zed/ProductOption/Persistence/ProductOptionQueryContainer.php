@@ -30,8 +30,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const COL_MAX_TAX_RATE = 'MaxTaxRate';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_OPTION_VALUE = 'idProductOptionValue';
+    /**
+     * @var string
+     */
     public const COL_COUNTRY_ISO2_CODE = 'countryIso2Code';
 
     /**

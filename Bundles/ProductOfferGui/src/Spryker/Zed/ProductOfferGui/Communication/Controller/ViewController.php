@@ -19,7 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRODUCT_OFFER_NOT_FOUND = 'Product offer not found';
 
     /**

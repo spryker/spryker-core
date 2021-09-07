@@ -25,10 +25,22 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
  */
 class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const RESULT_FIELD_PRODUCT_ORDER = 'product_order';
 
+    /**
+     * @var string
+     */
     protected const KEY_FK_LOCALE = 'fk_locale';
+    /**
+     * @var string
+     */
     protected const KEY_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+    /**
+     * @var string
+     */
     protected const KEY_CATEGORY_NAME = 'category_name';
 
     /**

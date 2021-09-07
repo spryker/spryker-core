@@ -48,7 +48,13 @@ class ProductLabelFacadeTest extends Unit
      */
     protected $tester;
 
+    /**
+     * @var string
+     */
     public const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     public const STORE_NAME_AT = 'AT';
 
     /**

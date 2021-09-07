@@ -22,6 +22,9 @@ class QuoteApprovalRemover implements QuoteApprovalRemoverInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_APPROVAL_REMOVED = 'quote_approval.removed';
 
     /**

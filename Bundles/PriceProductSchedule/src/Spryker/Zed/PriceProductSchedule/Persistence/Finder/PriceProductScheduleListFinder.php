@@ -13,14 +13,35 @@ use Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductSched
 
 class PriceProductScheduleListFinder implements PriceProductScheduleListFinderInterface
 {
+    /**
+     * @var string
+     */
     public const ALIAS_NUMBER_OF_PRICES = 'numberOfPrices';
+    /**
+     * @var string
+     */
     public const ALIAS_NUMBER_OF_PRODUCTS = 'numberOfProducts';
 
+    /**
+     * @var string
+     */
     protected const EXPRESSION_NUMBER_OF_PRICES = 'COUNT(%s)';
+    /**
+     * @var string
+     */
     protected const EXPRESSION_NUMBER_OF_PRODUCTS = 'COUNT(DISTINCT %s) + COUNT(DISTINCT %s)';
 
+    /**
+     * @var string
+     */
     protected const COL_ID_PRICE_PRODUCT_SCHEDULE = 'id_price_product_schedule';
+    /**
+     * @var string
+     */
     protected const COL_FK_PRODUCT = 'fk_product';
+    /**
+     * @var string
+     */
     protected const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
     /**

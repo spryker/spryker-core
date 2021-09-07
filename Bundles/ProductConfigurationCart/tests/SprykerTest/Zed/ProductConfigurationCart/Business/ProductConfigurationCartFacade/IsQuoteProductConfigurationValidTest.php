@@ -27,6 +27,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
  */
 class IsQuoteProductConfigurationValidTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_GROUP_KEY = 'test_group_key';
 
     /**

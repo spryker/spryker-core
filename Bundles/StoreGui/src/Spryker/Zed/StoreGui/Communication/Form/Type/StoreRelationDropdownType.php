@@ -21,24 +21,63 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class StoreRelationDropdownType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_INACTIVE_CHOICES = 'inactive_choices';
+    /**
+     * @var string
+     */
     public const OPTION_DATA_CLASS = 'data_class';
+    /**
+     * @var string
+     */
     public const OPTION_STORE_CHOICES = 'store_choices';
 
+    /**
+     * @var string
+     */
     public const OPTION_ATTRIBUTE_ACTION_URL = 'action_url';
+    /**
+     * @var string
+     */
     public const OPTION_ATTRIBUTE_ACTION_EVENT = 'action_event';
+    /**
+     * @var string
+     */
     public const OPTION_ATTRIBUTE_ACTION_FIELD = 'action_field';
 
+    /**
+     * @var string
+     */
     public const OPTION_EXTENDED = 'extended';
 
+    /**
+     * @var string
+     */
     protected const FIELD_ID_ENTITY = 'id_entity';
+    /**
+     * @var string
+     */
     protected const FIELD_ID_STORES = 'id_stores';
+    /**
+     * @var string
+     */
     protected const FIELD_ID_STORES_DISABLED = 'id_stores_disabled';
 
+    /**
+     * @var string
+     */
     protected const LABEL_STORES = 'Stores';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MULTI_STORE_PER_ZED_DISABLED = 'Stores (Multi-store per Zed feature is disabled)';
 
+    /**
+     * @var string
+     */
     protected const BLOCK_PREFIX = 'relation_dropdown';
 
     /**

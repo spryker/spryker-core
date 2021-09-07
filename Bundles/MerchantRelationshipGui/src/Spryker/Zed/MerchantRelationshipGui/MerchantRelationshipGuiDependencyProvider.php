@@ -17,13 +17,34 @@ use Spryker\Zed\MerchantRelationshipGui\Dependency\Facade\MerchantRelationshipGu
 
 class MerchantRelationshipGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_RELATIONSHIP = 'FACADE_MERCHANT_RELATIONSHIP';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+    /**
+     * @var string
+     */
     public const PROPEL_MERCHANT_RELATIONSHIP_QUERY = 'PROPEL_MERCHANT_RELATIONSHIP_QUERY';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_RELATIONSHIP_CREATE_FORM_EXPANDER = 'PLUGINS_MERCHANT_RELATIONSHIP_CREATE_FORM_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_RELATIONSHIP_EDIT_FORM_EXPANDER = 'PLUGINS_MERCHANT_RELATIONSHIP_EDIT_FORM_EXPANDER';
 
     /**

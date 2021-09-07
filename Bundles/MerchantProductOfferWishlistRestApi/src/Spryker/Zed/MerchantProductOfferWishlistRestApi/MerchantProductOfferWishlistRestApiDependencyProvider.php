@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantProductOfferWishlistRestApi\Dependency\Facade\MerchantPr
  */
 class MerchantProductOfferWishlistRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_WISHLIST = 'FACADE_WISHLIST';
 
     /**

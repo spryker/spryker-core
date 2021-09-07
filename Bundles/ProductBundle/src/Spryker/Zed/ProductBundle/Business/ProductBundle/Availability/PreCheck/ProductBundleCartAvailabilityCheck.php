@@ -23,9 +23,21 @@ use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 class ProductBundleCartAvailabilityCheck extends BasePreCheck implements ProductBundleCartAvailabilityCheckInterface
 {
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
+    /**
+     * @var string
+     */
     public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+    /**
+     * @var string
+     */
     public const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**

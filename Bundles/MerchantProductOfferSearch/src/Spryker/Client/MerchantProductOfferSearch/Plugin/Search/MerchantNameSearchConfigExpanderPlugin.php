@@ -16,7 +16,13 @@ use Spryker\Shared\Search\SearchConfig;
 
 class MerchantNameSearchConfigExpanderPlugin extends AbstractPlugin implements SearchConfigExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'merchant_name';
+    /**
+     * @var string
+     */
     protected const PARAMETER_NAME = 'merchant_name';
 
     /**

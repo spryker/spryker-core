@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class ServiceLocatorMatcher implements LocatorMatcherInterface
 {
+    /**
+     * @var string
+     */
     public const METHOD_PREFIX = 'service';
 
     /**

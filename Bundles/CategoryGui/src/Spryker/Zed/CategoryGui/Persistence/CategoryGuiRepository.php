@@ -20,10 +20,22 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const ID_CATEGORY_TEMPLATE = 'idCategoryTemplate';
+    /**
+     * @var string
+     */
     protected const CATEGORY_TEMPLATE_NAME = 'name';
 
+    /**
+     * @var string
+     */
     protected const CHILDREN_ID_CATEGORY_NODE = 'id';
+    /**
+     * @var string
+     */
     protected const CHILDREN_CATEGORY_ATTRIBUTE_NAME = 'text';
 
     /**

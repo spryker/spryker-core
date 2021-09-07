@@ -15,6 +15,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class TargetEntityReferenceToFkEntityStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const ENTITY_NOT_FOUND_MESSAGE_TEMPLATE = 'Failed to find %s entity by given %s.';
 
     /**

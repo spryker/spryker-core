@@ -20,8 +20,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PublishAndSynchronizeWriteHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * @var string
+     */
     public const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_SERVICE_NAME = 'publish-and-synchronize';
 
+    /**
+     * @var string
+     */
     public const ERROR_MESSAGE = 'Health check entity has not been updated.';
 
     /**

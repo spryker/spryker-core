@@ -16,6 +16,9 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProdu
 
 class AbstractSkuToIdProductAbstractStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE = 'Could not find abstract product by sku "%s"';
 
     /**

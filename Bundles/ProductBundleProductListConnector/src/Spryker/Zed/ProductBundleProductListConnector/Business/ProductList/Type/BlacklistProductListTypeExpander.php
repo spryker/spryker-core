@@ -19,11 +19,21 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
 {
     /**
      * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_BLACKLIST
+     * @var string
      */
     protected const PRODUCT_LIST_TYPE_BLACKLIST = 'blacklist';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRODUCT_BUNDLE_SKU_WAS_BLACKLISTED = '%product_bundle_sku% was blacklisted because %product_for_bundle_skus% had been blacklisted.';
+    /**
+     * @var string
+     */
     protected const PRODUCT_BUNDLE_SKU_PARAMETER = '%product_bundle_sku%';
+    /**
+     * @var string
+     */
     protected const PRODUCT_FOR_BUNDLE_SKUS_PARAMETER = '%product_for_bundle_skus%';
 
     /**

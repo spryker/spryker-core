@@ -16,8 +16,17 @@ use Spryker\Zed\Queue\Dependency\Service\QueueToUtilEncodingServiceBridge;
  */
 class QueueDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUEUE = 'queue client';
+    /**
+     * @var string
+     */
     public const QUEUE_MESSAGE_PROCESSOR_PLUGINS = 'queue message processor plugin';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'UTIL_ENCODING_SERVICE';
 
     /**

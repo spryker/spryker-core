@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateGlueIdeAutoCompletionConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const OLD_COMMAND_NAME = 'dev:ide:generate-glue-auto-completion';
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'dev:ide-auto-completion:glue:generate';
 
     /**

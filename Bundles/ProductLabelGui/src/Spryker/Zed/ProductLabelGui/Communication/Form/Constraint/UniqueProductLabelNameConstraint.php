@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint;
 
 class UniqueProductLabelNameConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_QUERY_CONTAINER = 'queryContainer';
 
     /**

@@ -38,8 +38,17 @@ use Spryker\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
  */
 class StockFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_AT = 'AT';
+    /**
+     * @var string
+     */
     protected const STOCK_NAME = 'Test Warehouse';
 
     /**
@@ -97,8 +106,17 @@ class StockFacadeTest extends Unit
      */
     protected $productConcreteEntity;
 
+    /**
+     * @var string
+     */
     public const ABSTRACT_SKU = 'abstract-sku';
+    /**
+     * @var string
+     */
     public const CONCRETE_SKU = 'concrete-sku';
+    /**
+     * @var int
+     */
     public const STOCK_QUANTITY_1 = 92;
     public const STOCK_QUANTITY_2 = 8.2;
 

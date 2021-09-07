@@ -21,25 +21,73 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueDumpConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'queue:dump';
+    /**
+     * @var string
+     */
     protected const DESCRIPTION = 'Dump queue content';
 
+    /**
+     * @var string
+     */
     protected const OPTION_LIMIT = 'limit';
+    /**
+     * @var string
+     */
     protected const OPTION_LIMIT_SHORT = 'l';
+    /**
+     * @var int
+     */
     protected const OPTION_LIMIT_DEFAULT = 10;
+    /**
+     * @var string
+     */
     protected const OPTION_LIMIT_DESCRIPTION = 'Defines what amount of events must be read from the queue. If limit is not defined the whole queue will be dumped';
 
+    /**
+     * @var string
+     */
     protected const OPTION_FORMAT = 'format';
+    /**
+     * @var string
+     */
     protected const OPTION_FORMAT_SHORT = 'f';
+    /**
+     * @var string
+     */
     protected const OPTION_FORMAT_DEFAULT = 'json';
+    /**
+     * @var string
+     */
     protected const OPTION_FORMAT_DESCRIPTION = 'Defines dump queue message export format (e.g json, csv)';
 
+    /**
+     * @var string
+     */
     protected const OPTION_ACK = 'ack';
+    /**
+     * @var string
+     */
     protected const OPTION_ACK_SHORT = 'k';
+    /**
+     * @var int
+     */
     protected const OPTION_ACK_DEFAULT = 0;
+    /**
+     * @var string
+     */
     protected const OPTION_ACK_DESCRIPTION = 'Defines if queue messages must be acknowledged';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_QUEUE = 'queue';
+    /**
+     * @var string
+     */
     public const ARGUMENT_QUEUE_DESCRIPTION = 'Name of the queue for receiving the messages';
 
     /**

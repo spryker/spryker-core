@@ -14,7 +14,13 @@ use Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface;
 
 class MetadataExpander implements MetadataExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const SKU_ABSTRACT = 'SKU_ABSTRACT';
+    /**
+     * @var string
+     */
     protected const SKU_CONCRETE = 'SKU_CONCRETE';
 
     /**

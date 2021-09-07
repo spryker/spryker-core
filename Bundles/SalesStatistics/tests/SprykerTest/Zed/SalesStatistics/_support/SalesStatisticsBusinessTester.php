@@ -32,6 +32,9 @@ class SalesStatisticsBusinessTester extends Actor
 {
     use _generated\SalesStatisticsBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     public const ITEM_NAME = 'test1';
 
     /**

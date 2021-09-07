@@ -15,10 +15,25 @@ use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 
 class SecurityBlockerConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
+    /**
+     * @var string
+     */
     protected const STORAGE_REDIS_CONNECTION_KEY = 'SECURITY_BLOCKER_REDIS';
+    /**
+     * @var int
+     */
     protected const DEFAULT_BLOCKING_TTL = 600;
+    /**
+     * @var int
+     */
     protected const DEFAULT_BLOCK_FOR = 300;
+    /**
+     * @var int
+     */
     protected const DEFAULT_BLOCKING_NUMBER_OF_ATTEMPTS = 10;
 
     /**

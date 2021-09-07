@@ -22,13 +22,31 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OmsTriggerForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_OMS_ACTION = 'OPTION_OMS_ACTION';
+    /**
+     * @var string
+     */
     public const OPTION_QUERY_PARAMS = 'OPTION_QUERY_PARAMS';
+    /**
+     * @var string
+     */
     public const OPTION_EVENT = 'OPTION_EVENT';
+    /**
+     * @var string
+     */
     public const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
 
+    /**
+     * @var string
+     */
     public const BUTTON_SUBMIT = 'submit';
 
+    /**
+     * @var string
+     */
     protected const ROUTE_OMS_TRIGGER = '/oms/trigger/';
 
     /**

@@ -14,17 +14,50 @@ use Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterfa
 
 class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const RELATION_CMS_BLOCK_STORES = 'SpyCmsBlockStores';
+    /**
+     * @var string
+     */
     protected const RELATION_STORE = 'SpyStore';
+    /**
+     * @var string
+     */
     protected const COLUMN_ID_CMS_BLOCK = 'id_cms_block';
+    /**
+     * @var string
+     */
     protected const COLUMN_STORE_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const COLUMN_CMS_BLOCK_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const COLUMN_CMS_BLOCK_KEY = 'key';
+    /**
+     * @var string
+     */
     protected const COLUMN_CMS_BLOCK_IS_ACTIVE = 'is_active';
 
+    /**
+     * @var string
+     */
     protected const CMS_BLOCK_ENTITY = 'CMS_BLOCK_ENTITY';
+    /**
+     * @var string
+     */
     protected const CMS_BLOCK_STORAGE_ENTITY = 'CMS_BLOCK_STORAGE_ENTITY';
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME = 'LOCALE_NAME';
+    /**
+     * @var string
+     */
     protected const STORE_NAME = 'STORE_NAME';
 
     /**

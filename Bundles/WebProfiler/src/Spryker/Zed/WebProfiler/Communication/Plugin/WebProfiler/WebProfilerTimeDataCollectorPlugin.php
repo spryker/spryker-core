@@ -15,7 +15,13 @@ use Symfony\Component\HttpKernel\DataCollector\TimeDataCollector;
 
 class WebProfilerTimeDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'time';
+    /**
+     * @var string
+     */
     protected const TEMPLATE = '@WebProfiler/Collector/time.html.twig';
 
     /**

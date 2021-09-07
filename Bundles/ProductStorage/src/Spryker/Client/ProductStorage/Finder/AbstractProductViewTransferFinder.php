@@ -14,6 +14,9 @@ use Spryker\Client\ProductStorage\ProductStorageConfig;
 
 abstract class AbstractProductViewTransferFinder implements ProductViewTransferFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRODUCT_VIEW_TRANSFER_NOT_FOUND_IN_CACHE = 'There is no `ProductViewTransfer` in the cache with provided product id and local name.';
 
     /**

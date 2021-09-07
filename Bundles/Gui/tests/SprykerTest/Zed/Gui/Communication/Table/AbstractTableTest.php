@@ -31,7 +31,13 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class AbstractTableTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const COL_ONE = 'one';
+    /**
+     * @var string
+     */
     public const COL_TWO = 'two';
 
     /**

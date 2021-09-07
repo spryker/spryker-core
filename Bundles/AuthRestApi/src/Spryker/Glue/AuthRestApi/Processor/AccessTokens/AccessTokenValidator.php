@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
 
     /**

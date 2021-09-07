@@ -11,7 +11,13 @@ use Symfony\Component\Finder\Finder;
 
 class InstallMultiPathFinder implements PathFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const PACKAGE_JSON_FILE_PATTERN = 'package.json';
+    /**
+     * @var string
+     */
     public const SEARCH_FOLDER_DEPTH_LEVEL = '< 2';
 
     /**

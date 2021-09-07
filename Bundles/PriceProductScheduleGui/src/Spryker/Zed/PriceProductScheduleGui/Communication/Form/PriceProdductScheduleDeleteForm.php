@@ -20,6 +20,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PriceProdductScheduleDeleteForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SUBMIT = 'submit';
 
     /**

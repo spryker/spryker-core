@@ -23,22 +23,41 @@ use Symfony\Component\Form\FormInterface;
  */
 class ProductCategorySlotBlockConditionForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_ARRAY = 'option-product-array';
+    /**
+     * @var string
+     */
     public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+    /**
+     * @var string
+     */
     public const OPTION_ALL_ARRAY = 'option-all-array';
 
     public const FIELD_ALL = CmsSlotBlockConditionTransfer::ALL;
     public const FIELD_CATEGORY_IDS = CmsSlotBlockConditionTransfer::CATEGORY_IDS;
     public const FIELD_PRODUCT_IDS = CmsSlotBlockConditionTransfer::PRODUCT_IDS;
 
+    /**
+     * @var string
+     */
     protected const OPTION_URL_AUTOCOMPLETE = '/cms-slot-block-product-category-gui/product-autocomplete';
 
     /**
      * @uses \Spryker\Shared\CmsSlotBlockProductCategoryConnector\CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY
+     * @var string
      */
     protected const FIELD_PRODUCT_CATEGORY = 'productCategory';
 
+    /**
+     * @var string
+     */
     protected const LABEL_PRODUCT_PAGES = 'Products Pages';
+    /**
+     * @var string
+     */
     protected const LABEL_PRODUCT_PAGES_PER_CATEGORY = 'Products pages per Category';
 
     /**

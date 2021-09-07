@@ -17,15 +17,20 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
  */
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CMS_CONTENT_WIDGET_PLUGINS = 'CMS CONTENT WIDGET PLUGINS';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const TWIG_ENVIRONMENT = 'TWIG ENVIRONMENT';
 
     /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 

@@ -13,8 +13,17 @@ use Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client\Produc
 
 class AbstractProductsCategoriesReader implements AbstractProductsCategoriesReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
 
     /**

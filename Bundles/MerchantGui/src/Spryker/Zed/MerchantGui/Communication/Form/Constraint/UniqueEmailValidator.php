@@ -14,6 +14,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueEmailValidator extends ConstraintValidator
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PROVIDED_EMAIL_IS_ALREADY_USED = 'Email is already used.';
 
     /**

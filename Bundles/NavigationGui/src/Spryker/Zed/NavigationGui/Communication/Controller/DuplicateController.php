@@ -17,10 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DuplicateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_NAVIGATION = 'id-navigation';
 
     /**
      * @uses \Spryker\Zed\NavigationGui\NavigationGuiConfig::REDIRECT_URL_DEFAULT
+     * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/navigation-gui';
 

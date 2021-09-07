@@ -12,9 +12,18 @@ namespace Spryker\Shared\Application\Log\Processor;
  */
 class ResponseProcessor
 {
+    /**
+     * @var string
+     */
     public const EXTRA = 'response';
+    /**
+     * @var string
+     */
     public const CONTEXT_KEY = 'response';
 
+    /**
+     * @var string
+     */
     public const RECORD_CONTEXT = 'context';
 
     /**

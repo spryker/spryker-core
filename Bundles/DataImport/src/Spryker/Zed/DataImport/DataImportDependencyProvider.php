@@ -24,21 +24,57 @@ use Spryker\Zed\Kernel\Container;
  */
 class DataImportDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'touch facade';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT = 'event facade';
+    /**
+     * @var string
+     */
     public const FACADE_GRACEFUL_RUNNER = 'FACADE_GRACEFUL_RUNNER';
 
+    /**
+     * @var string
+     */
     public const DATA_IMPORTER_PLUGINS = 'IMPORTER_PLUGINS';
+    /**
+     * @var string
+     */
     public const DATA_IMPORT_BEFORE_HOOK_PLUGINS = 'DATA_IMPORT_BEFORE_HOOK_PLUGINS';
+    /**
+     * @var string
+     */
     public const DATA_IMPORT_AFTER_HOOK_PLUGINS = 'DATA_IMPORT_AFTER_HOOK_PLUGINS';
+    /**
+     * @var string
+     */
     public const DATA_IMPORT_DEFAULT_WRITER_PLUGINS = 'DATA_IMPORT_DEFAULT_WRITER_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const PROPEL_CONNECTION = 'propel connection';
+    /**
+     * @var string
+     */
     public const STORE = 'store';
 
+    /**
+     * @var string
+     */
     public const CLIENT_QUEUE = 'CLIENT_QUEUE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
 
     /**

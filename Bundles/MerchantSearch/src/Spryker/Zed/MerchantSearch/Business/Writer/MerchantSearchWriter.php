@@ -19,6 +19,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
 {
     /**
      * @uses \Orm\Zed\MerchantCategory\Persistence\Map\SpyMerchantCategoryTableMap::COL_FK_MERCHANT
+     * @var string
      */
     protected const FK_CATEGORY_MERCHANT = 'spy_merchant_category.fk_merchant';
 

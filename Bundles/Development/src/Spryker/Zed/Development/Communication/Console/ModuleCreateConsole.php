@@ -21,9 +21,21 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ModuleCreateConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'dev:module:create';
+    /**
+     * @var string
+     */
     public const ARGUMENT_MODULE = 'module';
+    /**
+     * @var string
+     */
     public const ARGUMENT_FILE = 'file';
+    /**
+     * @var string
+     */
     public const OPTION_FORCE = 'force';
 
     /**

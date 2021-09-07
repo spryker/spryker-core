@@ -17,7 +17,13 @@ use Spryker\Zed\MerchantProfile\Dependency\Facade\MerchantProfileToLocaleFacadeB
  */
 class MerchantProfileDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**

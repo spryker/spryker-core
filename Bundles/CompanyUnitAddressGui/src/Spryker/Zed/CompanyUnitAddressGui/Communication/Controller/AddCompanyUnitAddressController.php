@@ -18,12 +18,22 @@ class AddCompanyUnitAddressController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\ListCompanyUnitAddressController::indexAction()
+     * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/company-unit-address-gui/list-company-unit-address';
 
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_COMPANY_UNIT_ADDRESS_CREATE_SUCCESS = 'Company unit address has been successfully created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_COMPANY_UNIT_ADDRESS_CREATE_ERROR = 'Company unit address create failed.';
 
     /**

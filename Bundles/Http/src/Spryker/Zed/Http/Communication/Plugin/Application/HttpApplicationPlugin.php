@@ -26,20 +26,40 @@ use Symfony\Component\Routing\RequestContext;
  */
 class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_COOKIES = 'cookies';
+    /**
+     * @var string
+     */
     protected const SERVICE_KERNEL = 'kernel';
+    /**
+     * @var string
+     */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
+    /**
+     * @var string
+     */
     protected const SERVICE_REQUEST_CONTEXT = 'request_context';
+    /**
+     * @var string
+     */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
+    /**
+     * @var string
+     */
     protected const SERVICE_RESOLVER = 'resolver';
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_CONTROLLER_RESOLVER
+     * @var string
      */
     protected const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
 
     /**
      * @uses \Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     * @var string
      */
     protected const SERVICE_EVENT_DISPATCHER = 'dispatcher';
 

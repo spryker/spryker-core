@@ -25,6 +25,9 @@ use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\ProductAbstra
  */
 class ProductAbstractRelationCollectorQueryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const COL_ITEM_ID = 'ItemId';
 
     /**

@@ -18,10 +18,14 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::slotProductsTableAction()
+     * @var string
      */
     protected const ROUTE_TABLE_RENDERING = '/slot-products-table?%s=%s';
 

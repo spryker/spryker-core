@@ -17,11 +17,13 @@ class ProductViewExpander implements ProductViewExpanderInterface
 {
     /**
      * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\RatingAggregationResultFormatterPlugin::NAME
+     * @var string
      */
     protected const KEY_RATING_AGGREGATION = 'ratingAggregation';
 
     /**
      * @see \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductRatingAggregationBulkResultFormatterPlugin::NAME
+     * @var string
      */
     protected const KEY_PRODUCT_BULK_AGGREGATION = 'productAggregation';
 

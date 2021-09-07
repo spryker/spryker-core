@@ -16,6 +16,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CheckLocalizedContentNavigationTermStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE = 'Failed to import locale id [%s]: %s';
 
     /**

@@ -27,6 +27,9 @@ use SprykerTest\Client\Storage\Helper\CacheDataProvider;
  */
 abstract class AbstractStorageCacheStrategyTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_CACHE_KEY = 'StorageClient_testKey';
 
     /**

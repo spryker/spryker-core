@@ -21,13 +21,31 @@ use Symfony\Component\Validator\Constraint;
  */
 class AddressCollectionType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'addresses';
 
+    /**
+     * @var string
+     */
     public const FIELD_SHIPPING_ADDRESS = 'shippingAddress';
+    /**
+     * @var string
+     */
     public const FIELD_BILLING_ADDRESS = 'billingAddress';
+    /**
+     * @var string
+     */
     public const FIELD_BILLING_SAME_AS_SHIPPING = 'billingSameAsShipping';
 
+    /**
+     * @var string
+     */
     public const OPTION_ADDRESS_CHOICES = 'address_choices';
+    /**
+     * @var string
+     */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;

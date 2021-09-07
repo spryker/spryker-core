@@ -30,10 +30,25 @@ use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
  */
 class RepositoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TYPE_FILESYSTEM = 'fs';
+    /**
+     * @var string
+     */
     protected const TYPE_OTHER = 'other';
+    /**
+     * @var string
+     */
     protected const SETTINGS_LOCATION = 'location';
+    /**
+     * @var string
+     */
     protected const REPOSITORY_NAME = 'repository';
+    /**
+     * @var string
+     */
     protected const LOCATION = 'dummy location';
 
     /**

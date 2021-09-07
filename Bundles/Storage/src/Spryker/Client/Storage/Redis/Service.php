@@ -15,6 +15,9 @@ use Predis\ClientInterface;
  */
 class Service implements ServiceInterface
 {
+    /**
+     * @var string
+     */
     public const KV_PREFIX = 'kv:';
 
     /**

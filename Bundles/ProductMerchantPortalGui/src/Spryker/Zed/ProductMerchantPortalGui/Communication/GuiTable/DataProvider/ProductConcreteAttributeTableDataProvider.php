@@ -22,16 +22,24 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProvider
 {
+    /**
+     * @var string
+     */
     protected const ATTRIBUTES_DEFAULT_SORT_DIRECTION_ASC = 'ASC';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductConcreteAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME
+     * @var string
      */
     protected const ATTRIBUTES_DEFAULT_SORT_FIELD = 'attribute_name';
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductConcreteAttributeGuiTableConfigurationProvider::COL_KEY_ID_PRODUCT_CONCRETE
+     * @var string
      */
     protected const COL_KEY_ID_PRODUCT_CONCRETE = 'idProductConcrete';
+    /**
+     * @var string
+     */
     protected const COL_KEY_ID_IS_SUPER = 'is_super';
 
     /**

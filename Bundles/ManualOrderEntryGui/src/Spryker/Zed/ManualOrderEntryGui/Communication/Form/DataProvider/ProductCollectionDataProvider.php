@@ -15,6 +15,9 @@ use Spryker\Zed\ManualOrderEntryGui\Communication\Form\Product\ProductCollection
 
 class ProductCollectionDataProvider implements FormDataProviderInterface
 {
+    /**
+     * @var int
+     */
     protected const NUMBER_PRODUCT_ROWS = 3;
 
     /**

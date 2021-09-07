@@ -16,6 +16,9 @@ use Spryker\Zed\Api\ApiConfig;
  */
 class PathPreProcessor implements PreProcessorInterface
 {
+    /**
+     * @var string
+     */
     public const SERVER_REQUEST_URI = 'REQUEST_URI';
 
     /**

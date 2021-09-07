@@ -25,6 +25,9 @@ class Calculator implements CalculatorInterface
 {
     use LoggerTrait;
 
+    /**
+     * @var string
+     */
     public const DISCOUNT_SUCCESSFULLY_APPLIED_KEY = 'discount.successfully.applied';
 
     /**

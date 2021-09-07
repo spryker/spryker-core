@@ -11,6 +11,9 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Exception\CacheValueNotFoun
 
 class ProductBundleCache implements ProductBundleCacheInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CACHE_NOT_FOUND = 'Cache value for ProductForBundleTransfer by provided sku wasn\'t found';
 
     /**

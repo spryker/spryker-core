@@ -17,6 +17,9 @@ use Spryker\Shared\Kernel\AbstractSharedFactory;
 
 class FactoryHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const SHARED_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Shared\%2$s\%2$sSharedFactory';
 
     /**

@@ -26,18 +26,54 @@ use Spryker\Zed\Stock\Persistence\StockQueryContainerInterface;
 
 class ProductConcreteFormAddDataProvider
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_INPUT_TYPE = 'text';
+    /**
+     * @var string
+     */
     public const TEXT_AREA_INPUT_TYPE = 'textarea';
 
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_ID = 'id';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_VALUE = 'value';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_PRODUCT_SPECIFIC = 'product_specific';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_LABEL = 'label';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_SUPER = 'super';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_INPUT_TYPE = 'input_type';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_VALUE_DISABLED = 'value_disabled';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_NAME_DISABLED = 'name_disabled';
+    /**
+     * @var string
+     */
     protected const FORM_FIELD_ALLOW_INPUT = 'allow_input';
 
     /**

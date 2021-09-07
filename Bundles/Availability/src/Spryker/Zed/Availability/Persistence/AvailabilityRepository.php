@@ -26,6 +26,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class AvailabilityRepository extends AbstractRepository implements AvailabilityRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_ID_PRODUCT = 'id_product';
 
     /**

@@ -17,7 +17,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductImageStorageQueryContainer extends AbstractQueryContainer implements ProductImageStorageQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+    /**
+     * @var string
+     */
     public const FK_PRODUCT = 'fkProduct';
 
     /**

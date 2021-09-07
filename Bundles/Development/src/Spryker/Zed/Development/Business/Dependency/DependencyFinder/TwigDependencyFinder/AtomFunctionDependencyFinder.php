@@ -13,6 +13,9 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyF
 
 class AtomFunctionDependencyFinder implements TwigDependencyFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const TEMPLATE_FUNCTION_PATTERN = '/atom\(\'(.*?),\s\'(.*?)\'/';
 
     /**

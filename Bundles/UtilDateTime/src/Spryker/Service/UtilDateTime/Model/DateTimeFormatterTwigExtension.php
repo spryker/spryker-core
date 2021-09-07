@@ -16,6 +16,9 @@ use Twig\TwigFilter;
  */
 class DateTimeFormatterTwigExtension extends TwigExtension
 {
+    /**
+     * @var string
+     */
     public const EXTENSION_NAME = 'DateTimeFormatterTwigExtension';
 
     /**

@@ -12,7 +12,13 @@ use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInt
 
 abstract class AbstractBarcodeGeneratorPluginMock implements BarcodeGeneratorPluginInterface
 {
+    /**
+     * @var string
+     */
     public const GENERATED_CODE = 'abstract_mock_generated_code';
+    /**
+     * @var string
+     */
     public const GENERATED_ENCODING = 'abstract_mock_generated_encoding';
 
     /**

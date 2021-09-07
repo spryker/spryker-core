@@ -14,7 +14,13 @@ use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBa
 
 class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_BARCODE = 'FACADE_PRODUCT_BARCODE';
 
     /**

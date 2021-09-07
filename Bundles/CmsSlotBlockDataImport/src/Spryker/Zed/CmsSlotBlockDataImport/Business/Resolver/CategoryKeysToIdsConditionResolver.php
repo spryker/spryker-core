@@ -12,6 +12,9 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 
 class CategoryKeysToIdsConditionResolver implements ConditionResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_CONDITION_CATEGORY_IDS = 'categoryIds';
 
     /**

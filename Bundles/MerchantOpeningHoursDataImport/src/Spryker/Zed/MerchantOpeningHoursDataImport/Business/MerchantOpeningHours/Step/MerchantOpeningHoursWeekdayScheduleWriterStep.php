@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Dat
 
 class MerchantOpeningHoursWeekdayScheduleWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantOpeningHoursWeekdayScheduleDataSetInterface::FK_MERCHANT,
         MerchantOpeningHoursWeekdayScheduleDataSetInterface::FK_WEEKDAY_SCHEDULE,
@@ -23,6 +26,7 @@ class MerchantOpeningHoursWeekdayScheduleWriterStep extends PublishAwareStep imp
 
     /**
      * @uses \Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig::MERCHANT_OPENING_HOURS_PUBLISH
+     * @var string
      */
     protected const MERCHANT_OPENING_HOURS_PUBLISH = 'MerchantOpeningHours.merchant_opening_hours_schedule.publish';
 

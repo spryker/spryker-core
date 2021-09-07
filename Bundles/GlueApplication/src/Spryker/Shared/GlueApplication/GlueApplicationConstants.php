@@ -17,6 +17,7 @@ interface GlueApplicationConstants
      * - The domain name used for Glue application.
      *
      * @api
+     * @var string
      */
     public const GLUE_APPLICATION_DOMAIN = 'GLUE_APPLICATION_DOMAIN';
 
@@ -25,6 +26,7 @@ interface GlueApplicationConstants
      *  - If rest debug is enabled, will show exception stack traces instead of 500 errors.
      *
      * @api
+     * @var string
      */
     public const GLUE_APPLICATION_REST_DEBUG = 'GLUE_APPLICATION_REST_DEBUG';
 
@@ -34,6 +36,7 @@ interface GlueApplicationConstants
      * - Ether '*' or single domain should be passed, due to CORS policy.
      *
      * @api
+     * @var string
      */
     public const GLUE_APPLICATION_CORS_ALLOW_ORIGIN = 'GLUE_APPLICATION_CORS_ALLOW_ORIGIN';
 
@@ -44,6 +47,7 @@ interface GlueApplicationConstants
      * - Value can be retrieved from the Container.
      *
      * @api
+     * @var string
      */
     public const ENABLE_APPLICATION_DEBUG = 'GLUE_APPLICATION:ENABLE_APPLICATION_DEBUG';
 }

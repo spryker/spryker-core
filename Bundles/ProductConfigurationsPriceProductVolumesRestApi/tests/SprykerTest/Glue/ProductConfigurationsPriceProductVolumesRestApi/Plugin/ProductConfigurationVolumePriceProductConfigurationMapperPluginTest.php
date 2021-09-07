@@ -33,7 +33,13 @@ use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Plugin\ProductC
  */
 class ProductConfigurationVolumePriceProductConfigurationMapperPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_NAME = 'priceTypeName';
+    /**
+     * @var string
+     */
     protected const CURRENCY_NAME = 'EUR';
 
     /**

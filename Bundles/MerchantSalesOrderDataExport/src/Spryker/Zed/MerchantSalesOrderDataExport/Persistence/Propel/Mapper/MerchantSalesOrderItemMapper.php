@@ -22,8 +22,15 @@ use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineProcessTableMap;
 
 class MerchantSalesOrderItemMapper
 {
+    /**
+     * @var string
+     */
     protected const KEY_SHIPPING_ADDRESS_SALUTATION = 'shipping_address_salutation';
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const FIELD_MAPPING = [
         'merchant_order_reference' => SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
         'marketplace_order_reference' => SpySalesOrderTableMap::COL_ORDER_REFERENCE,

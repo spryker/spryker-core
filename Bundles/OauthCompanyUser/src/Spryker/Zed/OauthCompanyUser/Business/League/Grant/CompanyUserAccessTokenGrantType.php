@@ -19,8 +19,14 @@ use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeInterface;
 
 class CompanyUserAccessTokenGrantType extends AbstractGrant implements GrantTypeInterface
 {
+    /**
+     * @var string
+     */
     public const COMPANY_USER_ACCESS_TOKEN_GRANT_TYPE = 'CompanyUserAccessToken';
 
+    /**
+     * @var string
+     */
     protected const ID_COMPANY_USER = 'id_company_user';
 
     /**

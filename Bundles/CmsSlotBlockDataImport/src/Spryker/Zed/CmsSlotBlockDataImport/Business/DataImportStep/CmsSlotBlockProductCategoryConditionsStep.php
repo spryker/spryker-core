@@ -14,20 +14,26 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CmsSlotBlockProductCategoryConditionsStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_CONDITION_PRODUCT_CATEGORY = 'productCategory';
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\AllConditionResolver::KEY_ALL
+     * @var string
      */
     protected const KEY_ALL = 'all';
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\CategoryKeysToIdsConditionResolver::KEY_CONDITION_CATEGORY_IDS
+     * @var string
      */
     protected const KEY_CONDITION_CATEGORY_IDS = 'categoryIds';
 
     /**
      * @uses \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ProductAbstractSkusToIdsConditionResolver::KEY_PRODUCT_ABSTRACT_IDS
+     * @var string
      */
     protected const KEY_PRODUCT_ABSTRACT_IDS = 'productIds';
 

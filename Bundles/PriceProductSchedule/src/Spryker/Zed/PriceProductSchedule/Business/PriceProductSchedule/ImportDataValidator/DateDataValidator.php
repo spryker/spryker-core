@@ -13,8 +13,14 @@ use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 
 class DateDataValidator extends AbstractImportDataValidator
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_ACTIVE_FROM_AND_ACTIVE_TO = 'Dates must be in right format and to date must be greater than from.';
 
+    /**
+     * @var string
+     */
     protected const FORMAT_DATE = 'Y-m-d\TH:i:sO';
 
     /**

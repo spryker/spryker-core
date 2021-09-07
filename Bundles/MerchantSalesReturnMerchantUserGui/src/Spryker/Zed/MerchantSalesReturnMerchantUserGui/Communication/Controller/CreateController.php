@@ -22,23 +22,46 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_MERCHANT_ORDER = 'id-merchant-order';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_RETURN = 'id-return';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\IndexController::indexAction()
+     * @var string
      */
     protected const ROUTE_RETURN_LIST = '/merchant-sales-return-merchant-user-gui';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\DetailController::indexAction()
+     * @var string
      */
     protected const ROUTE_RETURN_DETAIL = '/merchant-sales-return-merchant-user-gui/detail';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_ID = '%id%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_RETURN_CREATED_SUCCESS = 'Return was successfully created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_RETURN_CREATE_FAIL = 'Return has not been created.';
 
     /**

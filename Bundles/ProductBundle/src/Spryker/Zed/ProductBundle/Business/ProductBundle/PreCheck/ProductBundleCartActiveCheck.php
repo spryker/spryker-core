@@ -14,7 +14,13 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterfac
 
 class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_PRE_CHECK_ACTIVE_FAILED = 'cart.pre.check.active.failed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAMETER_SKU = '%sku%';
 
     /**

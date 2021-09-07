@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class JenkinsDisableConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'setup:jenkins:disable';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Disable Jenkins';
 
     /**

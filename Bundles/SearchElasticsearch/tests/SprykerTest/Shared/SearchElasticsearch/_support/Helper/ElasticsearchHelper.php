@@ -26,9 +26,18 @@ use SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper;
 
 class ElasticsearchHelper extends Module
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_MAPPING_TYPE = '_doc';
 
+    /**
+     * @var string
+     */
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
+    /**
+     * @var string
+     */
     public const REPOSITORY_TYPE_FILESYSTEM = 'fs';
 
     /**

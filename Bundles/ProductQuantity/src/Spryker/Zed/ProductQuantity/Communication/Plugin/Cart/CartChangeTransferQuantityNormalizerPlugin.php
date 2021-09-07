@@ -18,6 +18,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CartChangeTransferQuantityNormalizerPlugin extends AbstractPlugin implements CartChangeTransferNormalizerPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NORMALIZABLE_FIELD = 'quantity';
 
     /**

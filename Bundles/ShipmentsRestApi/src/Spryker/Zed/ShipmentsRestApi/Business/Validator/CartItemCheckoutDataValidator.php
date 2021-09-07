@@ -14,7 +14,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAMETER_ID = '%id%';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ITEM_NO_SHIPMENT_SELECTED = 'checkout.validation.item.no_shipment_selected';
 
     /**

@@ -16,8 +16,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class TwigDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'util text service';
+    /**
+     * @var string
+     */
     public const PLUGINS_TWIG = 'PLUGINS_TWIG';
+    /**
+     * @var string
+     */
     public const PLUGINS_TWIG_LOADER = 'PLUGINS_TWIG_LOADER';
 
     /**

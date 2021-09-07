@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 
 class PriceProductConfigurationVolumeFilter implements PriceProductConfigurationVolumeFilterInterface
 {
+    /**
+     * @var int
+     */
     protected const SINGLE_ITEM_QUANTITY = 1;
 
     /**

@@ -17,7 +17,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_ACL_ENTITY = 'FACADE_ACL_ENTITY';
+    /**
+     * @var string
+     */
     public const FACADE_ACL = 'FACADE_ACL';
 
     /**

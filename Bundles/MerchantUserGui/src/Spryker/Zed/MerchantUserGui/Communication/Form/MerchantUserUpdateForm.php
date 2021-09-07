@@ -17,6 +17,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class MerchantUserUpdateForm extends MerchantUserCreateForm
 {
+    /**
+     * @var string
+     */
     public const OPTION_STATUS_CHOICES = 'status_choices';
 
     /**

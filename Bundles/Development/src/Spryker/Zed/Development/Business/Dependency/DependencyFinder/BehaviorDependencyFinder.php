@@ -15,6 +15,9 @@ use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInt
 
 class BehaviorDependencyFinder implements DependencyFinderInterface
 {
+    /**
+     * @var string
+     */
     public const TYPE_PERSISTENCE = 'persistence';
 
     /**

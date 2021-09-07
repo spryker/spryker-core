@@ -9,5 +9,8 @@ namespace Spryker\Zed\AclEntity\Persistence\Exception;
 
 class OperationNotAuthorizedException extends AclEntityException
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_TEMPLATE = 'Operation "%s" is restricted for %s';
 }

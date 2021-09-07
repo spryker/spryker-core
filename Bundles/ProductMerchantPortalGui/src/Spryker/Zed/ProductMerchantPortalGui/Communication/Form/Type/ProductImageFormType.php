@@ -25,18 +25,48 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductImageFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_IMAGE = 'idProductImage';
+    /**
+     * @var string
+     */
     public const FIELD_SORT_ORDER = 'sortOrder';
+    /**
+     * @var string
+     */
     public const FIELD_EXTERNAL_URL_SMALL = 'externalUrlSmall';
+    /**
+     * @var string
+     */
     public const FIELD_EXTERNAL_URL_LARGE = 'externalUrlLarge';
 
+    /**
+     * @var string
+     */
     protected const LABEL_SMALL_IMAGE_URL = 'Small Image URL';
+    /**
+     * @var string
+     */
     protected const LABEL_LARGE_IMAGE_URL = 'Large Image URL';
 
+    /**
+     * @var int
+     */
     protected const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+    /**
+     * @var int
+     */
     protected const MIN_SORT_ORDER_VALUE = 0;
+    /**
+     * @var int
+     */
     protected const DEFAULT_SORT_ORDER_VALUE = 0;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_VALIDATION_NOT_BLANK_ERROR = 'The value cannot be blank. Please fill in this input';
 
     /**

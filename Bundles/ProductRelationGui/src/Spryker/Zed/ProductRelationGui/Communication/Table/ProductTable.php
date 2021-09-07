@@ -19,7 +19,13 @@ use Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEn
 
 class ProductTable extends AbstractProductTable
 {
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'Actions';
+    /**
+     * @var string
+     */
     protected const COL_STATUS = 'Status';
 
     /**

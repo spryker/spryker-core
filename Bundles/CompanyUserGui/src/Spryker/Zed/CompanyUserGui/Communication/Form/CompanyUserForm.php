@@ -20,9 +20,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CompanyUserForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
 
+    /**
+     * @var string
+     */
     public const FIELD_ID_COMPANY_USER = 'id_company_user';
+    /**
+     * @var string
+     */
     public const FIELD_FK_COMPANY = 'fk_company';
 
     /**

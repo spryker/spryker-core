@@ -15,6 +15,9 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPl
 
 class QueueMessageCreator implements QueueMessageCreatorInterface
 {
+    /**
+     * @var string
+     */
     protected const WRITE = 'write';
 
     /**

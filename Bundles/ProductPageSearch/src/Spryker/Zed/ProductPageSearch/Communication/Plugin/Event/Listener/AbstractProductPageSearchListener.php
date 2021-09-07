@@ -17,6 +17,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class AbstractProductPageSearchListener extends AbstractPlugin
 {
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**

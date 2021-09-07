@@ -13,6 +13,9 @@ use Spryker\Client\Kernel\Container;
 
 class CartNoteProductBundleConnectorDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_BUNDLE = 'CLIENT_PRODUCT_BUNDLE';
 
     /**

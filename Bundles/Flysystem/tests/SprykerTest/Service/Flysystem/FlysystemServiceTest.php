@@ -31,18 +31,45 @@ use SprykerTest\Service\Flysystem\Stub\FlysystemConfigStub;
  */
 class FlysystemServiceTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_FILE_NAME = 'fileName.jpg';
 
+    /**
+     * @var string
+     */
     public const FILE_SYSTEM_DOCUMENT = 'customerFileSystem';
+    /**
+     * @var string
+     */
     public const FILE_SYSTEM_PRODUCT_IMAGE = 'productFileSystem';
 
+    /**
+     * @var string
+     */
     public const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
+    /**
+     * @var string
+     */
     public const PATH_DOCUMENT = 'documents/';
+    /**
+     * @var string
+     */
     public const PATH_PRODUCT_IMAGE = 'images/product/';
 
+    /**
+     * @var string
+     */
     public const FILE_DOCUMENT = 'customer.txt';
+    /**
+     * @var string
+     */
     public const FILE_PRODUCT_IMAGE = 'image.png';
 
+    /**
+     * @var string
+     */
     public const FILE_CONTENT = 'Hello World';
 
     /**

@@ -16,7 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateCarrierController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_CARRIER_CREATE_SUCCESS = 'Carrier was created successfully.';
+    /**
+     * @var string
+     */
     protected const ROUTE_SHIPMENT = '/shipment-gui/shipment-method';
 
     /**

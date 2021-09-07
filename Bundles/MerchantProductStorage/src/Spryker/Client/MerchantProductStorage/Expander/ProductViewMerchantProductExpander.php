@@ -12,8 +12,17 @@ use Spryker\Client\MerchantProductStorage\Reader\MerchantProductStorageReaderInt
 
 class ProductViewMerchantProductExpander implements ProductViewMerchantProductExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const SELECTED_ATTRIBUTE_MERCHANT_REFERENCE = 'merchant_reference';
+    /**
+     * @var string
+     */
     protected const PARAM_SELECTED_MERCHANT_REFERENCE = 'selected_merchant_reference';
+    /**
+     * @var string
+     */
     protected const PARAM_SELECTED_MERCHANT_REFERENCE_TYPE = 'selected_merchant_reference_type';
 
     /**

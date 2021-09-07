@@ -39,27 +39,45 @@ use Spryker\Zed\Url\Business\UrlFacade;
  */
 class FacadeTestAbstract extends Unit
 {
+    /**
+     * @var array
+     */
     public const PRODUCT_ABSTRACT_NAME = [
         'en_US' => 'Product name en_US',
         'de_DE' => 'Product name de_DE',
     ];
 
+    /**
+     * @var array
+     */
     public const PRODUCT_CONCRETE_NAME = [
         'en_US' => 'Product concrete name en_US',
         'de_DE' => 'Product concrete name de_DE',
     ];
 
+    /**
+     * @var array
+     */
     public const UPDATED_PRODUCT_ABSTRACT_NAME = [
         'en_US' => 'Updated Product name en_US',
         'de_DE' => 'Updated Product name de_DE',
     ];
 
+    /**
+     * @var array
+     */
     public const UPDATED_PRODUCT_CONCRETE_NAME = [
         'en_US' => 'Updated Product concrete name en_US',
         'de_DE' => 'Updated Product concrete name de_DE',
     ];
 
+    /**
+     * @var string
+     */
     public const ABSTRACT_SKU = 'foo';
+    /**
+     * @var string
+     */
     public const CONCRETE_SKU = 'foo-concrete';
 
     /**

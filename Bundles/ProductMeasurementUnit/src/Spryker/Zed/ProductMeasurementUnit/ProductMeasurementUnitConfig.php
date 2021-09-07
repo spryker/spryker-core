@@ -14,11 +14,15 @@ class ProductMeasurementUnitConfig extends AbstractBundleConfig
 {
     /**
      * Default measurement unit code.
+     *
+     * @var string
      */
     public const DEFAULT_MEASUREMENT_UNIT_CODE = 'ITEM';
 
     /**
      * Infrastructural measurement units list.
+     *
+     * @var array
      */
     public const INFRASTRUCTURAL_MEASUREMENT_UNITS = [
         [

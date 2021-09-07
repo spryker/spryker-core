@@ -14,6 +14,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class DescriptionUpdater implements UpdaterInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_DESCRIPTION = 'description';
 
     /**

@@ -12,7 +12,13 @@ use Spryker\Zed\Mail\MailConfig;
 
 class MailProviderCollection implements MailProviderCollectionAddInterface, MailProviderCollectionGetInterface
 {
+    /**
+     * @var string
+     */
     public const ACCEPTED_MAIL_TYPES = 'accepted mail types';
+    /**
+     * @var string
+     */
     public const PROVIDER = 'provider';
 
     /**

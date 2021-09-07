@@ -17,14 +17,35 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DataImportConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_GROUP_FULL = 'FULL';
+    /**
+     * @var string
+     */
     public const IMPORT_GROUP_QUEUE_READERS = 'QUEUE_READERS';
+    /**
+     * @var string
+     */
     public const IMPORT_GROUP_QUEUE_WRITERS = 'QUEUE_WRITERS';
 
+    /**
+     * @var string
+     */
     public const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_QUEUE_READER_CHUNK_SIZE = 100;
+    /**
+     * @var int
+     */
     protected const DEFAULT_QUEUE_WRITER_CHUNK_SIZE = 100;
+    /**
+     * @var bool
+     */
     protected const DEFAULT_BULK_MODE = false;
 
     /**

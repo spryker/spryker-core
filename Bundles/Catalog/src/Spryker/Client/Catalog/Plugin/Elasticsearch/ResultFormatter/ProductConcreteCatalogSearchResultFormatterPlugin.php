@@ -17,7 +17,13 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class ProductConcreteCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     public const NAME = 'ProductConcreteCatalogSearchResultFormatterPlugin';
+    /**
+     * @var string
+     */
     public const KEY_ID_PRODUCT = 'id_product';
 
     /**

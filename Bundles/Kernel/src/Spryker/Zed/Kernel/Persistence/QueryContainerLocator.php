@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 
 class QueryContainerLocator extends AbstractLocator
 {
+    /**
+     * @var string
+     */
     public const PROPEL_CONNECTION = 'propel connection';
 
     /**

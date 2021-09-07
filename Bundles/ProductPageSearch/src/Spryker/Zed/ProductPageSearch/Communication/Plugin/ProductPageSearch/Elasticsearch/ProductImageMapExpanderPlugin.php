@@ -21,7 +21,13 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
  */
 class ProductImageMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY = 'images';
+    /**
+     * @var string
+     */
     protected const VALUE = 'product_images';
 
     /**

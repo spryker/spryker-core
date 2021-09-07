@@ -16,6 +16,9 @@ abstract class AbstractPlugin
     use ClientResolverAwareTrait;
     use BundleConfigResolverAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const SERVICE_LOCALE = 'locale';
 
     /**

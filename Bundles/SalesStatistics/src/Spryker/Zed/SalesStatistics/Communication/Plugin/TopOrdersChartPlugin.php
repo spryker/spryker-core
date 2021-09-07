@@ -20,9 +20,21 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {
+    /**
+     * @var int
+     */
     public const COUNT_PRODUCT = 10;
+    /**
+     * @var string
+     */
     public const NAME = 'top-orders';
+    /**
+     * @var string
+     */
     public const TITLE = 'Top Orders';
+    /**
+     * @var array
+     */
     public const OPTIONS = [
         'orientation' => 'h',
     ];

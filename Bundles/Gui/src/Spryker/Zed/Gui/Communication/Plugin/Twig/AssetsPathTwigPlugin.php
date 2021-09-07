@@ -19,6 +19,9 @@ use Twig\TwigFunction;
  */
 class AssetsPathTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME_ASSETS_PATH = 'assetsPath';
 
     /**

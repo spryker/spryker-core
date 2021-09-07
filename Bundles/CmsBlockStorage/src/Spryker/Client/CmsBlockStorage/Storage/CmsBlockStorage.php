@@ -16,10 +16,22 @@ use Spryker\Shared\CmsBlockStorage\CmsBlockStorageConstants;
 
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
+    /**
+     * @var string
+     */
     protected const OPTION_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const OPTION_KEY = 'key';
+    /**
+     * @var string
+     */
     protected const OPTION_KEYS = 'keys';
 
+    /**
+     * @var string
+     */
     protected const PREFIX_MAPPING_CMS_BLOCK_KEY = 'name:';
 
     /**

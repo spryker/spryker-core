@@ -22,9 +22,13 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
 {
     /**
      * @uses \Spryker\Zed\ProductAttribute\ProductAttributeConfig::DEFAULT_LOCALE
+     * @var string
      */
     public const DEFAULT_LOCALE = '_';
 
+    /**
+     * @var array
+     */
     public const LOCALE_NAME_MAP = [
         self::DEFAULT_LOCALE => ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT,
     ];

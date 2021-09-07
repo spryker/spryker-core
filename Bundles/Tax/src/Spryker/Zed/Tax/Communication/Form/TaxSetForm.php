@@ -29,8 +29,17 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class TaxSetForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_TAX_RATES = 'taxRates';
+    /**
+     * @var string
+     */
     public const FIELD_ID_TAX_SET = 'idTaxSet';
 
     /**

@@ -27,7 +27,13 @@ use Generated\Shared\Transfer\LocaleTransfer;
  */
 class CategoryImageFacadeTest extends Test
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_CATEGORY_IMAGE_SET_COUNT = 1;
+    /**
+     * @var int
+     */
     public const MAX_CATEGORY_IMAGE_SET_COUNT = 5;
 
     /**

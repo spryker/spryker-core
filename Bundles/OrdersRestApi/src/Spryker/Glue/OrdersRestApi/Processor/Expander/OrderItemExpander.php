@@ -14,6 +14,9 @@ use Spryker\Glue\OrdersRestApi\Processor\RestResponseBuilder\OrderRestResponseBu
 
 class OrderItemExpander implements OrderItemExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const ORDER_ITEM_UUID = 'orderItemUuid';
 
     /**

@@ -13,9 +13,21 @@ use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\Co
 
 class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const CONFIG_NAME = 'architecture-sniffer';
+    /**
+     * @var string
+     */
     protected const CONFIG_PRIORITY_NAME = 'priority';
+    /**
+     * @var int
+     */
     protected const CONFIG_PRIORITY_SKIP_VALUE = 0;
+    /**
+     * @var string
+     */
     protected const CONFIG_IGNORE_ERRORS = 'ignoreErrors';
 
     /**

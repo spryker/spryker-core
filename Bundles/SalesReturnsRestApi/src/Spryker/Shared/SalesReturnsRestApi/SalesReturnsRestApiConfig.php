@@ -11,12 +11,22 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class SalesReturnsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const ERROR_IDENTIFIER_FAILED_CREATE_RETURN = 'ERROR_IDENTIFIER_FAILED_CREATE_RETURN';
+    /**
+     * @var string
+     */
     public const ERROR_IDENTIFIER_RETURN_NOT_FOUND = 'ERROR_IDENTIFIER_RETURN_NOT_FOUND';
+    /**
+     * @var string
+     */
     public const ERROR_IDENTIFIER_MERCHANT_RETURN_ITEMS_FROM_DIFFERENT_MERCHANTS = 'ERROR_IDENTIFIER_MERCHANT_RETURN_ITEMS_FROM_DIFFERENT_MERCHANTS';
 
     /**
      * @see \Spryker\Zed\MerchantSalesReturn\Business\Model\MerchantReturnValidator::ERROR_MESSAGE_MERCHANT_RETURN_ITEMS_FROM_DIFFERENT_MERCHANTS
+     * @var string
      */
     protected const ERROR_MESSAGE_MERCHANT_RETURN_ITEMS_FROM_DIFFERENT_MERCHANTS = 'merchant_sales_return.message.items_from_different_merchant_detected';
 

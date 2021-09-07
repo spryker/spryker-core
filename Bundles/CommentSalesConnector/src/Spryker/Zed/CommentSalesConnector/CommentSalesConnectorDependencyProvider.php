@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CommentSalesConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMMENT = 'FACADE_COMMENT';
 
     /**

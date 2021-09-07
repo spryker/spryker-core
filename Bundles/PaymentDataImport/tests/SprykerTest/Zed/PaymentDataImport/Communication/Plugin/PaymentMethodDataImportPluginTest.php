@@ -25,6 +25,9 @@ use Spryker\Zed\PaymentDataImport\Communication\Plugin\PaymentMethodDataImportPl
  */
 class PaymentMethodDataImportPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_IMPORT_COUNT = 2;
 
     /**

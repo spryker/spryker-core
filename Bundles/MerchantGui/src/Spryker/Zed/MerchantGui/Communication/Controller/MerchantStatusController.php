@@ -17,14 +17,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MerchantStatusController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_MERCHANT = 'id-merchant';
+    /**
+     * @var string
+     */
     protected const PARAM_MERCHANT_STATUS = 'status';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'merchant_gui.error_wrong_params';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE = 'merchant_gui.success_merchant_status_update';
 
     /**
      * @uses \Spryker\Zed\MerchantGui\Communication\Controller\ListMerchantController::indexAction()
+     * @var string
      */
     protected const URL_REDIRECT_MERCHANT_LIST = '/merchant-gui/list-merchant';
 

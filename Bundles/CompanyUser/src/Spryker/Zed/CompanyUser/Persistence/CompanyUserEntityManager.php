@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class CompanyUserEntityManager extends AbstractEntityManager implements CompanyUserEntityManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_COMPANY_USER_IS_ACTIVE = 'IsActive';
 
     /**

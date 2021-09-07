@@ -27,12 +27,27 @@ use Symfony\Component\Console\Output\BufferedOutput;
  */
 class TriggerEventFromFileConsoleTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_STATE_MACHINE = 'Test01';
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_ORDER_ITEM_REFERENCE = 'TestMerchantOrderItemReference';
 
+    /**
+     * @var int
+     */
     protected const CODE_SUCCESS = 0;
+    /**
+     * @var int
+     */
     protected const CODE_ERROR = 1;
 
+    /**
+     * @var string
+     */
     protected const ARGUMENT_FILE_PATH = 'file-path';
 
     /**

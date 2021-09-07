@@ -15,6 +15,7 @@ class ContentProductGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::CONTENT_TYPE_PRODUCT_ABSTRACT_LIST
      *
      * Content item abstract product list
+     * @var string
      */
     public const CONTENT_TYPE_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
 
@@ -22,31 +23,39 @@ class ContentProductGuiConfig extends AbstractSharedConfig
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::CONTENT_TERM_PRODUCT_ABSTRACT_LIST
      *
      * Content item abstract product list
+     * @var string
      */
     public const CONTENT_TERM_PRODUCT_ABSTRACT_LIST = 'Abstract Product List';
 
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::TWIG_FUNCTION_NAME
+     * @var string
      */
     protected const TWIG_FUNCTION_NAME = 'content_product_abstract_list';
 
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE
+     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_BOTTOM_TITLE = 'bottom-title';
 
     /**
      * Content item abstract product list bottom-title template name
+     *
+     * @var string
      */
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_BOTTOM_TITLE = 'content_product_abstract_list.template.bottom-title';
 
     /**
      * @uses \Spryker\Shared\ContentProduct\ContentProductConfig::WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE
+     * @var string
      */
     protected const WIDGET_TEMPLATE_IDENTIFIER_TOP_TITLE = 'top-title';
 
     /**
      * Content item abstract product list top-title template name
+     *
+     * @var string
      */
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_TOP_TITLE = 'content_product_abstract_list.template.top-title';
 

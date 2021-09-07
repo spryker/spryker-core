@@ -16,13 +16,37 @@ use Spryker\Zed\Kernel\Container;
  */
 class AclDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_USER = 'user facade';
+    /**
+     * @var string
+     */
     public const FACADE_ACL = 'acl facade';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_USER = 'user query container';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_ACL = 'acl query container';
+    /**
+     * @var string
+     */
     public const SERVICE_DATE_FORMATTER = 'date formatter service';
+    /**
+     * @var string
+     */
     public const ACL_INSTALLER_PLUGINS = 'ACL_INSTALLER_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGINS_ACL_ROLES_EXPANDER = 'PLUGINS_ACL_ROLES_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_ACL_ROLE_POST_SAVE = 'PLUGINS_ACL_ROLE_POST_SAVE';
 
     /**

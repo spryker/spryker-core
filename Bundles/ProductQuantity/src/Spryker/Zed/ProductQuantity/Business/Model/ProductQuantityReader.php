@@ -13,6 +13,9 @@ use Spryker\Zed\ProductQuantity\Persistence\ProductQuantityRepositoryInterface;
 
 class ProductQuantityReader implements ProductQuantityReaderInterface
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_INTERVAL = 1;
 
     /**

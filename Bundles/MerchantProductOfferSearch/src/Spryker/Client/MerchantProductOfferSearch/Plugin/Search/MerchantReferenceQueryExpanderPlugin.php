@@ -18,6 +18,9 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
 class MerchantReferenceQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const MERCHANT_REFERENCE = 'merchant_reference';
 
     /**

@@ -18,14 +18,32 @@ use Spryker\Zed\ProductReviewCollector\Dependency\Facade\ProductReviewCollectorT
  */
 class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
 
+    /**
+     * @var string
+     */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_REVIEW = 'QUERY_CONTAINER_PRODUCT_REVIEW';
+    /**
+     * @var string
+     */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
 
+    /**
+     * @var string
+     */
     public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**

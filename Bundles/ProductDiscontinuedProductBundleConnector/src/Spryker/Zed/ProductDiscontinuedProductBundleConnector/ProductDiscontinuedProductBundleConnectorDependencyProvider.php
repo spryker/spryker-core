@@ -18,8 +18,17 @@ use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\Prod
  */
 class ProductDiscontinuedProductBundleConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_BUNDLE = 'FACADE_PRODUCT_BUNDLE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_DISCONTINUED = 'PROPEL_QUERY_PRODUCT_DISCONTINUED';
 
     /**

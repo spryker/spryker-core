@@ -13,8 +13,14 @@ use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 
 class EventHandler implements EventHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
+    /**
+     * @var string
+     */
     protected const PARAMETER_HOST = 'host';
 
     /**

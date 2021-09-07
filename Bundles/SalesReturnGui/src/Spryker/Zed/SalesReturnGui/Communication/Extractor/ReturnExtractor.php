@@ -12,6 +12,9 @@ use Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig;
 
 class ReturnExtractor implements ReturnExtractorInterface
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_LABEL_CLASS = 'label-default';
 
     /**

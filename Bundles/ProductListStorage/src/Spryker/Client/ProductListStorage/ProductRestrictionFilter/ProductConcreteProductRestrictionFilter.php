@@ -14,6 +14,9 @@ use Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductL
 
 class ProductConcreteProductRestrictionFilter extends AbstractProductRestrictionFilter
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_WRONG_PRODUCT_LIST_TRANSFER_TYPE = 'Type `%s` is not supported for getting concrete product id. Please use `%s` instead.';
 
     /**

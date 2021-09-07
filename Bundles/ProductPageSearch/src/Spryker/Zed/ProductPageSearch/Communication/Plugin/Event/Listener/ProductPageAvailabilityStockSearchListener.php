@@ -18,6 +18,7 @@ class ProductPageAvailabilityStockSearchListener extends AbstractProductPageSear
 {
     /**
      * @uses \Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap::COL_SKU
+     * @var string
      */
     protected const COL_SKU = 'spy_availability.sku';
 

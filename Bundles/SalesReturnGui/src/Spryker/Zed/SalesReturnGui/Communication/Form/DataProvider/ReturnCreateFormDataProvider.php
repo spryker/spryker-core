@@ -17,7 +17,13 @@ use Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFaca
 
 class ReturnCreateFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const CUSTOM_REASON = 'Custom reason';
+    /**
+     * @var string
+     */
     public const CUSTOM_REASON_KEY = 'custom_reason';
 
     /**

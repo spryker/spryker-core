@@ -17,6 +17,9 @@ use Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet\MerchantProfi
 
 class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantProfileAddressDataSetInterface::ADDRESS1,
         MerchantProfileAddressDataSetInterface::ADDRESS2,

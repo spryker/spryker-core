@@ -17,6 +17,8 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
     /**
      * The name on the customer_reference column related to Propel's ObjectCollection.
      * There is no equivalent replacement in *TableMap constants.
+     *
+     * @var string
      */
     public const COL_CUSTOMER_REFERENCE = 'customerReference';
 

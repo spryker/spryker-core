@@ -17,7 +17,13 @@ use Spryker\Service\Shipment\Dependency\Service\ShipmentToUtilEncodingServiceBri
  */
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_CUSTOMER = 'SERVICE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

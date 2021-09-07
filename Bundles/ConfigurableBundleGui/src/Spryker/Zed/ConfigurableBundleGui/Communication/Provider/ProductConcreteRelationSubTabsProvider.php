@@ -11,6 +11,9 @@ use Spryker\Zed\ConfigurableBundleGui\Communication\Exception\MissingTabsExcepti
 
 class ProductConcreteRelationSubTabsProvider implements ProductConcreteRelationSubTabsProviderInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_SUB_TABS = [
         'availableProductConcreteRelationTabs',
         'assignedProductConcreteRelationTabs',

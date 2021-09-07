@@ -19,24 +19,50 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends BaseProductRelationController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Product relation successfully modified';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ACTIVATE_SUCCESS = 'Relation successfully activated.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_DEACTIVATE_SUCCESS = 'Relation successfully deactivated.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_CSRF_TOKEN_IS_NOT_VALID = 'CSRF token is not valid.';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND = 'Product relation with id "%id%" not found.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\EditController::indexAction()
+     * @var string
      */
     protected const REDIRECT_URL_EDIT = '/product-relation-gui/edit/index';
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\ListController::indexAction()
+     * @var string
      */
     protected const REDIRECT_URL_LIST = '/product-relation-gui/list/index';
 

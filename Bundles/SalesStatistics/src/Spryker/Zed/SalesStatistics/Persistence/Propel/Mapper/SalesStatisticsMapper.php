@@ -12,6 +12,9 @@ use Spryker\Zed\SalesStatistics\Persistence\SalesStatisticsRepository;
 
 class SalesStatisticsMapper
 {
+    /**
+     * @var int
+     */
     public const DECIMAL = 100;
 
     /**

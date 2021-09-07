@@ -17,8 +17,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_CONTENT_WIDGET_PARAMETER_MAPPERS = 'CMS CONTENT WIDGET PARAMETER MAPPER';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE GLOSSARY';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'UTIL ENCODING';
 
     /**

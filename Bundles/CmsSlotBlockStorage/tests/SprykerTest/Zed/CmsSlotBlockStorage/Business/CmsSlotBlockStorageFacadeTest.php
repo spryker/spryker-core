@@ -24,6 +24,9 @@ use Generated\Shared\Transfer\SpyCmsSlotBlockStorageEntityTransfer;
  */
 class CmsSlotBlockStorageFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_SLOT_TEMPLATE_KEY = '%s:%s';
 
     /**

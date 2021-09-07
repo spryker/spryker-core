@@ -18,9 +18,18 @@ use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtil
  */
 class OauthAgentConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_AGENT = 'FACADE_AGENT';
+    /**
+     * @var string
+     */
     public const FACADE_OAUTH = 'FACADE_OAUTH';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

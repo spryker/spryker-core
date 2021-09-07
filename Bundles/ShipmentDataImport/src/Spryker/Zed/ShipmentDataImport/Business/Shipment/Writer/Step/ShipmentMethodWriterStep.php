@@ -14,6 +14,9 @@ use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\DataSet\ShipmentData
 
 class ShipmentMethodWriterStep implements DataImportStepInterface
 {
+    /**
+     * @var int
+     */
     public const BULK_SIZE = 100;
 
     /**

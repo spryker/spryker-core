@@ -30,6 +30,9 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
  */
 class ProductOptionGroupReaderTest extends MockProvider
 {
+    /**
+     * @var int
+     */
     protected const VALUE_ID_PRODUCT_OPTION_GROUP = 1;
 
     /**

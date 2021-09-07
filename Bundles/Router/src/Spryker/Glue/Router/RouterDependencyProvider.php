@@ -15,6 +15,9 @@ use Spryker\Glue\Kernel\Container;
  */
 class RouterDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_ROUTER = 'PLUGINS_ROUTER';
 
     /**

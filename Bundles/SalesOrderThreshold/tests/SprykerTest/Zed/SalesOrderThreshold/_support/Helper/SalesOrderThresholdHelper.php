@@ -22,8 +22,14 @@ class SalesOrderThresholdHelper extends Module
     use LocatorHelperTrait;
     use DataCleanupHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_FOUND = 'Found at least one entry in the database table but database table `%s` was expected to be empty.';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_EXPECTED = 'Expected at least %d entries in the database table `%s` and found %d entries.';
 
     /**

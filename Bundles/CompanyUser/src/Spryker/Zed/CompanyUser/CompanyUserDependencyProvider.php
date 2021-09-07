@@ -16,13 +16,34 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyUserDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_PRE_SAVE = 'PLUGINS_COMPANY_USER_PRE_SAVE';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_POST_SAVE = 'PLUGINS_COMPANY_USER_POST_SAVE';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_POST_CREATE = 'PLUGINS_COMPANY_USER_POST_CREATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_HYDRATE = 'PLUGINS_COMPANY_USER_HYDRATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_PRE_DELETE = 'PLUGINS_COMPANY_USER_PRE_DELETE';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_SAVE_PRE_CHECK = 'PLUGINS_COMPANY_USER_SAVE_PRE_CHECK';
 
     /**

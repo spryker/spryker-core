@@ -16,6 +16,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_attribute` entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE = 'Entity.spy_category_attribute.create';
 
@@ -24,6 +25,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_attribute` entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_ATTRIBUTE_UPDATE = 'Entity.spy_category_attribute.update';
 
@@ -32,6 +34,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_attribute` entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_ATTRIBUTE_DELETE = 'Entity.spy_category_attribute.delete';
 
@@ -40,6 +43,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category` entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_CREATE = 'Entity.spy_category.create';
 
@@ -48,6 +52,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category` entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_UPDATE = 'Entity.spy_category.update';
 
@@ -56,6 +61,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category` entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_DELETE = 'Entity.spy_category.delete';
 
@@ -64,6 +70,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_template` entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_TEMPLATE_CREATE = 'Entity.spy_category_template.create';
 
@@ -72,6 +79,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_template` entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_TEMPLATE_UPDATE = 'Entity.spy_category_template.update';
 
@@ -80,6 +88,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_template` entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_TEMPLATE_DELETE = 'Entity.spy_category_template.delete';
 
@@ -88,6 +97,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `CategoryNode` publish.
      *
      * @api
+     * @var string
      */
     public const CATEGORY_NODE_PUBLISH = 'Category.node.publish';
 
@@ -96,6 +106,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_node` entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_NODE_CREATE = 'Entity.spy_category_node.create';
 
@@ -104,6 +115,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_node` entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_NODE_UPDATE = 'Entity.spy_category_node.update';
 
@@ -112,6 +124,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `CategoryNode` publish.
      *
      * @api
+     * @var string
      */
     public const CATEGORY_NODE_UNPUBLISH = 'Category.node.unpublish';
 
@@ -120,6 +133,7 @@ class CategoryPageSearchConfig extends AbstractBundleConfig
      * - This events will be used for `spy_category_node` entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_CATEGORY_NODE_DELETE = 'Entity.spy_category_node.delete';
 }

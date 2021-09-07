@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
  */
 class OrderType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'order';
 
     /**

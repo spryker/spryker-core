@@ -15,8 +15,17 @@ use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterfac
  */
 class SessionHandlerFile implements SessionHandlerInterface
 {
+    /**
+     * @var string
+     */
     public const METRIC_SESSION_DELETE_TIME = 'File/Session_delete_time';
+    /**
+     * @var string
+     */
     public const METRIC_SESSION_WRITE_TIME = 'File/Session_write_time';
+    /**
+     * @var string
+     */
     public const METRIC_SESSION_READ_TIME = 'File/Session_read_time';
 
     /**

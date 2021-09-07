@@ -15,6 +15,8 @@ interface IndexGeneratorConstants
     /**
      * Specification:
      * - Defines the permission mode for generated files/directories.
+     *
+     * @var string
      */
     public const PERMISSION_MODE = 'INDEXGENERATOR:PERMISSION_MODE';
 }

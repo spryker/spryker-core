@@ -11,9 +11,18 @@ use Generated\Shared\Transfer\SortConfigTransfer;
 
 class SortConfig implements SortConfigInterface
 {
+    /**
+     * @var string
+     */
     public const DIRECTION_ASC = 'asc';
+    /**
+     * @var string
+     */
     public const DIRECTION_DESC = 'desc';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_SORT_PARAM_KEY = 'sort';
 
     /**

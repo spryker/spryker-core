@@ -13,6 +13,9 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 class IsNotIn implements ComparatorInterface
 {
+    /**
+     * @var string
+     */
     public const EXPRESSION = 'is not in';
 
     /**

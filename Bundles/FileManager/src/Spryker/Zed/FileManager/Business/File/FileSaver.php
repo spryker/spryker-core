@@ -21,7 +21,13 @@ class FileSaver implements FileSaverInterface
     use FileNameResolverTrait;
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const FILE_NAME_PATTERN = '%u%s%s.%s';
+    /**
+     * @var string
+     */
     protected const DEFAULT_FILENAME = 'file';
 
     /**

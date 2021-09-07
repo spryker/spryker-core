@@ -19,7 +19,13 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
  */
 class MerchantProductAbstractMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_NAMES = 'merchant_names';
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_NAME = 'merchant_name';
 
     /**

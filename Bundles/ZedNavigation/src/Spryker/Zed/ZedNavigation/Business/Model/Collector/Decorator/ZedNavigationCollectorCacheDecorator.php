@@ -16,6 +16,9 @@ class ZedNavigationCollectorCacheDecorator implements ZedNavigationCollectorInte
 {
     use LoggerTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_CACHE_LOST = 'Zed navigation cache file lost.';
 
     /**

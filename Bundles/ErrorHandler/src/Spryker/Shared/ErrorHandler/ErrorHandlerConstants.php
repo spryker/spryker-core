@@ -18,6 +18,7 @@ interface ErrorHandlerConstants
      * - Should only be enabled in development mode.
      *
      * @api
+     * @var string
      */
     public const IS_PRETTY_ERROR_HANDLER_ENABLED = 'ERROR_HANDLER:IS_PRETTY_ERROR_HANDLER_ENABLED';
 
@@ -26,6 +27,7 @@ interface ErrorHandlerConstants
      * - Absolute path to an HTML file which contains the error page for Zed. E.g. /var/www/public/Zed/error-page.html
      *
      * @api
+     * @var string
      */
     public const ZED_ERROR_PAGE = 'ZED_ERROR_PAGE';
 
@@ -34,6 +36,7 @@ interface ErrorHandlerConstants
      * - Absolute path to an HTML file which contains the error page for Yves. E.g. /var/www/public/Yves/error-page.html
      *
      * @api
+     * @var string
      */
     public const YVES_ERROR_PAGE = 'YVES_ERROR_PAGE';
 
@@ -42,6 +45,7 @@ interface ErrorHandlerConstants
      * - Class name of class which implements ErrorRendererInterface and should be used to render a given exception.
      *
      * @api
+     * @var string
      */
     public const ERROR_RENDERER = 'ERROR_RENDERER';
 
@@ -50,6 +54,7 @@ interface ErrorHandlerConstants
      * - Sets which PHP error levels are reported. It is not advised to modify this value.
      *
      * @api
+     * @var string
      */
     public const ERROR_LEVEL = 'ERROR_LEVEL';
 
@@ -60,6 +65,7 @@ interface ErrorHandlerConstants
      *   $config[ErrorHandlerConstants::ERROR_LEVEL_LOG_ONLY] = E_DEPRECATED | E_USER_DEPRECATED;
      *
      * @api
+     * @var string
      */
     public const ERROR_LEVEL_LOG_ONLY = 'ERROR_LEVEL_LOG_ONLY';
 
@@ -69,6 +75,7 @@ interface ErrorHandlerConstants
      * - The default `phpstorm://open?file=%s&line=%s` works for most OS.
      *
      * @api
+     * @var string
      */
     public const PATTERN_IDE_LINK = 'PATTERN_IDE_LINK';
 
@@ -79,6 +86,7 @@ interface ErrorHandlerConstants
      * - Enables file opening in IDE.
      *
      * @api
+     * @var string
      */
     public const USER_BASE_PATH = 'USER_BASE_PATH';
 
@@ -88,6 +96,7 @@ interface ErrorHandlerConstants
      * - This will be replaced with the user path.
      *
      * @api
+     * @var string
      */
     public const SERVER_BASE_PATH = 'SERVER_BASE_PATH';
 
@@ -96,6 +105,7 @@ interface ErrorHandlerConstants
      * - When using the USER_BASE_PATH to open files in IDE, some IDEs require AJAX calls for it to work.
      *
      * @api
+     * @var string
      */
     public const AS_AJAX = 'AS_AJAX';
 
@@ -106,6 +116,7 @@ interface ErrorHandlerConstants
      * - default false
      *
      * @api
+     * @var string
      */
     public const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 
@@ -114,6 +125,7 @@ interface ErrorHandlerConstants
      * - Class name of the class which implements `ErrorRendererInterface` and should be used to render a given exception in Glue.
      *
      * @api
+     * @var string
      */
     public const API_ERROR_RENDERER = 'ERROR_HANDLER:API_ERROR_RENDERER';
 }

@@ -29,6 +29,9 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMer
 
 class PriceProductOfferMapper
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_DATA_KEY_VOLUME_QUANTITY = 'volume_quantity';
 
     /**

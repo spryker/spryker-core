@@ -12,12 +12,12 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class GlueApplicationAuthorizationConnectorConfig extends AbstractBundleConfig
 {
     /**
-     * @const string
+     * @var string
      */
     public const ATTRIBUTE_ROUTE_AUTHORIZATION_CONFIGURATIONS = 'route-authorization-configurations';
 
     /**
-     * @const string
+     * @var string
      */
     public const ATTRIBUTE_ROUTE_AUTHORIZATION_DEFAULT_CONFIGURATION = 'route-authorization-default-configuration';
 }

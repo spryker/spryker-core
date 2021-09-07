@@ -28,10 +28,25 @@ class HttpMethodProcessorTest extends Unit
 {
     use ArraySubsetAsserts;
 
+    /**
+     * @var string
+     */
     protected const RESOURCE_PATH = '/test-resource';
+    /**
+     * @var string
+     */
     protected const RESOURCE_ID = '{testResourceId}';
+    /**
+     * @var string
+     */
     protected const BAD_REQUEST_RESPONSE_DESCRIPTION = 'Bad Request.';
+    /**
+     * @var string
+     */
     protected const NOT_FOUND_RESPONSE_DESCRIPTION = 'Not found.';
+    /**
+     * @var string
+     */
     protected const SUMMARY = 'Test summary.';
 
     /**

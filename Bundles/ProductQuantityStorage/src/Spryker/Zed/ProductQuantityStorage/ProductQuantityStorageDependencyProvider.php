@@ -18,8 +18,17 @@ use Spryker\Zed\ProductQuantityStorage\Dependency\Facade\ProductQuantityStorageT
  */
 class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_QUANTITY = 'FACADE_PRODUCT_QUANTITY';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_QUANTITY = 'PROPEL_QUERY_PRODUCT_QUANTITY';
 
     /**

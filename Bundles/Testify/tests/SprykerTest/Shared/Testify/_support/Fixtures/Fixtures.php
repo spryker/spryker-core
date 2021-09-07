@@ -12,6 +12,9 @@ use Codeception\Test\Loader\LoaderInterface;
 
 class Fixtures implements LoaderInterface
 {
+    /**
+     * @var string
+     */
     public const METHOD_BUILD_FIXTURES = 'buildFixtures';
 
     /**

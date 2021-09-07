@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SlotListController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_CMS_SLOT_TEMPLATE = 'id-cms-slot-template';
 
     /**

@@ -19,22 +19,29 @@ class CmsPageReader implements CmsPageReaderInterface
 {
     /**
      * @uses \Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\ResultFormatter\RawCmsPageSearchResultFormatterPlugin::NAME
+     * @var string
      */
     protected const SEARCH_RESULT_CMS_PAGES = 'cms_pages';
 
     /**
      * @uses \Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\ResultFormatter\PaginatedCmsPageResultFormatterPlugin::NAME
+     * @var string
      */
     protected const SEARCH_RESULT_PAGINATION = 'pagination';
 
+    /**
+     * @var string
+     */
     protected const ID_CMS_PAGE = 'id_cms_page';
     /**
      * @uses \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::PAGINATION_PARAMETER_NAME_PAGE
+     * @var string
      */
     protected const PAGINATION_PARAMETER_NAME_PAGE = 'page';
 
     /**
      * @uses \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
+     * @var string
      */
     protected const PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
 

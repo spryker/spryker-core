@@ -18,8 +18,17 @@ use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageT
  */
 class MerchantProductStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_PRODUCT = 'FACADE_MERCHANT_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_STORAGE = 'FACADE_PRODUCT_STORAGE';
 
     /**

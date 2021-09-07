@@ -16,6 +16,7 @@ class ProductListStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LIST_ABSTRACT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
@@ -24,6 +25,7 @@ class ProductListStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LIST_CONCRETE_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
@@ -32,6 +34,7 @@ class ProductListStorageConfig extends AbstractBundleConfig
      * - Key generation resource name of product abstract lists.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LIST_ABSTRACT_RESOURCE_NAME = 'product_abstract_product_lists';
 
@@ -40,16 +43,20 @@ class ProductListStorageConfig extends AbstractBundleConfig
      * - Key generation resource name of product concrete lists.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LIST_CONCRETE_RESOURCE_NAME = 'product_concrete_product_lists';
 
     /**
      * @uses \Spryker\Shared\Product\ProductConfig::VARIANT_LEAF_NODE_ID
+     * @var string
      */
     public const VARIANT_LEAF_NODE_ID = 'id_product_concrete';
 
     /**
      * @uses \Spryker\Shared\Product\ProductConfig::ATTRIBUTE_MAP_PATH_DELIMITER
+     * @phpstan-var non-empty-string
+     * @var string
      */
     public const ATTRIBUTE_MAP_PATH_DELIMITER = ':';
 }

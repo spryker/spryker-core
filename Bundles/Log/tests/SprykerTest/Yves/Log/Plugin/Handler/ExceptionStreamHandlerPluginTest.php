@@ -26,6 +26,9 @@ use Spryker\Yves\Log\Plugin\Handler\ExceptionStreamHandlerPlugin;
  */
 class ExceptionStreamHandlerPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const FILENAME = 'exception.log';
 
     /**

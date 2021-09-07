@@ -26,12 +26,27 @@ use Spryker\Zed\Money\Communication\Plugin\MoneyPlugin;
  */
 class MoneyPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const AMOUNT_INTEGER = 1000;
     public const AMOUNT_FLOAT = 10.00;
+    /**
+     * @var string
+     */
     public const AMOUNT_STRING = '1000';
 
+    /**
+     * @var string
+     */
     public const CURRENCY_EUR = 'EUR';
+    /**
+     * @var string
+     */
     public const LOCALE_DE_DE = 'de_DE';
+    /**
+     * @var string
+     */
     public const LOCALE_EN_US = 'en_US';
 
     /**

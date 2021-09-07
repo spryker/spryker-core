@@ -19,9 +19,21 @@ use Spryker\Zed\Kernel\Container;
  */
 class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_GLOSSARY = 'QUERY_CONTAINER_GLOSSARY';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_GLOSSARY_TRANSLATION = 'PROPEL_QUERY_GLOSSARY_TRANSLATE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_GLOSSARY_KEY = 'PROPEL_QUERY_GLOSSARY_KEY';
 
     /**

@@ -15,6 +15,9 @@ use Spryker\Zed\StockAddressDataImport\Business\Writer\StockAddress\DataSet\Stoc
 
 class StockAddressWriterStep implements DataImportStepInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
         StockAddressDataSetInterface::COLUMN_ADDRESS1,
         StockAddressDataSetInterface::COLUMN_CITY,

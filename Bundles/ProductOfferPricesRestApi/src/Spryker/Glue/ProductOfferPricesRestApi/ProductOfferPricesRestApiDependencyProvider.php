@@ -19,12 +19,30 @@ use Spryker\Glue\ProductOfferPricesRestApi\Dependency\Client\ProductOfferPricesR
  */
 class ProductOfferPricesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE = 'CLIENT_MERCHANT_PRODUCT_OFFER_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_PRODUCT_OFFER_PRICES_ATTRIBUTES_MAPPER = 'PLUGINS_REST_PRODUCT_OFFER_PRICES_ATTRIBUTES_MAPPER';
 
     /**

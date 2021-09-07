@@ -29,7 +29,13 @@ use Spryker\Zed\CmsSlot\Business\Exception\MissingCmsSlotTemplateException;
  */
 class CmsSlotFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_ERROR_MESSAGE_MISSING_CMS_SLOT_TEMPLATE = 'CMS Slot Template with id "%d" not found.';
+    /**
+     * @var string
+     */
     protected const EXCEPTION_ERROR_MESSAGE_MISSING_CMS_SLOT = 'CMS Slot with id "%d" not found.';
 
     /**

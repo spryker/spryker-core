@@ -35,6 +35,9 @@ use Generated\Shared\Transfer\StoreTransfer;
  */
 class PriceProductScheduleImportTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_DATE = 'Y-m-d\TH:i:sO';
 
     /**

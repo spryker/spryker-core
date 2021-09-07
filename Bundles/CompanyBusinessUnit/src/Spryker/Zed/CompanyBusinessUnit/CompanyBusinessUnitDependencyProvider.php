@@ -15,8 +15,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE = 'PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_BUSINESS_UNIT_PRE_DELETE = 'PLUGINS_COMPANY_BUSINESS_UNIT_PRE_DELETE';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER = 'PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER';
 
     /**

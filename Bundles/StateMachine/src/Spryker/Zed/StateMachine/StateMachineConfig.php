@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StateMachineConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const GRAPH_NAME = 'Statemachine';
 
     /**

@@ -26,41 +26,49 @@ class MapProductConfiguratorCheckSumResponseTest extends Unit
 {
     /**
      * @uses ProductConfigurationConfig::PRICE_DIMENSION_PRODUCT_CONFIGURATION
+     * @var string
      */
     protected const PRICE_DIMENSION_PRODUCT_CONFIGURATION = 'PRODUCT_CONFIGURATION';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     * @var string
      */
     protected const KEY_PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_NET
+     * @var string
      */
     protected const KEY_PRICE_MODE_NET = 'NET_MODE';
 
     /**
      * @uses ProductConfigurationInstancePriceMapper::KEY_PRICE_DATA
+     * @var string
      */
     protected const KEY_PRICE_DATA = 'priceData';
 
     /**
      * @uses ProductConfigurationInstancePriceMapper::KEY_PRODUCT_CONFIGURATION_INSTANCE
+     * @var string
      */
     protected const KEY_PRODUCT_CONFIGURATION_INSTANCE = 'productConfigurationInstance';
 
     /**
      * @uses ProductConfigurationInstancePriceMapper::KEY_PRICES
+     * @var string
      */
     protected const KEY_PRICES = 'prices';
 
     /**
      * @uses ProductConfigurationInstancePriceMapper::DEFAULT_PRICE_TYPE_NAME
+     * @var string
      */
     protected const DEFAULT_PRICE_TYPE_NAME = 'DEFAULT';
 
     /**
      * @uses ProductConfigurationInstancePriceMapper::IS_PRICE_MERGEABLE
+     * @var bool
      */
     protected const IS_PRICE_MERGEABLE = false;
 

@@ -14,6 +14,9 @@ use Spryker\Zed\Collector\Business\Collector\Storage\AbstractStoragePropelCollec
 
 class CmsBlockCollector extends AbstractStoragePropelCollector
 {
+    /**
+     * @var string
+     */
     public const COL_IS_IN_STORE = 'is_in_store';
 
     /**

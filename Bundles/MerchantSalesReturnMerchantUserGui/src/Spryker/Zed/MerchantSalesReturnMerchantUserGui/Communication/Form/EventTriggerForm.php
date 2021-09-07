@@ -19,14 +19,27 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class EventTriggerForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const OPTION_EVENT = 'OPTION_EVENT';
+    /**
+     * @var string
+     */
     protected const OPTION_SUBMIT_BUTTON_CLASS = 'OPTION_SUBMIT_BUTTON_CLASS';
+    /**
+     * @var string
+     */
     protected const OPTION_ACTION_QUERY_PARAMETERS = 'OPTION_ACTION_QUERY_PARAMETERS';
 
+    /**
+     * @var string
+     */
     protected const BUTTON_SUBMIT = 'submit';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\OmsTriggerController::submitTriggerEventAction()
+     * @var string
      */
     protected const ACTION_ROUTE = '/merchant-sales-return-merchant-user-gui/oms-trigger/submit-trigger-event';
 

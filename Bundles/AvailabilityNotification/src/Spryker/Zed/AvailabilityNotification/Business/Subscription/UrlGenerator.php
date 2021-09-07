@@ -13,6 +13,9 @@ use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
 
 class UrlGenerator implements UrlGeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const PARAM_SUBSCRIPTION_KEY = 'subscriptionKey';
 
     /**

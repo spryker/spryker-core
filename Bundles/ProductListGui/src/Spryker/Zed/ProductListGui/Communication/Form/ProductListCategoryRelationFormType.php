@@ -25,6 +25,9 @@ class ProductListCategoryRelationFormType extends AbstractType
     public const FIELD_ID_PRODUCT_LIST = ProductListCategoryRelationTransfer::ID_PRODUCT_LIST;
     public const FIELD_CATEGORY_IDS = ProductListCategoryRelationTransfer::CATEGORY_IDS;
 
+    /**
+     * @var string
+     */
     public const BLOCK_PREFIX = 'productListCategoryRelation';
 
     /**

@@ -16,6 +16,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class AclEntitySegmentReferenceValidatorStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_NOT_FOUND_TEMPLATE = 'Failed to find %s by reference: "%s"';
 
     /**

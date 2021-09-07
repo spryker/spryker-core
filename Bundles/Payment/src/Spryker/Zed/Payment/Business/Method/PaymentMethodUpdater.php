@@ -17,6 +17,9 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_UPDATE_ERROR = 'It is impossible to update this payment method';
 
     /**

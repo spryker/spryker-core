@@ -19,6 +19,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ProductPageProductAbstractRefreshConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'product-page-search:product-abstract-refresh';
 
     /**

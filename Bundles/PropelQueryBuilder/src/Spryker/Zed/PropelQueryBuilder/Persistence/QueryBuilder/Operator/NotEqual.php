@@ -11,6 +11,9 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class NotEqual extends Equal
 {
+    /**
+     * @var string
+     */
     public const TYPE = 'not_equal';
 
     /**

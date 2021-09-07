@@ -41,8 +41,14 @@ use SprykerTest\Zed\ProductRelationStorage\ProductRelationStorageConfigMock;
  */
 class ProductRelationStorageListenerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_DE = 'DE';
 
+    /**
+     * @var string
+     */
     protected const STORE_AT = 'AT';
 
     /**

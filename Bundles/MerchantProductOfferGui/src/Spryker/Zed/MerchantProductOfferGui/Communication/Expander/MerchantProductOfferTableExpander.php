@@ -17,7 +17,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const URL_PARAM_ID_MERCHANT = 'id-merchant';
+    /**
+     * @var string
+     */
     protected const COL_MERCHANT_NAME = 'Merchant';
 
     /**

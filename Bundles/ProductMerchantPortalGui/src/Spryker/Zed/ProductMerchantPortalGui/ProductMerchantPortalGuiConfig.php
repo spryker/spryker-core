@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductMerchantPortalGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const MAIN_CATEGORY_ID = 1;
 
     /**

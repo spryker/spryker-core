@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class ConfigurableBundleNoteDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     /**

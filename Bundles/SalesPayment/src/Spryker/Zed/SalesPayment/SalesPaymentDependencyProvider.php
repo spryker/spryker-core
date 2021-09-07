@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class SalesPaymentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SALES_PAYMENT_EXPANDER_PLUGINS = 'SALES_PAYMENT_EXPANDER_PLUGINS';
 
     /**

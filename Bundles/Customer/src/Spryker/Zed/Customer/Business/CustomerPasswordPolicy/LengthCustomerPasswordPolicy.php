@@ -14,10 +14,19 @@ use Spryker\Zed\Customer\CustomerConfig;
 
 class LengthCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MIN = 'customer.password.error.min_length';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_MAX = 'customer.password.error.max_length';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
 
     /**

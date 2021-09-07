@@ -26,8 +26,14 @@ use Spryker\Service\DataExport\Formatter\DataExportCsvFormatter;
  */
 class DataExportCsvFormatterTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_TYPE_CSV = 'csv';
 
+    /**
+     * @var array
+     */
     protected const CSV_DATA = [
         ['column_1' => 'data_1_1', 'column_2' => 'data_1_2'],
         ['column_1' => 'data_2_1', 'column_2' => 'data_2_2'],

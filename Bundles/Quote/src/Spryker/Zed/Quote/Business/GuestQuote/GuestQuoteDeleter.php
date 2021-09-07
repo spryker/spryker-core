@@ -20,6 +20,9 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var int
+     */
     protected const BATCH_SIZE_LIMIT = 200;
 
     /**

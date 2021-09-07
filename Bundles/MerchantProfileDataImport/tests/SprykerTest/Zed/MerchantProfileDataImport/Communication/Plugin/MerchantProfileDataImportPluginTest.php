@@ -26,6 +26,9 @@ use Spryker\Zed\MerchantProfileDataImport\MerchantProfileDataImportConfig;
  */
 class MerchantProfileDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const MERCHANT_REFERENCE = 'merchant-profile-data-import-test-reference';
 
     /**

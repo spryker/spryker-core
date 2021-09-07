@@ -9,6 +9,9 @@ namespace Spryker\Zed\SalesExtension\Dependency\Plugin;
 
 interface SalesTablePluginInterface
 {
+    /**
+     * @var string
+     */
     public const ROW_ACTIONS = 'Actions';
 
     /**

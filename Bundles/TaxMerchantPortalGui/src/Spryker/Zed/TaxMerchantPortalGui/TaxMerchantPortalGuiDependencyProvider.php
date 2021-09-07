@@ -13,6 +13,9 @@ use Spryker\Zed\TaxMerchantPortalGui\Dependency\Facade\TaxMerchantPortalGuiToTax
 
 class TaxMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_TAX = 'FACADE_TAX';
 
     /**

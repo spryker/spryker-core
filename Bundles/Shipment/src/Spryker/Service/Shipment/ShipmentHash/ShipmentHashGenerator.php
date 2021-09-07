@@ -15,6 +15,9 @@ use Spryker\Service\Shipment\ShipmentConfig;
 
 class ShipmentHashGenerator implements ShipmentHashGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const SHIPMENT_TRANSFER_KEY_PATTERN = '%s-%s-%s-%s';
 
     /**

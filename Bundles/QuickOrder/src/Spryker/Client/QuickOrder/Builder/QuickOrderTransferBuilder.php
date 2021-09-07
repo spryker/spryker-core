@@ -20,7 +20,13 @@ use Spryker\Client\QuickOrder\Validator\QuickOrderItemValidatorInterface;
 
 class QuickOrderTransferBuilder implements QuickOrderTransferBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_INVALID_SKU = 'quick-order.upload-order.errors.upload-order-invalid-sku-item';
 
     /**

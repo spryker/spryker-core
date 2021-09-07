@@ -43,6 +43,9 @@ use Spryker\Zed\QuoteApproval\QuoteApprovalConfig;
  */
 class QuoteApprovalFacadeTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const VALUE_GRAND_TOTAL = 10;
 
     /**

@@ -25,6 +25,9 @@ use Throwable;
 
 class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportStepInterface
 {
+    /**
+     * @var int
+     */
     protected const MERCHANT_RELATIONSHIPS_HEAP_LIMIT = 200;
 
     /**

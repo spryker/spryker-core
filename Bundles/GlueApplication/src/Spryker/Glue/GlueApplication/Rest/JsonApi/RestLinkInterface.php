@@ -9,13 +9,37 @@ namespace Spryker\Glue\GlueApplication\Rest\JsonApi;
 
 interface RestLinkInterface
 {
+    /**
+     * @var string
+     */
     public const LINK_FIRST = 'first';
+    /**
+     * @var string
+     */
     public const LINK_LAST = 'last';
+    /**
+     * @var string
+     */
     public const LINK_NEXT = 'next';
+    /**
+     * @var string
+     */
     public const LINK_PREV = 'prev';
+    /**
+     * @var string
+     */
     public const LINK_RELATED = 'related';
+    /**
+     * @var string
+     */
     public const LINK_SELF = 'self';
+    /**
+     * @var string
+     */
     public const KEY_HREF = 'href';
+    /**
+     * @var string
+     */
     public const KEY_META = 'meta';
 
     /**

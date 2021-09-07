@@ -24,6 +24,7 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPlugin exte
 {
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::ASC
+     * @var string
      */
     protected const ORDER_DIRECTION = 'ASC';
 

@@ -13,7 +13,13 @@ use PHPMD\Rule\ClassAware;
 
 class CouplingBetweenObjects extends AbstractRule implements ClassAware
 {
+    /**
+     * @var string
+     */
     public const COUPLING_BETWEEN_OBJECTS = 'cbo';
+    /**
+     * @var string
+     */
     public const THRESHOLD = 'minimum';
 
     /**

@@ -12,9 +12,21 @@ use Generated\Shared\Transfer\OauthAccessTokenDataTransfer;
 
 class TokenDataExtractor implements TokenDataExtractorInterface
 {
+    /**
+     * @var string
+     */
     protected const JWT_CLAIM_JTI = 'jti';
+    /**
+     * @var string
+     */
     protected const JWT_CLAIM_AUD = 'aud';
+    /**
+     * @var string
+     */
     protected const JWT_CLAIM_SUB = 'sub';
+    /**
+     * @var string
+     */
     protected const JWT_CLAIM_SCOPES = 'scopes';
 
     /**

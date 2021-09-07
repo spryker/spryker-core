@@ -18,10 +18,22 @@ use SprykerTest\Shared\Testify\Filter\InclusiveGroupFilterIterator;
 
 class SuiteFilterHelper extends Extension
 {
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_INCLUDE = 'groups';
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_EXCLUDE = 'skip-group';
 
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_INCLUSIVE = 'inclusive';
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_EXCLUSIVE = 'exclusive';
 
     /**

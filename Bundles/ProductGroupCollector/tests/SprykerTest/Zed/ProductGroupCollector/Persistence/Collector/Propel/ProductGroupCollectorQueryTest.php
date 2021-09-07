@@ -26,8 +26,17 @@ use Spryker\Zed\ProductGroupCollector\Persistence\Collector\Propel\ProductGroupC
  */
 class ProductGroupCollectorQueryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const ITEM_TYPE_PRODUCT_GROUP = 'product_group';
+    /**
+     * @var string
+     */
     protected const KEY_ITEM_TYPE = 'ItemType';
+    /**
+     * @var string
+     */
     protected const KEY_ITEM_ID = 'ItemId';
 
     /**

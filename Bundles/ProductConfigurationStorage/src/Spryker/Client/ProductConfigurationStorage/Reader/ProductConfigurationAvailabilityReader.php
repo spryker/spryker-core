@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 
 class ProductConfigurationAvailabilityReader implements ProductConfigurationAvailabilityReaderInterface
 {
+    /**
+     * @var int
+     */
     protected const MINIMUM_AVAILABLE_QUANTITY = 0;
 
     /**

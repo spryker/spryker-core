@@ -22,8 +22,17 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
      */
     protected static $lastResponse;
 
+    /**
+     * @var string
+     */
     protected const INFO_MESSAGES = 'infoMessages';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGES = 'errorMessages';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGES = 'successMessages';
 
     /**

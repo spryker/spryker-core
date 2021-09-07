@@ -11,6 +11,9 @@ use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'YvesDependencyProvider';
 
     /**

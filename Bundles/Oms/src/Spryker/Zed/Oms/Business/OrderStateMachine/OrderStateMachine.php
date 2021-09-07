@@ -36,11 +36,21 @@ class OrderStateMachine implements OrderStateMachineInterface
 {
     use DatabaseTransactionHandlerTrait;
 
+    /**
+     * @var string
+     */
     public const BY_ITEM = 'byItem';
+    /**
+     * @var string
+     */
     public const BY_ORDER = 'byOrder';
+    /**
+     * @var int
+     */
     public const MAX_EVENT_REPEATS = 10;
     /**
      * @deprecated Not in use anymore, will be removed in the next major.
+     * @var int
      */
     public const MAX_ON_ENTER = 50;
 

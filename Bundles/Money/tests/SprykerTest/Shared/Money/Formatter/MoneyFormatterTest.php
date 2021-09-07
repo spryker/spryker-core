@@ -26,6 +26,9 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterWithTypeInterface;
  */
 class MoneyFormatterTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const AMOUNT = '1000';
 
     /**

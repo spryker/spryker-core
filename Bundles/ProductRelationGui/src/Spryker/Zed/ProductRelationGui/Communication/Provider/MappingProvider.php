@@ -16,6 +16,9 @@ use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 
 class MappingProvider implements MappingProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_PRODUCT_ATTRIBUTE_KEY = 'product.json.%s';
 
     /**

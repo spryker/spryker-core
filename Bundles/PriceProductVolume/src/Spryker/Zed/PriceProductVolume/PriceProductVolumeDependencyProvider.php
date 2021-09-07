@@ -15,10 +15,19 @@ use Spryker\Zed\PriceProductVolume\Dependency\Service\PriceProductVolumeToUtilEn
 
 class PriceProductVolumeDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
 
+    /**
+     * @var string
+     */
     public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
 
     /**

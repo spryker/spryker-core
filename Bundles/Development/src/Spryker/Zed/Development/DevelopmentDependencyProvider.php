@@ -22,12 +22,33 @@ use Twig\Loader\FilesystemLoader;
  */
 class DevelopmentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MODULE_FINDER = 'module finder facade';
+    /**
+     * @var string
+     */
     public const PLUGIN_GRAPH = 'graph plugin';
+    /**
+     * @var string
+     */
     public const FINDER = 'finder';
+    /**
+     * @var string
+     */
     public const FILESYSTEM = 'filesystem';
+    /**
+     * @var string
+     */
     public const CONFIG_LOADER = 'config loader';
+    /**
+     * @var string
+     */
     public const TWIG_ENVIRONMENT = 'twig environment';
+    /**
+     * @var string
+     */
     public const TWIG_LOADER_FILESYSTEM = 'twig loader filesystem';
 
     /**

@@ -21,9 +21,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_CUSTOMER = 'customerTransfer';
 
+    /**
+     * @var string
+     */
     protected const URL_CUSTOMER_LIST_PAGE = '/customer';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id `%s` does not exist';
 
     /**

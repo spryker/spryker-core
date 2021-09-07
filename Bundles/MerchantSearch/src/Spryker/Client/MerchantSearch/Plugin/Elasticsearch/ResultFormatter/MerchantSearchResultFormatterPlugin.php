@@ -15,7 +15,13 @@ use Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsea
 
 class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'MerchantSearchCollection';
+    /**
+     * @var string
+     */
     protected const ITEMS_PER_PAGE = 'from';
 
     /**

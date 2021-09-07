@@ -20,14 +20,38 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodeStyleSnifferConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'code:sniff:style';
+    /**
+     * @var string
+     */
     public const OPTION_MODULE = 'module';
+    /**
+     * @var string
+     */
     public const OPTION_SNIFFS = 'sniffs';
+    /**
+     * @var string
+     */
     public const OPTION_DRY_RUN = 'dry-run';
+    /**
+     * @var string
+     */
     public const OPTION_FIX = 'fix';
+    /**
+     * @var string
+     */
     public const OPTION_EXPLAIN = 'explain';
+    /**
+     * @var string
+     */
     public const ARGUMENT_SUB_PATH = 'path';
 
+    /**
+     * @var string
+     */
     protected const OPTION_LEVEL = 'level';
 
     /**

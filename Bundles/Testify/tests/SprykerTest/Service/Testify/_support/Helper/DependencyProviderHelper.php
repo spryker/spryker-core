@@ -26,8 +26,14 @@ class DependencyProviderHelper extends Module
     use ContainerMocker;
     use ContainerHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN = '\%1$s\Service\%2$s\%2$sDependencyProvider';
 
+    /**
+     * @var array
+     */
     protected const NON_STANDARD_NAMESPACE_PREFIXES = [
         'SprykerShopTest',
         'SprykerSdkTest',

@@ -16,11 +16,26 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class LogDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUEUE = 'queue client';
+    /**
+     * @var string
+     */
     public const FILESYSTEM = 'filesystem';
 
+    /**
+     * @var string
+     */
     public const LOG_PROCESSORS = 'LOG_PROCESSORS';
+    /**
+     * @var string
+     */
     public const LOG_LISTENERS = 'LOG_LISTENERS';
+    /**
+     * @var string
+     */
     public const LOG_HANDLERS = 'LOG_HANDLERS';
 
     /**

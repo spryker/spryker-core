@@ -25,6 +25,9 @@ use Spryker\Zed\Touch\Business\Model\BulkTouch\Filter\IdFilterInsert;
  */
 class IdFilterInsertTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const ITEM_EVENT_ACTIVE = 'active';
 
     /**

@@ -16,8 +16,17 @@ use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdaterInterface;
 
 class CartWriter implements CartWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_NOT_FOUND = 'configured_bundle_cart.error.configured_bundle_not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_REMOVED = 'configured_bundle_cart.error.configured_bundle_cannot_be_removed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CONFIGURED_BUNDLE_CANNOT_BE_UPDATED = 'configured_bundle_cart.error.configured_bundle_cannot_be_updated';
 
     /**

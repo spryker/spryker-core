@@ -12,22 +12,46 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const FORM_RESOURCES_PATH = '/Presentation/Form/Type';
+    /**
+     * @var array
+     */
     protected const FORM_DEFAULT_TEMPLATE_FILE_NAMES = [
         'form_div_layout.html.twig',
         'bootstrap_3_layout.html.twig',
     ];
 
+    /**
+     * @var string
+     */
     protected const TABS_DEFAULT_TEMPLATE_PATH = '@Gui/Tabs/tabs.twig';
 
+    /**
+     * @var string
+     */
     protected const SUBMIT_BUTTON_DEFAULT_TEMPLATE_PATH = '@Gui/Form/button/submit_button.twig';
 
+    /**
+     * @var string
+     */
     protected const MODAL_DEFAULT_TEMPLATE_PATH = '@Gui/Modal/modal.twig';
 
+    /**
+     * @var string
+     */
     protected const PANEL_DEFAULT_TEMPLATE_PATH = '@Gui/Panel/panel.twig';
 
+    /**
+     * @var string
+     */
     protected const LIST_GROUP_DEFAULT_TEMPLATE_PATH = '@Gui/ListGroup/list-group.twig';
 
+    /**
+     * @var string
+     */
     protected const LIST_GROUP_MULTI_DEFAULT_TEMPLATE_PATH = '@Gui/ListGroup/list-group-multidimensional.twig';
 
     /**

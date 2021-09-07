@@ -23,7 +23,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductRelationRepository extends AbstractRepository implements ProductRelationRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
+    /**
+     * @var string
+     */
     protected const COL_ASSIGNED_CATEGORIES = 'assignedCategories';
 
     /**

@@ -33,9 +33,21 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class GlossaryController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REDIRECT_ADDRESS = '/cms/glossary';
+    /**
+     * @var int
+     */
     protected const SEARCH_LIMIT = 10;
+    /**
+     * @var string
+     */
     protected const ID_FORM = 'id-form';
+    /**
+     * @var string
+     */
     protected const TYPE = 'type';
 
     /**

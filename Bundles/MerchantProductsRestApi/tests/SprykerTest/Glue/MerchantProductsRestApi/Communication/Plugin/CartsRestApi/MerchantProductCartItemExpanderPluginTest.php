@@ -25,6 +25,9 @@ use Spryker\Glue\MerchantProductsRestApi\Plugin\CartsRestApi\MerchantProductCart
  */
 class MerchantProductCartItemExpanderPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
 
     /**

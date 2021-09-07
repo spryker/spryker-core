@@ -13,8 +13,17 @@ use Spryker\Zed\SchedulerJenkins\SchedulerJenkinsConfig;
 
 class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_LOG_ROTATE_DAYS = 'logrotate_days';
+    /**
+     * @var string
+     */
     protected const KEY_JOB = 'job';
+    /**
+     * @var string
+     */
     protected const KEY_WORKING_DIR = 'working_dir';
 
     /**

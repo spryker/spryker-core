@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_APPROVAL_STATUS_UPDATE = 'The approval status was updated';
 
     /**

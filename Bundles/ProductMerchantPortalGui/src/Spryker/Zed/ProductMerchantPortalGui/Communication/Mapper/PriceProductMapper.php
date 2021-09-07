@@ -25,13 +25,18 @@ class PriceProductMapper implements PriceProductMapperInterface
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
+    /**
+     * @var string
+     */
     protected const PRICE_KEY = '%s[%s][%s]';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     * @var string
      */
     protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 

@@ -12,19 +12,43 @@ use Symfony\Component\Form\FormErrorIterator;
 
 class ImageSetMapper implements ImageSetMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_IMAGE_SMALL = 'externalUrlSmall';
+    /**
+     * @var string
+     */
     protected const FIELD_IMAGE_LARGE = 'externalUrlLarge';
+    /**
+     * @var string
+     */
     protected const FIELD_SORT_ORDER = 'sortOrder';
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_PRODUCT_IMAGES = 'productImages';
 
+    /**
+     * @var string
+     */
     protected const IMAGE_SETS_FORM_FIELD = 'imageSets';
 
+    /**
+     * @var array
+     */
     protected const FORM_VALIDATION_IMAGE_SET_MAP = [
         self::FIELD_NAME => 'name',
         self::FIELD_PRODUCT_IMAGES => 'images',
     ];
 
+    /**
+     * @var array
+     */
     protected const FORM_VALIDATION_IMAGE_MAP = [
         self::FIELD_IMAGE_SMALL => 'srcSmall',
         self::FIELD_IMAGE_LARGE => 'srcLarge',

@@ -16,7 +16,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class MaintenanceDisableConsole extends AbstractMaintenanceConsole
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'maintenance:disable';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Will disable the maintenance mode while setup/deploy.';
 
     /**

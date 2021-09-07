@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 class CategoryImageTabExpander implements CategoryImageTabExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const TAB_TITLE = 'Images';
 
     /**

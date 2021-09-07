@@ -13,10 +13,25 @@ use Spryker\Zed\ProductCategorySearch\Persistence\ProductCategorySearchRepositor
 
 class ProductCategoryTreeBuilder implements ProductCategoryTreeBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+    /**
+     * @var string
+     */
     protected const COLUMN_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+    /**
+     * @var string
+     */
     protected const COLUMN_FK_LOCALE = 'fk_locale';
+    /**
+     * @var string
+     */
     protected const COLUMN_CATEGORY_NAME = 'category_name';
+    /**
+     * @var string
+     */
     protected const COLUMN_STORE_NAME = 'store_name';
 
     /**

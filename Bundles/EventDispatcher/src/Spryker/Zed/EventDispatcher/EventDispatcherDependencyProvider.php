@@ -15,8 +15,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_EVENT_DISPATCHER_PLUGINS = 'PLUGINS_EVENT_DISPATCHER_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGINS_BACKEND_GATEWAY_EVENT_DISPATCHER_PLUGINS = 'PLUGINS_BACKEND_GATEWAY_EVENT_DISPATCHER_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGINS_BACKEND_API_EVENT_DISPATCHER_PLUGINS = 'PLUGINS_BACKEND_API_EVENT_DISPATCHER_PLUGINS';
 
     /**

@@ -16,6 +16,7 @@ interface MerchantUserConstants
      * @api
      *
      * @uses \Spryker\Shared\MerchantPortalApplication\MerchantPortalConstants::BASE_URL_MP
+     * @var string
      */
     public const BASE_URL_MP = 'MERCHANT_PORTAL_APPLICATION:BASE_URL_MP';
 }

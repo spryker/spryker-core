@@ -31,6 +31,9 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
+    /**
+     * @var string
+     */
     public const DEFAULT_TRANSLATION = '';
 
     /**

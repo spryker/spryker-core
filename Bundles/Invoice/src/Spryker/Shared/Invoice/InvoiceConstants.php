@@ -12,5 +12,8 @@ namespace Spryker\Shared\Invoice;
  */
 interface InvoiceConstants
 {
+    /**
+     * @var string
+     */
     public const INVOICE_PROTECTED_DOCUMENT_DIRECTORY = 'INVOICE_PROTECTED_DOCUMENT_DIRECTORY';
 }

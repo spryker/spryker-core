@@ -12,8 +12,17 @@ use Laminas\Filter\Word\UnderscoreToCamelCase;
 
 class DefaultFieldSortingComparisonStrategy implements PriceProductSortingComparisonStrategyInterface
 {
+    /**
+     * @var string
+     */
     protected const SUFFIX_PRICE_TYPE_NET = '_net';
+    /**
+     * @var string
+     */
     protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
+    /**
+     * @var string
+     */
     protected const PREFIX_GETTER_METHOD = 'get';
 
     /**

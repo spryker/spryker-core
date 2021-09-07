@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueVolumePriceConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'The set of inputs Store, Currency, and Quantity needs to be unique.';
 
     /**

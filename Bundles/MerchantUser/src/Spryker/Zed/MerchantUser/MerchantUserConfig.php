@@ -14,6 +14,7 @@ class MerchantUserConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     * @var string
      */
     public const USER_CREATION_DEFAULT_STATUS = 'blocked';
 

@@ -12,16 +12,49 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class LocaleCmsPageDataExpander implements LocaleCmsPageDataExpanderInterface
 {
+    /**
+     * @var string
+     */
     public const PARAM_URL = 'url';
+    /**
+     * @var string
+     */
     public const PARAM_VALID_FROM = 'valid_from';
+    /**
+     * @var string
+     */
     public const PARAM_VALID_TO = 'valid_to';
+    /**
+     * @var string
+     */
     public const PARAM_IS_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     public const PARAM_ID = 'id';
+    /**
+     * @var string
+     */
     public const PARAM_TEMPLATE = 'template';
+    /**
+     * @var string
+     */
     public const PARAM_PLACEHOLDERS = 'placeholders';
+    /**
+     * @var string
+     */
     public const PARAM_NAME = 'name';
+    /**
+     * @var string
+     */
     public const PARAM_META_TITLE = 'meta_title';
+    /**
+     * @var string
+     */
     public const PARAM_META_KEYWORDS = 'meta_keywords';
+    /**
+     * @var string
+     */
     public const PARAM_META_DESCRIPTION = 'meta_description';
 
     /**

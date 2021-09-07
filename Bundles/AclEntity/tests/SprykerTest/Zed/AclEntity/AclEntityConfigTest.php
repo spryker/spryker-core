@@ -21,6 +21,9 @@ use Spryker\Zed\AclEntity\AclEntityConfig;
  */
 class AclEntityConfigTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_GLOBAL_OPERATION_MASK = 0;
 
     /**

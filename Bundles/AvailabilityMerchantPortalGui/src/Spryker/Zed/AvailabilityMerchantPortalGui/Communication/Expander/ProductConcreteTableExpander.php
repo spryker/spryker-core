@@ -20,15 +20,20 @@ use Spryker\Zed\AvailabilityMerchantPortalGui\Dependency\Facade\AvailabilityMerc
 
 class ProductConcreteTableExpander implements ProductConcreteTableExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_KEY_AVAILABLE_STOCK = 'availableStock';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
      * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
+     * @var string
      */
     protected const COLUMN_TYPE_TEXT = 'text';
 

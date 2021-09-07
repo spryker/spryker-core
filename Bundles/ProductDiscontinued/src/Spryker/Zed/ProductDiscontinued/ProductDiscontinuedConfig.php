@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductDiscontinuedConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_DAYS_AMOUNT_BEFORE_PRODUCT_DEACTIVATE = 180;
 
     /**

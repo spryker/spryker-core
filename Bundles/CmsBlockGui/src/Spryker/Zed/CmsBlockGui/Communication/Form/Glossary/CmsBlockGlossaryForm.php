@@ -21,7 +21,13 @@ class CmsBlockGlossaryForm extends AbstractType
 {
     use ArrayObjectTransformerTrait;
 
+    /**
+     * @var string
+     */
     public const FIELD_GLOSSARY_PLACEHOLDERS = 'glossaryPlaceholders';
+    /**
+     * @var string
+     */
     public const OPTION_DATA_CLASS_PLACEHOLDERS = 'data_class_glossary_placeholders';
 
     /**

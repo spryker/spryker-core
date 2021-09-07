@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CustomerAccessStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_CUSTOMER_ACCESS = 'QUERY_CUSTOMER_ACCESS';
 
     /**

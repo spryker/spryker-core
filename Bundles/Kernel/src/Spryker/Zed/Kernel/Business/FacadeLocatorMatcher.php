@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\Locator\LocatorMatcherInterface;
 
 class FacadeLocatorMatcher implements LocatorMatcherInterface
 {
+    /**
+     * @var string
+     */
     public const METHOD_PREFIX = 'facade';
 
     /**

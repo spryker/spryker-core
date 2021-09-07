@@ -16,6 +16,7 @@ class CmsSlotStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing CMS slot messages.
      *
      * @api
+     * @var string
      */
     public const CMS_SLOT_SYNC_STORAGE_QUEUE = 'sync.storage.cms';
 
@@ -24,6 +25,7 @@ class CmsSlotStorageConfig extends AbstractBundleConfig
      * - Resource name, it will be used for key generating.
      *
      * @api
+     * @var string
      */
     public const CMS_SLOT_RESOURCE_NAME = 'cms_slot';
 }

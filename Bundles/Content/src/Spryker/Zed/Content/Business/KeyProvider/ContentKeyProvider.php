@@ -17,7 +17,13 @@ use Spryker\Zed\Content\Persistence\ContentRepositoryInterface;
  */
 class ContentKeyProvider implements ContentKeyProviderInterface
 {
+    /**
+     * @var int
+     */
     protected const KEY_GENERATOR_ITERATION_LIMIT = 10;
+    /**
+     * @var string
+     */
     protected const ERROR_CONTENT_KEY_NOT_CREATED = 'Cannot create content key: maximum iterations threshold met.';
 
     /**

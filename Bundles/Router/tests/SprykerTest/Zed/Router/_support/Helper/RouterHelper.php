@@ -42,7 +42,13 @@ class RouterHelper extends Module
     use EventDispatcherHelperTrait;
     use ContainerHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const MODULE_NAME = 'Router';
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_ROUTER_PLUGINS = 'routerPlugins';
 
     /**
@@ -59,6 +65,7 @@ class RouterHelper extends Module
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
 

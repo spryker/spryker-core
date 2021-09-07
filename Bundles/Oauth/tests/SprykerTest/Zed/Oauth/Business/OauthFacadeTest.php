@@ -56,7 +56,13 @@ class OauthFacadeTest extends Unit
      */
     protected $customerTransfer;
 
+    /**
+     * @var string
+     */
     protected const CLIENT_IDENTIFIER = 'test client';
+    /**
+     * @var string
+     */
     protected const CLIENT_SECRET = 'abc123';
 
     /**

@@ -33,7 +33,13 @@ use SprykerTest\Zed\GlossaryStorage\GlossaryStorageConfigMock;
  */
 class GlossaryStorageFacadeTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ID_GLOSSARY = 1;
+    /**
+     * @var string
+     */
     public const LOCALE_EN_US = 'en_US';
 
     /**

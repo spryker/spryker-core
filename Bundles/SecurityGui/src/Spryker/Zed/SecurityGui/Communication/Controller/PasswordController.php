@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PasswordController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_TOKEN = 'token';
 
     /**

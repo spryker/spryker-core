@@ -19,8 +19,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class PriceProductStorageQueryContainer extends AbstractQueryContainer implements PriceProductStorageQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+    /**
+     * @var string
+     */
     public const ID_PRODUCT_CONCRETE = 'idProductConcrete';
+    /**
+     * @var string
+     */
     public const SKU = 'sku';
 
     /**

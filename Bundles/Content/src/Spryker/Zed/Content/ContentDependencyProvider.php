@@ -17,7 +17,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class ContentDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_UUID_GENERATOR = 'SERVICE_UTIL_UUID_GENERATOR';
 
     /**

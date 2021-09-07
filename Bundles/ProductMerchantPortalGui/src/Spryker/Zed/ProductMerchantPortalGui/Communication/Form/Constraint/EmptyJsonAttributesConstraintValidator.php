@@ -18,16 +18,19 @@ class EmptyJsonAttributesConstraintValidator extends AbstractConstraintValidator
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\AttributesDataProvider::DATA_KEY_ATTRIBUTES
+     * @var string
      */
     protected const DATA_KEY_ATTRIBUTES = 'attributes';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\AttributesDataProvider::DATA_KEY_VALUES
+     * @var string
      */
     protected const DATA_KEY_VALUE = 'value';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_EXISTING_ATTRIBUTES
+     * @var string
      */
     protected const FIELD_EXISTING_ATTRIBUTES = 'existing_attributes';
 

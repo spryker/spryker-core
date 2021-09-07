@@ -22,9 +22,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractProductsReader implements AbstractProductsReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_IDS_KEY = 'product_concrete_ids';
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**

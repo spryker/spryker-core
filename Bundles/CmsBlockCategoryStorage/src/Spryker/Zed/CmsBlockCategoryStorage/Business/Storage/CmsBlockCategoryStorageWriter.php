@@ -16,15 +16,23 @@ use Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQuery
 
 class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEYS = 'keys';
+    /**
+     * @var string
+     */
     protected const NAMES = 'names';
     /**
      * @uses \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::NAME
+     * @var string
      */
     protected const COLUMN_BLOCK_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::BLOCK_KEY
+     * @var string
      */
     protected const COLUMN_BLOCK_KEY = 'block_key';
 

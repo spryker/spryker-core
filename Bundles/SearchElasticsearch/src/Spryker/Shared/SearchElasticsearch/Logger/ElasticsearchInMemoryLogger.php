@@ -11,6 +11,9 @@ use Spryker\Shared\SearchElasticsearch\Dependency\Service\SearchElasticsearchToU
 
 class ElasticsearchInMemoryLogger implements ElasticsearchLoggerInterface
 {
+    /**
+     * @var string
+     */
     protected const URI_STRING_TEMPLATE_UNKNOWN = 'unknown';
 
     /**

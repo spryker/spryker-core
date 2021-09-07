@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class ConfigurableBundleCartDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'PROPEL_QUERY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT';
 
     /**

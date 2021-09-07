@@ -26,6 +26,9 @@ use Spryker\Client\ShoppingListProductOptionConnector\ShoppingList\ProductOption
  */
 class ProductOptionQuoteItemToItemMapperPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const GROUP_KEY = 'group_key';
 
     /**

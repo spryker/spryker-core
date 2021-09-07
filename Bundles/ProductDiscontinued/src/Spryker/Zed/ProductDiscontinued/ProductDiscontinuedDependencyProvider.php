@@ -16,10 +16,25 @@ use Spryker\Zed\ProductDiscontinued\Dependency\Facade\ProductDiscontinuedToProdu
  */
 class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const PLUGINS_POST_PRODUCT_DISCONTINUE = 'PLUGINS_POST_PRODUCT_DISCONTINUE';
+    /**
+     * @var string
+     */
     public const PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED = 'PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED';
+    /**
+     * @var string
+     */
     public const PLUGINS_POST_DELETE_BULK_PRODUCT_DISCONTINUED = 'PLUGINS_POST_DELETE_BULK_PRODUCT_DISCONTINUED';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK = 'PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK';
 
     /**

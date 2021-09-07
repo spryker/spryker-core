@@ -12,8 +12,14 @@ use Symfony\Component\Validator\Exception\ConstraintDefinitionException;
 
 class TransferConstraint extends Composite
 {
+    /**
+     * @var string
+     */
     protected const FIELDS = 'fields';
 
+    /**
+     * @var string
+     */
     protected const MISSING_FIELD_MESSAGE = 'This field is missing.';
 
     /**

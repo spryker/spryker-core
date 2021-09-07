@@ -24,6 +24,9 @@ use Symfony\Component\Form\FormView;
  */
 class ProductMoneyType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_FK_PRICE_TYPE = 'fk_price_type';
 
     /**

@@ -14,6 +14,9 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\SessionKeyGeneratorInte
  */
 class RedisSessionKeyGenerator implements SessionKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_PREFIX = 'session:';
 
     /**

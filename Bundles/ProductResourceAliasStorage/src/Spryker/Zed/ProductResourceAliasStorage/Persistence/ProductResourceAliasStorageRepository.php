@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductResourceAliasStorageRepository extends AbstractRepository implements ProductResourceAliasStorageRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
 
     /**
@@ -35,7 +38,7 @@ class ProductResourceAliasStorageRepository extends AbstractRepository implement
     /**
      * @param int[] $productAbstractIds
      *
-     * @return string[]
+     * @return string[][]
      */
     public function getProductAbstractSkuList(array $productAbstractIds): array
     {
@@ -64,7 +67,7 @@ class ProductResourceAliasStorageRepository extends AbstractRepository implement
     /**
      * @param int[] $productConcreteIds
      *
-     * @return string[]
+     * @return string[][]
      */
     public function getProductConcreteSkuList(array $productConcreteIds): array
     {

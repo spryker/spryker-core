@@ -13,5 +13,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class UrlConfig extends AbstractBundleConfig
 {
     public const RESOURCE_TYPE_URL = SharedUrlConfig::RESOURCE_TYPE_URL;
+    /**
+     * @var string
+     */
     public const RESOURCE_TYPE_REDIRECT = 'redirect';
 }

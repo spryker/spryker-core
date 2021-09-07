@@ -20,6 +20,9 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class AvailabilityNotificationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
+    /**
+     * @var string
+     */
     public const AVAILABILITY_NOTIFICATION_MAIL = 'AVAILABILITY_NOTIFICATION_MAIL';
 
     /**

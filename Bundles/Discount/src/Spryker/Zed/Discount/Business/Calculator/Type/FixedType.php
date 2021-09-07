@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\DiscountTransfer;
 
 class FixedType implements CalculatorTypeInterface
 {
+    /**
+     * @var string
+     */
     public const PRICE_NET_MODE = 'NET_MODE';
 
     /**

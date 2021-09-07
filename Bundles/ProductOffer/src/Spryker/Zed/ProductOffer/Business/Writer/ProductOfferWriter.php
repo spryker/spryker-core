@@ -22,6 +22,9 @@ class ProductOfferWriter implements ProductOfferWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRODUCT_OFFER_NOT_FOUND = 'Product offer is not found.';
 
     /**

@@ -22,17 +22,25 @@ use Spryker\Glue\ProductReviewsRestApi\ProductReviewsRestApiConfig;
 
 class ProductReviewReader implements ProductReviewReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
 
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
      * @uses \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\ProductReviewsResultFormatterPlugin::NAME
+     * @var string
      */
     protected const PRODUCT_REVIEWS = 'productReviews';
 
     /**
      * @uses \Spryker\Client\ProductReview\Plugin\Elasticsearch\ResultFormatter\PaginatedProductReviewsResultFormatterPlugin::NAME
+     * @var string
      */
     protected const PAGINATION = 'pagination';
 

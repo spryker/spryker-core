@@ -25,24 +25,78 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class AddressForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SALUTATION = 'salutation';
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const FIELD_MIDDLE_NAME = 'middle_name';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_1 = 'address1';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_2 = 'address2';
+    /**
+     * @var string
+     */
     public const FIELD_COMPANY = 'company';
+    /**
+     * @var string
+     */
     public const FIELD_CITY = 'city';
+    /**
+     * @var string
+     */
     public const FIELD_ZIP_CODE = 'zip_code';
+    /**
+     * @var string
+     */
     public const FIELD_PO_BOX = 'po_box';
+    /**
+     * @var string
+     */
     public const FIELD_PHONE = 'phone';
+    /**
+     * @var string
+     */
     public const FIELD_CELL_PHONE = 'cell_phone';
+    /**
+     * @var string
+     */
     public const FIELD_DESCRIPTION = 'description';
+    /**
+     * @var string
+     */
     public const FIELD_COMMENT = 'comment';
+    /**
+     * @var string
+     */
     public const FIELD_FK_COUNTRY = 'fkCountry';
 
+    /**
+     * @var string
+     */
     public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    /**
+     * @var string
+     */
     public const OPTION_COUNTRY_CHOICES = 'country';
 
     /**

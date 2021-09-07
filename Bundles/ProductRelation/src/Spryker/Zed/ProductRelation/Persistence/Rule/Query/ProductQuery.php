@@ -22,7 +22,13 @@ use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToProdu
 
 class ProductQuery implements QueryInterface
 {
+    /**
+     * @var string
+     */
     public const COL_CATEGORY_NAME = 'category_name';
+    /**
+     * @var string
+     */
     public const ALIAS_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES = 'spy_product_abstract_localized_attributes';
 
     /**

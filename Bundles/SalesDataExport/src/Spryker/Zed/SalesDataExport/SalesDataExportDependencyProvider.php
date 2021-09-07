@@ -22,11 +22,26 @@ use Spryker\Zed\SalesDataExport\Dependency\Service\SalesDataExportToUtilEncoding
  */
 class SalesDataExportDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_DATA_EXPORT = 'SERVICE_DATA_EXPORT';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SALES_ORDER = 'PROPEL_QUERY_SALES_ORDER';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SALES_EXPENSE = 'PROPEL_QUERY_SALES_EXPENSE';
 
     /**

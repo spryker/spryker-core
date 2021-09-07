@@ -16,14 +16,30 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
 {
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA
+     * @var string
      */
     protected const PRODUCT_ABSTRACT_PAGE_LOAD_DATA = 'PRODUCT_ABSTRACT_PAGE_LOAD_DATA';
 
+    /**
+     * @var string
+     */
     protected const COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+    /**
+     * @var string
+     */
     protected const COLUMN_PRODUCT_ORDER = 'product_order';
+    /**
+     * @var string
+     */
     protected const COLUMN_ALL_NODE_PARENTS = 'all_node_parents';
 
+    /**
+     * @var string
+     */
     protected const RELATION_LOCALE = 'Locale';
+    /**
+     * @var string
+     */
     protected const ID_LOCALE = 'id_locale';
 
     /**

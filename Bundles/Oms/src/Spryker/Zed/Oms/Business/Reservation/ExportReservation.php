@@ -18,6 +18,9 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class ExportReservation implements ExportReservationInterface
 {
+    /**
+     * @var string
+     */
     public const CURRENT_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**

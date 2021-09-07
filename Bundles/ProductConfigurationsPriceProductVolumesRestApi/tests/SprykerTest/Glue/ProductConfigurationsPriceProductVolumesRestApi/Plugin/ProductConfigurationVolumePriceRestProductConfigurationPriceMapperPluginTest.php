@@ -30,10 +30,25 @@ use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Plugin\ProductC
  */
 class ProductConfigurationVolumePriceRestProductConfigurationPriceMapperPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_NAME = 'priceTypeName';
+    /**
+     * @var int
+     */
     protected const NET_AMOUNT = 111;
+    /**
+     * @var int
+     */
     protected const GROSS_AMOUNT = 222;
+    /**
+     * @var string
+     */
     protected const CURRENCY_NAME = 'EUR';
+    /**
+     * @var string
+     */
     protected const PRICE_DATA_VOLUME = '{"volume_prices":[{"quantity":5,"net_price":350,"gross_price":385},{"quantity":10,"net_price":340,"gross_price":375}]}';
 
     /**

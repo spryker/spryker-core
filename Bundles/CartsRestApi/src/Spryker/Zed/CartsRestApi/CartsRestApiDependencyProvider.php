@@ -22,17 +22,47 @@ use Spryker\Zed\Kernel\Container;
  */
 class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+    /**
+     * @var string
+     */
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
+    /**
+     * @var string
+     */
     public const FACADE_CART = 'FACADE_CART';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_QUOTE = 'PROPEL_QUERY_QUOTE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_ITEM_MAPPER = 'PLUGINS_CART_ITEM_MAPPER';
+    /**
+     * @var string
+     */
     public const PLUGIN_QUOTE_CREATOR = 'PLUGIN_QUOTE_CREATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_COLLECTION_EXPANDER = 'PLUGINS_QUOTE_COLLECTION_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_EXPANDER = 'PLUGINS_QUOTE_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_ITEM_READ_VALIDATOR = 'PLUGINS_QUOTE_ITEM_READ_VALIDATOR';
 
     /**

@@ -36,7 +36,13 @@ use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQuer
  */
 class SalesRepository extends AbstractRepository implements SalesRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const ID_SALES_ORDER = 'id_sales_order';
+    /**
+     * @var array
+     */
     protected const SORT_KEYS_MAP = [
         'createdAt' => SpySalesOrderTableMap::COL_CREATED_AT,
         'updatedAt' => SpySalesOrderTableMap::COL_UPDATED_AT,

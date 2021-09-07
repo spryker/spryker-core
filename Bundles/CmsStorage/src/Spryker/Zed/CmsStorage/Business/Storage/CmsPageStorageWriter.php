@@ -18,9 +18,21 @@ use Spryker\Zed\CmsStorage\Persistence\CmsStorageQueryContainerInterface;
 
 class CmsPageStorageWriter implements CmsPageStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const CMS_PAGE_ENTITY = 'CMS_PAGE_ENTITY';
+    /**
+     * @var string
+     */
     protected const CMS_PAGE_STORAGE_ENTITY = 'CMS_PAGE_STORAGE_ENTITY';
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME = 'LOCALE_NAME';
+    /**
+     * @var string
+     */
     protected const STORE_NAME = 'STORE_NAME';
 
     /**

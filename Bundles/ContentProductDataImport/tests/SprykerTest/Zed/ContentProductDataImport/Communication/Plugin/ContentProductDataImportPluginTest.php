@@ -29,6 +29,9 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class ContentProductDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_ERROR_MESSAGE = 'Found invalid skus in a row with the provided key: "apl1", column: "skus.default"';
 
     /**

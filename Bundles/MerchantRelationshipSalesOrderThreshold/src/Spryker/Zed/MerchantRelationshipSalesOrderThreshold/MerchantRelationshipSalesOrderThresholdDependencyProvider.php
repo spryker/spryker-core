@@ -18,8 +18,17 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Dependency\Facade\Mercha
  */
 class MerchantRelationshipSalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SALES_ORDER_THRESHOLD = 'FACADE_SALES_ORDER_THRESHOLD';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
     /**

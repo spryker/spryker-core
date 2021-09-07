@@ -9,8 +9,17 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External;
 
 interface DocumentationGeneratorRestApiToYamlDumperInterface
 {
+    /**
+     * @var int
+     */
     public const YAML_DEFAULT_INLINE = 2;
+    /**
+     * @var int
+     */
     public const YAML_DEFAULT_INDENT = 4;
+    /**
+     * @var int
+     */
     public const YAML_DEFAULT_FLAG = 0;
 
     /**

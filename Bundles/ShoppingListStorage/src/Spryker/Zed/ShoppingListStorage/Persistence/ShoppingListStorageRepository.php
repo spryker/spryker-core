@@ -19,11 +19,29 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ShoppingListStorageRepository extends AbstractRepository implements ShoppingListStorageRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COMPANY_USER_CUSTOMER_ALIAS = 'companyUserCustomer';
+    /**
+     * @var string
+     */
     protected const COMPANY_BUSINESS_UNIT_CUSTOMER_ALIAS = 'companyBusinessUnitCustomer';
+    /**
+     * @var string
+     */
     protected const CUSTOMER_REFERENCE_FIELD = 'customer_reference';
+    /**
+     * @var string
+     */
     protected const COMPANY_USER_REFERENCES_NAME = 'companyUserReferences';
+    /**
+     * @var string
+     */
     protected const COMPANY_BUSINESS_UNIT_REFERENCES_NAME = 'companyBusinessUnitReferences';
+    /**
+     * @var string
+     */
     protected const COMPANY_BUSINESS_UNIT_COMPANY_USER_ALIAS = 'companyBusinessUnitCompanyUser';
 
     /**

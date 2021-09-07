@@ -16,6 +16,9 @@ use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInter
  */
 class SearchHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SEARCH_HEALTH_CHECK_SERVICE_NAME = 'search';
 
     /**

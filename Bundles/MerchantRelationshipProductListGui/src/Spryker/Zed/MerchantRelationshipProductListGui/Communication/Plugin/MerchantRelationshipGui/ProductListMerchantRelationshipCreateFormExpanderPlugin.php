@@ -19,6 +19,7 @@ class ProductListMerchantRelationshipCreateFormExpanderPlugin extends AbstractPl
 {
     /**
      * @uses \Spryker\Zed\MerchantRelationshipGui\Communication\Form\MerchantRelationshipCreateForm::OPTION_SELECTED_COMPANY
+     * @var string
      */
     protected const OPTION_SELECTED_COMPANY = 'id_company';
 

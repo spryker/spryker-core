@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ListController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_STATE_MACHINE = 'state-machine';
 
     /**

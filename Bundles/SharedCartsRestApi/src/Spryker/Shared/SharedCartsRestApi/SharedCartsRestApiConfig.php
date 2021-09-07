@@ -11,10 +11,28 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class SharedCartsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const ERROR_IDENTIFIER_QUOTE_NOT_FOUND = 'ERROR_IDENTIFIER_QUOTE_NOT_FOUND';
+    /**
+     * @var string
+     */
     public const ERROR_IDENTIFIER_QUOTE_PERMISSION_GROUP_NOT_FOUND = 'ERROR_IDENTIFIER_QUOTE_PERMISSION_GROUP_NOT_FOUND';
+    /**
+     * @var string
+     */
     public const ERROR_IDENTIFIER_SHARED_CART_NOT_FOUND = 'ERROR_IDENTIFIER_SHARED_CART_NOT_FOUND';
+    /**
+     * @var string
+     */
     public const ERROR_IDENTIFIER_FAILED_TO_SHARE_CART = 'ERROR_IDENTIFIER_FAILED_TO_SHARE_CART';
+    /**
+     * @var string
+     */
     public const ERROR_IDENTIFIER_FAILED_TO_SAVE_SHARED_CART = 'ERROR_IDENTIFIER_FAILED_TO_SAVE_SHARED_CART';
+    /**
+     * @var string
+     */
     public const ERROR_IDENTIFIER_ACTION_FORBIDDEN = 'ERROR_IDENTIFIER_ACTION_FORBIDDEN';
 }

@@ -9,6 +9,12 @@ namespace Spryker\Zed\AclEntityDataImport\Business\DataSet;
 
 interface AclEntitySegmentDataSetInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'name';
+    /**
+     * @var string
+     */
     public const REFERENCE = 'reference';
 }

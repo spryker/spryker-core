@@ -20,8 +20,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SummaryType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'summary';
 
+    /**
+     * @var string
+     */
     public const FIELD_IS_SUBMIT_ORDER = 'isSubmitOrder';
 
     /**

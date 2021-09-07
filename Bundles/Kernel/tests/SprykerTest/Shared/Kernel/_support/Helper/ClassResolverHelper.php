@@ -25,12 +25,27 @@ class ClassResolverHelper extends Module
     use ConfigHelperTrait;
     use ClassHelperTrait;
 
+    /**
+     * @var string
+     */
     public const MODULE_NAME = 'ModuleName';
 
+    /**
+     * @var string
+     */
     public const CODE_BUCKET = 'BUCKET';
 
+    /**
+     * @var string
+     */
     protected const PROJECT_ORGANIZATION = 'ProjectOrganization';
+    /**
+     * @var string
+     */
     protected const CORE_ORGANIZATION = 'CoreOrganization';
+    /**
+     * @var string
+     */
     protected const STORE_NAME = 'STORE';
 
     /**

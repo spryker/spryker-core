@@ -15,6 +15,9 @@ class ShoppingListItemPermissionValidator implements ShoppingListItemPermissionV
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_SHOPPING_LIST_WRITE_PERMISSION_REQUIRED = 'customer.account.shopping_list.error.write_permission_required';
 
     /**

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class ProductMeasurementSalesUnitGroupKeyGenerator implements ProductMeasurementSalesUnitGroupKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const GROUP_KEY_FORMAT = '%s_quantity_sales_unit_id_%s';
 
     /**

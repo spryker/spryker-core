@@ -11,7 +11,13 @@ use Spryker\Zed\Collector\CollectorConfig;
 
 class CollectorConfigWithNotDefinedDbEngineFake extends CollectorConfig
 {
+    /**
+     * @var string
+     */
     public const COLLECTOR_BULK_DELETE_QUERY_CLASS = 'WrongBulkDeleteTouchByIdQuery';
+    /**
+     * @var string
+     */
     public const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'WrongBulkUpdateTouchKeyByIdQuery';
 
     /**

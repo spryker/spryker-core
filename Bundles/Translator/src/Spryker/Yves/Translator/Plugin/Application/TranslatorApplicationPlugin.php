@@ -17,10 +17,15 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class TranslatorApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_TRANSLATOR = 'translator';
 
     /**
      * Added for BC reason only.
+     *
+     * @var string
      */
     protected const BC_FEATURE_FLAG_TWIG_TRANSLATOR = 'BC_FEATURE_FLAG_TWIG_TRANSLATOR';
 

@@ -20,17 +20,50 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyUserGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY = 'FACADE_COMPANY';
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_ROLE = 'FACADE_COMPANY_ROLE';
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY_USER = 'PROPEL_QUERY_COMPANY_USER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_CONFIG_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_PREPARE_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_FORM_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER = 'PLUGINS_COMPANY_USER_ATTACH_CUSTOMER_FORM_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER = 'PLUGINS_COMPANY_USER_TABLE_ACTION_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION = 'PLUGIN_COMPANY_USER_TABLE_DELETE_ACTION';
 
     /**

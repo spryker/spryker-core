@@ -15,6 +15,9 @@ use Spryker\Client\Kernel\Container;
  */
 class CmsSlotBlockDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_SLOT_BLOCK_VISIBILITY_RESOLVER = 'PLUGINS_CMS_SLOT_BLOCK_VISIBILITY_RESOLVER';
 
     /**

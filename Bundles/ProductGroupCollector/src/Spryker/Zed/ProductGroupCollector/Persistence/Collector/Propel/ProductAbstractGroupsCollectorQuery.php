@@ -14,7 +14,13 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductAbstractGroupsCollectorQuery extends AbstractPropelCollectorQuery
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_GROUPS = 'id_product_groups';
 
     /**

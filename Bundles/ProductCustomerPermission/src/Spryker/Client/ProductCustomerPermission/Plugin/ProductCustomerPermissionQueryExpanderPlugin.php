@@ -22,6 +22,9 @@ use Spryker\Shared\ProductCustomerPermission\ProductCustomerPermissionConfig;
  */
 class ProductCustomerPermissionQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const ID_CUSTOMER = 'id-customer';
 
     /**

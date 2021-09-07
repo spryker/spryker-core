@@ -20,6 +20,9 @@ use Spryker\Zed\ProductStorage\ProductStorageConfig;
 
 class AttributeMap implements AttributeMapInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_ID_PRODUCT_ABSTRACT_FK_LOCALE = '%d_%d';
 
     /**

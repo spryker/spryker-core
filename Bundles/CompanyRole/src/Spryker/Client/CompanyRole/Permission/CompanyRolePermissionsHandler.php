@@ -16,6 +16,9 @@ use Spryker\Client\CompanyRole\Zed\CompanyRoleStubInterface;
 
 class CompanyRolePermissionsHandler implements CompanyRolePermissionsHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const PERMISSION_KEY_GLOSSARY_PREFIX = 'permission.name.';
 
     /**

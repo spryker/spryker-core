@@ -33,8 +33,14 @@ use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
  */
 class SellableTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const SKU_PRODUCT = 'sku-123-321';
 
+    /**
+     * @var string
+     */
     public const SKU_PRODUCT_SECOND = 'sku-123-222';
 
     /**

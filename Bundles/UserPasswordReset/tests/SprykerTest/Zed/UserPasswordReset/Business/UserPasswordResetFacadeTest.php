@@ -26,7 +26,13 @@ use Orm\Zed\UserPasswordReset\Persistence\Map\SpyResetPasswordTableMap;
  */
 class UserPasswordResetFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_MAIL = 'username@example.com';
+    /**
+     * @var string
+     */
     protected const TEST_SYSTEM_USER_TOKEN = 'token';
 
     /**

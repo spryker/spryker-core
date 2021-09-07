@@ -17,16 +17,49 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 abstract class AbstractProductSetCollectorQuery extends AbstractPropelCollectorQuery
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_SET = 'id_product_set';
+    /**
+     * @var string
+     */
     public const FIELD_IS_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     public const FIELD_WEIGHT = 'weight';
+    /**
+     * @var string
+     */
     public const FIELD_PRODUCT_SET_KEY = 'product_set_key';
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_DESCRIPTION = 'description';
+    /**
+     * @var string
+     */
     public const FIELD_META_TITLE = 'meta_title';
+    /**
+     * @var string
+     */
     public const FIELD_META_KEYWORDS = 'meta_keywords';
+    /**
+     * @var string
+     */
     public const FIELD_META_DESCRIPTION = 'meta_description';
+    /**
+     * @var string
+     */
     public const FIELD_URL = 'url';
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
 
     /**

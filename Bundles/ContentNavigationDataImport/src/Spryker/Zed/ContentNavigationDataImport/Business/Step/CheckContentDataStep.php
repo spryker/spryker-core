@@ -16,6 +16,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class CheckContentDataStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE = 'Failed to import content navigation: %s';
 
     /**

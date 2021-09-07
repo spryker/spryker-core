@@ -20,6 +20,7 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
 {
     /**
      * @uses \Orm\Zed\GlossaryStorage\Persistence\Map\SpyGlossaryStorageTableMap::COL_ID_GLOSSARY_STORAGE
+     * @var string
      */
     protected const COL_ID_GLOSSARY_STORAGE = 'spy_glossary_storage.id_glossary_storage';
 

@@ -21,8 +21,12 @@ class CreateShipmentMethodController extends AbstractController
 {
     /**
      * @uses \Spryker\Zed\ShipmentGui\Communication\Controller\ShipmentMethodController::indexAction()
+     * @var string
      */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method/index';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Shipment method has been successfully saved';
 
     /**

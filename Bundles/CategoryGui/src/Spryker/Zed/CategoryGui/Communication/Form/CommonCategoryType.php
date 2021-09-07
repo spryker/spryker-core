@@ -23,24 +23,72 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 abstract class CommonCategoryType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_CATEGORY_TEMPLATE_CHOICES = 'category_template_choices';
+    /**
+     * @var string
+     */
     public const OPTION_DATA_CLASS = 'data_class';
 
+    /**
+     * @var string
+     */
     public const FIELD_STORE_RELATION = 'store_relation';
+    /**
+     * @var string
+     */
     protected const FIELD_CATEGORY_KEY = 'category_key';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_IN_MENU = 'is_in_menu';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_CLICKABLE = 'is_clickable';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_SEARCHABLE = 'is_searchable';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_MAIN = 'is_main';
+    /**
+     * @var string
+     */
     protected const FIELD_TEMPLATE = 'fk_category_template';
+    /**
+     * @var string
+     */
     protected const FIELD_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
+    /**
+     * @var string
+     */
     protected const LABEL_IS_ACTIVE = 'Active';
+    /**
+     * @var string
+     */
     protected const LABEL_IS_IN_MENU = 'Visible in the category tree';
+    /**
+     * @var string
+     */
     protected const LABEL_IS_SEARCHABLE = 'Allow to search for this category';
+    /**
+     * @var string
+     */
     protected const LABEL_TEMPLATE = 'Template';
 
+    /**
+     * @var string
+     */
     protected const BLOCK_PREFIX = 'category';
 
     /**

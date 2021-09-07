@@ -50,24 +50,44 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
  */
 class PriceProductFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const EUR_ISO_CODE = 'EUR';
+    /**
+     * @var string
+     */
     public const USD_ISO_CODE = 'USD';
 
+    /**
+     * @var string
+     */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
+    /**
+     * @var int
+     */
     protected const COUNT_PRODUCT_WITH_PRICES = 5;
 
+    /**
+     * @var string
+     */
     protected const FAKE_CURRENCY = 'FAKE_CURRENCY';
 
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA
+     * @var string
      */
     protected const PRICE_DATA = 'priceData';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DATA_BY_PRICE_TYPE
+     * @var string
      */
     protected const PRICE_DATA_BY_PRICE_TYPE = 'priceDataByPriceType';
 

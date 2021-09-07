@@ -15,15 +15,42 @@ use Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface
 
 class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     public const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_FK_PRODUCT = 'fk_product';
+    /**
+     * @var string
+     */
     public const CONCRETE_DESCRIPTION = 'description';
+    /**
+     * @var string
+     */
     public const ABSTRACT_DESCRIPTION = 'abstract_description';
+    /**
+     * @var string
+     */
     public const ABSTRACT_ATTRIBUTES = 'abstract_attributes';
+    /**
+     * @var string
+     */
     public const CONCRETE_ATTRIBUTES = 'attributes';
 
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_LOCALIZED_ENTITY = 'PRODUCT_CONCRETE_LOCALIZED_ENTITY';
+    /**
+     * @var string
+     */
     public const PRODUCT_CONCRETE_STORAGE_ENTITY = 'PRODUCT_CONCRETE_STORAGE_ENTITY';
+    /**
+     * @var string
+     */
     public const LOCALE_NAME = 'LOCALE_NAME';
 
     /**

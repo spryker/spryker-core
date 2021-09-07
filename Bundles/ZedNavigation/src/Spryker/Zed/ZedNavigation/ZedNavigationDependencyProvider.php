@@ -18,14 +18,27 @@ use Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingBridge;
  */
 class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const URL_BUILDER = 'url builder';
+    /**
+     * @var string
+     */
     public const SERVICE_ENCODING = 'util encoding service';
+    /**
+     * @var string
+     */
     public const FACADE_ROUTER = 'FACADE_ROUTER';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER} instead.
+     * @var string
      */
     public const PLUGINS_NAVIGATION_ITEM_FILTER = 'PLUGINS_NAVIGATION_ITEM_FILTER';
+    /**
+     * @var string
+     */
     public const PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER = 'PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER';
 
     /**

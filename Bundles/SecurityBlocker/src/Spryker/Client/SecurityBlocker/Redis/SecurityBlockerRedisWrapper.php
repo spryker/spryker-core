@@ -12,6 +12,9 @@ use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
 
 class SecurityBlockerRedisWrapper implements SecurityBlockerRedisWrapperInterface
 {
+    /**
+     * @var string
+     */
     protected const KV_PREFIX = 'kv:';
 
     /**

@@ -17,6 +17,9 @@ use Spryker\Shared\HealthCheck\Processor\HealthCheckProcessorInterface;
 
 class HealthCheck implements HealthCheckInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_HEALTH_CHECK_SERVICES = 'services';
 
     /**

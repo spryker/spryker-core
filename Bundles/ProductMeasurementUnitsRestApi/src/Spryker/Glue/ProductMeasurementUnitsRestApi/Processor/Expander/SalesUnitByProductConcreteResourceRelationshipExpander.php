@@ -17,6 +17,9 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\RestResponseBuilder\Sa
 
 class SalesUnitByProductConcreteResourceRelationshipExpander implements SalesUnitByProductConcreteResourceRelationshipExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
     /**

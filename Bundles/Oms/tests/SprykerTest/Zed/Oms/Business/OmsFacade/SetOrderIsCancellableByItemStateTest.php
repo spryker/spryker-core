@@ -22,9 +22,18 @@ use Codeception\Test\Unit;
  */
 class SetOrderIsCancellableByItemStateTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS = 'Test05';
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME_WITHOUT_CANCELLABLE_FLAGS = 'Test01';
 
+    /**
+     * @var string
+     */
     protected const SHIPPED_STATE_NAME = 'shipped';
 
     /**

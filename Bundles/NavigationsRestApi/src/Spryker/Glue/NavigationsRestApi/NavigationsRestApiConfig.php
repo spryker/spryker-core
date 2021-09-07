@@ -11,15 +11,36 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class NavigationsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_NAVIGATIONS = 'navigations';
+    /**
+     * @var string
+     */
     public const CONTROLLER_NAVIGATIONS = 'navigations-resource';
 
+    /**
+     * @var string
+     */
     public const ACTION_NAVIGATIONS_GET = 'get';
 
+    /**
+     * @var string
+     */
     public const RESPONSE_CODE_NAVIGATION_NOT_FOUND = '1601';
+    /**
+     * @var string
+     */
     public const RESPONSE_CODE_NAVIGATION_ID_IS_NOT_SPECIFIED = '1602';
 
+    /**
+     * @var string
+     */
     public const RESPONSE_DETAILS_NAVIGATION_NOT_FOUND = 'Navigation not found.';
+    /**
+     * @var string
+     */
     public const RESPONSE_DETAILS_NAVIGATION_ID_IS_NOT_SPECIFIED = 'Navigation id not specified.';
 
     /**

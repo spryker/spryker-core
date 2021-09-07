@@ -21,24 +21,75 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class MerchantRelationshipCreateForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_SELECTED_COMPANY = 'id_company';
+    /**
+     * @var string
+     */
     public const OPTION_IS_PERSISTENCE_FORM = 'is_persistence_form';
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+    /**
+     * @var string
+     */
     public const OPTION_MERCHANT_CHOICES = 'merchant_choices';
+    /**
+     * @var string
+     */
     public const OPTION_ASSIGNED_COMPANY_BUSINESS_UNIT_CHOICES = 'assignee_company_business_unit_choices';
 
+    /**
+     * @var string
+     */
     protected const FIELD_FK_COMPANY = 'fk_company';
+    /**
+     * @var string
+     */
     protected const FIELD_FK_MERCHANT = 'fk_merchant';
+    /**
+     * @var string
+     */
     protected const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
+    /**
+     * @var string
+     */
     protected const FIELD_ASSIGNED_COMPANY_BUSINESS_UNIT = 'assigneeCompanyBusinessUnits';
 
+    /**
+     * @var string
+     */
     protected const  COMPANY_FIELD_LABEL = 'Company';
+    /**
+     * @var string
+     */
     protected const  COMPANY_FIELD_PLACEHOLDER = 'Select Company';
+    /**
+     * @var string
+     */
     protected const  MERCHANT_FIELD_LABEL = 'Merchant';
+    /**
+     * @var string
+     */
     protected const  MERCHANT_FIELD_PLACEHOLDER = 'Select merchant';
+    /**
+     * @var string
+     */
     protected const  FK_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Business Unit Owner';
+    /**
+     * @var string
+     */
     protected const  FK_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select Business Unit';
+    /**
+     * @var string
+     */
     protected const  ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_LABEL = 'Assigned Business Units';
+    /**
+     * @var string
+     */
     protected const  ASSIGNED_COMPANY_BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Select Business Units';
 
     /**

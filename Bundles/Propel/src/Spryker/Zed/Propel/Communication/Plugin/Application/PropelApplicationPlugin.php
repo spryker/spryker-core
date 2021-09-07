@@ -22,6 +22,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const DATA_SOURCE_NAME = 'zed';
 
     /**

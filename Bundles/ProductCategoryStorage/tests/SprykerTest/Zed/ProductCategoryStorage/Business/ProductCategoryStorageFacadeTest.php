@@ -37,15 +37,36 @@ use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageRea
  */
 class ProductCategoryStorageFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const STORE_AT = 'AT';
 
+    /**
+     * @var int
+     */
     protected const FAKE_ID_CATEGORY = 6666;
+    /**
+     * @var int
+     */
     protected const FAKE_ID_CATEGORY_NODE = 8888;
+    /**
+     * @var int
+     */
     protected const FAKE_ID_PRODUCT_ABSTRACT = 5555;
 
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
+    /**
+     * @var string
+     */
     protected const ASSET_MESSAGE_COUNT_IS_WRONG = 'Product Category Storage record count is wrong.';
 
     /**

@@ -17,8 +17,14 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class RootCategoryType extends CommonCategoryType
 {
+    /**
+     * @var string
+     */
     protected const OPTION_PROPERTY_PATH_CATEGORY_NODE_IS_ROOT = 'categoryNode.isRoot';
 
+    /**
+     * @var string
+     */
     protected const FIELD_IS_ROOT = 'is_root';
 
     /**

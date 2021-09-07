@@ -15,6 +15,9 @@ use Spryker\Client\StorageRedis\StorageRedisConfig;
 
 class StorageRedisWrapper implements StorageRedisWrapperInterface
 {
+    /**
+     * @var string
+     */
     public const KV_PREFIX = 'kv:';
 
     /**

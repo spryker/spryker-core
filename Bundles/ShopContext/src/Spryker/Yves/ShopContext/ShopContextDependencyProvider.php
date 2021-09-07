@@ -12,6 +12,9 @@ use Spryker\Yves\Kernel\Container;
 
 class ShopContextDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_SHOP_CONTEXT_EXPANDER = 'PLUGINS_SHOP_CONTEXT_EXPANDER';
 
     /**

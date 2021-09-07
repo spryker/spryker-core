@@ -18,12 +18,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateCompanyUserController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Company user has been created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Company user has not been created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_COMPANY_WITHOUT_CUSTOMER = 'Customer with id `%s` does not exist';
 
+    /**
+     * @var string
+     */
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
     /**

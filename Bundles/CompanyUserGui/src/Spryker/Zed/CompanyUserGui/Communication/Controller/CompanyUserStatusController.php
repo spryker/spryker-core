@@ -18,11 +18,26 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CompanyUserStatusController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_REDIRECT_COMPANY_USER_PAGE = '/company-user-gui/list-company-user';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_COMPANY_USER_ENABLE = 'Company user successfully enabled';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_COMPANY_USER_ENABLE = 'Company user cannot be enabled';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_COMPANY_USER_DISABLE = 'Company user successfully disabled';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_COMPANY_USER_DISABLE = 'Company user cannot be disabled';
 
     /**

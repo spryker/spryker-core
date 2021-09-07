@@ -27,6 +27,9 @@ use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Synchronization\Produc
  */
 class ProductBundleSynchronizationDataBulkRepositoryPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const FAKE_ID_PRODUCT_CONCRETE = 6666;
 
     /**

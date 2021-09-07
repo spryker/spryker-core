@@ -30,33 +30,108 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class AddressFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
+    /**
+     * @var string
+     */
     public const FIELD_ID_CUSTOMER_ADDRESS = 'idCustomerAddress';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_ID_SALES_ORDER_ADDRESS = 'idSalesOrderAddress';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_SALUTATION = 'salutation';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_FIRST_NAME = 'firstName';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_MIDDLE_NAME = 'middleName';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_LAST_NAME = 'lastName';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_ADDRESS_1 = 'address1';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_ADDRESS_2 = 'address2';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_COMPANY = 'company';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_CITY = 'city';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_ZIP_CODE = 'zipCode';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_PHONE = 'phone';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_CELL_PHONE = 'cellPhone';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_DESCRIPTION = 'description';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_COMMENT = 'comment';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_ISO_2_CODE = 'iso2Code';
+    /**
+     * @var string
+     */
     public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
 
+    /**
+     * @var string
+     */
     public const VALUE_ADD_NEW_ADDRESS = '';
+    /**
+     * @var string
+     */
     public const ADDRESS_CHOICE_NEW_ADDRESS_LABEL = 'New address';
 
+    /**
+     * @var string
+     */
     public const ERROR_MESSAGE_VALUE_SHOULD_NOT_BE_BLANK = 'This value should not be blank.';
+    /**
+     * @var string
+     */
     protected const GROUP_SHIPPING_ADDRESS = 'shippingAddress';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_ZIP_CODE_PATTERN = '/^\d{5}$/';
+    /**
+     * @var string
+     */
     protected const VALIDATION_ZIP_CODE_MESSAGE = 'Zip code is not valid.';
 
     /**

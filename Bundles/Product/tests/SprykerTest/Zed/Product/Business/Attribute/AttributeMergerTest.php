@@ -24,6 +24,9 @@ use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
  */
 class AttributeMergerTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ID_LOCALE = 1;
 
     /**

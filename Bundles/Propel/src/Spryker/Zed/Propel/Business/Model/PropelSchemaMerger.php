@@ -20,10 +20,22 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface
 {
+    /**
+     * @var int
+     */
     protected const RANDOM_STRING_LENGTH = 32;
+    /**
+     * @var string
+     */
     protected const PATTERN_ANONYMOUS_ELEMENT = 'anonymous_%s';
 
+    /**
+     * @var string
+     */
     protected const SOURCE_CORE = 'core';
+    /**
+     * @var string
+     */
     protected const SOURCE_PROJECT = 'project';
 
     /**

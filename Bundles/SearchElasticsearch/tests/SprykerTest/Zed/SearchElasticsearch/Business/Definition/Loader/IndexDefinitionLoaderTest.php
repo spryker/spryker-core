@@ -31,10 +31,22 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class IndexDefinitionLoaderTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const SCHEMA_DEFINITION_FILE_NAME = 'index-name';
+    /**
+     * @var string
+     */
     protected const SCHEMA_DEFINITION_FILE_EXTENSION = 'json';
 
+    /**
+     * @var string
+     */
     protected const INDEX_DEFINITION_KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const INDEX_DEFINITION_KEY_DEFINITION = 'definition';
 
     /**

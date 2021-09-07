@@ -12,6 +12,9 @@ use Spryker\Zed\CategoryGui\Dependency\Service\CategoryGuiToUtilEncodingServiceI
 
 class CategoryNodeOrderUpdater implements CategoryNodeOrderUpdaterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID = 'id';
 
     /**

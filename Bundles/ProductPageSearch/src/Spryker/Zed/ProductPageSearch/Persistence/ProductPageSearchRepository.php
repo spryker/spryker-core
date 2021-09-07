@@ -24,6 +24,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductPageSearchRepository extends AbstractRepository implements ProductPageSearchRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**

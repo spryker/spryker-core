@@ -30,6 +30,7 @@ class ProductReviewBusinessTester extends Actor
     /**
      * @see SpyProductReviewTableMap::COL_UPDATED_AT
      * @see SpyProductReviewTableMap::COL_CREATED_AT
+     * @var array
      */
     public const DATE_FIELDS = [
         'created_at',

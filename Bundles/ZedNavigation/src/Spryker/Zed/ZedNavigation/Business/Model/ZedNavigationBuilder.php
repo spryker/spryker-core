@@ -15,7 +15,13 @@ use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
 
 class ZedNavigationBuilder
 {
+    /**
+     * @var string
+     */
     public const MENU = 'menu';
+    /**
+     * @var string
+     */
     public const PATH = 'path';
 
     /**

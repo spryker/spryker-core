@@ -25,13 +25,37 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class PriceVolumeCollectionFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_VOLUMES = 'volumes';
+    /**
+     * @var string
+     */
     public const FIELD_ID_STORE = 'idStore';
+    /**
+     * @var string
+     */
     public const FIELD_ID_CURRENCY = 'idCurrency';
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_CONCRETE = 'idProductConcrete';
+    /**
+     * @var string
+     */
     public const FIELD_NET_PRICE = 'net_price';
+    /**
+     * @var string
+     */
     public const FIELD_GROSS_PRICE = 'gross_price';
+    /**
+     * @var string
+     */
     protected const VALIDATION_VOLUMES_GROUP = 'volumes_group';
 
     /**

@@ -28,6 +28,9 @@ use Generated\Shared\Transfer\PersistentCartChangeTransfer;
  */
 class ProductConfigurationsRestApiFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_ITEM_SKU = 'test_sku';
 
     /**

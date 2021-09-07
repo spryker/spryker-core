@@ -15,6 +15,9 @@ use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInte
 
 class DataResponseFormatter implements DataResponseFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_DATA_RESPONSE_ARRAY_DATA = 'data';
 
     /**

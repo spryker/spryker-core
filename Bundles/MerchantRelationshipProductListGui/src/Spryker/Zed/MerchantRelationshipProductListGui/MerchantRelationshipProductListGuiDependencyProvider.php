@@ -17,7 +17,13 @@ use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRel
  */
 class MerchantRelationshipProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_RELATIONSHIP = 'FACADE_MERCHANT_RELATIONSHIP';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_RELATIONSHIP_PRODUCT_LIST = 'FACADE_MERCHANT_RELATIONSHIP_PRODUCT_LIST';
 
     /**

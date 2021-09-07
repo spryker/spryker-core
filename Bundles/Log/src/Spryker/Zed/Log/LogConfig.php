@@ -14,16 +14,22 @@ class LogConfig extends AbstractBundleConfig
 {
     /**
      * Sets how many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
+     *
+     * @var int
      */
     protected const BUFFER_LIMIT = 1000;
 
     /**
      * Sets that the messages that are handled can bubble up the stack or not.
+     *
+     * @var bool
      */
     protected const BUBBLE = true;
 
     /**
      * Sets is buffer have to be flushed when the max size has been reached, by default oldest entries are discarded.
+     *
+     * @var bool
      */
     protected const FLUSH_ON_OVERFLOW = true;
 

@@ -22,16 +22,29 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CompanyUserBusinessUnitForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_VALUES_BUSINESS_UNITS_CHOICES = 'company_business_unit_choices';
+    /**
+     * @var string
+     */
     public const OPTION_ATTRIBUTES_BUSINESS_UNITS_CHOICES = 'company_business_unit_attributes';
 
+    /**
+     * @var string
+     */
     public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
 
     /**
      * @uses \Spryker\Zed\CompanyBusinessUnitGui\Communication\Controller\SuggestController::indexAction()
+     * @var string
      */
     protected const ROUTE_SUGGEST = '/company-business-unit-gui/suggest';
 
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH = '@CompanyBusinessUnitGui/CompanyUser/company_business_unit.twig';
 
     /**

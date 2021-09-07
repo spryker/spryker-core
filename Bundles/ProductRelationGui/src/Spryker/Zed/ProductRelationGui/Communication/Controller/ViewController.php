@@ -15,7 +15,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewController extends BaseProductRelationController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/product-relation-gui/list/index';
 
     /**

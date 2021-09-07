@@ -26,6 +26,9 @@ use SprykerTest\Yves\StepEngine\Process\Fixtures\StepMockWithBreadcrumbs;
  */
 class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
 {
+    /**
+     * @var string
+     */
     public const FORM_NAME = 'formName';
 
     /**

@@ -21,8 +21,17 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
 {
     use TranslatorTrait;
 
+    /**
+     * @var string
+     */
     protected const KEY_VALUE = 'value';
+    /**
+     * @var string
+     */
     protected const KEY_GLOSSARY_KEY = 'GlossaryKey';
+    /**
+     * @var string
+     */
     protected const KEY_KEY = 'key';
 
     /**

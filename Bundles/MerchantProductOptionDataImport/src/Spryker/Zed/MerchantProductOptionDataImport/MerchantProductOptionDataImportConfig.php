@@ -12,6 +12,9 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class MerchantProductOptionDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_MERCHANT_PRODUCT_OPTION_GROUP = 'merchant-product-option-group';
 
     /**

@@ -13,9 +13,14 @@ class GlossaryConfig extends AbstractBundleConfig
 {
     /**
      * Used as `item_type` for touch mechanism.
+     *
+     * @var string
      */
     public const RESOURCE_TYPE_TRANSLATION = 'translation';
 
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_DEFAULT = '/glossary';
 
     /**

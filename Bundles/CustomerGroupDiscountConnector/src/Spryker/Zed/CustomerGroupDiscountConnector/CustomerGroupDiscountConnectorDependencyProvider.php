@@ -17,7 +17,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class CustomerGroupDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_DISCOUNT = 'FACADE_DISCOUNT';
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER_GROUP = 'FACADE_CUSTOMER_GROUP';
 
     /**

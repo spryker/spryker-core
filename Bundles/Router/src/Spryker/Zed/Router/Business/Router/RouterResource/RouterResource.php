@@ -27,7 +27,13 @@ use Symfony\Component\Finder\SplFileInfo;
  */
 class RouterResource implements ResourceInterface
 {
+    /**
+     * @var int
+     */
     public const MODULE_NAME_POSITION = 2;
+    /**
+     * @var int
+     */
     public const CONTROLLER_NAME_POSITION = 5;
 
     /**

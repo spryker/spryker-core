@@ -19,6 +19,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class AvailabilityStockForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_STOCKS = 'stocks';
 
     /**

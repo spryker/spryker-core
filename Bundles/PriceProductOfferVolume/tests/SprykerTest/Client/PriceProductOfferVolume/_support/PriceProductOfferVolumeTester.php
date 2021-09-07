@@ -29,6 +29,9 @@ class PriceProductOfferVolumeTester extends Actor
 {
     use _generated\PriceProductOfferVolumeTesterActions;
 
+    /**
+     * @var string
+     */
     protected const PRICE_DATA_VOLUME = '{"volume_prices":[{"quantity":3,"net_price":350,"gross_price":385},{"quantity":8,"net_price":340,"gross_price":375}]}';
 
     /**

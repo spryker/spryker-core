@@ -11,6 +11,9 @@ use Spryker\Client\Agent\AgentConfig;
 
 class AgentAccessConfigurator implements AgentAccessConfiguratorInterface
 {
+    /**
+     * @var string
+     */
     protected const AGENT_ALLOWED_SECURED_PATTERN_REPLACEMENT = '';
 
     /**

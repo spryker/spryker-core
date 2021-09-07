@@ -14,6 +14,9 @@ use Spryker\Zed\Tax\Business\Model\AccruedTaxCalculatorInterface;
 
 class TaxAmountCalculator implements CalculatorInterface
 {
+    /**
+     * @var string
+     */
     public const ROUNDING_ERROR_BUCKET_IDENTIFIER = 'calculable_object';
 
     /**

@@ -23,22 +23,42 @@ use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 
 class MerchantTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_ID_MERCHANT = 'id-merchant';
 
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
+    /**
+     * @var string
+     */
     public const COL_STORES = 'stores';
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const STATUS_CLASS_LABEL_MAPPING = [
         MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
         MerchantGuiConfig::STATUS_APPROVED => 'label-info',
         MerchantGuiConfig::STATUS_DENIED => 'label-danger',
     ];
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const STATUS_CLASS_BUTTON_MAPPING = [
         MerchantGuiConfig::STATUS_APPROVED => 'btn-create',
         MerchantGuiConfig::STATUS_DENIED => 'btn-remove',
     ];
 
+    /**
+     * @var string
+     */
     protected const STORE_CLASS_LABEL = 'label-info';
 
     /**

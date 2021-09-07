@@ -27,12 +27,33 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class ExpandItemsWithProductBundlesTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const CUSTOMER_REFERENCE = 'CUSTOMER_REFERENCE';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_SKU_1 = 'PRODUCT_CONCRETE_SKU_1';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_SKU_2 = 'PRODUCT_CONCRETE_SKU_2';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_SKU_3 = 'PRODUCT_CONCRETE_SKU_3';
+    /**
+     * @var string
+     */
     protected const BUNDLE_SKU_1 = 'BUNDLE_SKU_1';
+    /**
+     * @var string
+     */
     protected const CURRENCY_ISO_CODE = 'CODE';
 
     /**

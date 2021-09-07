@@ -12,6 +12,9 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface;
 
 class CriteriaByQueryFilterPreProcessor implements PreProcessorInterface
 {
+    /**
+     * @var string
+     */
     public const FILTER = 'filter';
 
     /**

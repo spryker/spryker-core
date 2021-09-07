@@ -17,6 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class RemoveYvesIdeAutoCompletionConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'dev:ide-auto-completion:yves:remove';
 
     /**

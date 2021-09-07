@@ -18,14 +18,41 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class CmsBlockCollectorQuery extends AbstractPropelCollectorQuery
 {
+    /**
+     * @var string
+     */
     public const COL_IS_ACTIVE = 'is_active';
+    /**
+     * @var string
+     */
     public const COL_VALID_FROM = 'valid_from';
+    /**
+     * @var string
+     */
     public const COL_VALID_TO = 'valid_to';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_ID_CMS_BLOCK = 'id_cms_block';
+    /**
+     * @var string
+     */
     public const COL_PLACEHOLDERS = 'placeholders';
+    /**
+     * @var string
+     */
     public const COL_GLOSSARY_KEYS = 'glossary_keys';
+    /**
+     * @var string
+     */
     public const COL_TEMPLATE_PATH = 'template_path';
+    /**
+     * @var string
+     */
     public const COL_IS_IN_STORE = 'is_in_store';
 
     /**

@@ -24,6 +24,9 @@ use Propel\Runtime\Propel;
  */
 class PropelApplicationPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_DATA_SOURCE_NAME = 'zed';
 
     /**

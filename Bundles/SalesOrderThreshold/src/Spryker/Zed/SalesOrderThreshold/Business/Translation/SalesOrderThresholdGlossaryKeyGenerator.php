@@ -11,7 +11,13 @@ use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 
 class SalesOrderThresholdGlossaryKeyGenerator implements SalesOrderThresholdGlossaryKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const SALES_ORDER_THRESHOLD_GLOSSARY_PREFIX = 'sales-order-threshold';
+    /**
+     * @var string
+     */
     protected const SALES_ORDER_THRESHOLD_GLOSSARY_MESSAGE = 'message';
 
     /**

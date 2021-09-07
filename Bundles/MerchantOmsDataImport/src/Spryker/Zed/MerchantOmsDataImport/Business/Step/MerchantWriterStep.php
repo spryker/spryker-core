@@ -17,6 +17,10 @@ use Spryker\Zed\MerchantOmsDataImport\Business\DataSet\MerchantOmsProcessDataSet
 
 class MerchantWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @phpstan-var array<string>
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantOmsProcessDataSetInterface::MERCHANT_REFERENCE,
         MerchantOmsProcessDataSetInterface::FK_STATE_MACHINE_PROCESS,

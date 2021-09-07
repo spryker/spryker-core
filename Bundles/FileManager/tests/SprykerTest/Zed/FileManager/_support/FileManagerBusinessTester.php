@@ -35,8 +35,17 @@ class FileManagerBusinessTester extends Actor
 {
     use _generated\FileManagerBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const PATH_DOCUMENT = 'documents/';
+    /**
+     * @var string
+     */
     protected const FILE_CONTENT = 'Spryker is awesome';
+    /**
+     * @var string
+     */
     protected const ROOT_DIRECTORY = 'fileSystemRoot/uploads/';
 
     /**

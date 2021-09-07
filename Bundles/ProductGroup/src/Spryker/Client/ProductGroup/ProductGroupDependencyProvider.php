@@ -14,7 +14,13 @@ use Spryker\Client\ProductGroup\Dependency\Client\ProductGroupToStorageBridge;
 
 class ProductGroupDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
 
     /**

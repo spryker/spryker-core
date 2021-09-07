@@ -20,6 +20,9 @@ class ProductRelationDeleter implements ProductRelationDeleterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND = 'Product relation #%d not found';
 
     /**

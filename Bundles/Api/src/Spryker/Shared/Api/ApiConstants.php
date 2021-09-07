@@ -17,6 +17,7 @@ interface ApiConstants
      * - Enables the mode when API response is extended with request parameters and stacktrace.
      *
      * @api
+     * @var string
      */
     public const ENABLE_API_DEBUG = 'API:ENABLE_API_DEBUG';
 }

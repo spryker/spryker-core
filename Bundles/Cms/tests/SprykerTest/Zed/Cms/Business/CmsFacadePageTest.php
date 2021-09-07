@@ -28,8 +28,17 @@ use Spryker\Zed\Store\Business\StoreFacade;
  */
 class CmsFacadePageTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const CMS_PAGE_NEW_TITLE = 'new title';
+    /**
+     * @var string
+     */
     public const CMS_PAGE_NEW_KEY_WORDS = 'new key words';
+    /**
+     * @var string
+     */
     public const CMS_PAGE_NEW_DESCRIPTION = 'new description';
 
     /**

@@ -13,8 +13,17 @@ use Spryker\Zed\PriceProductSchedule\Business\Product\ProductFinderInterface;
 
 class ProductDataValidator extends AbstractImportDataValidator
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRODUCT_CONCRETE_NOT_FOUND = 'Concrete product was not found by provided sku %sku%.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRODUCT_ABSTRACT_NOT_FOUND = 'Abstract product was not found by provided sku %sku%.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SKU_NOT_VALID = 'One Product Abstract Sku or Product Concrete Sku must be provided.';
 
     /**

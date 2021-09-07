@@ -16,6 +16,9 @@ use Spryker\Client\ProductListStorage\Exception\NotSupportedProductListTransferT
 
 abstract class AbstractProductRestrictionFilter implements ProductRestrictionFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_NOT_SUPPORTED_PRODUCT_LIST_TRANSFER_TYPE = 'Type `%s` is not supported for product filtering. Please use `%s` instead.';
 
     /**

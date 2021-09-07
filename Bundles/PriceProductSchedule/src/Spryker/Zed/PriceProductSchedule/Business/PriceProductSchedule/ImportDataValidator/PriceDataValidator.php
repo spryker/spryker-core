@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\PriceProductScheduleListImportErrorTransfer;
 
 class PriceDataValidator extends AbstractImportDataValidator
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_GROSS_AND_NET_VALUE = 'Gross and Net Amount must be a positive integer.';
 
     /**

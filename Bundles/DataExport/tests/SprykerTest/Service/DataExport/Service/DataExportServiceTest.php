@@ -30,16 +30,35 @@ class DataExportServiceTest extends Unit
 {
     /**
      * @uses \Spryker\Service\DataExport\Writer\DataExportLocalWriter::LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR
+     * @var string
      */
     protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
 
+    /**
+     * @var string
+     */
     protected const DATA_ENTITY_PRIMARY = 'data-entity-primary';
+    /**
+     * @var string
+     */
     protected const DATA_ENTITY_SECONDARY = 'data-entity-secondary';
 
+    /**
+     * @var string
+     */
     protected const HOOK_KEY_TIMESTAMP = 'timestamp';
+    /**
+     * @var string
+     */
     protected const HOOK_KEY_EXTENSION = 'extension';
 
+    /**
+     * @var string
+     */
     protected const DESTINATION_DIR = 'test-folder';
+    /**
+     * @var string
+     */
     protected const DESTINATION_FILE = 'test-export.csv';
 
     /**

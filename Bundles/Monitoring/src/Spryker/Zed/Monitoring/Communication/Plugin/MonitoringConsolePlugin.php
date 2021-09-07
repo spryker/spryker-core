@@ -21,6 +21,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
 {
+    /**
+     * @var string
+     */
     public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
     /**

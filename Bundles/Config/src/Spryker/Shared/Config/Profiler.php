@@ -9,8 +9,17 @@ namespace Spryker\Shared\Config;
 
 class Profiler
 {
+    /**
+     * @var string
+     */
     public const PROFILE_VALUE = 'value';
+    /**
+     * @var string
+     */
     public const PROFILE_DEFAULT = 'default';
+    /**
+     * @var string
+     */
     public const PROFILE_COUNT = 'count';
 
     /**

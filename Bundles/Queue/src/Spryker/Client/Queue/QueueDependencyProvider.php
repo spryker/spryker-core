@@ -15,6 +15,9 @@ use Spryker\Client\Kernel\Container;
  */
 class QueueDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const QUEUE_ADAPTERS = 'queue adapters';
 
     /**

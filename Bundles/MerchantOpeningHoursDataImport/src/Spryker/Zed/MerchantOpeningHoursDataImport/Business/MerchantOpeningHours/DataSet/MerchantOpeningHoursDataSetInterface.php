@@ -9,6 +9,12 @@ namespace Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHou
 
 interface MerchantOpeningHoursDataSetInterface
 {
+    /**
+     * @var string
+     */
     public const MERCHANT_REFERENCE = 'merchant_reference';
+    /**
+     * @var string
+     */
     public const FK_MERCHANT = 'fk_merchant';
 }

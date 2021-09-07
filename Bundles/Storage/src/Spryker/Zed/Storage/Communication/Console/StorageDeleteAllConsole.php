@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageDeleteAllConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'storage:delete';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will delete all keys from storage.';
 
     /**

@@ -24,12 +24,33 @@ use Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig;
 
 class ProductRuleTable extends AbstractProductTable
 {
+    /**
+     * @var string
+     */
     public const COL_ACTION = 'action';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     public const COL_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_CATEGORY_NAME = 'category_name';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    /**
+     * @var string
+     */
     public const COL_STATUS = 'status';
 
     /**

@@ -24,14 +24,35 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_TYPE = 'type';
+    /**
+     * @var string
+     */
     public const PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     public const PREVIOUS_STEP_NAME = 'previous-step';
+    /**
+     * @var string
+     */
     public const NEXT_STEP_NAME = 'next-step';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_INVALID_DATA_PROVIDED = 'Invalid data provided.';
+    /**
+     * @var string
+     */
     protected const SUCCESSFUL_MESSAGE_CUSTOMER_CREATED = 'Customer is registered successfully.';
+    /**
+     * @var string
+     */
     protected const SUCCESSFUL_MESSAGE_ORDER_CREATED = 'Order is created successfully.';
 
     /**

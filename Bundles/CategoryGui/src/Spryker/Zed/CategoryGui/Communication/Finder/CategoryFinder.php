@@ -17,6 +17,9 @@ use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToLocaleFacadeInterface
 
 class CategoryFinder implements CategoryFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const PATH_DELIMITER = '/';
 
     /**

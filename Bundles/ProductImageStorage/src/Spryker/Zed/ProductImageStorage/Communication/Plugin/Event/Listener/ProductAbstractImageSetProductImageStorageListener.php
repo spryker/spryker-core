@@ -25,6 +25,9 @@ class ProductAbstractImageSetProductImageStorageListener extends AbstractPlugin 
 {
     use DatabaseTransactionHandlerTrait;
 
+    /**
+     * @var array
+     */
     protected const PUBLISH_EVENTS = [
         ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_UPDATE,
         ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_TO_PRODUCT_IMAGE_CREATE,

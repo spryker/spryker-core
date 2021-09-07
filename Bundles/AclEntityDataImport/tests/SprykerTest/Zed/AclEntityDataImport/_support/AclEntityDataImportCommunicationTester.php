@@ -39,12 +39,27 @@ class AclEntityDataImportCommunicationTester extends Actor
 {
     use _generated\AclEntityDataImportCommunicationTesterActions;
 
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_REFERENCE_1 = 'sH9qLMZtt6sxWqRJVYib';
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_REFERENCE_2 = '5nIYY1SETa50lSDiwxf8';
 
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_NAME_1 = 'Segment 1';
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_NAME_2 = 'Segment 2';
 
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_TARGET_ENTITY = 'Orm\Zed\Merchant\Persistence\SpyMerchant';
 
     /**

@@ -34,8 +34,14 @@ class ProductSetPageSearchCommunicationTester extends Actor
 {
     use _generated\ProductSetPageSearchCommunicationTesterActions;
 
+    /**
+     * @var string
+     */
     public const PARAM_PROJECT = 'PROJECT';
 
+    /**
+     * @var string
+     */
     public const PROJECT_SUITE = 'suite';
 
     /**

@@ -19,7 +19,13 @@ use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceP
 
 class ItemsWithoutPriceFilter implements ItemFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_CONCRETE_PRODUCT_WITHOUT_PRICE_REMOVED = 'price-cart-connector.info.concrete-product-without-price.removed';
 
     /**

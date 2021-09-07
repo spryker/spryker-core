@@ -32,6 +32,9 @@ use Spryker\Zed\CmsSlotStorage\Persistence\CmsSlotStorageEntityManager;
  */
 class CmsSlotStoragePublishListenerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CMS_SLOT_KEY = 'test_cms_slot_key';
 
     /**

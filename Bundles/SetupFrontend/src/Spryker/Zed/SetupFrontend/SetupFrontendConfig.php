@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SetupFrontendConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const NODE_JS_MINIMUM_REQUIRED_MAJOR_VERSION = 12;
 
     /**

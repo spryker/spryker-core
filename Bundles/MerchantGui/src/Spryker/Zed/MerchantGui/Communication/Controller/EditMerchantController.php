@@ -19,13 +19,31 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditMerchantController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
+    /**
+     * @var string
+     */
     public const REQUEST_ID_MERCHANT = 'id-merchant';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_DEACTIVATE = 'merchant.deactivated';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_ACTIVATE = 'merchant.activated';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_NOT_FOUND = 'merchant.not_found';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_UPDATE_SUCCESS = 'Merchant updated successfully.';
 
     /**

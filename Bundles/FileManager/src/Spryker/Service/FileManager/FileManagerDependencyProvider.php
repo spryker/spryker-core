@@ -16,6 +16,9 @@ use Spryker\Service\Kernel\Container;
  */
 class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_FILE_SYSTEM = 'SERVICE_FILE_SYSTEM';
 
     /**

@@ -20,8 +20,14 @@ use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher as SymfonyTracea
  */
 class EventDispatcherApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     public const SERVICE_DISPATCHER = 'dispatcher';
 
+    /**
+     * @var string
+     */
     protected const SERVICE_STOPWATCH = 'stopwatch';
 
     /**

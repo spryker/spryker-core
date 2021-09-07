@@ -16,8 +16,17 @@ use Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeBridg
  */
 class SchedulerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_GRACEFUL_RUNNER = 'FACADE_GRACEFUL_RUNNER';
+    /**
+     * @var string
+     */
     public const PLUGINS_SCHEDULE_READER = 'PLUGINS_SCHEDULE_READER';
+    /**
+     * @var string
+     */
     public const PLUGINS_SCHEDULER_ADAPTER = 'PLUGINS_SCHEDULER_ADAPTER';
 
     /**

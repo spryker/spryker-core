@@ -29,9 +29,18 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class AclGroupDataImportPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_IMPORT_COUNT = 2;
 
+    /**
+     * @var string
+     */
     protected const ACL_GROUP_NAME_1 = 'Foo group';
+    /**
+     * @var string
+     */
     protected const ACL_GROUP_NAME_2 = 'Bar group';
 
     /**

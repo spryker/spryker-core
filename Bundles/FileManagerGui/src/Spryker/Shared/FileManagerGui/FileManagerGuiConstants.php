@@ -12,5 +12,8 @@ namespace Spryker\Shared\FileManagerGui;
  */
 interface FileManagerGuiConstants
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_FILE_MAX_SIZE = 'FILE_MANAGER_GUI:DEFAULT_FILE_MAX_SIZE';
 }

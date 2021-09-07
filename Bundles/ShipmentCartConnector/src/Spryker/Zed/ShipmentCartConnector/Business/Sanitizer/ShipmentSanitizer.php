@@ -14,16 +14,19 @@ class ShipmentSanitizer implements ShipmentSanitizerInterface
 {
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_ADD
+     * @var string
      */
     protected const OPERATION_ADD = 'add';
 
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     * @var string
      */
     protected const OPERATION_REMOVE = 'remove';
 
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     * @var string
      */
     protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 

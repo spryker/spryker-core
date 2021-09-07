@@ -11,8 +11,14 @@ use Symfony\Component\Validator\Constraint;
 
 class UniqueMerchantReference extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_CURRENT_MERCHANT_ID = 'currentMerchantId';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_MESSAGE = 'Merchant reference is already used.';
 
     /**

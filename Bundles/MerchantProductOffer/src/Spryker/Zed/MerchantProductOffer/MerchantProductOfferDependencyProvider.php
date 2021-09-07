@@ -17,7 +17,13 @@ use Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToPro
  */
 class MerchantProductOfferDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
 
     /**

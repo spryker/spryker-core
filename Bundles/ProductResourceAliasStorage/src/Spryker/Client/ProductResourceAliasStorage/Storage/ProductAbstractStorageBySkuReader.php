@@ -15,6 +15,9 @@ use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 class ProductAbstractStorageBySkuReader implements ProductAbstractStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const REFERENCE_NAME = 'sku:';
 
     /**

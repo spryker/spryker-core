@@ -14,7 +14,13 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
 
 class SynchronizationStorage implements SynchronizationInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'key';
+    /**
+     * @var string
+     */
     public const VALUE = 'value';
 
     /**

@@ -11,7 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SalesProductConnectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const POPULARITY_DAYS_INTERVAL = 90;
+    /**
+     * @var int
+     */
     protected const PRODUCT_PAGE_DATA_REFRESH_DAYS_INTERVAL = 1;
 
     /**

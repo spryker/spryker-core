@@ -33,7 +33,13 @@ class EventDispatcherGlueTester extends Actor
 {
     use _generated\EventDispatcherGlueTesterActions;
 
+    /**
+     * @var string
+     */
     protected const SERVICE_DISPATCHER = 'dispatcher';
+    /**
+     * @var string
+     */
     protected const SERVICE_STOPWATCH = 'stopwatch';
 
     /**

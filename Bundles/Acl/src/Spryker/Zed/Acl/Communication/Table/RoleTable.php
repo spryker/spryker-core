@@ -18,9 +18,21 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RoleTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const ACTION = 'Action';
+    /**
+     * @var string
+     */
     public const PARAM_ID_ROLE = 'id-role';
+    /**
+     * @var string
+     */
     public const UPDATE_ROLE_URL = '/acl/role/update';
+    /**
+     * @var string
+     */
     public const DELETE_ROLE_URL = '/acl/role/delete';
 
     /**

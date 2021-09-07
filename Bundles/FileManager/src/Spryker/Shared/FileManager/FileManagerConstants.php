@@ -12,5 +12,8 @@ namespace Spryker\Shared\FileManager;
  */
 interface FileManagerConstants
 {
+    /**
+     * @var string
+     */
     public const STORAGE_NAME = 'FILE_MANAGER:STORAGE_NAME';
 }

@@ -22,9 +22,18 @@ class DataExportConsole extends Console
 {
     use BundleConfigResolverAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'data:export';
 
+    /**
+     * @var string
+     */
     protected const OPTION_CONFIG = 'config';
+    /**
+     * @var string
+     */
     protected const OPTION_SHORTCUT_CONFIG = 'c';
 
     /**

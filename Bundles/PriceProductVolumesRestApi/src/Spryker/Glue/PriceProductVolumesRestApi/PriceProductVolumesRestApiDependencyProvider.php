@@ -16,6 +16,9 @@ use Spryker\Glue\PriceProductVolumesRestApi\Dependency\Client\PriceProductVolume
  */
 class PriceProductVolumesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT_VOLUME = 'CLIENT_PRICE_PRODUCT_VOLUME';
 
     /**

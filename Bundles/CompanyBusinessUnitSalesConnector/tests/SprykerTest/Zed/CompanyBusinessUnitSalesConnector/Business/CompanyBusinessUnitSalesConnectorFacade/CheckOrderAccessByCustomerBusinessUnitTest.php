@@ -29,7 +29,13 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
  */
 class CheckOrderAccessByCustomerBusinessUnitTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    /**
+     * @var string
+     */
     protected const FAKE_BUSINESS_UUID = 'FAKE_BUSINESS_UUID';
 
     /**

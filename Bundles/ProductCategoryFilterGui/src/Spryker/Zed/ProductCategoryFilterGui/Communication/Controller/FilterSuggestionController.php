@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FilterSuggestionController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_TERM = 'term';
 
     /**

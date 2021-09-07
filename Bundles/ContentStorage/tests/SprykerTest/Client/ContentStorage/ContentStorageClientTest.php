@@ -32,12 +32,12 @@ class ContentStorageClientTest extends Unit
     public const CONTENT_ITEM_KEY = '1';
 
     /**
-     * @var string
+     * @var int
      */
     public const CONTENT_ITEM_ID = 0;
 
     /**
-     * @var int
+     * @var string
      */
     public const LOCALE = 'zh-CN';
 

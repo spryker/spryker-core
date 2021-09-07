@@ -23,6 +23,9 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 class GlobalSoftThresholdFlexibleFeeFormExpanderPlugin extends AbstractPlugin implements SalesOrderThresholdFormExpanderPluginInterface, SalesOrderThresholdFormFieldDependenciesPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_SOFT_FLEXIBLE_FEE = 'flexibleFee';
 
     /**

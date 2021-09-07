@@ -18,21 +18,25 @@ class TransferDefinitionFinder implements FinderInterface
 {
     /**
      * @deprecated Will be removed with next major release
+     * @var string
      */
     public const KEY_BUNDLE = 'bundle';
 
     /**
      * @deprecated Will be removed with next major release
+     * @var string
      */
     public const KEY_CONTAINING_BUNDLE = 'containing bundle';
 
     /**
      * @deprecated Will be removed with next major release
+     * @var string
      */
     public const KEY_TRANSFER = 'transfer';
 
     /**
      * @deprecated Will be removed with next major release
+     * @var string
      */
     public const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 

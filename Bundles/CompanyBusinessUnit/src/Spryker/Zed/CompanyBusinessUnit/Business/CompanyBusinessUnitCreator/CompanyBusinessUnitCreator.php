@@ -20,6 +20,9 @@ class CompanyBusinessUnitCreator implements CompanyBusinessUnitCreatorInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_BUSINESS_UNIT_CREATE_SUCCESS = 'message.business_unit.create';
 
     /**

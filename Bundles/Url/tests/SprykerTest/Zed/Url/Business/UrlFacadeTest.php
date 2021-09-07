@@ -36,6 +36,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UrlFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const VALUE_URL = 'http://value.url/';
 
     /**

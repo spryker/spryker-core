@@ -33,7 +33,13 @@ class EventDispatcherCommunicationTester extends Actor
 {
     use _generated\EventDispatcherCommunicationTesterActions;
 
+    /**
+     * @var string
+     */
     protected const SERVICE_DISPATCHER = 'dispatcher';
+    /**
+     * @var string
+     */
     protected const SERVICE_STOPWATCH = 'stopwatch';
 
     /**

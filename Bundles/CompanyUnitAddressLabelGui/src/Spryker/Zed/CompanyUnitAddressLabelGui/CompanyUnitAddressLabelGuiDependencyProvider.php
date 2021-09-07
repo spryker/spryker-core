@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanyUnitAddressLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_UNIT_ADDRESS_LABEL = 'FACADE_COMPANY_UNIT_ADDRESS_LABEL';
 
     /**

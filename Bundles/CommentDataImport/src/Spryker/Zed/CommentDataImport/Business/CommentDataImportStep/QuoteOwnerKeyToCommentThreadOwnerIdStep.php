@@ -16,6 +16,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class QuoteOwnerKeyToCommentThreadOwnerIdStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const OWNER_TYPE = 'quote';
 
     /**

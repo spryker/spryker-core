@@ -26,10 +26,23 @@ use Symfony\Component\Form\FormView;
  */
 class ProductMoneyCollectionType extends AbstractCollectionType
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     public const PRICE_DELIMITER = '-';
 
+    /**
+     * @var string
+     */
     protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
+    /**
+     * @var string
+     */
     protected const PRICE_PRODUCT_VOLUME_ADD_URL = '/price-product-volume-gui/price-volume/add';
+    /**
+     * @var string
+     */
     protected const PRICE_PRODUCT_VOLUME_KEY = 'volumePrices';
 
     /**

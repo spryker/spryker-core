@@ -15,7 +15,13 @@ use Spryker\Zed\Acl\AclConfig;
 
 class AclConfigReader implements AclConfigReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const GROUP_KEY = 'group';
+    /**
+     * @var string
+     */
     protected const ROLE_KEY = 'role';
 
     /**

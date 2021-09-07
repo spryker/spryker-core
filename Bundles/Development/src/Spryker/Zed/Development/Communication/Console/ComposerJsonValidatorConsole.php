@@ -20,6 +20,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ComposerJsonValidatorConsole extends AbstractCoreModuleAwareConsole
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'dev:composer:validate-json-files';
 
     /**

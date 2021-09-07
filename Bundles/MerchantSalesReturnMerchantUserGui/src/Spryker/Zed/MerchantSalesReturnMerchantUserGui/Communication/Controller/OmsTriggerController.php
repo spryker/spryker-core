@@ -22,21 +22,46 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OmsTriggerController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchant-sales-order-item-reference';
+    /**
+     * @var string
+     */
     protected const URL_PARAM_RETURN_REFERENCE = 'return-reference';
+    /**
+     * @var string
+     */
     protected const URL_PARAM_REDIRECT = 'redirect';
+    /**
+     * @var string
+     */
     protected const URL_PARAM_EVENT = 'event';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_STATUS_CHANGED_SUCCESS = 'Status change triggered successfully.';
 
+    /**
+     * @var string
+     */
     protected const ERROR_INVALID_REQUEST = 'Request is invalid';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     * @var string
      */
     protected const REDIRECT_URL_DEFAULT = '/merchant-sales-return-merchant-user-gui/detail';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_RETURN_NOT_FOUND_ERROR = 'Merchant sales return #%d not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_REDIRECT_NOT_FOUND_ERROR = 'Parameter redirect not found.';
 
     /**

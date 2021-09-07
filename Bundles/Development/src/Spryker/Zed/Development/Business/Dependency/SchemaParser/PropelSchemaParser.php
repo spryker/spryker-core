@@ -15,6 +15,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaParser implements PropelSchemaParserInterface
 {
+    /**
+     * @var string
+     */
     protected const PROPEL_SCHEMA_PATH_PATTERN = '*/src/%s/Zed/*/Persistence/Propel/Schema';
 
     /**

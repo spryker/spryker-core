@@ -30,6 +30,9 @@ class CartSharer implements CartSharerInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_SHARED_CART_SHARE_ERROR_ALREADY_EXIST = 'shared_cart.share.error.already_exist';
 
     /**

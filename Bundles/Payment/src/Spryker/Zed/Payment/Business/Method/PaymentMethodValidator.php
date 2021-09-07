@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class PaymentMethodValidator implements PaymentMethodValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CHECKOUT_PAYMENT_METHOD_INVALID = 'checkout.payment_method.invalid';
 
     /**

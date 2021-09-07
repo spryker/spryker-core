@@ -24,11 +24,26 @@ use Spryker\Zed\ProductBarcodeGui\Dependency\Facade\ProductBarcodeGuiToProductBa
  */
 class ProductBarcodeTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_ID_PRODUCT = 'id_product';
+    /**
+     * @var string
+     */
     protected const COL_PRODUCT_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const COL_PRODUCT_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const COL_BARCODE = 'barcode';
 
+    /**
+     * @var string
+     */
     protected const BARCODE_IMAGE_TEMPLATE = '<img src="%s,%s">';
 
     /**

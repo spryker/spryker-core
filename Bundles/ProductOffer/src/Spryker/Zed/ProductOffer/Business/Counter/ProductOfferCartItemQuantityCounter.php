@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class ProductOfferCartItemQuantityCounter implements ProductOfferCartItemQuantityCounterInterface
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_ITEM_QUANTITY = 0;
 
     /**

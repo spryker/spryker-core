@@ -13,6 +13,9 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyF
 
 class ViewFunctionDependencyFinder implements TwigDependencyFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const TEMPLATE_FUNCTION_PATTERN = '/view\(\'(.*?),\s\'(.*?)\'/';
 
     /**

@@ -20,7 +20,13 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipS
 
 class MerchantRelationshipThresholdDataProvider
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_STORE_CURRENCY_ROW_LABEL = '%s - %s [%s]';
+    /**
+     * @var string
+     */
     protected const FORMAT_STORE_CURRENCY_ROW_VALUE = '%s%s%s';
 
     /**

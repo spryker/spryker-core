@@ -18,19 +18,49 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGuiTableConfigurationBuilderProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_STORE = 'Store';
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_CURRENCY = 'Currency';
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_NET = 'Net';
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS = 'Gross';
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_QUANTITY = 'Quantity';
 
+    /**
+     * @var string
+     */
     protected const TITLE_FILTER_IN_STORES = 'Stores';
+    /**
+     * @var string
+     */
     protected const TITLE_FILTER_IN_CURRENCIES = 'Currencies';
 
+    /**
+     * @var string
+     */
     protected const FORMAT_STRING_PRICE_KEY = '%s[%s][%s]';
 
+    /**
+     * @var string
+     */
     protected const INPUT_TYPE_NUMBER = 'number';
 
+    /**
+     * @var string
+     */
     protected const TYPE_OPTION_VALUE = 'value';
 
     /**

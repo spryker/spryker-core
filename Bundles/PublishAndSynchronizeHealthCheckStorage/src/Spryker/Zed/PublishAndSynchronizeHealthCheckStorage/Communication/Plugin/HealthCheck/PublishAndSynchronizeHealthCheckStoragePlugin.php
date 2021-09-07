@@ -17,6 +17,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PublishAndSynchronizeHealthCheckStoragePlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_SERVICE_NAME = 'publish-and-synchronize-storage';
 
     /**

@@ -17,6 +17,9 @@ class ProductConfiguratorResponseValidator implements ProductConfiguratorRespons
 {
     use LoggerTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_RESPONSE_VALIDATION_ERROR = 'product_configuration.response.validation.error';
 
     /**

@@ -17,6 +17,7 @@ interface FileManagerStorageConstants
      * - Queue name as used for processing file messages
      *
      * @api
+     * @var string
      */
     public const FILE_SYNC_STORAGE_QUEUE = 'sync.storage.file';
 
@@ -25,6 +26,7 @@ interface FileManagerStorageConstants
      * - Queue name as used for processing file messages
      *
      * @api
+     * @var string
      */
     public const FILE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.file.error';
 
@@ -33,6 +35,7 @@ interface FileManagerStorageConstants
      * - Resource name, this will use for key generating.
      *
      * @api
+     * @var string
      */
     public const RESOURCE_NAME = 'file';
 }

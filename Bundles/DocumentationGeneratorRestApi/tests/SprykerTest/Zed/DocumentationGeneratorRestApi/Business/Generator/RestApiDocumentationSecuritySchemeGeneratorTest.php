@@ -23,6 +23,9 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\DocumentationGenerato
  */
 class RestApiDocumentationSecuritySchemeGeneratorTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const BEARER_AUTH = 'BearerAuth';
 
     /**

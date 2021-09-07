@@ -13,7 +13,13 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 
 class PriceFieldSortingComparisonStrategy implements PriceProductSortingComparisonStrategyInterface
 {
+    /**
+     * @var string
+     */
     protected const SUFFIX_PRICE_TYPE_NET = 'net';
+    /**
+     * @var string
+     */
     protected const SUFFIX_PRICE_TYPE_GROSS = 'gross';
 
     /**

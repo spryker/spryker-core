@@ -34,7 +34,7 @@ use Spryker\Zed\User\UserConfig;
 class UserTest extends Unit
 {
     /**
-     * @const string
+     * @var string
      */
     public const USERNAME = 'test@test.com';
 

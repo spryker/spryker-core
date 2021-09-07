@@ -11,6 +11,9 @@ use Spryker\Zed\Development\Business\SnifferConfiguration\ConfigurationReader\Co
 
 class CodeStyleSnifferConfigurationLoader implements CodeStyleSnifferConfigurationLoaderInterface
 {
+    /**
+     * @var string
+     */
     protected const MODULE_CONFIG_TOOL_KEY = 'code-sniffer';
 
     /**

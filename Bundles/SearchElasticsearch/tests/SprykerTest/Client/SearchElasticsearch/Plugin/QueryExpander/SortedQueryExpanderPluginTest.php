@@ -28,6 +28,9 @@ use Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SortedQueryExpanderP
  */
 class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
 {
+    /**
+     * @var string
+     */
     protected const DIRECTION_ASC = 'asc';
 
     /**

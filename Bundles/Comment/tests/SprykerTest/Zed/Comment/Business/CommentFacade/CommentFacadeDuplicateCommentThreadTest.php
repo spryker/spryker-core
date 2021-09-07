@@ -35,6 +35,7 @@ class CommentFacadeDuplicateCommentThreadTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\Comment\Business\Writer\CommentThreadWriter::GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS
+     * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_THREAD_ALREADY_EXISTS = 'comment.validation.error.comment_thread_already_exists';
 

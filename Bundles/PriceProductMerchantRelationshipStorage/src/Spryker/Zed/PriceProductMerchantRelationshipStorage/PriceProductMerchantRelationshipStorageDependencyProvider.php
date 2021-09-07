@@ -17,8 +17,14 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\Dependency\Facade\PriceP
  */
 class PriceProductMerchantRelationshipStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP = 'PROPEL_QUERY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP';
 
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
     /**

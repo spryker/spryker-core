@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class OfferConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const PRICE_MODE_NET = 'NET_MODE';
 
     /**
@@ -29,6 +32,7 @@ class OfferConfig extends AbstractBundleConfig
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     * @var string
      */
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
 

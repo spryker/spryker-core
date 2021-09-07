@@ -17,7 +17,13 @@ use Spryker\Glue\ProductConfigurationsPriceProductVolumesRestApi\Dependency\Serv
  */
 class ProductConfigurationsPriceProductVolumesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_PRODUCT_CONFIGURATION = 'SERVICE_PRODUCT_CONFIGURATION';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

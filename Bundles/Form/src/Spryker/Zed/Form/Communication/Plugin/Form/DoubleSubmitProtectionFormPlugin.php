@@ -24,11 +24,13 @@ class DoubleSubmitProtectionFormPlugin extends AbstractPlugin implements FormPlu
 {
     /**
      * @uses \Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin::SERVICE_SESSION
+     * @var string
      */
     protected const SERVICE_SESSION = 'session';
 
     /**
      * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     * @var string
      */
     protected const SERVICE_TRANSLATOR = 'translator';
 

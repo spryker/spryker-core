@@ -30,11 +30,13 @@ class QuoteApprovalShipmentConnectorFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     * @var string
      */
     protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 
     /**
      * @uses \Spryker\Shared\QuoteApproval\QuoteApprovalConfig::STATUS_APPROVED
+     * @var string
      */
     protected const QUOTE_APPROVAL_STATUS_APPROVED = 'approved';
 

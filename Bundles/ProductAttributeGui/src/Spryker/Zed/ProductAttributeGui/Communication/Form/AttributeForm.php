@@ -30,18 +30,51 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class AttributeForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_MANAGEMENT_ATTRIBUTE = 'id_product_management_attribute';
+    /**
+     * @var string
+     */
     public const FIELD_KEY = 'key';
+    /**
+     * @var string
+     */
     public const FIELD_INPUT_TYPE = 'input_type';
+    /**
+     * @var string
+     */
     public const FIELD_ALLOW_INPUT = 'allow_input';
+    /**
+     * @var string
+     */
     public const FIELD_IS_SUPER = 'is_super';
+    /**
+     * @var string
+     */
     public const FIELD_VALUES = 'values';
 
+    /**
+     * @var string
+     */
     public const OPTION_ATTRIBUTE_TYPE_CHOICES = 'attribute_type_choices';
+    /**
+     * @var string
+     */
     public const OPTION_VALUES_CHOICES = 'values_choices';
+    /**
+     * @var string
+     */
     public const OPTION_IS_UPDATE = 'is_update';
 
+    /**
+     * @var string
+     */
     public const GROUP_VALUES = 'values_group';
+    /**
+     * @var string
+     */
     public const GROUP_UNIQUE_KEY = 'unique_key_group';
 
     /**

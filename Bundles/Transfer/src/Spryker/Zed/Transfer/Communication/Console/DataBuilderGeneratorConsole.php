@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DataBuilderGeneratorConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'transfer:databuilder:generate';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Generates data builders from databuilder XML definition files';
 
     /**

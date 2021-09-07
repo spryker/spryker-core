@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class GiftCardConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const PROVIDER_NAME = 'GiftCard';
 
     /**

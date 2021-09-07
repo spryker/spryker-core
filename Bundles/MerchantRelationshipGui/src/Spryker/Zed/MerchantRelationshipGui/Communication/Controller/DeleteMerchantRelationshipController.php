@@ -18,8 +18,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteMerchantRelationshipController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_RELATIONSHIP_DELETE_SUCCESS = 'Merchant relation deleted successfully.';
 
     /**

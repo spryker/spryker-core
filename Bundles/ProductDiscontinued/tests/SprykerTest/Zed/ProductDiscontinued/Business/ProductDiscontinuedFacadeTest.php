@@ -27,6 +27,9 @@ use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManager
  */
 class ProductDiscontinuedFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const NOTE_TEST = 'NOTE_TEST';
 
     /**

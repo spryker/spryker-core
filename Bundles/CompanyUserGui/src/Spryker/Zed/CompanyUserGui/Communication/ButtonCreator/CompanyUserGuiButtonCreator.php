@@ -13,7 +13,13 @@ use Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig;
 
 class CompanyUserGuiButtonCreator implements CompanyUserGuiButtonCreatorInterface
 {
+    /**
+     * @var string
+     */
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_URL = 'company-user-gui/create-company-user/attach-customer';
+    /**
+     * @var string
+     */
     protected const BUTTON_ATTACH_CUSTOMER_TO_COMPANY_TITLE = 'Attach to company';
 
     /**

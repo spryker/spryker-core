@@ -23,6 +23,9 @@ class ProductListTable extends AbstractTable
     protected const COLUMN_ID_PRODUCT_LIST = SpyProductListTableMap::COL_ID_PRODUCT_LIST;
     protected const COLUMN_TITLE = SpyProductListTableMap::COL_TITLE;
     protected const COLUMN_TYPE = SpyProductListTableMap::COL_TYPE;
+    /**
+     * @var string
+     */
     protected const COLUMN_ACTIONS = 'actions';
 
     public const URL_PRODUCT_LIST_EDIT = RoutingConstants::URL_EDIT;

@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const GROUP_KEY_DELIMITER = '_';
 
     /**

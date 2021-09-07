@@ -28,10 +28,20 @@ class MerchantSalesOrderFacadePluginMethodsTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE.
+     * @var string
      */
     protected const VALID_SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+    /**
+     * @var string
+     */
     protected const INVALID_SHIPMENT_EXPENSE_TYPE = 'ANOTHER_EXPENSE_TYPE';
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_REFERENCE = 'test-merchant-reference';
+    /**
+     * @var string
+     */
     protected const TEST_SECOND_MERCHANT_REFERENCE = 'test-second-merchant-reference';
 
     /**

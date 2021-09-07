@@ -23,7 +23,13 @@ class FactoryHelper extends Module
     use DependencyProviderHelperTrait;
     use ConfigHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const FACTORY_CLASS_NAME_PATTERN = '\%1$s\Yves\%2$s\%2$sFactory';
+    /**
+     * @var int
+     */
     protected const MODULE_NAME_POSITION = 2;
 
     /**

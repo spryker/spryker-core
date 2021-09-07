@@ -19,6 +19,9 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 
 class CompanySupplierProductPriceWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_SUPPLIER = 'SUPPLIER';
 
     /**

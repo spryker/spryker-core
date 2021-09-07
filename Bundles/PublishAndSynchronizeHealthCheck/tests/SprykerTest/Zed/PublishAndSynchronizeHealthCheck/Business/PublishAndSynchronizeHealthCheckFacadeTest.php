@@ -23,7 +23,13 @@ use Spryker\Zed\PublishAndSynchronizeHealthCheck\Business\PublishAndSynchronizeH
  */
 class PublishAndSynchronizeHealthCheckFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_HEALTH_CHECK_KEY = 'ps:hc:valid_key';
+    /**
+     * @var string
+     */
     public const TEST_HEALTH_CHECK_INVALID_KEY = 'ps:hc:invalid_key';
 
     /**

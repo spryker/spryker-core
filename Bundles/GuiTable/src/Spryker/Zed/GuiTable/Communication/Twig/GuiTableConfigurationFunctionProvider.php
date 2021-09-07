@@ -22,7 +22,13 @@ use Spryker\Shared\Twig\TwigFunctionProvider;
 
 class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
 {
+    /**
+     * @var string
+     */
     protected const CONFIG_ENABLED = 'enabled';
+    /**
+     * @var string
+     */
     protected const CONFIG_ITEMS = 'items';
 
     /**

@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ContentProductConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST = 20;
 
     /**

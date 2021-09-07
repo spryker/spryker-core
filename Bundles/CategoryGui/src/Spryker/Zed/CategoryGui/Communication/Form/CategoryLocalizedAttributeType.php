@@ -23,26 +23,74 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CategoryLocalizedAttributeType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_META_DESCRIPTION_ROWS = 'meta_description_rows';
 
+    /**
+     * @var string
+     */
     protected const OPTION_DATA_CLASS = 'data_class';
+    /**
+     * @var string
+     */
     protected const OPTION_PROPERTY_PATH_LOCALE_ID_LOCALE = 'locale.idLocale';
+    /**
+     * @var string
+     */
     protected const OPTION_PROPERTY_PATH_LOCALE_LOCALE_NAME = 'locale.localeName';
 
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_FK_LOCALE = 'fk_locale';
+    /**
+     * @var string
+     */
     protected const FIELD_LOCALE_NAME = 'locale_name';
+    /**
+     * @var string
+     */
     protected const FIELD_META_TITLE = 'meta_title';
+    /**
+     * @var string
+     */
     protected const FIELD_META_DESCRIPTION = 'meta_description';
+    /**
+     * @var string
+     */
     protected const FIELD_META_KEYWORDS = 'meta_keywords';
+    /**
+     * @var string
+     */
     protected const FIELD_CATEGORY_IMAGE_NAME = 'category_image_name';
 
+    /**
+     * @var string
+     */
     protected const LABEL_META_TITLE = 'Meta Title';
+    /**
+     * @var string
+     */
     protected const LABEL_META_DESCRIPTION = 'Meta Description';
+    /**
+     * @var string
+     */
     protected const LABEL_META_KEYWORDS = 'Meta Keywords';
 
+    /**
+     * @var string
+     */
     protected const BLOCK_PREFIX = 'localizedAttributes';
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_META_DESCRIPTION_ROWS_NUMBER = 5;
 
     /**

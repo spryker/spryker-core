@@ -33,7 +33,13 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
  */
 class ActiveProcessFetcherTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_STATE_MACHINE_NAME = 'ActiveStateMachine';
+    /**
+     * @var array
+     */
     protected const RESERVED_STATES = [
         'new',
         'payment pending',

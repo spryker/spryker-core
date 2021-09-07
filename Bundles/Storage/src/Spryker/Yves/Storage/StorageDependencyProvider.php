@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\Container;
  */
 class StorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**

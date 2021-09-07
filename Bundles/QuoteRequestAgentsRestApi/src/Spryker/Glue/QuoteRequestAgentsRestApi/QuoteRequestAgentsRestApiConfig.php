@@ -13,20 +13,42 @@ use Symfony\Component\HttpFoundation\Response;
 
 class QuoteRequestAgentsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_AGENT_QUOTE_REQUESTS = 'agent-quote-requests';
 
     /**
      * @uses \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND
+     * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_COMPANY_USER_NOT_FOUND = 'quote_request.validation.error.company_user_not_found';
 
+    /**
+     * @var string
+     */
     public const RESPONSE_CODE_COMPANY_USER_NOT_FOUND = '1404';
+    /**
+     * @var string
+     */
     public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found';
 
+    /**
+     * @var string
+     */
     public const RESPONSE_CODE_PROBLEM_CREATING_REQUEST_FOR_QUOTE_BY_AGENT = '4507';
+    /**
+     * @var string
+     */
     public const RESPONSE_DETAILS_PROBLEM_CREATING_REQUEST_FOR_QUOTE_BY_AGENT = 'There was a problem adding the quote request for agent.';
 
+    /**
+     * @var string
+     */
     public const RESPONSE_CODE_QUOTE_REQUEST_NOT_FOUND = '4501';
+    /**
+     * @var string
+     */
     public const RESPONSE_DETAIL_QUOTE_REQUEST_NOT_FOUND = 'Quote request not found.';
 
     /**

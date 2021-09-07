@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CompanyGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const COMPANY_SUGGESTION_LIMIT = 20;
 
     /**

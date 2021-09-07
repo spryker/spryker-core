@@ -18,12 +18,27 @@ use Spryker\Zed\ProductSetCollector\Dependency\Facade\ProductSetCollectorToSearc
  */
 class ProductSetCollectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COLLECTOR = 'FACADE_COLLECTOR';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_SET = 'QUERY_CONTAINER_PRODUCT_SET';
+    /**
+     * @var string
+     */
     public const FACADE_SEARCH = 'FACADE_SEARCH';
 
+    /**
+     * @var string
+     */
     public const SERVICE_DATA_READER = 'SERVICE_DATA_READER';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_TOUCH = 'QUERY_CONTAINER_TOUCH';
 
     /**

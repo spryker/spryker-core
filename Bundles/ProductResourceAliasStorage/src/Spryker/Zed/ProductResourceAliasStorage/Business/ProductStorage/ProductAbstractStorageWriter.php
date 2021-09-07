@@ -13,6 +13,9 @@ use Spryker\Zed\ProductResourceAliasStorage\Persistence\ProductResourceAliasStor
 
 class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
 
     /**

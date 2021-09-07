@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantSalesReturn\Dependency\Facade\MerchantSalesReturnToMerch
  */
 class MerchantSalesReturnDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
 
     /**

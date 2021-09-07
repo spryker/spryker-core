@@ -21,7 +21,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class GeneralForm extends AbstractSubForm
 {
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_DESCRIPTION = 'description';
 
     /**

@@ -19,17 +19,39 @@ use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiT
 
 class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderItemGuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const COL_KEY_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_KEY_IMAGE = 'image';
+    /**
+     * @var string
+     */
     public const COL_KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_KEY_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const COL_KEY_STATE = 'state';
+    /**
+     * @var string
+     */
     public const COL_KEY_ACTION_IDS = 'actionIds';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_NO_BATCH_ACTION_AVAILABLE_FOR_ITEMS = 'There are no applicable actions for the selected items.';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\ItemListController::tableDataAction()
+     * @var string
      */
     protected const DATA_URL = '/sales-merchant-portal-gui/item-list/table-data';
 

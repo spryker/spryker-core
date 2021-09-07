@@ -22,11 +22,13 @@ class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements Publ
 {
     /**
      * @uses \Generated\Shared\Transfer\ProductBundleTransfer::ID_PRODUCT_CONCRETE_BUNDLE
+     * @var string
      */
     protected const ID_PRODUCT_CONCRETE_BUNDLE = 'id_product_concrete_bundle';
 
     /**
      * @uses \Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE
+     * @var string
      */
     protected const COL_ID_PRODUCT_BUNDLE = 'spy_product_bundle.id_product_bundle';
 

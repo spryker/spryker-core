@@ -79,13 +79,13 @@ class ProductPriceNotBlankValidator extends ConstraintValidator
      */
     protected function getGrouppedPricesArray(ArrayObject $productPrices)
     {
-        $grouppedPrices = [];
+        $groupedPrices = [];
 
         foreach ($productPrices as $compositeKey => $priceProductTransfer) {
-            $grouppedPrices[$this->getGroupKeyFromCompositePriceKey($compositeKey)][] = $priceProductTransfer;
+            $groupedPrices[$this->getGroupKeyFromCompositePriceKey($compositeKey)][] = $priceProductTransfer;
         }
 
-        return $grouppedPrices;
+        return $groupedPrices;
     }
 
     /**

@@ -17,15 +17,39 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SchedulerSetupConsole extends AbstractSchedulerConsole
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'scheduler:setup';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Sets up scheduler cron jobs.';
 
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION = 'roles';
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION_SHORTCUT = 'r';
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION_DESCRIPTION = 'Job roles to include.';
 
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION = 'schedulers';
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION_DESCRIPTION = 'Schedulers that will be executed.';
 
     /**

@@ -20,6 +20,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductImageRepository extends AbstractRepository implements ProductImageRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const FK_PRODUCT_CONCRETE = 'fkProductConcrete';
 
     /**

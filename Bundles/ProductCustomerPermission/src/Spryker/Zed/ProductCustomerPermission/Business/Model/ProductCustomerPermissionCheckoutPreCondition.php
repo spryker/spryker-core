@@ -15,6 +15,9 @@ use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQ
 
 class ProductCustomerPermissionCheckoutPreCondition implements ProductCustomerPermissionCheckoutPreConditionInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_NO_PERMISSION = 'checkout.step.error.no-product-permission';
 
     /**

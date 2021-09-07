@@ -33,11 +33,13 @@ class MerchantProductOfferSearchFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\Mapper\ProductAbstractMerchantMapper::KEY_MERCHANT_NAMES
+     * @var string
      */
     protected const KEY_MERCHANT_NAMES = 'names';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\Mapper\ProductAbstractMerchantMapper::KEY_MERCHANT_REFERENCES
+     * @var string
      */
     protected const KEY_MERCHANT_REFERENCES = 'references';
 

@@ -18,21 +18,66 @@ use Spryker\Zed\Kernel\Container;
  */
 class CartDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CALCULATION = 'calculation facade';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'messenger facade';
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
+    /**
+     * @var string
+     */
     public const CART_EXPANDER_PLUGINS = 'cart expander plugins';
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_PLUGINS = 'pre check plugins';
+    /**
+     * @var string
+     */
     public const CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS = 'CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS';
+    /**
+     * @var string
+     */
     public const CART_REMOVAL_PRE_CHECK_PLUGINS = 'CART_REMOVAL_PRE_CHECK_PLUGINS';
+    /**
+     * @var string
+     */
     public const CART_POST_SAVE_PLUGINS = 'cart post save plugins';
+    /**
+     * @var string
+     */
     public const CART_PRE_RELOAD_PLUGINS = 'cart pre reload plugins';
+    /**
+     * @var string
+     */
     public const CART_TERMINATION_PLUGINS = 'CART_TERMINATION_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_CHANGE_OBSERVER = 'PLUGINS_QUOTE_CHANGE_OBSERVER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_ADD_ITEM_STRATEGY = 'PLUGINS_CART_ADD_ITEM_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGINS_CART_REMOVE_ITEM_STRATEGY = 'PLUGINS_CART_REMOVE_ITEM_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGINS_POST_RELOAD_ITEMS = 'PLUGINS_POST_RELOAD_ITEMS';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_LOCK_PRE_RESET = 'PLUGINS_QUOTE_LOCK_PRE_RESET';
 
     /**

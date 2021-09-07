@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ZedUiApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
 
     /**

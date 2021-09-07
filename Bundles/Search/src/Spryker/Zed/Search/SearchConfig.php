@@ -17,19 +17,27 @@ class SearchConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST
+     * @var string
      */
     protected const HOST = 'SEARCH_ELASTICSEARCH:HOST';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT
+     * @var string
      */
     protected const PORT = 'SEARCH_ELASTICSEARCH:PORT';
 
+    /**
+     * @var array
+     */
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
         'index.number_of_shards',
         'index.routing_partition_size',
     ];
 
+    /**
+     * @var array
+     */
     protected const STATIC_INDEX_SETTINGS = [
         'index.number_of_shards',
         'index.shard.check_on_startup',
@@ -38,6 +46,9 @@ class SearchConfig extends AbstractBundleConfig
         'analysis',
     ];
 
+    /**
+     * @var array
+     */
     protected const DYNAMIC_INDEX_SETTINGS = [
         'index.number_of_replicas',
         'index.auto_expand_replicas',
@@ -62,8 +73,14 @@ class SearchConfig extends AbstractBundleConfig
         'index.gc_deletes',
     ];
 
+    /**
+     * @var string
+     */
     public const INDEX_OPEN_STATE = 'open';
 
+    /**
+     * @var string
+     */
     public const INDEX_CLOSE_STATE = 'close';
 
     /**

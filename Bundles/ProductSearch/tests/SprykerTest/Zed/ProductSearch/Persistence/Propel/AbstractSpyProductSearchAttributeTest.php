@@ -24,6 +24,9 @@ use Propel\Runtime\Propel;
  */
 class AbstractSpyProductSearchAttributeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_SEARCH_ATTRIBUTE_FILTER_TYPE = 'product_search_attribute';
 
     /**

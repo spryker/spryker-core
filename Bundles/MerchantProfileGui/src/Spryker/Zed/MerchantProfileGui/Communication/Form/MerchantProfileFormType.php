@@ -27,37 +27,124 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class MerchantProfileFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const SALUTATION_CHOICES_OPTION = 'salutation_choices';
 
+    /**
+     * @var string
+     */
     protected const FIELD_ID_MERCHANT_PROFILE = 'id_merchant_profile';
+    /**
+     * @var string
+     */
     protected const FIELD_CONTACT_PERSON_ROLE = 'contact_person_role';
+    /**
+     * @var string
+     */
     protected const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
+    /**
+     * @var string
+     */
     protected const FIELD_CONTACT_PERSON_FIRST_NAME = 'contact_person_first_name';
+    /**
+     * @var string
+     */
     protected const FIELD_CONTACT_PERSON_LAST_NAME = 'contact_person_last_name';
+    /**
+     * @var string
+     */
     protected const FIELD_CONTACT_PERSON_PHONE = 'contact_person_phone';
+    /**
+     * @var string
+     */
     protected const FIELD_LOGO_URL = 'logo_url';
+    /**
+     * @var string
+     */
     protected const FIELD_PUBLIC_EMAIL = 'public_email';
+    /**
+     * @var string
+     */
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
+    /**
+     * @var string
+     */
     protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
+    /**
+     * @var string
+     */
     protected const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_TERMS_CONDITIONS_GLOSSARY_KEY = 'terms_conditions_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
+    /**
+     * @var string
+     */
     protected const FIELD_FAX_NUMBER = 'fax_number';
 
+    /**
+     * @var string
+     */
     protected const LABEL_CONTACT_PERSON_ROLE = 'Role';
+    /**
+     * @var string
+     */
     protected const LABEL_CONTACT_PERSON_TITLE = 'Title';
+    /**
+     * @var string
+     */
     protected const LABEL_CONTACT_PERSON_FIRST_NAME = 'First Name';
+    /**
+     * @var string
+     */
     protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
+    /**
+     * @var string
+     */
     protected const LABEL_CONTACT_PERSON_PHONE = 'Phone';
+    /**
+     * @var string
+     */
     protected const LABEL_LOGO_URL = 'Logo URL';
+    /**
+     * @var string
+     */
     protected const LABEL_PUBLIC_EMAIL = 'Public Email';
+    /**
+     * @var string
+     */
     protected const LABEL_PUBLIC_PHONE = 'Public Phone';
+    /**
+     * @var string
+     */
     protected const LABEL_FAX_NUMBER = 'Fax number';
 
+    /**
+     * @var string
+     */
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**

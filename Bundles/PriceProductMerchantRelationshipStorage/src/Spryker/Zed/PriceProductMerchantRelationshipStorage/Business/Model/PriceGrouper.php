@@ -12,6 +12,9 @@ use Spryker\Zed\PriceProductMerchantRelationshipStorage\PriceProductMerchantRela
 
 class PriceGrouper implements PriceGrouperInterface
 {
+    /**
+     * @var string
+     */
     protected const PRICES = 'prices';
 
     /**

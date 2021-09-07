@@ -16,6 +16,9 @@ use Spryker\Client\Kernel\Container;
  */
 class ContentBannerDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CONTENT_STORAGE = 'CLIENT_CONTENT_STORAGE';
 
     /**

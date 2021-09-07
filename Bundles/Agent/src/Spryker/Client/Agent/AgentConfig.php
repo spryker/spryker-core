@@ -12,6 +12,9 @@ use Spryker\Shared\Agent\AgentConstants;
 
 class AgentConfig extends AbstractBundleConfig
 {
+    /**
+     * @var array
+     */
     protected const DEFAULT_AGENT_ALLOWED_SECURED_PATTERN_LIST = [];
 
     /**

@@ -31,7 +31,13 @@ class CompanyBusinessUnitTester extends Actor
 {
     use _generated\CompanyBusinessUnitTesterActions;
 
+    /**
+     * @var string
+     */
     protected const LEVEL = 'level';
+    /**
+     * @var string
+     */
     protected const CHILDREN = 'children';
 
     /**

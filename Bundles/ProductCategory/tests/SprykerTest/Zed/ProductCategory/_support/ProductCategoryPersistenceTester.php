@@ -33,6 +33,9 @@ class ProductCategoryPersistenceTester extends Actor
 {
     use _generated\ProductCategoryPersistenceTesterActions;
 
+    /**
+     * @var string
+     */
     protected const ATTRIBUTES = '[]';
 
     /**

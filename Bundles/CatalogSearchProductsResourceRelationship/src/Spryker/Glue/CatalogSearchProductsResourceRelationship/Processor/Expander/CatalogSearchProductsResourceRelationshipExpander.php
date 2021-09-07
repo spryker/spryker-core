@@ -16,8 +16,12 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
 {
     /**
      * @deprecated Will be removed in next major release.
+     * @var string
      */
     protected const KEY_PRODUCTS = 'products';
+    /**
+     * @var string
+     */
     protected const KEY_ABSTRACT_PRODUCTS = 'abstractProducts';
 
     /**

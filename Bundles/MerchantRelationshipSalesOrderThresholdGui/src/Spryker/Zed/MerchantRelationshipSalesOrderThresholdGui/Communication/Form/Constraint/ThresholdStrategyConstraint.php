@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint;
 
 class ThresholdStrategyConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS = 'salesOrderThresholdFormExpanderPlugins';
 
     /**

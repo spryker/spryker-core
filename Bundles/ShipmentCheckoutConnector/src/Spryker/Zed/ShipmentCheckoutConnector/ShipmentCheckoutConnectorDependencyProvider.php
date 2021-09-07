@@ -17,8 +17,14 @@ use Spryker\Zed\ShipmentCheckoutConnector\Dependency\Service\ShipmentCheckoutCon
  */
 class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
 
+    /**
+     * @var string
+     */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**

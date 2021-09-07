@@ -29,6 +29,9 @@ use Spryker\Zed\ProductRelation\Persistence\ProductRelationQueryContainer;
  */
 class ProductRelationQueryContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME = 'xxx';
 
     /**

@@ -32,21 +32,69 @@ class RestApiDocumentationSchemaGeneratorTest extends Unit
 {
     use ArraySubsetAsserts;
 
+    /**
+     * @var string
+     */
     protected const SCHEMA_REF_REST_ERROR_MESSAGE = '#/components/schemas/RestErrorMessage';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_ERROR_MESSAGE = 'RestErrorMessage';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_LINKS = 'RestLinks';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_RELATIONSHIPS = 'RestRelationships';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_ALTERNATIVE_RELATIONSHIPS = 'RestTestAlternativeRelationships';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_ALTERNATIVE_RESPONSE_ATTRIBUTES = 'RestTestAlternativeAttributes';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_ALTERNATIVE_RESPONSE_RESOURCE = 'RestTestAlternativeResponse';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_ALTERNATIVE_RESPONSE_RESOURCE_DATA = 'RestTestAlternativeResponseData';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_REQUEST = 'RestTestRequest';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_REQUEST_ATTRIBUTES = 'RestTestRequestAttributes';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_REQUEST_DATA = 'RestTestRequestData';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_ATTRIBUTES = 'RestTestAttributes';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_COLLECTION = 'RestTestCollectionResponse';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_COLLECTION_DATA = 'RestTestCollectionResponseData';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_RESOURCE = 'RestTestResponse';
+    /**
+     * @var string
+     */
     protected const SCHEMA_NAME_REST_TEST_RESPONSE_RESOURCE_DATA = 'RestTestResponseData';
 
     /**

@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class MerchantDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_MERCHANT = 'merchant';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_MERCHANT_STORE = 'merchant-store';
 
     /**

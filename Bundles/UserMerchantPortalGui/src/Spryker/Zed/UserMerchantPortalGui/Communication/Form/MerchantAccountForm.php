@@ -25,21 +25,60 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class MerchantAccountForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FORM_NAME = 'user-merchant-portal-gui_merchant-account';
 
+    /**
+     * @var string
+     */
     protected const FIELD_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     protected const FIELD_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     protected const FIELD_USERNAME = 'username';
+    /**
+     * @var string
+     */
     public const FIELD_FK_LOCALE = 'fk_locale';
+    /**
+     * @var string
+     */
     protected const BUTTON_SAVE = 'save';
 
+    /**
+     * @var string
+     */
     public const OPTIONS_LOCALE = 'options_locale';
 
+    /**
+     * @var string
+     */
     protected const LABEL_FIRST_NAME = 'First name';
+    /**
+     * @var string
+     */
     protected const LABEL_LAST_NAME = 'Last name';
+    /**
+     * @var string
+     */
     protected const LABEL_USERNAME = 'E-mail';
+    /**
+     * @var string
+     */
     protected const LABEL_PASSWORD = 'Password';
+    /**
+     * @var string
+     */
     protected const LABEL_FK_LOCALE = 'Language';
+    /**
+     * @var string
+     */
     protected const LABEL_SAVE = 'Save';
 
     /**

@@ -25,15 +25,45 @@ class QuoteApprovalRequestValidator implements QuoteApprovalRequestValidatorInte
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_APPROVER_CANT_APPROVE_QUOTE = 'quote_approval.create.approver_cant_approve_quote';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_YOU_CANT_APPROVE_QUOTE = 'quote_approval.create.you_cant_approve_quote';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_ALREADY_APPROVED = 'quote_approval.create.quote_already_approved';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_ALREADY_DECLINED = 'quote_approval.create.quote_already_declined';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_ALREADY_CANCELLED = 'quote_approval.create.quote_already_cancelled';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_QUOTE_ALREADY_WAITING_FOR_APPROVAL = 'quote_approval.create.quote_already_waiting_for_approval';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ONLY_QUOTE_OWNER_CAN_SEND_APPROVAL_REQUEST = 'quote_approval.create.only_quote_owner_can_send_request';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_DO_NOT_HAVE_PERMISSION_TO_CANCEL_APPROVAL_REQUEST = 'quote_approval.cancel.do_not_have_permission';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CANT_SEND_FOR_APPROVE_EMPTY_QUOTE = 'quote_approval.create.cant_send_for_approve_empty_quote';
 
     /**

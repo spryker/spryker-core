@@ -20,18 +20,54 @@ use Codeception\Test\Unit;
  */
 class AclEntityServiceTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const BASE_TABLE_NAME = 'base_table';
+    /**
+     * @var string
+     */
     protected const CONNECTOR_TABLE_NAME = 'connector_table';
+    /**
+     * @var string
+     */
     protected const BASE_CLASS_NAME = '/path/to/BaseClass';
+    /**
+     * @var string
+     */
     protected const BASE_CLASS_SHORT_NAME = 'BaseClass';
 
+    /**
+     * @var string
+     */
     protected const EXPECTED_SEGMENT_CONNECTOR_TABLE_NAME = 'spy_acl_entity_segment_base_table';
+    /**
+     * @var string
+     */
     protected const EXPECTED_SEGMENT_CONNECTOR_PRIMARY_KEY = 'id_connector_table';
+    /**
+     * @var string
+     */
     protected const EXPECTED_SEGMENT_CONNECTOR_CLASS = '/path/to/SpyAclEntitySegmentBaseClass';
+    /**
+     * @var string
+     */
     protected const EXPECTED_SEGMENT_CONNECTOR_RELATION_NAME = 'BaseClass.SpyAclEntitySegmentBaseClass';
+    /**
+     * @var string
+     */
     protected const EXPECTED_SEGMENT_CONNECTOR_GETTER = 'getSpyAclEntitySegmentBaseClasss';
+    /**
+     * @var string
+     */
     protected const EXPECTED_SEGMENT_CONNECTOR_REFERENCE_GETTER = 'getFkBaseClass';
+    /**
+     * @var string
+     */
     protected const EXPECTED_SEGMENT_CONNECTOR_REFERENCE_SETTER = 'setFkBaseClass';
+    /**
+     * @var string
+     */
     protected const EXPECTED_SEGMENT_CONNECTOR_REFERENCE_COLUMN = 'fk_base_table';
 
     /**

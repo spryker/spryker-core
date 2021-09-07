@@ -18,22 +18,70 @@ use Symfony\Component\Process\Process;
 
 class ArchitectureSniffer implements ArchitectureSnifferInterface
 {
+    /**
+     * @var string
+     */
     public const OPTION_PRIORITY = 'priority';
+    /**
+     * @var string
+     */
     public const OPTION_STRICT = 'strict';
+    /**
+     * @var string
+     */
     public const OPTION_DRY_RUN = 'dry-run';
+    /**
+     * @var string
+     */
     public const NAME_VISIBLE_VIOLATIONS = 'visible';
+    /**
+     * @var string
+     */
     public const NAME_IGNORED_VIOLATIONS = 'ignored';
+    /**
+     * @var string
+     */
     public const VIOLATION_FIELD_NAME_DESCRIPTION = 'description';
+    /**
+     * @var string
+     */
     public const VIOLATION_FIELD_NAME_RULESET = 'ruleset';
+    /**
+     * @var string
+     */
     public const VIOLATION_FIELD_NAME_RULE = 'rule';
+    /**
+     * @var string
+     */
     public const OPTION_UPDATE = 'update-baseline';
 
+    /**
+     * @var string
+     */
     protected const SOURCE_FOLDER_NAME = 'src';
+    /**
+     * @var string
+     */
     protected const OPTION_MODULE = 'module';
+    /**
+     * @var string
+     */
     protected const OPTION_IGNORE_ERRORS = 'ignoreErrors';
+    /**
+     * @var string
+     */
     protected const OPTION_VERBOSE = 'verbose';
+    /**
+     * @var string
+     */
     protected const ARCHITECTURE_BASELINE_JSON = 'architecture-baseline.json';
+    /**
+     * @var string
+     */
     protected const VIOLATION_FIELD_NAME_PRIORITY = 'priority';
+    /**
+     * @var string
+     */
     protected const VIOLATION_FIELD_NAME_FILENAME = 'fileName';
 
     /**

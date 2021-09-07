@@ -34,7 +34,13 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
  */
 class ProductBundleAvailabilityHandlerTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ID_STORE = 1;
+    /**
+     * @var string
+     */
     protected const STORE_NAME = 'DE';
 
     /**

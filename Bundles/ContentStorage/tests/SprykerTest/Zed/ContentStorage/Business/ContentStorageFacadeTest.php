@@ -31,16 +31,49 @@ use Spryker\Zed\ContentStorage\Persistence\ContentStoragePersistenceFactory;
  */
 class ContentStorageFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CONTENT_STORAGE_DATA_KEY = 'data';
+    /**
+     * @var string
+     */
     protected const CONTENT_STORAGE_LOCALE_KEY = 'locale';
+    /**
+     * @var string
+     */
     protected const EN_LOCALE = 'en_US';
+    /**
+     * @var string
+     */
     protected const FR_LOCALE = 'fr_FR';
+    /**
+     * @var string
+     */
     protected const DE_LOCALE = 'de_DE';
+    /**
+     * @var string
+     */
     protected const PL_LOCALE = 'pl_PL';
+    /**
+     * @var string
+     */
     protected const DE_LOCALE_KEY = 'de';
+    /**
+     * @var string
+     */
     protected const EN_LOCALE_NAME = 'en';
+    /**
+     * @var string
+     */
     protected const FR_LOCALE_NAME = 'fr';
+    /**
+     * @var string
+     */
     protected const PL_LOCALE_NAME = 'pl';
+    /**
+     * @var int
+     */
     protected const EXPECTED_STORED_CONTENT_ITEMS = 4;
 
     /**

@@ -31,6 +31,9 @@ use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfi
  */
 class ProductDiscontinuedDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DISCONTINUED_PRODUCT_TEST_SKU = 'discontinued_sku';
 
     /**

@@ -12,6 +12,9 @@ use Symfony\Component\Finder\Finder;
 
 class JsonIndexDefinitionFinder implements IndexDefinitionFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const FILE_EXTENSION = '.json';
 
     /**

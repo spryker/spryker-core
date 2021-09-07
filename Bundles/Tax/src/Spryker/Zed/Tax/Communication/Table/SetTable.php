@@ -17,7 +17,13 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class SetTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_COL_ACTIONS = 'Actions';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_TAX_SET = 'id-tax-set';
 
     /**

@@ -14,6 +14,7 @@ interface ProductMeasurementUnitEvents
     * - This event is used for product_measurement_unit publishing.
     *
     * @api
+    * @var string
     */
     public const PRODUCT_MEASUREMENT_UNIT_PUBLISH = 'ProductMeasurementUnit.product_measurement_unit.publish';
 
@@ -22,6 +23,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for product_measurement_unit unpublishing.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_MEASUREMENT_UNIT_UNPUBLISH = 'ProductMeasurementUnit.product_measurement_unit.unpublish';
 
@@ -30,6 +32,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_unit entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_UNIT_CREATE = 'Entity.spy_product_measurement_unit.create';
 
@@ -38,6 +41,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_unit entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_UNIT_UPDATE = 'Entity.spy_product_measurement_unit.update';
 
@@ -46,6 +50,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_unit entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_UNIT_DELETE = 'Entity.spy_product_measurement_unit.delete';
 
@@ -54,6 +59,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for product_concrete_measurement_unit publishing.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH = 'ProductMeasurementUnit.product_concrete_measurement_unit.publish';
 
@@ -62,6 +68,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for product_concrete_measurement_unit unpublishing.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONCRETE_MEASUREMENT_UNIT_UNPUBLISH = 'ProductMeasurementUnit.product_concrete_measurement_unit.unpublish';
 
@@ -70,6 +77,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_base_unit entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_BASE_UNIT_CREATE = 'Entity.spy_product_measurement_base_unit.create';
 
@@ -78,6 +86,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_base_unit entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_BASE_UNIT_UPDATE = 'Entity.spy_product_measurement_base_unit.update';
 
@@ -86,6 +95,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_base_unit entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_BASE_UNIT_DELETE = 'Entity.spy_product_measurement_base_unit.delete';
 
@@ -94,6 +104,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_sales_unit entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_SALES_UNIT_CREATE = 'Entity.spy_product_measurement_sales_unit.create';
 
@@ -102,6 +113,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_sales_unit entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_SALES_UNIT_UPDATE = 'Entity.spy_product_measurement_sales_unit.update';
 
@@ -110,6 +122,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_sales_unit entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_SALES_UNIT_DELETE = 'Entity.spy_product_measurement_sales_unit.delete';
 
@@ -118,6 +131,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_sales_unit_store entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_SALES_UNIT_STORE_CREATE = 'Entity.spy_product_measurement_sales_unit_store.create';
 
@@ -126,6 +140,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_sales_unit_store entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_SALES_UNIT_STORE_UPDATE = 'Entity.spy_product_measurement_sales_unit_store.update';
 
@@ -134,6 +149,7 @@ interface ProductMeasurementUnitEvents
      * - This event is used for spy_product_measurement_sales_unit_store entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_MEASUREMENT_SALES_UNIT_STORE_DELETE = 'Entity.spy_product_measurement_sales_unit_store.delete';
 }

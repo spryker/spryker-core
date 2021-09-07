@@ -14,9 +14,18 @@ use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollection;
 
 class DependencyInjectorResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     public const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\Dependency\\Injector\\%4$sDependencyInjector';
+    /**
+     * @var string
+     */
     public const KEY_FROM_BUNDLE = '%fromBundle%';
 
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'YvesDependencyInjector';
 
     /**

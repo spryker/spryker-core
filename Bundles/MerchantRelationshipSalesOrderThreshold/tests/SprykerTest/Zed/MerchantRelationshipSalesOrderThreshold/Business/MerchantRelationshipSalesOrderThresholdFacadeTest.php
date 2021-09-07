@@ -28,8 +28,17 @@ use Spryker\Zed\SalesOrderThreshold\SalesOrderThresholdDependencyProvider;
  */
 class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const HARD_STRATEGY_KEY = 'hard-minimum-threshold';
+    /**
+     * @var string
+     */
     protected const SOFT_STRATEGY_KEY = 'soft-minimum-threshold';
+    /**
+     * @var string
+     */
     protected const MERCHANT_RELATIONSHIP_KEY = 'mr-test-001';
 
     /**

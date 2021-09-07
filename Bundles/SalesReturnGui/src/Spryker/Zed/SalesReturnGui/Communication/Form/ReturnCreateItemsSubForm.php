@@ -25,8 +25,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnCreateItemsSubForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_RETURN_ITEM_IS_NOT_ELIGIBLE_FOR_RETURN = 'Item selected for return is not eligible for return anymore.';
 
+    /**
+     * @var string
+     */
     public const FIELD_CUSTOM_REASON = 'customReason';
 
     /**

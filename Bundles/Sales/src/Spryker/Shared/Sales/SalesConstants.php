@@ -12,7 +12,13 @@ namespace Spryker\Shared\Sales;
  */
 interface SalesConstants
 {
+    /**
+     * @var string
+     */
     public const NAME_ORDER_REFERENCE = 'OrderReference';
+    /**
+     * @var string
+     */
     public const ENVIRONMENT_PREFIX = 'ENVIRONMENT_PREFIX';
 
     /**
@@ -28,6 +34,7 @@ interface SalesConstants
      *    'PAYMENT_METHOD_1' => 'StateMachineProcess_1',
      *    'PAYMENT_METHOD_2' => 'StateMachineProcess_2',
      * ]
+     * @var string
      */
     public const PAYMENT_METHOD_STATEMACHINE_MAPPING = 'PAYMENT_METHOD_STATEMACHINE_MAPPING';
 }

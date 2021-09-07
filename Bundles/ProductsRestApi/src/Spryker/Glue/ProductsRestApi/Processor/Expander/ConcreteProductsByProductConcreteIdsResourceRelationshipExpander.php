@@ -12,6 +12,9 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class ConcreteProductsByProductConcreteIdsResourceRelationshipExpander extends AbstractConcreteProductsResourceRelationshipExpander
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
 
     /**

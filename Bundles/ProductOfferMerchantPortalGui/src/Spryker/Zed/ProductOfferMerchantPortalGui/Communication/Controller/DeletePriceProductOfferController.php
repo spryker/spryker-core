@@ -22,12 +22,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeletePriceProductOfferController extends AbstractPriceProductOfferController
 {
+    /**
+     * @var string
+     */
     protected const POST_ACTION_TYPE_REFRESH_TABLE = 'refresh_table';
 
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Success! The Price is deleted.';
 
+    /**
+     * @var string
+     */
     protected const PARAM_PRODUCT_OFFER_ID = 'product-offer-id';
+    /**
+     * @var string
+     */
     protected const PARAM_PRICE_PRODUCT_OFFER_IDS = 'price-product-offer-ids';
+    /**
+     * @var string
+     */
     protected const PARAM_QUANTITY = 'quantity';
 
     /**

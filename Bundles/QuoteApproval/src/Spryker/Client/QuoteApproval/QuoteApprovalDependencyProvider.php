@@ -17,8 +17,17 @@ use Spryker\Client\QuoteApproval\Dependency\Client\QuoteApprovalToZedRequestClie
  */
 class QuoteApprovalDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_APPLICABLE_FOR_APPROVAL_CHECK = 'PLUGINS_QUOTE_APPLICABLE_FOR_APPROVAL_CHECK';
 
     /**

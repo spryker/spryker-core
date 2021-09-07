@@ -15,8 +15,14 @@ use Spryker\Shared\Search\SearchConstants;
  */
 class SearchConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     public const FACET_NAME_AGGREGATION_SIZE = 10;
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_SOURCE_IDENTIFIER = 'page';
 
     /**

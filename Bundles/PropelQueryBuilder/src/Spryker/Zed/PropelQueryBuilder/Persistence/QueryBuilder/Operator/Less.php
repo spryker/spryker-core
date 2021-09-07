@@ -11,6 +11,9 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class Less extends AbstractOperator
 {
+    /**
+     * @var string
+     */
     public const TYPE = 'less';
 
     /**

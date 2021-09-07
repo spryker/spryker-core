@@ -16,11 +16,26 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
 {
+    /**
+     * @var string
+     */
     protected const FACET_NAME = 'facet-name';
+    /**
+     * @var string
+     */
     protected const FACET_VALUE = 'facet-value';
+    /**
+     * @var string
+     */
     protected const ALL_PARENTS = 'all-parents';
+    /**
+     * @var string
+     */
     protected const DIRECT_PARENTS = 'direct-parents';
 
+    /**
+     * @var string
+     */
     protected const KEY_ADD_TO_CART_SKU = 'add_to_cart_sku';
 
     /**

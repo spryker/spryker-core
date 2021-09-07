@@ -24,6 +24,9 @@ use Symfony\Component\Finder\Finder;
  */
 class YamlOpenApiSpecificationWriterTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const GENERATED_FILE_NAME_PATTERN = '*.schema.yml';
 
     /**

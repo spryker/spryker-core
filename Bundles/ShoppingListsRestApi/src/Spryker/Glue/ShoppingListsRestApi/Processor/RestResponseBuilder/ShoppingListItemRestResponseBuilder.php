@@ -20,6 +20,9 @@ use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 class ShoppingListItemRestResponseBuilder extends RestResponseBuilder implements ShoppingListItemRestResponseBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_SELF_LINK_SHOPPING_LIST_ITEMS_RESOURCE = '%s/%s/%s/%s';
 
     /**

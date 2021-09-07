@@ -9,6 +9,12 @@ namespace SprykerTest\Service\Barcode\Mocks;
 
 class BarcodeGeneratorPluginMockUnregistered extends AbstractBarcodeGeneratorPluginMock
 {
+    /**
+     * @var string
+     */
     public const GENERATED_CODE = 'mock_unregistered_generated_code';
+    /**
+     * @var string
+     */
     public const GENERATED_ENCODING = 'mock_unregistered_generated_encoding';
 }

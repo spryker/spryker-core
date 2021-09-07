@@ -11,6 +11,9 @@ use Symfony\Component\Yaml\Parser;
 
 class ConfigurationReader implements ConfigurationReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const CONFIG_FILE_NAME = 'tooling.yml';
 
     /**

@@ -24,20 +24,56 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface;
 
 class ProductOptionListTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_COL_PRICE = 'price';
+    /**
+     * @var string
+     */
     public const TABLE_COL_GROSS_PRICE = 'gross_price';
+    /**
+     * @var string
+     */
     public const TABLE_COL_NET_PRICE = 'net_price';
+    /**
+     * @var string
+     */
     public const TABLE_COL_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const TABLE_COL_NAME = 'name';
+    /**
+     * @var string
+     */
     public const TABLE_COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_OPTION_GROUP = 'id-product-option-group';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ACTIVE = 'active';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     public const PRICE_NET = 'PRICE_NET';
+    /**
+     * @var string
+     */
     public const PRICE_GROSS = 'PRICE_GROSS';
 
+    /**
+     * @var string
+     */
     public const PRICE_LABEL = '<span class="label label-info">%s</span>';
 
     /**

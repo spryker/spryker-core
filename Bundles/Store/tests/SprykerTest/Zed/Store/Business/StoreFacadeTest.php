@@ -25,6 +25,9 @@ use Spryker\Zed\Store\Business\StoreFacade;
  */
 class StoreFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_STORE_NAME = 'DE';
 
     /**

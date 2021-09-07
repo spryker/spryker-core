@@ -30,26 +30,50 @@ use Spryker\Zed\Kernel\Container;
  */
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_PROVIDER = 'SERVICE_PROVIDER';
+    /**
+     * @var string
+     */
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
+    /**
+     * @var string
+     */
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
+    /**
+     * @var string
+     */
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::PLUGINS_BACKOFFICE_APPLICATION} instead.
+     * @var string
      */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+    /**
+     * @var string
+     */
     public const PLUGINS_BACKOFFICE_APPLICATION = 'PLUGINS_BACKOFFICE_APPLICATION';
+    /**
+     * @var string
+     */
     public const PLUGINS_BACKEND_GATEWAY_APPLICATION = 'PLUGINS_BACKEND_GATEWAY_APPLICATION';
+    /**
+     * @var string
+     */
     public const PLUGINS_BACKEND_API_APPLICATION = 'PLUGINS_BACKEND_API_APPLICATION';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const SERVICE_ENCODING = 'util encoding service';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const ENVIRONMENT = 'ENVIRONMENT';
 

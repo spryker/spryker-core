@@ -15,22 +15,55 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class DevelopmentConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const BUNDLE_PLACEHOLDER = '[BUNDLE]';
+    /**
+     * @var string
+     */
     protected const PHPSTAN_CONFIG_FILENAME = 'phpstan.neon';
 
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER = 'Spryker';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_ECO = 'SprykerEco';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_SDK = 'SprykerSdk';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_MIDDLEWARE = 'SprykerMiddleware';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_MERCHANT_PORTAL = 'SprykerMerchantPortal';
 
+    /**
+     * @var string
+     */
     protected const GROUP_SPRYKER_TEST = 'SprykerTest';
 
+    /**
+     * @var array
+     */
     public const APPLICATION_NAMESPACES = [
         'Orm',
     ];
 
+    /**
+     * @var array
+     */
     public const APPLICATIONS = [
         'Client',
         'Service',
@@ -40,12 +73,19 @@ class DevelopmentConfig extends AbstractBundleConfig
         'Glue',
     ];
 
+    /**
+     * @var array
+     */
     protected const INTERNAL_NAMESPACES_LIST = [
         self::NAMESPACE_SPRYKER,
         self::NAMESPACE_SPRYKER_SHOP,
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL,
     ];
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var string[]
+     */
     protected const INTERNAL_NAMESPACES_TO_PATH_MAPPING = [
         self::NAMESPACE_SPRYKER => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker/',
         self::NAMESPACE_SPRYKER_SHOP => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-shop/',
@@ -55,8 +95,15 @@ class DevelopmentConfig extends AbstractBundleConfig
         self::NAMESPACE_SPRYKER_MERCHANT_PORTAL => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker-merchant-portal/',
     ];
 
+    /**
+     * @phpstan-var array<string>
+     * @var array
+     */
     protected const INTERNAL_PACKAGE_DIRECTORIES = ['spryker', 'spryker-shop', 'spryker-merchant-portal'];
 
+    /**
+     * @var int
+     */
     protected const TIMEOUT_DEFAULT = 9000;
 
     /**
@@ -522,6 +569,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @phpstan-return array<string, string>
      * @return string[]
      */
     public function getIdeAutoCompletionSourceDirectoryGlobPatterns()

@@ -17,6 +17,9 @@ use Propel\Runtime\ActiveQuery\Criterion\CustomCriterion;
 
 class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const CONCAT = 'CONCAT';
 
     /**

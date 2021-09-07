@@ -11,6 +11,9 @@ use Symfony\Component\Translation\Loader\CsvFileLoader as SymfonyCsvFileLoader;
 
 class CsvFileLoader extends SymfonyCsvFileLoader implements TranslationLoaderInterface
 {
+    /**
+     * @var string
+     */
     protected const LOADER_FORMAT = 'csv';
 
     /**

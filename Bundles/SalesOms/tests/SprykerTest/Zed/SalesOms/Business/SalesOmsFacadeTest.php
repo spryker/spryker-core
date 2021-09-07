@@ -25,7 +25,13 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
  */
 class SalesOmsFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const ORDER_ITEM_REFERENCE = 'Test01';
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**

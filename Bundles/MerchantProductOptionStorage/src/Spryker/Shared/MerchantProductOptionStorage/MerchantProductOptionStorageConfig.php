@@ -16,6 +16,7 @@ class MerchantProductOptionStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_merchant_product_option_group` publishing.
      *
      * @api
+     * @var string
      */
     public const MERCHANT_PRODUCT_OPTION_GROUP_PUBLISH = 'MerchantProductOption.group.publish';
 
@@ -24,6 +25,7 @@ class MerchantProductOptionStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_merchant_product_option_group` entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_MERCHANT_PRODUCT_OPTION_GROUP_CREATE = 'Entity.spy_merchant_product_option_group.create';
 
@@ -32,6 +34,7 @@ class MerchantProductOptionStorageConfig extends AbstractBundleConfig
      * - This events will be used for `spy_merchant_product_option_group` entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_MERCHANT_PRODUCT_OPTION_GROUP_UPDATE = 'Entity.spy_merchant_product_option_group.update';
 }

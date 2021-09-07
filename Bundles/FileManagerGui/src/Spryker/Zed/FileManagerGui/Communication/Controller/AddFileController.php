@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddFileController extends AbstractUploadFileController
 {
+    /**
+     * @var string
+     */
     protected const FILE_DIRECTORY_ID = 'file-directory-id';
 
     /**

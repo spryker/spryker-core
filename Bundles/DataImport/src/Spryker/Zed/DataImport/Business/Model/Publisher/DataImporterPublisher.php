@@ -14,7 +14,13 @@ use Spryker\Zed\Kernel\Locator;
 
 class DataImporterPublisher implements DataImporterPublisherInterface
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_CHUNK_SIZE = 20000;
+    /**
+     * @var int
+     */
     public const DEFAULT_FLUSH_CHUNK_SIZE = 10000000;
 
     /**

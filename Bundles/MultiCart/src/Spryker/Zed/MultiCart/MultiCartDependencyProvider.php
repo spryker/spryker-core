@@ -18,9 +18,21 @@ use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToStoreFacadeBridge;
  */
 class MultiCartDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const QUERY_QUOTE = 'QUERY_QUOTE';
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'CLIENT_MESSENGER';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
 
     /**

@@ -13,11 +13,15 @@ class CategoryConfig extends AbstractBundleConfig
 {
     /**
      * Used as `item_type` for touch mechanism.
+     *
+     * @var string
      */
     public const RESOURCE_TYPE_CATEGORY_NODE = 'categorynode';
 
     /**
      * Used as `item_type` for touch mechanism.
+     *
+     * @var string
      */
     public const RESOURCE_TYPE_NAVIGATION = 'navigation';
 }

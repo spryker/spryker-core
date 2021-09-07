@@ -14,18 +14,26 @@ use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 
 class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_KEY_PRODUCT_OPTIONS = 'productOptions';
 
     /**
      * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_LIST
+     * @var string
      */
     protected const COLUMN_TYPE_LIST = 'list';
 
     /**
      * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
+     * @var string
      */
     protected const COLUMN_TYPE_TEXT = 'text';
 
+    /**
+     * @var int
+     */
     protected const LIST_TYPE_OPTION_VALUE_LIMIT = 1000;
 
     /**

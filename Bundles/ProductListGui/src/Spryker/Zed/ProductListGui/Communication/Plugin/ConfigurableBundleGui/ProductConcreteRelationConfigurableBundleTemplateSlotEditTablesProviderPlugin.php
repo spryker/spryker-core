@@ -16,7 +16,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlugin extends AbstractPlugin implements ConfigurableBundleTemplateSlotEditTablesProviderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const AVAILABLE_PRODUCT_CONCRETE_TABLE_NAME = 'availableProductConcreteTable';
+    /**
+     * @var string
+     */
     protected const ASSIGNED_PRODUCT_CONCRETE_TABLE_NAME = 'assignedProductConcreteTable';
 
     /**

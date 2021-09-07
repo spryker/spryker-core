@@ -22,6 +22,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductSetStorageQueryContainer extends AbstractQueryContainer implements ProductSetStorageQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
 
     /**

@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class EmptyJsonAttributesConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'This value should not be blank.';
 
     /**

@@ -12,7 +12,13 @@ use Generated\Shared\Transfer\ValidationMessageTransfer;
 
 class ComposerJsonPackageNameValidator implements ComposerJsonValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const REQUIRE = 'require';
+    /**
+     * @var string
+     */
     protected const REQUIRE_DEV = 'require-dev';
 
     /**

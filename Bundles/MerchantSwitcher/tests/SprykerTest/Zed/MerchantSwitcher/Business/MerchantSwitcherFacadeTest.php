@@ -30,6 +30,9 @@ use Generated\Shared\Transfer\WishlistTransfer;
  */
 class MerchantSwitcherFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const OLD_PRODUCT_OFFER_REFERENCE = 'old_product_offer_reference';
 
     /**

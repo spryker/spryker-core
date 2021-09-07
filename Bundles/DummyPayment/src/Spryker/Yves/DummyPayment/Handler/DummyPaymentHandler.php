@@ -14,6 +14,9 @@ use Spryker\Yves\DummyPayment\Exception\PaymentMethodNotFoundException;
 
 class DummyPaymentHandler
 {
+    /**
+     * @var string
+     */
     public const PAYMENT_PROVIDER = 'DummyPayment';
 
     /**

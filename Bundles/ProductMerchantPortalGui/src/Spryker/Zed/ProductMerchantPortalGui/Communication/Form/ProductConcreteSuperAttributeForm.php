@@ -23,10 +23,22 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductConcreteSuperAttributeForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
 
+    /**
+     * @var string
+     */
     protected const VALIDATION_MESSAGE_NOT_BLANK = 'The value cannot be empty. Please fill in this input.';
 
     /**

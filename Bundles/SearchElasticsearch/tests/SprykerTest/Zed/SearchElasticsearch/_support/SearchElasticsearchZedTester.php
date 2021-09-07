@@ -34,6 +34,9 @@ class SearchElasticsearchZedTester extends Actor
 {
     use _generated\SearchElasticsearchZedTesterActions;
 
+    /**
+     * @var string
+     */
     protected const INDEX_MAP_DESTINATION_DIR = 'IndexMap';
 
     /**

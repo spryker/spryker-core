@@ -18,6 +18,9 @@ use Spryker\Glue\QuoteRequestAgentsRestApi\Processor\RestResponseBuilder\QuoteRe
 
 class QuoteRequestCreator implements QuoteRequestCreatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MAPPING_TYPE_UUID = 'uuid';
 
     /**

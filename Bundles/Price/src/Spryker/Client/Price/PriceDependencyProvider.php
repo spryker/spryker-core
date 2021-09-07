@@ -16,7 +16,13 @@ use Spryker\Client\Price\Dependency\Client\PriceToQuoteClientBridge;
  */
 class PriceDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRICE_MODE_POST_UPDATE = 'PLUGINS_PRICE_MODE_POST_UPDATE';
 
     /**

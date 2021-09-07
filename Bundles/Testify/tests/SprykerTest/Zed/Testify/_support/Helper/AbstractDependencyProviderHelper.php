@@ -29,8 +29,14 @@ abstract class AbstractDependencyProviderHelper extends Module
     use ContainerHelperTrait;
     use StaticVariablesHelper;
 
+    /**
+     * @var string
+     */
     protected const DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN = '\%1$s\Zed\%2$s\%2$sDependencyProvider';
 
+    /**
+     * @var array
+     */
     protected const NON_STANDARD_NAMESPACE_PREFIXES = [
         'SprykerShopTest',
         'SprykerSdkTest',

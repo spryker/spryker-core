@@ -26,33 +26,94 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextBridge;
  */
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CONDITION_PLUGINS = 'CONDITION_PLUGINS';
+    /**
+     * @var string
+     */
     public const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
+    /**
+     * @var string
+     */
     public const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
+    /**
+     * @var string
+     */
     public const PLUGINS_RESERVATION_AGGREGATION = 'PLUGINS_RESERVATION_AGGREGATION';
+    /**
+     * @var string
+     */
     public const PLUGINS_OMS_RESERVATION_AGGREGATION = 'PLUGINS_OMS_RESERVATION_AGGREGATION';
+    /**
+     * @var string
+     */
     public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
+    /**
+     * @var string
+     */
     public const PLUGINS_OMS_ORDER_MAIL_EXPANDER = 'PLUGINS_OMS_ORDER_MAIL_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_OMS_MANUAL_EVENT_GROUPER = 'PLUGINS_OMS_MANUAL_EVENT_GROUPER';
+    /**
+     * @var string
+     */
     public const PLUGINS_OMS_RESERVATION_READER_STRATEGY = 'PLUGINS_OMS_RESERVATION_READER_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGINS_OMS_RESERVATION_WRITER_STRATEGY = 'PLUGINS_OMS_RESERVATION_WRITER_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY = 'PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY';
+    /**
+     * @var string
+     */
     public const PLUGINS_TIMEOUT_PROCESSOR = 'PLUGINS_TIMEOUT_PROCESSOR';
 
+    /**
+     * @var string
+     */
     public const FACADE_MAIL = 'FACADE_MAIL';
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
 
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const FACADE_UTIL_TEXT = 'FACADE_UTIL_TEXT';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Oms\OmsDependencyProvider::QUERY_CONTAINER_SALES} instead.
+     * @var string
      */
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 

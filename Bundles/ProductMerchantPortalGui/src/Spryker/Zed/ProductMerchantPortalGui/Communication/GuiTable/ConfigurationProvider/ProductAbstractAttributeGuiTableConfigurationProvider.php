@@ -21,51 +21,99 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::PARAM_ID_PRODUCT_ABSTRACT
+     * @var string
      */
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::PARAM_ATTRIBUTE_NAME
+     * @var string
      */
     protected const PARAM_ATTRIBUTE_NAME = 'attribute_name';
 
+    /**
+     * @var string
+     */
     public const COL_KEY_COLUMN_TYPE = 'columnType';
+    /**
+     * @var string
+     */
     public const COL_KEY_COLUMN_TYPE_OPTIONS = 'columnTypeOptions';
+    /**
+     * @var string
+     */
     public const COL_KEY_ALLOW_INPUT = 'allowInput';
+    /**
+     * @var string
+     */
     public const COL_KEY_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+    /**
+     * @var string
+     */
     public const COL_KEY_ATTRIBUTE_NAME = 'attribute_name';
+    /**
+     * @var string
+     */
     public const COL_KEY_ATTRIBUTE_DEFAULT = 'attribute_default';
 
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_ATTRIBUTE_NAME = 'Attribute';
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_ATTRIBUTE_DEFAULT = 'Default';
 
+    /**
+     * @var string
+     */
     protected const ID_ROW_ACTION_DELETE = 'delete-attribute';
+    /**
+     * @var string
+     */
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
 
+    /**
+     * @var string
+     */
     protected const FORMAT_STRING_DATA_URL = '%s?%s=%s';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::attributeDataAction()
+     * @var string
      */
     protected const PRODUCT_ATTRIBUTES_DATA_URL = '/product-merchant-portal-gui/product-attributes/attribute-data/';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::saveAction()
+     * @var string
      */
     protected const PRODUCT_ATTRIBUTE_SAVE_DATA_URL = '/product-merchant-portal-gui/product-attributes/save';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::deleteAction()
+     * @var string
      */
     protected const PRODUCT_ATTRIBUTE_DELETE_URL = '/product-merchant-portal-gui/product-attributes/delete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAttributesController::tableDataAction()
+     * @var string
      */
     protected const PRODUCT_ATTRIBUTES_TABLE_DATA_URL = '/product-merchant-portal-gui/product-attributes/table-data';
 
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_SELECT_ATTRIBUTE = 'Select';
 
+    /**
+     * @var string
+     */
     protected const COLOR_GREY = 'gray';
+    /**
+     * @var string
+     */
     protected const COLOR_BLUE = 'blue';
 
     /**

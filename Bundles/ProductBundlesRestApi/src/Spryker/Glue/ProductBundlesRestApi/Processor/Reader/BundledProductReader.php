@@ -17,6 +17,9 @@ use Spryker\Glue\ProductBundlesRestApi\ProductBundlesRestApiConfig;
 
 class BundledProductReader implements BundledProductReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE_SKU = 'sku';
 
     /**

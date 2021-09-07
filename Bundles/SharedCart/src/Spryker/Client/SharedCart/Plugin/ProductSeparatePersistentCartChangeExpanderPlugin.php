@@ -18,6 +18,9 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChang
  */
 class ProductSeparatePersistentCartChangeExpanderPlugin extends AbstractPlugin implements PersistentCartChangeExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const PARAM_SEPARATE_PRODUCT = 'separate_product';
 
     /**

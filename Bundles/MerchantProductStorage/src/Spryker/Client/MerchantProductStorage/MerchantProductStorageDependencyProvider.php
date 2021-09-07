@@ -14,7 +14,13 @@ use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStora
 
 class MerchantProductStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**

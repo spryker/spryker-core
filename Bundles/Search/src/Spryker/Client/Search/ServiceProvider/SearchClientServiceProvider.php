@@ -14,6 +14,9 @@ use Spryker\Shared\Kernel\ContainerGlobals;
 
 class SearchClientServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'search client';
 
     /**

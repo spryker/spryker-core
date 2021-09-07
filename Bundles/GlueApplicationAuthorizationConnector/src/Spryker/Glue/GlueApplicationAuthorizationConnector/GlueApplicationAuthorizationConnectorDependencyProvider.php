@@ -13,6 +13,9 @@ use Spryker\Glue\Kernel\Container;
 
 class GlueApplicationAuthorizationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_AUTHORIZATION = 'CLIENT_AUTHORIZATION';
 
     /**

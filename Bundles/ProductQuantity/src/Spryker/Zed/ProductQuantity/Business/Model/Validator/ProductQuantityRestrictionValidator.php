@@ -15,13 +15,34 @@ use Spryker\Zed\ProductQuantity\Business\Model\ProductQuantityReaderInterface;
 
 class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_QUANTITY_MIN_NOT_FULFILLED = 'cart.pre.check.quantity.min.failed';
+    /**
+     * @var string
+     */
     protected const ERROR_QUANTITY_MAX_NOT_FULFILLED = 'cart.pre.check.quantity.max.failed';
+    /**
+     * @var string
+     */
     protected const ERROR_QUANTITY_INTERVAL_NOT_FULFILLED = 'cart.pre.check.quantity.interval.failed';
+    /**
+     * @var string
+     */
     protected const ERROR_QUANTITY_INCORRECT = 'cart.pre.check.quantity.value.failed';
 
+    /**
+     * @var string
+     */
     protected const RESTRICTION_MIN = 'min';
+    /**
+     * @var string
+     */
     protected const RESTRICTION_MAX = 'max';
+    /**
+     * @var string
+     */
     protected const RESTRICTION_INTERVAL = 'interval';
 
     /**

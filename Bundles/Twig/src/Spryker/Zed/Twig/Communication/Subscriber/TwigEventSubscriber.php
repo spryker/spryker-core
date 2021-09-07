@@ -19,7 +19,13 @@ use Twig\Environment;
 
 class TwigEventSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
+    /**
+     * @var string
+     */
     protected const SERVICE_TWIG = 'twig';
 
     /**

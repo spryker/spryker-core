@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Dat
 
 class DateScheduleWriterStep implements DataImportStepInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantOpeningHoursDateScheduleDataSetInterface::DATE,
     ];

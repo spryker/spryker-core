@@ -36,30 +36,49 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  */
 class ConfigurableBundleFacadeTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const FAKE_TEMPLATE_ID = 666;
+    /**
+     * @var int
+     */
     protected const FAKE_TEMPLATE_SLOT_ID = 666;
+    /**
+     * @var int
+     */
     protected const FAKE_PRODUCT_LIST_ID = 666;
 
+    /**
+     * @var string
+     */
     protected const FAKE_PRODUCT_IMAGE_SET_NAME_1 = 'FAKE_PRODUCT_IMAGE_SET_NAME_1';
+    /**
+     * @var string
+     */
     protected const FAKE_PRODUCT_IMAGE_SET_NAME_2 = 'FAKE_PRODUCT_IMAGE_SET_NAME_2';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateReader::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS
+     * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_EXISTS = 'configurable_bundle.template.validation.error.not_exists';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdater::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED
+     * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_ACTIVATED = 'configurable_bundle.template.validation.error.already_activated';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Updater\ConfigurableBundleTemplateUpdater::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED
+     * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_ALREADY_DEACTIVATED = 'configurable_bundle.template.validation.error.already_deactivated';
 
     /**
      * @see \Spryker\Zed\ConfigurableBundle\Business\Reader\ConfigurableBundleTemplateSlotReader::GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS
+     * @var string
      */
     protected const GLOSSARY_KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NOT_EXISTS = 'configurable_bundle.slot.validation.error.not_exists';
 

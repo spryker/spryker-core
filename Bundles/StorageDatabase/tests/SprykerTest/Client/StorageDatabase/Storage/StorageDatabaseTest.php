@@ -28,7 +28,13 @@ use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPlugi
  */
 class StorageDatabaseTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DUMMY_KEY = 'dummy_key';
+    /**
+     * @var string
+     */
     protected const DUMMY_VALUE = 'dummy_value';
 
     /**

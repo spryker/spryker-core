@@ -25,9 +25,18 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class SubRequestHandlerTest extends Unit
 {
+    /**
+     * @var array
+     */
     public const GET_PARAMS = ['fruit' => 'mango'];
+    /**
+     * @var array
+     */
     public const POST_PARAMS = ['fruit' => 'orange'];
 
+    /**
+     * @var string
+     */
     public const URL_SUB_REQUEST = '/foo/bar/baz';
 
     /**

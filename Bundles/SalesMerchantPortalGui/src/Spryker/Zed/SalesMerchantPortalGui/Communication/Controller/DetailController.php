@@ -21,10 +21,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class DetailController extends AbstractSalesMerchantPortalGuiController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_MERCHANT_ORDER = 'merchant-order-id';
 
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     * @var string
      */
     protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 

@@ -17,8 +17,17 @@ use Propel\Runtime\Propel;
 
 abstract class AbstractRelationResolverStrategy
 {
+    /**
+     * @var string
+     */
     protected const RELATION_TEMPLATE = '%s.%s';
+    /**
+     * @var string
+     */
     protected const RELATION_ALIAS_TEMPLATE = '%s%s';
+    /**
+     * @var string
+     */
     protected const JOIN_SUFFIX = '_acl';
 
     /**

@@ -22,6 +22,9 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const KEY_DELIMITER = '_';
 
     /**

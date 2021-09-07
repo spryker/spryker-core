@@ -13,6 +13,9 @@ use Spryker\Glue\MerchantsRestApi\Processor\Reader\MerchantReaderInterface;
 
 class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipOrderResourceExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES = 'merchantReferences';
 
     /**

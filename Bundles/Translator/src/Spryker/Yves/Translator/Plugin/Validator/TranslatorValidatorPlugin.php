@@ -17,8 +17,12 @@ class TranslatorValidatorPlugin extends AbstractPlugin implements ValidatorPlugi
 {
     /**
      * @uses \Spryker\Yves\Translator\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     * @var string
      */
     protected const SERVICE_TRANSLATOR = 'translator';
+    /**
+     * @var string
+     */
     protected const TRANSLATION_DOMAIN = 'validators';
 
     /**

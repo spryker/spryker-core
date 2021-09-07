@@ -15,9 +15,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateCompanyRoleController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_REDIRECT_LIST_COMPANY_ROLE = '/company-role-gui/list-company-role';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_COMPANY_ROLE_CREATE = 'Company role has been successfully created';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_COMPANY_ROLE_CREATE = 'Company role cannot be created';
 
     /**

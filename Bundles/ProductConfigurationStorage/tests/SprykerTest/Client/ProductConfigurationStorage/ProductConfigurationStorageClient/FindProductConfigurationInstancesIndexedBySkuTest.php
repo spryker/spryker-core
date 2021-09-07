@@ -29,7 +29,13 @@ use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactor
  */
 class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_SKU_1 = 'test-sku-1';
+    /**
+     * @var string
+     */
     protected const TEST_SKU_2 = 'test-sku-2';
 
     /**

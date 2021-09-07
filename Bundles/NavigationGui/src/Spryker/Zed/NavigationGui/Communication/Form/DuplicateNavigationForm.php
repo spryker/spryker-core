@@ -22,7 +22,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class DuplicateNavigationForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_KEY = 'key';
 
     /**

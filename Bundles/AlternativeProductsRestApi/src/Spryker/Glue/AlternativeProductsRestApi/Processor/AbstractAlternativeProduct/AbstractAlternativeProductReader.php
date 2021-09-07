@@ -16,6 +16,9 @@ use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
 class AbstractAlternativeProductReader implements AbstractAlternativeProductReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
 
     /**

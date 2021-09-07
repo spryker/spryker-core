@@ -24,6 +24,9 @@ use Spryker\Zed\Shipment\Persistence\ShipmentRepository;
  */
 class ShipmentRepositoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_STORE_NAME = 'DE';
 
     /**

@@ -18,8 +18,17 @@ use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
 
 class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const MAPPING_TYPE_UUID = 'uuid';
+    /**
+     * @var string
+     */
     protected const MAPPING_DELIMITER = ':';
+    /**
+     * @var string
+     */
     protected const MAPPING_DATA_KEY_ID = 'id';
 
     /**

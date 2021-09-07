@@ -19,6 +19,9 @@ class ProductOfferValidityWriterStep implements DataImportStepInterface
     protected const PRODUCT_VALID_TO = ProductOfferValidityDataSetInterface::PRODUCT_VALID_TO;
     protected const FK_PRODUCT_OFFER = ProductOfferValidityDataSetInterface::FK_PRODUCT_OFFER;
 
+    /**
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
         ProductOfferValidityDataSetInterface::FK_PRODUCT_OFFER,
     ];

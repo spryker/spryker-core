@@ -15,11 +15,18 @@ use Spryker\Zed\CmsSlotBlockCmsGui\Dependency\QueryContainer\CmsSlotBlockCmsGuiT
 
 class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_OPTION_ALL_CMS_PAGES = 'All CMS Pages';
+    /**
+     * @var string
+     */
     protected const KEY_OPTION_SPECIFIC_CMS_PAGES = 'Specific CMS Pages';
 
     /**
      * @uses \Spryker\Zed\Cms\Persistence\CmsQueryContainer::CMS_NAME
+     * @var string
      */
     protected const CMS_PAGE_NAME = 'name';
 

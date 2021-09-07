@@ -14,6 +14,9 @@ use Spryker\Service\Kernel\AbstractPlugin;
 
 class Code128BarcodeGeneratorPlugin extends AbstractPlugin implements BarcodeGeneratorPluginInterface
 {
+    /**
+     * @var string
+     */
     public const ENCODING = 'data:image/png;base64';
 
     /**

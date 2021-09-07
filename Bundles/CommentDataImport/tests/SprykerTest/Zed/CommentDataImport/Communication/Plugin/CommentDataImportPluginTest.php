@@ -31,9 +31,21 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class CommentDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_COMMENT_CUSTOMER_REFERENCE = 'test-comment-customer-reference';
+    /**
+     * @var string
+     */
     protected const INCORRECT_COMMENT_CUSTOMER_REFERENCE = 'incorrect-comment-customer-reference';
+    /**
+     * @var string
+     */
     protected const TEST_COMMENT_QUOTE_KEY = 'test-comment-owner-key';
+    /**
+     * @var string
+     */
     protected const INCORRECT_COMMENT_QUOTE_KEY = 'incorrect-comment-owner-key';
 
     /**

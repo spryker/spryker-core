@@ -13,11 +13,13 @@ class CategoryStorageConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Client\Catalog\Plugin\ConfigTransferBuilder\CategoryFacetConfigTransferBuilderPlugin::NAME
+     * @var string
      */
     protected const CATEGORY_NAME = 'category';
 
     /**
      * @uses \Generated\Shared\Search\PageIndexMap::CATEGORY_ALL_PARENTS
+     * @var string
      */
     protected const CATEGORY_ALL_PARENTS = 'category.all-parents';
 

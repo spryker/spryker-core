@@ -30,6 +30,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class EmptyGeneratedDirectoryConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'setup:empty-generated-directory';
 
     /**

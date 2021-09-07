@@ -15,7 +15,13 @@ use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInter
 
 class RequestExecutor implements RequestExecutorInterface
 {
+    /**
+     * @var string
+     */
     protected const AUTH_KEY = 'auth';
+    /**
+     * @var string
+     */
     protected const HEADER_SET_COOKIE = 'set-cookie';
 
     /**

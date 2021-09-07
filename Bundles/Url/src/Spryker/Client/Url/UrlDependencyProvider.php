@@ -13,6 +13,9 @@ use Spryker\Client\Url\Dependency\Client\UrlToStorageClientBridge;
 
 class UrlDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**

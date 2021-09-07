@@ -13,6 +13,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class FileInfoExtractor
 {
+    /**
+     * @var string
+     */
     public const LAYER = 'Default';
 
     /**

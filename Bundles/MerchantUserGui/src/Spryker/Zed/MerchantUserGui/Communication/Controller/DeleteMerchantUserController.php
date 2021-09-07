@@ -17,8 +17,14 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class DeleteMerchantUserController extends AbstractCrudMerchantUserController
 {
+    /**
+     * @var string
+     */
     public const PARAM_MERCHANT_USER_ID = 'merchant-user-id';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_INCORRECT_MERCHANT_USER_ID = 'Merchant user ID is incorrect.';
 
     /**

@@ -27,25 +27,76 @@ use Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig;
 
 class ProductRelationTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const HEADER_AVAILABLE_IN_STORE = 'Store';
+    /**
+     * @var string
+     */
     protected const HEADER_ID_PRODUCT_RELATION = 'ID';
+    /**
+     * @var string
+     */
     protected const HEADER_ABSTRACT_SKU = 'Abstract SKU';
+    /**
+     * @var string
+     */
     protected const HEADER_ABSTRACT_PRODUCT_NAME = 'Abstract product name';
+    /**
+     * @var string
+     */
     protected const HEADER_RELATION_TYPE = 'Relation type';
+    /**
+     * @var string
+     */
     protected const HEADER_STATUS = 'Status';
+    /**
+     * @var string
+     */
     protected const HEADER_NUMBER_OF_PRODUCTS = 'Number of Products';
+    /**
+     * @var string
+     */
     protected const HEADER_PRODUCT_RELATION_KEY = 'Product Relation Key';
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'Actions';
+    /**
+     * @var string
+     */
     protected const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';
+    /**
+     * @var string
+     */
     protected const COL_LOCALIZED_NAME = 'localized_name';
 
+    /**
+     * @var string
+     */
     protected const URL_RELATION_DELETE = '/product-relation-gui/delete/index';
+    /**
+     * @var string
+     */
     protected const URL_RELATION_TOGGLE_IS_ACTIVE = '/product-relation-gui/edit/toggle-is-active';
+    /**
+     * @var string
+     */
     protected const URL_PRODUCT_RELATION_LIST = '/product-relation-gui/list/index';
+    /**
+     * @var string
+     */
     protected const URL_PRODUCT_RELATION_VIEW = '/product-relation-gui/view/index';
 
+    /**
+     * @var string
+     */
     protected const LABEL_PRIMARY = 'label-primary';
 
+    /**
+     * @var string
+     */
     public const URL_PRODUCT_RELATION_EDIT = '/product-relation-gui/edit/index';
 
     /**

@@ -21,21 +21,22 @@ class TaxProductAbstractFormExpanderPlugin extends AbstractPlugin implements Pro
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm::GROUP_WITH_STORES
+     * @var string
      */
     protected const GROUP_WITH_STORES = 'stores';
 
     /**
-     * @const
+     * @var string
      */
     protected const LABEL_ID_TAX_SET = 'Tax Set';
 
     /**
-     * @const
+     * @var string
      */
     protected const PLACEHOLDER_ID_TAX_SET = 'Select tax set';
 
     /**
-     * @const
+     * @var string
      */
     protected const MESSAGE_VALIDATION_NOT_BLANK_ERROR = 'The value cannot be blank. Please fill in this input';
 

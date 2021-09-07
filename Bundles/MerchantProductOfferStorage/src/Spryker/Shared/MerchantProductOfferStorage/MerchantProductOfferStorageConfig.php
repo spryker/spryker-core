@@ -17,6 +17,7 @@ class MerchantProductOfferStorageConfig
      * - Product offer reference attribute as used for selected attributes.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_OFFER_REFERENCE_ATTRIBUTE = 'product_offer_reference';
 
@@ -25,6 +26,7 @@ class MerchantProductOfferStorageConfig
      * - Queue name as used for processing merchant product offer messages.
      *
      * @api
+     * @var string
      */
     public const MERCHANT_PRODUCT_OFFER_SYNC_STORAGE_QUEUE = 'sync.storage.merchant_product_offer';
 
@@ -33,6 +35,7 @@ class MerchantProductOfferStorageConfig
      * - Queue name as used for processing merchant product offer messages.
      *
      * @api
+     * @var string
      */
     public const MERCHANT_PRODUCT_OFFER_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.merchant_product_offer.error';
 
@@ -41,6 +44,7 @@ class MerchantProductOfferStorageConfig
      * - Resource name, this will use for key generating.
      *
      * @api
+     * @var string
      */
     public const RESOURCE_MERCHANT_PRODUCT_OFFER_NAME = 'product_offer';
 
@@ -49,6 +53,7 @@ class MerchantProductOfferStorageConfig
      * - Resource name, this will use for key generating.
      *
      * @api
+     * @var string
      */
     public const RESOURCE_PRODUCT_CONCRETE_PRODUCT_OFFERS_NAME = 'product_concrete_product_offers';
 }

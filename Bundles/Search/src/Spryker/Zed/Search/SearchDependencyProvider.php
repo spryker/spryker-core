@@ -18,15 +18,34 @@ use Spryker\Zed\Search\Dependency\Service\SearchToUtilEncodingBridge;
  */
 class SearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'search client';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGIN_SEARCH_PAGE_MAPS = 'PLUGIN_SEARCH_PAGE_MAPS';
+    /**
+     * @var string
+     */
     public const PLUGINS_SEARCH_SOURCE_INSTALLER = 'PLUGINS_SEARCH_SOURCE_INSTALLER';
+    /**
+     * @var string
+     */
     public const PLUGINS_SEARCH_MAP_INSTALLER = 'PLUGINS_SEARCH_MAP_INSTALLER';
+    /**
+     * @var string
+     */
     public const GUZZLE_CLIENT = 'GUZZLE_CLIENT';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
     /**

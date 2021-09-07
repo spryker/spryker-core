@@ -31,6 +31,9 @@ use Spryker\Zed\ShoppingListDataImport\ShoppingListDataImportConfig;
  */
 class ShoppingListDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_CUSTOMER_REFERENCE = 'test-shopping-list-customer-reference';
 
     /**

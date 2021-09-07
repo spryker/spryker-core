@@ -18,6 +18,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyRoleCompanyUserTableConfigExpanderPlugin extends AbstractPlugin implements CompanyUserTableConfigExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const TITLE_COMPANY_ROLE_NAMES = 'Roles';
 
     /**

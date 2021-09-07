@@ -25,8 +25,17 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
  */
 class ReNameDataSetKeysStepTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const ORIGINAL_KEY_A = 'key-a';
+    /**
+     * @var string
+     */
     public const NEW_KEY_A = 'new-key-a';
+    /**
+     * @var string
+     */
     public const VALUE_A = 'value a';
 
     /**

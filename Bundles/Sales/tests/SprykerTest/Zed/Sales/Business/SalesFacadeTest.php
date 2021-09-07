@@ -31,10 +31,22 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class SalesFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    /**
+     * @var string
+     */
     protected const DEFAULT_ITEM_STATE = 'test';
+    /**
+     * @var string
+     */
     protected const NON_EXISTING_ORDER_REFERENCE = 'test--111';
 
+    /**
+     * @var array
+     */
     protected const ORDER_WRONG_SEARCH_PARAMS = [
         'orderReference' => '123_wrong',
         'customerReference' => 'testing-customer-wrong',

@@ -13,6 +13,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class CategoryUrlConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_URL_FACADE = 'urlFacade';
 
     /**

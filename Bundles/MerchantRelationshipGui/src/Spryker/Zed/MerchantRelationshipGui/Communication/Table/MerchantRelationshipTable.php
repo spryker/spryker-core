@@ -20,6 +20,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class MerchantRelationshipTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const TABLE_IDENTIFIER = 'merchant-relationship-table';
 
     /**

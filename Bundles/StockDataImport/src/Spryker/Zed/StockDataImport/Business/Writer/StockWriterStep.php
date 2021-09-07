@@ -16,6 +16,9 @@ use Spryker\Zed\StockDataImport\Business\Writer\DataSet\StockDataSetInterface;
 
 class StockWriterStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE = '"%s" must be in the data set. Given: "%s"';
 
     /**

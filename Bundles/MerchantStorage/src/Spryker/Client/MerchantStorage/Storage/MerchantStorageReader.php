@@ -19,7 +19,13 @@ use Spryker\Shared\MerchantStorage\MerchantStorageConfig;
 
 class MerchantStorageReader implements MerchantStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID_MERCHANT = 'id';
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_REFERENCE = 'merchant_reference';
 
     /**

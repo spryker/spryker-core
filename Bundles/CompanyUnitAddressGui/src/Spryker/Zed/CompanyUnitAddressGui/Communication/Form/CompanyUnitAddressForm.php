@@ -23,7 +23,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CompanyUnitAddressForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+    /**
+     * @var string
+     */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
     /**

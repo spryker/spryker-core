@@ -21,7 +21,13 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class AttributeKeyForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_KEY = 'key';
+    /**
+     * @var string
+     */
     public const FIELD_KEY_HIDDEN_ID = 'key_hidden_id';
 
     /**

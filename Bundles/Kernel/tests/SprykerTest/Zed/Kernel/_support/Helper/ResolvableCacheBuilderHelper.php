@@ -20,15 +20,36 @@ class ResolvableCacheBuilderHelper extends Module
     use ConfigHelperTrait;
     use ClassHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const CLASS_KEY_STORE = 'store';
+    /**
+     * @var string
+     */
     protected const CLASS_KEY_PROJECT = 'project';
+    /**
+     * @var string
+     */
     protected const CLASS_KEY_CORE = 'core';
 
+    /**
+     * @var string
+     */
     protected const CACHE_KEY = 'KernelZedFacade';
 
+    /**
+     * @var string
+     */
     protected const CURRENT_STORE = 'DE';
+    /**
+     * @var string
+     */
     protected const MODULE_NAME = 'FooBar';
 
+    /**
+     * @var string
+     */
     protected const PATH_TO_CACHE_FILE = 'vfs://root/directory/cacheFile.php';
 
     /**

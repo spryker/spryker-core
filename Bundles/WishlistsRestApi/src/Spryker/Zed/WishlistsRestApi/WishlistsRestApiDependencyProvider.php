@@ -17,9 +17,18 @@ use Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFac
  */
 class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_WISHLIST = 'PROPEL_QUERY_WISHLIST';
 
+    /**
+     * @var string
+     */
     public const FACADE_WISHLIST = 'FACADE_WISHLIST';
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_DELETE_STRATEGY = 'PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_DELETE_STRATEGY';
 
     /**

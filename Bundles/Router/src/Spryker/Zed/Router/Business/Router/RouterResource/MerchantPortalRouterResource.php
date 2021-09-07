@@ -12,6 +12,9 @@ use Symfony\Component\Finder\Finder;
 
 class MerchantPortalRouterResource extends AbstractRouterResource
 {
+    /**
+     * @var string
+     */
     protected const MERCHANT_PORTAL_FOLDER_FILTER = 'MerchantPortal';
 
     /**

@@ -35,6 +35,9 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class FinderTest extends StateMachineMocks
 {
+    /**
+     * @var string
+     */
     public const TEST_STATE_MACHINE_NAME = 'TestStateMachine';
 
     /**

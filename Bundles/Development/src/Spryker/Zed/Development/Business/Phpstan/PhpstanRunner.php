@@ -24,22 +24,61 @@ class PhpstanRunner implements PhpstanRunnerInterface
 {
     use PathTrait;
 
+    /**
+     * @var string
+     */
     public const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    /**
+     * @var string
+     */
     public const NAMESPACE_SPRYKER = 'Spryker';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_LEVEL = 'defaultLevel';
+    /**
+     * @var string
+     */
     public const MEMORY_LIMIT = '-1';
+    /**
+     * @var int
+     */
     public const CODE_SUCCESS = 0;
 
+    /**
+     * @var string
+     */
     public const OPTION_DRY_RUN = 'dry-run';
+    /**
+     * @var string
+     */
     public const OPTION_VERBOSE = 'verbose';
+    /**
+     * @var string
+     */
     public const OPTION_MODULE = 'module';
+    /**
+     * @var string
+     */
     public const OPTION_LEVEL = 'level';
+    /**
+     * @var string
+     */
     public const OPTION_OFFSET = 'offset';
 
+    /**
+     * @var int
+     */
     protected const SUCCESS_EXIT_CODE = 0;
+    /**
+     * @var int
+     */
     protected const ERROR_EXIT_CODE = 1;
 
+    /**
+     * @var string
+     */
     protected const PHPSTAN_MEMORY_LIMIT = '4000M';
 
     /**

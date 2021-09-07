@@ -33,6 +33,9 @@ class GiftCardBusinessTester extends Actor
 {
     use _generated\GiftCardBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     public const GIFT_CARD_CODE = 'testCode1';
 
     /**

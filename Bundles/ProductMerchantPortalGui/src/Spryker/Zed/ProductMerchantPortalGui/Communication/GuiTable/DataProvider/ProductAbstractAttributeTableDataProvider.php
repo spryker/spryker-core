@@ -21,10 +21,14 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProvider
 {
+    /**
+     * @var string
+     */
     protected const ATTRIBUTES_DEFAULT_SORT_DIRECTION_ASC = 'ASC';
 
     /**
      * @uses ProductAbstractAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME
+     * @var string
      */
     protected const ATTRIBUTES_DEFAULT_SORT_FIELD = 'attribute_name';
 

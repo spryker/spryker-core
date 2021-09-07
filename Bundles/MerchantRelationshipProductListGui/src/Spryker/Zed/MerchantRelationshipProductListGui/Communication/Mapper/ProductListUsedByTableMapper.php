@@ -15,9 +15,18 @@ use Spryker\Service\UtilText\Model\Url\Url;
 
 class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const ENTITY_TITLE = 'Merchant Relationship';
 
+    /**
+     * @var string
+     */
     protected const EDIT_BUTTON_TITLE = 'Edit Merchant Relationship';
+    /**
+     * @var array
+     */
     protected const EDIT_BUTTON_OPTIONS = [
         'class' => 'btn-edit btn-xs',
         'iconClass' => 'fa fa-pencil-square-o',
@@ -25,8 +34,12 @@ class ProductListUsedByTableMapper implements ProductListUsedByTableMapperInterf
 
     /**
      * @uses \Spryker\Zed\MerchantRelationshipGui\Communication\Controller\EditMerchantRelationshipController::indexAction()
+     * @var string
      */
     protected const ROUTE_EDIT_MERCHANT_RELATIONSHIP = '/merchant-relationship-gui/edit-merchant-relationship';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_MERCHANT_RELATIONSHIP = 'id-merchant-relationship';
 
     /**

@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateMerchantUserController extends AbstractCrudMerchantUserController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_MERCHANT_ID = 'merchant-id';
 
     /**

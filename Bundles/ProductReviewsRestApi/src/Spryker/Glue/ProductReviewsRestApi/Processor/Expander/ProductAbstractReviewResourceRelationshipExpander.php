@@ -18,9 +18,16 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
 {
     /**
      * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper::ID_PRODUCT_ABSTRACT
+     * @var string
      */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const PRODUCT_MAPPING_TYPE = 'sku';
 
     /**

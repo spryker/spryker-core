@@ -36,6 +36,9 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
  */
 class ProductBundleReaderTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ID_STORE = 1;
 
     /**

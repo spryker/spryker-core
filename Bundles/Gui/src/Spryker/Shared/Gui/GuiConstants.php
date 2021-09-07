@@ -19,6 +19,7 @@ interface GuiConstants
      * @example '/assets/'
      *
      * @api
+     * @var string
      */
     public const ZED_ASSETS_BASE_URL = 'GUI:ZED_ASSETS_BASE_URL';
 }

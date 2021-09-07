@@ -25,6 +25,9 @@ use Spryker\Zed\ProductLabelCollector\Business\ProductLabelCollectorFacadeInterf
  */
 class ProductLabelCollectorFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const METHOD_FOR_RELATION_COLLECTION = 'runProductAbstractRelationStorageCollector';
 
     /**

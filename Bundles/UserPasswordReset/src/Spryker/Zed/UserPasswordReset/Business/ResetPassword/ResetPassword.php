@@ -21,14 +21,27 @@ use Spryker\Zed\UserPasswordReset\UserPasswordResetConfig;
 
 class ResetPassword implements ResetPasswordInterface
 {
+    /**
+     * @var int
+     */
     protected const RANDOM_STRING_LENGTH = 8;
 
+    /**
+     * @var string
+     */
     protected const STATUS_ACTIVE = 'active';
+    /**
+     * @var string
+     */
     protected const STATUS_EXPIRED = 'expired';
+    /**
+     * @var string
+     */
     protected const STATUS_USED = 'used';
 
     /**
      * @uses \Spryker\Zed\SecurityGui\Communication\Controller\PasswordController::PARAM_TOKEN
+     * @var string
      */
     protected const PARAM_TOKEN = 'token';
 

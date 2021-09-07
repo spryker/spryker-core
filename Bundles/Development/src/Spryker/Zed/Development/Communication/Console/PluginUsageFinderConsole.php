@@ -24,7 +24,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PluginUsageFinderConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'dev:plugin-usage:dump';
+    /**
+     * @var string
+     */
     protected const ARGUMENT_MODULE = 'module';
 
     /**

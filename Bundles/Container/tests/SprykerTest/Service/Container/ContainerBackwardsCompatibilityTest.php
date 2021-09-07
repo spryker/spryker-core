@@ -21,6 +21,9 @@ use Spryker\Service\Container\Container;
  */
 class ContainerBackwardsCompatibilityTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const SERVICE = 'service';
 
     /**

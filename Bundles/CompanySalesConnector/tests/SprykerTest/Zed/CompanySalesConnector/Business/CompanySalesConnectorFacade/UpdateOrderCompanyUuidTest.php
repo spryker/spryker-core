@@ -23,7 +23,13 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  */
 class UpdateOrderCompanyUuidTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    /**
+     * @var string
+     */
     protected const COMPANY_UUID = 'uuid-sample';
 
     /**

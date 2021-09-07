@@ -27,6 +27,9 @@ use Spryker\Zed\MerchantDataImport\MerchantDataImportConfig;
  */
 class MerchantDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const MERCHANT_REFERENCE = 'MER000006-test';
 
     /**

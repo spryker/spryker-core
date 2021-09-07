@@ -15,15 +15,28 @@ use Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToT
 
 class UserMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+    /**
+     * @var string
+     */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     /**
      * @uses \Spryker\Zed\ZedUi\Communication\Plugin\Application\ZedUiApplicationPlugin::SERVICE_ZED_UI_FACTORY
+     * @var string
      */
     public const SERVICE_ZED_UI_FACTORY = 'SERVICE_ZED_UI_FACTORY';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_USER_POST_CHANGE_PLUGINS = 'PLUGINS_MERCHANT_USER_POST_CHANGE_PLUGINS';
 
     /**

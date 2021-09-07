@@ -18,9 +18,18 @@ use Symfony\Component\Form\FormInterface;
  */
 abstract class AbstractUpdateProductController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'The Product is saved.';
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'Please resolve all errors.';
 
+    /**
+     * @var array
+     */
     protected const DEFAULT_INITIAL_DATA = [
         GuiTableEditableInitialDataTransfer::DATA => [],
         GuiTableEditableInitialDataTransfer::ERRORS => [],

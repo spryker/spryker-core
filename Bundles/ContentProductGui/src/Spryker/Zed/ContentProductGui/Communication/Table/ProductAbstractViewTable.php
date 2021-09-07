@@ -12,12 +12,27 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ProductAbstractViewTable extends AbstractProductAbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_IDENTIFIER = 'product-abstract-view-table';
+    /**
+     * @var string
+     */
     public const TABLE_CLASS = 'product-abstract-view-table gui-table-data';
+    /**
+     * @var string
+     */
     public const BASE_URL = '/content-product-gui/product-abstract/';
 
+    /**
+     * @var string
+     */
     public const COL_SELECTED = 'Selected';
 
+    /**
+     * @var string
+     */
     public const COL_ALIAS_NAME = 'name';
 
     /**

@@ -20,6 +20,9 @@ class PriceProductScheduleCreator implements PriceProductScheduleCreatorInterfac
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_CREATE_SCHEDULED_PRICE = 'Scheduled price creation failed';
 
     /**

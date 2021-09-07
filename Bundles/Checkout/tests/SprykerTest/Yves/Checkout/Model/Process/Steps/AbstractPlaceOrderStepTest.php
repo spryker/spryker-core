@@ -30,11 +30,29 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractPlaceOrderStepTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const ORDER_REFERENCE = 'order reference';
+    /**
+     * @var string
+     */
     public const ESCAPE_ROUTE = 'escapeRoute';
+    /**
+     * @var string
+     */
     public const STEP_ROUTE = 'stepRoute';
+    /**
+     * @var int
+     */
     public const ERROR_CODE_123 = 123;
+    /**
+     * @var string
+     */
     public const ESCAPE_ROUTE_123 = 'escapeRoute123';
+    /**
+     * @var string
+     */
     public const EXTERNAL_REDIRECT_URL = 'externalRedirectUrl';
 
     /**

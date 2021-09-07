@@ -13,6 +13,9 @@ use Spryker\Service\PriceProductVolume\Dependency\Service\PriceProductVolumeToUt
 
 class PriceProductVolumeDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class OrderCustomReferenceConfig extends AbstractSharedConfig
 {
+    /**
+     * @var int
+     */
     protected const ORDER_CUSTOM_REFERENCE_MAX_LENGTH = 255;
 
     /**

@@ -23,15 +23,34 @@ use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const KEY_PRICES = 'prices';
+    /**
+     * @var string
+     */
     protected const KEY_CATEGORIES = 'categories';
+    /**
+     * @var string
+     */
     protected const KEY_IMAGE_SETS = 'imageSets';
+    /**
+     * @var string
+     */
     protected const KEY_ATTRIBUTE_MAP = 'attribute_map';
+    /**
+     * @var string
+     */
     protected const KEY_ID = 'id';
 
     /**
      * @uses \Spryker\Zed\Storage\Communication\Table\StorageTable::KV_PREFIX
+     * @var string
      */
     protected const KV_PREFIX = 'kv:';
 

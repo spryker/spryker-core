@@ -25,6 +25,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MoneyCollectionType extends AbstractCollectionType
 {
+    /**
+     * @var string
+     */
     public const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
     /**

@@ -20,19 +20,52 @@ use Traversable;
 class DiscountsTable extends AbstractTable
 {
     public const TABLE_COL_PERIOD = self::TYPE_COL_PERIOD;
+    /**
+     * @var string
+     */
     public const TABLE_COL_TYPE = 'Type';
+    /**
+     * @var string
+     */
     public const TYPE_COL_PERIOD = 'Period';
+    /**
+     * @var string
+     */
     public const TABLE_COL_ACTIONS = 'Actions';
+    /**
+     * @var string
+     */
     public const TABLE_COL_STORE = 'Store';
 
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_DISCOUNT = 'id-discount';
+    /**
+     * @var string
+     */
     public const URL_PARAM_VISIBILITY = 'visibility';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     public const URL_FRAGMENT_TAB_CONTENT_VOUCHER = 'tab-content-voucher';
 
+    /**
+     * @var string
+     */
     public const DATE_FORMAT = 'Y-m-d';
+    /**
+     * @var string
+     */
     public const BUTTON_ACTIVATE = 'Activate';
+    /**
+     * @var string
+     */
     public const BUTTON_DEACTIVATE = 'Deactivate';
 
     /**

@@ -16,6 +16,9 @@ use Spryker\Glue\Kernel\Container;
  */
 class CompanyBusinessUnitAddressesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_UNIT_ADDRESS = 'CLIENT_COMPANY_UNIT_ADDRESS';
 
     /**

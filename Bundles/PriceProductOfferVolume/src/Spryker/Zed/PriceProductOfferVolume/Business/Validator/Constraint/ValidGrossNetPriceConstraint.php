@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ValidGrossNetPriceConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'Gross Default and/or Net Default price is required for volume price.';
 
     /**

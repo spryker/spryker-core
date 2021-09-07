@@ -24,8 +24,17 @@ class Writer implements WriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     public const TOUCH_STOCK_TYPE = 'stock-type';
+    /**
+     * @var string
+     */
     public const TOUCH_STOCK_PRODUCT = 'stock-product';
+    /**
+     * @var string
+     */
     public const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**

@@ -16,10 +16,19 @@ use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitReposit
 
 class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSalesUnitCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_ITEM_SALES_UNIT_IS_NOT_FOUND = 'cart.item.sales_unit.not_found';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
+    /**
+     * @var string
+     */
     protected const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**

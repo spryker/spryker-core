@@ -14,6 +14,7 @@ class CmsBlockConfig
      * - Defines the collector resource name
      *
      * @api
+     * @var string
      */
     public const RESOURCE_TYPE_CMS_BLOCK = 'cms-block';
 }

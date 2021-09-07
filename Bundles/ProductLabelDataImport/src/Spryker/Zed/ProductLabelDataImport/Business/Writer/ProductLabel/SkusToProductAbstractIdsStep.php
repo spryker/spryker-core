@@ -16,6 +16,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class SkusToProductAbstractIdsStep implements DataImportStepInterface
 {
+    /**
+     * @var int
+     */
     protected const BULK_SIZE = 100;
 
     /**

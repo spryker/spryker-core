@@ -29,7 +29,13 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionRepository;
  */
 class ProductOptionListTableTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_OPTION_VALUE_SKU_1 = 'PRODUCT_OPTION_VALUE_SKU_1';
+    /**
+     * @var string
+     */
     protected const PRODUCT_OPTION_VALUE_SKU_2 = 'PRODUCT_OPTION_VALUE_SKU_2';
 
     /**

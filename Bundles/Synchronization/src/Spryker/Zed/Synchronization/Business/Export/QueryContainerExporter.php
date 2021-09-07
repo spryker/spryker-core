@@ -21,6 +21,9 @@ class QueryContainerExporter implements ExporterInterface
 {
     use InstancePoolingTrait;
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_CHUNK_SIZE = 100;
 
     /**

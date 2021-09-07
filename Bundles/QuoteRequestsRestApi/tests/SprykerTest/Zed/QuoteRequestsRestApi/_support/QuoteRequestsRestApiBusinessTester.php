@@ -42,7 +42,13 @@ class QuoteRequestsRestApiBusinessTester extends Actor
 {
     use _generated\QuoteRequestsRestApiBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     public const FAKE_CUSTOMER_REFERENCE = 'FAKE_CUSTOMER_REFERENCE';
+    /**
+     * @var string
+     */
     public const FAKE_CONFIGURABLE_BUNDLE_GROUP_KEY = 'configurable-bundle-group-key';
 
     /**

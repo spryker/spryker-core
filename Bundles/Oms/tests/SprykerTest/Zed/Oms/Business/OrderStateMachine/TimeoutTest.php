@@ -37,8 +37,17 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
  */
 class TimeoutTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const CONDITION_NAME = 'conditionName';
+    /**
+     * @var string
+     */
     public const EVENT_PAY = 'pay';
+    /**
+     * @var string
+     */
     public const EVENT_SHIP = 'ship';
 
     /**

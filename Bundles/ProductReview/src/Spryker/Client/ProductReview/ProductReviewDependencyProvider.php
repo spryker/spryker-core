@@ -25,14 +25,38 @@ use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
  */
 class ProductReviewDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
+    /**
+     * @var string
+     */
     public const PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS = 'PRODUCT_REVIEWS_QUERY_EXPANDER_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_REVIEWS_BULK_QUERY_EXPANDER = 'PLUGINS_PRODUCT_REVIEWS_BULK_QUERY_EXPANDER';
+    /**
+     * @var string
+     */
     public const PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS = 'PRODUCT_REVIEWS_SEARCH_RESULT_FORMATTER_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_REVIEWS_BULK_SEARCH_RESULT_FORMATTER = 'PLUGINS_PRODUCT_REVIEWS_BULK_SEARCH_RESULT_FORMATTER';
+    /**
+     * @var string
+     */
     public const PAGINATION_CONFIG_BUILDER_PLUGIN = 'PAGINATION_CONFIG_BUILDER_PLUGIN';
 
     /**

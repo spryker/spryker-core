@@ -19,10 +19,22 @@ use Spryker\Zed\Kernel\Container;
  */
 class CategoryImageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_CATEGORY_IMAGE = 'PROPEL_QUERY_CATEGORY_IMAGE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_CATEGORY_IMAGE_SET = 'PROPEL_QUERY_CATEGORY_IMAGE_SET';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE = 'PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE';
 
     /**

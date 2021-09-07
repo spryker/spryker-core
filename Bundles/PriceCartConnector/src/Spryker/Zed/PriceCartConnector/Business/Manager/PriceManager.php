@@ -20,6 +20,9 @@ use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceP
 
 class PriceManager implements PriceManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CART_ITEM_CAN_NOT_BE_PRICED = 'Cart item "%s" can not be priced.';
 
     /**

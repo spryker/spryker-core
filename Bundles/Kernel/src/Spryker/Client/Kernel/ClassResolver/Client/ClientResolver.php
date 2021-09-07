@@ -11,6 +11,9 @@ use Spryker\Client\Kernel\ClassResolver\AbstractClassResolver;
 
 class ClientResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'ClientClient';
 
     /**

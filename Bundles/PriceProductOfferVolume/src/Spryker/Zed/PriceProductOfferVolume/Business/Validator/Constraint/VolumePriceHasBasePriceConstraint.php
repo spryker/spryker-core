@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class VolumePriceHasBasePriceConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'For a volume price the Gross and Net base price needs to be set.';
 
     /**

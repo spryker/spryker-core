@@ -31,6 +31,9 @@ class ProductConfigurationDataImportPluginTest extends Unit
 {
     use DataCleanupHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONFIGURATION_TEST_SKU = 'product_configuration_test_sku';
 
     /**

@@ -34,6 +34,9 @@ use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
  */
 class IndexTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE = 'de';
 
     /**

@@ -19,14 +19,35 @@ use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToTranslato
  */
 class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
+    /**
+     * @var string
+     */
     public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR = 'PLUGINS_PRICE_PRODUCT_OFFER_EXTRACTOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRICE_PRODUCT_OFFER_EXPANDER = 'PLUGINS_PRICE_PRODUCT_OFFER_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRICE_PRODUCT_OFFER_VALIDATOR = 'PLUGINS_PRICE_PRODUCT_OFFER_VALIDATOR';
 
     /**

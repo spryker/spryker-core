@@ -35,26 +35,69 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CategoryRepository extends AbstractRepository implements CategoryRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_FK_CATEGORY = 'fk_category';
+    /**
+     * @var string
+     */
     protected const KEY_ID_CATEGORY_NODE = 'id_category_node';
+    /**
+     * @var string
+     */
     protected const KEY_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+    /**
+     * @var string
+     */
     protected const KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const KEY_CATEGORY_KEY = 'category_key';
+    /**
+     * @var string
+     */
     protected const COL_FK_LOCALE = 'fk_locale';
+    /**
+     * @var string
+     */
     protected const KEY_FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
 
+    /**
+     * @var string
+     */
     public const NODE_PATH_GLUE = '/';
+    /**
+     * @var string
+     */
     public const CATEGORY_NODE_PATH_GLUE = ' / ';
+    /**
+     * @var int|null
+     */
     public const NODE_PATH_NULL_DEPTH = null;
+    /**
+     * @var int
+     */
     public const NODE_PATH_ZERO_DEPTH = 0;
+    /**
+     * @var int
+     */
     public const IS_NOT_ROOT_NODE = 0;
+    /**
+     * @var string
+     */
     protected const COL_CATEGORY_NAME = 'name';
 
     /**
      * @uses \Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap::COL_LOCALE_NAME
+     * @var string
      */
     protected const COL_LOCALE_NAME = 'spy_locale.locale_name';
 
+    /**
+     * @var int
+     */
     protected const DEPTH_WITH_CHILDREN_RELATIONS = 1;
 
     /**
@@ -190,7 +233,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         ?int $depth = self::NODE_PATH_NULL_DEPTH
     ): SpyCategoryNodeQuery {
         return $this->queryNodePathWithRootNode($idNode, $idLocale, $depth)
-            ->filterByIsRoot(static::IS_NOT_ROOT_NODE);
+            ->filterByIsRoot((string)static::IS_NOT_ROOT_NODE);
     }
 
     /**

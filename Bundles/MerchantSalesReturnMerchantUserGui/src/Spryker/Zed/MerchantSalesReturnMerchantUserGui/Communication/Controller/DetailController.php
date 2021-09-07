@@ -20,16 +20,32 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_RETURN = 'id-return';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Controller\IndexController::indexAction()
+     * @var string
      */
     protected const ROUTE_RETURN_LIST = '/merchant-sales-return-merchant-user-gui';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_RETURN_NOT_FOUND_ERROR = 'Requested return with ID %id% was not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_ID = '%id%';
+    /**
+     * @var string
+     */
     protected const DEFAULT_LABEL_CLASS = 'label-default';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
 
     /**

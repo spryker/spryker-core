@@ -16,6 +16,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - This event is used for writing product relation to the storage.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_RELATION_CREATE = 'Entity.spy_product_relation.create';
 
@@ -24,6 +25,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - This event is used for writing product relation to the storage.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_RELATION_UPDATE = 'Entity.spy_product_relation.update';
 
@@ -32,6 +34,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - This event is used for writing product relation to the storage.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_RELATION_DELETE = 'Entity.spy_product_relation.delete';
 
@@ -40,6 +43,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - This event is used for writing product relation to the storage.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_RELATION_PUBLISH = 'ProductRelation.product_abstract_relation.publish';
 
@@ -48,6 +52,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - This event is used for writing product relation to the storage.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_RELATION_STORE_PUBLISH = 'ProductRelation.product_abstract_relation_store.publish';
 
@@ -56,6 +61,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - This event is used for writing product relation to the storage.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE = 'Entity.spy_product_relation_product_abstract.create';
 
@@ -64,6 +70,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - This event is used for writing product relation to the storage.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE = 'Entity.spy_product_relation_product_abstract.delete';
 
@@ -72,6 +79,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - This event is used for writing product relation to the storage.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_RELATION_STORE_CREATE = 'Entity.spy_product_relation_store.create';
 
@@ -80,6 +88,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - This event is used for writing product relation to the storage.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_RELATION_STORE_DELETE = 'Entity.spy_product_relation_store.delete';
 
@@ -88,6 +97,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_RELATION_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
@@ -96,6 +106,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_RELATION_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
@@ -104,6 +115,7 @@ class ProductRelationStorageConfig extends AbstractBundleConfig
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_RELATION_RESOURCE_NAME = 'product_abstract_relation';
 }

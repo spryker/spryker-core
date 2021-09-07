@@ -12,8 +12,14 @@ use Symfony\Component\Validator\Constraint;
 
 class UniqueUserEmailConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_MERCHANT_USER_FACADE = 'merchantUserFacade';
 
+    /**
+     * @var string
+     */
     public const GROUP_UNIQUE_USERNAME_CHECK = 'unique_email_check';
 
     /**

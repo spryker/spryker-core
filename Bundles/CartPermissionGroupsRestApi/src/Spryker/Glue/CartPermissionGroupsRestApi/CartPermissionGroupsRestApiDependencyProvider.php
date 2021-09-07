@@ -16,6 +16,9 @@ use Spryker\Glue\Kernel\Container;
  */
 class CartPermissionGroupsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SHARED_CART = 'CLIENT_SHARED_CART';
 
     /**

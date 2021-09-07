@@ -18,9 +18,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditMerchantRelationshipController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_RELATIONSHIP_UPDATE_SUCCESS = 'Merchant relation updated successfully.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_RELATIONSHIP_NOT_FOUND = 'Merchant relation is not found.';
 
     /**

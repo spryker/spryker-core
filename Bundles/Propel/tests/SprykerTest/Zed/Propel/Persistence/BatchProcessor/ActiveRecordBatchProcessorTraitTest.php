@@ -29,6 +29,9 @@ use Throwable;
  */
 class ActiveRecordBatchProcessorTraitTest extends Unit
 {
+    /**
+     * @var array
+     */
     protected const MODULES_TO_EXCLUDE = [
         'Payone',
     ];

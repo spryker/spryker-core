@@ -14,7 +14,13 @@ use Spryker\Zed\SharedCart\Persistence\SharedCartRepositoryInterface;
 
 class SharedCartMessenger implements SharedCartMessengerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_SHARED_CART_SET_DEFAULT_SUCCESS = 'shared_cart.cart.set_default.success';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PARAMETER_QUOTE = '%quote%';
 
     /**

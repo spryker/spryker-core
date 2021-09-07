@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class SeoFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_LOCALIZED_SEO_FORM_COLLECTION = 'localized_seo_form_collection';
 
     /**

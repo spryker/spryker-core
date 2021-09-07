@@ -19,12 +19,33 @@ use Spryker\Zed\QuoteRequest\Dependency\Service\QuoteRequestToUtilEncodingServic
  */
 class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
+    /**
+     * @var string
+     */
     public const FACADE_CART = 'FACADE_CART';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_REQUEST_QUOTE_CHECK = 'PLUGINS_QUOTE_REQUEST_QUOTE_CHECK';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_REQUEST_VALIDATOR = 'PLUGINS_QUOTE_REQUEST_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_REQUEST_USER_VALIDATOR = 'PLUGINS_QUOTE_REQUEST_USER_VALIDATOR';
 
     /**

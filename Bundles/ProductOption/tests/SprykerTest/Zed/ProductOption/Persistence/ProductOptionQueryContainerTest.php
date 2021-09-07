@@ -30,7 +30,13 @@ use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainer;
  */
 class ProductOptionQueryContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE_NAME = 'xxx';
+    /**
+     * @var string
+     */
     protected const TEST_LOCALIZED_PRODUCT_NAME = 'Test Product';
 
     /**

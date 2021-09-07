@@ -14,6 +14,9 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStr
 
 class PriceProductOfferTableViewSorter implements PriceProductOfferTableViewSorterInterface
 {
+    /**
+     * @var string
+     */
     protected const DIRECTION_ASC = 'asc';
 
     /**

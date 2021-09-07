@@ -18,11 +18,26 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteScheduleListController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/price-product-schedule-gui/import';
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE = 'Scheduled price list was successfully removed';
 
+    /**
+     * @var string
+     */
     protected const PARAM_TEMPLATE_PRICE_PRODUCT_SCHEDULE_LIST = 'priceProductScheduleList';
+    /**
+     * @var string
+     */
     protected const PARAM_TEMPLATE_FORM = 'form';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
 
     /**

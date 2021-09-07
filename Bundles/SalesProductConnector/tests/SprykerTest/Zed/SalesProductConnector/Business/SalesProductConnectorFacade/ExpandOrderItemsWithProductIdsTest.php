@@ -23,8 +23,14 @@ use Generated\Shared\Transfer\ItemTransfer;
  */
 class ExpandOrderItemsWithProductIdsTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
+    /**
+     * @var string
+     */
     protected const FAKE_SKU = 'FAKE_SKU';
 
     /**

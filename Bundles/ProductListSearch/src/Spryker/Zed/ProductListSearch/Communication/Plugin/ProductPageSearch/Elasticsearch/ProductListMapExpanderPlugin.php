@@ -21,6 +21,9 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
  */
 class ProductListMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_LIST_MAP = 'product_list_map';
 
     /**

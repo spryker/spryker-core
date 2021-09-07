@@ -19,14 +19,35 @@ use Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodi
  */
 class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
+    /**
+     * @var string
+     */
     public const FACADE_OAUTH = 'FACADE_OAUTH';
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER = 'PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CUSTOMER_OAUTH_REQUEST_MAPPER = 'PLUGINS_CUSTOMER_OAUTH_REQUEST_MAPPER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CUSTOMER_EXPANDER = 'PLUGINS_CUSTOMER_EXPANDER';
 
     /**

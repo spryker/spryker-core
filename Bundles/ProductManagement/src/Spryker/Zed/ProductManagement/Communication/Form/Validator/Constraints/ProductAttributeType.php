@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint;
 
 class ProductAttributeType extends Constraint
 {
+    /**
+     * @var string
+     */
     public const TYPE_NUMBER = 'number';
 
     /**

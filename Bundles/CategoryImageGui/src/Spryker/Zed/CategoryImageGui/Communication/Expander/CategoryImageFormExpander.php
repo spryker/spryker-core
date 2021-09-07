@@ -14,6 +14,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryImageFormExpander implements CategoryImageFormExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_IMAGE_SETS = 'imageSets';
 
     /**

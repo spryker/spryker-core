@@ -12,6 +12,9 @@ namespace Spryker\Shared\SequenceNumber;
  */
 interface SequenceNumberConstants
 {
+    /**
+     * @var string
+     */
     public const ENVIRONMENT_PREFIX = 'environmentPrefix';
 
     /**
@@ -24,6 +27,7 @@ interface SequenceNumberConstants
      *  'SEQUENCE1' => 100,
      *  'SEQUENCE2' => 200,
      * ]
+     * @var string
      */
     public const LIMIT_LIST = 'SEQUENCE_NUMBER:LIMIT_LIST';
 }

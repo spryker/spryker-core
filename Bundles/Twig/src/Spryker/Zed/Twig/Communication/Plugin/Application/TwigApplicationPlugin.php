@@ -20,8 +20,17 @@ use Twig\Loader\ChainLoader;
  */
 class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     public const SERVICE_TWIG = 'twig';
+    /**
+     * @var string
+     */
     public const SERVICE_DEBUG = 'debug';
+    /**
+     * @var string
+     */
     public const SERVICE_CHARSET = 'charset';
 
     /**

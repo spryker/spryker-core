@@ -15,7 +15,13 @@ use Spryker\Client\CmsBlockProductStorage\Dependency\Service\CmsBlockProductStor
 
 class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const RESOURCE_CMS_BLOCK_PRODUCT = 'cms_block_product';
+    /**
+     * @var string
+     */
     protected const KEY_BLOCK_KEYS = 'block_keys';
 
     /**

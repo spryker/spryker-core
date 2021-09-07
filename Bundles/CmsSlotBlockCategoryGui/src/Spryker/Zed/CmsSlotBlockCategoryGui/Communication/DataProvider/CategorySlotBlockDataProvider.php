@@ -17,8 +17,17 @@ use Spryker\Zed\CmsSlotBlockCategoryGui\Dependency\Facade\CmsSlotBlockCategoryGu
 
 class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_OPTION_ALL_CATEGORIES = 'All Category Pages';
+    /**
+     * @var string
+     */
     protected const KEY_OPTION_SPECIFIC_CATEGORY = 'Specific Category Pages';
+    /**
+     * @var string
+     */
     protected const FORMATTED_CATEGORY_NAME = '%s [%s]';
 
     /**

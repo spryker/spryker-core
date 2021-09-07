@@ -25,7 +25,13 @@ use SprykerTest\Yves\StepEngine\Dependency\Step\Fixtures\BaseStep;
  */
 class BaseStepTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const STEP_ROUTE = 'stepRoute';
+    /**
+     * @var string
+     */
     public const ESCAPE_ROUTE = 'escapeRoute';
 
     /**

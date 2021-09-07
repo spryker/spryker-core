@@ -17,7 +17,13 @@ use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOf
  */
 class MerchantProductOfferWishlistDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
 
     /**

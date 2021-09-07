@@ -26,22 +26,56 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ImageCollectionForm extends AbstractSubForm
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_IMAGE = 'id_product_image';
+    /**
+     * @var string
+     */
     public const FIELD_IMAGE_SMALL = 'external_url_small';
+    /**
+     * @var string
+     */
     public const FIELD_IMAGE_LARGE = 'external_url_large';
+    /**
+     * @var string
+     */
     public const FIELD_SORT_ORDER = 'sort_order';
+    /**
+     * @var string
+     */
     public const FIELD_IMAGE_PREVIEW = 'image_preview';
+    /**
+     * @var string
+     */
     public const FIELD_IMAGE_PREVIEW_LARGE_URL = 'image_preview_large_url';
+    /**
+     * @var string
+     */
     public const FIELD_FK_IMAGE_SET_ID = 'fk_image_set_id';
 
+    /**
+     * @var string
+     */
     public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
 
+    /**
+     * @var int
+     */
     protected const MAX_SORT_ORDER_VALUE = 2147483647; // 32 bit integer
+    /**
+     * @var int
+     */
     protected const MIN_SORT_ORDER_VALUE = 0;
+    /**
+     * @var int
+     */
     protected const DEFAULT_SORT_ORDER_VALUE = 0;
 
     /**
      * @uses \Spryker\Zed\Gui\Communication\Form\Type\ImageType::OPTION_IMAGE_WIDTH
+     * @var string
      */
     protected const OPTION_IMAGE_WIDTH = 'image_width';
 

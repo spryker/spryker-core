@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewPageController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_CMS_PAGE = 'id-cms-page';
 
     /**

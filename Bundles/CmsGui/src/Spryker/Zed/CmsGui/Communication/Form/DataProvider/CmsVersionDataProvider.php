@@ -15,6 +15,9 @@ use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 
 class CmsVersionDataProvider
 {
+    /**
+     * @var string
+     */
     public const DATA_CLASS = 'data_class';
 
     /**

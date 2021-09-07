@@ -16,6 +16,9 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ContentByTypeTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const FIELD_ACTION_CONTENT_ITEM = '<input type="radio" %s data-content-item-name="%s" data-id="%d" name="content-item" value="%s"/>';
 
     /**

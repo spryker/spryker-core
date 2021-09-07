@@ -11,7 +11,13 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueSkuInProductConcreteCollectionConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_VALUE_UNIQUE = 'This value needs to be unique.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_VALUE_EXISTS = 'This value already exists.';
 
     /**

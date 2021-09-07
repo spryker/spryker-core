@@ -11,6 +11,9 @@ use Exception;
 
 class InheritedScopeCanNotBeAssignedException extends Exception
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TEMPLATE = 'Scope inherited rule can not be assigned to %s entity.';
 
     /**

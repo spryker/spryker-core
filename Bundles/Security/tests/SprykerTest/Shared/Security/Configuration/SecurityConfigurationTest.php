@@ -25,7 +25,13 @@ use Symfony\Component\Security\Http\Event\LogoutEvent;
  */
 class SecurityConfigurationTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FIREWALL_MAIN = 'main';
+    /**
+     * @var string
+     */
     protected const FIREWALL_SECONDARY = 'secondary';
 
     /**

@@ -14,6 +14,9 @@ use Spryker\Zed\CustomerNote\Persistence\CustomerNoteEntityManagerInterface;
 
 class NoteWriter implements NoteWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const USERNAME_FORMAT = '%s %s';
 
     /**

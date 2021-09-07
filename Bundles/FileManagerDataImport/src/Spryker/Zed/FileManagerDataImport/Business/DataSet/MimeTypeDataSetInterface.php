@@ -9,6 +9,12 @@ namespace Spryker\Zed\FileManagerDataImport\Business\DataSet;
 
 interface MimeTypeDataSetInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     public const KEY_IS_ALLOWED = 'is_allowed';
 }

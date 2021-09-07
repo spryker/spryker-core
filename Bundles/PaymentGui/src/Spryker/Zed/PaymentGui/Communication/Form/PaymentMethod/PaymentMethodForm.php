@@ -12,6 +12,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class PaymentMethodForm extends ViewPaymentMethodForm
 {
+    /**
+     * @var string
+     */
     public const FIELD_IS_ACTIVE = 'isActive';
 
     /**

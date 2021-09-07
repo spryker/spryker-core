@@ -33,12 +33,22 @@ use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
  */
 class ProductCategorySearchFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_DE = 'DE';
+    /**
+     * @var int
+     */
     protected const FAKE_ID_PRODUCT_ABSTRACT = 6666;
+    /**
+     * @var string
+     */
     protected const TEST_CATEGORY_NAME = 'Test category';
 
     /**
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA
+     * @var string
      */
     protected const PRODUCT_ABSTRACT_PAGE_LOAD_DATA = 'PRODUCT_ABSTRACT_PAGE_LOAD_DATA';
 

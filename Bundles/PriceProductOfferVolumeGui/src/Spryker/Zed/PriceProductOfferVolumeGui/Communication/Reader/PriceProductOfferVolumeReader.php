@@ -13,8 +13,17 @@ use Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Service\PriceProductOfferV
 
 class PriceProductOfferVolumeReader implements PriceProductOfferVolumeReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRICE_DATA_VOLUME_PRICES = 'volume_prices';
+    /**
+     * @var string
+     */
     protected const KEY_VOLUME_PRICES = 'volumePrices';
+    /**
+     * @var string
+     */
     protected const KEY_PRICE_PRODUCT = 'priceProduct';
 
     /**

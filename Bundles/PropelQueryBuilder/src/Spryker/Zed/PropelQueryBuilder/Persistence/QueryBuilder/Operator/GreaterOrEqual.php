@@ -11,6 +11,9 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class GreaterOrEqual extends AbstractOperator
 {
+    /**
+     * @var string
+     */
     public const TYPE = 'greater_or_equal';
 
     /**

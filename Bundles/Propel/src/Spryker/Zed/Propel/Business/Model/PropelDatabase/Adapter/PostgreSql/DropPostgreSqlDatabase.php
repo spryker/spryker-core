@@ -18,6 +18,9 @@ use Symfony\Component\Process\Process;
 
 class DropPostgreSqlDatabase implements DropDatabaseInterface
 {
+    /**
+     * @var string
+     */
     protected const SHELL_CHARACTERS_PATTERN = '/\$|`/i';
 
     /**

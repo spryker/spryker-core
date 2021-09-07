@@ -25,6 +25,9 @@ use Spryker\Zed\Stock\Persistence\StockRepositoryInterface;
 
 class StockProductReader implements StockProductReaderInterface
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_NO_RESULT = 'no stock set for this sku';
 
     /**

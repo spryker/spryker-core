@@ -32,8 +32,17 @@ class QuoteBusinessTester extends Actor
 {
     use _generated\QuoteBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:123';
+    /**
+     * @var string
+     */
     protected const CONFIG_LIFETIME_ONE_SECOND = 'PT01S';
+    /**
+     * @var string
+     */
     protected const CONFIG_LIFETIME_ONE_HOUR = 'PT01H';
 
     /**

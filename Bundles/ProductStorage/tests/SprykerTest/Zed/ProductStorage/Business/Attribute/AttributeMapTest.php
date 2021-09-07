@@ -32,28 +32,61 @@ use Spryker\Zed\ProductStorage\ProductStorageConfig;
  */
 class AttributeMapTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_1 = 'fake-sku-1';
+    /**
+     * @var string
+     */
     protected const FAKE_SKU_2 = 'fake-sku-2';
 
+    /**
+     * @var array
+     */
     protected const FAKE_PRODUCT_ATTRIBUTES_1 = [
         'attribute_1' => 'value_1_1',
         'attribute_2' => 'value_1_2',
     ];
 
+    /**
+     * @var array
+     */
     protected const FAKE_PRODUCT_ATTRIBUTES_2 = [
         'attribute_1' => 'value_2_1',
         'attribute_2' => 'value_2_2',
     ];
 
+    /**
+     * @var array
+     */
     protected const FAKE_SUPER_ATTRIBUTES = [
         'attribute_1', 'attribute_2', 'attribute_3', 'attribute_4', 'attribute_5', 'attribute_6',
     ];
 
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT = 'spy_product.id_product';
+    /**
+     * @var string
+     */
     protected const KEY_ATTRIBUTES = 'spy_product.attributes';
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'spy_product.sku';
+    /**
+     * @var string
+     */
     protected const KEY_FK_PRODUCT_ABSTRACT = 'spy_product.fk_product_abstract';
+    /**
+     * @var string
+     */
     protected const KEY_FK_LOCALE = 'fk_locale';
+    /**
+     * @var string
+     */
     protected const KEY_LOCALIZED_ATTRIBUTES = 'localized_attributes';
 
     /**

@@ -14,9 +14,21 @@ use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
 
 class DateTimeFormatter implements DateTimeFormatterInterface
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_TIME_ZONE = 'Europe/Berlin';
+    /**
+     * @var string
+     */
     public const DEFAULT_FORMAT_TIME = 'H:i';
+    /**
+     * @var string
+     */
     public const DEFAULT_FORMAT_DATE_TIME = 'M. d, Y H:i';
+    /**
+     * @var string
+     */
     public const DEFAULT_FORMAT_DATE = 'M. d, Y';
 
     /**

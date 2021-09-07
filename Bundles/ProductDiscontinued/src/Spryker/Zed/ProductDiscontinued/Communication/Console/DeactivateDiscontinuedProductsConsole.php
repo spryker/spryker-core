@@ -18,6 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeactivateDiscontinuedProductsConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'deactivate-discontinued-products';
 
     /**

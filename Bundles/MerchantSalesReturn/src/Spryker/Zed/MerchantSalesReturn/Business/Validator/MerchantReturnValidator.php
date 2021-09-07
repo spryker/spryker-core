@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\ReturnResponseTransfer;
 
 class MerchantReturnValidator implements MerchantReturnValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_MERCHANT_RETURN_ITEMS_FROM_DIFFERENT_MERCHANTS = 'merchant_sales_return.message.items_from_different_merchant_detected';
 
     /**

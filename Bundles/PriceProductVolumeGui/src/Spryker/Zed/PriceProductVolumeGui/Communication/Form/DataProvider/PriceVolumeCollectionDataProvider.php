@@ -22,18 +22,48 @@ use Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig;
 
 class PriceVolumeCollectionDataProvider
 {
+    /**
+     * @var string
+     */
     public const OPTION_CURRENCY_CODE = 'currency_code';
+    /**
+     * @var string
+     */
     public const OPTION_DIVISOR = 'divisor';
+    /**
+     * @var string
+     */
     public const OPTION_FRACTION_DIGITS = 'fraction_digits';
 
+    /**
+     * @var string
+     */
     protected const VOLUME_PRICES = 'volume_prices';
 
+    /**
+     * @var int
+     */
     protected const EMPTY_ROW_COUNT = 3;
+    /**
+     * @var int
+     */
     protected const FRACTION_POW_BASE = 10;
+    /**
+     * @var int
+     */
     protected const DEFAULT_FRACTION_DIGITS = 2;
+    /**
+     * @var int
+     */
     protected const DEFAULT_DIVISOR = 1;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRICE_PRODUCT_ABSTRACT_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Abstract Id "%d".';
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRICE_PRODUCT_CONCRETE_NOT_FOUND_ERROR = 'Price Product by chosen criteria is not defined for Product Concrete Id "%d".';
 
     /**

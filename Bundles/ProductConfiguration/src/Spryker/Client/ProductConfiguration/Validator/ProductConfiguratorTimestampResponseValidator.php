@@ -13,6 +13,9 @@ use Spryker\Client\ProductConfiguration\ProductConfigurationConfig;
 
 class ProductConfiguratorTimestampResponseValidator implements ProductConfiguratorResponseValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_STORAGE_EXPIRED_TIMESTAMP = 'product_configuration.validation.error.expired_timestamp';
 
     /**

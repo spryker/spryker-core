@@ -14,6 +14,9 @@ use Spryker\Shared\Nopayment\NopaymentConfig;
 
 class NopaymentCheckoutPreConditionChecker implements NopaymentCheckoutPreConditionCheckerInterface
 {
+    /**
+     * @var int
+     */
     protected const ERROR_CODE_NOPAYMENT_NOT_ALLOWED = 403;
 
     /**

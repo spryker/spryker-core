@@ -34,7 +34,13 @@ abstract class AbstractEventDispatcherHelper extends Module
 {
     use ContainerHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const MODULE_NAME = 'EventDispatcher';
+    /**
+     * @var string
+     */
     protected const SERVICE_DISPATCHER = 'dispatcher';
 
     /**

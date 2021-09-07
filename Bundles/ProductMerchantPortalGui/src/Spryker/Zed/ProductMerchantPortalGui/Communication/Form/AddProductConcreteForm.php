@@ -26,9 +26,21 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class AddProductConcreteForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_ATTRIBUTES = 'attributes';
+    /**
+     * @var string
+     */
     protected const FIELD_EXISTING_ATTRIBUTES = 'existing_attributes';
+    /**
+     * @var string
+     */
     protected const FIELD_PRODUCTS = 'products';
+    /**
+     * @var string
+     */
     protected const FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**

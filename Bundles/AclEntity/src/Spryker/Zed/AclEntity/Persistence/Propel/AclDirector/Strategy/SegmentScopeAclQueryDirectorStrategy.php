@@ -23,8 +23,12 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
 {
     /**
      * @uses \Spryker\Zed\AclEntityDataImport\Business\DataSet\AclEntitySegmentConnectorDataSetInterface::FK_ACL_ENTITY_SEGMENT
+     * @var string
      */
     public const FK_ACL_ENTITY_SEGMENT = 'fk_acl_entity_segment';
+    /**
+     * @var string
+     */
     protected const SEGMENT_JOIN_CONDITION_TEMPLATE = '%s IN ?';
 
     /**

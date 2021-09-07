@@ -25,6 +25,9 @@ use Spryker\Shared\Kernel\Store;
  */
 class CurrencyBuilderTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_CURRENCY = 'EUR';
 
     /**

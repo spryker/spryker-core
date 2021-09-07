@@ -20,20 +20,45 @@ use Spryker\Zed\SalesReturn\Dependency\Service\SalesReturnToUtilDateTimeServiceB
  */
 class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const FACADE_SALES = 'FACADE_SALES';
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'FACADE_OMS';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_RETURN_PRE_CREATE = 'PLUGINS_RETURN_PRE_CREATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR = 'PLUGINS_RETURN_CREATE_REQUEST_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_RETURN_EXPANDER = 'PLUGINS_RETURN_EXPANDER';
 
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const PLUGINS_RETURN_COLLECTION_EXPANDER = 'PLUGINS_RETURN_COLLECTION_EXPANDER';
 

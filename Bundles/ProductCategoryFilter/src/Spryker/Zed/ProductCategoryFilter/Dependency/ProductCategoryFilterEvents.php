@@ -14,6 +14,7 @@ interface ProductCategoryFilterEvents
      * - This events will be used for spy_product_category_filter entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_CATEGORY_FILTER_CREATE = 'Entity.spy_product_category_filter.create';
 
@@ -22,6 +23,7 @@ interface ProductCategoryFilterEvents
      * - This events will be used for spy_product_category_filter entity changes
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_CATEGORY_FILTER_UPDATE = 'Entity.spy_product_category_filter.update';
 
@@ -30,6 +32,7 @@ interface ProductCategoryFilterEvents
      * - This events will be used for spy_product_category_filter entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_CATEGORY_FILTER_DELETE = 'Entity.spy_product_category_filter.delete';
 }

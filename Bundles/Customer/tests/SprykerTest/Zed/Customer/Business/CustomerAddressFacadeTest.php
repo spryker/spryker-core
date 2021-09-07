@@ -30,12 +30,33 @@ use Spryker\Zed\Kernel\Container;
  */
 class CustomerAddressFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TESTER_EMAIL = 'tester@spryker.com';
+    /**
+     * @var string
+     */
     protected const TESTER_PASSWORD = 'testpassworD1$';
+    /**
+     * @var string
+     */
     protected const TESTER_NAME = 'Tester';
+    /**
+     * @var string
+     */
     protected const TESTER_CITY = 'Testcity';
+    /**
+     * @var string
+     */
     protected const TESTER_ADDRESS1 = 'Testerstreet 23';
+    /**
+     * @var string
+     */
     protected const TESTER_ZIP_CODE = '42';
+    /**
+     * @var int
+     */
     protected const TESTER_FK_COUNTRY_GERMANY = 60;
 
     /**

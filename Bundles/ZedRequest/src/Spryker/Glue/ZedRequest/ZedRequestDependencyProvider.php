@@ -15,6 +15,9 @@ use Spryker\Glue\Kernel\Container;
  */
 class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
     /**

@@ -16,6 +16,9 @@ use Spryker\Zed\UserPasswordResetMail\Dependency\Facade\UserPasswordResetMailToM
  */
 class UserPasswordResetMailDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MAIL = 'FACADE_MAIL';
 
     /**

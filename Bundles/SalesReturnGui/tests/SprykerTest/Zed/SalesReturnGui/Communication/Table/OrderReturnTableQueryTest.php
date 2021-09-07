@@ -28,20 +28,26 @@ use Twig\Loader\LoaderInterface;
  */
 class OrderReturnTableQueryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable::COL_ITEMS
+     * @var string
      */
     protected const COL_ITEMS = 'items';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable::COL_RETURN_REFERENCE
+     * @var string
      */
     protected const COL_RETURN_REFERENCE = 'return_reference';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 

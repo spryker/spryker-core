@@ -27,6 +27,9 @@ use Spryker\Zed\SharedCart\Persistence\SharedCartRepository;
  */
 class SharedCartRepositoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PERMISSION_KEY = 'PERMISSION_KEY';
 
     /**

@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint;
 
 class PriceProductScheduleDateConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     protected const VALIDATION_MESSAGE = 'Finish at must be greater than start from';
 
     /**

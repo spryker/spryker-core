@@ -16,6 +16,9 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInte
 
 class PriceProductScheduleAbstractTable extends AbstractScheduledPriceTable
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_TABLE_IDENTIFIER = 'price-product-schedule-abstract:%s:%s';
 
     /**

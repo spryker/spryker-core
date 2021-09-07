@@ -11,6 +11,8 @@ class DiscountPromotionConfig
 {
     /**
      * This constant used to uniquely identify promotion discount collector strategy type
+     *
+     * @var string
      */
     public const DISCOUNT_COLLECTOR_STRATEGY = 'promotion';
 }

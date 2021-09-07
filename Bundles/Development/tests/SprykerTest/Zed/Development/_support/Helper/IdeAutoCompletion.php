@@ -12,6 +12,9 @@ use Codeception\TestInterface;
 
 class IdeAutoCompletion extends Module
 {
+    /**
+     * @var string
+     */
     public const TEST_TARGET_DIRECTORY = '/tmp/development-ide-auto-completion-test/';
 
     /**

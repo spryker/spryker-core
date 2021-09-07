@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CategoryTreeController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_ROOT_NODE = 'id-root-node';
 
     /**

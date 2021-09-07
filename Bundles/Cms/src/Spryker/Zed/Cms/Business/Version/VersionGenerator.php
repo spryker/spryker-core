@@ -11,6 +11,9 @@ use Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface;
 
 class VersionGenerator implements VersionGeneratorInterface
 {
+    /**
+     * @var int
+     */
     public const DEFAULT_VERSION_NUMBER = 1;
 
     /**

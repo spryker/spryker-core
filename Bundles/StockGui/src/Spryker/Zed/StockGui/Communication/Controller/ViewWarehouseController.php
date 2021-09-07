@@ -15,8 +15,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewWarehouseController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_STOCK = 'id-stock';
 
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/stock-gui/warehouse/list';
 
     /**

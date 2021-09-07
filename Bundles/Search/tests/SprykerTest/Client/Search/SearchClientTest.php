@@ -45,6 +45,9 @@ use StdClass;
  */
 class SearchClientTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const INDEX_NAME = 'de_index_devtest';
 
     /**

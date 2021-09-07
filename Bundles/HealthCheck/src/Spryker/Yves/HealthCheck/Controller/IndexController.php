@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const KEY_HEALTH_CHECK_SERVICES = 'services';
 
     /**

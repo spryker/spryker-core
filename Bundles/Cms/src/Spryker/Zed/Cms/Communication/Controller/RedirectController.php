@@ -27,13 +27,34 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class RedirectController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const REDIRECT_ADDRESS = '/cms/redirect';
+    /**
+     * @var string
+     */
     public const REQUEST_ID_URL = 'id-url';
+    /**
+     * @var string
+     */
     public const REQUEST_ID_URL_REDIRECT = 'id-url-redirect';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_REDIRECT_CREATE_SUCCESS = 'Redirect was created successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_REDIRECT_UPDATE_SUCCESS = 'Redirect was updated successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_REDIRECT_DELETE_SUCCESS = 'Redirect was deleted successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_ID_REDIRECT_EXTRACT_ERROR = 'ID redirect URL is not set.';
 
     /**

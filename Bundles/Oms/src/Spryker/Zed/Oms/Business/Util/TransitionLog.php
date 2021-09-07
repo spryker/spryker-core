@@ -18,10 +18,25 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class TransitionLog implements TransitionLogInterface
 {
+    /**
+     * @var string
+     */
     public const SAPI_CLI = 'cli';
+    /**
+     * @var string
+     */
     public const SAPI_PHPDBG = 'phpdbg';
+    /**
+     * @var string
+     */
     public const QUERY_STRING = 'QUERY_STRING';
+    /**
+     * @var string
+     */
     public const DOCUMENT_URI = 'DOCUMENT_URI';
+    /**
+     * @var string
+     */
     public const ARGV = 'argv';
 
     /**

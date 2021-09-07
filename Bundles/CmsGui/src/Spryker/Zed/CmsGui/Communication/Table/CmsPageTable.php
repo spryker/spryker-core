@@ -21,6 +21,9 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsPageTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const BUTTON_LABEL_EDIT = 'Edit';
 
     /**

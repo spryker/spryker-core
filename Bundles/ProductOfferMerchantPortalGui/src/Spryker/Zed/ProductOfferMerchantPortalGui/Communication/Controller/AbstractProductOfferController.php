@@ -23,12 +23,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AbstractProductOfferController extends AbstractController
 {
+    /**
+     * @var array
+     */
     protected const DEFAULT_INITIAL_DATA = [
         GuiTableEditableInitialDataTransfer::DATA => [],
         GuiTableEditableInitialDataTransfer::ERRORS => [],
     ];
 
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'The Offer is saved.';
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'To save an Offer please resolve all errors.';
 
     /**

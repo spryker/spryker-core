@@ -12,6 +12,9 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 
 class CmsPageKeysToIdsConditionResolver implements ConditionResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_CMS_PAGE_IDS = 'pageIds';
 
     /**

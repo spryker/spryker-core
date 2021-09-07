@@ -11,9 +11,18 @@ use Generated\Shared\Transfer\SortConfigTransfer;
 
 class CmsPageSortConfigBuilder implements SortConfigBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const DIRECTION_ASC = 'asc';
+    /**
+     * @var string
+     */
     protected const DIRECTION_DESC = 'desc';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_SORT_PARAM_KEY = 'sort';
 
     /**

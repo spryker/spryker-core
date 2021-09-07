@@ -15,7 +15,13 @@ use Spryker\Zed\SalesReturn\SalesReturnConfig;
 
 class IsReturnableSetter implements IsReturnableSetterInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_RETURNABLE_TILL_DATE = 'return.return_policy.returnable_till.message';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAMETER_RETURNABLE_TILL_DATE = '%date%';
 
     /**

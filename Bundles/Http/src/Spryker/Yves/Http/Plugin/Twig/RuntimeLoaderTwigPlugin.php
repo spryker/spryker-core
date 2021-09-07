@@ -25,6 +25,7 @@ class RuntimeLoaderTwigPlugin extends AbstractPlugin implements TwigPluginInterf
 {
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 

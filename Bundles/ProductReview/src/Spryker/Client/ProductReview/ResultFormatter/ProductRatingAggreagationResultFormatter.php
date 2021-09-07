@@ -9,6 +9,9 @@ namespace Spryker\Client\ProductReview\ResultFormatter;
 
 class ProductRatingAggreagationResultFormatter implements ResultFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const SUB_NAME = 'ratingAggregation';
 
     /**

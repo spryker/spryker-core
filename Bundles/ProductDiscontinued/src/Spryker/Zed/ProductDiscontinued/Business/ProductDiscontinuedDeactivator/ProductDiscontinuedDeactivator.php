@@ -19,6 +19,9 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
 {
     use TransactionTrait;
 
+    /**
+     * @var int
+     */
     protected const DEACTIVATE_BATCH_SIZE = 1000;
 
     /**

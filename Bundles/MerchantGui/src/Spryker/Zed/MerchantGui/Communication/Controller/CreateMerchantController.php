@@ -17,8 +17,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateMerchantController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_CREATE_SUCCESS = 'Merchant created successfully.';
 
     /**

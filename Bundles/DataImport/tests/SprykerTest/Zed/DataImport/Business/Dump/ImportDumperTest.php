@@ -30,6 +30,9 @@ use SprykerTest\Zed\DataImport\Communication\Plugin\DataImportStubPlugin;
  */
 class ImportDumperTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const IMPORT_CONFIG_FILE_NAME = 'import_dummy.yml';
 
     /**

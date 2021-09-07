@@ -22,6 +22,9 @@ class QuoteResolver implements QuoteResolverInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_QUOTE_NOT_AVAILABLE = 'persistent_cart.error.quote.not_available';
 
     /**

@@ -11,6 +11,9 @@ use Exception;
 
 class AclEntityRuleReferencedEntityNotFoundException extends Exception
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TEMPLATE = 'Referenced entity class %s was not found.';
 
     /**

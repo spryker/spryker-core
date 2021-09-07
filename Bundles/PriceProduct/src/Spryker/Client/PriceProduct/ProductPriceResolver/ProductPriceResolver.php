@@ -22,6 +22,9 @@ use Spryker\Shared\PriceProduct\PriceProductConfig as SharedPriceProductConfig;
 
 class ProductPriceResolver implements ProductPriceResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const PRICE_KEY_SEPARATOR = '-';
 
     /**

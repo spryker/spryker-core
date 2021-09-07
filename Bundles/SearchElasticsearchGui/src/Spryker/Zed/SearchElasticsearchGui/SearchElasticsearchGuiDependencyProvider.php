@@ -14,7 +14,13 @@ use Spryker\Zed\SearchElasticsearchGui\Dependency\Facade\SearchElasticsearchGuiT
 
 class SearchElasticsearchGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH_ELASTICSEARCH = 'CLIENT_SEARCH_ELASTICSEARCH';
+    /**
+     * @var string
+     */
     public const FACADE_SEARCH_ELASTICSEARCH = 'FACADE_SEARCH_ELASTICSEARCH';
 
     /**

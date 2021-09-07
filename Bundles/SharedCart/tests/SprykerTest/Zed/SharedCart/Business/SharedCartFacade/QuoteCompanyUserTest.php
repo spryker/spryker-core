@@ -31,7 +31,13 @@ use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
  */
 class QuoteCompanyUserTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const QUOTE_PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+    /**
+     * @var string
+     */
     protected const QUOTE_PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
     /**

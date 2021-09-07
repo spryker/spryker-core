@@ -17,6 +17,9 @@ use Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface;
 
 class Trigger implements TriggerInterface
 {
+    /**
+     * @var int
+     */
     public const MAX_EVENT_REPEATS = 10;
 
     /**

@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class ProductLabelSearchQueryContainer extends AbstractQueryContainer implements ProductLabelSearchQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**

@@ -25,9 +25,21 @@ class ProductImageDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     public const URL_SMALL = 'small';
+    /**
+     * @var string
+     */
     public const URL_LARGE = 'large';
+    /**
+     * @var string
+     */
     public const NAME = 'set';
+    /**
+     * @var int
+     */
     public const SORT_ORDER = 1;
 
     /**

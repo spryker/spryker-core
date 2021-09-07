@@ -19,6 +19,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CodePhpstanConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'code:phpstan';
     protected const OPTION_MODULE = PhpstanRunner::OPTION_MODULE;
     protected const OPTION_DRY_RUN = PhpstanRunner::OPTION_DRY_RUN;
@@ -26,6 +29,7 @@ class CodePhpstanConsole extends Console
     protected const OPTION_OFFSET = PhpstanRunner::OPTION_OFFSET;
     /**
      * @deprecated Not Used
+     * @var string
      */
     protected const OPTION_FORMAT = 'format';
 

@@ -13,6 +13,9 @@ use Spryker\Client\Kernel\Container;
 
 class CustomerCatalogDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
 
     /**

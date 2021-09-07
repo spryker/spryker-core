@@ -25,10 +25,14 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const SEARCH_KEY_PRODUCTS = 'products';
 
     /**
      * @uses \Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin::NAME
+     * @var string
      */
     protected const NAME = 'facets';
 

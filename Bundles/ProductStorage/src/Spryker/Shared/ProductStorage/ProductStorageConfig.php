@@ -13,11 +13,15 @@ class ProductStorageConfig extends AbstractSharedConfig
 {
     /**
      * Defines queue name for publish.
+     *
+     * @var string
      */
     public const PUBLISH_PRODUCT_ABSTRACT = 'publish.product_abstract';
 
     /**
      * Defines queue name for publish.
+     *
+     * @var string
      */
     public const PUBLISH_PRODUCT_CONCRETE = 'publish.product_concrete';
 }

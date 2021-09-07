@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class TaxStorageEntityManager extends AbstractEntityManager implements TaxStorageEntityManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_FK_TAX_SET = 'FkTaxSet';
 
     /**

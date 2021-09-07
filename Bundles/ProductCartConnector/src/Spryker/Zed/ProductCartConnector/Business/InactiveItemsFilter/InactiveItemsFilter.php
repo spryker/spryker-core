@@ -16,7 +16,13 @@ use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToSto
 
 class InactiveItemsFilter implements InactiveItemsFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_CONCRETE_INACTIVE_PRODUCT_REMOVED = 'product-cart.info.concrete-product-inactive.removed';
 
     /**

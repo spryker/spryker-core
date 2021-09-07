@@ -11,10 +11,25 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductConcreteMapper implements ProductConcreteMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const FIELD_ATTRIBUTE = 'attribute';
+    /**
+     * @var string
+     */
     protected const FIELD_SUPER_ATTRIBUTES = 'superAttributes';
+    /**
+     * @var string
+     */
     protected const FIELD_VALUE = 'value';
 
     /**

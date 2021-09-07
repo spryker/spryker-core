@@ -21,7 +21,13 @@ use Spryker\Shared\Redis\Logger\RedisLoggerInterface;
 
 class PredisAdapterFactory implements RedisAdapterFactoryInterface
 {
+    /**
+     * @var string
+     */
     protected const CONNECTION_PARAMETERS = 'CONNECTION_PARAMETERS';
+    /**
+     * @var string
+     */
     protected const CONNECTION_OPTIONS = 'CONNECTION_OPTIONS';
 
     /**

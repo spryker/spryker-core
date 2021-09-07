@@ -22,7 +22,13 @@ use Codeception\Test\Unit;
  */
 class GuestQuoteCleanerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SHOULD_BE_DELETED = 'Quote should have been deleted from database.';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SHOULD_NOT_BE_DELETED = 'Quote should not have been deleted from database.';
 
     /**

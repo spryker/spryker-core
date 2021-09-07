@@ -24,6 +24,9 @@ class AvailabilityProductStorageListener extends AbstractPlugin implements Event
 {
     use DatabaseTransactionHandlerTrait;
 
+    /**
+     * @var string
+     */
     public const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**

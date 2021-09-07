@@ -23,13 +23,37 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
  */
 class ProductCategorySearchRepository extends AbstractRepository implements ProductCategorySearchRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_ID_CATEGORY_NODE = 'id_category_node';
+    /**
+     * @var string
+     */
     protected const COLUMN_CATEGORY_NAME = 'category_name';
+    /**
+     * @var string
+     */
     protected const COLUMN_FK_CATEGORY = 'fk_category';
+    /**
+     * @var string
+     */
     protected const COLUMN_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
+    /**
+     * @var string
+     */
     protected const COLUMN_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const COLUMN_CATEGORY_KEY = 'category_key';
+    /**
+     * @var string
+     */
     protected const COLUMN_FK_LOCALE = 'fk_locale';
+    /**
+     * @var string
+     */
     protected const COLUMN_STORE_NAME = 'store_name';
 
     /**

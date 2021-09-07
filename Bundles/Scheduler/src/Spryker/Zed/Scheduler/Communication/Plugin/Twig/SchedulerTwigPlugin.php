@@ -20,6 +20,9 @@ use Twig\TwigFunction;
  */
 class SchedulerTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME_GET_ENV = 'getenv';
 
     /**

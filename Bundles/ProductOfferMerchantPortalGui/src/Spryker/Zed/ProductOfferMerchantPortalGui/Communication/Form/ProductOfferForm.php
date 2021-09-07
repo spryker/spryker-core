@@ -27,29 +27,86 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductOfferForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_STORE_CHOICES = 'OPTION_STORE_CHOICES';
 
+    /**
+     * @var string
+     */
     protected const FIELD_MERCHANT_SKU = 'merchantSku';
+    /**
+     * @var string
+     */
     protected const FIELD_STORES = 'stores';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_ACTIVE = 'isActive';
+    /**
+     * @var string
+     */
     protected const FIELD_PRODUCT_OFFER_STOCKS = 'productOfferStocks';
+    /**
+     * @var string
+     */
     protected const FIELD_PRODUCT_OFFER_VALIDITY = 'productOfferValidity';
+    /**
+     * @var string
+     */
     protected const FIELD_PRODUCT_OFFER_PRICES = 'prices';
+    /**
+     * @var string
+     */
     protected const BUTTON_CREATE = 'create';
 
+    /**
+     * @var string
+     */
     protected const LABEL_MERCHANT_SKU = 'Merchant SKU';
+    /**
+     * @var string
+     */
     protected const LABEL_STORES = 'Stores';
+    /**
+     * @var string
+     */
     protected const LABEL_IS_ACTIVE = 'Offer is online';
+    /**
+     * @var string
+     */
     protected const LABEL_PRODUCT_OFFER_STOCK = 'Stock';
+    /**
+     * @var string
+     */
     protected const LABEL_PRODUCT_OFFER_VALIDITY = 'Validity Dates';
+    /**
+     * @var string
+     */
     protected const LABEL_CREATE = 'Create';
 
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_MERCHANT_SKU = 'Enter SKU';
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_STORES = 'select.default.placeholder';
 
+    /**
+     * @var int
+     */
     protected const FIELD_MERCHANT_SKU_MAX_LENGTH = 255;
+    /**
+     * @var int
+     */
     protected const FIELD_STORES_MIN_COUNT = 1;
 
+    /**
+     * @var string
+     */
     protected const BLOCK_PREFIX = 'productOffer';
 
     /**

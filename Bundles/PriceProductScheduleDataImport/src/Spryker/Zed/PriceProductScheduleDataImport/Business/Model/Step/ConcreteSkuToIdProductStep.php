@@ -16,6 +16,9 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProdu
 
 class ConcreteSkuToIdProductStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE = 'Could not find product by sku "%s"';
 
     /**

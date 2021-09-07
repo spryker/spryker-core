@@ -12,6 +12,9 @@ use Spryker\Service\Kernel\Container;
 
 class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const MONITORING_EXTENSIONS = 'monitoring extensions';
 
     /**

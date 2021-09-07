@@ -17,6 +17,9 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
  */
 class SessionRedisConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const SESSION_REDIS_CONNECTION_KEY = 'SESSION_YVES';
 
     /**

@@ -17,6 +17,9 @@ use Spryker\Shared\SharedCart\SharedCartConfig;
  */
 class WriteSharedCartPermissionPlugin extends AbstractPlugin implements ExecutablePermissionPluginInterface, InfrastructuralPermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'WriteSharedCartPermissionPlugin';
 
     /**

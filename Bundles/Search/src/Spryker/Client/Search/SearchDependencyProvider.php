@@ -21,12 +21,28 @@ class SearchDependencyProvider extends AbstractDependencyProvider
 {
     /**
      * @deprecated Will be removed without replacement.
+     * @var string
      */
     public const SEARCH_CONFIG_BUILDER = 'search config builder';
+    /**
+     * @var string
+     */
     public const PLUGINS_CLIENT_ADAPTER = 'PLUGINS_CLIENT_ADAPTER';
+    /**
+     * @var string
+     */
     public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
+    /**
+     * @var string
+     */
     public const STORE = 'store';
+    /**
+     * @var string
+     */
     public const PLUGIN_MONEY = 'money plugin';
+    /**
+     * @var string
+     */
     public const PLUGINS_SEARCH_CONTEXT_EXPANDER = 'PLUGINS_SOURCE_IDENTIFIER_MAPPER';
 
     /**

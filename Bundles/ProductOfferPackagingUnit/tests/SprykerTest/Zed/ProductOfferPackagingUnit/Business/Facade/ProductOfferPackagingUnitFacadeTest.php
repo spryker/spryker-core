@@ -30,6 +30,9 @@ use Spryker\DecimalObject\Decimal;
  */
 class ProductOfferPackagingUnitFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
 
     /**

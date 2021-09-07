@@ -16,16 +16,46 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\Formatter\RowFormatterInte
 
 abstract class AbstractPriceProductScheduleTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_SKU_PRODUCT_ABSTRACT = 'spy_product_abstract.sku';
+    /**
+     * @var string
+     */
     protected const COL_SKU_PRODUCT = 'spy_product.sku';
+    /**
+     * @var string
+     */
     protected const COL_PRICE_TYPE = 'spy_price_type.name';
+    /**
+     * @var string
+     */
     protected const COL_CURRENCY = 'fk_currency';
+    /**
+     * @var string
+     */
     protected const COL_STORE = 'fk_store';
+    /**
+     * @var string
+     */
     protected const COL_NET_PRICE = 'net_price';
+    /**
+     * @var string
+     */
     protected const COL_GROSS_PRICE = 'gross_price';
+    /**
+     * @var string
+     */
     protected const COL_ACTIVE_FROM = 'active_from';
+    /**
+     * @var string
+     */
     protected const COL_ACTIVE_TO = 'active_to';
 
+    /**
+     * @var string
+     */
     protected const PRICE_NUMERIC_PATTERN = '/[^0-9]+/';
 
     /**

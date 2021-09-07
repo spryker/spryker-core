@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Container;
 
 class ProductConfigurationGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
 
     /**

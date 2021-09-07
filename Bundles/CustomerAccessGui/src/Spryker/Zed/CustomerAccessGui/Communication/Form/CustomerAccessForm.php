@@ -20,7 +20,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CustomerAccessForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_CONTENT_TYPE_ACCESS = 'OPTION_CONTENT_TYPE_ACCESS';
+    /**
+     * @var string
+     */
     public const FIELD_CONTENT_TYPE_ACCESS = 'contentTypeAccess';
 
     /**

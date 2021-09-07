@@ -27,6 +27,9 @@ class CommunicationHelper extends Module
     use ConfigHelperTrait;
     use DependencyProviderHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Zed\%3$s\Communication\%3$sCommunicationFactory';
 
     /**

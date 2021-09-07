@@ -15,6 +15,9 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterf
 
 class ProductConcreteIsActiveChecker implements ProductConcreteIsActiveCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE = 'customer.account.shopping_list_item.error.product_not_active';
 
     /**

@@ -12,5 +12,8 @@ namespace Spryker\Shared\Flysystem;
  */
 interface FlysystemConstants
 {
+    /**
+     * @var string
+     */
     public const FILESYSTEM_SERVICE = 'FILESYSTEM:FILESYSTEM_SERVICE';
 }

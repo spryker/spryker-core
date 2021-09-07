@@ -17,7 +17,13 @@ use Spryker\Yves\Translator\Dependency\Client\TranslatorToLocaleClientBridge;
  */
 class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**

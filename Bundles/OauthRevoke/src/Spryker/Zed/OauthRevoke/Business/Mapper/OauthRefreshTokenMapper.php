@@ -13,6 +13,9 @@ use Spryker\Zed\OauthRevoke\Dependency\Service\OauthRevokeToUtilEncodingServiceI
 
 class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const CUSTOMER_REFERENCE = 'customer_reference';
 
     /**

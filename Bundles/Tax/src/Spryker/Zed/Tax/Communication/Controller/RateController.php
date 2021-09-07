@@ -20,8 +20,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_URL_ID_TAX_RATE = 'id-tax-rate';
 
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_DEFAULT = '/tax/rate/list';
 
     /**

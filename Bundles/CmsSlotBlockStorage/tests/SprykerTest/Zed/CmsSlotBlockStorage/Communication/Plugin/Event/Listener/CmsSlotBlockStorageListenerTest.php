@@ -33,6 +33,9 @@ use Spryker\Zed\CmsSlotBlockStorage\Persistence\CmsSlotBlockStoragePersistenceFa
  */
 class CmsSlotBlockStorageListenerTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const COUNT_CMS_SLOT_BLOCK_STORAGE_ROWS = 1;
 
     /**

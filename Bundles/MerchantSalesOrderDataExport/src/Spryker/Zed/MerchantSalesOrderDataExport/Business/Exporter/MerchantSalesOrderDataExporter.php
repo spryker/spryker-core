@@ -18,27 +18,45 @@ use Spryker\Zed\MerchantSalesOrderDataExport\MerchantSalesOrderDataExportConfig;
 
 class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterInterface
 {
+    /**
+     * @var int
+     */
     protected const LIMIT_VALUE = 200;
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepository::FILTER_CRITERIA_PARAM_OFFSET
+     * @var string
      */
     protected const FILTER_CRITERIA_KEY_OFFSET = 'offset';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\MerchantSalesOrderDataExportRepository::FILTER_CRITERIA_PARAM_LIMIT
+     * @var string
      */
     protected const FILTER_CRITERIA_KEY_LIMIT = 'limit';
 
+    /**
+     * @var string
+     */
     protected const HOOK_KEY_MERCHANT_NAME = 'merchant_name';
+    /**
+     * @var string
+     */
     protected const HOOK_KEY_STORE_NAME = 'store_name';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderDataExport\Persistence\Propel\Mapper\MerchantSalesOrderMapper::KEY_MERCHANT_NAME
+     * @var string
      */
     protected const EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_NAME = 'merchant_name';
+    /**
+     * @var string
+     */
     protected const EXTENDED_DATA_EXPORT_CONFIGURATION_FIELD_MERCHANT_ORDER_STORE = 'merchant_order_store';
 
+    /**
+     * @var string
+     */
     protected const DATA_ENTITY_MERCHANT_ORDER = 'merchant-order';
 
     /**

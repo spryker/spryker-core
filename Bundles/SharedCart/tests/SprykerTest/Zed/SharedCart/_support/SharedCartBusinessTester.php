@@ -37,9 +37,21 @@ class SharedCartBusinessTester extends Actor
 {
     use _generated\SharedCartBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const VALUE_SHARE_OPTION = 'VALUE_SHARE_OPTION';
+    /**
+     * @var int
+     */
     protected const VALUE_ID_QUOTE = 1;
+    /**
+     * @var int
+     */
     protected const VALUE_OWNER_ID_COMPANY_USER = 1;
+    /**
+     * @var int
+     */
     protected const VALUE_OWNER_ID_COMPANY_BUSINESS_UNIT = 1;
 
     /**

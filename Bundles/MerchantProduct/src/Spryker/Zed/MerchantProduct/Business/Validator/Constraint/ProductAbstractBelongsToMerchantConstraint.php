@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ProductAbstractBelongsToMerchantConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'Merchant product is not found for product abstract id %d and merchant id %d.';
 
     /**

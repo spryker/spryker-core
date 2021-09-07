@@ -17,19 +17,52 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SchedulerResumeConsole extends AbstractSchedulerConsole
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'scheduler:resume';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Resumes scheduler job(s)';
 
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION = 'roles';
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION_SHORTCUT = 'r';
+    /**
+     * @var string
+     */
     protected const ROLES_OPTION_DESCRIPTION = 'Job roles to include.';
 
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION = 'schedulers';
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION_SHORTCUT = 's';
+    /**
+     * @var string
+     */
     protected const SCHEDULERS_OPTION_DESCRIPTION = 'Schedulers that will be executed.';
 
+    /**
+     * @var string
+     */
     protected const JOBS_OPTION = 'jobs';
+    /**
+     * @var string
+     */
     protected const JOBS_OPTION_SHORTCUT = 'j';
+    /**
+     * @var string
+     */
     protected const JOBS_OPTION_DESCRIPTION = 'Scheduler job(s) that will be enabled.';
 
     /**

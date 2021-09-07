@@ -28,18 +28,41 @@ use Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig;
 
 class ProductOfferTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_STORES = 'stores';
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'actions';
+    /**
+     * @var string
+     */
     protected const COL_PRODUCT_NAME = 'product_name';
+    /**
+     * @var string
+     */
     protected const COL_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    /**
+     * @var string
+     */
     protected const STORE_CLASS_LABEL = 'label-info';
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const APPROVAL_STATUS_CLASS_LABEL_MAPPING = [
         SharedProductOfferGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
         SharedProductOfferGuiConfig::STATUS_APPROVED => 'label-info',
         SharedProductOfferGuiConfig::STATUS_DENIED => 'label-danger',
     ];
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const APPROVAL_STATUS_CLASS_BUTTON_MAPPING = [
         SharedProductOfferGuiConfig::STATUS_APPROVED => 'btn-create',
         SharedProductOfferGuiConfig::STATUS_DENIED => 'btn-remove',

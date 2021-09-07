@@ -12,7 +12,13 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueEmail extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_MERCHANT_FACADE = 'merchantFacade';
+    /**
+     * @var string
+     */
     public const OPTION_CURRENT_ID_MERCHANT = 'currentIdMerchant';
 
     /**

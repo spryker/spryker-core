@@ -20,8 +20,14 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class FuzzyQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FUZZINESS_AUTO = 'AUTO';
 
+    /**
+     * @var string
+     */
     protected const MUST_KEY = 'must';
 
     /**

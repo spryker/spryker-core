@@ -14,7 +14,13 @@ use Spryker\Zed\StockDataImport\Business\Writer\DataSet\StockDataSetInterface;
 
 class NameValidatorStep implements DataImportStepInterface
 {
+    /**
+     * @var int
+     */
     protected const MAX_LENGTH = 255;
+    /**
+     * @var int
+     */
     protected const MIN_LENGTH = 1;
 
     /**

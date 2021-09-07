@@ -15,6 +15,9 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterfac
 
 class ProductOptionGroupDataProvider
 {
+    /**
+     * @var string
+     */
     public const NEW_GROUP_NAME = 'new_group_name';
 
     /**

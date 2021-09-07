@@ -11,6 +11,9 @@ use Exception;
 
 class AclEntityMetadataConfigInvalidKeyException extends Exception
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TEMPLATE = 'Acl entity metadata config key is not valid for %s entity.';
 
     /**

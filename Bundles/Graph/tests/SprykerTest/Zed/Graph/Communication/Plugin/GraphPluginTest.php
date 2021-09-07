@@ -26,11 +26,29 @@ use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
  */
 class GraphPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const GRAPH_NAME = 'graph name';
+    /**
+     * @var string
+     */
     public const NODE_A = 'node A';
+    /**
+     * @var string
+     */
     public const NODE_B = 'node B';
+    /**
+     * @var string
+     */
     public const GROUP_NAME = 'group name';
+    /**
+     * @var string
+     */
     public const CLUSTER_NAME = 'cluster name';
+    /**
+     * @var array
+     */
     public const ATTRIBUTES = ['attribute' => 'value', 'html attribute' => '<h1>Html Value</h1>'];
 
     /**

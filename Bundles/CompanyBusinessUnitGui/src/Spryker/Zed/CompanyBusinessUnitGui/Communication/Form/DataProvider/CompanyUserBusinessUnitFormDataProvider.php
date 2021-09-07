@@ -13,8 +13,14 @@ use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiT
 
 class CompanyUserBusinessUnitFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
 
+    /**
+     * @var string
+     */
     protected const FORMAT_NAME = '%s (id: %s)';
 
     /**

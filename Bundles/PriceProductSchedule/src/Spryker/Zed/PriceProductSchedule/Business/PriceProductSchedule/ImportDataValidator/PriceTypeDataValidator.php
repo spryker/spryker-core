@@ -13,6 +13,9 @@ use Spryker\Zed\PriceProductSchedule\Business\PriceType\PriceTypeFinderInterface
 
 class PriceTypeDataValidator extends AbstractImportDataValidator
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRICE_TYPE_NOT_FOUND = 'Price type was not found by provided sku %sku%.';
 
     /**

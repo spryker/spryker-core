@@ -21,17 +21,44 @@ use Spryker\Zed\Stock\Dependency\Facade\StockToTouchBridge;
  */
 class StockDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
+    /**
+     * @var string
+     */
     public const PLUGINS_STOCK_UPDATE = 'PLUGINS_STOCK_UPDATE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_STOCK_COLLECTION_EXPANDER = 'PLUGINS_STOCK_COLLECTION_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_STOCK_POST_CREATE = 'PLUGINS_STOCK_POST_CREATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_STOCK_POST_UPDATE = 'PLUGINS_STOCK_POST_UPDATE';
 
+    /**
+     * @var string
+     */
     public const CONNECTION = 'CONNECTION';
 
     /**

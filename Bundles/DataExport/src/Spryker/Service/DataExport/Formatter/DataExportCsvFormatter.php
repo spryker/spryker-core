@@ -15,8 +15,14 @@ use Spryker\Service\DataExport\Dependency\External\DataExportToCsvFormatterInter
 
 class DataExportCsvFormatter implements DataExportFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_INVALID_DATA_SET = 'Invalid data set provided.';
 
+    /**
+     * @var string
+     */
     protected const EXTENSION_CSV = 'csv';
 
     /**

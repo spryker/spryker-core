@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class TaxProductStorageEntityManager extends AbstractEntityManager implements TaxProductStorageEntityManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_FK_PRODUCT_ABSTRACT = 'FkProductAbstract';
 
     /**

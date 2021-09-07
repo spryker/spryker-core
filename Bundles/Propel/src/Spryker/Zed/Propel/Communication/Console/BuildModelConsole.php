@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class BuildModelConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'propel:model:build';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Build Propel2 classes';
 
     /**

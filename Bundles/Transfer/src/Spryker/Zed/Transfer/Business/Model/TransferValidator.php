@@ -17,6 +17,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class TransferValidator implements TransferValidatorInterface
 {
+    /**
+     * @var string
+     */
     public const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
 
     /**

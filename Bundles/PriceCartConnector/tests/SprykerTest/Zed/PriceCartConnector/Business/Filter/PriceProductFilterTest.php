@@ -35,6 +35,9 @@ use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
  */
 class PriceProductFilterTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CART_OPERATION_ADD = 'add';
 
     /**

@@ -17,8 +17,17 @@ class BundleProxy
 {
     use SharedConfigResolverAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const LOCATOR_MATCHER_SUFFIX = 'Matcher';
+    /**
+     * @var string
+     */
     protected const INSTANCE = 'instance';
+    /**
+     * @var string
+     */
     protected const CLASS_NAME = 'className';
 
     /**

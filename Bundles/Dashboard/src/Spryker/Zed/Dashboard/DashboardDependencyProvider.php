@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 
 class DashboardDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_RENDER_DASHBOARDS = 'PLUGIN_RENDER_DASHBOARDS';
 
     /**

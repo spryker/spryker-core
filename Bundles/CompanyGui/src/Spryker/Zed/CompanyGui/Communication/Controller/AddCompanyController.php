@@ -15,10 +15,22 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddCompanyController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REDIRECT_URL = 'redirect-url';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_DEFAULT = '/company-gui/list-company';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_COMPANY_CREATE_SUCCESS = 'Company has been created.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_COMPANY_CREATE_ERROR = 'Company has not been created.';
 
     /**

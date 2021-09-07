@@ -27,7 +27,13 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
  */
 class ProductAbstractAssertionTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const SKU = 'sku';
+    /**
+     * @var int
+     */
     public const ID_PRODUCT_ABSTRACT = 1;
 
     /**

@@ -22,11 +22,23 @@ use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreBridge;
  */
 class MoneyDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const STORE = 'store';
 
+    /**
+     * @var string
+     */
     public const FACADE_CURRENCY = 'currency facade';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'store facade';
 
+    /**
+     * @var string
+     */
     public const MONEY_PARSER = 'money parser';
 
     /**

@@ -22,10 +22,22 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ProductsConcreteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = '%s Variants are updated';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ACTIVATION_NAME_STATUS = 'activationNameStatus';
+    /**
+     * @var string
+     */
     protected const PARAM_ACTIVATION_NAME_VALIDITY = 'activationNameValidity';
+    /**
+     * @var string
+     */
     protected const PARAM_PRODUCT_IDS = 'product-ids';
 
     /**

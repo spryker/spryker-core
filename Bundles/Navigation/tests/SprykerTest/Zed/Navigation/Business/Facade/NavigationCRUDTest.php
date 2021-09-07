@@ -28,16 +28,24 @@ use Spryker\Zed\Navigation\Persistence\NavigationQueryContainer;
  */
 class NavigationCRUDTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_NAVIGATION_KEY = 'test-navigation-1';
+    /**
+     * @var string
+     */
     protected const TEST_NAVIGATION_NAME = 'Test navigation 1';
 
     /**
      * @uses \Spryker\Zed\Navigation\Business\Navigation\NavigationDuplicator::ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND
+     * @var string
      */
     protected const ERROR_MESSAGE_NAVIGATION_TREE_NOT_FOUND = 'Navigation tree transfer is not found.';
 
     /**
      * @uses \Spryker\Zed\Navigation\Business\Navigation\NavigationDuplicator::ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS
+     * @var string
      */
     protected const ERROR_MESSAGE_NAVIGATION_KEY_ALREADY_EXISTS = 'Navigation with the same key already exists.';
 

@@ -20,7 +20,13 @@ use Throwable;
 
 class ConnectionProvider implements ConnectionProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const CONNECTION_NAME = 'storage connection';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INVALID_CONNECTION_CONFIGURATION_EXCEPTION = 'Connection configuration is invalid.';
 
     /**

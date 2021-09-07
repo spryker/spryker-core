@@ -27,9 +27,13 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL
+     * @var string
      */
     protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
 
+    /**
+     * @var string
+     */
     protected const COLUMN_DATA_APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'Pending';
 
     /**

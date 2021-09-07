@@ -16,11 +16,26 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisio
  */
 class MultiShipmentDecisionRuleStrategyResolver implements MultiShipmentDecisionRuleStrategyResolverInterface
 {
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
+    /**
+     * @var string
+     */
     public const DISCOUNT_TYPE_CARRIER = 'DISCOUNT_TYPE_CARRIER';
+    /**
+     * @var string
+     */
     public const DISCOUNT_TYPE_METHOD = 'DISCOUNT_TYPE_METHOD';
+    /**
+     * @var string
+     */
     public const DISCOUNT_TYPE_PRICE = 'DISCOUNT_TYPE_PRICE';
 
     /**

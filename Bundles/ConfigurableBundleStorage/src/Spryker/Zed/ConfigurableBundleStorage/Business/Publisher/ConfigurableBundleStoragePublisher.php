@@ -19,6 +19,9 @@ use Spryker\Zed\ConfigurableBundleStorage\Persistence\ConfigurableBundleStorageR
 
 class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePublisherInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_IMAGE_SET = 'image_sets';
 
     /**

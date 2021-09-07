@@ -11,6 +11,9 @@ use Exception;
 
 class DuplicatedAclEntityRuleException extends Exception
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TEMPLATE = 'Acl entity rule is duplicated for %s entity, %s role id.';
 
     /**

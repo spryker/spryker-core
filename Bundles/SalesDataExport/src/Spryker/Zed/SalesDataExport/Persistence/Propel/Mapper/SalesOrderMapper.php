@@ -9,6 +9,9 @@ namespace Spryker\Zed\SalesDataExport\Persistence\Propel\Mapper;
 
 class SalesOrderMapper
 {
+    /**
+     * @var string
+     */
     public const KEY_ORDER_COMMENTS = 'order_comments';
 
     /**

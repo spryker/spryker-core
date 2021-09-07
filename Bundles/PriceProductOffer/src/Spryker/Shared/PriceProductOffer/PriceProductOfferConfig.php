@@ -14,6 +14,7 @@ class PriceProductOfferConfig
      * - Dimension type, used for product offer price.
      *
      * @api
+     * @var string
      */
     public const DIMENSION_TYPE_PRODUCT_OFFER = 'PRODUCT_OFFER';
 }

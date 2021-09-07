@@ -18,8 +18,17 @@ use Spryker\Service\Kernel\Container;
  */
 class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_READER = 'plugin reader';
+    /**
+     * @var string
+     */
     public const PLUGIN_WRITER = 'plugin writer';
+    /**
+     * @var string
+     */
     public const PLUGIN_STREAM = 'plugin stream';
 
     /**

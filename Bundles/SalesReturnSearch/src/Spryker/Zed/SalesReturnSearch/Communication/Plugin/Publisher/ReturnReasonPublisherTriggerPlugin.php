@@ -22,6 +22,7 @@ class ReturnReasonPublisherTriggerPlugin extends AbstractPlugin implements Publi
 {
     /**
      * @uses \Orm\Zed\SalesReturn\Persistence\Map\SpySalesReturnReasonTableMap::COL_ID_SALES_RETURN_REASON
+     * @var string
      */
     protected const COL_ID_SALES_RETURN_REASON = 'spy_sales_return_reason.id_sales_return_reason';
 

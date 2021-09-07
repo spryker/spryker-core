@@ -16,6 +16,9 @@ use Spryker\Yves\Kernel\AbstractPlugin;
  */
 class ShopContextApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_SHOP_CONTEXT = 'SERVICE_SHOP_CONTEXT';
 
     /**

@@ -17,9 +17,18 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MimeTypeSettingsForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_MIME_TYPES = 'mimeTypes';
 
+    /**
+     * @var string
+     */
     public const FORM_DATA_KEY_ID_MIME_TYPE = 'idMimeType';
+    /**
+     * @var string
+     */
     public const FORM_DATA_KEY_IS_ALLOWED = 'isAllowed';
 
     /**

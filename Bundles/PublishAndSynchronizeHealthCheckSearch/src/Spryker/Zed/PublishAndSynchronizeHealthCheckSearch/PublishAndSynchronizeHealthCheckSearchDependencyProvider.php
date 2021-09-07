@@ -18,9 +18,18 @@ use Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\Dependency\Facade\Publish
  */
 class PublishAndSynchronizeHealthCheckSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
+    /**
+     * @var string
+     */
     public const PROPEL_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_QUERY = 'PROPEL_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_QUERY';
 
     /**

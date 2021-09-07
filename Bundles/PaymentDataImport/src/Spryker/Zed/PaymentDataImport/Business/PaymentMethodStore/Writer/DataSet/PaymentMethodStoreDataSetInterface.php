@@ -9,8 +9,20 @@ namespace Spryker\Zed\PaymentDataImport\Business\PaymentMethodStore\Writer\DataS
 
 interface PaymentMethodStoreDataSetInterface
 {
+    /**
+     * @var string
+     */
     public const COL_PAYMENT_METHOD_KEY = 'payment_method_key';
+    /**
+     * @var string
+     */
     public const COL_STORE = 'store';
+    /**
+     * @var string
+     */
     public const COL_ID_PAYMENT_METHOD = 'fk_payment_method';
+    /**
+     * @var string
+     */
     public const COL_ID_STORE = 'fk_store';
 }

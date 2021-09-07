@@ -16,6 +16,7 @@ class SalesProductConnectorConfig extends AbstractSharedConfig
      * - Constant is used to group popularity product-related product page data expanders.
      *
      * @api
+     * @var string
      */
     public const PLUGIN_PRODUCT_POPULARITY_DATA = 'PLUGIN_PRODUCT_POPULARITY_DATA';
 }

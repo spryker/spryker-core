@@ -114,17 +114,53 @@ class ProductImageFacadeTest extends Unit
      */
     protected $image;
 
+    /**
+     * @var string
+     */
     public const URL_SMALL = 'small';
+    /**
+     * @var string
+     */
     public const URL_LARGE = 'large';
+    /**
+     * @var string
+     */
     public const SET_NAME = 'Default';
+    /**
+     * @var string
+     */
     public const SET_NAME_DE = 'Default DE';
+    /**
+     * @var string
+     */
     public const SET_NAME_EN = 'Default EN';
+    /**
+     * @var string
+     */
     public const ABSTRACT_SKU = 'abstract-sku';
+    /**
+     * @var string
+     */
     public const CONCRETE_SKU = 'concrete-sku';
+    /**
+     * @var string
+     */
     public const ABSTRACT_SKU_2 = 'abstract-sku-2';
+    /**
+     * @var string
+     */
     public const CONCRETE_SKU_2 = 'concrete-sku-2';
+    /**
+     * @var int
+     */
     public const ID_LOCALE_DE = 46;
+    /**
+     * @var int
+     */
     public const ID_LOCALE_EN = 66;
+    /**
+     * @var string
+     */
     public const LOCALE_DE_DE = 'de_DE';
 
     /**

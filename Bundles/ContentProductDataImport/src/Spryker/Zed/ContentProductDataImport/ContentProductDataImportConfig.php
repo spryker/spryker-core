@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ContentProductDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_FILE_NAME = 'content_product_abstract_list.csv';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_CONTENT_PRODUCT = 'content-product-abstract-list';
 
     /**

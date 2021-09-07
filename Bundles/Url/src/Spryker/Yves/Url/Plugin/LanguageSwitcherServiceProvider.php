@@ -20,6 +20,9 @@ use Twig\TwigFunction;
  */
 class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_RENDER_LANGUAGE_SWITCHER = 'render_language_switcher';
 
     /**

@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 
 class ProductConcreteStorageUrlBuilder implements ProductConcreteStorageUrlBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const ATTRIBUTE_QUERY_STRING_PREFIX = 'attribute';
 
     /**

@@ -15,11 +15,26 @@ use Spryker\Shared\Kernel\KernelSharedFactory;
 
 abstract class AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     public const KEY_NAMESPACE = '%namespace%';
+    /**
+     * @var string
+     */
     public const KEY_BUNDLE = '%bundle%';
+    /**
+     * @var string
+     */
     public const KEY_CODE_BUCKET = '%codeBucket%';
 
+    /**
+     * @var string|null
+     */
     protected const CLASS_NAME_PATTERN = null;
+    /**
+     * @var string|null
+     */
     protected const RESOLVABLE_TYPE = null;
 
     /**
@@ -78,7 +93,7 @@ abstract class AbstractClassResolver
     protected $resolvedClassName;
 
     /**
-     * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo
+     * @var \Spryker\Shared\Kernel\ClassResolver\ClassInfo|null
      */
     protected $classInfo;
 

@@ -15,8 +15,17 @@ use Spryker\Client\StorageDatabase\StorageTableNameResolver\StorageTableNameReso
 
 abstract class AbstractStorageReader implements StorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_DATA = 'data';
+    /**
+     * @var string
+     */
     protected const FIELD_KEY = 'key';
+    /**
+     * @var string
+     */
     protected const FIELD_ALIAS_KEYS = 'alias_keys';
 
     /**

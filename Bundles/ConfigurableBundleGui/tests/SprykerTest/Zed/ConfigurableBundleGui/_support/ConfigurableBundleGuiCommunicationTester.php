@@ -30,6 +30,9 @@ class ConfigurableBundleGuiCommunicationTester extends Actor
 {
     use _generated\ConfigurableBundleGuiCommunicationTesterActions;
 
+    /**
+     * @var string
+     */
     protected const TRANSLATION_TRANSFER_NAME = 'test-name';
 
     /**

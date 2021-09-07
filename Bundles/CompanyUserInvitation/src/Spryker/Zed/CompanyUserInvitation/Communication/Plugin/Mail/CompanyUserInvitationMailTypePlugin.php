@@ -18,9 +18,18 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
+    /**
+     * @var string
+     */
     public const MAIL_TYPE = 'company user invitation mail';
 
+    /**
+     * @var string
+     */
     protected const HTML_TEMPLATE = 'company-user-invitation/mail/invitation.html.twig';
+    /**
+     * @var string
+     */
     protected const TEXT_TEMPLATE = 'company-user-invitation/mail/invitation.text.twig';
 
     /**

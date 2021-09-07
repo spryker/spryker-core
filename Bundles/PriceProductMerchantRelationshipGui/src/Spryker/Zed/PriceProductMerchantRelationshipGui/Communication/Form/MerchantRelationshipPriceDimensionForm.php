@@ -20,11 +20,23 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MerchantRelationshipPriceDimensionForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES = 'merchant_relationship_choices';
 
+    /**
+     * @var string
+     */
     protected const FIELD_PLACEHOLDER_MERCHANT_RELATIONSHIP = 'Default prices';
+    /**
+     * @var string
+     */
     protected const FIELD_LABEL_MERCHANT_RELATIONSHIP = 'Merchant Price Dimension';
 
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH = '@PriceProductMerchantRelationshipGui/ProductManagement/price_dimension.twig';
 
     /**

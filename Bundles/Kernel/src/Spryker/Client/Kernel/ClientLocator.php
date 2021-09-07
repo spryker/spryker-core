@@ -12,6 +12,9 @@ use Spryker\Shared\Kernel\AbstractLocator;
 
 class ClientLocator extends AbstractLocator
 {
+    /**
+     * @var string
+     */
     public const LOCATABLE_SUFFIX = 'Client';
 
     /**

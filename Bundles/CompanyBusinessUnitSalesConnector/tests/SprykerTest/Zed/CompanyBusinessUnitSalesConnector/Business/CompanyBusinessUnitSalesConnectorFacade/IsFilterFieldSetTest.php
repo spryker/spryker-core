@@ -23,6 +23,9 @@ use Generated\Shared\Transfer\FilterFieldTransfer;
  */
 class IsFilterFieldSetTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const SAMPLE_TYPE = 'sample';
 
     /**

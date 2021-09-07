@@ -13,9 +13,21 @@ use Spryker\Zed\ConfigurableBundle\Dependency\Service\ConfigurableBundleToUtilTe
 
 class ConfigurableBundleNameGenerator implements ConfigurableBundleNameGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const PREFIX_TEMPLATE_NAME = 'configurable_bundle.templates';
+    /**
+     * @var string
+     */
     protected const PREFIX_TEMPLATE_SLOT_NAME = 'configurable_bundle.template_slots';
+    /**
+     * @var string
+     */
     protected const POSTFIX_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const CONCATENATOR = '.';
 
     /**

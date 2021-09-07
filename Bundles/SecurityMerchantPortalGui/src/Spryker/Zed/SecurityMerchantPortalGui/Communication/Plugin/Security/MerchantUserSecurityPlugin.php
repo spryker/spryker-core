@@ -20,15 +20,28 @@ use Spryker\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiConfig;
  */
 class MerchantUserSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SECURITY_FIREWALL_NAME = 'MerchantUser';
 
+    /**
+     * @var string
+     */
     protected const ROUTE_LOGIN = 'security-merchant-portal-gui:login';
+    /**
+     * @var string
+     */
     protected const PATH_LOGOUT = '/security-merchant-portal-gui/logout';
 
+    /**
+     * @var string
+     */
     protected const IS_AUTHENTICATED_ANONYMOUSLY = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
     /**
      * @see \Symfony\Component\Form\Extension\Csrf\CsrfExtension::loadTypeExtensions()
+     * @var string
      */
     protected const FORM_FIELD_CSRF_TOKEN = '_token';
 

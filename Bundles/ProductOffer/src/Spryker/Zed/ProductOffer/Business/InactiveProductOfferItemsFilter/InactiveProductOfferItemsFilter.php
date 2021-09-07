@@ -18,7 +18,13 @@ use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_OFFER_INACTIVE_PRODUCT_REMOVED = 'product-offer.info.product-offer-inactive.removed';
 
     /**

@@ -37,6 +37,9 @@ use Spryker\Zed\ProductRelation\Business\ProductRelationFacade;
  */
 class ProductRelationFacadeTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ID_TEST_LOCALE = 66;
 
     /**

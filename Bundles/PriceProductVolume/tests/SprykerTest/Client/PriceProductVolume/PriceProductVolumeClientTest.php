@@ -27,18 +27,29 @@ class PriceProductVolumeClientTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     * @var string
      */
     protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     * @var string
      */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
 
+    /**
+     * @var int
+     */
     protected const NET_PRICE = 22;
 
+    /**
+     * @var int
+     */
     protected const GROSS_PRICE = 33;
 
     /**

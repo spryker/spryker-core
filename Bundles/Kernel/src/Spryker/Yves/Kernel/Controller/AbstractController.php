@@ -24,26 +24,36 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 abstract class AbstractController
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_LOCALE = 'locale';
+    /**
+     * @var string
+     */
     protected const SERVICE_FLASH_MESSENGER = 'flash_messenger';
 
     /**
      * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     protected const SERVICE_TWIG = 'twig';
 
     /**
      * @uses \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin::BC_REDIRECT_URL_VALIDATION_HANDLED
+     * @var string
      */
     protected const BC_REDIRECT_URL_VALIDATION_HANDLED = 'BC_REDIRECT_URL_VALIDATION_HANDLED';
 

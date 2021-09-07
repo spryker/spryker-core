@@ -28,9 +28,21 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
  */
 class AvailabilityQueryContainerTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME = 'Test store';
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME = 'xxx';
+    /**
+     * @var string
+     */
     protected const STOCK_NAME_1 = 'Test Stock 1';
+    /**
+     * @var string
+     */
     protected const STOCK_NAME_2 = 'Test Stock 2';
 
     /**

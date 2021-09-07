@@ -12,6 +12,9 @@ use Spryker\Shared\Redis\Dependency\Service\RedisToUtilEncodingServiceInterface;
 
 class RedisInMemoryLogger implements RedisLoggerInterface
 {
+    /**
+     * @var string
+     */
     protected const DSN_STRING_TEMPLATE_UNKNOWN = 'unknown';
 
     /**

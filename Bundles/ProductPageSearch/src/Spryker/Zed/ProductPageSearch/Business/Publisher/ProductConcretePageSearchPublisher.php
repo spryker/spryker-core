@@ -29,7 +29,13 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     use TransactionTrait;
     use InstancePoolingTrait;
 
+    /**
+     * @var string
+     */
     protected const IDENTIFIER_PRODUCT_CONCRETE_PAGE_SEARCH = 'id_product_concrete_page_search';
+    /**
+     * @var string
+     */
     protected const IDENTIFIER_STRUCTURED_DATA = 'structured_data';
 
     /**

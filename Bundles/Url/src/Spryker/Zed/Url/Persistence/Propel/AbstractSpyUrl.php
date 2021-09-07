@@ -22,12 +22,19 @@ use Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException;
  */
 abstract class AbstractSpyUrl extends BaseSpyUrl
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_DATA_NAME = 'name';
+    /**
+     * @var string
+     */
     public const RESOURCE_DATA_VALUE = 'value';
     /**
      * Used to map a row to its resource type
      *
      * @see AbstractSpyUrlQuery::RESOURCE_PREFIX
+     * @var string
      */
     public const RESOURCE_PREFIX = 'fk_resource_';
 

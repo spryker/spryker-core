@@ -54,6 +54,9 @@ class ShipmentBusinessTester extends Actor
 {
     use _generated\ShipmentBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const FAKE_EXPENSE_TYPE = 'FAKE_EXPENSE_TYPE';
 
     /**

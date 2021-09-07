@@ -16,6 +16,7 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const PRODUCT_REVIEW_RESOURCE_NAME = 'product_review';
 
@@ -23,6 +24,7 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
      * //TODO add specification
      *
      * @api
+     * @var string
      */
     public const PLUGIN_PRODUCT_PAGE_RATING_DATA = 'PLUGIN_PRODUCT_PAGE_RATING_DATA';
 
@@ -31,6 +33,7 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
      * - Queue name as used for processing Product messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_REVIEW_SYNC_SEARCH_QUEUE = 'sync.search.product';
 
@@ -39,6 +42,7 @@ class ProductReviewSearchConfig extends AbstractBundleConfig
      * - Queue name as used for processing Product messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_REVIEW_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
 }

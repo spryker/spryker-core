@@ -16,8 +16,17 @@ use Spryker\Zed\Refund\Persistence\RefundQueryContainerInterface;
 
 class RefundTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const ACTIONS = 'Actions';
+    /**
+     * @var string
+     */
     public const SPY_SALES_ORDER = 'SpySalesOrder';
+    /**
+     * @var string
+     */
     public const COL_CURRENCY_ISO_CODE = 'spy_sales_order.currency_iso_code';
 
     /**

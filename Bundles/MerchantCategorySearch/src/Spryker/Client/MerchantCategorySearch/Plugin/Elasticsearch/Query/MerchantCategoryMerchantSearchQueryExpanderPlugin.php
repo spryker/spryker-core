@@ -20,10 +20,14 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class MerchantCategoryMerchantSearchQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAMETER_CATEGORY_KEYS = 'category-keys';
 
     /**
      * @uses \Spryker\Zed\MerchantCategorySearch\Communication\Expander\MerchantCategorySearchExpander::CATEGORY_KEYS
+     * @var string
      */
     protected const CATEGORY_KEYS = 'category-keys';
 

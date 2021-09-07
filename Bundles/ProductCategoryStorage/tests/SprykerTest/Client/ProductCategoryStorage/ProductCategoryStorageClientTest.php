@@ -24,6 +24,9 @@ use Spryker\Client\StorageRedis\Plugin\StorageRedisPlugin;
  */
 class ProductCategoryStorageClientTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const INVALID_ID_PRODUCT_ABSTRACT = 1234567890;
 
     /**

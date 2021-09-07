@@ -24,8 +24,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AbstractProductPricesReader implements AbstractProductPricesReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    /**
+     * @var string
+     */
     protected const SELF_LINK_TEMPLATE = '%s/%s/%s';
 
     /**

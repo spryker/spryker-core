@@ -25,6 +25,9 @@ class AvailabilityDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_QUANTITY = 10;
 
     /**

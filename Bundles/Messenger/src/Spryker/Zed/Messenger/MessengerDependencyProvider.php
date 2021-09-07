@@ -16,17 +16,25 @@ use Spryker\Zed\Messenger\Communication\Plugin\TranslationPlugin;
  */
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SESSION = 'session';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @deprecated See \Spryker\Zed\Messenger\MessengerDependencyProvider::PLUGINS_TRANSLATION
+     * @var string
      */
     public const PLUGIN_TRANSLATION = 'translation plugin';
+    /**
+     * @var string
+     */
     public const PLUGINS_TRANSLATION = 'PLUGINS_TRANSLATION';
 
     /**

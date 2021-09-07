@@ -37,7 +37,13 @@ use Spryker\Zed\SharedCartDataImport\SharedCartDataImportConfig;
  */
 class SharedCartDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_QUOTE_KEY = 'test-shared-cart';
+    /**
+     * @var string
+     */
     protected const TEST_COMPANY_USER_KEY = 'test-company-user-key';
 
     /**

@@ -23,13 +23,31 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class MerchantSalesOrderDataExportFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DATA_ENTITY_MERCHANT_ORDER = 'merchant-order';
+    /**
+     * @var string
+     */
     protected const DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_MERCHANT_ORDER = 'merchant-orders_DE_%s.csv';
 
+    /**
+     * @var string
+     */
     protected const DATA_ENTITY_MERCHANT_ORDER_ITEM = 'merchant-order-item';
+    /**
+     * @var string
+     */
     protected const DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_MERCHANT_ORDER_ITEM = 'merchant-order-items_DE_%s.csv';
 
+    /**
+     * @var string
+     */
     protected const DATA_ENTITY_MERCHANT_ORDER_EXPENSE = 'merchant-order-expense';
+    /**
+     * @var string
+     */
     protected const DATA_EXPORT_RESULT_FILE_NAME_TEMPLATE_MERCHANT_ORDER_EXPENSE = 'merchant-order-expenses_DE_%s.csv';
 
     /**

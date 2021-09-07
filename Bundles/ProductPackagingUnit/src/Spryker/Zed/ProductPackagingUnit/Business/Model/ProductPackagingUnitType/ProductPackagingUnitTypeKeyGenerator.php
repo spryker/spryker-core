@@ -12,6 +12,9 @@ use Spryker\Zed\ProductPackagingUnit\Dependency\Service\ProductPackagingUnitToUt
 
 class ProductPackagingUnitTypeKeyGenerator implements ProductPackagingUnitTypeKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_PACKAGING_UNIT_TYPE_KEY = 'packaging_unit_type.%s.name';
 
     /**

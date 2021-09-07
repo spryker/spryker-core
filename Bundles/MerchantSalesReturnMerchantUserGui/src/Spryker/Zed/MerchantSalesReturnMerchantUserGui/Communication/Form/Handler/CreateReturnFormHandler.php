@@ -20,16 +20,19 @@ class CreateReturnFormHandler implements CreateReturnFormHandlerInterface
 {
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateItemsSubForm::FIELD_CUSTOM_REASON
+     * @var string
      */
     protected const FIELD_CUSTOM_REASON = 'customReason';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::FIELD_RETURN_ITEMS
+     * @var string
      */
     protected const FIELD_RETURN_ITEMS = 'returnItems';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\DataProvider\ReturnCreateFormDataProvider::CUSTOM_REASON_KEY
+     * @var string
      */
     protected const CUSTOM_REASON_KEY = 'custom_reason';
 

@@ -22,6 +22,9 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
  */
 class ProductConcretePageSearchEventResourceBulkRepositoryPlugin extends AbstractPlugin implements EventResourceBulkRepositoryPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_ID_PRODUCT_CONCRETE = '.id_product_concrete';
 
     /**

@@ -36,6 +36,9 @@ class PriceProductOfferFacadeTest extends Unit
 {
     use DataCleanupHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const FAKE_CURRENCY = 'FAKE_CURRENCY';
 
     /**

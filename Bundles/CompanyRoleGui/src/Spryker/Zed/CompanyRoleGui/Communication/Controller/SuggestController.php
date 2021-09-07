@@ -18,7 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SuggestController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_COMPANY = 'idCompany';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_COMPANY_USER = 'idCompanyUser';
 
     /**

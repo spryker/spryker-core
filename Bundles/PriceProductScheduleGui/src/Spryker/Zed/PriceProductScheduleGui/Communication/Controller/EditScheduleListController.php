@@ -22,10 +22,25 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditScheduleListController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/price-product-schedule-gui/import';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Scheduled price list has been successfully saved';
+    /**
+     * @var string
+     */
     protected const URL_PATTERN_EDIT_LIST = '/price-product-schedule-gui/edit-schedule-list?id-price-product-schedule-list=%s';
+    /**
+     * @var string
+     */
     protected const FORMAT_DATE_TIME = 'Y-m-d e H:i:s';
 
     /**

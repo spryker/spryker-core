@@ -20,6 +20,9 @@ class ProductRelationUpdater implements ProductRelationUpdaterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_UPDATE_ERROR = 'It is impossible to update product relation #%d';
 
     /**

@@ -31,9 +31,21 @@ class PriceProductDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const EUR_ISO_CODE = 'EUR';
+    /**
+     * @var string
+     */
     protected const USD_ISO_CODE = 'USD';
+    /**
+     * @var int
+     */
     protected const NET_PRICE = 10;
+    /**
+     * @var int
+     */
     protected const GROSS_PRICE = 9;
 
     /**

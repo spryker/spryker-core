@@ -17,6 +17,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PublishAndSynchronizeHealthCheckSearchPlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_SEARCH_SERVICE_NAME = 'publish-and-synchronize-search';
 
     /**

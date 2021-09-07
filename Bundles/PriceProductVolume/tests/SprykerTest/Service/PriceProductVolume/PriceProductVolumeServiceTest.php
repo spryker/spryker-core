@@ -23,8 +23,17 @@ use Spryker\Service\PriceProductVolume\PriceProductVolumeService;
  */
 class PriceProductVolumeServiceTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const VOLUME_QUANTITY = 5;
+    /**
+     * @var int
+     */
     protected const GROSS_AMOUNT = 200;
+    /**
+     * @var int
+     */
     protected const NET_AMOUNT = 123;
 
     /**

@@ -21,8 +21,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddressController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_CUSTOMER_LIST = '/customer';
+    /**
+     * @var string
+     */
     protected const URL_CUSTOMER_VIEW = '/customer/view';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CUSTOMER_ADDRESS_DOES_NOT_EXIST = 'Customer Address with ID = %d does not exist';
 
     /**

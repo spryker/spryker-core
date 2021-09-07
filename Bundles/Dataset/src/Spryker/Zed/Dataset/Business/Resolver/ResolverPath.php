@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\DatasetFilenameTransfer;
 
 class ResolverPath implements ResolverPathInterface
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_NAME = 'dataset';
 
     /**

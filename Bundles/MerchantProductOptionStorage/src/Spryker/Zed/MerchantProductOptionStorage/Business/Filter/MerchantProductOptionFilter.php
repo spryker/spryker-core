@@ -15,6 +15,7 @@ class MerchantProductOptionFilter implements MerchantProductOptionFilterInterfac
 {
     /**
      * @uses \Spryker\Zed\MerchantProductOption\MerchantProductOptionConfig::STATUS_APPROVED
+     * @var string
      */
     protected const STATUS_APPROVED = 'approved';
 

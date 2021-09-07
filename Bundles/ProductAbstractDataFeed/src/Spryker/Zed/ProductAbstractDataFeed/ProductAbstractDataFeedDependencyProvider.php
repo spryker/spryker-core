@@ -16,6 +16,9 @@ use Spryker\Zed\ProductAbstractDataFeed\Dependency\QueryContainer\ProductAbstrac
  */
 class ProductAbstractDataFeedDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PRODUCT_QUERY_CONTAINER = 'PRODUCT_QUERY_CONTAINER';
 
     /**

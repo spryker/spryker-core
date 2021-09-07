@@ -16,6 +16,9 @@ use Throwable;
 
 class StockCreator implements StockCreatorInterface
 {
+    /**
+     * @var string
+     */
     protected const TOUCH_STOCK_TYPE = 'stock-type';
 
     /**

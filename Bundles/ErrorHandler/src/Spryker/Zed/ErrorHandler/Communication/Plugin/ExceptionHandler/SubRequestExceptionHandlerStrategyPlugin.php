@@ -22,6 +22,9 @@ use Throwable;
  */
 class SubRequestExceptionHandlerStrategyPlugin extends AbstractPlugin implements ExceptionHandlerStrategyPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const URL_NAME_PREFIX = '/error-handler/error/error';
 
     /**

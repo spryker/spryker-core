@@ -37,30 +37,63 @@ use Twig\Loader\FilesystemLoader;
 
 abstract class AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_CLASS = 'gui-table-data';
+    /**
+     * @var string
+     */
     public const TABLE_CLASS_NO_SEARCH_SUFFIX = '-no-search';
 
+    /**
+     * @var string
+     */
     public const BUTTON_CLASS = 'class';
+    /**
+     * @var string
+     */
     public const BUTTON_HREF = 'href';
+    /**
+     * @var string
+     */
     public const BUTTON_DEFAULT_CLASS = 'btn-default';
+    /**
+     * @var string
+     */
     public const BUTTON_ICON = 'icon';
+    /**
+     * @var string
+     */
     public const PARAMETER_VALUE = 'value';
+    /**
+     * @var string
+     */
     public const SORT_BY_COLUMN = 'column';
+    /**
+     * @var string
+     */
     public const SORT_BY_DIRECTION = 'dir';
+    /**
+     * @var string
+     */
     public const URL_ANCHOR = '#';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
     /**
      * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     * @var string
      */
     public const SERVICE_TRANSLATOR = 'translator';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_FACTORY
+     * @var string
      */
     public const SERVICE_FORM_FACTORY = 'form.factory';
 
@@ -72,11 +105,19 @@ abstract class AbstractTable
      * [
      *    'name_suffix' => $id,
      * ]
+     *
+     * @var string
      */
     protected const DELETE_FORM_NAME_SUFFIX = 'name_suffix';
 
+    /**
+     * @var string
+     */
     protected const DELETE_FORM_NAME = 'delete_form';
 
+    /**
+     * @var string
+     */
     protected const DATE_TIME_FORMAT_FOR_CSV_FILENAME = 'Y-m-d-h-i-s';
 
     /**

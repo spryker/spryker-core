@@ -11,7 +11,16 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class RelatedProductsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const RELATIONSHIP_NAME_RELATED_PRODUCTS = 'related-products';
+    /**
+     * @var string
+     */
     public const CONTROLLER_RELATED_PRODUCTS = 'related-products';
+    /**
+     * @var string
+     */
     public const ACTION_RELATED_PRODUCTS_GET = 'get';
 }

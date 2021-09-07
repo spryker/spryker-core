@@ -35,6 +35,9 @@ use Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Oauth\CustomerOauthU
  */
 class OauthCompanyUserFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
     /**

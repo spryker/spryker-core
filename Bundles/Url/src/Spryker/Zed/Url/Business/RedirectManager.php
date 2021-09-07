@@ -20,6 +20,9 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
  */
 class RedirectManager implements RedirectManagerInterface
 {
+    /**
+     * @var string
+     */
     public const ITEM_TYPE_REDIRECT = 'redirect';
 
     /**

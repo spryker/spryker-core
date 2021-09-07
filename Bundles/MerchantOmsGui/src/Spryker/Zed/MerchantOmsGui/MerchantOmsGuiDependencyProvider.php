@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantOmsGui\Dependency\Facade\MerchantOmsGuiToMerchantOmsFaca
  */
 class MerchantOmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
 
     /**

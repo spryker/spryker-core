@@ -17,7 +17,13 @@ use Spryker\Client\OauthPermission\Dependency\Service\OauthPermissionToUtilEncod
  */
 class OauthPermissionDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_OAUTH = 'SERVICE_OAUTH';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

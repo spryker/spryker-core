@@ -15,8 +15,17 @@ use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 class SessionHandlerRedis implements SessionHandlerInterface
 {
+    /**
+     * @var string
+     */
     public const METRIC_SESSION_DELETE_TIME = 'Redis/Session_delete_time';
+    /**
+     * @var string
+     */
     public const METRIC_SESSION_WRITE_TIME = 'Redis/Session_write_time';
+    /**
+     * @var string
+     */
     public const METRIC_SESSION_READ_TIME = 'Redis/Session_read_time';
 
     /**

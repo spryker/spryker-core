@@ -16,8 +16,17 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class RequireExternalUpdater implements UpdaterInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_REQUIRE = 'require';
+    /**
+     * @var string
+     */
     public const RELEASE_OPERATOR = '^';
+    /**
+     * @var string
+     */
     public const KEY_NAME = 'name';
 
     /**

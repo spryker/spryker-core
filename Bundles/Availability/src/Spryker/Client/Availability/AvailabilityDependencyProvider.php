@@ -15,9 +15,18 @@ use Spryker\Client\Kernel\Container;
 
 class AvailabilityDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
 
+    /**
+     * @var string
+     */
     public const KV_STORAGE = 'KV_STORAGE';
 
     /**

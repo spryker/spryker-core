@@ -14,11 +14,13 @@ class PriceProductOfferTableViewPriceComparisonStrategy implements PriceProductO
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_NET
+     * @var string
      */
     protected const SUFFIX_PRICE_TYPE_NET = '_net';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepository::SUFFIX_PRICE_TYPE_GROSS
+     * @var string
      */
     protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
 

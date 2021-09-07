@@ -34,6 +34,9 @@ class SecurityHelper extends Module
     use EventDispatcherHelperTrait;
     use DependencyProviderHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const MODULE_NAME = 'Security';
 
     /**

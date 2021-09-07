@@ -19,7 +19,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CompanyTableCompanyTypePlugin extends AbstractPlugin implements CompanyTableConfigExpanderPluginInterface, CompanyTableHeaderExpanderPluginInterface, CompanyTableDataExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_COMPANY_TYPE = 'company_type';
+    /**
+     * @var string
+     */
     protected const COL_COMPANY_TYPE_LABEL = 'Company Type';
     protected const FK_COMPANY_TYPE = SpyCompanyTableMap::COL_FK_COMPANY_TYPE;
 

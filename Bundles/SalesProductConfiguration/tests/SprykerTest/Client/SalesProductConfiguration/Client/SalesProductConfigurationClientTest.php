@@ -28,12 +28,33 @@ use Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer;
  */
 class SalesProductConfigurationClientTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_CONFIGURATION = 'TEST_CONFIGURATION';
+    /**
+     * @var string
+     */
     protected const TEST_CONFIGURATOR_KEY = 'TEST_CONFIGURATOR_KEY';
+    /**
+     * @var string
+     */
     protected const TEST_CUSTOMER_REFERENCE = 'TEST_CUSTOMER_REFERENCE';
+    /**
+     * @var string
+     */
     protected const TEST_GROUP_KEY = 'TEST_GROUP_KEY';
+    /**
+     * @var string
+     */
     protected const TEST_DISPLAY_DATA = 'TEST_DISPLAY_DATA';
+    /**
+     * @var int
+     */
     protected const TEST_ID_SALES_ORDER_ITEM = 1;
+    /**
+     * @var string
+     */
     protected const TEST_ORDER_REFERENCE = 'TEST_ORDER_REFERENCE';
 
     /**

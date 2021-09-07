@@ -19,7 +19,13 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsRedirectTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const ACTIONS = 'Actions';
+    /**
+     * @var string
+     */
     protected const REQUEST_ID_URL = 'id-url';
 
     /**

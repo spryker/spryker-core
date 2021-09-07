@@ -20,10 +20,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class StoreType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'stores';
 
+    /**
+     * @var string
+     */
     public const FIELD_STORE = 'storeCurrency';
 
+    /**
+     * @var string
+     */
     public const OPTION_STORES_ARRAY = 'option-stores-array';
 
     /**

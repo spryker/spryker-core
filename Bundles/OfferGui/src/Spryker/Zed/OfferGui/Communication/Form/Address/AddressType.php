@@ -24,19 +24,58 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class AddressType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SALUTATION = 'salutation';
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'firstName';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'lastName';
+    /**
+     * @var string
+     */
     public const FIELD_COMPANY = 'company';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_1 = 'address1';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_2 = 'address2';
+    /**
+     * @var string
+     */
     public const FIELD_ADDRESS_3 = 'address3';
+    /**
+     * @var string
+     */
     public const FIELD_ZIP_CODE = 'zipCode';
+    /**
+     * @var string
+     */
     public const FIELD_CITY = 'city';
+    /**
+     * @var string
+     */
     public const FIELD_ISO_2_CODE = 'iso2Code';
+    /**
+     * @var string
+     */
     public const FIELD_PHONE = 'phone';
+    /**
+     * @var string
+     */
     public const FIELD_ID_CUSTOMER_ADDRESS = 'idCustomerAddress';
 
+    /**
+     * @var string
+     */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
     /**

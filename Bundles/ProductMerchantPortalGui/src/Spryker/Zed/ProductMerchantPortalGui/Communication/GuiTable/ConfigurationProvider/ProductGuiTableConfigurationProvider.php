@@ -15,36 +15,75 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const COL_KEY_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_KEY_IMAGE = 'image';
+    /**
+     * @var string
+     */
     public const COL_KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_KEY_SUPER_ATTRIBUTES = 'superAttributes';
+    /**
+     * @var string
+     */
     public const COL_KEY_STATUS = 'status';
+    /**
+     * @var string
+     */
     public const COL_KEY_VALID_FROM = 'validFrom';
+    /**
+     * @var string
+     */
     public const COL_KEY_VALID_TO = 'validTo';
 
+    /**
+     * @var string
+     */
     public const COLUMN_DATA_STATUS_ACTIVE = 'Active';
+    /**
+     * @var string
+     */
     public const COLUMN_DATA_STATUS_INACTIVE = 'Inactive';
 
+    /**
+     * @var string
+     */
     protected const SEARCH_PLACEHOLDER = 'Search';
 
+    /**
+     * @var string
+     */
     protected const TITLE_ROW_ACTION_UPDATE_PRODUCT = 'Manage Product';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsConcreteController::tableDataAction()
+     * @var string
      */
     protected const DATA_URL = '/product-merchant-portal-gui/products-concrete/table-data';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsConcreteController::bulkEditAction()
+     * @var string
      */
     protected const BULK_EDIT_URL = '/product-merchant-portal-gui/products-concrete/bulk-edit?product-ids=${rowIds}';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductConcreteController::indexAction()
+     * @var string
      */
     protected const ROW_EDIT_URL = '/product-merchant-portal-gui/update-product-concrete?product-id=${row.%s}';
 
+    /**
+     * @var string
+     */
     protected const ROW_EDIT_ID = 'update-product';
 
     /**

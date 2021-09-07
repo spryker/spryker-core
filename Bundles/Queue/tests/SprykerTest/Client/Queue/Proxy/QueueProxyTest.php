@@ -26,6 +26,9 @@ use Spryker\Shared\Queue\QueueConfig;
  */
 class QueueProxyTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_QUEUE_NAME = 'testQueueName';
 
     /**

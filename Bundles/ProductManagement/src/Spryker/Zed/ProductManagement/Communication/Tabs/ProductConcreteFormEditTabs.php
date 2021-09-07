@@ -12,10 +12,25 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 
 class ProductConcreteFormEditTabs extends ProductFormEditTabs
 {
+    /**
+     * @var string
+     */
     protected const TEMPLATE_TAB_GENERAL = '@ProductManagement/Product/_partials/EditVariant/tab-general.twig';
+    /**
+     * @var string
+     */
     protected const TEMPLATE_TAB_BUNDLED_PRODUCTS = '@ProductManagement/Product/_partials/EditVariant/tab-product-bundles.twig';
+    /**
+     * @var string
+     */
     protected const TEMPLATE_TAB_ATTRIBUTES = '@ProductManagement/Variant/_partials/abstract-attribute-tab.twig';
+    /**
+     * @var string
+     */
     protected const TEMPLATE_TAB_PRICE_AND_STOCK = '@ProductManagement/Variant/_partials/price-tab.twig';
+    /**
+     * @var string
+     */
     protected const TEMPLATE_TAB_VARIANTS = '@ProductManagement/Product/_partials/variant-tab-adding.twig';
 
     /**

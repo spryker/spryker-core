@@ -24,10 +24,22 @@ use Generated\Shared\Transfer\OrderItemFilterTransfer;
  */
 class GetOrderItemManualEventsTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    /**
+     * @var int
+     */
     protected const FAKE_SALES_ORDER_ITEM_ID = 666;
 
+    /**
+     * @var string
+     */
     protected const SHIPPED_STATE_NAME = 'shipped';
+    /**
+     * @var string
+     */
     protected const DELIVERED_STATE_NAME = 'delivered';
 
     /**

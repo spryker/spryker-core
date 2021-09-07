@@ -25,7 +25,13 @@ class ConsoleBootstrap extends Application
 {
     use BundleConfigResolverAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const VERSION = '1';
+    /**
+     * @var string
+     */
     protected const NAME = 'Spryker Glue Console';
 
     /**

@@ -20,19 +20,61 @@ use Spryker\Client\Search\Plugin\Config\PaginationConfigBuilder;
  */
 class CatalogDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'search client';
+    /**
+     * @var string
+     */
     public const CATALOG_SEARCH_QUERY_PLUGIN = 'catalog search query plugin';
+    /**
+     * @var string
+     */
     public const CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS = 'catalog search query expander plugins';
+    /**
+     * @var string
+     */
     public const CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS = 'catalog search result formatter plugins';
+    /**
+     * @var string
+     */
     public const SUGGESTION_QUERY_PLUGIN = 'suggestion query plugin';
+    /**
+     * @var string
+     */
     public const SUGGESTION_QUERY_EXPANDER_PLUGINS = 'suggestion query expander plugins';
+    /**
+     * @var string
+     */
     public const SUGGESTION_RESULT_FORMATTER_PLUGINS = 'suggestion result formatter plugins';
+    /**
+     * @var string
+     */
     public const PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS = 'PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS';
+    /**
+     * @var string
+     */
     public const PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS = 'PLUGIN_SORT_CONFIG_TRANSFER_BUILDERS';
+    /**
+     * @var string
+     */
     public const PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER = 'PLUGINS_CATALOG_SEARCH_COUNT_QUERY_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY = 'PLUGIN_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER = 'PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_RESULT_FORMATTER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_CATALOG_SEARCH_QUERY_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_PAGINATION_CONFIG_BUILDER = 'PLUGIN_PAGINATION_CONFIG_BUILDER';
 
     /**

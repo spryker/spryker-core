@@ -14,8 +14,17 @@ use Spryker\Client\Kernel\AbstractPlugin;
 
 class PopularitySortConfigTransferBuilderPlugin extends AbstractPlugin implements SortConfigTransferBuilderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const CONFIG_NAME = 'popularity';
+    /**
+     * @var string
+     */
     protected const PARAMETER_NAME = 'popularity';
+    /**
+     * @var string
+     */
     protected const UNMAPPED_TYPE = 'integer';
 
     /**

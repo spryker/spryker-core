@@ -23,34 +23,73 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddProductConcreteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_TYPE = 'type';
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_MESSAGE = 'message';
 
+    /**
+     * @var string
+     */
     protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
+    /**
+     * @var string
+     */
     protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
+    /**
+     * @var string
+     */
     protected const RESPONSE_TYPE_SUCCESS = 'success';
+    /**
+     * @var string
+     */
     protected const RESPONSE_TYPE_ERROR = 'error';
 
+    /**
+     * @var string
+     */
     protected const RESPONSE_MESSAGE_SUCCESS_PRODUCTS_SAVED = 'Success! %d Concrete Products are saved.';
+    /**
+     * @var string
+     */
     protected const RESPONSE_MESSAGE_SUCCESS_PRODUCT_SAVED = 'Success! %d Concrete Product is saved.';
+    /**
+     * @var string
+     */
     protected const RESPONSE_MESSAGE_ERROR = 'Please resolve all errors.';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'product-abstract-id';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_ID_PRODUCT_ABSTRACT
+     * @var string
      */
     protected const ADD_PRODUCT_CONCRETE_FORM_FIELD_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_EXISTING_ATTRIBUTES
+     * @var string
      */
     protected const ADD_PRODUCT_CONCRETE_FORM_FIELD_EXISTING_ATTRIBUTES = 'existing_attributes';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\AddProductConcreteForm::FIELD_PRODUCTS
+     * @var string
      */
     protected const FIELD_PRODUCTS = 'products';
 

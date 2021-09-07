@@ -27,6 +27,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class PriceProductRepository extends AbstractRepository implements PriceProductRepositoryInterface
 {
+    /**
+     * @var string
+     */
     public const PRICE_PRODUCT_RELATION_NAME = 'PriceProduct';
 
     /**

@@ -22,15 +22,36 @@ use Twig\TwigFunction;
  */
 class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const URI_SUFFIX_INDEX = '\/index$';
+    /**
+     * @var string
+     */
     protected const URI_SUFFIX_SLASH = '\/$';
 
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_NAME_NAVIGATION = 'navigation';
+    /**
+     * @var string
+     */
     protected const TWIG_FUNCTION_NAME_BREADCRUMBS = 'breadcrumb';
 
+    /**
+     * @var string
+     */
     protected const TWIG_GLOBAL_VARIABLE_NAME_NAVIGATION = 'navigation';
+    /**
+     * @var string
+     */
     protected const TWIG_GLOBAL_VARIABLE_NAME_BREADCRUMBS = 'breadcrumb';
 
+    /**
+     * @var string
+     */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**

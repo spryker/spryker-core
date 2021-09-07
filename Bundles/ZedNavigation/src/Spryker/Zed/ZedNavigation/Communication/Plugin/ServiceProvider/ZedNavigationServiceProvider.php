@@ -24,7 +24,13 @@ use Twig\TwigFunction;
  */
 class ZedNavigationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const URI_SUFFIX_INDEX = '\/index$';
+    /**
+     * @var string
+     */
     public const URI_SUFFIX_SLASH = '\/$';
 
     /**

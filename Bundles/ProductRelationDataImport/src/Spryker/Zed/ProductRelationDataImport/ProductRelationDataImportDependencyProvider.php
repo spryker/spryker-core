@@ -17,6 +17,9 @@ use Spryker\Zed\ProductRelationDataImport\Dependency\Service\ProductRelationData
  */
 class ProductRelationDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_RELATION = 'FACADE_PRODUCT_RELATION';
 
     /**

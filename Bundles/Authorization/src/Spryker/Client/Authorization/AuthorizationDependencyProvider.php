@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 
 class AuthorizationDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_AUTHORIZATION_STRATEGIES = 'PLUGINS_AUTHORIZATION_STRATEGIES';
 
     /**

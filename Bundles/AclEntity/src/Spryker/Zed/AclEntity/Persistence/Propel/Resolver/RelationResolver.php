@@ -20,6 +20,9 @@ use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface;
 
 class RelationResolver implements RelationResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const RELATION_GETTER_TEMPLATE = 'get%s';
 
     /**

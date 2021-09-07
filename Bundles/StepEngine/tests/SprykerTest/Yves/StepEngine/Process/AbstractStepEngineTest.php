@@ -28,24 +28,63 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 abstract class AbstractStepEngineTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const ERROR_ROUTE = 'error-route';
+    /**
+     * @var string
+     */
     public const ERROR_URL = '/error/url';
 
+    /**
+     * @var string
+     */
     public const ESCAPE_ROUTE = 'escape-route';
+    /**
+     * @var string
+     */
     public const ESCAPE_URL = '/escape/url';
 
+    /**
+     * @var string
+     */
     public const STEP_ROUTE_A = 'step-route-a';
+    /**
+     * @var string
+     */
     public const STEP_URL_A = '/step/url/a';
 
+    /**
+     * @var string
+     */
     public const STEP_ROUTE_B = 'step-route-b';
+    /**
+     * @var string
+     */
     public const STEP_URL_B = '/step/url/b';
 
+    /**
+     * @var string
+     */
     public const STEP_ROUTE_C = 'step-route-c';
+    /**
+     * @var string
+     */
     public const STEP_URL_C = '/step/url/c';
 
+    /**
+     * @var string
+     */
     public const STEP_ROUTE_D = 'step-route-d';
+    /**
+     * @var string
+     */
     public const STEP_URL_D = '/step/url/d';
 
+    /**
+     * @var string
+     */
     public const EXTERNAL_URL = 'http://external.de';
 
     /**

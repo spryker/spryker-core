@@ -22,10 +22,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CmsBlockType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_CATEGORIES = 'id_categories';
 
+    /**
+     * @var string
+     */
     public const OPTION_CATEGORY_ARRAY = 'option-category-array';
+    /**
+     * @var string
+     */
     public const OPTION_CMS_BLOCK_POSITION_LIST = 'option-cms-block-position-list';
+    /**
+     * @var string
+     */
     public const OPTION_WRONG_TEMPLATE_CATEGORY_LIST = 'option-wring-template-category-list';
 
     /**

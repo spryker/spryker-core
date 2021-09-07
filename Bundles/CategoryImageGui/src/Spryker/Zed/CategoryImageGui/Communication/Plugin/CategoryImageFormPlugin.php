@@ -20,6 +20,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CategoryImageFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FIELD_IMAGE_SETS = 'imageSets';
 
     /**

@@ -15,6 +15,9 @@ use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsRead
 
 class ProductAbstractRelationshipExpander implements ProductAbstractRelationshipExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
 
     /**

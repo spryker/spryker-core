@@ -16,8 +16,17 @@ use Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockF
 
 class CmsBlockSuggestionFinder implements CmsBlockSuggestionFinderInterface
 {
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_RESULTS = 'results';
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_PAGINATION = 'pagination';
+    /**
+     * @var string
+     */
     protected const RESPONSE_KEY_PAGINATION_MORE = 'more';
 
     /**

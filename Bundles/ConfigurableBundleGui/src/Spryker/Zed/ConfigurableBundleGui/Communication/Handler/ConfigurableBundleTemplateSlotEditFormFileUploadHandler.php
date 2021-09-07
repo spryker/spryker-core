@@ -14,6 +14,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ConfigurableBundleTemplateSlotEditFormFileUploadHandler implements ConfigurableBundleTemplateSlotEditFormFileUploadHandlerInterface
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     protected const FIELD_PATH_SEPARATOR = '.';
 
     /**

@@ -36,11 +36,26 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CalculatorForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_AMOUNT = 'amount';
+    /**
+     * @var string
+     */
     public const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
+    /**
+     * @var string
+     */
     public const FIELD_COLLECTOR_QUERY_STRING = 'collector_query_string';
+    /**
+     * @var string
+     */
     public const FIELD_COLLECTOR_TYPE_CHOICE = 'collector_type_choice';
 
+    /**
+     * @var string
+     */
     public const OPTION_COLLECTOR_TYPE_CHOICES = 'collector_type_choices';
 
     /**

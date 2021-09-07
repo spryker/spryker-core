@@ -18,10 +18,14 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
  */
 class TwigConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const APPLICATION_ZED = 'ZED';
 
     /**
      * @uses \Spryker\Yves\Twig\TwigConfig::APPLICATION_YVES
+     * @var string
      */
     protected const APPLICATION_YVES = 'YVES';
 

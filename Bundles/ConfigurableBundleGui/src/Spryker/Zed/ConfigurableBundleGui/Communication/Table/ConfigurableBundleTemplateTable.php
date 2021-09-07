@@ -24,34 +24,62 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class ConfigurableBundleTemplateTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const STATUS_ACTIVE = 'Active';
+    /**
+     * @var string
+     */
     protected const STATUS_INACTIVE = 'Inactive';
 
+    /**
+     * @var string
+     */
     protected const COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id_configurable_bundle_template';
+    /**
+     * @var string
+     */
     protected const COL_NAME_TRANSLATION = 'name_translation';
+    /**
+     * @var string
+     */
     protected const COL_COUNT_OF_SLOTS = 'count_of_slots';
+    /**
+     * @var string
+     */
     protected const COL_STATUS = 'is_active';
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'actions';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::editAction()
+     * @var string
      */
     protected const ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE = '/configurable-bundle-gui/template/edit';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::activateAction()
+     * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_ACTIVATE = '/configurable-bundle-gui/template/activate';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::deactivateAction()
+     * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DEACTIVATE = '/configurable-bundle-gui/template/deactivate';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::confirmDeleteAction()
+     * @var string
      */
     protected const ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_CONFIRM_DELETE = '/configurable-bundle-gui/template/confirm-delete';
 

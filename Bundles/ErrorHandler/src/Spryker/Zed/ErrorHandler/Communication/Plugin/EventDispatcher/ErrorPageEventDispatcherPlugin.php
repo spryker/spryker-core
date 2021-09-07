@@ -21,6 +21,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class ErrorPageEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    /**
+     * @var int
+     */
     protected const PRIORITY = 50;
 
     /**

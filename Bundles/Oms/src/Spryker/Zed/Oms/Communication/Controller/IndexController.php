@@ -20,7 +20,13 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class IndexController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_FORMAT = 'svg';
+    /**
+     * @var int
+     */
     public const DEFAULT_FONT_SIZE = 14;
 
     /**

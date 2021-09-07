@@ -33,6 +33,9 @@ use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
  */
 class SearchElasticsearchClientTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const INDEX_NAME = 'index_name_devtest';
 
     /**

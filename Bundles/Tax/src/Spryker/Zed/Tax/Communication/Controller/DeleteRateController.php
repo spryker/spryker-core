@@ -19,9 +19,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteRateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REQUEST_ID_TAX_RATE = 'id-tax-rate';
+    /**
+     * @var string
+     */
     protected const PARAM_TEMPLATE_ID_TAX_RATE = 'idTaxRate';
 
+    /**
+     * @var string
+     */
     protected const DELETE_FORM = 'deleteForm';
 
     /**

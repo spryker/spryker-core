@@ -13,7 +13,13 @@ use Spryker\Zed\CompanyBusinessUnitGui\Communication\Generator\CompanyBusinessUn
 
 class CompanyBusinessUnitGuiFormatter implements CompanyBusinessUnitGuiFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ID = 'id';
+    /**
+     * @var string
+     */
     protected const KEY_TEXT = 'text';
 
     /**

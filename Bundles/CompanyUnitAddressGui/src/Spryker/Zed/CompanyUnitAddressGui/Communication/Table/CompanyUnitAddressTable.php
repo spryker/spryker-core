@@ -28,15 +28,28 @@ class CompanyUnitAddressTable extends AbstractTable
     protected const COL_COUNTRY_NAME = SpyCountryTableMap::COL_NAME;
     protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
 
+    /**
+     * @var string
+     */
     protected const COL_COUNTRY_RELATION = 'Country';
+    /**
+     * @var string
+     */
     protected const COL_COMPANY_RELATION = 'Company';
 
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     protected const REQUEST_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
     /**
      * @uses \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\EditCompanyUnitAddressController::indexAction()
+     * @var string
      */
     protected const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
 

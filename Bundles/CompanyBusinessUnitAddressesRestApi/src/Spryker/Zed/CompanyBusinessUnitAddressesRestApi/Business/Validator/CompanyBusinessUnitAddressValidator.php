@@ -15,8 +15,17 @@ use Spryker\Zed\CompanyBusinessUnitAddressesRestApi\Dependency\Facade\CompanyBus
 
 class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAMETER_ID = '%id%';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_COMPANY_ADDRESS_IN_CHECKOUT_DATA_NOT_FOUND = 'checkout.validation.company_address.not_found';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_COMPANY_ADDRESSES_APPLICABLE_FOR_COMPANY_USERS_ONLY = 'checkout.validation.company_address.not_applicable';
 
     /**

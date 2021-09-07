@@ -16,9 +16,18 @@ use Spryker\Glue\OrdersRestApi\Dependency\Client\OrdersRestApiToSalesClientBridg
  */
 class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SALES = 'CLIENT_SALES';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_ORDER_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_ORDER_ITEMS_ATTRIBUTES_MAPPER';
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_ORDER_DETAILS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_ORDER_DETAILS_ATTRIBUTES_MAPPER';
 
     /**

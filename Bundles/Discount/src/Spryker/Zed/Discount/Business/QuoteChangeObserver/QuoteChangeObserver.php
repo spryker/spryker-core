@@ -17,8 +17,17 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 
 class QuoteChangeObserver implements QuoteChangeObserverInterface
 {
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_NOT_AVAILABLE = 'discount.quote_change.discount.not_available';
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DISCOUNT_AMOUNT_CHANGED = 'discount.quote_change.discount.amount_changed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_DISCOUNT_QUOTE_CHANGE_DOES_NOT_APPLY_FOR_CURRENCY = 'discount.quote_change.does_not_apply_for_currency';
 
     /**

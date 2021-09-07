@@ -16,7 +16,13 @@ use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
  */
 class TaxRateCalculatorStrategyResolver implements TaxRateCalculatorStrategyResolverInterface
 {
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
     /**

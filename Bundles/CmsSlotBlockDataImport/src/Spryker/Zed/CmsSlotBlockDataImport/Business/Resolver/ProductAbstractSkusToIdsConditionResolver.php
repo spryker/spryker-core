@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 
 class ProductAbstractSkusToIdsConditionResolver implements ConditionResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_ABSTRACT_IDS = 'productIds';
+    /**
+     * @var int
+     */
     protected const BULK_SELECT_CHUNK_SIZE = 1000;
 
     /**

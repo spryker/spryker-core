@@ -17,11 +17,13 @@ class ResourceRelationshipsPluginAnnotationAnalyzer implements ResourceRelations
 {
     /**
      * @uses \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzer::PATTERN_REGEX_GLUE_ANNOTATION
+     * @var string
      */
     protected const PATTERN_REGEX_GLUE_ANNOTATION = '/(?<=@Glue\()(.|\n)*?(?=(\s\*\n)*?\))/';
 
     /**
      * @uses \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzer::EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT
+     * @var string
      */
     protected const EXCEPTION_MESSAGE_INVALID_ANNOTATION_FORMAT = 'Invalid JSON format: %s in %s';
 

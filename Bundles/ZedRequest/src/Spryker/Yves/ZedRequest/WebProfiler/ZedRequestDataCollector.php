@@ -15,6 +15,9 @@ use Throwable;
 
 class ZedRequestDataCollector extends DataCollector
 {
+    /**
+     * @var string
+     */
     protected const COLLECTOR_NAME = 'zed_request';
 
     /**

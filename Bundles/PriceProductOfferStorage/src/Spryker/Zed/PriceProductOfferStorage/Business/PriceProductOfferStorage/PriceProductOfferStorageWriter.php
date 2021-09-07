@@ -27,10 +27,22 @@ use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStor
 
 class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const ID_PRICE_PRODUCT_OFFER = 'id_price_product_offer';
+    /**
+     * @var string
+     */
     protected const PRODUCT_OFFER_REFERENCE = 'product_offer_reference';
 
+    /**
+     * @var string
+     */
     protected const COL_ID_PRODUCT_NAME = 'IdProduct';
+    /**
+     * @var string
+     */
     protected const COL_SKU_NAME = 'Sku';
 
     /**

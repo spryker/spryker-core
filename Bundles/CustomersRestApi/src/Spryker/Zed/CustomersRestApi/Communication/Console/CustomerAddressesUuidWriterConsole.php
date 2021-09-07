@@ -18,7 +18,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CustomerAddressesUuidWriterConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'customer-addresses:uuid:generate';
+    /**
+     * @var string
+     */
     protected const COMMAND_DESCRIPTION = 'Generates UUIDs for the existing customers addresses that do not have one.';
 
     /**

@@ -21,6 +21,9 @@ class ProductListAggregateFormType extends AbstractType
 {
     public const OPTION_CATEGORY_IDS = ProductListCategoryRelationTransfer::CATEGORY_IDS;
 
+    /**
+     * @var string
+     */
     public const BLOCK_PREFIX = 'productListAggregate';
 
     /**

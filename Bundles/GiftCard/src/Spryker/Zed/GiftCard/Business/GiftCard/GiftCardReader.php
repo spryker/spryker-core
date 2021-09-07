@@ -20,6 +20,9 @@ use Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface;
 
 class GiftCardReader implements GiftCardReaderInterface
 {
+    /**
+     * @var string
+     */
     public const ATTRIBUTES = 'attributes';
 
     /**

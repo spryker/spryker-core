@@ -19,6 +19,9 @@ use Twig\TwigFunction;
  */
 class UrlDecodeTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME_URL_DECODE = 'urldecode';
 
     /**

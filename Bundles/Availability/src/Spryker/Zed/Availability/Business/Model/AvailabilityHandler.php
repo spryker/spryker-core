@@ -23,7 +23,13 @@ use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
 class AvailabilityHandler implements AvailabilityHandlerInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_SKU_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this SKU: %s';
+    /**
+     * @var string
+     */
     protected const PRODUCT_ID_NOT_FOUND_EXCEPTION_MESSAGE_FORMAT = 'The product was not found with this ID: %d';
 
     /**

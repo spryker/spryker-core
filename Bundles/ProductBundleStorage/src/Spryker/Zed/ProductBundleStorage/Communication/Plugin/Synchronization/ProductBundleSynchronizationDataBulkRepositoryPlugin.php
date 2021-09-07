@@ -22,6 +22,7 @@ class ProductBundleSynchronizationDataBulkRepositoryPlugin extends AbstractPlugi
 {
     /**
      * @uses \Orm\Zed\ProductBundleStorage\Persistence\Map\SpyProductBundleStorageTableMap::COL_ID_PRODUCT_BUNDLE_STORAGE
+     * @var string
      */
     protected const COL_ID_PRODUCT_BUNDLE_STORAGE = 'spy_product_bundle_storage.id_product_bundle_storage';
 

@@ -40,11 +40,13 @@ class ProductOfferStoragePublishListenerTest extends AbstractStoragePublishListe
 {
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
+     * @var string
      */
     protected const STATUS_DENIED = 'denied';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     * @var string
      */
     protected const STATUS_APPROVED = 'approved';
 

@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_PRODUCT_QUANTITY = 'SERVICE_PRODUCT_QUANTITY';
 
     /**

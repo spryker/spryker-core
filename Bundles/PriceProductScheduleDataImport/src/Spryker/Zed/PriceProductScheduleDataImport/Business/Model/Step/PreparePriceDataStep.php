@@ -14,6 +14,9 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProdu
 
 class PreparePriceDataStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const WRONG_PRICE_EXCEPTION_MESSAGE = 'Price "%s" is wrong';
 
     /**

@@ -18,9 +18,18 @@ use Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade\MerchantRelati
  */
 class MerchantRelationshipProductListDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_RELATIONSHIP = 'FACADE_MERCHANT_RELATIONSHIP';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_LIST = 'PROPEL_QUERY_PRODUCT_LIST';
 
     /**

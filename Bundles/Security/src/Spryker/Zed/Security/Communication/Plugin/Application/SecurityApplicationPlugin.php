@@ -74,69 +74,188 @@ use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterfa
  */
 class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface, BootableApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_FIREWALL = 'security.firewall';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHORIZATION_CHECKER = 'security.authorization_checker';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_TOKEN_STORAGE = 'security.token_storage';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_MANAGER = 'security.authentication_manager';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ACCESS_MANAGER = 'security.access_manager';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDERS = 'security.authentication_providers';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ENCODER_FACTORY = 'security.encoder_factory';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_USER_CHECKER = 'security.user_checker';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_VOTERS = 'security.voters';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_TRUST_RESOLVER = 'security.trust_resolver';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_HTTP_UTILS = 'security.http_utils';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_LAST_ERROR = 'security.last_error';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ACCESS_MAP = 'security.access_map';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_UTILS = 'security.authentication_utils';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_CHANNEL_LISTENER = 'security.channel_listener';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ACCESS_LISTENER = 'security.access_listener';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_USER_PROVIDER_INMEMORY_PROTO = 'security.user_provider.inmemory._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_CONTEXT_LISTENER_PROTO = 'security.context_listener._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_EXCEPTION_LISTENER_PROTO = 'security.exception_listener._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_SUCCESS_HANDLER_PROTO = 'security.authentication.success_handler._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_FAILURE_HANDLER_PROTO = 'security.authentication.failure_handler._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LOGOUT_HANDLER_PROTO = 'security.authentication.logout_handler._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_GUARD_PROTO = 'security.authentication_listener.guard._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_GUARD_HANDLER = 'security.authentication.guard_handler';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_FORM_PROTO = 'security.authentication_listener.form._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_HTTP_PROTO = 'security.authentication_listener.http._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_ANONYMOUS_PROTO = 'security.authentication_listener.anonymous._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_LOGOUT_PROTO = 'security.authentication_listener.logout._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_SWITCH_USER_PROTO = 'security.authentication_listener.switch_user._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_USER_SESSION_HANDLER_PROTO = 'security.authentication_listener.user_session_handler._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ENTRY_POINT_FORM_PROTO = 'security.entry_point.form._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ENTRY_POINT_HTTP_PROTO = 'security.entry_point.http._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ENTRY_POINT_GUARD_PROTO = 'security.entry_point.guard._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_DAO_PROTO = 'security.authentication_provider.dao._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_GUARD_PROTO = 'security.authentication_provider.guard._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_PROVIDER_ANONYMOUS_PROTO = 'security.authentication_provider.anonymous._proto';
+    /**
+     * @var string
+     */
     protected const SERVICE_LOGGER = 'logger';
 
     /**
      * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_CSRF_PROVIDER
+     * @var string
      */
     protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     protected const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
+     * @var string
      */
     protected const SERVICE_ROUTER = 'routers';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     * @var string
      */
     protected const SERVICE_KERNEL = 'kernel';
 
     /**
      * @uses \Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     * @var string
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
 
+    /**
+     * @var array
+     */
     protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous', 'user_session_handler'];
 
     /**

@@ -21,6 +21,9 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeInterf
 
 class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInterface
 {
+    /**
+     * @var string|null
+     */
     public const DEFAULT_PRICE = null;
 
     /**

@@ -21,9 +21,21 @@ use Symfony\Component\Form\FormEvents;
  */
 class UpdateProductsFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
+    /**
+     * @var string
+     */
     public const FIELD_DEASSIGN_ID_PRODUCT_ABSTRACTS = 'deassign_id_product_abstracts';
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_ABSTRACTS = 'id_product_abstracts';
+    /**
+     * @var string
+     */
     public const FIELD_PRODUCT_POSITION = 'product_position';
 
     /**

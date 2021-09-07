@@ -17,9 +17,21 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SKUS_TO_IDS = 'Found invalid skus in a row with the provided key: "{key}", column: "{column}"';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_DEFAULT_SKUS = '[skus.default] is required. Please check the row with key: "{key}".';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAMETER_KEY = '{key}';
 
     /**

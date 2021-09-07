@@ -11,21 +11,29 @@ class MerchantCategoryEvents
 {
     /**
      * This events will be used for spy_merchant_category entity changes.
+     *
+     * @var string
      */
     public const ENTITY_SPY_MERCHANT_CATEGORY_UPDATE = 'Entity.spy_merchant_category.update';
 
     /**
      * This events will be used for spy_merchant_category entity creation.
+     *
+     * @var string
      */
     public const ENTITY_SPY_MERCHANT_CATEGORY_CREATE = 'Entity.spy_merchant_category.create';
 
     /**
      * This events will be used for spy_merchant_category entity deletetion.
+     *
+     * @var string
      */
     public const ENTITY_SPY_MERCHANT_CATEGORY_DELETE = 'Entity.spy_merchant_category.delete';
 
     /**
      * This events will be used for spy_merchant_category publishing.
+     *
+     * @var string
      */
     public const MERCHANT_CATEGORY_PUBLISH = 'MerchantCategory.merchant_category.publish';
 }

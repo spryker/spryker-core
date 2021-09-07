@@ -17,9 +17,18 @@ use Spryker\Service\DataExport\Resolver\DataExportPathResolverInterface;
 
 class DataExportLocalWriter implements DataExportWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const ACCESS_MODE_TYPE_OVERWRITE = 'wb';
+    /**
+     * @var string
+     */
     protected const ACCESS_MODE_TYPE_APPEND = 'ab';
 
+    /**
+     * @var string
+     */
     protected const LOCAL_CONNECTION_PARAM_EXPORT_ROOT_DIR = 'export_root_dir';
 
     /**

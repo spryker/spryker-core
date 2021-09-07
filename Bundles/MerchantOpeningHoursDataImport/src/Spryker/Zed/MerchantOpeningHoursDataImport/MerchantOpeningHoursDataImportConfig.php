@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class MerchantOpeningHoursDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE = 'merchant-opening-hours-weekday-schedule';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_MERCHANT_OPENING_HOURS_DATE_SCHEDULE = 'merchant-opening-hours-date-schedule';
 
     /**

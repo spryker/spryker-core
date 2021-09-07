@@ -26,6 +26,9 @@ use Spryker\Zed\ProductReviewSearch\Persistence\ProductReviewSearchRepository;
  */
 class ProductReviewSearchRepositoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE_NAME = 'xxx';
 
     /**

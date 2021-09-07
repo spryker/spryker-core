@@ -13,8 +13,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const CMS_FOLDER_PATH = '@Cms/templates/';
 
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_DEFAULT = '/cms-gui/list-page';
 
     /**

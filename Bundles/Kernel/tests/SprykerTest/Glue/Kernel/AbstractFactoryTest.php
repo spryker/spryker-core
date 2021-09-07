@@ -24,7 +24,13 @@ use SprykerTest\Glue\Kernel\Fixtures\ConcreteFactory;
  */
 class AbstractFactoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_KEY = 'test';
+    /**
+     * @var string
+     */
     public const TEST_VALUE = 'value';
 
     /**

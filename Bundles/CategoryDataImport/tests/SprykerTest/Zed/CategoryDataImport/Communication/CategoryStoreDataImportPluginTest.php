@@ -28,16 +28,35 @@ use Spryker\Zed\CategoryDataImport\Communication\Plugin\DataImport\CategoryStore
  */
 class CategoryStoreDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_AT = 'AT';
+    /**
+     * @var string
+     */
     protected const CATEGORY_NAME_TEST = 'test-category';
+    /**
+     * @var string
+     */
     protected const CATEGORY_PARENT_NAME_TEST = 'parent-test-category';
+    /**
+     * @var string
+     */
     protected const CATEGORY_CHILD_NAME_TEST = 'child-test-category';
 
+    /**
+     * @var int
+     */
     protected const EXPECTED_IMPORT_COUNT = 1;
 
     /**
      * @uses \Spryker\Zed\CategoryDataImport\CategoryDataImportConfig::IMPORT_TYPE_CATEGORY_STORE
+     * @var string
      */
     protected const IMPORT_TYPE_CATEGORY_STORE = 'category-store';
 

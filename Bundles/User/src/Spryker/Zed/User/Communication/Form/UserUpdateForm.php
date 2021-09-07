@@ -17,6 +17,9 @@ use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 
 class UserUpdateForm extends UserForm
 {
+    /**
+     * @var string
+     */
     public const OPTION_STATUS_CHOICES = 'status_choices';
 
     /**

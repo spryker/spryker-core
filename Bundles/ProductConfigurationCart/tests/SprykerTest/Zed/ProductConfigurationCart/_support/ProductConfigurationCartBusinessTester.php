@@ -36,6 +36,9 @@ class ProductConfigurationCartBusinessTester extends Actor
 {
     use _generated\ProductConfigurationCartBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONFIGURATION_TEST_KEY = 'product_configuration_test_key';
 
     /**

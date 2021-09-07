@@ -28,7 +28,13 @@ use SprykerTest\Service\Barcode\Mocks\BarcodeGeneratorPluginMockUnregistered;
  */
 class BarcodeServiceTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const GENERATED_CODE = 'generated string';
+    /**
+     * @var string
+     */
     protected const GENERATED_ENCODING = 'data:image/png;base64';
 
     /**

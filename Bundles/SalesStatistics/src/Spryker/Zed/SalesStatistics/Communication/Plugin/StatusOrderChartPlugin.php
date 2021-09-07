@@ -20,7 +20,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class StatusOrderChartPlugin extends AbstractPlugin implements ChartPluginInterface, DashboardPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'status-orders';
+    /**
+     * @var string
+     */
     public const TITLE = 'Status orders';
 
     /**

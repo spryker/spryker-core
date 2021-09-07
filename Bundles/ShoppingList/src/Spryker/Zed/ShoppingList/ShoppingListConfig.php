@@ -16,6 +16,9 @@ use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlug
 
 class ShoppingListConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_SHOPPING_LIST_NAME = 'Shopping List';
 
     /**

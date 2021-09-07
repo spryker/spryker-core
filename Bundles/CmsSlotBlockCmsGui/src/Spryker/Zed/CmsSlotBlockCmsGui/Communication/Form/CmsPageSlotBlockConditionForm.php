@@ -18,7 +18,13 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class CmsPageSlotBlockConditionForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_PAGE_ARRAY = 'option-page-array';
+    /**
+     * @var string
+     */
     public const OPTION_ALL_ARRAY = 'option-all-array';
 
     public const FIELD_ALL = CmsSlotBlockConditionTransfer::ALL;
@@ -26,9 +32,13 @@ class CmsPageSlotBlockConditionForm extends AbstractType
 
     /**
      * @uses \Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig::CONDITION_KEY
+     * @var string
      */
     protected const FIELD_CMS_PAGE = 'cms_page';
 
+    /**
+     * @var string
+     */
     protected const LABEL_CMS_PAGES = 'CMS Pages';
 
     /**

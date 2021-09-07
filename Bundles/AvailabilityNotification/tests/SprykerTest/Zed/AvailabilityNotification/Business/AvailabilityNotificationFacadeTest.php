@@ -25,8 +25,14 @@ use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificat
  */
 class AvailabilityNotificationFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TESTER_INVALID_EMAIL = 'invalid<>example@spryker.com';
 
+    /**
+     * @var string
+     */
     public const TESTER_INCORRECT_SUBSCRIPTION_KEY = '992233445566778899';
 
     /**

@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MoneyConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH_MONEY_TABLE = '@Money/Form/Type/money_table.twig';
 
     /**

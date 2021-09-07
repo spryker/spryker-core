@@ -9,6 +9,9 @@ namespace Spryker\Service\CmsSlotBlockStorage\KeyBuilder;
 
 class CmsSlotBlockStorageKeyBuilder implements CmsSlotBlockStorageKeyBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_SLOT_TEMPLATE_KEY = '%s:%s';
 
     /**

@@ -11,8 +11,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantProfileMerchantPortalGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const PREFIX_MERCHANT_PROFILE_URL = 'merchant';
 
+    /**
+     * @var array
+     */
     protected const SALUTATION_CHOICES = [
         'Ms' => 'Ms',
         'Mr' => 'Mr',

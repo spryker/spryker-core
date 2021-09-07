@@ -27,10 +27,25 @@ use Generated\Shared\Transfer\PriceTypeTransfer;
  */
 class PriceProductScheduleApplyTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const KEY_IS_OTHER_CURRENCY = 'isOtherCurrency';
+    /**
+     * @var string
+     */
     public const KEY_IS_OTHER_PRICE_TYPE = 'isOtherPriceType';
+    /**
+     * @var string
+     */
     public const KEY_IS_PRODUCT_CONCRETE = 'isProductConcrete';
+    /**
+     * @var string
+     */
     public const KEY_IS_PRODUCT_ABSTRACT = 'isProductAbstract';
+    /**
+     * @var string
+     */
     public const KEY_PRICE_PRODUCT_SCHEDULE_DATA = 'priceProductScheduleData';
 
     /**

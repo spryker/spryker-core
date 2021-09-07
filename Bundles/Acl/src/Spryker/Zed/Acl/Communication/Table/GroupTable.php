@@ -16,8 +16,17 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class GroupTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const ROLES = 'roles';
+    /**
+     * @var string
+     */
     public const EDIT = 'Edit';
+    /**
+     * @var string
+     */
     public const EDIT_PARAMETER = 'id-group';
 
     /**

@@ -16,9 +16,18 @@ use Spryker\Zed\Publisher\Dependency\Facade\PublisherToEventBehaviorFacadeBridge
  */
 class PublisherDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_PUBLISHER = 'PLUGINS_PUBLISHER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PUBLISHER_TRIGGER = 'PLUGINS_PUBLISHER_TRIGGER';
 
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
 
     /**

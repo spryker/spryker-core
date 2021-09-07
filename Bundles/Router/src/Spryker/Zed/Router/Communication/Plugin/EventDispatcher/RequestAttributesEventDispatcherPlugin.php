@@ -23,18 +23,48 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class RequestAttributesEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    /**
+     * @var int
+     */
     protected const EARLY_EVENT = 512;
 
+    /**
+     * @var string
+     */
     protected const MODULE = 'module';
+    /**
+     * @var string
+     */
     protected const CONTROLLER = 'controller';
+    /**
+     * @var string
+     */
     protected const ACTION = 'action';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_MODULE = 'application';
+    /**
+     * @var string
+     */
     protected const DEFAULT_CONTROLLER = 'index';
+    /**
+     * @var string
+     */
     protected const DEFAULT_ACTION = 'index';
 
+    /**
+     * @var int
+     */
     protected const POSITION_OF_ACTION = 2;
+    /**
+     * @var int
+     */
     protected const POSITION_OF_CONTROLLER = 1;
+    /**
+     * @var int
+     */
     protected const POSITION_OF_MODULE = 0;
 
     /**

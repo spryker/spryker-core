@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends EditController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_CUSTOMER = 'id-customer';
 
     /**

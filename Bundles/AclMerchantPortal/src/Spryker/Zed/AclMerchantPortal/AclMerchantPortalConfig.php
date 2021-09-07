@@ -45,16 +45,27 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::VALIDATOR_WILDCARD
+     * @var string
      */
     protected const RULE_VALIDATOR_WILDCARD = '*';
 
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::ALLOW
+     * @var string
      */
     protected const RULE_TYPE_ALLOW = 'allow';
+    /**
+     * @var string
+     */
     protected const MERCHANT_ACL_REFERENCE_PREFIX = '__MERCHANT_';
 
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_PRODUCT_VIEWER_NAME = 'Product Viewer for Offer creation';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_PRODUCT_VIEWER_REFERENCE = 'product-viewer-for-offer-creation';
 
     /**

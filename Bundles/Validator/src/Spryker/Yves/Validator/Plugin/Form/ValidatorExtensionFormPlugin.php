@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormFactoryBuilderInterface;
  */
 class ValidatorExtensionFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_VALIDATOR = 'validator';
 
     /**

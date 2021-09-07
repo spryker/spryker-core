@@ -25,18 +25,24 @@ class GetMerchantSynchronizationDataTransfersByIdsTest extends Unit
 {
     /**
      * @uses \SprykerTest\Zed\MerchantSearch\MerchantSearchBusinessTester::MERCHANT_COUNT
+     * @var int
      */
     protected const MERCHANT_COUNT = 3;
 
     /**
      * @uses \Generated\Shared\Search\MerchantIndexMap::SEARCH_RESULT_DATA
+     * @var string
      */
     protected const SEARCH_RESULT_DATA = 'search-result-data';
 
+    /**
+     * @var string
+     */
     protected const ID_MERCHANT = 'id_merchant';
 
     /**
      * @uses \Orm\Zed\MerchantSearch\Persistence\Map\SpyMerchantSearchTableMap::COL_FK_MERCHANT
+     * @var string
      */
     protected const COL_FK_MERCHANT = 'spy_merchant_search.fk_merchant';
 

@@ -14,6 +14,10 @@ use Spryker\Glue\ShipmentsRestApi\ShipmentsRestApiConfig;
 
 class ShipmentMethodSorter implements ShipmentMethodSorterInterface
 {
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     protected const SORT_VALUE_DELIMITER = '.';
 
     /**

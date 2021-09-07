@@ -23,7 +23,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DryRunImportController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_IMPORT_PAGE = '/price-product-schedule-gui/import';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
 
     /**

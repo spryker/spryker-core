@@ -26,8 +26,17 @@ use Spryker\Zed\Store\Business\StoreFacadeInterface;
  */
 class ReservationReaderTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const NOT_RESERVED_SUBPROCESS_ITEM_STATE = 'awaiting approval';
+    /**
+     * @var string
+     */
     protected const RESERVED_SUBPROCESS_ITEM_STATE = 'payment preparations';
 
     /**

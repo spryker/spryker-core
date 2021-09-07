@@ -24,6 +24,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductImageSetFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_VALIDATION_NOT_BLANK_ERROR = 'The value cannot be blank. Please fill in this input';
 
     /**

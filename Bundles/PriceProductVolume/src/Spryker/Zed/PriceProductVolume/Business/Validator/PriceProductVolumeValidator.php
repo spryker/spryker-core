@@ -26,7 +26,13 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class PriceProductVolumeValidator implements PriceProductVolumeValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const VALUE_IS_INVALID = 'This value is not valid.';
+    /**
+     * @var string
+     */
     protected const VOLUME_QUANTITY_IS_INVALID = 'This value cannot be blank';
 
     /**

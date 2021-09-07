@@ -45,6 +45,9 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class GiftCardFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const TEST_GIFT_CARD_CODE = 'testCode';
 
     /**

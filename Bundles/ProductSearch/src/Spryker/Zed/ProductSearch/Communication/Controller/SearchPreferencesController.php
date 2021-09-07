@@ -18,7 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SearchPreferencesController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID = 'id';
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_DEFAULT = '/product-search/search-preferences';
 
     /**

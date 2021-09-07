@@ -19,7 +19,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class UpdateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID = 'id';
+    /**
+     * @var string
+     */
     protected const ROUTE_TEMPLATES_LIST = '/product-review-gui';
 
     /**

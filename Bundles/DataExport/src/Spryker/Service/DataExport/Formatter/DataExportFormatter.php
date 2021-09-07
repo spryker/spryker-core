@@ -14,7 +14,13 @@ use Generated\Shared\Transfer\MessageTransfer;
 
 class DataExportFormatter implements DataExportFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_FORMATTER_PLUGIN_NOT_FOUND = 'Formatter plugin not found for format "%s"';
+    /**
+     * @var string
+     */
     protected const DEFAULT_FORMAT_TYPE = 'csv';
 
     /**

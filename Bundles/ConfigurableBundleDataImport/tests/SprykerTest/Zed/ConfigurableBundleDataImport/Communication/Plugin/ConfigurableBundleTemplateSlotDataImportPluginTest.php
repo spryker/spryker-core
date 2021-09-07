@@ -29,10 +29,22 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class ConfigurableBundleTemplateSlotDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_CONFIGURABLE_BUNDLE_TEMPLATE_KEY = 'test-configurable-bundle-template-key-1';
+    /**
+     * @var string
+     */
     protected const TEST_PRODUCT_LIST_KEY = 'test-product-list-key';
 
+    /**
+     * @var string
+     */
     protected const INCORRECT_CONFIGURABLE_BUNDLE_TEMPLATE_KEY = 'incorrect-configurable-bundle-template-key';
+    /**
+     * @var string
+     */
     protected const INCORRECT_PRODUCT_LIST_KEY = 'incorrect-product-list-key';
 
     /**

@@ -14,7 +14,13 @@ use Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProvide
 
 class SpecificationBuilder implements SpecificationBuilderInterface
 {
+    /**
+     * @var string
+     */
     public const OPEN_PARENTHESIS = '(';
+    /**
+     * @var string
+     */
     public const CLOSE_PARENTHESIS = ')';
 
     /**

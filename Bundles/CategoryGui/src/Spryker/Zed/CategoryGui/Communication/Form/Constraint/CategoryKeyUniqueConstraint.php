@@ -12,10 +12,22 @@ use Symfony\Component\Validator\Constraint;
 
 class CategoryKeyUniqueConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_CATEGORY_GUI_REPOSITORY = 'categoryGuiRepository';
+    /**
+     * @var string
+     */
     public const OPTION_TRANSLATOR_FACADE = 'translatorFacade';
 
+    /**
+     * @var string
+     */
     protected const PARAMETER_CATEGORY_KEY = '%categoryKey%';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE = 'Category with key "%categoryKey%" already in use, please choose another one.';
 
     /**

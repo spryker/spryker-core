@@ -15,8 +15,17 @@ use Spryker\Client\ProductOption\Dependency\Client\ProductOptionToStorageClientB
 
 class ProductOptionDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    /**
+     * @var string
+     */
     public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
 
     /**

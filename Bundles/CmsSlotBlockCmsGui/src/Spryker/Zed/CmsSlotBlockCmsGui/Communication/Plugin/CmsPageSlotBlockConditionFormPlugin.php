@@ -20,6 +20,7 @@ class CmsPageSlotBlockConditionFormPlugin extends AbstractPlugin implements CmsS
 {
     /**
      * @uses \Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig::CONDITION_KEY
+     * @var string
      */
     protected const CONDITION_KEY = 'cms_page';
 

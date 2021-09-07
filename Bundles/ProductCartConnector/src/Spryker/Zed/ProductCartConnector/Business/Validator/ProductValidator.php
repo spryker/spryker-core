@@ -16,12 +16,30 @@ use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToPro
 
 class ProductValidator implements ProductValidatorInterface
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_ERROR_ABSTRACT_PRODUCT_EXISTS = 'product-cart.validation.error.abstract-product-exists';
+    /**
+     * @var string
+     */
     public const MESSAGE_ERROR_CONCRETE_PRODUCT_EXISTS = 'product-cart.validation.error.concrete-product-exists';
+    /**
+     * @var string
+     */
     public const MESSAGE_PARAM_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE = 'product-cart.validation.error.concrete-product-inactive';
 
+    /**
+     * @var string
+     */
     protected const SKU_CONCRETE = 'SKU_CONCRETE';
+    /**
+     * @var string
+     */
     protected const SKU_ABSTRACT = 'SKU_ABSTRACT';
 
     /**

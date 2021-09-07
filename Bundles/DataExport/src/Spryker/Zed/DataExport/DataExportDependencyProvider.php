@@ -17,9 +17,18 @@ use Spryker\Zed\Kernel\Container;
  */
 class DataExportDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_GRACEFUL_RUNNER = 'FACADE_GRACEFUL_RUNNER';
+    /**
+     * @var string
+     */
     public const SERVICE_DATA_EXPORT = 'SERVICE_DATA_EXPORT';
 
+    /**
+     * @var string
+     */
     public const DATA_ENTITY_EXPORTER_PLUGINS = 'DATA_ENTITY_EXPORTER_PLUGINS';
 
     /**

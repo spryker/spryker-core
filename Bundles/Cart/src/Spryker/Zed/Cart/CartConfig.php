@@ -11,7 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CartConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const OPERATION_ADD = 'add';
 
+    /**
+     * @var string
+     */
     public const OPERATION_REMOVE = 'remove';
 }

@@ -26,6 +26,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const BUNDLE = 'Propel';
 
     /**

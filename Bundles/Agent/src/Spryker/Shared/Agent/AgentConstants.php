@@ -17,6 +17,7 @@ interface AgentConstants
      * - Defines a list of secured patterns that are allowed for an agent.
      *
      * @api
+     * @var string
      */
     public const AGENT_ALLOWED_SECURED_PATTERN_LIST = 'AGENT:AGENT_ALLOWED_SECURED_PATTERN_LIST';
 }

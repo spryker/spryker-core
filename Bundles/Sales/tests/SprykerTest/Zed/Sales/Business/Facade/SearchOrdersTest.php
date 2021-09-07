@@ -26,7 +26,13 @@ use Generated\Shared\Transfer\PaginationTransfer;
  */
 class SearchOrdersTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    /**
+     * @var string
+     */
     protected const FAKE_LIKE_ORDER_REFERENCE = 'fake-like-order-reference';
 
     /**

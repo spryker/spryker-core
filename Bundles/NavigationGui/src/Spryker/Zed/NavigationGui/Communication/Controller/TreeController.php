@@ -18,7 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TreeController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_NAVIGATION = 'id-navigation';
+    /**
+     * @var string
+     */
     public const PARAM_NAVIGATION_TREE = 'navigation-tree';
 
     /**

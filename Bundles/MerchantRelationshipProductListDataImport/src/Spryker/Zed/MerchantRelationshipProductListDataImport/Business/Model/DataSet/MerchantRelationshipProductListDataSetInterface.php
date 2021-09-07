@@ -9,9 +9,21 @@ namespace Spryker\Zed\MerchantRelationshipProductListDataImport\Business\Model\D
 
 interface MerchantRelationshipProductListDataSetInterface
 {
+    /**
+     * @var string
+     */
     public const MERCHANT_RELATION_KEY = 'merchant_relation_key';
+    /**
+     * @var string
+     */
     public const PRODUCT_LIST_KEY = 'product_list_key';
 
+    /**
+     * @var string
+     */
     public const ID_MERCHANT_RELATIONSHIP = 'id_merchant_relationship';
+    /**
+     * @var string
+     */
     public const ID_PRODUCT_LIST = 'id_product_list';
 }

@@ -17,13 +17,31 @@ use Spryker\Shared\Kernel\Store;
 
 class CurrencyDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const STORE = 'store';
+    /**
+     * @var string
+     */
     public const INTERNATIONALIZATION = 'internationalization';
 
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CURRENCY_POST_CHANGE = 'PLUGINS_CURRENCY_POST_CHANGE';
 
     /**

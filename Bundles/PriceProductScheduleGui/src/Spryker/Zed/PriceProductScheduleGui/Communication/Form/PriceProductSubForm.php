@@ -21,9 +21,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PriceProductSubForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_PRICE_TYPE = 'priceType';
+    /**
+     * @var string
+     */
     public const FIELD_MONEY_VALUE = 'moneyValue';
+    /**
+     * @var string
+     */
     public const FIELD_ABSTRACT_SKU = 'skuProductAbstract';
+    /**
+     * @var string
+     */
     public const FIELD_CONCRETE_SKU = 'skuProduct';
 
     /**

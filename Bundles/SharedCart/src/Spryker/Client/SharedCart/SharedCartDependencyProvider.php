@@ -18,12 +18,33 @@ use Spryker\Client\SharedCart\Dependency\Client\SharedCartToQuoteClientBridge;
 
 class SharedCartDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_MULTI_CART = 'CLIENT_MULTI_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
 
     /**

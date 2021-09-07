@@ -22,6 +22,9 @@ class QuoteItemOperation implements QuoteItemOperationInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     public const GLOSSARY_KEY_PERMISSION_FAILED = 'global.permission.failed';
 
     /**

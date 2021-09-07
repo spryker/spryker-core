@@ -14,8 +14,14 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPlu
  */
 class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'PlaceOrderWithAmountUpToPermissionPlugin';
 
+    /**
+     * @var string
+     */
     protected const FIELD_CENT_AMOUNT = 'cent_amount';
 
     /**

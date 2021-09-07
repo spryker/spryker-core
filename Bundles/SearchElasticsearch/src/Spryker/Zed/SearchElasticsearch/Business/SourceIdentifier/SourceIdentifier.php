@@ -12,8 +12,14 @@ use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class SourceIdentifier implements SourceIdentifierInterface
 {
+    /**
+     * @var string
+     */
     protected const STORE_PREFIX_DELIMITER = '_';
 
+    /**
+     * @var string
+     */
     protected const INVALID_SOURCE_IDENTIFIER_MESSAGE_TEMPLATE = 'Provided source identifier `%s` is not supported or cannot be installed for store `%s`.';
 
     /**

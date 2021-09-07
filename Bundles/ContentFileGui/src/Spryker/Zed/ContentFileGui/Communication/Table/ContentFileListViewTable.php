@@ -15,20 +15,45 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class ContentFileListViewTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_IDENTIFIER = 'file-list-view-table';
+    /**
+     * @var string
+     */
     public const TABLE_CLASS = 'item-list-view-table gui-table-data';
+    /**
+     * @var string
+     */
     public const BASE_URL = '/content-file-gui/file-list/';
 
+    /**
+     * @var string
+     */
     public const HEADER_NAME = 'File Name';
+    /**
+     * @var string
+     */
     public const HEADER_ID_FILE = 'ID';
 
+    /**
+     * @var string
+     */
     public const COL_ID_FILE = 'id_file';
+    /**
+     * @var string
+     */
     public const COL_FILE_NAME = 'file_name';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListViewTable::COL_ACTIONS} instead.
+     * @var string
      */
     public const COL_SELECTED = 'Actions';
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'Actions';
 
     /**

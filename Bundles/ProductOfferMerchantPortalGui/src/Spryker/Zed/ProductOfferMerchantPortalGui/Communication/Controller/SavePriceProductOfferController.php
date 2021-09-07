@@ -22,12 +22,27 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class SavePriceProductOfferController extends AbstractPriceProductOfferController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_TYPE_PRICE_PRODUCT_OFFER_IDS = 'type-price-product-offer-ids';
+    /**
+     * @var string
+     */
     protected const PARAM_VOLUME_QUANTITY = 'volume_quantity';
+    /**
+     * @var string
+     */
     protected const PARAM_PRODUCT_OFFER_ID = 'product_offer_id';
 
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Offer prices saved successfully.';
 
+    /**
+     * @var string
+     */
     protected const POST_ACTION_REFRESH_TABLE = 'refresh_table';
 
     /**

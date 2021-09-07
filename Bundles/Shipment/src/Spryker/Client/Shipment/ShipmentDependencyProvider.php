@@ -15,7 +15,13 @@ use Spryker\Client\Kernel\Container;
  */
 class ShipmentDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_ZED = 'zed service';
+    /**
+     * @var string
+     */
     public const SESSION = 'session';
 
     /**

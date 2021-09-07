@@ -16,6 +16,9 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class FacetExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {
+    /**
+     * @var string
+     */
     public const DOC_COUNT = 'doc_count';
 
     /**

@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ChangePasswordController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Success! The Password is updated.';
 
     /**

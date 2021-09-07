@@ -22,9 +22,21 @@ use Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConn
 
 class CheckCartAvailability implements CheckCartAvailabilityInterface
 {
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_AVAILABILITY_FAILED = 'cart.pre.check.availability.failed';
+    /**
+     * @var string
+     */
     public const CART_PRE_CHECK_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
+    /**
+     * @var string
+     */
     public const STOCK_TRANSLATION_PARAMETER = '%stock%';
+    /**
+     * @var string
+     */
     public const SKU_TRANSLATION_PARAMETER = '%sku%';
 
     /**

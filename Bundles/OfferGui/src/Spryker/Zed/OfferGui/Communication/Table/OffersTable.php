@@ -21,22 +21,52 @@ use Spryker\Zed\OfferGui\OfferGuiConfig;
 
 class OffersTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const URL_OFFER_GUI_EDIT = '/offer-gui/edit/';
+    /**
+     * @var string
+     */
     protected const URL_OFFER_GUI_VIEW_DETAILS = '/offer-gui/view/details';
+    /**
+     * @var string
+     */
     protected const URL_OFFER_GUI_PRINT_VERSION = '/offer-gui/view/print-version';
+    /**
+     * @var string
+     */
     protected const URL_OFFER_GUI_SUGGEST = '/offer-gui/create';
+    /**
+     * @var string
+     */
     protected const URL_OFFER_GUI_PLACE_ORDER = '/offer-gui/place-order/';
+    /**
+     * @var string
+     */
     protected const URL_PARAM_ID_OFFER = 'id-offer';
 
     protected const COL_ID_OFFER = SpyOfferTableMap::COL_ID_OFFER;
     protected const COL_CREATED_AT = SpyOfferTableMap::COL_CREATED_AT;
     protected const COL_CUSTOMER_REFERENCE = SpyOfferTableMap::COL_CUSTOMER_REFERENCE;
+    /**
+     * @var string
+     */
     protected const COL_EMAIL = 'email';
+    /**
+     * @var string
+     */
     protected const COL_GRAND_TOTAL = 'grand_total';
     protected const COL_CONTACT_DATE = SpyOfferTableMap::COL_CONTACT_DATE;
     protected const COL_CONTACT_PERSON = SpyOfferTableMap::COL_CONTACT_PERSON;
     protected const COL_NOTE = SpyOfferTableMap::COL_NOTE;
+    /**
+     * @var string
+     */
     protected const COL_URL = 'url';
+    /**
+     * @var string
+     */
     protected const COL_STATUS = 'status';
 
     /**

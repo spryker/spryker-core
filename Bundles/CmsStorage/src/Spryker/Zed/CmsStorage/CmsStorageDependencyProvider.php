@@ -20,11 +20,29 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_CMS_PAGE = 'QUERY_CONTAINER_CMS_PAGE';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const FACADE_CMS = 'FACADE_CMS';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
 
     /**

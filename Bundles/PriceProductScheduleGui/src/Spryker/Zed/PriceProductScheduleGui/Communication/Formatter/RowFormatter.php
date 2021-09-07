@@ -18,6 +18,9 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 
 class RowFormatter implements RowFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const DATE_FORMAT = 'Y-m-d e H:i:s';
 
     /**

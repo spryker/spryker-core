@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 
 class ProductConfigurationChecker implements ProductConfigurationCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_IS_NOT_COMPLETE = 'product_configuration.checkout.validation.error.is_not_complete';
 
     /**

@@ -39,30 +39,57 @@ use Twig\Environment;
  */
 class WebProfilerApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface, BootableApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     public const SERVICE_STOPWATCH = 'stopwatch';
+    /**
+     * @var string
+     */
     public const SERVICE_LOGGER = 'logger';
+    /**
+     * @var string
+     */
     public const SERVICE_PROFILER = 'profiler';
+    /**
+     * @var string
+     */
     public const SERVICE_TWIG_PROFILE = 'profile';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_CHARSET
+     * @var string
      */
     public const SERVICE_CHARSET = 'charset';
 
     /**
      * @uses \Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     * @var string
      */
     public const SERVICE_DISPATCHER = 'dispatcher';
 
+    /**
+     * @var string
+     */
     public const SERVICE_REQUEST = 'request';
+    /**
+     * @var string
+     */
     public const SERVICE_REQUEST_STACK = 'request_stack';
+    /**
+     * @var string
+     */
     public const SERVICE_ROUTER = 'routers';
 
+    /**
+     * @var int
+     */
     protected const ROUTER_PRIORITY = 10;
 
     /**

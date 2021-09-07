@@ -20,15 +20,39 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_SALES_SHIPMENT = 'id-shipment';
 
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_DEFAULT = '/sales';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/sales/detail';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHIPMENT_EDIT_SUCCESS = 'Shipment has been successfully edited.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHIPMENT_EDIT_FAIL = 'Shipment edit failed.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Sales order #%d not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ORDER_SHIPMENT_NOT_FOUND_ERROR = 'Sales order shipment #%d not found.';
 
     /**

@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormView;
  */
 abstract class AbstractDiscountExtensionSubFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TEMPLATE_PATH = 'template_path';
 
     /**

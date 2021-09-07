@@ -18,6 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ParagraphType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_TEXT = 'text';
 
     /**

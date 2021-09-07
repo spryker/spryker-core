@@ -9,7 +9,13 @@ namespace Spryker\Zed\Gui\Communication\Table;
 
 class TableConfiguration
 {
+    /**
+     * @var string
+     */
     public const SORT_ASC = 'asc';
+    /**
+     * @var string
+     */
     public const SORT_DESC = 'desc';
 
     /**

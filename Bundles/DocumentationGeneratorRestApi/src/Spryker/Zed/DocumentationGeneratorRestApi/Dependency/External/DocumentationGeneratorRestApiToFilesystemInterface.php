@@ -9,6 +9,9 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External;
 
 interface DocumentationGeneratorRestApiToFilesystemInterface
 {
+    /**
+     * @var int
+     */
     public const PERMISSION_ALL = 0777;
 
     /**

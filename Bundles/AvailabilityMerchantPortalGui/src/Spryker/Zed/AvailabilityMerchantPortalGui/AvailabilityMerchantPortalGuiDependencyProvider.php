@@ -15,8 +15,17 @@ use Spryker\Zed\Kernel\Container;
 
 class AvailabilityMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_AVAILABILITY = 'FACADE_AVAILABILITY';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT_STOCK = 'FACADE_MERCHANT_STOCK';
 
     /**

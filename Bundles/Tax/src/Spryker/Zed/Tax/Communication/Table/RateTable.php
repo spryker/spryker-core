@@ -18,8 +18,17 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RateTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const TABLE_COL_ACTIONS = 'Actions';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_TAX_RATE = 'id-tax-rate';
+    /**
+     * @var string
+     */
     public const COUNTRY_NOT_AVAILABLE = 'N/A';
 
     /**

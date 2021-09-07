@@ -16,9 +16,18 @@ use Spryker\Yves\Kernel\Container;
  */
 class SessionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const MONITORING_SERVICE = 'monitoring service';
+    /**
+     * @var string
+     */
     public const PLUGINS_SESSION_HANDLER = 'PLUGINS_SESSION_HANDLER';
 
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**

@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\QuoteRequestTransfer;
 
 class QuoteRequestProductConfigurationValidator implements QuoteRequestProductConfigurationValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_IN_QUOTE_REQUEST_IS_INCOMPLETE = 'product_configuration.quote_request.validation.error.incomplete';
 
     /**

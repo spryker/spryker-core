@@ -16,6 +16,9 @@ use Spryker\Zed\ProductCustomerPermission\Persistence\ProductCustomerPermissionQ
 
 class ProductCustomerPermissionCartValidator implements ProductCustomerPermissionCartValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_NO_PERMISSION = 'product-cart.validation.error.no-product-permission';
 
     /**

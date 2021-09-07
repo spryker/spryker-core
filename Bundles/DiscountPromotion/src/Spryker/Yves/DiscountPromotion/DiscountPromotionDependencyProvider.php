@@ -15,8 +15,17 @@ use Spryker\Yves\Kernel\Container;
 
 class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PRODUCT_CLIENT = 'PRODUCT_CLIENT';
+    /**
+     * @var string
+     */
     public const AVAILABILITY_CLIENT = 'AVAILABILITY_CLIENT';
+    /**
+     * @var string
+     */
     public const PRODUCT_MAPPER_PLUGIN = 'PRODUCT_MAPPER_PLUGIN';
 
     /**

@@ -31,8 +31,12 @@ class QuoteApprovalCreator implements QuoteApprovalCreatorInterface
 
     /**
      * @uses \Spryker\Shared\SharedCart\SharedCartConfig::PERMISSION_GROUP_READ_ONLY
+     * @var string
      */
     protected const PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_APPROVAL_CREATED = 'quote_approval.created';
 
     /**

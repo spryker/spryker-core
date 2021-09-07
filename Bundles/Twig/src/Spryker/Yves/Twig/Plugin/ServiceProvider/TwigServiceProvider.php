@@ -22,6 +22,9 @@ use Twig\RuntimeLoader\FactoryRuntimeLoader;
  */
 class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const TWIG_LOADER_YVES = 'twig.loader.yves';
 
     /**

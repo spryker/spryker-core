@@ -11,6 +11,9 @@ use Spryker\Glue\Kernel\ClassResolver\AbstractClassResolver;
 
 class BundleConfigResolver extends AbstractClassResolver
 {
+    /**
+     * @var string
+     */
     protected const RESOLVABLE_TYPE = 'GlueConfig';
 
     /**

@@ -18,10 +18,22 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class MerchantSearchDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_MERCHANT_SEARCH_QUERY = 'PLUGIN_MERCHANT_SEARCH_QUERY';
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_SEARCH_RESULT_FORMATTER = 'PLUGINS_MERCHANT_SEARCH_RESULT_FORMATTER';
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_SEARCH_QUERY_EXPANDER = 'PLUGINS_MERCHANT_SEARCH_QUERY_EXPANDER';
 
     /**

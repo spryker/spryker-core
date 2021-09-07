@@ -13,6 +13,9 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class StoreRelationshipFilterStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const ALL_STORES_IDENTIFIER = '*';
 
     /**

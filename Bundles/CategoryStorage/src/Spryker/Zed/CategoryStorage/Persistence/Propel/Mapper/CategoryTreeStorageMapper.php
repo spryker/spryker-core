@@ -14,6 +14,9 @@ use Spryker\Zed\CategoryStorage\Dependency\Service\CategoryStorageToUtilSanitize
 
 class CategoryTreeStorageMapper
 {
+    /**
+     * @var string
+     */
     public const KEY_CATEGORY_NODES_STORAGE = 'category_nodes_storage';
 
     /**

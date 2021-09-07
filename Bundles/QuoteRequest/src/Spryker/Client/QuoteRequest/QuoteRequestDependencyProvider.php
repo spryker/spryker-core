@@ -19,10 +19,25 @@ use Spryker\Client\QuoteRequest\Dependency\Client\QuoteRequestToZedRequestClient
  */
 class QuoteRequestDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_PERSISTENT_CART = 'CLIENT_PERSISTENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE = 'CLIENT_QUOTE';
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK = 'PLUGINS_QUOTE_REQUEST_CREATE_PRE_CHECK';
 
     /**

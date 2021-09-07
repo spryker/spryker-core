@@ -23,14 +23,38 @@ use Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductPa
  */
 class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_PRODUCT_QUERY = 'PROPEL_PRODUCT_QUERY';
+    /**
+     * @var string
+     */
     public const PROPEL_PRODUCT_CATEGORY_QUERY = 'PROPEL_PRODUCT_CATEGORY_QUERY';
+    /**
+     * @var string
+     */
     public const PROPEL_PRODUCT_LIST_CATEGORY_QUERY = 'PROPEL_PRODUCT_LIST_CATEGORY_QUERY';
+    /**
+     * @var string
+     */
     public const PROPEL_PRODUCT_LIST_PRODUCT_CONCRETE_QUERY = 'PROPEL_PRODUCT_LIST_PRODUCT_CONCRETE_QUERY';
 
+    /**
+     * @var string
+     */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_PAGE_SEARCH = 'FACADE_PRODUCT_PAGE_SEARCH';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_LIST = 'FACADE_PRODUCT_LIST';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT_CATEGORY = 'FACADE_PRODUCT_CATEGORY';
 
     /**

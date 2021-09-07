@@ -23,7 +23,13 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const AGGREGATION_FILTER_NAME = 'filter';
+    /**
+     * @var string
+     */
     public const AGGREGATION_GLOBAL_PREFIX = 'global-';
 
     /**

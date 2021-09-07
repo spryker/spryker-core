@@ -11,7 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class RedisConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const PROCESS_TIMEOUT = 60;
+    /**
+     * @var string
+     */
     protected const DEFAULT_REDIS_HOST = '127.0.0.1';
 
     /**

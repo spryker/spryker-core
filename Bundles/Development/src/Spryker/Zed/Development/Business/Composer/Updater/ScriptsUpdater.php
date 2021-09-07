@@ -13,6 +13,9 @@ use Symfony\Component\Yaml\Parser;
 
 class ScriptsUpdater implements UpdaterInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_SCRIPTS = 'scripts';
 
     /**

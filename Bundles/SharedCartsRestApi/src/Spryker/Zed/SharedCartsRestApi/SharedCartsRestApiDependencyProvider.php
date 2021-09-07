@@ -17,7 +17,13 @@ use Spryker\Zed\SharedCartsRestApi\Dependency\Facade\SharedCartsRestApiToSharedC
  */
 class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE = 'FACADE_QUOTE';
+    /**
+     * @var string
+     */
     public const FACADE_SHARED_CART = 'FACADE_SHARED_CART';
 
     /**

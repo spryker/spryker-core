@@ -16,6 +16,9 @@ use Spryker\Glue\ProductDiscontinuedRestApi\Dependency\Client\ProductDiscontinue
  */
 class ProductDiscontinuedRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_DISCONTINUED_STORAGE = 'CLIENT_PRODUCT_DISCONTINUED_STORAGE';
 
     /**

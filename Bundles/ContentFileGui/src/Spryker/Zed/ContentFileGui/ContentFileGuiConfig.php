@@ -16,6 +16,8 @@ class ContentFileGuiConfig extends AbstractBundleConfig
 {
     /**
      * Should be more than in max count of list files
+     *
+     * @var int
      */
     public const MAX_NUMBER_SELECTABLE_FILES_IN_FILE_LIST = 30;
 

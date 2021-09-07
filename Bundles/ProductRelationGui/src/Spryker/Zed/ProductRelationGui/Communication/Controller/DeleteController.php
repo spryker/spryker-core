@@ -17,9 +17,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_PRODUCT_RELATION = 'id-product-relation';
+    /**
+     * @var string
+     */
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS = 'Relation #%d successfully deleted.';
 
     /**

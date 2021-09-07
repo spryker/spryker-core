@@ -17,11 +17,29 @@ use Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOffer
 
 class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const FACADE_STORE_CLIENT = 'FACADE_STORE_CLIENT';
+    /**
+     * @var string
+     */
     public const FACADE_PRICE_PRODUCT_SERVICE = 'FACADE_PRICE_PRODUCT_SERVICE';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRICE_PRODUCT_OFFER_STORAGE_PRICE_EXTRACTOR = 'PLUGINS_PRICE_PRODUCT_OFFER_STORAGE_PRICE_EXTRACTOR';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
 
     /**

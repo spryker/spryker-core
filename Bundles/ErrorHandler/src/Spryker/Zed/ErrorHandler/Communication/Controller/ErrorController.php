@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ErrorController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_EXCEPTION = 'exception';
 
     /**

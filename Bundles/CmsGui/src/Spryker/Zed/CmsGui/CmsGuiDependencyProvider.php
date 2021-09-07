@@ -24,27 +24,67 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'locale facade';
+    /**
+     * @var string
+     */
     public const FACADE_CMS = 'locale cms';
+    /**
+     * @var string
+     */
     public const FACADE_URL = 'url facade';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'glossary facade';
+    /**
+     * @var string
+     */
     public const FACADE_CMS_CONTENT_WIDGET = 'content widget facade';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_CMS = 'cms query container';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'util encoding service';
 
+    /**
+     * @var string
+     */
     public const TWIG_ENVIRONMENT = 'twig environment';
 
     /**
      * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     * @var string
      */
     public const SERVICE_TWIG = 'twig';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CREATE_GLOSSARY_EXPANDER = 'PLUGINS_CREATE_GLOSSARY_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_GLOSSARY_BEFORE_SAVE = 'PLUGINS_CMS_GLOSSARY_BEFORE_SAVE';
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_GLOSSARY_AFTER_FIND = 'PLUGINS_CMS_GLOSSARY_AFTER_FIND';
 
     /**

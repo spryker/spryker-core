@@ -15,9 +15,21 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class PivotTableRelationResolverStrategy extends AbstractRelationResolverStrategy
 {
+    /**
+     * @var string
+     */
     protected const PIVOT_TABLE_GETTER_TEMPLATE = 'get%ss';
+    /**
+     * @var string
+     */
     protected const REFERENCE_TABLE_GETTER_TEMPLATE = 'get%s';
+    /**
+     * @var string
+     */
     protected const PIVOT_TABLE_JOINER_TEMPLATE = 'join%ss';
+    /**
+     * @var string
+     */
     protected const REFERENCE_TABLE_JOINER_TEMPLATE = 'join%s';
 
     /**

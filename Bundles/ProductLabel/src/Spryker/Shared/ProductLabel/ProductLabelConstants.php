@@ -12,8 +12,17 @@ namespace Spryker\Shared\ProductLabel;
  */
 class ProductLabelConstants
 {
+    /**
+     * @var int
+     */
     public const RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER = 1;
+    /**
+     * @var string
+     */
     public const RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY = 'product_label_dictionary';
+    /**
+     * @var string
+     */
     public const RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS = 'product_abstract_product_label_relations';
 
     /**
@@ -21,6 +30,7 @@ class ProductLabelConstants
      * - Defines the number of product label relations in the chunk to be deassigned.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE = 'PRODUCT_LABEL:PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE';
 }

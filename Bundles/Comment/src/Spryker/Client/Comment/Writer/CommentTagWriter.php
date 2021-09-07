@@ -15,6 +15,9 @@ use Spryker\Client\Comment\Zed\CommentStubInterface;
 
 class CommentTagWriter implements CommentTagWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_COMMENT_TAG_NOT_AVAILABLE = 'comment.validation.error.comment_tag_not_available';
 
     /**

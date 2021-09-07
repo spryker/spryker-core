@@ -28,6 +28,9 @@ use Twig\Environment;
  */
 class GetOrderInvoicesTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const INVOICE_NUMBER = 5;
 
     /**

@@ -30,12 +30,33 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class CmsSlotBlockDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CMS_SLOT_CONTENT_PROVIDER_TYPE = 'SprykerCmsSlotBlock';
+    /**
+     * @var string
+     */
     protected const CMS_SLOT_TEMPLATE_PATH = '@TestPage/views/pdp/pdp.twig';
+    /**
+     * @var string
+     */
     protected const CMS_SLOT_KEY = 'test-slot-key';
+    /**
+     * @var string
+     */
     protected const CMS_BLOCK_KEY = 'test-block-key';
+    /**
+     * @var string
+     */
     protected const CMS_PAGE_KEY = 'test-page-key';
+    /**
+     * @var string
+     */
     protected const CATEGORY_KEY = 'test-category-key';
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_SKU = 'test-product-abstract-sku';
 
     /**

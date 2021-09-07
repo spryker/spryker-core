@@ -15,22 +15,56 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 
 class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const COL_KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_KEY_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_KEY_IMAGE = 'image';
+    /**
+     * @var string
+     */
     public const COL_KEY_STORES = 'stores';
+    /**
+     * @var string
+     */
     public const COL_KEY_STATUS = 'status';
+    /**
+     * @var string
+     */
     public const COL_KEY_OFFERS = 'offers';
+    /**
+     * @var string
+     */
     public const COL_KEY_VALID_FROM = 'validFrom';
+    /**
+     * @var string
+     */
     public const COL_KEY_VALID_TO = 'validTo';
 
+    /**
+     * @var string
+     */
     public const COLUMN_DATA_STATUS_ACTIVE = 'Online';
+    /**
+     * @var string
+     */
     public const COLUMN_DATA_STATUS_INACTIVE = 'Offline';
 
+    /**
+     * @var string
+     */
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductListController::tableDataAction()
+     * @var string
      */
     protected const DATA_URL = '/product-offer-merchant-portal-gui/product-list/table-data';
 

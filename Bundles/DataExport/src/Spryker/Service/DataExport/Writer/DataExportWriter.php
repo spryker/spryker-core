@@ -15,7 +15,13 @@ use Spryker\Service\DataExport\Formatter\DataExportFormatterInterface;
 
 class DataExportWriter implements DataExportWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_CONNECTION_PLUGIN_NOT_FOUND = 'Connection plugin not found for connection type "%s"';
+    /**
+     * @var string
+     */
     protected const DEFAULT_CONNECTION_TYPE = 'local';
 
     /**

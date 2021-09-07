@@ -43,11 +43,26 @@ class ProductOptionFacadeTest extends Unit
 {
     use InstancePoolingHelperTrait;
 
+    /**
+     * @var string
+     */
     public const DEFAULT_LOCALE_ISO_CODE = 'en_US';
 
+    /**
+     * @var int
+     */
     public const DEFAULT_ID_CURRENCY = 5;
+    /**
+     * @var int|null
+     */
     public const DEFAULT_ID_STORE = null;
+    /**
+     * @var int
+     */
     public const DEFAULT_NET_PRICE = 100;
+    /**
+     * @var int
+     */
     public const DEFAULT_GROSS_PRICE = 200;
 
     /**

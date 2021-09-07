@@ -22,6 +22,9 @@ use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
  */
 class MerchantSearchQueryPlugin extends AbstractPlugin implements QueryInterface, SearchContextAwareQueryInterface
 {
+    /**
+     * @var string
+     */
     protected const SOURCE_IDENTIFIER = 'merchant';
 
     /**

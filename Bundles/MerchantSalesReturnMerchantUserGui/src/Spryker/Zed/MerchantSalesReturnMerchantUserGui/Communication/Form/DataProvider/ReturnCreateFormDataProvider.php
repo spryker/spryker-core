@@ -16,16 +16,24 @@ use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSal
 
 class ReturnCreateFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const CUSTOM_REASON = 'Custom reason';
+    /**
+     * @var string
+     */
     protected const CUSTOM_REASON_KEY = 'custom_reason';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::FIELD_RETURN_ITEMS
+     * @var string
      */
     protected const FIELD_RETURN_ITEMS = 'returnItems';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::OPTION_RETURN_REASONS
+     * @var string
      */
     protected const OPTION_RETURN_REASONS = 'option_return_reasons';
 

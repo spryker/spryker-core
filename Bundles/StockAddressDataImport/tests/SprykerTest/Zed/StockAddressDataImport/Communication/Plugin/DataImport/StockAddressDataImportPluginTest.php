@@ -30,7 +30,13 @@ use Spryker\Zed\StockAddressDataImport\StockAddressDataImportConfig;
  */
 class StockAddressDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_COUNTRY_ISO_CODE = 'DE';
+    /**
+     * @var string
+     */
     protected const TEST_STOCK_NAME = 'Test Warehouse';
 
     /**

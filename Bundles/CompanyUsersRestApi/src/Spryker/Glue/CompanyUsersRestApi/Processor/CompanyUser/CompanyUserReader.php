@@ -21,6 +21,9 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CompanyUserReader implements CompanyUserReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const MAPPING_TYPE_UUID = 'uuid';
 
     /**

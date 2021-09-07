@@ -14,9 +14,21 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RulesetTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_RULE = 'id-rule';
+    /**
+     * @var string
+     */
     public const PARAM_ID_ROLE = 'id-role';
+    /**
+     * @var string
+     */
     public const REMOVE_ACL_RULESET_URL = '/acl/ruleset/delete';
+    /**
+     * @var string
+     */
     public const ACTIONS = 'actions';
 
     /**

@@ -14,11 +14,29 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttrib
 
 class AttributesDataProvider implements AttributesDataProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const DATA_KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const DATA_KEY_VALUE = 'value';
+    /**
+     * @var string
+     */
     protected const DATA_KEY_ATTRIBUTES = 'attributes';
+    /**
+     * @var string
+     */
     protected const DATA_KEY_ATTRIBUTE = 'attribute';
+    /**
+     * @var string
+     */
     protected const DATA_KEY_SUPER_ATTRIBUTES = 'superAttributes';
+    /**
+     * @var string
+     */
     protected const DATA_KEY_SKU = 'sku';
 
     /**

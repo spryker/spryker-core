@@ -25,16 +25,40 @@ use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInt
  */
 class FormatCategoryTreeFilterTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const FIRST_CATEGORY_NODE_ID = 1;
+    /**
+     * @var int
+     */
     protected const FIRST_CATEGORY_DOC_COUNT = 224;
 
+    /**
+     * @var int
+     */
     protected const SECOND_CATEGORY_DOC_COUNT = 33;
+    /**
+     * @var int
+     */
     protected const SECOND_CATEGORY_NODE_ID = 2;
 
+    /**
+     * @var int
+     */
     protected const THIRD_CATEGORY_DOC_COUNT = 41;
+    /**
+     * @var int
+     */
     protected const THIRD_CATEGORY_NODE_ID = 3;
 
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE_NAME = 'en_US';
+    /**
+     * @var string
+     */
     protected const TEST_STORE_NAME = 'DE';
 
     /**

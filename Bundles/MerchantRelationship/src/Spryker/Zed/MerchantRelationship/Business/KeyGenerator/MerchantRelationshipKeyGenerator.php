@@ -11,6 +11,9 @@ use Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryI
 
 class MerchantRelationshipKeyGenerator implements MerchantRelationshipKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PREFIX = 'mr';
 
     /**

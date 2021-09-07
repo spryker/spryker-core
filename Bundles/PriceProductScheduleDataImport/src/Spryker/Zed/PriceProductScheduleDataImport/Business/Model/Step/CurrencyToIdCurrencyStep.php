@@ -16,6 +16,9 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProdu
 
 class CurrencyToIdCurrencyStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const EXCEPTION_MESSAGE = 'Could not find currency by code "%s"';
 
     /**

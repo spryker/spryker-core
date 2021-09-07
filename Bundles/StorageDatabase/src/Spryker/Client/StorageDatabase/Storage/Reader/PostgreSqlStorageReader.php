@@ -11,9 +11,18 @@ use Propel\Runtime\Connection\StatementInterface;
 
 class PostgreSqlStorageReader extends AbstractStorageReader
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_PLACEHOLDER_KEY = ':key';
+    /**
+     * @var string
+     */
     protected const DEFAULT_PLACEHOLDER_ALIAS_KEY = ':alias_key';
 
+    /**
+     * @var string
+     */
     protected const SELECT_STATEMENT_PATTERN = '
       SELECT *
         FROM (

@@ -17,9 +17,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DiffConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'propel:diff';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Generate diff for Propel2';
 
+    /**
+     * @var int
+     */
     public const PROCESS_TIMEOUT = 300;
 
     /**

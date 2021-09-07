@@ -15,17 +15,33 @@ use Spryker\Zed\Kernel\Container;
  */
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const COMMANDS = 'commands';
+    /**
+     * @var string
+     */
     public const EVENT_SUBSCRIBER = 'event_subscriber';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
 
     /**
      * @deprecated Use {@link \Spryker\Zed\Console\ConsoleDependencyProvider::APPLICATION_PLUGINS} instead.
+     * @var string
      */
     public const SERVICE_PROVIDERS = 'service providers';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'PLUGINS_CONSOLE_PRE_RUN_HOOK';
+    /**
+     * @var string
+     */
     public const PLUGINS_CONSOLE_POST_RUN_HOOK = 'PLUGINS_CONSOLE_POST_RUN_HOOK';
 
     /**

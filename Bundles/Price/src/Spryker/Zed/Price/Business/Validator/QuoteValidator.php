@@ -14,8 +14,17 @@ use Spryker\Zed\Price\PriceConfig;
 
 class QuoteValidator implements QuoteValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRICE_MODE_DATA_IS_MISSING = 'quote.validation.error.price_mode_is_missing';
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PRICE_MODE = '{{price_mode}}';
 
     /**

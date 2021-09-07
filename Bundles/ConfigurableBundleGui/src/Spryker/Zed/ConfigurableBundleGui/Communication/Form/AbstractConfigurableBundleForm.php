@@ -19,10 +19,22 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 abstract class AbstractConfigurableBundleForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_AVAILABLE_LOCALES = 'OPTION_AVAILABLE_LOCALES';
 
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_TRANSLATIONS = 'translations';
+    /**
+     * @var string
+     */
     protected const OPTION_DATA_CLASS = 'data_class';
 
     /**

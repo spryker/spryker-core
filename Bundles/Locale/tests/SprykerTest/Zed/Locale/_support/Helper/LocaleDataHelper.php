@@ -17,6 +17,9 @@ class LocaleDataHelper extends Module
 {
     use LocatorHelperTrait;
 
+    /**
+     * @var int
+     */
     public const LOCALE_NAME_LENGTH_LIMIT = 5;
 
     /**

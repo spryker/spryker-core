@@ -21,10 +21,22 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class QueueTaskConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'queue:task:start';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Start queue task for specific queue';
 
+    /**
+     * @var string
+     */
     public const OPTION_NO_ACK = 'no-ack';
+    /**
+     * @var string
+     */
     public const OPTION_NO_ACK_SHORT = 'k';
 
     /**

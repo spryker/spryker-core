@@ -17,6 +17,7 @@ interface CustomerAccessStorageConstants
      * - Queue name as used for processing customer access messages
      *
      * @api
+     * @var string
      */
     public const CUSTOMER_ACCESS_SYNC_STORAGE_QUEUE = 'sync.storage.customer_access';
 
@@ -25,6 +26,7 @@ interface CustomerAccessStorageConstants
      * - Queue name as used for processing customer access error messages
      *
      * @api
+     * @var string
      */
     public const CUSTOMER_ACCESS_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.customer_access.error';
 
@@ -33,6 +35,7 @@ interface CustomerAccessStorageConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const CUSTOMER_ACCESS_RESOURCE_NAME = 'unauthenticated_customer_access';
 }

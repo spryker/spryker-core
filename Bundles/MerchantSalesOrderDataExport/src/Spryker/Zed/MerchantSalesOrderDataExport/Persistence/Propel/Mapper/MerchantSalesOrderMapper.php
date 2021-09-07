@@ -18,11 +18,27 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 
 class MerchantSalesOrderMapper
 {
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_ORDER_COMMENTS = 'merchant_order_comments';
+    /**
+     * @var string
+     */
     protected const KEY_ORDER_SALUTATION = 'salutation';
+    /**
+     * @var string
+     */
     protected const KEY_BILLING_ADDRESS_SALUTATION = 'billing_address_salutation';
+    /**
+     * @var string
+     */
     protected const KEY_PRICE_MODE = 'price_mode';
 
+    /**
+     * @phpstan-var array<string, string>
+     * @var array
+     */
     protected const FIELD_MAPPING = [
         'merchant_order_reference' => SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
         'marketplace_order_reference' => SpySalesOrderTableMap::COL_ORDER_REFERENCE,

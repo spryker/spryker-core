@@ -26,15 +26,29 @@ class MerchantOrderTable extends AbstractTable
 {
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER
+     * @var string
      */
     protected const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+    /**
+     * @var string
+     */
     protected const COL_FULL_CUSTOMER_NAME = 'fullCustomerName';
+    /**
+     * @var string
+     */
     protected const COL_ITEM_COUNT = 'itemCount';
+    /**
+     * @var string
+     */
     protected const COL_ORDER_STATE = 'orderState';
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'actions';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::ROUTE_REDIRECT
+     * @var string
      */
     protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
 

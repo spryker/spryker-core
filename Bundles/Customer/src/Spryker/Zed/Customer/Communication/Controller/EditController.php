@@ -21,10 +21,22 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_CUSTOMER_UPDATE_ERROR = 'Customer was not updated.';
+    /**
+     * @var string
+     */
     public const MESSAGE_CUSTOMER_UPDATE_SUCCESS = 'Customer was updated successfully.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_CUSTOMER_NOT_EXIST = 'Customer with id `%s` does not exist';
 
+    /**
+     * @var string
+     */
     protected const URL_CUSTOMER_LIST_PAGE = '/customer';
 
     /**

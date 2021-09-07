@@ -16,27 +16,45 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationPro
 
 class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductAbstractGuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_STRING_DATA_URL = '%s?%s=%s';
+    /**
+     * @var string
+     */
     protected const FORMAT_STRING_PRICES_URL = '%s?%s=${row.%s}&%s=${row.%s}&%s=${row.%s}';
 
+    /**
+     * @var string
+     */
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
+    /**
+     * @var string
+     */
     protected const TITLE_EDITABLE_BUTTON = 'Add';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::tableDataAction()
+     * @var string
      */
     protected const DATA_URL = '/product-merchant-portal-gui/update-product-abstract/table-data';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\SavePriceProductAbstractController::indexAction()
+     * @var string
      */
     protected const URL_SAVE_PRICES = '/product-merchant-portal-gui/save-price-product-abstract';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\DeletePriceProductAbstractController::indexAction()
+     * @var string
      */
     protected const URL_DELETE_PRICE = '/product-merchant-portal-gui/delete-price-product-abstract';
 
+    /**
+     * @var string
+     */
     protected const ID_ROW_ACTION_URL_DELETE_PRICE = 'delete-price';
 
     /**

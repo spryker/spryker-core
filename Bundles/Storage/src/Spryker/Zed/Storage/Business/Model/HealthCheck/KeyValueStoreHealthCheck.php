@@ -13,6 +13,9 @@ use Spryker\Client\Storage\StorageClientInterface;
 
 class KeyValueStoreHealthCheck implements HealthCheckInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_STORAGE_ZED_HEALTH_CHECK = 'STORAGE_ZED_HEALTH_CHECK';
 
     /**

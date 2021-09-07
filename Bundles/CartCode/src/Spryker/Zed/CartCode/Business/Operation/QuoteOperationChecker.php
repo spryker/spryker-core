@@ -14,8 +14,14 @@ use Spryker\Zed\CartCode\Dependency\Facade\CartCodeToQuoteFacadeInterface;
 
 class QuoteOperationChecker implements QuoteOperationCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
     /**

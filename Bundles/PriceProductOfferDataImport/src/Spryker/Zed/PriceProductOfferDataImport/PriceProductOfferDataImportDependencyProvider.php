@@ -16,6 +16,9 @@ use Spryker\Zed\PriceProductOfferDataImport\Dependency\Facade\PriceProductOfferD
  */
 class PriceProductOfferDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRODUCT_OFFER';
 
     /**

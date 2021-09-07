@@ -13,17 +13,47 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RequestProcessor implements ProcessorInterface
 {
+    /**
+     * @var string
+     */
     public const EXTRA = 'request';
+    /**
+     * @var string
+     */
     public const CONTEXT_KEY = 'request';
 
+    /**
+     * @var string
+     */
     public const REQUEST_PARAMS = 'request_params';
+    /**
+     * @var string
+     */
     public const REQUEST_ID = 'requestId';
+    /**
+     * @var string
+     */
     public const SESSION_ID = 'sessionId';
+    /**
+     * @var string
+     */
     public const USERNAME = 'username';
+    /**
+     * @var string
+     */
     public const REQUEST_TYPE = 'type';
 
+    /**
+     * @var string
+     */
     public const RECORD_CONTEXT = 'context';
+    /**
+     * @var string
+     */
     public const SESSION_KEY_USER = 'user:currentUser';
+    /**
+     * @var string
+     */
     public const RECORD_EXTRA = 'extra';
 
     /**

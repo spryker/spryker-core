@@ -12,5 +12,8 @@ namespace Spryker\Shared\CompanySupplier;
  */
 interface CompanySupplierConstants
 {
+    /**
+     * @var string
+     */
     public const COMPANY_SUPPLIER_TYPE = 'supplier';
 }

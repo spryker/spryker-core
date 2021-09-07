@@ -18,7 +18,13 @@ use Propel\Runtime\Propel;
 
 class ReferenceColumnRelationResolverStrategy extends AbstractRelationResolverStrategy
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_GETTER_TEMPLATE = 'get%s';
+    /**
+     * @var string
+     */
     protected const JOIN_COLUMN_TEMPLATE = '%s.%s';
 
     /**

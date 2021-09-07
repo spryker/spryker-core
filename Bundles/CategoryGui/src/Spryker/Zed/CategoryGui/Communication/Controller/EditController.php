@@ -19,14 +19,24 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends CategoryAbstractController
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
+     * @var string
      */
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
+    /**
+     * @var string
+     */
     protected const ROUTE_CATEGORY_EDIT = '/category-gui/edit';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CATEGORY_DOES_NOT_EXIST = 'Category with id %s does not exist';
 
     /**

@@ -22,18 +22,48 @@ use Spryker\Zed\Kernel\Container;
  */
 class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'locale facade';
+    /**
+     * @var string
+     */
     public const FACADE_STOCK = 'stock facade';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'store facade';
+    /**
+     * @var string
+     */
     public const FACADE_OMS = 'oms facade';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_AVAILABILITY = 'availability query container';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_PRODUCT_BUNDLE = 'product bundle query container';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_AVAILABILITY_ABSTRACT_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_AVAILABILITY_ABSTRACT_TABLE_QUERY_CRITERIA_EXPANDER';
 
+    /**
+     * @var string
+     */
     public const SERVICE_AVAILABILITY = 'SERVICE_AVAILABILITY';
 
     /**

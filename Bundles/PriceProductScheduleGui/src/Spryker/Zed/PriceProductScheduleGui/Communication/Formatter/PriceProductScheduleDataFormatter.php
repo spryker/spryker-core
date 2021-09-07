@@ -12,9 +12,18 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 
 class PriceProductScheduleDataFormatter implements PriceProductScheduleDataFormatterInterface
 {
+    /**
+     * @var string
+     */
     protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
+    /**
+     * @var string
+     */
     protected const TITLE_PRODUCT_CONCRETE_PATTERN = 'Edit Product Concrete: %s';
 
+    /**
+     * @var string
+     */
     protected const TIMEZONE_TEXT_PATTERN = 'The timezone used for the scheduled price will be <b>%s</b> as defined on the store selected';
 
     /**

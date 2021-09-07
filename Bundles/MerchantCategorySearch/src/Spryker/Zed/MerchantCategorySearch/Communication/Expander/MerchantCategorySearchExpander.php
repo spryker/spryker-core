@@ -13,6 +13,9 @@ use Spryker\Zed\MerchantCategorySearch\Dependency\Facade\MerchantCategorySearchT
 
 class MerchantCategorySearchExpander implements MerchantCategorySearchExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const CATEGORY_KEYS = 'category-keys';
 
     /**

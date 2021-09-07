@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class PaymentDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PAYMENT_METHOD = 'payment-method';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PAYMENT_METHOD_STORE = 'payment-method-store';
 
     /**

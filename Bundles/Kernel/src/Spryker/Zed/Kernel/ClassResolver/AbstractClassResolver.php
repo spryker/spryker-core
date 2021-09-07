@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver as SharedAbstractC
 
 abstract class AbstractClassResolver extends SharedAbstractClassResolver
 {
+    /**
+     * @var string
+     */
     public const KEY_LAYER = '%layer%';
 
     /**

@@ -16,8 +16,14 @@ use Spryker\Zed\Kernel\Container;
  */
 class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_OAUTH = 'FACADE_OAUTH';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_POST_AUTH = 'PLUGINS_POST_AUTH';
 
     /**

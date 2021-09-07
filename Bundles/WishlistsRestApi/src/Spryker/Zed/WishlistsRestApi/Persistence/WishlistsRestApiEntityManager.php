@@ -15,6 +15,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class WishlistsRestApiEntityManager extends AbstractEntityManager implements WishlistsRestApiEntityManagerInterface
 {
+    /**
+     * @var int
+     */
     protected const BATCH_SIZE = 200;
 
     /**

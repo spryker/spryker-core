@@ -24,13 +24,20 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class CompanyBusinessUnitRepository extends AbstractRepository implements CompanyBusinessUnitRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const TABLE_JOIN_PARENT_BUSINESS_UNIT = 'parentCompanyBusinessUnit';
 
     /**
      * @see \Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap::COL_CUSTOMER_REFERENCE
+     * @var string
      */
     protected const COL_CUSTOMER_REFERENCE = 'spy_customer.customer_reference';
 
+    /**
+     * @var string
+     */
     protected const COL_FK_CUSTOMER = 'fk_customer';
 
     /**

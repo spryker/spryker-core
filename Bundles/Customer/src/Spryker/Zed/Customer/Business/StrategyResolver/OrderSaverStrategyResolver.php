@@ -16,7 +16,13 @@ use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
  */
 class OrderSaverStrategyResolver implements OrderSaverStrategyResolverInterface
 {
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
     /**

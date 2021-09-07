@@ -34,12 +34,30 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class SalesPaymentFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_PROVIDER_ONE = 'Test one';
+    /**
+     * @var string
+     */
     protected const TEST_PROVIDER_TWO = 'Test two';
+    /**
+     * @var int
+     */
     protected const TEST_GRAND_TOTAL = 125;
 
+    /**
+     * @var string
+     */
     protected const ITEM_NAME = 'ITEM_NAME';
+    /**
+     * @var string
+     */
     protected const CURRENCY_ISO_CODE = 'CODE';
+    /**
+     * @var string
+     */
     protected const CUSTOMER_REFERENCE = 'CUSTOMER_REFERENCE';
 
     /**

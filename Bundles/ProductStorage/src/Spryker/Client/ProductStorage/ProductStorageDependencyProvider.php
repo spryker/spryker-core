@@ -22,18 +22,57 @@ use Spryker\Shared\Kernel\Store;
  */
 class ProductStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_VIEW_EXPANDERS = 'PLUGIN_STORAGE_PRODUCT_EXPANDERS';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_ABSTRACT_RESTRICTION = 'PLUGINS_PRODUCT_ABSTRACT_RESTRICTION';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_RESTRICTION = 'PLUGINS_PRODUCT_CONCRETE_RESTRICTION';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_EXPANDER = 'PLUGINS_PRODUCT_CONCRETE_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_ABSTRACT_RESTRICTION_FILTER = 'PLUGINS_PRODUCT_ABSTRACT_RESTRICTION_FILTER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONCRETE_RESTRICTION_FILTER = 'PLUGINS_PRODUCT_CONCRETE_RESTRICTION_FILTER';
 
     /**

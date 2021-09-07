@@ -9,6 +9,12 @@ namespace Spryker\Zed\Development\Business\IdeAutoCompletion;
 
 final class IdeAutoCompletionConstants
 {
+    /**
+     * @var string
+     */
     public const APPLICATION_NAME_PLACEHOLDER = '{{APPLICATION_NAME}}';
+    /**
+     * @var string
+     */
     public const DIRECTORY_PERMISSION = 'DIRECTORY_PERMISSION';
 }

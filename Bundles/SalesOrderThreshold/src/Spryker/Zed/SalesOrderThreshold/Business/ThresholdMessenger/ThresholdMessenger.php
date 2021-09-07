@@ -20,7 +20,13 @@ use Spryker\Zed\SalesOrderThreshold\Dependency\Facade\SalesOrderThresholdToMoney
 
 class ThresholdMessenger implements ThresholdMessengerInterface
 {
+    /**
+     * @var string
+     */
     protected const THRESHOLD_GLOSSARY_PARAMETER = '{{threshold}}';
+    /**
+     * @var string
+     */
     protected const FEE_GLOSSARY_PARAMETER = '{{fee}}';
 
     /**

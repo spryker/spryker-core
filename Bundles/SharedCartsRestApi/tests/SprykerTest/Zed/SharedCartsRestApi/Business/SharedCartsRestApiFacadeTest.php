@@ -32,14 +32,35 @@ use Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface;
  */
 class SharedCartsRestApiFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const QUOTE_PERMISSION_GROUP_READ_ONLY = 'READ_ONLY';
+    /**
+     * @var string
+     */
     protected const QUOTE_PERMISSION_GROUP_FULL_ACCESS = 'FULL_ACCESS';
 
+    /**
+     * @var string
+     */
     protected const READ_SHARED_CART_PERMISSION_PLUGIN_KEY = 'ReadSharedCartPermissionPlugin';
+    /**
+     * @var string
+     */
     protected const WRITE_SHARED_CART_PERMISSION_PLUGIN_KEY = 'WriteSharedCartPermissionPlugin';
 
+    /**
+     * @var string
+     */
     protected const WRONG_QUOTE_UUID = 'WRONG_QUOTE_UUID';
+    /**
+     * @var string
+     */
     protected const WRONG_CUSTOMER_REFERENCE = 'WRONG_CUSTOMER_REFERENCE';
+    /**
+     * @var string
+     */
     protected const WRONG_QUOTE_COMPANY_USER_UUID = 'WRONG_QUOTE_COMPANY_USER_UUID';
 
     /**

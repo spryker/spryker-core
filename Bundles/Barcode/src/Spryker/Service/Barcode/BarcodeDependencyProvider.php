@@ -12,6 +12,9 @@ use Spryker\Service\Kernel\Container;
 
 class BarcodeDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_BARCODE_GENERATOR = 'PLUGINS_BARCODE_GENERATOR';
 
     /**

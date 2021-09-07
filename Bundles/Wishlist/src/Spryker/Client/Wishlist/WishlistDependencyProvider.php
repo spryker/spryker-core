@@ -16,14 +16,35 @@ use Spryker\Client\Wishlist\Dependency\Client\WishlistToProductBridge;
 
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_ZED = 'SERVICE_ZED';
 
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_WISHLIST_POST_MOVE_TO_CART_COLLECTION_EXPANDER = 'PLUGINS_WISHLIST_POST_MOVE_TO_CART_COLLECTION_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_WISHLIST_COLLECTION_TO_REMOVE_EXPANDER = 'PLUGINS_WISHLIST_COLLECTION_TO_REMOVE_EXPANDER';
 
     /**

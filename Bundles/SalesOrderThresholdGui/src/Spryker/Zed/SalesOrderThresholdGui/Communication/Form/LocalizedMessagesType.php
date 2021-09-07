@@ -21,6 +21,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class LocalizedMessagesType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_MESSAGE = 'message';
 
     /**

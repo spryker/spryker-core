@@ -16,10 +16,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const DESCRIPTION_DEFAULT_REQUEST = 'Expected request body.';
+    /**
+     * @var string
+     */
     protected const DESCRIPTION_DEFAULT_RESPONSE = 'Expected response to a bad request.';
+    /**
+     * @var string
+     */
     protected const DESCRIPTION_SUCCESSFUL_RESPONSE = 'Expected response to a valid request.';
 
+    /**
+     * @var string
+     */
     protected const KEY_DEFAULT = 'default';
 
     /**

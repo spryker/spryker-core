@@ -24,12 +24,27 @@ use Spryker\Service\Container\Exception\NotFoundException;
  */
 class ContainerAliasTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const SERVICE = 'service';
+    /**
+     * @var string
+     */
     protected const SERVICE_2 = 'service-2';
 
+    /**
+     * @var string
+     */
     protected const SERVICE_ALIAS = 'service-alias';
+    /**
+     * @var string
+     */
     protected const SERVICE_ALIAS_2 = 'service-alias-2';
 
+    /**
+     * @var string
+     */
     protected const SERVICE_GLOBAL = 'global service';
 
     /**

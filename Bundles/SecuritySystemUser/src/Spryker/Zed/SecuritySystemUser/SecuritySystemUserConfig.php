@@ -12,16 +12,24 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SecuritySystemUserConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const ROLE_SYSTEM_USER = 'ROLE_SYSTEM_USER';
+    /**
+     * @var string
+     */
     public const AUTH_TOKEN = 'Auth-Token';
 
     /**
      * @uses \Spryker\Shared\User\UserConstants::USER_SYSTEM_USERS
+     * @var string
      */
     protected const USER_SYSTEM_USERS = 'USER_SYSTEM_USERS';
 
     /**
      * @uses \Spryker\Shared\Session\SessionConstants::ZED_SESSION_TIME_TO_LIVE
+     * @var string
      */
     protected const ZED_SESSION_TIME_TO_LIVE = 'SESSION:ZED_SESSION_TIME_TO_LIVE';
 

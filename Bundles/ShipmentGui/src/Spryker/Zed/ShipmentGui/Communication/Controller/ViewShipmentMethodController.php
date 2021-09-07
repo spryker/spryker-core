@@ -15,8 +15,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewShipmentMethodController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_SHIPMENT_METHOD = 'id-shipment-method';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/shipment-gui/shipment-method';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SHIPMENT_METHOD_NOT_FOUND = 'Shipment method is not found';
 
     /**

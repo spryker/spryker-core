@@ -26,7 +26,13 @@ use Spryker\Client\Redis\Adapter\RedisAdapterProvider;
  */
 class RedisAdapterProviderTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CONNECTION_KEY_SESSION = 'session connection key';
+    /**
+     * @var string
+     */
     protected const CONNECTION_KEY_STORAGE = 'storage connection key';
 
     /**

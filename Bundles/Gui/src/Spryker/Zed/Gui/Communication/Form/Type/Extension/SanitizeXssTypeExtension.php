@@ -17,8 +17,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SanitizeXssTypeExtension extends AbstractTypeExtension
 {
+    /**
+     * @var string
+     */
     public const OPTION_SANITIZE_XSS = 'sanitize_xss';
+    /**
+     * @var string
+     */
     public const OPTION_ALLOWED_ATTRIBUTES = 'allowed_attributes';
+    /**
+     * @var string
+     */
     public const OPTION_ALLOWED_HTML_TAGS = 'allowed_html_tags';
 
     /**

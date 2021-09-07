@@ -52,12 +52,33 @@ use Spryker\Zed\ProductCartConnector\Communication\Plugin\ProductExistsCartPreCh
  */
 class CartFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const PRICE_TYPE_DEFAULT = 'DEFAULT';
+    /**
+     * @var string
+     */
     public const DUMMY_1_SKU_ABSTRACT_PRODUCT = 'ABSTRACT1';
+    /**
+     * @var string
+     */
     public const DUMMY_1_SKU_CONCRETE_PRODUCT = 'CONCRETE1';
+    /**
+     * @var int
+     */
     public const DUMMY_1_PRICE = 99;
+    /**
+     * @var string
+     */
     public const DUMMY_2_SKU_ABSTRACT_PRODUCT = 'ABSTRACT2';
+    /**
+     * @var string
+     */
     public const DUMMY_2_SKU_CONCRETE_PRODUCT = 'CONCRETE2';
+    /**
+     * @var int
+     */
     public const DUMMY_2_PRICE = 100;
 
     /**

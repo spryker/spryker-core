@@ -21,7 +21,13 @@ class DependencyProviderHelper extends Module
 {
     use ContainerMocker;
 
+    /**
+     * @var string
+     */
     protected const DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN = '\%1$s\Glue\%2$s\%2$sDependencyProvider';
+    /**
+     * @var int
+     */
     protected const MODULE_NAME_POSITION = 2;
 
     /**

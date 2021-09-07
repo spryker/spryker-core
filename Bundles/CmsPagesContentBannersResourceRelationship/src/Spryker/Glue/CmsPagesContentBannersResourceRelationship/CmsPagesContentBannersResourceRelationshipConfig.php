@@ -13,11 +13,13 @@ class CmsPagesContentBannersResourceRelationshipConfig extends AbstractBundleCon
 {
     /**
      * @uses \Spryker\Shared\ContentBanner\ContentBannerConfig::TWIG_FUNCTION_NAME
+     * @var string
      */
     public const TWIG_FUNCTION_NAME = 'content_banner';
 
     /**
      * @uses \Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiConfig::RESOURCE_CONTENT_BANNERS
+     * @var string
      */
     public const RESOURCE_CONTENT_BANNERS = 'content-banners';
 }

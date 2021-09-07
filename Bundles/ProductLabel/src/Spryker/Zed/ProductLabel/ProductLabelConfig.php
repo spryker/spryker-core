@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductLabelConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const PRODUCT_LABEL_TO_DE_ASSIGN_CHUNK_SIZE = 1000;
 
     /**

@@ -26,12 +26,19 @@ use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundl
  */
 class WhitelistExpandProductBundleTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const PRODUCT_ID_1 = 1;
 
+    /**
+     * @var int
+     */
     protected const BUNDLE_PRODUCT_ID = 20;
 
     /**
      * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_WHITELIST
+     * @var string
      */
     protected const PRODUCT_LIST_TYPE_WHITELIST = 'whitelist';
 

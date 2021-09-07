@@ -20,7 +20,13 @@ use Codeception\Test\Unit;
  */
 class UtilValidateServiceTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const VALID_EMAIL = 'some.one@example.com';
+    /**
+     * @var string
+     */
     public const INVALID_EMAIL = "te'<i>sting@twelvebeaufort.com";
 
     /**

@@ -13,6 +13,9 @@ use Spryker\Client\PriceProductMerchantRelationship\Dependency\Client\PriceProdu
 
 class PriceProductMerchantRelationshipDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
 
     /**

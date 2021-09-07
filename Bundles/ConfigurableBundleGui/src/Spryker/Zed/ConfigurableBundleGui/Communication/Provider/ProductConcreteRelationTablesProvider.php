@@ -11,6 +11,9 @@ use Spryker\Zed\ConfigurableBundleGui\Communication\Exception\MissingTablesExcep
 
 class ProductConcreteRelationTablesProvider implements ProductConcreteRelationTablesProviderInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_TABLES = [
         'availableProductConcreteTable',
         'assignedProductConcreteTable',

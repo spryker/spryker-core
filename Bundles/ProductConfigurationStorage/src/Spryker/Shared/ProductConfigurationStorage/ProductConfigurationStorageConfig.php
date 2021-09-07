@@ -16,6 +16,7 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing product configuration messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONFIGURATION_SYNC_STORAGE_QUEUE = 'sync.storage.product_configuration';
 
@@ -24,6 +25,7 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing product configuration error messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONFIGURATION_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product_configuration.error';
 
@@ -32,6 +34,7 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * - Resource name for product configuration.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONFIGURATION_RESOURCE_NAME = 'product_configuration';
 
@@ -40,6 +43,7 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * - This events will be used for spy_product_configuration publishing
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONFIGURATION_PUBLISH = 'Entity.spy_product_configuration.publish';
 
@@ -48,6 +52,7 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * - This events will be used for spy_product_configuration un-publishing
      *
      * @api
+     * @var string
      */
     public const PRODUCT_CONFIGURATION_UNPUBLISH = 'Entity.spy_product_configuration.unpublish';
     /**
@@ -55,6 +60,7 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * - This events will be used for spy_product_configuration entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_CONFIGURATION_CREATE = 'Entity.spy_product_configuration.create';
 
@@ -63,6 +69,7 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * - This events will be used for spy_product_configuration entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_CONFIGURATION_UPDATE = 'Entity.spy_product_configuration.update';
 
@@ -71,6 +78,7 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * - This events will be used for spy_product_configuration entity deletion.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_CONFIGURATION_DELETE = 'Entity.spy_product_configuration.delete';
 
@@ -81,6 +89,7 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * @uses \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig::PRICE_DIMENSION_PRODUCT_CONFIGURATION.
      *
      * @api
+     * @var string
      */
     public const PRICE_DIMENSION_PRODUCT_CONFIGURATION = 'PRODUCT_CONFIGURATION';
 }

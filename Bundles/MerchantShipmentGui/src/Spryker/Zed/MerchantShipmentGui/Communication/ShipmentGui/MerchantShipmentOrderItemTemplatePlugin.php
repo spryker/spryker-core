@@ -18,6 +18,9 @@ use Spryker\Zed\ShipmentGuiExtension\Dependency\Plugin\ShipmentOrderItemTemplate
  */
 class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements ShipmentOrderItemTemplatePluginInterface
 {
+    /**
+     * @var string
+     */
     protected const MERCHANT_NAME = 'merchantName';
 
     /**

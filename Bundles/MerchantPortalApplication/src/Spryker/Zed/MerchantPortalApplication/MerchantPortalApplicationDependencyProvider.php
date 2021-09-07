@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class MerchantPortalApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_PORTAL_APPLICATION = 'PLUGINS_MERCHANT_PORTAL_APPLICATION';
 
     /**

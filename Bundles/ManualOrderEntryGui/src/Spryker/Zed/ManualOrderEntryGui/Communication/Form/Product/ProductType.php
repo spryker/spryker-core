@@ -20,9 +20,18 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class ProductType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const FIELD_QUANTITY = 'quantity';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_QUANTITY = 'Invalid Quantity.';
 
     /**

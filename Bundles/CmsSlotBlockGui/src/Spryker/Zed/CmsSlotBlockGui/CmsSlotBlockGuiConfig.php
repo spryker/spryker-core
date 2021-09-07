@@ -11,7 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CmsSlotBlockGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const MAX_NUMBER_BLOCKS_ASSIGNED_TO_SLOT = 500;
+    /**
+     * @var int
+     */
     protected const MAX_CMS_BLOCKS_IN_BLOCK_SELECTOR = 500;
 
     /**

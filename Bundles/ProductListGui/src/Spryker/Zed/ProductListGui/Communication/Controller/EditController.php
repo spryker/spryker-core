@@ -18,8 +18,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends ProductListAbstractController
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_PRODUCT_LIST_UPDATE_SUCCESS = 'Product List "%s" has been successfully updated.';
 
+    /**
+     * @var string
+     */
     protected const ROUTE_REDIRTECT = '/product-list-gui/edit';
 
     /**

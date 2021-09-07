@@ -18,8 +18,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class NodeController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_NAVIGATION = 'id-navigation';
+    /**
+     * @var string
+     */
     public const PARAM_ID_NAVIGATION_NODE = 'id-navigation-node';
+    /**
+     * @var string
+     */
     public const PARAM_ID_SELECTED_TREE_NODE = 'id-selected-tree-node';
 
     /**

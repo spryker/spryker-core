@@ -21,8 +21,14 @@ use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
 class MerchantUserCreator implements MerchantUserCreatorInterface
 {
+    /**
+     * @var string
+     */
     protected const USER_HAVE_ANOTHER_MERCHANT_ERROR_MESSAGE = 'A user with the same email is already connected to another merchant.';
 
+    /**
+     * @var int
+     */
     protected const USER_CREATION_DEFAULT_PASSWORD_LENGTH = 64;
 
     /**

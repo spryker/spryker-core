@@ -16,8 +16,17 @@ use Spryker\Shared\CmsBlockCategoryStorage\CmsBlockCategoryStorageConstants;
 
 class CmsBlockCategoryStorageReader implements CmsBlockCategoryStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const OPTION_KEY_POSITION = 'position';
+    /**
+     * @var string
+     */
     protected const KEY_CMS_BLOCK_CATEGORIES = 'cms_block_categories';
+    /**
+     * @var string
+     */
     protected const KEY_BLOCK_KEYS = 'block_keys';
 
     /**

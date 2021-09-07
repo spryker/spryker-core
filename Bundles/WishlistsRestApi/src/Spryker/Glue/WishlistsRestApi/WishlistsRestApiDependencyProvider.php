@@ -16,7 +16,13 @@ use Spryker\Glue\WishlistsRestApi\Dependency\Client\WishlistsRestApiToWishlistCl
  */
 class WishlistsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_WISHLIST = 'CLIENT_WISHLIST';
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_WISHLIST_ITEMS_ATTRIBUTES_MAPPER';
 
     /**

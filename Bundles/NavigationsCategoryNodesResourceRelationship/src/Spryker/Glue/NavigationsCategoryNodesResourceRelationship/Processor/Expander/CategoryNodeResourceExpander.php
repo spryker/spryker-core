@@ -14,6 +14,9 @@ use Spryker\Glue\NavigationsCategoryNodesResourceRelationship\Dependency\RestRes
 
 class CategoryNodeResourceExpander implements CategoryNodeResourceExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const NODE_TYPE_VALUE_CATEGORY = 'category';
 
     /**

@@ -11,6 +11,9 @@ use Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPlu
 
 class OrderInvoicesExpanderPluginMock implements OrderInvoicesExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FAKE_REFERENCE_FOR_PLUGIN_CHECK = 'FAKE_REFERENCE_FOR_PLUGIN_CHECK';
 
     /**

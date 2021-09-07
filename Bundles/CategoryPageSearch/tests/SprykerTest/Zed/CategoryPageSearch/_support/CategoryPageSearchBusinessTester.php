@@ -33,6 +33,9 @@ class CategoryPageSearchBusinessTester extends Actor
 {
     use _generated\CategoryPageSearchBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_STORE_NAME = 'DE';
 
     /**

@@ -17,43 +17,58 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
 {
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::CONDITION_GROUP_ALL
+     * @var string
      */
     protected const CONDITION_GROUP_ALL = 'CONDITION_GROUP_ALL';
 
+    /**
+     * @psalm-var array<string, string>
+     * @var array
+     */
     protected const MAPPED_ORDER_BY_FILTERS = [
         'customerName' => self::COLUMN_FULL_NAME,
         'customerEmail' => self::COLUMN_EMAIL,
     ];
 
+    /**
+     * @var string
+     */
     protected const COLUMN_FULL_NAME = 'full_name';
 
     /**
      * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_FIRST_NAME
+     * @var string
      */
     protected const COLUMN_FIRST_NAME = 'first_name';
 
     /**
      * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_FIRST_NAME
+     * @var string
      */
     protected const COLUMN_LAST_NAME = 'last_name';
 
     /**
      * @uses \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_BUSINESS_UNIT_UUID
+     * @var string
      */
     protected const COLUMN_COMPANY_BUSINESS_UNIT_UUID = 'spy_sales_order.company_business_unit_uuid';
 
     /**
      * @uses \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_EMAIL
+     * @var string
      */
     protected const COLUMN_EMAIL = 'spy_sales_order.email';
 
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::EQUAL
+     * @var string
      */
     protected const COMPARISON_EQUAL = '=';
 
     /**
      * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::DELIMITER_ORDER_BY
+     * @phpstan-var non-empty-string
+     * @var string
      */
     protected const DELIMITER_ORDER_BY = '::';
 

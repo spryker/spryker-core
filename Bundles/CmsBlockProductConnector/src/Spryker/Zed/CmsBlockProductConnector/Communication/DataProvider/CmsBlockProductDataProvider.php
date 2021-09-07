@@ -15,6 +15,9 @@ use Spryker\Zed\CmsBlockProductConnector\Persistence\CmsBlockProductConnectorRep
 
 class CmsBlockProductDataProvider
 {
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_AUTOCOMPLETE_URL = '/cms-block-product-connector/product-autocomplete/';
 
     /**

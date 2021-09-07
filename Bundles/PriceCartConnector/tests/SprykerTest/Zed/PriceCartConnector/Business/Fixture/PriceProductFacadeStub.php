@@ -15,6 +15,9 @@ use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 
 class PriceProductFacadeStub extends PriceProductFacade
 {
+    /**
+     * @var string
+     */
     protected const EUR_ISO_CODE = 'EUR';
 
     /**

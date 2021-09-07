@@ -25,7 +25,13 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDataProvider
 {
+    /**
+     * @var int
+     */
     protected const INDEX_PRICE_TYPE = 0;
+    /**
+     * @var int
+     */
     protected const INDEX_AMOUNT_TYPE = 2;
 
     /**

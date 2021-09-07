@@ -25,16 +25,19 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
 {
     /**
      * @uses \Spryker\Zed\Category\Business\Tree\CategoryTreeReader::ID_CATEGORY
+     * @var string
      */
     protected const KEY_NODE_CHILD_ID_CATEGORY = 'id_category';
 
     /**
      * @uses \Spryker\Zed\Category\Business\Tree\CategoryTreeReader::TEXT
+     * @var string
      */
     protected const KEY_NODE_CHILD_TEXT = 'text';
 
     /**
      * @uses \Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter::CHILDREN
+     * @var string
      */
     protected const KEY_NODE_CHILD_CHILDREN = 'children';
 

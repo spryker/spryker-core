@@ -29,6 +29,9 @@ use Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface;
 
 class Reader implements ReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_WISHLIST_NOT_FOUND = 'wishlist.not.found';
 
     /**

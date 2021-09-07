@@ -20,21 +20,54 @@ use Symfony\Component\HttpFoundation\Request;
 class CreateController extends AbstractController
 {
     //If this parameter exist, we create new offer using another one
+    /**
+     * @var string
+     */
     public const PARAM_ID_OFFER = 'id-offer';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_OFFER_CREATE_SUCCESS = 'Offer was created successfully.';
 
+    /**
+     * @var string
+     */
     public const PARAM_KEY_INITIAL_OFFER = 'key-offer';
+    /**
+     * @var string
+     */
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
+    /**
+     * @var string
+     */
     public const PARAM_SUBMIT_CUSTOMER_CREATE = 'submit-customer-create';
+    /**
+     * @var string
+     */
     public const PARAM_SUBMIT_RELOAD = 'submit-reload';
+    /**
+     * @var string
+     */
     public const PARAM_CUSTOMER_REFERENCE = 'customerReference';
+    /**
+     * @var string
+     */
     public const PARAM_KEY_REDIRECT_URL = 'redirectUrl';
 
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_OFFER_VIEW = '/offer-gui/view/details';
 
+    /**
+     * @var string
+     */
     protected const SESSION_KEY_OFFER_DATA = 'key-offer-data';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_ITEMS_NOT_AVAILABLE = 'Please fill offer with available items';
 
     /**

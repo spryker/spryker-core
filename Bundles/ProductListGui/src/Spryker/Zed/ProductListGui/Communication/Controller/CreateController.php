@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends ProductListAbstractController
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_PRODUCT_LIST_CREATE_SUCCESS = 'Product List "%s" has been successfully created.';
 
     /**

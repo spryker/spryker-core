@@ -24,15 +24,28 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class CompanyUserRoleForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_VALUES_ROLES_CHOICES = 'company_role_choices';
+    /**
+     * @var string
+     */
     public const OPTION_ATTRIBUTES_ROLES_CHOICES = 'company_role_attributes';
 
     /**
      * @uses \Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm
+     * @var string
      */
     protected const FIELD_FK_COMPANY = 'fk_company';
+    /**
+     * @var string
+     */
     protected const FIELD_COMPANY_ROLE_COLLECTION = 'company_role_collection';
 
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH = '@CompanyRoleGui/CompanyUser/company_role.twig';
 
     /**

@@ -9,9 +9,18 @@ namespace Spryker\Shared\Log\Processor;
 
 class ResponseProcessor implements ProcessorInterface
 {
+    /**
+     * @var string
+     */
     public const EXTRA = 'response';
+    /**
+     * @var string
+     */
     public const CONTEXT_KEY = 'response';
 
+    /**
+     * @var string
+     */
     public const RECORD_CONTEXT = 'context';
 
     /**

@@ -16,7 +16,13 @@ use Spryker\Glue\QuoteRequestsRestApi\Dependency\Client\QuoteRequestsRestApiToQu
  */
 class QuoteRequestsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER = 'PLUGINS_REST_QUOTE_REQUEST_ATTRIBUTES_EXPANDER';
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE_REQUEST = 'CLIENT_QUOTE_REQUEST';
 
     /**

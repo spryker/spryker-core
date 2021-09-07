@@ -16,7 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MaintenanceController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const REFERENCE_KEY = 'reference_key';
+    /**
+     * @var string
+     */
     public const URL_STORAGE_MAINTENANCE = '/storage/maintenance';
 
     /**

@@ -20,21 +20,63 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_URL = 'FACADE_URL';
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_URL = 'QUERY_CONTAINER_URL';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_GLOSSARY = 'QUERY_CONTAINER_GLOSSARY';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS';
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_PAGE_POST_ACTIVATOR = 'PLUGINS_CMS_PAGE_POST_ACTIVATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_CMS_PAGE_BEFORE_DELETE = 'PLUGINS_CMS_PAGE_BEFORE_DELETE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

@@ -26,8 +26,14 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UpdateProductAbstractController extends AbstractUpdateProductController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'product-abstract-id';
 
+    /**
+     * @var array
+     */
     protected const DEFAULT_INITIAL_DATA = [
         GuiTableEditableInitialDataTransfer::DATA => [],
         GuiTableEditableInitialDataTransfer::ERRORS => [],
@@ -35,6 +41,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
 
     /**
      * @see \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\AddProductConcreteController::indexAction()
+     * @var string
      */
     protected const URL_ADD_PRODUCT_CONCRETE = '/product-merchant-portal-gui/add-product-concrete';
 

@@ -25,7 +25,13 @@ use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
  */
 class TransferToMoneyConverterTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const AMOUNT = 1000;
+    /**
+     * @var string
+     */
     public const CURRENCY = 'EUR';
 
     /**

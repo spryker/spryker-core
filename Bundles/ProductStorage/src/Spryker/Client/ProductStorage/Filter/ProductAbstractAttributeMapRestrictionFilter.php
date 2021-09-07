@@ -14,13 +14,23 @@ use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReaderInterface;
 
 class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAttributeMapRestrictionFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_CONCRETE_IDS = 'product_concrete_ids';
 
     /**
      * @deprecated Exists for Backward Compatibility reasons only. Use {@link KEY_ATTRIBUTE_VARIANT_MAP} instead.
+     * @var string
      */
     protected const KEY_ATTRIBUTE_VARIANTS = 'attribute_variants';
+    /**
+     * @var string
+     */
     protected const KEY_ATTRIBUTE_VARIANT_MAP = 'attribute_variant_map';
+    /**
+     * @var string
+     */
     protected const KEY_SUPER_ATTRIBUTES = 'super_attributes';
 
     /**

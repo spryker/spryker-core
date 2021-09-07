@@ -25,6 +25,9 @@ use Symfony\Component\Form\FormView;
  */
 class AbstractSubFormTypeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEMPLATE_PATH = 'abstract/sub/form/type';
 
     /**

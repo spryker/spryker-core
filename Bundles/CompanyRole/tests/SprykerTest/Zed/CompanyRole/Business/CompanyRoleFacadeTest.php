@@ -29,7 +29,13 @@ use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
  */
 class CompanyRoleFacadeTest extends Test
 {
+    /**
+     * @var array
+     */
     protected const CONFIGURATION = ['testKey' => 'testValue'];
+    /**
+     * @var string
+     */
     protected const TEST_NAME = 'Test Name';
 
     /**

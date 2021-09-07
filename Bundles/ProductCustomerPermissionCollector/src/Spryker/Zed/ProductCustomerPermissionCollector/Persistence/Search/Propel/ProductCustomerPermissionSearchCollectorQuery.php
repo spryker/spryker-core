@@ -14,8 +14,17 @@ use Spryker\Zed\Collector\Persistence\Collector\AbstractPropelCollectorQuery;
 
 class ProductCustomerPermissionSearchCollectorQuery extends AbstractPropelCollectorQuery
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_CUSTOMER_PERMISSION = 'id_product_customer_permission';
+    /**
+     * @var string
+     */
     public const FIELD_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+    /**
+     * @var string
+     */
     public const FIELD_FK_CUSTOMER = 'fk_customer';
 
     /**

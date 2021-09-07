@@ -29,10 +29,22 @@ use Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface;
  */
 class MoneyBuilderTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_CURRENCY = 'EUR';
+    /**
+     * @var int
+     */
     public const AMOUNT_INTEGER = 1000;
     public const AMOUNT_FLOAT = 10.00;
+    /**
+     * @var string
+     */
     public const AMOUNT_STRING = '1000';
+    /**
+     * @var string
+     */
     public const OTHER_CURRENCY = 'USD';
 
     /**

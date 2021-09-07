@@ -14,8 +14,14 @@ use Twig\TwigFunction;
 
 class NavigationTwigExtension extends TwigExtension
 {
+    /**
+     * @var string
+     */
     public const EXTENSION_NAME = 'NavigationTwigExtension';
 
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME_NAVIGATION = 'spyNavigation';
 
     /**

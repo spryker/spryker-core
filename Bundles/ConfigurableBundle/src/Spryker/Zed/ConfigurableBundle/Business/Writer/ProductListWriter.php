@@ -19,6 +19,7 @@ class ProductListWriter implements ProductListWriterInterface
 {
     /**
      * @uses \Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap::COL_TYPE_WHITELIST
+     * @var string
      */
     protected const PRODUCT_LIST_DEFAULT_TYPE = 'whitelist';
 

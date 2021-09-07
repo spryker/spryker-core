@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint;
 
 class StockNameUniqueConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_STOCK_FACADE = 'stockFacade';
 
     /**

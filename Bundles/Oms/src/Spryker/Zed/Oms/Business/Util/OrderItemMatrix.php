@@ -14,6 +14,9 @@ use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
 class OrderItemMatrix
 {
+    /**
+     * @var string
+     */
     public const COL_STATE = 'COL_STATE';
 
     /**

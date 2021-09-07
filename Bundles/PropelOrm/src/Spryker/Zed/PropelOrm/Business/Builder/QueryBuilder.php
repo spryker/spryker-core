@@ -17,6 +17,9 @@ use Propel\Generator\Model\PropelTypes;
 
 class QueryBuilder extends PropelQueryBuilder
 {
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_CASE_INSENSITIVE = 'caseInsensitive';
 
     /**

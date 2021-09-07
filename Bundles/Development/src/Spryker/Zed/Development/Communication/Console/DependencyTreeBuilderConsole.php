@@ -20,10 +20,22 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DependencyTreeBuilderConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'dev:dependency:build-tree';
 
+    /**
+     * @var string
+     */
     public const OPTION_APPLICATION = 'application';
+    /**
+     * @var string
+     */
     public const OPTION_MODULE = 'module';
+    /**
+     * @var string
+     */
     public const OPTION_LAYER = 'layer';
 
     /**

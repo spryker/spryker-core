@@ -13,6 +13,8 @@ class PersistentCartConfig extends AbstractBundleConfig
 {
     /**
      * Persistent cart anonymous prefix.
+     *
+     * @var string
      */
     protected const PERSISTENT_CART_ANONYMOUS_PREFIX = 'anonymous:';
 

@@ -17,6 +17,7 @@ class ProductSetPageSearchConstants
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const PRODUCT_SET_RESOURCE_NAME = 'product_set';
 
@@ -25,6 +26,7 @@ class ProductSetPageSearchConstants
      * - Queue name as used for processing Product messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_SET_SYNC_SEARCH_QUEUE = 'sync.search.product';
 
@@ -33,6 +35,7 @@ class ProductSetPageSearchConstants
      * - Queue name as used for processing Product messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_SET_SYNC_SEARCH_ERROR_QUEUE = 'sync.search.product.error';
 }

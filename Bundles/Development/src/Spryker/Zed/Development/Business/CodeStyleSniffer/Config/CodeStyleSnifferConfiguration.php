@@ -14,46 +14,63 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
 {
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_FIX
+     * @var string
      */
     protected const OPTION_FIX = 'fix';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_DRY_RUN
+     * @var string
      */
     protected const OPTION_DRY_RUN = 'dry-run';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_QUIET
+     * @var string
      */
     protected const OPTION_QUIET = 'quiet';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_EXPLAIN
+     * @var string
      */
     protected const OPTION_EXPLAIN = 'explain';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_SNIFFS
+     * @var string
      */
     protected const OPTION_SNIFFS = 'sniffs';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_VERBOSE
+     * @var string
      */
     protected const OPTION_VERBOSE = 'verbose';
 
     /**
      * @see \Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer::OPTION_IGNORE
+     * @var string
      */
     protected const OPTION_IGNORE = 'ignore';
 
     /**
      * @see \Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole::OPTION_LEVEL
+     * @var string
      */
     protected const OPTION_LEVEL = 'level';
 
+    /**
+     * @var string
+     */
     protected const MODULE_CONFIG_LEVEL = 'level';
+    /**
+     * @var int
+     */
     protected const LEVEL_SPRYKER_BASIC = 1;
+    /**
+     * @var int
+     */
     protected const LEVEL_SPRYKER_STRICT = 2;
 
     /**

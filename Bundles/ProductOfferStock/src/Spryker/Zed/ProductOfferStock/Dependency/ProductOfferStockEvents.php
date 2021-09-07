@@ -14,6 +14,7 @@ interface ProductOfferStockEvents
      * - Represents spy_product_offer_stock entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_OFFER_STOCK_CREATE = 'Entity.spy_product_offer_stock.create';
 
@@ -22,6 +23,7 @@ interface ProductOfferStockEvents
      * - Represents spy_product_offer_stock entity update.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_OFFER_STOCK_UPDATE = 'Entity.spy_product_offer_stock.update';
 
@@ -30,6 +32,7 @@ interface ProductOfferStockEvents
      * - Represents product offer stock publish.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_OFFER_STOCK_PUBLISH = 'ProductOffer.spy_product_offer_stock.publish';
 }

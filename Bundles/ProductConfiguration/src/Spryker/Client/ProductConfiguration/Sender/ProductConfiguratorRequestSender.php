@@ -21,10 +21,16 @@ class ProductConfiguratorRequestSender implements ProductConfiguratorRequestSend
 {
     use LoggerTrait;
 
+    /**
+     * @var array
+     */
     protected const ASSESS_TOKEN_REQUEST_HEADERS = [
         'Content-Type' => 'application/json',
     ];
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PRODUCT_CONFIGURATION_CAN_NOT_OBTAIN_ACCESS_TOKEN = 'product_configuration.access_token.request.error.can_not_obtain_access_token';
 
     /**

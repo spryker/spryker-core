@@ -16,19 +16,25 @@ class ApprovalStatusValidatorStep implements DataImportStepInterface
 {
     /**
      * @uses \Spryker\Zed\MerchantProductOption\MerchantProductOptionConfig::STATUS_WAITING_FOR_APPROVAL
+     * @var string
      */
     protected const STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOption\MerchantProductOptionConfig::STATUS_APPROVED
+     * @var string
      */
     protected const STATUS_APPROVED = 'approved';
 
     /**
      * @uses \Spryker\Zed\MerchantProductOption\MerchantProductOptionConfig::STATUS_DENIED
+     * @var string
      */
     protected const STATUS_DENIED = 'denied';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_APPROVAL_STATUS = 'waiting_for_approval';
 
     /**

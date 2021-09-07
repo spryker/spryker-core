@@ -22,16 +22,29 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
 
+    /**
+     * @var string
+     */
     protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**

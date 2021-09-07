@@ -19,7 +19,13 @@ class QuoteStatusChecker implements QuoteStatusCheckerInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_REQUIRE_APPROVAL = 'quote_approval.cart.require_approval';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CART_WAITING_APPROVAL = 'quote_approval.cart.waiting_approval';
 
     /**

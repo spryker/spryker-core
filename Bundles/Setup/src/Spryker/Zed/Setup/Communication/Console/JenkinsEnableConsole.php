@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class JenkinsEnableConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'setup:jenkins:enable';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Enable Jenkins';
 
     /**

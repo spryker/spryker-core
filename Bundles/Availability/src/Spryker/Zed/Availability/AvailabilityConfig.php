@@ -11,10 +11,22 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AvailabilityConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     public const ERROR_CODE_PRODUCT_UNAVAILABLE = 4002;
+    /**
+     * @var string
+     */
     public const RESOURCE_TYPE_AVAILABILITY_ABSTRACT = 'availability_abstract';
 
+    /**
+     * @var string
+     */
     protected const ERROR_TYPE_AVAILABILITY = 'Availability';
+    /**
+     * @var string
+     */
     protected const PARAMETER_PRODUCT_SKU_AVAILABILITY = '%sku%';
 
     /**

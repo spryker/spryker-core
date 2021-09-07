@@ -31,7 +31,13 @@ use Spryker\Zed\Event\Dependency\Service\EventToUtilEncodingInterface;
  */
 class EventDispatcherTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TEST_EVENT_NAME = 'trigger.before.save';
+    /**
+     * @var string
+     */
     public const LISTENER_NAME = 'Test/Listener';
 
     /**

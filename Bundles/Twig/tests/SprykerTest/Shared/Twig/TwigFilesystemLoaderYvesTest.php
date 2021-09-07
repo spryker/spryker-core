@@ -33,10 +33,25 @@ class TwigFilesystemLoaderYvesTest extends Unit
     public const PATH_TO_CORE_NON_SPLIT = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/*/src/CoreNamespace/Yves/Bundle/Theme/default';
     public const PATH_TO_CORE_3RD_PARTY = __DIR__ . '/Fixtures/vendor/spryker/3rd-party/src/CoreNamespace/Yves/Bundle/Theme/default';
 
+    /**
+     * @var string
+     */
     public const CONTENT_PROJECT_FILE = 'project yves file' . PHP_EOL;
+    /**
+     * @var string
+     */
     public const CONTENT_PROJECT_CUSTOM_THEME_FILE = 'project custom theme yves file' . PHP_EOL;
+    /**
+     * @var string
+     */
     public const CONTENT_CORE_FILE = 'core yves file' . PHP_EOL;
+    /**
+     * @var string
+     */
     public const CONTENT_CORE_NON_SPLIT_FILE = 'core yves non split file' . PHP_EOL;
+    /**
+     * @var string
+     */
     public const CONTENT_CORE_3RD_PARTY_FILE = 'core yves 3rd party file' . PHP_EOL;
 
     /**

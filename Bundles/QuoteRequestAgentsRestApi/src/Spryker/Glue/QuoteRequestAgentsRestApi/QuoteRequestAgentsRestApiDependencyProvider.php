@@ -18,9 +18,18 @@ use Spryker\Glue\QuoteRequestAgentsRestApi\Dependency\RestResource\QuoteRequestA
  */
 class QuoteRequestAgentsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_QUOTE_REQUESTS_REST_API = 'RESOURCE_QUOTE_REQUESTS_REST_API';
 
+    /**
+     * @var string
+     */
     public const CLIENT_QUOTE_REQUEST_AGENT = 'CLIENT_QUOTE_REQUEST_AGENT';
+    /**
+     * @var string
+     */
     public const CLIENT_COMPANY_USER_STORAGE = 'CLIENT_COMPANY_USER_STORAGE';
 
     /**

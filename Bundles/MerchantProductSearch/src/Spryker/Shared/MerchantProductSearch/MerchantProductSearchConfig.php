@@ -16,6 +16,7 @@ class MerchantProductSearchConfig extends AbstractSharedConfig
      * - Constant is used to group merchant product-related product page data expanders.
      *
      * @api
+     * @var string
      */
     public const PLUGIN_MERCHANT_PRODUCT_DATA = 'PLUGIN_MERCHANT_PRODUCT_DATA';
 
@@ -24,6 +25,7 @@ class MerchantProductSearchConfig extends AbstractSharedConfig
      * - This events will be used for spy_merchant_product_abstract publishing.
      *
      * @api
+     * @var string
      */
     public const MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProduct.merchant_product_abstract.publish';
 
@@ -32,6 +34,7 @@ class MerchantProductSearchConfig extends AbstractSharedConfig
      * - This events will be used for spy_merchant publishing.
      *
      * @api
+     * @var string
      */
     public const MERCHANT_PUBLISH = 'Merchant.merchant.publish';
 
@@ -40,6 +43,7 @@ class MerchantProductSearchConfig extends AbstractSharedConfig
      * - This events will be used for spy_merchant entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
 }

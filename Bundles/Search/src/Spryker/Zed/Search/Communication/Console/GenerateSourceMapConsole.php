@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateSourceMapConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'search:setup:source-map';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will generate the IndexMap classes by found schema definition files';
 
     /**

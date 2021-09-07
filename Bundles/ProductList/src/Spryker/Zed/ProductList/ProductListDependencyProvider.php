@@ -18,13 +18,31 @@ use Spryker\Zed\ProductList\Dependency\Service\ProductListToUtilTextServiceBridg
  */
 class ProductListDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
+    /**
+     * @var string
+     */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_LIST_PRE_CREATE = 'PLUGINS_PRODUCT_LIST_PRE_CREATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_LIST_PRE_UPDATE = 'PLUGINS_PRODUCT_LIST_PRE_UPDATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_LIST_DELETE_PRE_CHECK = 'PLUGINS_PRODUCT_LIST_DELETE_PRE_CHECK';
 
     /**

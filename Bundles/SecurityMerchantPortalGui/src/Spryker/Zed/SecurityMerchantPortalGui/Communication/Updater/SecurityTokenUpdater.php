@@ -17,6 +17,7 @@ class SecurityTokenUpdater implements SecurityTokenUpdaterInterface
 {
     /**
      * @uses \Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\MerchantUserSecurityPlugin::SECURITY_FIREWALL_NAME
+     * @var string
      */
     protected const SECURITY_FIREWALL_NAME = 'MerchantUser';
 

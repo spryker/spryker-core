@@ -22,15 +22,36 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepository;
  */
 class ProductCategoryRepositoryTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const LOCALE_NAME = 'en_US';
 
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_SKU = 'PRODUCT_ABSTRACT';
 
+    /**
+     * @var string
+     */
     protected const CATEGORY_NAME_1 = 'CATEGORY_1';
+    /**
+     * @var string
+     */
     protected const CATEGORY_NAME_2 = 'CATEGORY_2';
 
+    /**
+     * @var string
+     */
     protected const CATEGORY_ATTRIBUTE_1 = 'CATEGORY_ATTRIBUTE_1';
+    /**
+     * @var string
+     */
     protected const CATEGORY_ATTRIBUTE_2 = 'CATEGORY_ATTRIBUTE_2';
+    /**
+     * @var string
+     */
     protected const CATEGORY_ATTRIBUTE_3 = 'CATEGORY_ATTRIBUTE_3';
 
     /**

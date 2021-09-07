@@ -20,8 +20,17 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PropelAbstractValidateConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'code:propel:validate-abstract';
+    /**
+     * @var string
+     */
     protected const OPTION_MODULE = 'module';
+    /**
+     * @var string
+     */
     protected const OPTION_STRICT = 'strict';
 
     /**

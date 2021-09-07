@@ -24,24 +24,72 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_USER = 'id-user';
+    /**
+     * @var string
+     */
     public const USER_LISTING_URL = '/user';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_CREATE_SUCCESS = 'User was created successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_UPDATE_SUCCESS = 'User was updated successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_ACTIVATE_SUCCESS = 'User was activated successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_DEACTIVATE_SUCCESS = 'User was deactivated successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_DELETE_SUCCESS = 'User was deleted successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_PASSWORD_UPDATE_SUCCESS = 'User password was updated successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_CSRF_FORM_PROTECTION_ERROR = 'CSRF token is not valid!';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_CREATE_ERROR = 'User entity was not created.';
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_UPDATE_ERROR = 'User entity was not updated.';
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_ACTIVATE_ERROR = 'User was not activated.';
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_DEACTIVATE_ERROR = 'User was not deactivated.';
+    /**
+     * @var string
+     */
     public const MESSAGE_USER_DELETE_ERROR = 'User was not deleted.';
+    /**
+     * @var string
+     */
     public const MESSAGE_ID_USER_EXTRACT_ERROR = 'Missing user id!';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_USER_NOT_FOUND = "User couldn't be found";
 
     /**

@@ -34,8 +34,17 @@ use Spryker\Zed\SalesQuantity\SalesQuantityConfig;
  */
 class SalesQuantityFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const ABSTRACT_PRODUCT_SKU = 'ABSTRACT_PRODUCT_SKU';
+    /**
+     * @var string
+     */
     protected const CONCRETE_PRODUCT_SKU = 'CONCRETE_PRODUCT_SKU';
+    /**
+     * @var int
+     */
     protected const QUANTITY = 5;
 
     /**

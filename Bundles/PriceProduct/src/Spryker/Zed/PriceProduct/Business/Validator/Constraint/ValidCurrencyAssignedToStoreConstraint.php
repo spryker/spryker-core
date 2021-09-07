@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ValidCurrencyAssignedToStoreConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'Currency {{ currency }} is not assigned to the store {{ store }}';
 
     /**

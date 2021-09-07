@@ -15,12 +15,27 @@ use Spryker\Glue\Kernel\Container;
  */
 class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const COMMANDS = 'COMMANDS';
+    /**
+     * @var string
+     */
     public const EVENT_SUBSCRIBER = 'EVENT_SUBSCRIBER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_CONSOLE_PRE_RUN_HOOK = 'PLUGINS_CONSOLE_PRE_RUN_HOOK';
+    /**
+     * @var string
+     */
     public const PLUGINS_CONSOLE_POST_RUN_HOOK = 'PLUGINS_CONSOLE_POST_RUN_HOOK';
 
     /**

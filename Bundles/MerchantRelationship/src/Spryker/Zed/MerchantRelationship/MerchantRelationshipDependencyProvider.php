@@ -15,8 +15,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE = 'PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE';
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_RELATIONSHIP_POST_UPDATE = 'PLUGINS_MERCHANT_RELATIONSHIP_POST_UPDATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_RELATIONSHIP_POST_CREATE = 'PLUGINS_MERCHANT_RELATIONSHIP_POST_CREATE';
 
     /**

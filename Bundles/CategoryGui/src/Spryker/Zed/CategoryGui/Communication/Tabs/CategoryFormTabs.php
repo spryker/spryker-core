@@ -13,7 +13,13 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 
 class CategoryFormTabs extends AbstractTabs
 {
+    /**
+     * @var string
+     */
     protected const NAME_SETTINGS = 'settings';
+    /**
+     * @var string
+     */
     protected const TITLE_SETTING = 'Settings';
 
     /**

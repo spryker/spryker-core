@@ -15,6 +15,9 @@ use Spryker\Shared\ProductStorage\ProductStorageConstants;
 
 class ProductConcreteStorageBySkuReader implements ProductConcreteStorageReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const REFERENCE_NAME = 'sku:';
 
     /**

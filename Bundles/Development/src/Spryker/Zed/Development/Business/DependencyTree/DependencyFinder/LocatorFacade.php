@@ -12,6 +12,9 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class LocatorFacade extends AbstractDependencyFinder
 {
+    /**
+     * @var string
+     */
     public const BUNDLE = 'bundle';
 
     /**

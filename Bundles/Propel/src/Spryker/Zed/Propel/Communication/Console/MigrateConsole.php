@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class MigrateConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'propel:migrate';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Migrate database';
 
     /**

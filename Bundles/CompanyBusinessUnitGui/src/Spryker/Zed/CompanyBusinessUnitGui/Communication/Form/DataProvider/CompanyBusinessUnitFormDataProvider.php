@@ -15,6 +15,9 @@ use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiT
 
 class CompanyBusinessUnitFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
 
     /**

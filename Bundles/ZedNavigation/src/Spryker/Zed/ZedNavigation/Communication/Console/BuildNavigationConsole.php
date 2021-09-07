@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class BuildNavigationConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'navigation:build-cache';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Build the navigation tree and persist it';
 
     /**

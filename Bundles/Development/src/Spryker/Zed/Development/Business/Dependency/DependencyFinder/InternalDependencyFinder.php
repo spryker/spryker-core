@@ -14,6 +14,9 @@ use Spryker\Zed\Development\DevelopmentConfig;
 
 class InternalDependencyFinder extends AbstractFileDependencyFinder
 {
+    /**
+     * @var string
+     */
     public const TYPE_INTERNAL = 'internal';
 
     /**

@@ -12,9 +12,18 @@ namespace Spryker\Shared\Mail;
  */
 interface MailConstants
 {
+    /**
+     * @var string
+     */
     public const MAILCATCHER_GUI = 'MAILCATCHER_GUI';
 
+    /**
+     * @var string
+     */
     public const SMTP_HOST = 'MAIL_CONSTANTS:SMTP_HOST';
+    /**
+     * @var string
+     */
     public const SMTP_PORT = 'MAIL_CONSTANTS:SMTP_PORT';
 
     /**
@@ -23,6 +32,7 @@ interface MailConstants
      * - Available values are "tls", "ssl" or "".
      *
      * @api
+     * @var string
      */
     public const SMTP_ENCRYPTION = 'MAIL:SMTP_ENCRYPTION';
 
@@ -32,6 +42,7 @@ interface MailConstants
      * - Available values are "plain", "login", "cram-md5", or "".
      *
      * @api
+     * @var string
      */
     public const SMTP_AUTH_MODE = 'MAIL:SMTP_AUTH_MODE';
 
@@ -40,6 +51,7 @@ interface MailConstants
      * - Defines `username` for `SMTP`.
      *
      * @api
+     * @var string
      */
     public const SMTP_USERNAME = 'MAIL:SMTP_USERNAME';
 
@@ -48,6 +60,7 @@ interface MailConstants
      * - Defines `password` for `SMTP`.
      *
      * @api
+     * @var string
      */
     public const SMTP_PASSWORD = 'MAIL:SMTP_PASSWORD';
 
@@ -56,6 +69,7 @@ interface MailConstants
      * - Defines `sender name`.
      *
      * @api
+     * @var string
      */
     public const SENDER_NAME = 'MAIL:SENDER_NAME';
 
@@ -64,6 +78,7 @@ interface MailConstants
      * - Defines `sender email`.
      *
      * @api
+     * @var string
      */
     public const SENDER_EMAIL = 'MAIL:SENDER_EMAIL';
 }

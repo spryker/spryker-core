@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ExportController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRODUCT_LIST = 'id-product-list';
 
     /**

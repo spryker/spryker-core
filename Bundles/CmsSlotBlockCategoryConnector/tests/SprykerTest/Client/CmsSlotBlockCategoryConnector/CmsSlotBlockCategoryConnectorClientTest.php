@@ -26,6 +26,9 @@ use Spryker\Shared\CmsSlotBlockCategoryConnector\CmsSlotBlockCategoryConnectorCo
  */
 class CmsSlotBlockCategoryConnectorClientTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const ID_CATEGORY = 1;
 
     /**

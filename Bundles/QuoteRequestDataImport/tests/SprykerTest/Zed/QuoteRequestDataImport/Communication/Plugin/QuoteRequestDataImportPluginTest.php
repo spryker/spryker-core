@@ -29,7 +29,13 @@ use Spryker\Zed\QuoteRequestDataImport\QuoteRequestDataImportConfig;
  */
 class QuoteRequestDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_COMPANY_USER_KEY = 'test-company-user-key';
+    /**
+     * @var string
+     */
     protected const INCORRECT_COMPANY_USER_KEY = 'incorrect-company-user-key';
 
     /**

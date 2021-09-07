@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class PromotionProductMapper implements PromotionProductMapperInterface
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_VARIANT_ATTRIBUTES = 'attributes';
 
     /**

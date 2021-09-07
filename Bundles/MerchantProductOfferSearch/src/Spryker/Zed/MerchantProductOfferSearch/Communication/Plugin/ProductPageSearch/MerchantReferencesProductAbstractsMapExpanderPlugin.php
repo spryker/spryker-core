@@ -14,6 +14,9 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
 
 class MerchantReferencesProductAbstractsMapExpanderPlugin implements ProductAbstractMapExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_MERCHANT_REFERENCES = 'merchant_references';
 
     /**

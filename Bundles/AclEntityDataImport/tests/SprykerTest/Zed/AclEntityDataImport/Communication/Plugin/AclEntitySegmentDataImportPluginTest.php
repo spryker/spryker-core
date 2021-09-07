@@ -28,6 +28,9 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class AclEntitySegmentDataImportPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_IMPORT_COUNT = 5;
 
     /**

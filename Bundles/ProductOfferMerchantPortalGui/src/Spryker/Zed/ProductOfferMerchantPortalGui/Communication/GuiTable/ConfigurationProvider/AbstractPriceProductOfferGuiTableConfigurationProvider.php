@@ -21,24 +21,50 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 {
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm::FIELD_PRODUCT_OFFER_PRICES
+     * @var string
      */
     protected const FIELD_PRODUCT_OFFER_PRICES = 'prices';
 
     /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm::BLOCK_PREFIX
+     * @var string
      */
     protected const BLOCK_PREFIX = 'productOffer';
 
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_STORE = 'Store';
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_CURRENCY = 'Currency';
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_NET = 'Net';
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_PREFIX_PRICE_TYPE_GROSS = 'Gross';
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_VOLUME_QUANTITY = 'Volume Quantity';
 
+    /**
+     * @var string
+     */
     protected const TITLE_EDITABLE_BUTTON = 'Add';
 
+    /**
+     * @var string
+     */
     protected const INPUT_TYPE_NUMBER = 'number';
 
+    /**
+     * @var string
+     */
     protected const TYPE_OPTION_VALUE = 'value';
 
     /**

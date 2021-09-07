@@ -12,6 +12,9 @@ use Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrateg
 
 class CustomerReferenceMatchingEntityIdAuthorizationStrategyPlugin implements AuthorizationStrategyPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const STRATEGY_NAME = 'CustomerReferenceMatchingEntityId';
 
     /**

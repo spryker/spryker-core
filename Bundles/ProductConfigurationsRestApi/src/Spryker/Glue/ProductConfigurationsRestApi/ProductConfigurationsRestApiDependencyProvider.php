@@ -16,9 +16,18 @@ use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigura
  */
 class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_CONFIGURATION_STORAGE = 'CLIENT_PRODUCT_CONFIGURATION_STORAGE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_CONFIGURATION_PRICE_MAPPER = 'PLUGINS_PRODUCT_CONFIGURATION_PRICE_MAPPER';
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_PRODUCT_CONFIGURATION_PRICE_MAPPER = 'PLUGINS_REST_PRODUCT_CONFIGURATION_PRICE_MAPPER';
 
     /**

@@ -32,23 +32,43 @@ use Symfony\Component\Validator\Constraint;
  */
 class ProductConcreteForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const BLOCK_PREFIX = 'productConcrete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::FIELD_USE_ABSTRACT_PRODUCT_NAME
+     * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductLocalizedAttributesForm::NAME_VALIDATION_GROUP
+     * @var string
      */
     protected const NAME_VALIDATION_GROUP = 'name_validation_group';
 
+    /**
+     * @var string
+     */
     protected const LABEL_VALID_FROM = 'From';
+    /**
+     * @var string
+     */
     protected const LABEL_VALID_TO = 'To';
+    /**
+     * @var string
+     */
     protected const LABEL_STOCK = 'Stock';
 
+    /**
+     * @var string
+     */
     protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+    /**
+     * @var string
+     */
     protected const WIDGET_SINGLE_TEXT = 'single_text';
 
     /**

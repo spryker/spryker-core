@@ -19,6 +19,9 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMer
 
 class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_DATA_KEY_VOLUME_QUANTITY = 'volume_quantity';
 
     /**

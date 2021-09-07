@@ -19,7 +19,13 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class CategoryDataFeedQueryContainer extends AbstractQueryContainer implements CategoryDataFeedQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
+    /**
+     * @var string
+     */
     public const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**

@@ -22,25 +22,54 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ProductAttributesController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_DELETE_SUCCESS = 'Success! The Attribute is deleted.';
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_UPDATE_SUCCESS = 'Product attributes updated successfully.';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_EMPTY_ATTRIBUTE_NAME = 'The attribute name must be not empty';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_EMPTY_ATTRIBUTES = 'Please fill in at least one value';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_ABSTRACT_PRODUCT_CANNOT_BE_FOUND = 'Abstract Product cannot be found';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CONCRETE_PRODUCT_CANNOT_BE_FOUND = 'Concrete Product cannot be found';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SUPER_ATTRIBUTE_WAS_NOT_DELETED = 'Super attribute was not deleted';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT_CONCRETE = 'idProductConcrete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_NAME
+     * @var string
      */
     protected const PARAM_ATTRIBUTE_NAME = 'attribute_name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT
+     * @var string
      */
     protected const PARAM_ATTRIBUTE_DEFAULT = 'attribute_default';
 

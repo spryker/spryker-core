@@ -16,9 +16,18 @@ use Spryker\Zed\Kernel\Container;
  */
 class GuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_SANITIZE_XSS = 'SERVICE_UTIL_SANITIZE_XSS';
 
+    /**
+     * @var string
+     */
     public const GUI_TWIG_FUNCTIONS = 'gui_twig_functions';
+    /**
+     * @var string
+     */
     public const GUI_TWIG_FILTERS = 'gui_twig_filters';
 
     /**

@@ -17,7 +17,13 @@ use Spryker\Glue\NavigationsRestApi\Dependency\Client\NavigationsRestApiToUrlSto
  */
 class NavigationsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_NAVIGATION_STORAGE = 'CLIENT_NAVIGATION_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
 
     /**

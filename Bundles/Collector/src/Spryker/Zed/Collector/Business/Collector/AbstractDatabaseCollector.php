@@ -27,6 +27,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 abstract class AbstractDatabaseCollector extends AbstractCollector implements DatabaseCollectorInterface
 {
+    /**
+     * @var string
+     */
     public const ID_TOUCH = 'idTouch';
 
     /**

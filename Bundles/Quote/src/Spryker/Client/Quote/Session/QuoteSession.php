@@ -14,6 +14,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class QuoteSession implements QuoteSessionInterface
 {
+    /**
+     * @var string
+     */
     public const QUOTE_SESSION_IDENTIFIER = 'quote session identifier';
 
     /**

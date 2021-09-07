@@ -27,7 +27,13 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductPackagingUnitRepository extends AbstractRepository implements ProductPackagingUnitRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const COL_COUNT = 'count';
 
     /**

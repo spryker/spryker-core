@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantStock\Persistence\MerchantStockEntityManagerInterface;
 
 class MerchantStockWriter implements MerchantStockWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MERCHANT_STOCK_CREATE = 'Merchant stock can not be created.';
 
     /**

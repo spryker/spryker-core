@@ -12,11 +12,23 @@ use Generated\Shared\Transfer\LocaleTransfer;
 
 class ProductSetSearchDataMapper implements ProductSetSearchDataMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_SET_RESOURCE_NAME = 'product_set';
 
+    /**
+     * @var string
+     */
     protected const KEY_STORE = 'store';
+    /**
+     * @var string
+     */
     protected const KEY_WEIGHT = 'weight';
 
+    /**
+     * @var array
+     */
     protected const FILTERED_KEYS = [
         'locale',
         'store',

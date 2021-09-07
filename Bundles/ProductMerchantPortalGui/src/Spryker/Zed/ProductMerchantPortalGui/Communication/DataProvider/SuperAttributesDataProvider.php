@@ -11,8 +11,17 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class SuperAttributesDataProvider implements SuperAttributesDataProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_VALUE = 'value';
+    /**
+     * @var string
+     */
     protected const FIELD_ATTRIBUTES = 'attributes';
 
     /**

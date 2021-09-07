@@ -19,22 +19,67 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PriceVolumeController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_PRODUCT_CONCRETE = 'id-product-concrete';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_PRODUCT = 'id-product';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_STORE_NAME = 'store-name';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_CURRENCY_CODE = 'currency-code';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_PRICE_DIMENSION = 'price-dimension';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_PRICE_TYPE = 'price-type';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_SAVE_AND_EXIT = 'save_and_exit';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_SKU = 'sku';
 
+    /**
+     * @var string
+     */
     protected const PRICE_PRODUCT_VOLUME_EDIT_URL = '/price-product-volume-gui/price-volume/edit';
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_EDIT_URL = '/product-management/edit/variant';
+    /**
+     * @var string
+     */
     protected const PRODUCT_ABSTRACT_EDIT_URL = '/product-management/edit';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_VOLUME_PRICES_UPDATE_SUCCESS = 'Volume prices successfully saved.';
+    /**
+     * @var string
+     */
     protected const PARAM_URL_FRAGMENT = 'fragment';
+    /**
+     * @var string
+     */
     protected const PARAM_URL_FRAGMENT_DEFAULT_VALUE = 'tab-content-%s';
 
     /**

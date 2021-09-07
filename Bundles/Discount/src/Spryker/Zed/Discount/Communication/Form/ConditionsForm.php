@@ -27,7 +27,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ConditionsForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_DECISION_RULE_QUERY_STRING = 'decision_rule_query_string';
+    /**
+     * @var string
+     */
     public const FIELD_MINIMUM_ITEM_AMOUNT = 'minimum_item_amount';
 
     /**

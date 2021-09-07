@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CmsSlotDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CMS_SLOT_VALIDATOR = 'CMS_SLOT_VALIDATOR';
 
     /**

@@ -14,6 +14,7 @@ interface ProductReviewEvents
      * - This events will be used for spy_product_review publishing
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_REVIEW_PUBLISH = 'ProductReview.product_abstract_review.publish';
 
@@ -22,6 +23,7 @@ interface ProductReviewEvents
      * - This events will be used for spy_product_review un-publishing
      *
      * @api
+     * @var string
      */
     public const PRODUCT_ABSTRACT_REVIEW_UNPUBLISH = 'ProductReview.product_abstract_review.unpublish';
 
@@ -30,6 +32,7 @@ interface ProductReviewEvents
      * - This events will be used for product_review publishing
      *
      * @api
+     * @var string
      */
     public const PRODUCT_REVIEW_PUBLISH = 'ProductReview.product_review.publish';
 
@@ -38,6 +41,7 @@ interface ProductReviewEvents
      * - This events will be used for product_review un-publishing
      *
      * @api
+     * @var string
      */
     public const PRODUCT_REVIEW_UNPUBLISH = 'ProductReview.product_review.unpublish';
 
@@ -46,6 +50,7 @@ interface ProductReviewEvents
      * - This events will be used for spy_product_review entity creation
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_REVIEW_CREATE = 'Entity.spy_product_review.create';
 
@@ -54,6 +59,7 @@ interface ProductReviewEvents
      * - This events will be used for spy_product_review entity update
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_REVIEW_UPDATE = 'Entity.spy_product_review.update';
 
@@ -62,6 +68,7 @@ interface ProductReviewEvents
      * - This events will be used for spy_product_review entity deletion
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PRODUCT_REVIEW_DELETE = 'Entity.spy_product_review.delete';
 }

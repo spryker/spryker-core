@@ -18,8 +18,17 @@ use Spryker\Glue\Kernel\Container;
  */
 class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CONTENT_PRODUCT = 'CLIENT_CONTENT_PRODUCT';
+    /**
+     * @var string
+     */
     public const RESOURCE_PRODUCTS_REST_API = 'RESOURCE_PRODUCTS_REST_API';
+    /**
+     * @var string
+     */
     public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**

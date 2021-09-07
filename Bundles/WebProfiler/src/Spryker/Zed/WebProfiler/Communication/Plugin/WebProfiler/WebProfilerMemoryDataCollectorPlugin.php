@@ -14,7 +14,13 @@ use Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector;
 
 class WebProfilerMemoryDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'memory';
+    /**
+     * @var string
+     */
     protected const TEMPLATE = '@WebProfiler/Collector/memory.html.twig';
 
     /**

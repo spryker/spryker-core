@@ -29,6 +29,9 @@ class PriceProductVolumeServiceTester extends Actor
 {
     use _generated\PriceProductVolumeServiceTesterActions;
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_PRICE_DATA_JSON = '{"volume_prices":[{"quantity":1,"net_price":110,"gross_price":120},{"quantity":100,"net_price":80,"gross_price":100}]}';
 
     /**

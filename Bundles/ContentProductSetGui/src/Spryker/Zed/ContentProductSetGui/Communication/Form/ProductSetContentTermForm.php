@@ -23,8 +23,14 @@ use Symfony\Component\Validator\Constraint;
  */
 class ProductSetContentTermForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_SET = 'idProductSet';
 
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH = '@ContentProductSetGui/ProductSet/product_set.twig';
 
     /**

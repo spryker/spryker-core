@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class SkuExists extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_FACADE = 'productFacade';
 
     /**

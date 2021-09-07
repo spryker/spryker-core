@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CommentDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

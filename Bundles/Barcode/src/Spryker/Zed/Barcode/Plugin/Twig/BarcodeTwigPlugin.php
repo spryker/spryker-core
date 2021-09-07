@@ -18,6 +18,9 @@ use Twig\TwigFunction;
  */
 class BarcodeTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME_BARCODE = 'barcode';
 
     /**

@@ -15,17 +15,36 @@ use Spryker\Shared\Storage\StorageConstants;
 
 class StorageInstanceBuilder
 {
+    /**
+     * @var string
+     */
     public const KV_NAMESPACE = 'Spryker\\Zed\\Collector\\Business\\Storage\\Adapter\\KeyValue\\';
+    /**
+     * @var string
+     */
     public const ADAPTER_READ_WRITE = 'ReadWrite';
+    /**
+     * @var string
+     */
     public const ADAPTER_READ = 'Read';
 
+    /**
+     * @var string
+     */
     public const KV_ADAPTER_REDIS = 'redis';
+    /**
+     * @var string
+     */
     public const SEARCH_ELASTICA_ADAPTER = 'elastica';
 
+    /**
+     * @var int
+     */
     public const DEFAULT_REDIS_DATABASE = 0;
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME.
+     * @var string
      */
     protected const STORAGE_REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
 

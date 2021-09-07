@@ -34,8 +34,14 @@ class ShoppingListReader implements ShoppingListReaderInterface
 {
     use PermissionAwareTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHOPPING_LIST_REMOVED = 'shopping_list.already_removed';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHOPPING_LIST_NO_ACCESS = 'shopping_list.no_access';
 
     /**

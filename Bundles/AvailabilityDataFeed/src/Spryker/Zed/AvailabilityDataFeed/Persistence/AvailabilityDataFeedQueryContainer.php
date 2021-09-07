@@ -19,7 +19,13 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implements AvailabilityDataFeedQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const UPDATED_FROM_CONDITION = 'UPDATED_FROM_CONDITION';
+    /**
+     * @var string
+     */
     public const UPDATED_TO_CONDITION = 'UPDATED_TO_CONDITION';
 
     /**

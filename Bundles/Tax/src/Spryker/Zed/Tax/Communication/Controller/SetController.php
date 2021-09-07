@@ -19,8 +19,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SetController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_URL_ID_TAX_SET = 'id-tax-set';
 
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_DEFAULT = '/tax/set/list';
 
     /**

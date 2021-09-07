@@ -18,6 +18,9 @@ use Spryker\Zed\SalesOrderThreshold\Business\TaxRateReader\TaxRateReaderInterfac
 
 class ExpenseCalculator implements ExpenseCalculatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_TEMPLATE = 'sales-order-threshold.strategy.%s';
 
     /**

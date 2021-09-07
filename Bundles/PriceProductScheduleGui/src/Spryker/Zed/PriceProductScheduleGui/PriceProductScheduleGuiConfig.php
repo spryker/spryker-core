@@ -13,52 +13,70 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
 {
     /**
      * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_ABSTRACT_SKU
+     * @var string
      */
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
 
     /**
      * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_CONCRETE_SKU
+     * @var string
      */
     protected const KEY_CONCRETE_SKU = 'concrete_sku';
 
     /**
      * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_STORE
+     * @var string
      */
     protected const KEY_STORE = 'store';
 
     /**
      * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_CURRENCY
+     * @var string
      */
     protected const KEY_CURRENCY = 'currency';
 
     /**
      * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_PRICE_TYPE
+     * @var string
      */
     protected const KEY_PRICE_TYPE = 'price_type';
 
     /**
      * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_VALUE_NET
+     * @var string
      */
     protected const KEY_VALUE_NET = 'value_net';
 
     /**
      * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_VALUE_GROSS
+     * @var string
      */
     protected const KEY_VALUE_GROSS = 'value_gross';
 
     /**
      * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_FROM_INCLUDED
+     * @var string
      */
     protected const KEY_FROM_INCLUDED = 'from_included';
 
     /**
      * @see \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig::KEY_TO_INCLUDED
+     * @var string
      */
     protected const KEY_TO_INCLUDED = 'to_included';
 
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRICE_PRODUCT_SCHEDULE = 'ID';
 
+    /**
+     * @var string
+     */
     protected const FILE_MAX_SIZE = '50M';
+    /**
+     * @var array
+     */
     protected const FILE_MIME_TYPES = ['text/csv', 'text/plain'];
 
     /**

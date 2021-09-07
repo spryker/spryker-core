@@ -22,7 +22,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ResetPasswordForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_CURRENT_PASSWORD = 'current_password';
+    /**
+     * @var string
+     */
     public const FIELD_PASSWORD = 'password';
 
     /**

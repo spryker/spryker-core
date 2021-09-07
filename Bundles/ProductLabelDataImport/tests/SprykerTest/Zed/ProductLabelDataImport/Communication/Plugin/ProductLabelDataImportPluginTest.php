@@ -26,6 +26,9 @@ use Spryker\Zed\ProductLabelDataImport\Communication\Plugin\ProductLabelDataImpo
  */
 class ProductLabelDataImportPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_IMPORT_COUNT = 2;
 
     /**

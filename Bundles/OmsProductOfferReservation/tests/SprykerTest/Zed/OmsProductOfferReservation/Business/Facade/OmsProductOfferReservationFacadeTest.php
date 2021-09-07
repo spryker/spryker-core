@@ -29,6 +29,9 @@ use Spryker\DecimalObject\Decimal;
  */
 class OmsProductOfferReservationFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
 
     /**

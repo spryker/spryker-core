@@ -28,10 +28,19 @@ use Spryker\Zed\PriceProductScheduleDataImport\PriceProductScheduleDataImportCon
  */
 class PriceProductScheduleDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const ABSTRACT_SKU = 'foo';
 
+    /**
+     * @var string
+     */
     public const CONCRETE_SKU = 'foo-concrete';
 
+    /**
+     * @var int
+     */
     public const EXPECTED_IMPORT_COUNT = 8;
 
     /**

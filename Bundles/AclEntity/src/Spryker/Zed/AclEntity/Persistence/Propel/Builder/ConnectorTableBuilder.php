@@ -18,10 +18,25 @@ use Spryker\Service\AclEntity\AclEntityServiceInterface;
 
 class ConnectorTableBuilder implements ConnectorTableBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_TABLE_NAME = 'spy_acl_entity_segment';
+    /**
+     * @var string
+     */
     protected const ID_COLUMN_TYPE = 'INTEGER';
+    /**
+     * @var string
+     */
     protected const FOREIGN_KEY_TEMPLATE = '%s-%s';
+    /**
+     * @var string
+     */
     protected const ACL_ENTITY_SEGMENT_CONNECTOR_TABLE_UNIQUE_KEY_NAME = 'fk_target_entity_unique_fk_acl_entity_segment';
+    /**
+     * @var string
+     */
     protected const ID_METHOD_PARAMETER_VALUE_TEMPLATE = '%s_seq';
 
     /**

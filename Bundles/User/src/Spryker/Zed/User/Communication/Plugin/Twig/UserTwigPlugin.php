@@ -20,7 +20,13 @@ use Twig\Environment;
  */
 class UserTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const TWIG_GLOBAL_VARIABLE_USERNAME = 'username';
+    /**
+     * @var string
+     */
     protected const TWIG_GLOBAL_VARIABLE_USER_EMAIL = 'userEmail';
 
     /**

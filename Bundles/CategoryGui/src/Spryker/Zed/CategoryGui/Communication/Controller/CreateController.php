@@ -18,14 +18,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends CategoryAbstractController
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_PARENT_NODE = 'id-parent-node';
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_IS_ROOT = 'is-root';
 
+    /**
+     * @var string
+     */
     protected const ROUTE_CATEGORY_CREATE = '/category-gui/create';
 
     /**
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\EditController::indexAction()
+     * @var string
      */
     protected const ROUTE_CATEGORY_EDIT = '/category-gui/edit';
 

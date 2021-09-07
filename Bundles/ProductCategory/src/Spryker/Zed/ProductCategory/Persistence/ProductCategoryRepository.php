@@ -20,6 +20,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class ProductCategoryRepository extends AbstractRepository implements ProductCategoryRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const TABLE_JOIN_CATEGORY = 'Category';
 
     /**

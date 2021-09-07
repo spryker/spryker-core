@@ -24,6 +24,9 @@ use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
  */
 class GetProductBundleCollectionByCriteriaFilterTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const FAKE_ID_PRODUCT_CONCRETE = 6666;
 
     /**

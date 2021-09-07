@@ -42,6 +42,9 @@ class TransferBusinessTester extends Actor
         getFacade as getTransferFacade;
     }
 
+    /**
+     * @var string
+     */
     protected const TRANSFER_DESTINATION_DIR = 'Transfers';
 
     /**

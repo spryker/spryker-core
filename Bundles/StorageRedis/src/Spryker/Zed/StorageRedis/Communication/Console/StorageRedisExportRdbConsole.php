@@ -17,9 +17,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class StorageRedisExportRdbConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'storage:redis:export-rdb';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will export Redis rdb file.';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_DESTINATION = 'destination';
 
     /**

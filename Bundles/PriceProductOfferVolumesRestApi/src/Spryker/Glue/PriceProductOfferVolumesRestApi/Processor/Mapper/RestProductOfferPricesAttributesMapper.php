@@ -18,21 +18,25 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
 {
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_TYPE
+     * @var string
      */
     protected const VOLUME_PRICE_KEY = 'volume_prices';
 
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY
+     * @var string
      */
     public const VOLUME_PRICE_QUANTITY_KEY = 'quantity';
 
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_NET_PRICE
+     * @var string
      */
     public const VOLUME_PRICE_NET_PRICE_KEY = 'net_price';
 
     /**
      * @uses \Spryker\Shared\PriceProductVolume\PriceProductVolumeConfig::VOLUME_PRICE_GROSS_PRICE
+     * @var string
      */
     public const VOLUME_PRICE_GROSS_PRICE_KEY = 'gross_price';
 

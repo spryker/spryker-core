@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditFileController extends AbstractUploadFileController
 {
+    /**
+     * @var string
+     */
     protected const URL_PARAM_ID_FILE = 'id-file';
 
     /**

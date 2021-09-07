@@ -35,6 +35,9 @@ use Spryker\Zed\ProductBundle\ProductBundleConfig;
  */
 class ProductBundleCartAvailabilityCheckTest extends PreCheckMocks
 {
+    /**
+     * @var int
+     */
     public const ID_STORE = 1;
 
     /**

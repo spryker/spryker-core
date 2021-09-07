@@ -21,6 +21,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CurrencySubForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ID_CURRENCY = 'idCurrency';
 
     /**

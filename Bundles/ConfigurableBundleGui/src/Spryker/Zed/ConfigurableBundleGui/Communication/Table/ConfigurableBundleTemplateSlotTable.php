@@ -22,25 +22,43 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class ConfigurableBundleTemplateSlotTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION = 'configurable_bundle_template_slot_name_translation';
+    /**
+     * @var string
+     */
     protected const COL_NUMBER_OF_ITEMS = 'number_of_items';
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'actions';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE = 'id-configurable-bundle-template';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = 'id-configurable-bundle-template-slot';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::slotTableAction()
+     * @var string
      */
     protected const ROUTE_TABLE_RENDERING = '/slot-table?%s=%s';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::editAction()
+     * @var string
      */
     protected const ROUTE_EDIT_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = '/configurable-bundle-gui/slot/edit';
 
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\SlotController::deleteAction()
+     * @var string
      */
     protected const ROUTE_DELETE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT = '/configurable-bundle-gui/slot/delete';
 

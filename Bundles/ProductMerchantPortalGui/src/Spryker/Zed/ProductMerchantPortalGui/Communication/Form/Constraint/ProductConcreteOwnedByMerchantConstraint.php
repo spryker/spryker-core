@@ -13,6 +13,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ProductConcreteOwnedByMerchantConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'This concrete product is not owned by this merchant.';
 
     /**

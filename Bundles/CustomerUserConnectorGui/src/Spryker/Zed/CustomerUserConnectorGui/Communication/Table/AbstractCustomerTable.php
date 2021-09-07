@@ -19,19 +19,46 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 abstract class AbstractCustomerTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const COL_ID = 'id_customer';
+    /**
+     * @var string
+     */
     public const COL_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const COL_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const COL_GENDER = 'gender';
+    /**
+     * @var string
+     */
     public const COL_EMAIL = 'email';
+    /**
+     * @var string
+     */
     public const COL_ASSIGNED_USER = 'assigned_zed_user';
+    /**
+     * @var string
+     */
     public const COL_CHECKBOX = 'checkbox';
 
+    /**
+     * @var array
+     */
     public const GENDER_MAP = [
         0 => 'Male',
         1 => 'Female',
     ];
 
+    /**
+     * @var bool
+     */
     public const IS_CHECKBOX_SET_BY_DEFAULT = true;
 
     /**

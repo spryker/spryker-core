@@ -27,6 +27,7 @@ class OauthUserProvider extends AbstractPlugin implements UserProviderInterface
 {
     /**
      * @uses \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin::PATH_LOGIN_CHECK
+     * @var string
      */
     protected const PATH_LOGIN_CHECK = '/login_check';
 

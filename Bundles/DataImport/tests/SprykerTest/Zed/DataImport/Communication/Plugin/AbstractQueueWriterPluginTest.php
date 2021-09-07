@@ -26,6 +26,9 @@ use Spryker\Zed\DataImport\Communication\Plugin\AbstractQueueWriterPlugin;
  */
 class AbstractQueueWriterPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DUMMY_QUEUE_NAME = 'dummy_queue';
 
     /**

@@ -9,6 +9,9 @@ namespace Spryker\Shared\ErrorHandler\ErrorRenderer;
 
 class ApiErrorRenderer implements ErrorRendererInterface
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_ERROR_MESSAGE = 'Something went wrong!';
 
     /**

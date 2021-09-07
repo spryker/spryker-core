@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CompanySupplierDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_COMPANY = 'PROPEL_QUERY_COMPANY';
 
     /**

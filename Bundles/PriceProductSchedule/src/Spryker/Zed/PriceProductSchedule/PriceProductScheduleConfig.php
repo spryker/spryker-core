@@ -14,32 +14,73 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     * @var string
      */
     public const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 
     /**
      * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_TYPE_DEFAULT
+     * @var string
      */
     public const PRICE_TYPE_DEFAULT = 'DEFAULT';
 
+    /**
+     * @var string
+     */
     public const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
 
+    /**
+     * @var int
+     */
     protected const APPLY_BATCH_SIZE = 1000;
 
+    /**
+     * @var string
+     */
     protected const KEY_ID_PRICE_PRODUCT_SCHEDULE = 'ID';
 
+    /**
+     * @var string
+     */
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
+    /**
+     * @var string
+     */
     protected const KEY_CONCRETE_SKU = 'concrete_sku';
+    /**
+     * @var string
+     */
     protected const KEY_STORE = 'store';
+    /**
+     * @var string
+     */
     protected const KEY_CURRENCY = 'currency';
+    /**
+     * @var string
+     */
     protected const KEY_PRICE_TYPE = 'price_type';
 
+    /**
+     * @var string
+     */
     protected const KEY_VALUE_NET = 'value_net';
+    /**
+     * @var string
+     */
     protected const KEY_VALUE_GROSS = 'value_gross';
 
+    /**
+     * @var string
+     */
     protected const KEY_FROM_INCLUDED = 'from_included';
+    /**
+     * @var string
+     */
     protected const KEY_TO_INCLUDED = 'to_included';
 
+    /**
+     * @var string
+     */
     protected const PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_NAME = 'Default list';
 
     /**

@@ -9,5 +9,8 @@ namespace Spryker\Zed\ProductPackagingUnitDataImport\Business\Model\DataSet;
 
 interface ProductPackagingUnitTypeDataSetInterface
 {
+    /**
+     * @var string
+     */
     public const COLUMN_NAME = 'name';
 }

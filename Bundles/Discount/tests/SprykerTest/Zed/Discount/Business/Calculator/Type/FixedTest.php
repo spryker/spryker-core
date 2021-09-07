@@ -28,7 +28,13 @@ use Spryker\Zed\Discount\Business\Calculator\Type\FixedType;
  */
 class FixedTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ITEM_GROSS_PRICE_1000 = 1000;
+    /**
+     * @var int
+     */
     public const DISCOUNT_AMOUNT_FIXED_100 = 100;
     public const DISCOUNT_AMOUNT_FIXED_MINUS_100 = -100;
 

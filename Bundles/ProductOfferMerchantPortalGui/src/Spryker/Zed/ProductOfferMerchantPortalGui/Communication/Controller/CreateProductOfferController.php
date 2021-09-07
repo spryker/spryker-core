@@ -23,8 +23,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class CreateProductOfferController extends AbstractProductOfferController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT = 'product-id';
 
+    /**
+     * @var string
+     */
     protected const RESPONSE_ACTION_REDIRECT_URL = '/product-offer-merchant-portal-gui/product-offers';
 
     /**

@@ -13,6 +13,9 @@ use Spryker\Client\ProductConfigurationPersistentCart\Dependency\Client\ProductC
 
 class ProductConfigurationPersistentCartDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT_CONFIGURATION_STORAGE = 'CLIENT_PRODUCT_CONFIGURATION_STORAGE';
 
     /**

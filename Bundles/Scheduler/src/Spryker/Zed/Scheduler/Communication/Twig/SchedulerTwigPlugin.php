@@ -15,6 +15,9 @@ use Twig\TwigFunction;
  */
 class SchedulerTwigPlugin extends AbstractTwigExtensionPlugin
 {
+    /**
+     * @var string
+     */
     public const EXTENSION_NAME = 'getenv';
 
     /**

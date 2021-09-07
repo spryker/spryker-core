@@ -15,7 +15,13 @@ use Propel\Generator\Builder\Om\ExtensionQueryBuilder as PropelExtensionQueryObj
 
 class ExtensionQueryBuilder extends PropelExtensionQueryObjectBuilder
 {
+    /**
+     * @var int
+     */
     public const POSITION_OF_ORM = 0;
+    /**
+     * @var int
+     */
     public const POSITION_OF_BASE = 4;
 
     /**

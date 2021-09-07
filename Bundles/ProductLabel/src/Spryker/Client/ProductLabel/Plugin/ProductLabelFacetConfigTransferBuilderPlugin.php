@@ -15,7 +15,13 @@ use Spryker\Shared\Search\SearchConfig;
 
 class ProductLabelFacetConfigTransferBuilderPlugin extends AbstractPlugin implements FacetConfigTransferBuilderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const NAME = 'label';
+    /**
+     * @var string
+     */
     public const PARAMETER_NAME = 'label';
 
     /**

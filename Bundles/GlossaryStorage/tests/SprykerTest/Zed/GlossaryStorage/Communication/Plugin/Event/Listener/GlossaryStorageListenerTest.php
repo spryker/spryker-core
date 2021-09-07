@@ -41,6 +41,9 @@ use SprykerTest\Zed\GlossaryStorage\GlossaryStorageConfigMock;
  */
 class GlossaryStorageListenerTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const ID_GLOSSARY = 1;
 
     /**

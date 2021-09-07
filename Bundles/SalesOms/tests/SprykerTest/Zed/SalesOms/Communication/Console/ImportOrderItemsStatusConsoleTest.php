@@ -31,9 +31,18 @@ use Symfony\Component\Console\Output\BufferedOutput;
  */
 class ImportOrderItemsStatusConsoleTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const CODE_SUCCESS = 0;
+    /**
+     * @var int
+     */
     protected const CODE_ERROR = 1;
 
+    /**
+     * @var string
+     */
     protected const ARGUMENT_FILE_PATH = 'file-path';
 
     /**

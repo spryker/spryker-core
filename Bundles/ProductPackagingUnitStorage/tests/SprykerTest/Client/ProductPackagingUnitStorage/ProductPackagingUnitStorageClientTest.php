@@ -25,6 +25,9 @@ use Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageClient
  */
 class ProductPackagingUnitStorageClientTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PACKAGING_TYPE = 'box';
 
     /**

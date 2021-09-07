@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantProductOption\Dependency\Facade\MerchantProductOptionToM
  */
 class MerchantProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
 
     /**

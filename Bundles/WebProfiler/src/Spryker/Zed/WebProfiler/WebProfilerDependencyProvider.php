@@ -17,8 +17,12 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @deprecated Use {@link \Spryker\Zed\WebProfiler\WebProfilerDependencyProvider::PLUGINS_DATA_COLLECTORS} instead.
+     * @var string
      */
     public const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';
+    /**
+     * @var string
+     */
     public const PLUGINS_DATA_COLLECTORS = 'PLUGINS_DATA_COLLECTORS';
 
     /**

@@ -11,5 +11,8 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class DiscountPromotionsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_PROMOTIONAL_ITEMS = 'promotional-items';
 }

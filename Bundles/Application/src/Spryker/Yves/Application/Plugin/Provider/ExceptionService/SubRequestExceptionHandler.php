@@ -14,6 +14,9 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class SubRequestExceptionHandler implements ExceptionHandlerInterface
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_URL_NAME_PREFIX = 'error/';
 
     /**

@@ -12,6 +12,9 @@ use Spryker\Glue\OrdersRestApi\Processor\Order\OrderReaderInterface;
 
 class OrderByOrderReferenceResourceRelationshipExpander implements OrderByOrderReferenceResourceRelationshipExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const ORDER_REFERENCE = 'orderReference';
 
     /**

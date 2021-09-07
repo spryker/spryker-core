@@ -9,5 +9,8 @@ namespace Spryker\Zed\Cms\Communication\Table;
 
 interface CmsTableConstants
 {
+    /**
+     * @var string
+     */
     public const REQUEST_ID_PAGE = 'id-page';
 }

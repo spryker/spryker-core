@@ -17,8 +17,14 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 abstract class AbstractAssignmentTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_CUSTOMER_GROUP = 'id-customer-group';
 
+    /**
+     * @var string
+     */
     public const COL_SELECT_CHECKBOX = 'select-checkbox';
     public const COL_CUSTOMER_ID = SpyCustomerTableMap::COL_ID_CUSTOMER;
     public const COL_CUSTOMER_EMAIL = SpyCustomerTableMap::COL_EMAIL;

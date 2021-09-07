@@ -24,10 +24,22 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class DoubleSubmitFormType extends AbstractTypeExtension
 {
+    /**
+     * @var string
+     */
     public const OPTION_KEY_ERROR_MESSAGE = 'double_submit_error';
+    /**
+     * @var string
+     */
     public const OPTION_KEY_TOKEN_FIELD_NAME = 'token_field_name';
 
+    /**
+     * @var string
+     */
     public const DEFAULT_TOKEN_FIELD_NAME = '_requestToken';
+    /**
+     * @var string
+     */
     public const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';
 
     /**

@@ -13,6 +13,9 @@ use Spryker\DecimalObject\Decimal;
 
 class ProductPackagingUnitAmountSalesUnitValue implements ProductPackagingUnitAmountSalesUnitValueInterface
 {
+    /**
+     * @var int
+     */
     protected const DIVISION_SCALE = 10;
 
     /**

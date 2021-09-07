@@ -22,12 +22,19 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DetailController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
 
+    /**
+     * @var string
+     */
     public const ROUTE_REDIRECT = '/sales/detail';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
+     * @var string
      */
     protected const SERVICE_SUB_REQUEST = 'sub_request';
 

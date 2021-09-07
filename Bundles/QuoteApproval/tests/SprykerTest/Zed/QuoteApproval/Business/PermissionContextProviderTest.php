@@ -29,7 +29,13 @@ use Spryker\Zed\QuoteApproval\QuoteApprovalConfig as QuoteApprovalZedConfig;
  */
 class PermissionContextProviderTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const QUOTE_GRAND_TOTAL = 12345;
+    /**
+     * @var int
+     */
     protected const QUOTE_SHIPMENT_PRICE = 200;
 
     /**

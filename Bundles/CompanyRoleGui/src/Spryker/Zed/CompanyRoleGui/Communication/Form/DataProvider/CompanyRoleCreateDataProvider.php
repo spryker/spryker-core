@@ -19,6 +19,9 @@ use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToPermissionFacad
 
 class CompanyRoleCreateDataProvider
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PREFIX_PERMISSION_NAME = 'permission.name.';
 
     /**

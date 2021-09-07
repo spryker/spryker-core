@@ -15,11 +15,26 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class AclEntityRulePermissionMaskToBinaryStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const INVALID_PERMISSION_TEMPLATE = 'Invalid permission given: %s. Use one of: %s';
 
+    /**
+     * @var string
+     */
     protected const OPERATION_CREATE = 'C';
+    /**
+     * @var string
+     */
     protected const OPERATION_READ = 'R';
+    /**
+     * @var string
+     */
     protected const OPERATION_UPDATE = 'U';
+    /**
+     * @var string
+     */
     protected const OPERATION_DELETE = 'D';
 
     /**

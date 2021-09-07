@@ -32,6 +32,9 @@ use Symfony\Component\Console\Command\Command;
  */
 class PropelCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @var string
+     */
     public const LOGGER_NAME = 'defaultLogger';
 
     /**

@@ -14,6 +14,9 @@ use Spryker\Zed\Development\DevelopmentConfig;
 
 class MappedDependencyFinder extends AbstractFileDependencyFinder
 {
+    /**
+     * @var string
+     */
     public const TYPE_MAPPED = 'mapped';
 
     /**

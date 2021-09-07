@@ -29,11 +29,26 @@ use Spryker\Zed\HealthCheck\HealthCheckDependencyProvider;
  */
 class HealthCheckFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const DATABASE_SERVICE_NAME = 'database';
+    /**
+     * @var string
+     */
     protected const SEARCH_SERVICE_NAME = 'search';
+    /**
+     * @var string
+     */
     protected const STORAGE_SERVICE_NAME = 'storage';
 
+    /**
+     * @var bool
+     */
     protected const IS_SERVICE_HEALTHY = true;
+    /**
+     * @var bool
+     */
     protected const IS_SERVICE_UNHEALTHY = false;
 
     /**

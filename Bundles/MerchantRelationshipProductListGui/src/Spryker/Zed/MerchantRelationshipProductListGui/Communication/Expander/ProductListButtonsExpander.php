@@ -15,9 +15,16 @@ class ProductListButtonsExpander implements ProductListButtonsExpanderInterface
 {
     /**
      * @uses \Spryker\Zed\ConfigurableBundleGui\Communication\Controller\TemplateController::indexAction()
+     * @var string
      */
     protected const MERCHANT_RELATION_LIST_BUTTON_URL = '/merchant-relationship-gui/list-merchant-relationship';
+    /**
+     * @var string
+     */
     protected const MERCHANT_RELATION_LIST_BUTTON_TITLE = 'Merchant Relations';
+    /**
+     * @var array
+     */
     protected const MERCHANT_RELATION_LIST_BUTTON_OPTIONS = [
         'class' => 'btn-view',
         'iconClass' => 'fa fa-caret-right',

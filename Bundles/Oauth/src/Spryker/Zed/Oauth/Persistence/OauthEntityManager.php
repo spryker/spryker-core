@@ -17,6 +17,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class OauthEntityManager extends AbstractEntityManager implements OauthEntityManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_REVOKED_AT = 'RevokedAt';
 
     /**

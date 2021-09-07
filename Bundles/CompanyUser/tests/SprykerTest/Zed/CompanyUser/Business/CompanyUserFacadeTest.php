@@ -33,6 +33,9 @@ use Generated\Shared\Transfer\CustomerTransfer;
  */
 class CompanyUserFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const FIRST_NAME_TEST = 'TEST_NAME';
 
     /**

@@ -15,7 +15,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_TWIG_CHART_GUI_FUNCTIONS = 'PLUGIN_TWIG_CHART_GUI_FUNCTIONS';
+    /**
+     * @var string
+     */
     public const PLUGIN_CHART = 'PLUGIN_CHART';
 
     /**

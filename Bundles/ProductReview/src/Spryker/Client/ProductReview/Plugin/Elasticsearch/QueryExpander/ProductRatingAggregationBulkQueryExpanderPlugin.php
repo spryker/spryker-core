@@ -18,7 +18,13 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class ProductRatingAggregationBulkQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const PRODUCT_AGGREGATOIN_NAME = 'product-aggregation';
+    /**
+     * @var string
+     */
     protected const REVIEW_AGGREGATION_NAME = 'rating-aggregation';
 
     /**

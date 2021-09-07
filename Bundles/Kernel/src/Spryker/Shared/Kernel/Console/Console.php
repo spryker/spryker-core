@@ -23,7 +23,13 @@ use Symfony\Component\Console\Terminal;
  */
 class Console extends SymfonyCommand
 {
+    /**
+     * @var int
+     */
     public const CODE_SUCCESS = 0;
+    /**
+     * @var int
+     */
     public const CODE_ERROR = 1;
 
     /**

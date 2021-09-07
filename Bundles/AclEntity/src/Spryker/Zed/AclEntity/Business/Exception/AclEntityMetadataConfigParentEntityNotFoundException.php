@@ -11,6 +11,9 @@ use Exception;
 
 class AclEntityMetadataConfigParentEntityNotFoundException extends Exception
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TEMPLATE = 'Acl entity metadata configuration  was not found for %s parent.';
 
     /**

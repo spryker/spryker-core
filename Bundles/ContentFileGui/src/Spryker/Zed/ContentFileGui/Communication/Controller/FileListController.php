@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FileListController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_FILE_IDS = 'ids';
 
     /**

@@ -20,15 +20,36 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class OrderInvoiceSendConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const COMMAND_NAME = 'order:invoice:send';
+    /**
+     * @var string
+     */
     protected const COMMAND_DESCRIPTION = 'Sends email for order invoices';
 
+    /**
+     * @var string
+     */
     protected const ARGUMENT_ORDER_IDS = 'order_ids';
+    /**
+     * @var string
+     */
     protected const ARGUMENT_ORDER_IDS_DESCRIPTION = 'Filter order invoices by order ids';
 
+    /**
+     * @var string
+     */
     protected const ARGUMENT_FORCE_EMAIL_SEND = 'force';
+    /**
+     * @var string
+     */
     protected const ARGUMENT_FORCE_EMAIL_SEND_DESCRIPTION = 'Allows to resend email';
 
+    /**
+     * @var int
+     */
     protected const BATCH = 20;
 
     /**

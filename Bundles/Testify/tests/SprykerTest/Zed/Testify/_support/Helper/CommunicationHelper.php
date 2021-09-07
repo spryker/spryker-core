@@ -23,6 +23,9 @@ use SprykerTest\Shared\Testify\Helper\ConfigHelper;
  */
 class CommunicationHelper extends Module
 {
+    /**
+     * @var string
+     */
     protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Communication\%3$sCommunicationFactory';
 
     /**

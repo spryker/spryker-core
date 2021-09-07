@@ -18,15 +18,42 @@ use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClient
 
 class ShoppingListDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
+    /**
+     * @var string
+     */
     public const CLIENT_PRODUCT = 'CLIENT_PRODUCT';
+    /**
+     * @var string
+     */
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    /**
+     * @var string
+     */
     public const CLIENT_PRICE_PRODUCT = 'CLIENT_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const CLIENT_MESSENGER = 'CLIENT_MESSENGER';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER = 'PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER = 'PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER';
+    /**
+     * @var string
+     */
     public const PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER';
 
     /**

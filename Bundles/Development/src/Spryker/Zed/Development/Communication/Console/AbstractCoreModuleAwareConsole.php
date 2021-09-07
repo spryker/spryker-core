@@ -23,6 +23,9 @@ use Symfony\Component\Console\Input\InputInterface;
  */
 class AbstractCoreModuleAwareConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const ARGUMENT_MODULE = 'module';
 
     /**

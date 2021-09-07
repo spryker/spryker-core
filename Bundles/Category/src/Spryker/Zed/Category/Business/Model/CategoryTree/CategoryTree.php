@@ -25,6 +25,9 @@ class CategoryTree implements CategoryTreeInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_DESTINATION_CHILD_COLLECTION_COUNT = 0;
 
     /**

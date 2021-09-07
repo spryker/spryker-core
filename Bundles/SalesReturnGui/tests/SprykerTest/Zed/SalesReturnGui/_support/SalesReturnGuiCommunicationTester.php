@@ -38,6 +38,9 @@ class SalesReturnGuiCommunicationTester extends Actor
 {
     use _generated\SalesReturnGuiCommunicationTesterActions;
 
+    /**
+     * @var string
+     */
     protected const SHIPPED_STATE_NAME = 'shipped';
 
     /**

@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class DownloadScheduleListController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
 
     /**

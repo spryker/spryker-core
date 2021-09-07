@@ -15,6 +15,9 @@ use Spryker\Zed\ProductDiscontinuedProductBundleConnector\Dependency\Facade\Prod
 
 class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRODUCT_BUNDLE_DISCONTINUED = 'You can not unmark the discontinued bundle until any of the bundled products are discontinued.';
 
     /**

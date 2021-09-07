@@ -18,11 +18,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class YvesBuildFrontendConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'frontend:yves:build';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will build Yves frontend.';
 
+    /**
+     * @var string
+     */
     protected const OPTION_ENVIRONMENT = 'environment';
+    /**
+     * @var string
+     */
     protected const OPTION_ENVIRONMENT_SHORT = 'e';
+    /**
+     * @var string
+     */
     protected const OPTION_ENVIRONMENT_DESCRIPTION = 'Sets the environment to run the command. Currently available environments: production';
 
     /**

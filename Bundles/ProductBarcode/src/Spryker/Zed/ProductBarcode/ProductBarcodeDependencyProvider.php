@@ -16,6 +16,9 @@ use Spryker\Zed\ProductBarcode\Dependency\Service\ProductBarcodeToBarcodeService
  */
 class ProductBarcodeDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_BARCODE = 'SERVICE_BARCODE';
 
     /**

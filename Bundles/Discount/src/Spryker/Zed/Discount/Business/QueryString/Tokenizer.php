@@ -11,6 +11,9 @@ use Spryker\Zed\Discount\Business\Exception\QueryStringException;
 
 class Tokenizer implements TokenizerInterface
 {
+    /**
+     * @var string
+     */
     public const STRING_TO_TOKENS_REGEXP = '((\(|\)|["\'].*?["\'])|\s+)';
 
     /**

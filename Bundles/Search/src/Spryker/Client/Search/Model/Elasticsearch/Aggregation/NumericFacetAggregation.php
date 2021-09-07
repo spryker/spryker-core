@@ -15,6 +15,9 @@ use Spryker\Client\Search\SearchConfig;
  */
 class NumericFacetAggregation extends AbstractFacetAggregation
 {
+    /**
+     * @var string
+     */
     public const STATS_SUFFIX = '-stats';
 
     /**

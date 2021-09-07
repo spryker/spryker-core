@@ -25,7 +25,13 @@ use Spryker\Service\UtilSanitizeXss\UtilSanitizeXssServiceInterface;
  */
 class UtilSanitizeXssServiceTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const HTML_TAG_IFRAME = 'iframe';
+    /**
+     * @var string
+     */
     protected const ATTRIBUTE_STYLE = 'style';
 
     /**

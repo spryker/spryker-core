@@ -24,14 +24,35 @@ use Spryker\Zed\CartExtension\Dependency\Plugin\TerminationAwareCartPreCheckPlug
 
 class Operation implements OperationInterface
 {
+    /**
+     * @var string
+     */
     public const ADD_ITEMS_SUCCESS = 'cart.add.items.success';
+    /**
+     * @var string
+     */
     public const REMOVE_ITEMS_SUCCESS = 'cart.remove.items.success';
 
+    /**
+     * @var string
+     */
     protected const TERMINATION_EVENT_NAME_ADD = 'add';
+    /**
+     * @var string
+     */
     protected const TERMINATION_EVENT_NAME_REMOVE = 'remove';
+    /**
+     * @var string
+     */
     protected const TERMINATION_EVENT_NAME_RELOAD = 'reload';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED = 'cart.locked.change_denied';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_NOTIFICATION = 'notification';
 
     /**

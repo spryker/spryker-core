@@ -11,6 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class FileManagerStorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const STORAGE_COMPOSITE_KEY = 'composite_key';
 
     /**

@@ -14,6 +14,9 @@ use Twig\TwigFunction;
 
 class ProductGroupTwigExtension extends TwigExtension
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME_PRODUCT_GROUP_ITEMS = 'spyProductGroupItems';
 
     /**

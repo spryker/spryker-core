@@ -20,10 +20,22 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AddController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const MESSAGE_CUSTOMER_CREATE_SUCCESS = 'Customer was created successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_CUSTOMER_CREATE_ERROR = 'Customer was not created.';
 
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_DEFAULT = '/customer';
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_KEY = 'redirectUrl';
 
     /**

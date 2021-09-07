@@ -16,7 +16,13 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class TargetEntityValidatorStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const ENTITY_NOT_FOUND_TEMPLATE = 'Failed to find %s by %s: "%s"';
+    /**
+     * @var string
+     */
     protected const MULTIPLE_ENTITIES_FOUND_TEMPLATE = 'Multiple %s were found by %s: "%s"';
 
     /**

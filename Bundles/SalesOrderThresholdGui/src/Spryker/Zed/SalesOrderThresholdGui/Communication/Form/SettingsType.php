@@ -18,8 +18,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class SettingsType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_TAX_SETS = 'OPTION_TAX_SETS';
 
+    /**
+     * @var string
+     */
     public const FIELD_TAX_SET = 'fkTaxSet';
 
     /**

@@ -27,13 +27,28 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  */
 class CompanyUnitAddressFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const TEST_ADDRESS = 'TEST ADDRESS';
 
+    /**
+     * @var int
+     */
     protected const VALUE_COMPANY_UNIT_ADDRESSES_COUNT = 3;
 
+    /**
+     * @var int
+     */
     protected const VALUE_COMPANY_UNIT_ADDRESSES_MAX_PER_PAGE = 2;
+    /**
+     * @var int
+     */
     protected const VALUE_COMPANY_UNIT_ADDRESSES_PAGE = 2;
 
+    /**
+     * @var int
+     */
     protected const VALUE_COMPANY_UNIT_ADDRESSES_COUNT_EXPECTED = 1;
 
     /**

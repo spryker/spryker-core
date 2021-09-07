@@ -21,7 +21,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const AVAILABILITY_LIST_URL = '/availability-gui/index';
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_STORE = 'id-store';
 
     /**

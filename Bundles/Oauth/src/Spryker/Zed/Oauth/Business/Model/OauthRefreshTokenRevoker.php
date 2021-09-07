@@ -22,9 +22,18 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
 {
     use CryptTrait;
 
+    /**
+     * @var string
+     */
     protected const REFRESH_TOKEN_INVALID_ERROR_MESSAGE = 'Invalid Refresh Token';
+    /**
+     * @var string
+     */
     protected const REFRESH_TOKEN_NOT_FOUND_ERROR_MESSAGE = 'Refresh Token not found';
 
+    /**
+     * @var string
+     */
     protected const KEY_REFRESH_TOKEN_ID = 'refresh_token_id';
 
     /**

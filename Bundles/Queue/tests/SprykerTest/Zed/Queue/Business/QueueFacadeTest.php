@@ -36,11 +36,26 @@ use Spryker\Zed\Queue\QueueDependencyProvider;
  */
 class QueueFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const REGISTERED_QUEUE_NAME = 'event';
+    /**
+     * @var string
+     */
     protected const UNREGISTERED_QUEUE_NAME = 'wrongQueueName';
 
+    /**
+     * @var int
+     */
     protected const LIMIT_OPTION = 1;
+    /**
+     * @var string
+     */
     protected const FORMAT_OPTION = 'json';
+    /**
+     * @var int
+     */
     protected const NO_ACK_OPTION = 0;
 
     /**

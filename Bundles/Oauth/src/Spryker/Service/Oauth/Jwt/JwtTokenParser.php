@@ -12,6 +12,9 @@ use Spryker\Service\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface
 
 class JwtTokenParser implements JwtTokenParserInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_ALG = 'alg';
 
     /**

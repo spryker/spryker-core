@@ -26,7 +26,13 @@ use Spryker\Glue\ProductConfigurationsRestApi\Plugin\CartsRestApi\ProductConfigu
  */
 class ProductConfigurationRestCartItemsAttributesMapperPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_SKU = 'test-sku';
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE = 'en_US';
 
     /**

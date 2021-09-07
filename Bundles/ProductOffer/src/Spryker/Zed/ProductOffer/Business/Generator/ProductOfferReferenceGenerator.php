@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductOffer\Business\Generator;
 
 class ProductOfferReferenceGenerator implements ProductOfferReferenceGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const PREFIX_PRODUCT_OFFER_REFERENCE = 'offer';
 
     /**

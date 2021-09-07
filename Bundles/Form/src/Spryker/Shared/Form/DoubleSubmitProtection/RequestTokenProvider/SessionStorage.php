@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionStorage implements StorageInterface
 {
+    /**
+     * @var string
+     */
     protected const SESSION_KEY_PREFIX = 'req_';
 
     /**

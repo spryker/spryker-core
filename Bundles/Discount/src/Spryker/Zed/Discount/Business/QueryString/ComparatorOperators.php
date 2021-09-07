@@ -13,11 +13,35 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface;
 
 class ComparatorOperators implements ComparatorOperatorsInterface
 {
+    /**
+     * @var string
+     */
     public const MATCH_ALL_IDENTIFIER = '*';
+
+    /**
+     * @var string
+     */
     public const TYPE_NUMBER = 'number';
+
+    /**
+     * @var string
+     */
     public const TYPE_STRING = 'string';
+
+    /**
+     * @var string
+     */
     public const TYPE_LIST = 'list';
+
+    /**
+     * @var string
+     */
     public const NUMBER_REGEXP = '/[0-9\.\,]+/';
+
+    /**
+     * @phpstan-var non-empty-string
+     * @var string
+     */
     public const LIST_DELIMITER = ';';
 
     /**

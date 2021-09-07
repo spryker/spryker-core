@@ -9,13 +9,28 @@ namespace SprykerTest\Zed\CategoryGui\PageObject;
 
 class CategoryListPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/category-gui/root';
 
+    /**
+     * @var string
+     */
     public const SELECTOR_TABLE = 'dataTables_wrapper';
+    /**
+     * @var string
+     */
     public const SELECTOR_CATEGORIES_LIST = 'categories-list';
 
+    /**
+     * @var string
+     */
     public const BUTTON_CREATE_CATEGORY = '//div[@class="title-action"]/a';
 
+    /**
+     * @var string
+     */
     public const SELECTOR_TREE_LIST = '#category-tree > div.dd > ol.dd-list';
 
     /**

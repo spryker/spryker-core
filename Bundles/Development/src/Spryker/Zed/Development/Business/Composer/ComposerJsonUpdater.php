@@ -15,7 +15,13 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
 {
+    /**
+     * @var string
+     */
     public const KEY_REQUIRE = 'require';
+    /**
+     * @var string
+     */
     public const KEY_REQUIRE_DEV = 'require-dev';
 
     /**

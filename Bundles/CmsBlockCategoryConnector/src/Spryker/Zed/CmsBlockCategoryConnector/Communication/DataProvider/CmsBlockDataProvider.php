@@ -17,6 +17,9 @@ use Spryker\Zed\CmsBlockCategoryConnector\Persistence\CmsBlockCategoryConnectorQ
 
 class CmsBlockDataProvider
 {
+    /**
+     * @var string
+     */
     protected const FORMATTED_CATEGORY_NAME = '%s [%s][%s]';
 
     /**

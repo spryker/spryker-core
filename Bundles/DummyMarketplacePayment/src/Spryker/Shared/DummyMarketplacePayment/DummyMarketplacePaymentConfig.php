@@ -9,6 +9,12 @@ namespace Spryker\Shared\DummyMarketplacePayment;
 
 class DummyMarketplacePaymentConfig
 {
+    /**
+     * @var string
+     */
     public const PAYMENT_PROVIDER_NAME = 'DummyMarketplacePayment';
+    /**
+     * @var string
+     */
     public const PAYMENT_METHOD_DUMMY_MARKETPLACE_PAYMENT_INVOICE = 'dummyMarketplacePaymentInvoice';
 }

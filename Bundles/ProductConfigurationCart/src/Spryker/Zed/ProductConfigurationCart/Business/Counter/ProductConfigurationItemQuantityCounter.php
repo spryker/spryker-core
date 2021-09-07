@@ -14,10 +14,14 @@ use Spryker\Zed\ProductConfigurationCart\Business\Comparator\ItemComparatorInter
 
 class ProductConfigurationItemQuantityCounter implements ProductConfigurationItemQuantityCounterInterface
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_ITEM_QUANTITY = 0;
 
     /**
      * @uses \Spryker\Zed\Cart\CartConfig::OPERATION_REMOVE
+     * @var string
      */
     protected const OPERATION_REMOVE = 'remove';
 

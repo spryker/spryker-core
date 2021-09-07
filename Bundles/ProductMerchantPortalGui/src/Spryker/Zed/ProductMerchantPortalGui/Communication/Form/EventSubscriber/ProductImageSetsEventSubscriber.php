@@ -13,14 +13,41 @@ use Symfony\Component\Form\FormEvents;
 
 class ProductImageSetsEventSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_IMAGE_SETS_FRONT = 'imageSetsFront';
+    /**
+     * @var string
+     */
     protected const FIELD_IMAGE_SETS = 'imageSets';
+    /**
+     * @var string
+     */
     protected const FIELD_IMAGE_SET_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_ID_PRODUCT_IMAGE_SET = 'idProductImageSet';
+    /**
+     * @var string
+     */
     protected const FIELD_PRODUCT_IMAGES = 'productImages';
+    /**
+     * @var string
+     */
     protected const FIELD_LOCALE = 'locale';
+    /**
+     * @var string
+     */
     protected const FIELD_ID_LOCALE = 'idLocale';
+    /**
+     * @var string
+     */
     protected const FIELD_LOCALE_NAME = 'localeName';
+    /**
+     * @var string
+     */
     protected const FIELD_ORIGINAL_INDEX = 'originalIndex';
 
     /**

@@ -15,16 +15,40 @@ use Spryker\Zed\Setup\SetupConfig;
  */
 class Cronjobs
 {
+    /**
+     * @var string
+     */
     public const ROLE_ADMIN = 'admin';
+    /**
+     * @var string
+     */
     public const ROLE_REPORTING = 'reporting';
+    /**
+     * @var string
+     */
     public const ROLE_EMPTY = 'empty';
     public const DEFAULT_ROLE = self::ROLE_ADMIN;
+    /**
+     * @var int
+     */
     public const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
+    /**
+     * @var string
+     */
     public const JENKINS_API_JOBS_URL = 'api/json/jobs?pretty=true&tree=jobs[name]';
 
+    /**
+     * @var string
+     */
     protected const JENKINS_URL_API_CSRF_TOKEN = 'crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)';
+    /**
+     * @var string
+     */
     protected const JENKINS_CSRF_TOKEN_NAME = 'crumb';
 
+    /**
+     * @var string
+     */
     protected const TEMPLATE_MESSAGE_ERROR_CURL = 'cURL error: %s  while calling Jenkins URL %s';
 
     /**

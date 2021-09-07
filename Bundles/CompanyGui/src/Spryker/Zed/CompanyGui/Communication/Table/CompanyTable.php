@@ -24,14 +24,35 @@ class CompanyTable extends AbstractTable
     public const COL_NAME = SpyCompanyTableMap::COL_NAME;
     public const COL_IS_ACTIVE = SpyCompanyTableMap::COL_IS_ACTIVE;
     public const COL_STATUS = SpyCompanyTableMap::COL_STATUS;
+    /**
+     * @var string
+     */
     public const COL_ACTIONS = 'actions';
 
+    /**
+     * @var string
+     */
     public const REQUEST_ID_COMPANY = 'id-company';
 
+    /**
+     * @var string
+     */
     public const URL_COMPANY_DEACTIVATE = '/company-gui/edit-company/deactivate';
+    /**
+     * @var string
+     */
     public const URL_COMPANY_ACTIVATE = '/company-gui/edit-company/activate';
+    /**
+     * @var string
+     */
     public const URL_COMPANY_DENY = '/company-gui/edit-company/deny';
+    /**
+     * @var string
+     */
     public const URL_COMPANY_APPROVE = '/company-gui/edit-company/approve';
+    /**
+     * @var string
+     */
     public const URL_COMPANY_EDIT = '/company-gui/edit-company/index?id-company=%d';
 
     /**

@@ -16,6 +16,9 @@ use Spryker\Glue\ProductMeasurementUnitsRestApi\Processor\Translator\ProductMeas
 
 class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements ProductMeasurementUnitBySalesUnitResourceRelationshipExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_MEASUREMENT_UNIT_MAPPING_TYPE = 'code';
 
     /**

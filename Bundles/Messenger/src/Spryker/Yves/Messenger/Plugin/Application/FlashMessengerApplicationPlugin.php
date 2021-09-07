@@ -15,10 +15,14 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class FlashMessengerApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const SERVICE_FLASH_MESSENGER = 'flash_messenger';
 
     /**
      * @uses \Spryker\Yves\Session\Plugin\Application\SessionApplicationPlugin::SERVICE_SESSION
+     * @var string
      */
     protected const SERVICE_SESSION = 'session';
 

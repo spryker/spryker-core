@@ -18,9 +18,18 @@ use Spryker\Zed\ShipmentCartConnector\Dependency\Service\ShipmentCartConnectorTo
  */
 class ShipmentCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_SHIPMENT = 'shipment facade';
+    /**
+     * @var string
+     */
     public const FACADE_PRICE = 'price facade';
 
+    /**
+     * @var string
+     */
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**

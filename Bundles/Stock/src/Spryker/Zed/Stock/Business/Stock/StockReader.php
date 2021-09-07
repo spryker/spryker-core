@@ -17,6 +17,9 @@ use Spryker\Zed\Stock\Persistence\StockRepositoryInterface;
 
 class StockReader implements StockReaderInterface
 {
+    /**
+     * @var string
+     */
     public const ERROR_STOCK_TYPE_UNKNOWN = 'stock type unknown';
 
     /**

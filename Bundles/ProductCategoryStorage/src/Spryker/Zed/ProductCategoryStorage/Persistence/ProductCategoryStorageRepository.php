@@ -29,9 +29,18 @@ use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationData
  */
 class ProductCategoryStorageRepository extends AbstractRepository implements ProductCategoryStorageRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_FK_CATEGORY = 'fk_category';
 
+    /**
+     * @var string
+     */
     protected const COL_BOOSTED_DEPTH = 'boostedDepth';
+    /**
+     * @var int
+     */
     protected const DEPTH_TO_BOOST = 0;
 
     /**

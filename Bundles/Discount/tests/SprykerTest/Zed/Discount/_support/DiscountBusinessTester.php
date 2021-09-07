@@ -30,6 +30,9 @@ class DiscountBusinessTester extends Actor
 {
     use _generated\DiscountBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     public const VOUCHER_CODE = 'testCode1';
 
     /**

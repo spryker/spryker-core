@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint;
 
 class UniqueRelationTypeForProductAbstractAndQuerySet extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_RELATION_FACADE = 'productRelationFacade';
 
     /**

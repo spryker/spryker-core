@@ -17,6 +17,9 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChang
  */
 class QuickOrderQuoteNameExpanderPlugin extends AbstractPlugin implements PersistentCartChangeExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const PARAM_SUBMIT_BUTTON_CREATE_ORDER = 'createOrder';
 
     /**

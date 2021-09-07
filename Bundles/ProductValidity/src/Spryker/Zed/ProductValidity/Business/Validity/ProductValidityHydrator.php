@@ -13,6 +13,9 @@ use Spryker\Zed\ProductValidity\Persistence\ProductValidityQueryContainerInterfa
 
 class ProductValidityHydrator implements ProductValidityHydratorInterface
 {
+    /**
+     * @var string
+     */
     public const VALIDITY_DATE_TIME_FORMAT = 'Y-m-d G:i';
 
     /**

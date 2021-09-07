@@ -29,6 +29,9 @@ class SessionHelper extends Module
     use FactoryHelperTrait;
     use ClientHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const MODULE_NAME = 'Session';
 
     /**

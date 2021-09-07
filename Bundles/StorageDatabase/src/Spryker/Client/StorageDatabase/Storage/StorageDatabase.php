@@ -12,11 +12,26 @@ use Spryker\Client\StorageDatabaseExtension\Dependency\Plugin\StorageReaderPlugi
 
 class StorageDatabase implements StorageDatabaseInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PLACEHOLDER = ':key';
+    /**
+     * @var string
+     */
     protected const KV_PREFIX = 'kv:';
 
+    /**
+     * @var string
+     */
     protected const ACCESS_STATS_KEY_COUNT = 'count';
+    /**
+     * @var string
+     */
     protected const ACCESS_STATS_KEY_KEYS = 'keys';
+    /**
+     * @var string
+     */
     protected const ACCESS_STATS_KEY_READ = 'read';
 
     /**

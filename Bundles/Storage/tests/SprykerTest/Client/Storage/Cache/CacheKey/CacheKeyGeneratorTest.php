@@ -27,7 +27,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CacheKeyGeneratorTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const KEY_NAME_PREFIX = 'storage';
+    /**
+     * @var string
+     */
     protected const KEY_NAME_SEPARATOR = ':';
 
     /**

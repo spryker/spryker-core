@@ -16,6 +16,9 @@ use Spryker\Glue\UrlsRestApi\Processor\Url\ResponseBuilder\UrlResponseBuilderInt
 
 class UrlResolver implements UrlResolverInterface
 {
+    /**
+     * @var string
+     */
     protected const URL_REQUEST_PARAMETER = 'url';
 
     /**

@@ -21,6 +21,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ShipmentMethodDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
+    /**
+     * @var string
+     */
     public const DECISION_RULE_FIELD_NAME = 'shipment-method';
 
     /**

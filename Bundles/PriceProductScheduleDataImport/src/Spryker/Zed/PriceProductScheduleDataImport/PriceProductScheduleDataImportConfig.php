@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class PriceProductScheduleDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_PRODUCT_PRICE_SCHEDULE = 'product-price-schedule';
+    /**
+     * @var string
+     */
     public const PRICE_PRODUCT_SCHEDULE_LIST_DEFAULT_NAME = 'price schedule data import';
 
     /**

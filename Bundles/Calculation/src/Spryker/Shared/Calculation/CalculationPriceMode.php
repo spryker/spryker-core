@@ -9,6 +9,12 @@ namespace Spryker\Shared\Calculation;
 
 interface CalculationPriceMode
 {
+    /**
+     * @var string
+     */
     public const PRICE_MODE_NET = 'NET_MODE';
+    /**
+     * @var string
+     */
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
 }

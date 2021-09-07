@@ -26,12 +26,30 @@ use Orm\Zed\Sales\Persistence\SpySalesShipment;
 
 class BusinessHelper extends Module
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
+    /**
+     * @var string
+     */
     public const DEFAULT_ITEM_STATE = 'test';
 
+    /**
+     * @var int
+     */
     protected const ORDER_ITEM_QTY = 1;
+    /**
+     * @var int
+     */
     protected const ORDER_ITEM_GROSS_PRICE_1 = 500;
+    /**
+     * @var int
+     */
     protected const ORDER_ITEM_GROSS_PRICE_2 = 800;
+    /**
+     * @var int
+     */
     protected const ORDER_ITEM_TAX_RATE = 19;
 
     /**

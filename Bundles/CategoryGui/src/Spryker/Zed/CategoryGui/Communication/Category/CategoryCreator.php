@@ -15,6 +15,9 @@ use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterfa
 
 class CategoryCreator implements CategoryCreatorInterface
 {
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_CATEGORY_ADDED = 'The category was added successfully.';
 
     /**

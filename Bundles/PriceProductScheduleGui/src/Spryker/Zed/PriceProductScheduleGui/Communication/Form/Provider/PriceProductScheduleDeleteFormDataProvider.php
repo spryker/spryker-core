@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 
 class PriceProductScheduleDeleteFormDataProvider
 {
+    /**
+     * @var string
+     */
     public const OPTION_REDIRECT_URL = 'option_redirect_url';
 
     /**

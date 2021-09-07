@@ -13,11 +13,13 @@ class ProductBundleConfig extends AbstractBundleConfig
 {
     /**
      * @see \Spryker\Zed\Availability\AvailabilityConfig::ERROR_TYPE_AVAILABILITY
+     * @var string
      */
     protected const ERROR_TYPE_AVAILABILITY = 'Availability';
 
     /**
      * @see \Spryker\Zed\Availability\AvailabilityConfig::PARAMETER_PRODUCT_SKU_AVAILABILITY
+     * @var string
      */
     protected const PARAMETER_PRODUCT_SKU_AVAILABILITY = '%sku%';
 

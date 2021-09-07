@@ -13,6 +13,7 @@ class NavigationsCategoryNodesResourceRelationshipConfig extends AbstractBundleC
 {
     /**
      * @uses \Spryker\Glue\CategoriesRestApi\CategoriesRestApiConfig::RESOURCE_CATEGORY_NODES
+     * @var string
      */
     public const RESOURCE_CATEGORY_NODES = 'category-nodes';
 }

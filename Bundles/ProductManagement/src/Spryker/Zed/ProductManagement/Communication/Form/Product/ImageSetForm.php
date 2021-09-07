@@ -26,14 +26,35 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ImageSetForm extends AbstractSubForm
 {
+    /**
+     * @var string
+     */
     public const FIELD_SET_ID = 'id_product_image_set';
+    /**
+     * @var string
+     */
     public const FIELD_SET_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_SET_FK_LOCALE = 'fk_locale';
+    /**
+     * @var string
+     */
     public const FIELD_SET_FK_PRODUCT = 'fk_product';
+    /**
+     * @var string
+     */
     public const FIELD_SET_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 
+    /**
+     * @var string
+     */
     public const PRODUCT_IMAGES = 'product_images';
 
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
 
     /**

@@ -12,6 +12,9 @@ use Spryker\Service\UtilMeasurementUnitConversion\UtilMeasurementUnitConversionC
 
 class MeasurementUnitConverter implements MeasurementUnitConverterInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_INVALID_EXCHANGE = 'There is no exchange ratio defined between "%s" and "%s" measurement unit codes.';
 
     /**

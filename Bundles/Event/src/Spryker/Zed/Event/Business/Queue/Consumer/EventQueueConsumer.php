@@ -22,8 +22,17 @@ use Throwable;
 
 class EventQueueConsumer implements EventQueueConsumerInterface
 {
+    /**
+     * @var string
+     */
     public const EVENT_TRANSFERS = 'eventTransfers';
+    /**
+     * @var string
+     */
     public const EVENT_MESSAGES = 'eventMessages';
+    /**
+     * @var string
+     */
     public const RETRY_KEY = 'retry';
 
     /**

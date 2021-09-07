@@ -9,5 +9,8 @@ namespace SprykerTest\Zed\ProductOption\PageObject;
 
 class ProductOptionListPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/product-option/list';
 }

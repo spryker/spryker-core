@@ -13,6 +13,9 @@ use Spryker\Client\PriceProductVolume\Dependency\Client\PriceProductVolumeToProd
 
 class PriceProductReader implements PriceProductReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const STORAGE_KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**

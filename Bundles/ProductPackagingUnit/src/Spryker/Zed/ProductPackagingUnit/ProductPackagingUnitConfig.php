@@ -14,11 +14,15 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
 {
     /**
      * Default packaging unit type name.
+     *
+     * @var string
      */
     protected const DEFAULT_PRODUCT_PACKAGING_UNIT_TYPE_NAME = 'packaging_unit_type.item.name';
 
     /**
      * Infrastructural packaging unit types.
+     *
+     * @var array
      */
     protected const INFRASTRUCTURAL_PACKAGING_UNIT_TYPES = [
         [

@@ -17,6 +17,9 @@ use Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface;
 
 class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
 {
+    /**
+     * @var int
+     */
     protected const ERROR_VOUCHER_CODE_LIMIT_REACHED = 399;
 
     /**

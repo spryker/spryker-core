@@ -21,8 +21,17 @@ use Throwable;
 
 class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 {
+    /**
+     * @var string
+     */
     public const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+    /**
+     * @var string
+     */
     public const QUANTITY = 'quantity';
+    /**
+     * @var int
+     */
     protected const DIVISION_SCALE = 10;
 
     /**

@@ -21,13 +21,37 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CheckTimeoutConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'oms:check-timeout';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Check timeouts';
+    /**
+     * @var string
+     */
     protected const OPTION_STORE_NAME = 'store-name';
+    /**
+     * @var string
+     */
     protected const OPTION_STORE_NAME_SHORT = 's';
+    /**
+     * @var string
+     */
     protected const OPTION_LIMIT = 'limit';
+    /**
+     * @var string
+     */
     protected const OPTION_LIMIT_SHORT = 'l';
+    /**
+     * @var string
+     */
     protected const OPTION_PROCESSOR_ID = 'processor-id';
+    /**
+     * @var string
+     */
     protected const OPTION_PROCESSOR_ID_SHORT = 'p';
 
     /**

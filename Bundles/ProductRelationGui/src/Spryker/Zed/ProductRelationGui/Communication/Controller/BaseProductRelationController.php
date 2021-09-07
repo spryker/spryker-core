@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BaseProductRelationController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_PARAM_DATA = 'data';
 
     /**

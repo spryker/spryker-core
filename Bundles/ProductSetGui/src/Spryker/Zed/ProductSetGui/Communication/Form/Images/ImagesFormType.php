@@ -18,6 +18,9 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class ImagesFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_IMAGE_SET_COLLECTION_PREFIX = 'image_set_collection_';
 
     /**

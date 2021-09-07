@@ -19,6 +19,9 @@ use Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodi
 
 class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const TOKEN_TYPE = 'Bearer';
 
     /**

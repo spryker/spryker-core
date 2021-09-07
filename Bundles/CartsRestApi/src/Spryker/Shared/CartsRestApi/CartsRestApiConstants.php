@@ -26,6 +26,7 @@ interface CartsRestApiConstants
      *   {@link \Spryker\Glue\CartsRestApi\Controller\GuestCartItemsResourceController::deleteAction()}.
      *
      * @api
+     * @var string
      */
     public const IS_QUOTE_RELOAD_ENABLED = 'CARTS_REST_API:IS_QUOTE_RELOAD_ENABLED';
 }

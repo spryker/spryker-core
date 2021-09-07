@@ -13,6 +13,9 @@ use Spryker\Client\ShoppingListNote\Dependency\Client\ShoppingListNoteToCartClie
 
 class ShoppingListNoteDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
 
     /**

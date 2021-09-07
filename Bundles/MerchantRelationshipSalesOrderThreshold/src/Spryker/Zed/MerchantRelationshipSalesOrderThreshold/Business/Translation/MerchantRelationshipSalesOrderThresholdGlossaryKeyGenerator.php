@@ -12,8 +12,17 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 class MerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator implements MerchantRelationshipSalesOrderThresholdGlossaryKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     protected const SALES_ORDER_THRESHOLD_GLOSSARY_PREFIX = 'merchant-relationship-threshold';
+    /**
+     * @var string
+     */
     protected const SALES_ORDER_THRESHOLD_GLOSSARY_MESSAGE = 'message';
+    /**
+     * @var string
+     */
     protected const MERCHANT_RELATIONSHIP_IDENTIFIER_PREFIX = 'mr-';
 
     /**

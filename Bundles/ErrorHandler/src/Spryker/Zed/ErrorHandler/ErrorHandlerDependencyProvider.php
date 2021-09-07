@@ -16,15 +16,20 @@ use Spryker\Zed\Kernel\Container;
  */
 class ErrorHandlerDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_EXCEPTION_HANDLER = 'PLUGINS_EXCEPTION_HANDLER';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     * @var string
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     * @var string
      */
     public const SERVICE_KERNEL = 'kernel';
 

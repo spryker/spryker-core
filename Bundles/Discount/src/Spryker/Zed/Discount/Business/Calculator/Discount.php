@@ -26,6 +26,9 @@ class Discount implements DiscountInterface
 {
     use LoggerTrait;
 
+    /**
+     * @var string
+     */
     protected const ITEM_QUANTITY_DECISION_RULE = 'item-quantity';
 
     /**

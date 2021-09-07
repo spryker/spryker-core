@@ -12,7 +12,13 @@ use Symfony\Component\Form\FormInterface;
 
 class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const FIELD_RETURN_CREATE_FORM = 'returnCreateForm';
+    /**
+     * @var string
+     */
     protected const FIELD_ORDER = 'order';
 
     /**

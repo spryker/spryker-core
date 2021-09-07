@@ -26,6 +26,9 @@ class ProductConcreteImageSetStorageListener extends AbstractPlugin implements E
 {
     use DatabaseTransactionHandlerTrait;
 
+    /**
+     * @var array
+     */
     protected const PUBLISH_EVENTS = [
         ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE,
         ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE,

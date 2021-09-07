@@ -12,10 +12,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class UserPasswordResetConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const DAY_IN_SECONDS = 86400;
 
     /**
      * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::PASSWORD_RESET_PATH
+     * @var string
      */
     protected const PASSWORD_RESET_PATH = '/security-gui/password/reset';
 

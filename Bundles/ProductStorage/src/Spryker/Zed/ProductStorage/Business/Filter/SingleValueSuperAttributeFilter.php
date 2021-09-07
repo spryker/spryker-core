@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductStorage\Business\Filter;
 
 class SingleValueSuperAttributeFilter implements SingleValueSuperAttributeFilterInterface
 {
+    /**
+     * @var int
+     */
     protected const SINGLE_VALUE_ATTRIBUTE_COUNT = 1;
 
     /**

@@ -14,7 +14,13 @@ use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 
 class DuplicateOrderChecker implements DuplicateOrderCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CHECKOUT_DUPLICATE_ORDER = 'checkout.order.duplicate';
+    /**
+     * @var string
+     */
     protected const DUPLICATE_ORDER_REFERENCE_PARAMETER = '{{reference}}';
 
     /**

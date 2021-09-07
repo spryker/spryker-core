@@ -15,6 +15,9 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class RouterDebugBackendApiConsole extends AbstractRouterDebugConsole
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'router:debug:backend-api';
 
     /**

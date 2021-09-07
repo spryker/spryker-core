@@ -14,9 +14,21 @@ use Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface;
 
 class CorsFilterPostProcessor implements PostProcessorInterface
 {
+    /**
+     * @var string
+     */
     public const HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin';
+    /**
+     * @var string
+     */
     public const HEADER_ACCESS_CONTROL_ALLOW_HEADERS = 'Access-Control-Allow-Headers';
+    /**
+     * @var string
+     */
     public const HEADER_ACCESS_CONTROL_ALLOW_METHODS = 'Access-Control-Allow-Methods';
+    /**
+     * @var string
+     */
     public const HEADER_ORIGIN = 'origin';
 
     /**

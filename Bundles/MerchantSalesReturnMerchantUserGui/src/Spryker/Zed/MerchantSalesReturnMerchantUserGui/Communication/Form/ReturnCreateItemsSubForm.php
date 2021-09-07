@@ -25,14 +25,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ReturnCreateItemsSubForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_RETURN_ITEM_IS_NOT_ELIGIBLE_FOR_RETURN = 'Item selected for return is not eligible for return anymore.';
 
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_SELECT_REASON = 'Select reason';
 
+    /**
+     * @var string
+     */
     protected const FIELD_CUSTOM_REASON = 'customReason';
 
     /**
      * @uses \Spryker\Zed\MerchantSalesReturnMerchantUserGui\Communication\Form\ReturnCreateForm::OPTION_RETURN_REASONS
+     * @var string
      */
     protected const OPTION_RETURN_REASONS = 'option_return_reasons';
 

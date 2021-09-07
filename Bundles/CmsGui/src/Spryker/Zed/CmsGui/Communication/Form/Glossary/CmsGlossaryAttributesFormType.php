@@ -30,16 +30,43 @@ class CmsGlossaryAttributesFormType extends AbstractType
 {
     use ArrayObjectTransformerTrait;
 
+    /**
+     * @var string
+     */
     public const FIELD_PLACEHOLDER = 'placeholder';
+    /**
+     * @var string
+     */
     public const FIELD_FK_PAGE = 'fkPage';
+    /**
+     * @var string
+     */
     public const FIELD_FK_GLOSSARY_MAPPING = 'fkCmsGlossaryMapping';
+    /**
+     * @var string
+     */
     public const FIELD_TEMPLATE_NAME = 'templateName';
+    /**
+     * @var string
+     */
     public const FIELD_SEARCH_OPTION = 'searchOption';
+    /**
+     * @var string
+     */
     public const FIELD_TRANSLATIONS = 'translations';
+    /**
+     * @var string
+     */
     public const FIELD_TRANSLATION_KEY = 'translationKey';
 
+    /**
+     * @var string
+     */
     public const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
 
+    /**
+     * @var string
+     */
     public const OPTION_GLOSSARY_KEY_SEARCH_OPTIONS = 'glossaryKeySearchOptions';
 
     /**

@@ -21,6 +21,7 @@ class MerchantRelationshipProductAbstractFormExpanderPlugin extends AbstractPlug
 {
     /**
      * @uses \Spryker\Zed\ProductManagement\Communication\Form\ProductFormAdd::FORM_PRICE_DIMENSION
+     * @var string
      */
     protected const FORM_PRICE_DIMENSION = 'price_dimension';
 

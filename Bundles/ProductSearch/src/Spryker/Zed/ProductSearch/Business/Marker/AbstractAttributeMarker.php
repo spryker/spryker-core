@@ -22,6 +22,9 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 abstract class AbstractAttributeMarker implements AttributeMarkerInterface
 {
+    /**
+     * @var bool
+     */
     public const NOT_SYNCED = false;
 
     /**

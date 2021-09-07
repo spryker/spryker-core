@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class BusinessOnBehalfCompanyUserTableDeleteActionPlugin extends AbstractPlugin implements CompanyUserTableDeleteActionPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const PATH_CONFIRM_DELETE_COMPANY_USER = '/business-on-behalf-gui/delete-company-user/delete-confirm';
 
     /**

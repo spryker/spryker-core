@@ -9,5 +9,8 @@ namespace Spryker\Zed\CompanyUnitAddressLabelDataImport\Business\Model\DataSet;
 
 interface CompanyUnitAddressLabelDataSet
 {
+    /**
+     * @var string
+     */
     public const LABEL_NAME = 'name';
 }

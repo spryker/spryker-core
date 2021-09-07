@@ -12,13 +12,37 @@ use Spryker\Zed\Transfer\Business\Exception\EmptyEntityTransferDefinitionExcepti
 
 class EntityTransferDefinitionLoader extends TransferDefinitionLoader
 {
+    /**
+     * @var string
+     */
     public const KEY_TABLE = 'table';
+    /**
+     * @var string
+     */
     public const KEY_COLUMN = 'column';
+    /**
+     * @var string
+     */
     public const KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     public const ENTITY_SCHEMA_SUFFIX = '.schema.xml';
+    /**
+     * @var string
+     */
     public const ENTITY_PREFIX = 'spy_';
+    /**
+     * @var int
+     */
     public const PREFIX_LENGTH = 4;
+    /**
+     * @var string
+     */
     public const ENTITY_NAMESPACE = 'entity-namespace';
+    /**
+     * @var string
+     */
     public const ENTITY_SCHEMA_PATHNAME = 'path';
 
     /**

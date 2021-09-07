@@ -24,23 +24,32 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class UpdateProductOfferController extends AbstractProductOfferController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT_OFFER = 'product-offer-id';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_WAITING_FOR_APPROVAL
+     * @var string
      */
     protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
+     * @var string
      */
     protected const APPROVAL_STATUS_APPROVED = 'approved';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_DENIED
+     * @var string
      */
     protected const APPROVAL_STATUS_DENIED = 'denied';
 
+    /**
+     * @var string
+     */
     protected const APPROVAL_STATUS_WAITING_FOR_APPROVAL_CHIP_TITLE = 'Pending';
 
     /**

@@ -20,7 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CreateController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const ROUTE_PRODUCT_LABEL_EDIT = '/product-label-gui/edit';
+    /**
+     * @var string
+     */
     protected const PARAM_ID_PRODUCT_LABEL = 'id-product-label';
 
     /**

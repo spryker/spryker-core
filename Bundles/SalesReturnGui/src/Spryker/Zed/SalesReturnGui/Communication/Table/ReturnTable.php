@@ -21,26 +21,50 @@ use Spryker\Zed\SalesReturnGui\SalesReturnGuiConfig;
 
 class ReturnTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_RETURN_ID = 'id_sales_return';
+    /**
+     * @var string
+     */
     protected const COL_RETURN_REFERENCE = 'return_reference';
+    /**
+     * @var string
+     */
     protected const COL_ORDER_REFERENCE = 'order_reference';
+    /**
+     * @var string
+     */
     protected const COL_RETURNED_PRODUCTS = 'returned_products';
+    /**
+     * @var string
+     */
     protected const COL_RETURN_DATE = 'created_at';
+    /**
+     * @var string
+     */
     protected const COL_STATE = 'state';
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'actions';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\DetailController::indexAction()
+     * @var string
      */
     protected const ROUTE_DETAIL = '/sales-return-gui/detail';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\ReturnSlipController::indexAction()
+     * @var string
      */
     protected const ROUTE_RETURN_SLIP = '/sales-return-gui/return-slip';
 
     /**
      * @uses \Spryker\Zed\SalesReturnGui\Communication\Controller\AbstractReturnController::PARAM_ID_RETURN
+     * @var string
      */
     protected const PARAM_ID_RETURN = 'id-return';
 

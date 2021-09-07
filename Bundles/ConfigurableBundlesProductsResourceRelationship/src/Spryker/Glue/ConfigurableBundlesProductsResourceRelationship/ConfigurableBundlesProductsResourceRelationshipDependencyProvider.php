@@ -17,8 +17,14 @@ use Spryker\Glue\Kernel\Container;
  */
 class ConfigurableBundlesProductsResourceRelationshipDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_PRODUCTS_REST_API = 'RESOURCE_PRODUCTS_REST_API';
 
+    /**
+     * @var string
+     */
     public const CLIENT_CATALOG = 'CLIENT_CATALOG';
 
     /**

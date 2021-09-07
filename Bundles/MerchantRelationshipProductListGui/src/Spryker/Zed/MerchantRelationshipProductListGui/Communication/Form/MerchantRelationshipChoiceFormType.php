@@ -21,6 +21,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class MerchantRelationshipChoiceFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_VALUES_MERCHANT_RELATIONSHIP_CHOICES = 'merchant_relationship_choices';
 
     /**

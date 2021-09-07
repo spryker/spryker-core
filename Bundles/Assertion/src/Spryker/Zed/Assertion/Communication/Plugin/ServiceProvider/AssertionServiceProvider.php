@@ -16,6 +16,9 @@ use Spryker\Zed\Assertion\Business\AssertionFacade;
  */
 class AssertionServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const ASSERTION = 'assertion';
 
     /**

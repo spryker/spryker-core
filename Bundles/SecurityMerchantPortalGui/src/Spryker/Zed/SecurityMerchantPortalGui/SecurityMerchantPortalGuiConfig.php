@@ -11,9 +11,18 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SecurityMerchantPortalGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const ROLE_MERCHANT_USER = 'ROLE_MERCHANT_USER';
 
+    /**
+     * @var string
+     */
     protected const MERCHANT_USER_DEFAULT_URL = '/dashboard-merchant-portal-gui/dashboard';
+    /**
+     * @var string
+     */
     protected const LOGIN_URL = '/security-merchant-portal-gui/login';
 
     /**

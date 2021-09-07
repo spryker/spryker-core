@@ -26,12 +26,17 @@ class ShipmentMethodDataHelper extends Module
 {
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     public const NAMESPACE_ROOT = '\\';
 
     /**
      * First level key represents store name.
      * Second level key represents currency ISO code.
      * Second level value represents the optional corresponding MoneyValue transfer object override values.
+     *
+     * @var array
      */
     public const DEFAULT_PRICE_LIST = [
         'DE' => [

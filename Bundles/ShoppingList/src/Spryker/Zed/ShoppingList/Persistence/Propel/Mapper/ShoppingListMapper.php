@@ -15,11 +15,26 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingList;
 
 class ShoppingListMapper implements ShoppingListMapperInterface
 {
+    /**
+     * @var string
+     */
     public const FIELD_NUMBER_OF_ITEMS = 'number_of_items';
 
+    /**
+     * @var string
+     */
     public const FIELD_FIRST_NAME = 'first_name';
+    /**
+     * @var string
+     */
     public const FIELD_LAST_NAME = 'last_name';
+    /**
+     * @var string
+     */
     public const FIELD_CREATED_AT = 'created_at';
+    /**
+     * @var string
+     */
     public const FIELD_UPDATED_AT = 'updated_at';
 
     /**

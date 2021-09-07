@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 class OrderCustomReferenceEntityManager extends AbstractEntityManager implements OrderCustomReferenceEntityManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_ORDER_CUSTOM_REFERENCE = 'OrderCustomReference';
 
     /**

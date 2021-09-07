@@ -43,20 +43,34 @@ use Spryker\Zed\ProductMerchantPortalGui\Persistence\Propel\ProductTableDataMapp
  */
 class ProductMerchantPortalGuiRepository extends AbstractRepository implements ProductMerchantPortalGuiRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const SUFFIX_PRICE_TYPE_NET = '_net';
+    /**
+     * @var string
+     */
     protected const SUFFIX_PRICE_TYPE_GROSS = '_gross';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
+     * @var string
      */
     protected const COL_KEY_PRODUCT_ABSTRACT_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
+     * @var string
      */
     protected const COL_KEY_PRODUCT_SKU = 'sku';
 
+    /**
+     * @var string
+     */
     protected const COL_NAME_FALLBACK = 'name_fallback';
+    /**
+     * @var string
+     */
     protected const RELATION_LOCALE_FALLBACK = 'locale_fallback';
 
     /**

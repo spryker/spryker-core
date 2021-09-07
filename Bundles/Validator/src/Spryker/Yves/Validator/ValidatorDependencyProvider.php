@@ -12,7 +12,13 @@ use Spryker\Yves\Kernel\Container;
 
 class ValidatorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_VALIDATOR = 'PLUGINS_VALIDATOR';
+    /**
+     * @var string
+     */
     public const PLUGINS_CONSTRAINT = 'PLUGINS_CONSTRAINT';
 
     /**

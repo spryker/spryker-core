@@ -26,6 +26,9 @@ use Spryker\Shared\Session\Model\SessionStorage\SessionStorageHandlerPool;
  */
 class SessionStorageHandlerPoolTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const CONFIGURED_HANDLER_NAME = 'handler name';
 
     /**

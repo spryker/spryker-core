@@ -21,10 +21,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ShipmentType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const TYPE_NAME = 'shipments';
 
+    /**
+     * @var string
+     */
     public const FIELD_SHIPMENT_METHOD = 'idShipmentMethod';
 
+    /**
+     * @var string
+     */
     public const OPTION_SHIPMENT_METHODS_ARRAY = 'option-shipment-methods-array';
 
     /**

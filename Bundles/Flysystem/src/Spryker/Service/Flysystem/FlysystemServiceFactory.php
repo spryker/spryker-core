@@ -21,6 +21,9 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
  */
 class FlysystemServiceFactory extends AbstractServiceFactory
 {
+    /**
+     * @var string
+     */
     public const SPRYKER_ADAPTER_CLASS = 'sprykerAdapterClass';
 
     /**

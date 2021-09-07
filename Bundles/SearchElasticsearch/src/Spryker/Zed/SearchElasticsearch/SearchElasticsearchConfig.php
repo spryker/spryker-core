@@ -15,11 +15,17 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class SearchElasticsearchConfig extends AbstractBundleConfig
 {
+    /**
+     * @var array
+     */
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
         'index.number_of_shards',
         'index.routing_partition_size',
     ];
 
+    /**
+     * @var array
+     */
     protected const STATIC_INDEX_SETTINGS = [
         'index.number_of_shards',
         'index.shard.check_on_startup',
@@ -28,6 +34,9 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
         'analysis',
     ];
 
+    /**
+     * @var array
+     */
     protected const DYNAMIC_INDEX_SETTINGS = [
         'index.number_of_replicas',
         'index.auto_expand_replicas',
@@ -52,7 +61,13 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
         'index.gc_deletes',
     ];
 
+    /**
+     * @var string
+     */
     public const INDEX_OPEN_STATE = 'open';
+    /**
+     * @var string
+     */
     public const INDEX_CLOSE_STATE = 'close';
 
     /**

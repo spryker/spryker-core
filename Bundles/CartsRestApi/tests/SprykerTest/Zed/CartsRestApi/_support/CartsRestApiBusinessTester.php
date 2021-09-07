@@ -45,18 +45,42 @@ class CartsRestApiBusinessTester extends Actor
 {
     use _generated\CartsRestApiBusinessTesterActions;
 
+    /**
+     * @var int
+     */
     public const TEST_ID_QUOTE = 67238;
+    /**
+     * @var string
+     */
     public const TEST_QUOTE_UUID = 'test-quote-uuid';
 
+    /**
+     * @var string
+     */
     public const TEST_CUSTOMER_REFERENCE = 'DE--666';
 
+    /**
+     * @var string
+     */
     public const TEST_ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:DE--666';
 
+    /**
+     * @var string
+     */
     public const TEST_QUANTITY = '3';
 
+    /**
+     * @var string
+     */
     public const TEST_SKU = 'test-sku';
+    /**
+     * @var string
+     */
     public const TEST_SKU2 = 'test-sku2';
 
+    /**
+     * @var array
+     */
     public const COLLECTION_QUOTES = [
         [
             'id_quote' => 1,
@@ -79,6 +103,9 @@ class CartsRestApiBusinessTester extends Actor
         ],
     ];
 
+    /**
+     * @var array
+     */
     public const ITEMS = [
         [
             'sku' => 'test sku',

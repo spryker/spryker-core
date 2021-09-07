@@ -12,6 +12,9 @@ use Spryker\Zed\MerchantRelationshipProductListGui\Dependency\Facade\MerchantRel
 
 class MerchantRelationshipChoiceFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_MERCHANT_RELATIONSHIP_KEY = '%s - %s';
 
     /**

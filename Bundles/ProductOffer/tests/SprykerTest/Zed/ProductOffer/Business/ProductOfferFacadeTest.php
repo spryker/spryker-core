@@ -37,14 +37,41 @@ use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
  */
 class ProductOfferFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_SKU_1 = 'sku_1';
+    /**
+     * @var string
+     */
     protected const TEST_SKU_2 = 'sku_2';
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_REFERENCE_1 = 'merchant_reference_1';
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_REFERENCE_2 = 'merchant_reference_2';
+    /**
+     * @var string
+     */
     protected const TEST_MERCHANT_REFERENCE_3 = 'merchant_reference_3';
+    /**
+     * @var string
+     */
     protected const TEST_PRODUCT_REFERENCE_1 = 'product_reference_1';
+    /**
+     * @var string
+     */
     protected const TEST_PRODUCT_REFERENCE_2 = 'product_reference_2';
+    /**
+     * @var string
+     */
     protected const TEST_PRODUCT_REFERENCE_3 = 'product_reference_3';
+    /**
+     * @var string
+     */
     protected const TEST_PRODUCT_REFERENCE_4 = 'product_reference_4';
 
     /**

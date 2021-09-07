@@ -16,10 +16,25 @@ use Spryker\Zed\Kernel\Container;
  */
 class SessionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SESSION_CLIENT = 'SESSION_CLIENT';
+    /**
+     * @var string
+     */
     public const MONITORING_SERVICE = 'monitoring service';
+    /**
+     * @var string
+     */
     public const PLUGINS_SESSION_HANDLER = 'PLUGINS_SESSION_HANDLER';
+    /**
+     * @var string
+     */
     public const PLUGINS_YVES_SESSION_LOCK_RELEASER = 'PLUGINS_YVES_SESSION_LOCK_RELEASER';
+    /**
+     * @var string
+     */
     public const PLUGINS_ZED_SESSION_LOCK_RELEASER = 'PLUGINS_ZED_SESSION_LOCK_RELEASER';
 
     /**

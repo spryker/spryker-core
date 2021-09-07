@@ -11,5 +11,8 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 
 class ProductImageConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const DEFAULT_IMAGE_SET_NAME = 'default';
 }

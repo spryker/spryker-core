@@ -18,20 +18,51 @@ use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiT
 
 class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const COL_KEY_REFERENCE = 'reference';
+    /**
+     * @var string
+     */
     public const COL_KEY_MERCHANT_REFERENCE = 'merchantReference';
+    /**
+     * @var string
+     */
     public const COL_KEY_CREATED = 'created';
+    /**
+     * @var string
+     */
     public const COL_KEY_CUSTOMER = 'customer';
+    /**
+     * @var string
+     */
     public const COL_KEY_EMAIL = 'Email';
+    /**
+     * @var string
+     */
     public const COL_KEY_ITEMS_STATES = 'itemsStates';
+    /**
+     * @var string
+     */
     public const COL_KEY_GRAND_TOTAL = 'grandTotal';
+    /**
+     * @var string
+     */
     public const COL_KEY_NUMBER_OF_ITEMS = 'numberOfItems';
+    /**
+     * @var string
+     */
     public const COL_KEY_STORE = 'store';
 
+    /**
+     * @var string
+     */
     protected const ROW_ACTION_ID_MERCHANT_ORDER_DETAIL = 'merchant-order-detail';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\OrdersController::tableDataAction()
+     * @var string
      */
     protected const DATA_URL = '/sales-merchant-portal-gui/orders/table-data';
 

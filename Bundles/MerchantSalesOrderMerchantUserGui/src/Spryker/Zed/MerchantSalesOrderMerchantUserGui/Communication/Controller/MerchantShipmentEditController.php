@@ -16,11 +16,26 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MerchantShipmentEditController extends AbstractMerchantShipmentController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_SHIPMENT = 'id-shipment';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHIPMENT_UPDATE_SUCCESS = 'Shipment has been successfully updated.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHIPMENT_UPDATE_FAIL = 'Shipment has not been updated.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SHIPMENT_NOT_FOUND_ERROR = 'Shipment #%d not found.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_REFERENCE_NOT_FOUND = 'Merchant reference not found.';
 
     /**

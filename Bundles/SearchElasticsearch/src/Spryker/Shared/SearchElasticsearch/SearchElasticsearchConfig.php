@@ -13,12 +13,26 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
 {
     /**
      * Available facet types
+     *
+     * @var string
      */
     public const FACET_TYPE_ENUMERATION = 'enumeration';
+    /**
+     * @var string
+     */
     public const FACET_TYPE_RANGE = 'range';
+    /**
+     * @var string
+     */
     public const FACET_TYPE_PRICE_RANGE = 'price-range';
+    /**
+     * @var string
+     */
     public const FACET_TYPE_CATEGORY = 'category';
 
+    /**
+     * @var array
+     */
     protected const SUPPORTED_SOURCE_IDENTIFIERS = [];
 
     /**

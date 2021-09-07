@@ -12,6 +12,9 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class BeginsWith extends AbstractOperator
 {
+    /**
+     * @var string
+     */
     public const TYPE = 'begins_with';
 
     /**

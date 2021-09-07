@@ -16,6 +16,9 @@ use Spryker\Zed\QuoteApprovalShipmentConnector\Dependency\Facade\QuoteApprovalSh
  */
 class QuoteApprovalShipmentConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_QUOTE_APPROVAL = 'FACADE_QUOTE_APPROVAL';
 
     /**

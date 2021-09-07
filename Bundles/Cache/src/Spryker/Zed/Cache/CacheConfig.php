@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CacheConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const STORE_PATTERN_MARKER = '{STORE}';
 
     /**

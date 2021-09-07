@@ -17,6 +17,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class MerchantPortalRouterCacheWarmUpConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'router:cache:warm-up:merchant-portal';
 
     /**

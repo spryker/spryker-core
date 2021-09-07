@@ -13,6 +13,9 @@ use Spryker\Zed\SearchElasticsearchGui\Dependency\Facade\SearchElasticsearchGuiT
 
 class IndexTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_INDEX = 'COL_INDEX';
 
     /**

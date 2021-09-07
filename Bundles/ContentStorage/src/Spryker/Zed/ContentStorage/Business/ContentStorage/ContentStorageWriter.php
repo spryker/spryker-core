@@ -21,6 +21,9 @@ class ContentStorageWriter implements ContentStorageWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_LOCALE = 'DEFAULT_LOCALE';
 
     /**

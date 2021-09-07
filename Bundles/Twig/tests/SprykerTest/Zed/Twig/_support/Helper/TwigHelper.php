@@ -39,8 +39,17 @@ class TwigHelper extends Module
     use DependencyProviderHelperTrait;
     use EventDispatcherHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const MODULE_NAME = 'Twig';
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_TWIG_PLUGINS = 'twigPlugins';
+    /**
+     * @var string
+     */
     protected const CONFIG_KEY_LOADER_PLUGINS = 'loaderPlugins';
 
     /**

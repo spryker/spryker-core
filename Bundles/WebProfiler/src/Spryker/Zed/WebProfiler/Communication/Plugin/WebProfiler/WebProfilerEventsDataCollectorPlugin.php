@@ -15,7 +15,13 @@ use Symfony\Component\HttpKernel\DataCollector\EventDataCollector;
 
 class WebProfilerEventsDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'events';
+    /**
+     * @var string
+     */
     protected const TEMPLATE = '@WebProfiler/Collector/events.html.twig';
 
     /**

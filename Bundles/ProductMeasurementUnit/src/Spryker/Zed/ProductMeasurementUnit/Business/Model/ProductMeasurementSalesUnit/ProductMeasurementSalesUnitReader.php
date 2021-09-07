@@ -15,6 +15,9 @@ use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitReposit
 
 class ProductMeasurementSalesUnitReader implements ProductMeasurementSalesUnitReaderInterface
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_EXCHANGE_RATIO = 1;
 
     /**

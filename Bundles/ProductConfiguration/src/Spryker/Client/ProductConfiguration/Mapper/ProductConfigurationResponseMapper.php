@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 
 class ProductConfigurationResponseMapper implements ProductConfigurationResponseMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_PRODUCT_CONFIGURATION_INSTANCE = 'productConfigurationInstance';
 
     /**

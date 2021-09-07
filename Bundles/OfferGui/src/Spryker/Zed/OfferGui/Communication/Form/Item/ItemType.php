@@ -23,23 +23,71 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class ItemType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const FIELD_GROUP_KEY = 'groupKey';
+    /**
+     * @var string
+     */
     public const FIELD_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const FIELD_OFFER_FEE = 'offerFee';
+    /**
+     * @var string
+     */
     public const FIELD_STOCK = 'stock';
+    /**
+     * @var string
+     */
     public const FIELD_UNIT_GROSS_PRICE = 'unitGrossPrice';
+    /**
+     * @var string
+     */
     public const FIELD_UNIT_NET_PRICE = 'unitNetPrice';
+    /**
+     * @var string
+     */
     public const FIELD_SOURCE_UNIT_GROSS_PRICE = 'sourceUnitGrossPrice';
+    /**
+     * @var string
+     */
     public const FIELD_SOURCE_UNIT_NET_PRICE = 'sourceUnitNetPrice';
+    /**
+     * @var string
+     */
     public const FIELD_OFFER_DISCOUNT = 'offerDiscount';
+    /**
+     * @var string
+     */
     public const FIELD_UNIT_SUBTOTAL_AGGREGATION = 'unitSubtotalAggregation';
+    /**
+     * @var string
+     */
     public const FIELD_SUM_SUBTOTAL_AGGREGATION = 'sumSubtotalAggregation';
 
+    /**
+     * @var string
+     */
     public const FIELD_FORCED_UNIT_GROSS_PRICE = 'forcedUnitGrossPrice';
+    /**
+     * @var string
+     */
     public const FIELD_FORCED_UNIT_NET_PRICE = 'forcedUnitNetPrice';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
+    /**
+     * @var string
+     */
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
 
     /**

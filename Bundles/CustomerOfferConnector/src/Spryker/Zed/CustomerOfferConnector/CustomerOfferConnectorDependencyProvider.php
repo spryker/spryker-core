@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Container;
 
 class CustomerOfferConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     /**

@@ -14,7 +14,13 @@ use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
 
 class PriceProductItemValidator implements PriceProductItemValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_NO_PRICE_PRODUCT = 'price_product.error.price_not_found';
 
     /**

@@ -12,6 +12,9 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\Context\Depende
 
 class ModuleAnnotationDependencyFinder implements DependencyFinderInterface
 {
+    /**
+     * @var string
+     */
     public const TYPE = 'module-annotation';
 
     /**

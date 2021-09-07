@@ -18,6 +18,9 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 
 class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapperInterface
 {
+    /**
+     * @var int
+     */
     protected const PAGINATION_FIRST_PAGE = 1;
 
     /**

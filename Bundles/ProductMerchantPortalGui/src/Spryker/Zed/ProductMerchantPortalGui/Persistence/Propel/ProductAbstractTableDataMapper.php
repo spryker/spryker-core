@@ -20,46 +20,55 @@ class ProductAbstractTableDataMapper
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SKU
+     * @var string
      */
     protected const COL_KEY_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_IMAGE
+     * @var string
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_NAME
+     * @var string
      */
     protected const COL_KEY_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_SUPER_ATTRIBUTES
+     * @var string
      */
     protected const COL_KEY_SUPER_ATTRIBUTES = 'superAttributes';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_VARIANTS
+     * @var string
      */
     protected const COL_KEY_VARIANTS = 'variants';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_CATEGORIES
+     * @var string
      */
     protected const COL_KEY_CATEGORIES = 'categories';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_STORES
+     * @var string
      */
     protected const COL_KEY_STORES = 'stores';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAbstractGuiTableConfigurationProvider::COL_KEY_VISIBILITY
+     * @var string
      */
     protected const COL_KEY_VISIBILITY = 'visibility';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepository::COL_NAME_FALLBACK
+     * @var string
      */
     protected const COL_NAME_FALLBACK = 'name_fallback';
 
@@ -68,6 +77,9 @@ class ProductAbstractTableDataMapper
      */
     protected $utilEncodingService;
 
+    /**
+     * @var array
+     */
     public const PRODUCT_ABSTRACT_DATA_COLUMN_MAP = [
         self::COL_KEY_SKU => SpyProductAbstractTableMap::COL_SKU,
         self::COL_KEY_IMAGE => ProductImageTransfer::EXTERNAL_URL_SMALL,

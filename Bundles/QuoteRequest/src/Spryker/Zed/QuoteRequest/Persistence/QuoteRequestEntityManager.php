@@ -21,6 +21,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRequestEntityManagerInterface
 {
+    /**
+     * @var string
+     */
     protected const COLUMN_STATUS = 'Status';
 
     /**

@@ -41,8 +41,17 @@ class ProductFacadeTest extends Unit
      */
     protected $productFacade;
 
+    /**
+     * @var string
+     */
     protected const SKU_1 = 'test-sku1';
+    /**
+     * @var string
+     */
     protected const SKU_2 = 'test-sku2';
+    /**
+     * @var string
+     */
     protected const LOCALIZED_ATTRIBUTE_NAME = 'name';
 
     /**

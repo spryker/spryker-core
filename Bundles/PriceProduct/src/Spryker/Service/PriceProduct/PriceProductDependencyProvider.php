@@ -15,6 +15,9 @@ use Spryker\Service\Kernel\Container;
  */
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_PRODUCT_DECISION = 'PLUGIN_PRICE_PRODUCT_DECISION';
 
     /**

@@ -24,6 +24,9 @@ class Writer implements WriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
+    /**
+     * @var string
+     */
     public const TOUCH_PRODUCT = 'product';
 
     /**

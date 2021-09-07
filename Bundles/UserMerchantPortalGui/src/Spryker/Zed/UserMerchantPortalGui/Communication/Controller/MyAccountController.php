@@ -20,15 +20,28 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MyAccountController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_MERCHANT_MY_ACCOUNT = '/user-merchant-portal-gui/my-account';
 
     /**
      * @see \Spryker\Zed\UserMerchantPortalGui\Communication\Controller\MyAccountController::indexAction()
+     * @var string
      */
     protected const URL_CHANGE_PASSWORD = '/user-merchant-portal-gui/change-password';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_USER_UPDATE_SUCCESS = 'Success! The Account is updated.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_USER_UPDATE_ERROR = 'Merchant user entity was not updated.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_USER_VALIDATION_ERROR = 'Please resolve all errors.';
 
     /**

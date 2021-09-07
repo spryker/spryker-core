@@ -32,6 +32,9 @@ class ApiControllerEventDispatcherPlugin extends AbstractPlugin implements Event
 {
     use LoggerTrait;
 
+    /**
+     * @var string
+     */
     protected const REQUEST_URI = 'REQUEST_URI';
 
     /**

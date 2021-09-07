@@ -16,6 +16,9 @@ use Spryker\Zed\SalesConfigurableBundle\Dependency\Facade\SalesConfigurableBundl
  */
 class SalesConfigurableBundleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
     /**

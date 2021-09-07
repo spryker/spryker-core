@@ -33,6 +33,9 @@ class SharedCartPersistenceTester extends Actor
 {
     use _generated\SharedCartPersistenceTesterActions;
 
+    /**
+     * @var int
+     */
     public const MAPPING_KEY = 1;
 
     /**

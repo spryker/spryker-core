@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
  */
 class CategoryStorageQueryContainer extends AbstractQueryContainer implements CategoryStorageQueryContainerInterface
 {
+    /**
+     * @var string
+     */
     public const ID_CATEGORY_NODE = 'idCategoryNode';
 
     /**

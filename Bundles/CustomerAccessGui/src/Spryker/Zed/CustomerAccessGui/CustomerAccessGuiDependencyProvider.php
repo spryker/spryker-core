@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class CustomerAccessGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CUSTOMER_ACCESS = 'FACADE_CUSTOMER_ACCESS';
 
     /**

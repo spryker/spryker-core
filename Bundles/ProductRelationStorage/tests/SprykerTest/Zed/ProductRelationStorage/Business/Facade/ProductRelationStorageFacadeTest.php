@@ -33,6 +33,9 @@ use Spryker\Client\Queue\QueueDependencyProvider;
  */
 class ProductRelationStorageFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME = 'DE';
 
     /**

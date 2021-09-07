@@ -31,19 +31,52 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ProductOptionGroupForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_TAX_SET_FIELD = 'fkTaxSet';
+    /**
+     * @var string
+     */
     public const FIELD_VALUES = 'productOptionValues';
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_OPTION_GROUP = 'idProductOptionGroup';
+    /**
+     * @var string
+     */
     public const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     public const FIELD_VALUE_TRANSLATIONS = 'productOptionValueTranslations';
+    /**
+     * @var string
+     */
     public const FIELD_GROUP_NAME_TRANSLATIONS = 'groupNameTranslations';
 
+    /**
+     * @var string
+     */
     public const OPTION_TAX_SETS = 'optionTaxSets';
 
+    /**
+     * @var string
+     */
     public const PRODUCTS_TO_BE_ASSIGNED = 'products_to_be_assigned';
+    /**
+     * @var string
+     */
     public const PRODUCTS_TO_BE_DE_ASSIGNED = 'products_to_be_de_assigned';
+    /**
+     * @var string
+     */
     public const PRODUCT_OPTION_VALUES_TO_BE_REMOVED = 'product_option_values_to_be_removed';
 
+    /**
+     * @var string
+     */
     public const ALPHA_NUMERIC_PATTERN = '/^[a-z0-9\.\_]+$/';
 
     /**

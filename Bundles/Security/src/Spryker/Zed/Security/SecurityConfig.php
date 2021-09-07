@@ -12,9 +12,18 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SecurityConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const BCRYPT_FACTOR = 12;
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_REQUEST_HTTP_PORT = 80;
+    /**
+     * @var int
+     */
     protected const DEFAULT_REQUEST_HTTPS_PORT = 443;
 
     /**

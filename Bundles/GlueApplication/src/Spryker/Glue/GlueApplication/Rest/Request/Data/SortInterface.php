@@ -9,7 +9,13 @@ namespace Spryker\Glue\GlueApplication\Rest\Request\Data;
 
 interface SortInterface
 {
+    /**
+     * @var string
+     */
     public const SORT_DESC = 'DESC';
+    /**
+     * @var string
+     */
     public const SORT_ASC = 'ASC';
 
     /**

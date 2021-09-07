@@ -15,7 +15,13 @@ use Spryker\Zed\ProductList\Dependency\Facade\ProductListToMessengerFacadeInterf
 
 class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_INFO_RESTRICTED_PRODUCT_REMOVED = 'product-cart.info.restricted-product.removed';
 
     /**

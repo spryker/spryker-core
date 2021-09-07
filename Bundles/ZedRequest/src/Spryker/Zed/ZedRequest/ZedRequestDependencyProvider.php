@@ -20,7 +20,13 @@ use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreBridge;
  */
 class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MESSENGER = 'messenger facade';
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
 
     /**

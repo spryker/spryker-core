@@ -9,7 +9,13 @@ namespace SprykerTest\Zed\CustomerGroup\PageObject;
 
 class CustomerGroupListPage
 {
+    /**
+     * @var string
+     */
     public const URL = '/customer-group';
 
+    /**
+     * @var string
+     */
     public const SELECTOR_TABLE = '.dataTables_wrapper';
 }

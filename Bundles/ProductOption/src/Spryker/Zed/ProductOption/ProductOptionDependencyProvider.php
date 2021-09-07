@@ -29,25 +29,76 @@ use Spryker\Zed\ProductOption\Exception\MissingMoneyCollectionFormTypePluginExce
  */
 class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    /**
+     * @var string
+     */
     public const FACADE_TAX = 'FACADE_TAX';
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'FACADE_TOUCH';
+    /**
+     * @var string
+     */
     public const FACADE_MONEY = 'FACADE_MONEY';
+    /**
+     * @var string
+     */
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
+    /**
+     * @var string
+     */
     public const FACADE_STORE = 'FACADE_STORE';
+    /**
+     * @var string
+     */
     public const FACADE_PRICE = 'FACADE_PRICE';
+    /**
+     * @var string
+     */
     public const FACADE_EVENT = 'FACADE_EVENT';
+    /**
+     * @var string
+     */
     public const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
 
+    /**
+     * @var string
+     */
     public const MONEY_COLLECTION_FORM_TYPE_PLUGIN = 'MONEY_COLLECTION_FORM_TYPE_PLUGIN';
 
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
+    /**
+     * @var string
+     */
     public const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE = 'PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_OPTION_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_OPTION_LIST_ACTION_VIEW_DATA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_OPTION_LIST_TABLE_QUERY_CRITERIA_EXPANDER = 'PLUGINS_PRODUCT_OPTION_LIST_TABLE_QUERY_CRITERIA_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_PRODUCT_OPTION_GROUP_EXPANDER = 'PLUGINS_PRODUCT_OPTION_GROUP_EXPANDER';
 
     /**

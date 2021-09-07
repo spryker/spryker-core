@@ -25,11 +25,23 @@ class Writer implements WriterInterface
 {
     use DatabaseTransactionHandlerTrait;
 
+    /**
+     * @var string
+     */
     public const DEFAULT_NAME = 'default';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_NAME_ALREADY_EXISTS = 'wishlist.validation.error.name.already_exists';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_NAME_HAS_INCORRECT_FORMAT = 'wishlist.validation.error.name.wrong_format';
 
+    /**
+     * @var string
+     */
     protected const WISH_LIST_NAME_VALIDATION_REGEX = '/^[ A-Za-z0-9_-]+$/';
 
     /**

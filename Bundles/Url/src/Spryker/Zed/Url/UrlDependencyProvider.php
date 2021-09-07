@@ -18,17 +18,42 @@ use Spryker\Zed\Url\Dependency\UrlToTouchBridge;
  */
 class UrlDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_LOCALE = 'locale facade';
+    /**
+     * @var string
+     */
     public const FACADE_TOUCH = 'touch facade';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_URL_BEFORE_CREATE = 'PLUGINS_URL_BEFORE_CREATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_URL_AFTER_CREATE = 'PLUGINS_URL_AFTER_CREATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_URL_BEFORE_UPDATE = 'PLUGINS_URL_BEFORE_UPDATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_URL_AFTER_UPDATE = 'PLUGINS_URL_AFTER_UPDATE';
+    /**
+     * @var string
+     */
     public const PLUGINS_URL_BEFORE_DELETE = 'PLUGINS_URL_BEFORE_DELETE';
+    /**
+     * @var string
+     */
     public const PLUGINS_URL_AFTER_DELETE = 'PLUGINS_URL_AFTER_DELETE';
     /**
      * @deprecated Use the `getConnection()` method from query container instead.
+     * @var string
      */
     public const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 

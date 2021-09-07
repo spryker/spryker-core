@@ -18,11 +18,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ElasticsearchSnapshotCreateConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'elasticsearch:snapshot:create';
+    /**
+     * @var string
+     */
     public const COMMAND_ALIAS = 'search:snapshot:create';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will create an Elasticsearch snapshot.';
 
+    /**
+     * @var string
+     */
     public const ARGUMENT_SNAPSHOT_REPOSITORY = 'snapshot-repository';
+    /**
+     * @var string
+     */
     public const ARGUMENT_SNAPSHOT_NAME = 'snapshot-name';
 
     /**

@@ -20,49 +20,61 @@ class MerchantOrderTableDataMapper
 {
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_REFERENCE
+     * @var string
      */
     protected const COL_KEY_REFERENCE = 'reference';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_MERCHANT_REFERENCE
+     * @var string
      */
     protected const COL_KEY_MERCHANT_REFERENCE = 'merchantReference';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_CREATED
+     * @var string
      */
     protected const COL_KEY_CREATED = 'created';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_CUSTOMER
+     * @var string
      */
     protected const COL_KEY_CUSTOMER = 'customer';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_EMAIL
+     * @var string
      */
     protected const COL_KEY_EMAIL = 'Email';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_ITEMS_STATES
+     * @var string
      */
     protected const COL_KEY_ITEMS_STATES = 'itemsStates';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_GRAND_TOTAL
+     * @var string
      */
     protected const COL_KEY_GRAND_TOTAL = 'grandTotal';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_NUMBER_OF_ITEMS
+     * @var string
      */
     protected const COL_KEY_NUMBER_OF_ITEMS = 'numberOfItems';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_STORE
+     * @var string
      */
     public const COL_KEY_STORE = 'store';
 
+    /**
+     * @var array
+     */
     public const MERCHANT_ORDER_DATA_COLUMN_MAP = [
         self::COL_KEY_REFERENCE => SpySalesOrderTableMap::COL_ORDER_REFERENCE,
         self::COL_KEY_MERCHANT_REFERENCE => SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,

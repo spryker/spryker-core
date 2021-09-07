@@ -54,6 +54,9 @@ use SprykerTest\Zed\Discount\Communication\Fixtures\VoucherCollectedDiscountGrou
  */
 class CalculatorTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const ITEM_GROSS_PRICE_500 = 500;
 
     /**

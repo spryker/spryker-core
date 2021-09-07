@@ -20,11 +20,23 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteSetController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const PARAM_REQUEST_ID_TAX_SET = 'id-tax-set';
+    /**
+     * @var string
+     */
     protected const PARAM_TEMPLATE_ID_TAX_SET = 'idTaxSet';
 
+    /**
+     * @var string
+     */
     protected const DELETE_FORM = 'deleteForm';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_DELETE_TAX_SET = 'The tax set has been deleted';
 
     /**

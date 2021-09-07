@@ -37,10 +37,14 @@ class MerchantSearchBusinessTester extends Actor
 {
     use _generated\MerchantSearchBusinessTesterActions;
 
+    /**
+     * @var int
+     */
     protected const MERCHANT_COUNT = 3;
 
     /**
      * @uses \Spryker\Zed\Merchant\MerchantConfig::STATUS_APPROVED
+     * @var string
      */
     protected const MERCHANT_STATUS_APPROVED = 'approved';
 

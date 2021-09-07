@@ -9,10 +9,18 @@ namespace Spryker\Shared\SessionRedis\Handler\KeyBuilder;
 
 class SessionKeyBuilder implements SessionKeyBuilderInterface
 {
+    /**
+     * @var string
+     */
     protected const SESSION_KEY_PREFIX = 'session';
+    /**
+     * @var string
+     */
     protected const SESSION_LOCK_KEY_SUFFIX = 'lock';
     /**
      * By default generated session key has length = 32 symbols, if this const will be less than 32 there can be session collision.
+     *
+     * @var int
      */
     protected const MAX_SESSION_KEY_LENGTH = 64;
 

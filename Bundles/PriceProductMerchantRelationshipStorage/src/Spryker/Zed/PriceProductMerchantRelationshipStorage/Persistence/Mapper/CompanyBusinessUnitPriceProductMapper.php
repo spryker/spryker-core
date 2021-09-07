@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\PriceProductMerchantRelationshipValueTransfer;
 
 class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceProductMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const PRICE_KEY_SEPARATOR = ':';
 
     /**

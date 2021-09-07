@@ -26,6 +26,9 @@ use Spryker\Shared\CmsSlotBlockCmsConnector\CmsSlotBlockCmsConnectorConfig;
  */
 class CmsSlotBlockCmsConnectorClientTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const ID_CMS_PAGE = 1;
 
     /**

@@ -15,6 +15,7 @@ class PublishAndSynchronizeHealthCheckStorageConfig extends AbstractBundleConfig
      * Defines queue name for processing synchronize.
      *
      * @api
+     * @var string
      */
     public const SYNC_STORAGE_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK = 'sync.storage.publish_and_synchronize_health_check';
 
@@ -23,6 +24,7 @@ class PublishAndSynchronizeHealthCheckStorageConfig extends AbstractBundleConfig
      * - This events will be used for spy_publish_and_synchronize_health_check entity creation.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_CREATE = 'Entity.spy_publish_and_synchronize_health_check.create';
 
@@ -31,6 +33,7 @@ class PublishAndSynchronizeHealthCheckStorageConfig extends AbstractBundleConfig
      * - This events will be used for spy_publish_and_synchronize_health_check entity changes.
      *
      * @api
+     * @var string
      */
     public const ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_UPDATE = 'Entity.spy_publish_and_synchronize_health_check.update';
 
@@ -39,6 +42,7 @@ class PublishAndSynchronizeHealthCheckStorageConfig extends AbstractBundleConfig
      * - The storage key for the data to run validation against.
      *
      * @api
+     * @var string
      */
     public const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_KEY = 'publish_and_synchronize_health_check:health-check';
 }

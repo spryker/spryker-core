@@ -25,10 +25,22 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  */
 class RoleController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_ROLE = 'id-role';
+    /**
+     * @var string
+     */
     public const ACL_ROLE_LIST_URL = '/acl/role/index';
+    /**
+     * @var string
+     */
     public const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_ROLE_NOT_FOUND = "Role couldn't be found";
 
     /**

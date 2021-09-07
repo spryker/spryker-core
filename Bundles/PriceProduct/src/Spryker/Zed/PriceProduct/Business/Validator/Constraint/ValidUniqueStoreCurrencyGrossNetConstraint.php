@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ValidUniqueStoreCurrencyGrossNetConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'The set of inputs Store and Currency needs to be unique.';
 
     /**

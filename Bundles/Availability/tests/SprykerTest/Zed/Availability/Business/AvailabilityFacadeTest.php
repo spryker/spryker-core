@@ -45,9 +45,21 @@ use Spryker\Zed\Kernel\Container;
  */
 class AvailabilityFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const ABSTRACT_SKU = '123_availability_test';
+    /**
+     * @var string
+     */
     public const CONCRETE_SKU = '123_availability_test-concrete';
+    /**
+     * @var int
+     */
     public const ID_STORE = 1;
+    /**
+     * @var string
+     */
     public const STORE_NAME_DE = 'DE';
 
     /**

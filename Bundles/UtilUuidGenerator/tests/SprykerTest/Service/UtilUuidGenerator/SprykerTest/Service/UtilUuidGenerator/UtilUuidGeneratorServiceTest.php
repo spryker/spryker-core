@@ -22,7 +22,13 @@ use Spryker\Service\UtilUuidGenerator\UtilUuidGeneratorServiceInterface;
  */
 class UtilUuidGeneratorServiceTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_VALUE_ENCODED = 'carts.DE--1.Shopping Cart';
+    /**
+     * @var string
+     */
     protected const TEST_VALUE_DECODED = '9673c873-e007-5930-a37b-5cedf2c2f10f';
 
     /**

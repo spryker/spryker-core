@@ -19,6 +19,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
 {
+    /**
+     * @var string
+     */
     public const REQUEST_URI = 'REQUEST_URI';
 
     /**

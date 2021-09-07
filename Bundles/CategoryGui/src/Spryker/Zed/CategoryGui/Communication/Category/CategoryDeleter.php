@@ -14,6 +14,9 @@ use Spryker\Zed\CategoryGui\Dependency\Facade\CategoryGuiToCategoryFacadeInterfa
 
 class CategoryDeleter implements CategoryDeleterInterface
 {
+    /**
+     * @var string
+     */
     protected const SUCCESS_MESSAGE_CATEGORY_DELETED = 'The category was deleted successfully.';
 
     /**

@@ -27,6 +27,9 @@ use Spryker\Zed\StockDataImport\Communication\Plugin\StockStoreDataImportPlugin;
  */
 class StockStoreDataImportPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const EXPECTED_IMPORT_COUNT = 4;
 
     /**

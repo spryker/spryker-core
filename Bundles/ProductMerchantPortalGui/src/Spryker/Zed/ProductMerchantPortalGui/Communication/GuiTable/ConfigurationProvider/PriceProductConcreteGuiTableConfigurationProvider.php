@@ -15,37 +15,57 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationPro
 
 class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductConcreteGuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const FORMAT_STRING_DATA_URL = '%s?%s=%s';
+    /**
+     * @var string
+     */
     protected const FORMAT_STRING_PRICES_URL = '%s?%s=${row.%s}&%s=${row.%s}&%s=${row.%s}';
 
+    /**
+     * @var string
+     */
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
+    /**
+     * @var string
+     */
     protected const TITLE_EDITABLE_BUTTON = 'Add';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteEditForm::BLOCK_PREFIX
+     * @var string
      */
     protected const BLOCK_PREFIX_PRODUCT_CONCRETE_EDIT_FORM = 'productConcreteEdit';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm::BLOCK_PREFIX
+     * @var string
      */
     protected const BLOCK_PREFIX_PRODUCT_CONCRETE_FORM = 'productConcrete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductConcreteController::priceTableDataAction()
+     * @var string
      */
     protected const DATA_URL = '/product-merchant-portal-gui/update-product-concrete/price-table-data';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\SavePriceProductConcreteController::indexAction()
+     * @var string
      */
     protected const URL_SAVE_PRICES = '/product-merchant-portal-gui/save-price-product-concrete';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\DeletePriceProductConcreteController::indexAction()
+     * @var string
      */
     protected const URL_DELETE_PRICE = '/product-merchant-portal-gui/delete-price-product-concrete';
 
+    /**
+     * @var string
+     */
     protected const ID_ROW_ACTION_URL_DELETE_PRICE = 'delete-price';
 
     /**

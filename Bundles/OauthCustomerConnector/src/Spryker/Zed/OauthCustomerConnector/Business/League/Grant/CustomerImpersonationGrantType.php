@@ -19,6 +19,9 @@ use Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig;
 
 class CustomerImpersonationGrantType extends AbstractGrant implements GrantTypeInterface
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAMETER_CUSTOMER_REFERENCE = 'customer_reference';
 
     /**

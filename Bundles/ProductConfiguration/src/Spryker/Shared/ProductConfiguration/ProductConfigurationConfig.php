@@ -18,6 +18,7 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      * - Dimension type as used for product configuration price.
      *
      * @api
+     * @var string
      */
     public const PRICE_DIMENSION_PRODUCT_CONFIGURATION = 'PRODUCT_CONFIGURATION';
 

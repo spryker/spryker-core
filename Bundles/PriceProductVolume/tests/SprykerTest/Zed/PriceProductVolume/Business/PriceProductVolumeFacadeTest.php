@@ -28,19 +28,58 @@ use Spryker\Zed\PriceProductVolume\Business\PriceProductVolumeFacade;
  */
 class PriceProductVolumeFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PRICE_DATA_VOLUME = '{"volume_prices":[{"quantity":3,"net_price":350,"gross_price":385},{"quantity":8,"net_price":340,"gross_price":375}]}';
+    /**
+     * @var int
+     */
     protected const MONEY_VALUE = 10000;
+    /**
+     * @var string
+     */
     protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_DEFAULT = 'DEFAULT';
+    /**
+     * @var string
+     */
     protected const PRICE_TYPE_ORIGINAL = 'ORIGINAL';
+    /**
+     * @var int
+     */
     protected const PRICE_TYPE_ID = 1;
+    /**
+     * @var int
+     */
     protected const CURRENCY_ID = 1;
+    /**
+     * @var int
+     */
     protected const STORE_ID = 1;
 
+    /**
+     * @var string
+     */
     protected const VALID_GROSS_NET_PRICE_CONSTRAINT_MESSAGE = 'Gross Default and/or Net Default price is required for volume price.';
+    /**
+     * @var string
+     */
     protected const VALID_VOLUME_QUANTITY_CONSTRAINT_MESSAGE = 'Invalid volume quantity.';
+    /**
+     * @var string
+     */
     protected const VALID_DEFAULT_PRICE_TYPE_CONSTRAINT_MESSAGE = 'Volume prices can only have DEFAULT prices.';
+    /**
+     * @var string
+     */
     protected const VALID_UNIQUE_VOLUME_PRICE_CONSTRAINT_MESSAGE = 'The set of inputs Store, Currency, and Quantity needs to be unique.';
+    /**
+     * @var string
+     */
     protected const VALID_VOLUME_PRICE_HAS_BASE_PRICE_CONSTRAINT_MESSAGE = 'A Price for Quantity of 2 or above requires a Price for 1 for this set of inputs Store, Currency, and Quantity.';
 
     /**

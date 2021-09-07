@@ -13,6 +13,9 @@ use Twig\Cache\FilesystemCache;
 
 class TwigConfig extends AbstractSharedConfig
 {
+    /**
+     * @var string
+     */
     protected const THEME_NAME_DEFAULT = 'default';
 
     /**

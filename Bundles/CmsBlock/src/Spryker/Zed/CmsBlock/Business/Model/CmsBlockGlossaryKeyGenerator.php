@@ -12,10 +12,22 @@ use Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToGlossaryInterface;
 
 class CmsBlockGlossaryKeyGenerator implements CmsBlockGlossaryKeyGeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms.cms-block';
+    /**
+     * @var string
+     */
     public const ID_CMS_BLOCK = 'idCmsBlock';
+    /**
+     * @var string
+     */
     public const UNIQUE_ID = 'uniqueId';
 
+    /**
+     * @var int
+     */
     protected const KEY_GENERATOR_ITERATION_LIMIT = 10;
 
     /**

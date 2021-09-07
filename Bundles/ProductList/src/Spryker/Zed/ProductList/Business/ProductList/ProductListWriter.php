@@ -19,6 +19,9 @@ class ProductListWriter implements ProductListWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_PRODUCT_LIST_DELETE_SUCCESS = 'Product List has been successfully removed.';
 
     /**

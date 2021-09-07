@@ -31,6 +31,9 @@ use SprykerTest\Zed\StateMachine\Mocks\StateMachineMocks;
  */
 class StateUpdaterTest extends StateMachineMocks
 {
+    /**
+     * @var string
+     */
     public const TEST_STATE_MACHINE_NAME = 'test state machine name';
 
     /**

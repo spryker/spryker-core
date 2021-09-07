@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewFileController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const URL_PARAM_ID_FILE = 'id-file';
 
     /**

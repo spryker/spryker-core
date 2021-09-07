@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 
 class SplittableOrderItemTransformer implements SplittableOrderItemTransformerInterface
 {
+    /**
+     * @var int
+     */
     protected const DIVISION_SCALE = 10;
 
     /**

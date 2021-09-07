@@ -23,12 +23,30 @@ use Spryker\Zed\MerchantSalesOrderDataExport\Dependency\Service\MerchantSalesOrd
  */
 class MerchantSalesOrderDataExportDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_DATA_EXPORT = 'SERVICE_DATA_EXPORT';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_MERCHANT = 'PROPEL_QUERY_MERCHANT';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER = 'PROPEL_QUERY_MERCHANT_SALES_ORDER';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM = 'PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_SALES_ORDER_COMMENT = 'PROPEL_QUERY_SALES_ORDER_COMMENT';
 
     /**

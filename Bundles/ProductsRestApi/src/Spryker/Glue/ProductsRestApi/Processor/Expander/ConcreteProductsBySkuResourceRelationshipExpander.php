@@ -11,6 +11,9 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class ConcreteProductsBySkuResourceRelationshipExpander extends AbstractConcreteProductsResourceRelationshipExpander
 {
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
 
     /**

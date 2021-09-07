@@ -11,6 +11,9 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterfa
 
 class RequestQuoteApprovalPermissionPlugin implements PermissionPluginInterface
 {
+    /**
+     * @var string
+     */
     public const KEY = 'RequestQuoteApprovalPermissionPlugin';
 
     /**

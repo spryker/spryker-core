@@ -13,16 +13,34 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class AbstractTransfer extends ParentAbstractTransfer
 {
+    /**
+     * @var string
+     */
     public const STRING = 'string';
 
+    /**
+     * @var string
+     */
     public const INT = 'int';
 
+    /**
+     * @var string
+     */
     public const BOOL = 'bool';
 
+    /**
+     * @var string
+     */
     public const ARRAY_PROPERTY = 'array';
 
+    /**
+     * @var string
+     */
     public const TRANSFER = 'transfer';
 
+    /**
+     * @var string
+     */
     public const TRANSFER_COLLECTION = 'transferCollection';
 
     /**

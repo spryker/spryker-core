@@ -14,6 +14,9 @@ use Spryker\Zed\Collector\Business\Index\IndexFactoryInterface;
 
 class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderInterface
 {
+    /**
+     * @var string
+     */
     public const READER_NAME = 'elastic-search-reader';
 
     /**

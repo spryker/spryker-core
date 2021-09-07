@@ -11,6 +11,9 @@ use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class SalesConfig extends AbstractSharedConfig
 {
+    /**
+     * @var array
+     */
     protected const ORDER_SEARCH_TYPES = [
         'all',
         'orderReference',

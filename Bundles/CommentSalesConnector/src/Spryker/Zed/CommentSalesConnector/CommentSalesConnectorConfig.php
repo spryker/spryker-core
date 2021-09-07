@@ -11,5 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class CommentSalesConnectorConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const COMMENT_THREAD_SALES_ORDER_OWNER_TYPE = 'sales_order';
 }

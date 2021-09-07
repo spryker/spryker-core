@@ -27,10 +27,25 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class RouterDebugZedConsole extends Console
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'router:debug';
+    /**
+     * @var string
+     */
     protected const NAME_ALIAS = 'router:debug:zed';
+    /**
+     * @var string
+     */
     protected const ARGUMENT_ROUTE_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const OPTION_SHOW_CONTROLLERS = 'show-controllers';
+    /**
+     * @var string
+     */
     protected const OPTION_SHOW_CONTROLLERS_SHORT = 'c';
 
     /**

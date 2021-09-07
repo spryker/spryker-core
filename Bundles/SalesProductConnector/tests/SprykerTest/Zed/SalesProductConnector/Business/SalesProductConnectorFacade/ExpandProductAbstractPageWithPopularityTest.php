@@ -27,6 +27,9 @@ use Generated\Shared\Transfer\ProductPayloadTransfer;
  */
 class ExpandProductAbstractPageWithPopularityTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const FAKE_ID_PRODUCT_ABSTRACT = 6666;
 
     /**

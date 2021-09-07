@@ -26,10 +26,22 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
  */
 class ExpandOrderProductBundlesWithProductOptionsTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_BUNDLE_ITEM_IDENTIFIER_1 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_1';
+    /**
+     * @var string
+     */
     protected const FAKE_BUNDLE_ITEM_IDENTIFIER_2 = 'FAKE_BUNDLE_ITEM_IDENTIFIER_2';
 
+    /**
+     * @var string
+     */
     protected const FAKE_PRODUCT_OPTION_SKU_1 = 'FAKE_PRODUCT_OPTION_SKU_1';
+    /**
+     * @var string
+     */
     protected const FAKE_PRODUCT_OPTION_SKU_2 = 'FAKE_PRODUCT_OPTION_SKU_2';
 
     /**

@@ -16,8 +16,14 @@ use Spryker\Glue\UrlsRestApi\Dependency\Client\UrlsRestApiToUrlStorageClientBrid
  */
 class UrlsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_URL_STORAGE = 'CLIENT_URL_STORAGE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_REST_URL_RESOLVER_ATTRIBUTES_TRANSFER_PROVIDER = 'PLUGINS_REST_URL_RESOLVER_ATTRIBUTES_TRANSFER_PROVIDER';
 
     /**

@@ -13,41 +13,49 @@ class CreateProductAbstractWithSingleConcreteFormDataProvider implements CreateP
 {
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_NAME
+     * @var string
      */
     protected const FIELD_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_SKU
+     * @var string
      */
     protected const FIELD_SKU = 'sku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_NAME
+     * @var string
      */
     protected const FIELD_CONCRETE_NAME = 'concreteName';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_CONCRETE_SKU
+     * @var string
      */
     protected const FIELD_CONCRETE_SKU = 'concreteSku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_AUTOGENERATE_SKU
+     * @var string
      */
     protected const FIELD_AUTOGENERATE_SKU = 'autogenerateSku';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractWithSingleConcreteForm::FIELD_USE_ABSTRACT_PRODUCT_NAME
+     * @var string
      */
     protected const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\CreateProductAbstractController::REQUEST_PARAM_NAME
+     * @var string
      */
     protected const REQUEST_PARAM_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\CreateProductAbstractController::REQUEST_PARAM_NAME
+     * @var string
      */
     protected const REQUEST_PARAM_SKU = 'sku';
 

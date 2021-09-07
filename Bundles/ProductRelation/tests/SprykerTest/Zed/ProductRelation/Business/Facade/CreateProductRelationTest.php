@@ -31,7 +31,13 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
  */
 class CreateProductRelationTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FIRST_FIXTURE_VALUE = 'test';
+    /**
+     * @var string
+     */
     protected const SECOND_FIXTURE_VALUE = 'test1';
 
     /**

@@ -28,6 +28,9 @@ class StorageHelperTest extends Unit
     use StorageHelperTrait;
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const STORAGE_VALUE = 'value';
 
     /**

@@ -39,41 +39,54 @@ use Spryker\Shared\QuoteRequest\QuoteRequestConfig as SharedQuoteRequestConfig;
  */
 class QuoteRequestFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FAKE_QUOTE_REQUEST_REFERENCE = 'FAKE_QUOTE_REQUEST_REFERENCE';
+    /**
+     * @var string
+     */
     protected const FAKE_QUOTE_REQUEST_VERSION_REFERENCE = 'FAKE_QUOTE_REQUEST_VERSION_REFERENCE';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS
+     * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_NOT_EXISTS = 'quote_request.validation.error.not_exists';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS
+     * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_WRONG_STATUS = 'quote_request.validation.error.wrong_status';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidator::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND
+     * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VERSION_NOT_FOUND = 'quote_request.checkout.validation.error.version_not_found';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidator::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS
+     * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_STATUS = 'quote_request.checkout.validation.error.wrong_status';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Validator\QuoteRequestTimeValidator::GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL
+     * @var string
      */
     protected const GLOSSARY_KEY_WRONG_QUOTE_REQUEST_VALID_UNTIL = 'quote_request.checkout.validation.error.wrong_valid_until';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestUserWriter::GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS
+     * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_EMPTY_QUOTE_ITEMS = 'quote_request.validation.error.empty_quote_items';
 
     /**
      * @see \Spryker\Zed\QuoteRequest\Business\Writer\QuoteRequestWriter::GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY
+     * @var string
      */
     protected const GLOSSARY_KEY_QUOTE_REQUEST_CART_IS_EMPTY = 'quote_request.validation.error.cart_is_empty';
 

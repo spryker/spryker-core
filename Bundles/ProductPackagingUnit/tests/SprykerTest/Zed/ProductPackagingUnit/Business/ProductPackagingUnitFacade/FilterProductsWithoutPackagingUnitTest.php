@@ -25,7 +25,13 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  */
 class FilterProductsWithoutPackagingUnitTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PACKAGING_UNIT_NAME = 'packagingUnit';
+    /**
+     * @var int
+     */
     protected const PACKAGING_UNIT_AMOUNT = 1;
 
     /**

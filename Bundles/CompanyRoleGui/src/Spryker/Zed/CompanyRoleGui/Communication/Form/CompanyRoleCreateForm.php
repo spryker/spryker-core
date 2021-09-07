@@ -28,16 +28,43 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CompanyRoleCreateForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
+    /**
+     * @var string
+     */
     public const OPTION_PERMISSION_CHOICES = 'permission_choices';
 
+    /**
+     * @var string
+     */
     protected const FIELD_ID_COMPANY_ROLE = 'idCompanyRole';
+    /**
+     * @var string
+     */
     protected const FIELD_FK_COMPANY = 'fkCompany';
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const FIELD_IS_DEFAULT = 'isDefault';
+    /**
+     * @var string
+     */
     protected const FIELD_PERMISSION_COLLECTION = 'permissionCollection';
+    /**
+     * @var string
+     */
     protected const FIELD_COMPANY_USER_COLLECTION = 'companyUserCollection';
 
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH = '@CompanyRoleGui/_partials/company_role_manage_permissions.twig';
 
     /**

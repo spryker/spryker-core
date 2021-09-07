@@ -16,6 +16,7 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing category image messages
      *
      * @api
+     * @var string
      */
     public const CATEGORY_IMAGE_SYNC_STORAGE_QUEUE = 'sync.storage.category';
 
@@ -24,6 +25,7 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing category image messages
      *
      * @api
+     * @var string
      */
     public const CATEGORY_IMAGE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.category.error';
 
@@ -32,6 +34,7 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const CATEGORY_IMAGE_RESOURCE_NAME = 'category_image';
 
@@ -40,6 +43,7 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
      * - Default image set name.
      *
      * @api
+     * @var string
      */
     public const DEFAULT_IMAGE_SET_NAME = 'default';
 }

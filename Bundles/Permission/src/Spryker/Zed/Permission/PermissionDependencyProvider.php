@@ -15,8 +15,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class PermissionDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_PERMISSION = 'CLIENT_PERMISSION';
+    /**
+     * @var string
+     */
     public const PLUGINS_PERMISSION = 'PLUGINS_PERMISSION';
+    /**
+     * @var string
+     */
     public const PLUGINS_PERMISSION_STORAGE = 'PLUGINS_PERMISSION_STORAGE';
 
     /**

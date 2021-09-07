@@ -15,29 +15,67 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 
 class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const COL_KEY_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const COL_KEY_IMAGE = 'image';
+    /**
+     * @var string
+     */
     public const COL_KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     public const COL_KEY_SUPER_ATTRIBUTES = 'superAttributes';
+    /**
+     * @var string
+     */
     public const COL_KEY_VARIANTS = 'variants';
+    /**
+     * @var string
+     */
     public const COL_KEY_CATEGORIES = 'categories';
+    /**
+     * @var string
+     */
     public const COL_KEY_STORES = 'stores';
+    /**
+     * @var string
+     */
     public const COL_KEY_VISIBILITY = 'visibility';
 
+    /**
+     * @var string
+     */
     public const COLUMN_DATA_VISIBILITY_ONLINE = 'Online';
+    /**
+     * @var string
+     */
     public const COLUMN_DATA_VISIBILITY_OFFLINE = 'Offline';
 
+    /**
+     * @var string
+     */
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
+    /**
+     * @var string
+     */
     protected const TITLE_ROW_ACTION_UPDATE_PRODUCT = 'Manage Product';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\UpdateProductAbstractController::indexAction()
+     * @var string
      */
     protected const URL_ROW_ACTION_UPDATE_PRODUCT = '/product-merchant-portal-gui/update-product-abstract?product-abstract-id=${row.%s}';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductsController::tableDataAction()
+     * @var string
      */
     protected const DATA_URL = '/product-merchant-portal-gui/products/table-data';
 

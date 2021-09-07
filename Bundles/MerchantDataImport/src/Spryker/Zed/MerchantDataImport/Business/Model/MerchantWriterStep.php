@@ -25,6 +25,9 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 
 class MerchantWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @var array
+     */
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantDataSetInterface::MERCHANT_REFERENCE,
         MerchantDataSetInterface::NAME,
@@ -33,7 +36,13 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
         MerchantDataSetInterface::EMAIL,
     ];
 
+    /**
+     * @var string
+     */
     protected const ACTION_CREATE = 'create';
+    /**
+     * @var string
+     */
     protected const ACTION_UPDATE = 'update';
 
     /**

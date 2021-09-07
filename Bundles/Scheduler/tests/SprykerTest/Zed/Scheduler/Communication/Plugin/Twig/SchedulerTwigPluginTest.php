@@ -24,6 +24,9 @@ use Spryker\Zed\Scheduler\Communication\Twig\SchedulerTwigPlugin;
  */
 class SchedulerTwigPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_ENV_NAME = 'TEST';
 
     /**

@@ -14,6 +14,9 @@ use Spryker\Shared\Kernel\ClassResolver\ClassInfo as SharedClassInfo;
  */
 class ClassInfo extends SharedClassInfo
 {
+    /**
+     * @var int
+     */
     public const KEY_LAYER = 3;
 
     /**

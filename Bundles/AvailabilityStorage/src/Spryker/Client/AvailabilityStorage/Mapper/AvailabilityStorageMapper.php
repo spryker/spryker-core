@@ -13,10 +13,25 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 
 class AvailabilityStorageMapper implements AvailabilityStorageMapperInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_SPY_AVAILABILITIES = 'SpyAvailabilities';
+    /**
+     * @var string
+     */
     protected const KEY_SKU = 'sku';
+    /**
+     * @var string
+     */
     protected const KEY_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+    /**
+     * @var string
+     */
     protected const KEY_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     protected const KEY_ABSTRACT_SKU = 'abstract_sku';
 
     /**

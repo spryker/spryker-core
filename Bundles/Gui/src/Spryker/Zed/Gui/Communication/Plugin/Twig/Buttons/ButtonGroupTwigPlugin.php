@@ -19,6 +19,9 @@ use Twig\TwigFunction;
  */
 class ButtonGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const FUNCTION_NAME_GROUP_ACTION_BUTTONS = 'groupActionButtons';
 
     /**

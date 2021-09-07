@@ -13,9 +13,18 @@ use Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException;
 
 class PropelConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const DB_ENGINE_MYSQL = 'mysql';
+    /**
+     * @var string
+     */
     public const DB_ENGINE_PGSQL = 'pgsql';
 
+    /**
+     * @var int
+     */
     protected const PROCESS_TIMEOUT = 600;
 
     /**
@@ -25,6 +34,7 @@ class PropelConfig extends AbstractBundleConfig
      * - It can be modified by editing the sourcecode of postgres, which is not advised.
      *
      * @api
+     * @var int
      */
     public const POSTGRES_INDEX_NAME_MAX_LENGTH = 63;
 

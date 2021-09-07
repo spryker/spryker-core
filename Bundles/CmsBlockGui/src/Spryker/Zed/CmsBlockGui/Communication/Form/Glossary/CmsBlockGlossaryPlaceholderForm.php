@@ -25,13 +25,34 @@ class CmsBlockGlossaryPlaceholderForm extends AbstractType
 {
     use ArrayObjectTransformerTrait;
 
+    /**
+     * @var string
+     */
     public const FIELD_FK_CMS_BLOCK = 'fkCmsBlock';
+    /**
+     * @var string
+     */
     public const FIELD_PLACEHOLDER = 'placeholder';
+    /**
+     * @var string
+     */
     public const FIELD_ID_GLOSSARY_KEY_MAPPING = 'idCmsBlockGlossaryKeyMapping';
+    /**
+     * @var string
+     */
     public const FIELD_TEMPLATE_NAME = 'templateName';
+    /**
+     * @var string
+     */
     public const FIELD_TRANSLATIONS = 'translations';
+    /**
+     * @var string
+     */
     public const FIELD_TRANSLATION_KEY = 'translationKey';
 
+    /**
+     * @var string
+     */
     public const GROUP_PLACEHOLDER_CHECK = 'placeholder_check';
 
     /**

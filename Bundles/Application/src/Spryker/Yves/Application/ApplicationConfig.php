@@ -17,39 +17,39 @@ use Symfony\Component\HttpFoundation\Request;
 class ApplicationConfig extends AbstractBundleConfig
 {
     /**
-     * @const string
+     * @var string
      */
     protected const HEADER_X_FRAME_OPTIONS_VALUE = 'SAMEORIGIN';
 
     /**
-     * @const string
+     * @var string
      */
     protected const HEADER_CONTENT_SECURITY_POLICY_VALUE = 'frame-ancestors \'self\'';
 
     /**
-     * @const string
+     * @var string
      */
     protected const HEADER_X_CONTENT_TYPE_OPTIONS_VALUE = 'nosniff';
 
     /**
-     * @const string
+     * @var string
      */
     protected const HEADER_X_XSS_PROTECTION_VALUE = '1; mode=block';
 
     /**
-     * @const string
+     * @var string
      */
     protected const HEADER_REFERRER_POLICY_VALUE = 'same-origin';
 
     /**
      * @deprecated {@link https://www.w3.org/TR/permissions-policy-1/#introduction}
      *
-     * @const string
+     * @var string
      */
     protected const HEADER_FEATURE_POLICY_VALUE = '';
 
     /**
-     * @const string
+     * @var string
      */
     protected const HEADER_PERMISSION_POLICY_VALUE = '';
 

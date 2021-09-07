@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantDataImport\Dependency\Facade\MerchantDataImportToMerchan
  */
 class MerchantDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
 
     /**

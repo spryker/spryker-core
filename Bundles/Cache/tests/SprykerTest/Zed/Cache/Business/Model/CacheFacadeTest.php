@@ -23,8 +23,17 @@ use Codeception\Test\Unit;
  */
 class CacheFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_CACHE_DIRECTORY_NAME = 'cache';
+    /**
+     * @var string
+     */
     protected const TEST_CODE_BUCKET_DIRECTORY_NAME = 'codeBucketDE';
+    /**
+     * @var string
+     */
     protected const TEST_DEFAULT_CODE_BUCKET_DIRECTORY_NAME = 'codeBucket';
 
     /**

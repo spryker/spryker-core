@@ -27,6 +27,9 @@ use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantStoreDataImportP
  */
 class MerchantStoreDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const MERCHANT_REFERENCE = 'kudu-merchant-test';
 
     /**

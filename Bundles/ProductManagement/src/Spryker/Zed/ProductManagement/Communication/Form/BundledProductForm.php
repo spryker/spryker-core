@@ -23,9 +23,21 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class BundledProductForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_QUANTITY = 'quantity';
+    /**
+     * @var string
+     */
     public const FIELD_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    /**
+     * @var string
+     */
     public const FIELD_SKU = 'sku';
+    /**
+     * @var string
+     */
     public const NUMERIC_PATTERN = '/\d+/';
 
     /**

@@ -17,9 +17,18 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class RestApiValidator implements RestApiValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const CUSTOMERS_GENDER_ENUM_MALE = 'Male';
+    /**
+     * @var string
+     */
     protected const CUSTOMERS_GENDER_ENUM_FEMALE = 'Female';
 
+    /**
+     * @var array
+     */
     public const CUSTOMERS_GENDERS_ENUM = [
         self::CUSTOMERS_GENDER_ENUM_MALE,
         self::CUSTOMERS_GENDER_ENUM_FEMALE,

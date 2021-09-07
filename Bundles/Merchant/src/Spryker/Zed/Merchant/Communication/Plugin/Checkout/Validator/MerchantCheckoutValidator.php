@@ -15,7 +15,13 @@ use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
 
 class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_REMOVED_MERCHANT = 'merchant.message.removed';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_PARAM_SKU = '%sku%';
 
     /**

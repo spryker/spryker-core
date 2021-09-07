@@ -12,7 +12,13 @@ use Spryker\Zed\Discount\Business\Exception\QueryBuilderException;
 
 class MetaProviderFactory implements MetaProviderFactoryInterface
 {
+    /**
+     * @var string
+     */
     public const TYPE_COLLECTOR = 'collector';
+    /**
+     * @var string
+     */
     public const TYPE_DECISION_RULE = 'decision-rule';
 
     /**

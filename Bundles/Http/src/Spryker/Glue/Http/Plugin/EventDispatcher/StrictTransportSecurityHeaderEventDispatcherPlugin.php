@@ -22,9 +22,21 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class StrictTransportSecurityHeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const HEADER_STS = 'Strict-Transport-Security';
+    /**
+     * @var string
+     */
     protected const HEADER_STS_MAX_AGE = 'max_age';
+    /**
+     * @var string
+     */
     protected const HEADER_STS_INCLUDE_SUBDOMAINS = 'include_sub_domains';
+    /**
+     * @var string
+     */
     protected const HEADER_STS_PRELOAD = 'preload';
 
     /**

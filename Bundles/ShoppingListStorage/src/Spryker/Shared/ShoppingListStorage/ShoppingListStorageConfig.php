@@ -9,6 +9,9 @@ namespace Spryker\Shared\ShoppingListStorage;
 
 interface ShoppingListStorageConfig
 {
+    /**
+     * @var string
+     */
     public const RESOURCE_TYPE_SHOPPING_LIST = 'shopping_list_customer';
 
     /**
@@ -16,6 +19,7 @@ interface ShoppingListStorageConfig
      * - Queue name as used for processing shopping list messages.
      *
      * @api
+     * @var string
      */
     public const SHOPPING_LIST_SYNC_STORAGE_QUEUE = 'sync.storage.shopping_list';
 
@@ -24,6 +28,7 @@ interface ShoppingListStorageConfig
      * - Queue name as used for processing shopping list error messages.
      *
      * @api
+     * @var string
      */
     public const SHOPPING_LIST_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.shopping_list.error';
 
@@ -32,6 +37,7 @@ interface ShoppingListStorageConfig
      * - Resource name, this will use for key generating
      *
      * @api
+     * @var string
      */
     public const SHOPPING_LIST_RESOURCE_NAME = 'shopping_list_customer';
 }

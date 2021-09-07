@@ -21,6 +21,9 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class ProductsFormType extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_ASSIGN_ID_PRODUCT_ABSTRACTS = 'assign_id_product_abstracts';
 
     /**

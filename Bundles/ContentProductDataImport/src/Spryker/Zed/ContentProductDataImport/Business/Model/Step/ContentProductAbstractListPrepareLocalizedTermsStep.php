@@ -21,8 +21,17 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 
 class ContentProductAbstractListPrepareLocalizedTermsStep implements DataImportStepInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_SUFFIX = 'Please check row with key: "{key}", column: {column}';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAMETER_COLUMN = '{column}';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PARAMETER_KEY = '{key}';
 
     /**

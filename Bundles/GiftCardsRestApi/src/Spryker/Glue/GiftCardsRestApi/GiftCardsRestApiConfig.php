@@ -13,12 +13,17 @@ class GiftCardsRestApiConfig extends AbstractBundleConfig
 {
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_CARTS
+     * @var string
      */
     public const RESOURCE_CARTS = 'carts';
+    /**
+     * @var string
+     */
     public const RESOURCE_GIFT_CARDS = 'gift-cards';
 
     /**
      * @uses \Spryker\Glue\CartCodesRestApi\CartCodesRestApiConfig::RESOURCE_CART_CODES,
+     * @var string
      */
     public const RESOURCE_CART_CODES = 'cart-codes';
 }

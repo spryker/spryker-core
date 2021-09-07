@@ -42,9 +42,18 @@ class ShoppingListTest extends Unit
 {
     use ArraySubsetAsserts;
 
+    /**
+     * @var string
+     */
     protected const ERROR_DUPLICATE_NAME_SHOPPING_LIST = 'customer.account.shopping_list.error.duplicate_name';
 
+    /**
+     * @var string
+     */
     protected const FAKE_PERMISSION_READ_ONLY = 'FAKE_READ_ONLY';
+    /**
+     * @var string
+     */
     protected const FAKE_PERMISSION_FULL_ACCESS = 'FAKE_FULL_ACCESS';
 
     /**

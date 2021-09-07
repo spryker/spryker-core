@@ -21,8 +21,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CustomerCompanyAttachForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const OPTION_COMPANY_CHOICES = 'company_choices';
 
+    /**
+     * @var string
+     */
     public const FIELD_FK_COMPANY = 'fk_company';
 
     /**

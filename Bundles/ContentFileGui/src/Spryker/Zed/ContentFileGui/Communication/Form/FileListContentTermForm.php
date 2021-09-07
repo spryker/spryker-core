@@ -24,9 +24,18 @@ use Symfony\Component\Validator\Constraint;
  */
 class FileListContentTermForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     public const FIELD_FILE_IDS = 'fileIds';
+    /**
+     * @var string
+     */
     public const PLACEHOLDER_ID_FILE = 'id';
 
+    /**
+     * @var string
+     */
     protected const TEMPLATE_PATH = '@ContentFileGui/FileList/file_list.twig';
 
     /**

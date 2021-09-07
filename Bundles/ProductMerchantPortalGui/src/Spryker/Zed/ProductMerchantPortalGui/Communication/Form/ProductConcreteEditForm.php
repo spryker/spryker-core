@@ -23,27 +23,70 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductConcreteEditForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_PRODUCT_CONCRETE = 'productConcrete';
+    /**
+     * @var string
+     */
     protected const FIELD_USE_ABSTRACT_PRODUCT_NAME = 'useAbstractProductName';
+    /**
+     * @var string
+     */
     protected const FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'useAbstractProductDescription';
+    /**
+     * @var string
+     */
     protected const FIELD_USE_ABSTRACT_PRODUCT_PRICES = 'useAbstractProductPrices';
+    /**
+     * @var string
+     */
     protected const FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'useAbstractProductImageSets';
+    /**
+     * @var string
+     */
     protected const FIELD_SEARCHABILITY = 'searchability';
 
+    /**
+     * @var string
+     */
     protected const BLOCK_PREFIX = 'productConcreteEdit';
 
+    /**
+     * @var string
+     */
     protected const OPTION_SEARCHABILITY_CHOICES = 'OPTION_SEARCHABILITY_CHOICES';
 
+    /**
+     * @var string
+     */
     protected const LABEL_USE_ABSTRACT_PRODUCT_NAME = 'Use Abstract Product Name';
+    /**
+     * @var string
+     */
     protected const LABEL_USE_ABSTRACT_PRODUCT_DESCRIPTION = 'Use Abstract Product Description';
+    /**
+     * @var string
+     */
     protected const LABEL_USE_ABSTRACT_PRODUCT_PRICES = 'Use Abstract Product prices';
+    /**
+     * @var string
+     */
     protected const LABEL_USE_ABSTRACT_PRODUCT_IMAGE_SETS = 'Use Abstract Product Image Sets';
+    /**
+     * @var string
+     */
     protected const LABEL_SEARCHABILITY = 'Searchability';
 
+    /**
+     * @var string
+     */
     protected const PLACEHOLDER_SEARCHABILITY = 'Select Locales';
 
     /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductConcreteForm::BLOCK_PREFIX
+     * @var string
      */
     protected const BLOCK_PREFIX_PRODUCT_CONCRETE_FORM = 'productConcrete';
 

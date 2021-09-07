@@ -21,6 +21,7 @@ class GlossaryPublisherTriggerPlugin extends AbstractPlugin implements Publisher
 {
     /**
      * @uses \Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY
+     * @var string
      */
     protected const COL_ID_GLOSSARY_KEY = 'spy_glossary_key.id_glossary_key';
 

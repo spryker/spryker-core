@@ -13,6 +13,9 @@ use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface
 
 class MultiCartStorage implements MultiCartStorageInterface
 {
+    /**
+     * @var string
+     */
     public const SESSION_KEY_QUOTE_COLLECTION = 'SESSION_KEY_QUOTE_COLLECTION';
 
     /**

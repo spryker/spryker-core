@@ -12,7 +12,13 @@ use Spryker\Zed\DataImport\DataImportConfig;
 
 class ContentNavigationDataImportConfig extends DataImportConfig
 {
+    /**
+     * @var string
+     */
     public const IMPORT_FILE_NAME = 'content_navigation.csv';
+    /**
+     * @var string
+     */
     public const IMPORT_TYPE_CONTENT_NAVIGATION = 'content-navigation';
 
     /**

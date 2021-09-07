@@ -19,8 +19,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MerchantProfileForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_BUSINESS_INFO_MERCHANT_PROFILE = 'businessInfoMerchantProfile';
+    /**
+     * @var string
+     */
     protected const FIELD_ONLINE_PROFILE_MERCHANT_PROFILE = 'onlineProfileMerchantProfile';
+    /**
+     * @var string
+     */
     protected const BUTTON_SAVE = 'save';
 
     /**

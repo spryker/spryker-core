@@ -13,6 +13,9 @@ use Spryker\Client\Kernel\Container;
 
 class CartCurrencyConnectorDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_CART = 'CLIENT_CART';
 
     /**

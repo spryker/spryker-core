@@ -12,30 +12,93 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const ROUTE_PREFIX_API_REST = '/api/rest/';
 
+    /**
+     * @var string
+     */
     public const FORMAT_TYPE = 'json';
 
+    /**
+     * @var string
+     */
     public const ACTION_CREATE = 'add';
+    /**
+     * @var string
+     */
     public const ACTION_READ = 'get';
+    /**
+     * @var string
+     */
     public const ACTION_UPDATE = 'update';
+    /**
+     * @var string
+     */
     public const ACTION_DELETE = 'remove';
+    /**
+     * @var string
+     */
     public const ACTION_INDEX = 'find';
+    /**
+     * @var string
+     */
     public const ACTION_OPTIONS = 'options';
 
+    /**
+     * @var string
+     */
     public const HTTP_METHOD_OPTIONS = 'OPTIONS';
+    /**
+     * @var string
+     */
     public const HTTP_METHOD_GET = 'GET';
+    /**
+     * @var string
+     */
     public const HTTP_METHOD_POST = 'POST';
+    /**
+     * @var string
+     */
     public const HTTP_METHOD_PATCH = 'PATCH';
+    /**
+     * @var string
+     */
     public const HTTP_METHOD_DELETE = 'DELETE';
 
+    /**
+     * @var int
+     */
     public const HTTP_CODE_SUCCESS = 200;
+    /**
+     * @var int
+     */
     public const HTTP_CODE_CREATED = 201;
+    /**
+     * @var int
+     */
     public const HTTP_CODE_NO_CONTENT = 204;
+    /**
+     * @var int
+     */
     public const HTTP_CODE_PARTIAL_CONTENT = 206;
+    /**
+     * @var int
+     */
     public const HTTP_CODE_NOT_FOUND = 404;
+    /**
+     * @var int
+     */
     public const HTTP_CODE_NOT_ALLOWED = 405;
+    /**
+     * @var int
+     */
     public const HTTP_CODE_VALIDATION_ERRORS = 422;
+    /**
+     * @var int
+     */
     public const HTTP_CODE_INTERNAL_ERROR = 500;
 
     /**

@@ -33,7 +33,13 @@ use SprykerTest\Zed\StateMachine\Mocks\TestStateMachineHandlerException;
  */
 class StateMachineFacadeExceptionTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const TESTING_SM = 'TestingSm';
+    /**
+     * @var string
+     */
     public const TEST_PROCESS_NAME = 'TestProcess';
 
     /**

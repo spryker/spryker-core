@@ -18,7 +18,13 @@ use Spryker\Zed\Locale\Communication\Plugin\Locale\LocaleLocalePlugin;
  */
 class LocaleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGIN_LOCALE = 'PLUGIN_LOCALE';
+    /**
+     * @var string
+     */
     public const STORE = 'STORE';
 
     /**

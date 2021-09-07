@@ -12,6 +12,9 @@ use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 
 interface AclQueryDirectorStrategyInterface
 {
+    /**
+     * @var string
+     */
     public const CONDITION_EMPTY_COLLECTION = '0=1';
 
     /**

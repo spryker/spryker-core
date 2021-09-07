@@ -16,7 +16,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class AbstractPriceProductOfferController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Success.';
+    /**
+     * @var string
+     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'Something went wrong, please try again.';
 
     /**

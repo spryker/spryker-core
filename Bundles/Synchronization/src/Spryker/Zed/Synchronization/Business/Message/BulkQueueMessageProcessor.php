@@ -13,10 +13,22 @@ use Throwable;
 
 class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
 {
+    /**
+     * @var string
+     */
     protected const TYPE_WRITE = 'write';
+    /**
+     * @var string
+     */
     protected const TYPE_DELETE = 'delete';
 
+    /**
+     * @var string
+     */
     protected const KEY_MESSAGE_BODY = 'message';
+    /**
+     * @var string
+     */
     protected const KEY_TRANSFER = 'transfer';
 
     /**

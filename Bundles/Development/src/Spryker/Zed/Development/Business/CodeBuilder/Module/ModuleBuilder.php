@@ -14,10 +14,22 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ModuleBuilder
 {
+    /**
+     * @var string
+     */
     protected const OPTION_FILE = 'file';
+    /**
+     * @var string
+     */
     protected const OPTION_FORCE = 'force';
 
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER = 'Spryker';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
 
     /**

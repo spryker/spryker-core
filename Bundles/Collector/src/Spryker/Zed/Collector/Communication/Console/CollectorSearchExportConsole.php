@@ -16,7 +16,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CollectorSearchExportConsole extends AbstractCollectorConsole
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'collector:search:export';
+    /**
+     * @var string
+     */
     public const COMMAND_DESCRIPTION = 'Collector export search';
 
     /**

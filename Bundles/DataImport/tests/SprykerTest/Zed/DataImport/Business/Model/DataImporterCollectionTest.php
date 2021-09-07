@@ -26,14 +26,35 @@ use Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface;
  */
 class DataImporterCollectionTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const DATA_IMPORTER_FULL = 'full';
+    /**
+     * @var string
+     */
     public const DATA_IMPORTER_TYPE_A = 'data-importer-type-a';
+    /**
+     * @var string
+     */
     public const DATA_IMPORTER_TYPE_B = 'data-importer-type-b';
 
+    /**
+     * @var string
+     */
     public const DATA_IMPORTER_PLUGIN_TYPE_A = 'data-importer-plugin-type-a';
+    /**
+     * @var string
+     */
     public const DATA_IMPORTER_PLUGIN_TYPE_B = 'data-importer-plugin-type-b';
 
+    /**
+     * @var string
+     */
     protected const DATA_IMPORTER_IMPORT_GROUP_FULL = 'FULL';
+    /**
+     * @var string
+     */
     protected const DATA_IMPORTER_IMPORT_GROUP_QUEUE_WRITERS = 'QUEUE_WRITERS';
 
     /**

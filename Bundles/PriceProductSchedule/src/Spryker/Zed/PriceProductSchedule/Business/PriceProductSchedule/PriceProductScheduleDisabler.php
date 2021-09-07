@@ -21,7 +21,13 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const PATTERN_MINUS_ONE_DAY = '-1 day';
+    /**
+     * @var string
+     */
     protected const PATTERN_FORMAT_DATE = 'Y-m-d H:i:s';
 
     /**

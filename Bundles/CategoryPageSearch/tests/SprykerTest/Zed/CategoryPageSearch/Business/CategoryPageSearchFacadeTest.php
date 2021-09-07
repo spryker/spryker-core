@@ -31,11 +31,21 @@ class CategoryPageSearchFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Shared\CategoryPageSearch\CategoryPageSearchConstants::CATEGORY_STORE_PUBLISH,
+     * @var string
      */
     protected const CATEGORY_STORE_PUBLISH = 'Category.category_store.publish';
 
+    /**
+     * @var string
+     */
     protected const KEY_SEARCH_RESULT_DATA = 'search-result-data';
+    /**
+     * @var string
+     */
     protected const KEY_NAME = 'name';
+    /**
+     * @var string
+     */
     protected const KEY_CATEGORY_NODE_ID = 'category-node-id';
 
     /**

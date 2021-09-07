@@ -15,7 +15,13 @@ use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class PriceProductConstraintProvider implements PriceProductConstraintProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const VALUE_IS_INVALID = 'This value is not valid.';
+    /**
+     * @var string
+     */
     protected const VOLUME_QUANTITY_IS_INVALID = 'Invalid volume quantity.';
 
     /**

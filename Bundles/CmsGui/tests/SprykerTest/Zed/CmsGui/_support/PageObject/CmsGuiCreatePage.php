@@ -9,5 +9,8 @@ namespace SprykerTest\Zed\CmsGui\PageObject;
 
 class CmsGuiCreatePage
 {
+    /**
+     * @var string
+     */
     public const URL = '/cms-gui/create-page';
 }

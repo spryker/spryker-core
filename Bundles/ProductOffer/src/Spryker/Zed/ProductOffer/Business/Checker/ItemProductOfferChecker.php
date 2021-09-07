@@ -15,8 +15,17 @@ use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_ERROR_INVALID_PRODUCT_OFFER_REFERENCE = 'product-offer.info.reference.invalid';
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_PARAM_SKU = '%sku%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**

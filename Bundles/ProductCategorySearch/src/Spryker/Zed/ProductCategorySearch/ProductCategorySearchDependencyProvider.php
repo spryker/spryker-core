@@ -18,8 +18,17 @@ use Spryker\Zed\Kernel\Container;
  */
 class ProductCategorySearchDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRODUCT_CATEGORY = 'PROPEL_QUERY_PRODUCT_CATEGORY';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_CATEGORY_NODE = 'PROPEL_QUERY_CATEGORY_NODE';
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_CATEGORY_ATTRIBUTE = 'PROPEL_QUERY_CATEGORY_ATTRIBUTE';
 
     /**

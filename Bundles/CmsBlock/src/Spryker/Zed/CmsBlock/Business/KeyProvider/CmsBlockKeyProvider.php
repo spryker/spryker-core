@@ -12,7 +12,13 @@ use Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface;
 
 class CmsBlockKeyProvider implements CmsBlockKeyProviderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_GENERATOR_PREFIX = 'blck';
+    /**
+     * @var int
+     */
     protected const KEY_GENERATOR_ITERATION_LIMIT = 10;
 
     /**

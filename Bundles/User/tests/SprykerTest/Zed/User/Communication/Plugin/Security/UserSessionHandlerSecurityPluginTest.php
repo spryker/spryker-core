@@ -26,6 +26,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class UserSessionHandlerSecurityPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const FIREWALL_NAME = 'test-firewall';
 
     /**

@@ -19,6 +19,9 @@ use Twig\TwigFunction;
  */
 class ListGroupTwigPlugin extends AbstractPlugin implements TwigPluginInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME_LIST_GROUP = 'listGroup';
 
     /**

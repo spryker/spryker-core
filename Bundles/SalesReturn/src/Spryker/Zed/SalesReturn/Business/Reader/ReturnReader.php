@@ -22,11 +22,26 @@ use Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface;
 
 class ReturnReader implements ReturnReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_RETURN_NOT_EXISTS = 'return.validation.error.not_exists';
 
+    /**
+     * @var string
+     */
     protected const ID_SALES_RETURN_SORT_FIELD = 'id_sales_return';
+    /**
+     * @var string
+     */
     protected const DEFAULT_SORT_DIRECTION = 'DESC';
+    /**
+     * @var int
+     */
     protected const DEFAULT_OFFSET = 1;
+    /**
+     * @var int
+     */
     protected const DEFAULT_LIMIT = 10;
 
     /**

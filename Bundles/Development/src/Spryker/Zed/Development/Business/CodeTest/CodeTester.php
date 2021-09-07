@@ -18,17 +18,38 @@ use Symfony\Component\Process\Process;
 
 class CodeTester
 {
+    /**
+     * @var string
+     */
     public const OPTION_VERBOSE = 'verbose';
 
+    /**
+     * @var string
+     */
     public const OPTION_INITIALIZE = 'initialize';
 
+    /**
+     * @var string
+     */
     public const OPTION_GROUP = 'group';
 
+    /**
+     * @var string
+     */
     public const OPTION_TYPE_EXCLUDE = 'exclude';
 
+    /**
+     * @var string
+     */
     public const OPTION_DRY_RUN = 'dry-run';
 
+    /**
+     * @var int
+     */
     protected const CODE_SUCCESS = 0;
+    /**
+     * @var int
+     */
     protected const CODE_ERROR = 1;
 
     /**

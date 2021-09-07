@@ -19,8 +19,17 @@ use Spryker\Zed\MerchantProductOption\Persistence\MerchantProductOptionRepositor
 
 class MerchantProductOptionValidator implements MerchantProductOptionValidatorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_PARAM_NAME = '%name%';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_CART_ITEM_OPTION_PRE_CHECK = 'cart.item.option.pre.check.validation.error.exists';
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_CHECKOUT_ITEM_OPTION_PRE_CONDITION = 'checkout.item.option.pre.condition.validation.error.exists';
 
     /**

@@ -21,7 +21,13 @@ class UrlStorageWriter implements UrlStorageWriterInterface
 {
     use LoggerTrait;
 
+    /**
+     * @var string
+     */
     public const RESOURCE_TYPE = 'type';
+    /**
+     * @var string
+     */
     public const RESOURCE_VALUE = 'value';
 
     /**

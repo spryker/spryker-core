@@ -25,6 +25,9 @@ class ReturnWriter implements ReturnWriterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @var string
+     */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_REQUIRED_FIELDS_ERROR = 'return.create_return.validation.required_item_fields_error';
 
     /**

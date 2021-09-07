@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class Currency extends SymfonyConstraint
 {
+    /**
+     * @var array
+     */
     protected const VALID_CURRENCIES = [
         'FJD',
     ];

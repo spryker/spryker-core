@@ -17,7 +17,13 @@ use Spryker\Zed\Kernel\Container;
  */
 class CartCodesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_CART_CODE = 'FACADE_CART_CODE';
+    /**
+     * @var string
+     */
     public const FACADE_CARTS_REST_API = 'FACADE_CARTS_REST_API';
 
     /**

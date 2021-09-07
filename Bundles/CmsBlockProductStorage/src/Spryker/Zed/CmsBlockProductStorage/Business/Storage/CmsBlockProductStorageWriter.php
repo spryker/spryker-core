@@ -15,15 +15,23 @@ use Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryCo
 
 class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const KEYS = 'keys';
+    /**
+     * @var string
+     */
     protected const NAMES = 'names';
     /**
      * @uses \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainer::NAME
+     * @var string
      */
     protected const COLUMN_BLOCK_NAME = 'name';
 
     /**
      * @uses \Spryker\Zed\CmsBlockProductStorage\Persistence\CmsBlockProductStorageQueryContainer::BLOCK_KEY
+     * @var string
      */
     protected const COLUMN_BLOCK_KEY = 'block_key';
 

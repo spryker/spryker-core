@@ -15,8 +15,14 @@ use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
 class Environment extends Module
 {
+    /**
+     * @var string
+     */
     protected const TESTING_APPLICATION_ENV_NAME = 'devtest';
 
+    /**
+     * @var string
+     */
     protected const CONFIG_IS_ISOLATED_MODULE_TEST = 'isolated';
 
     /**

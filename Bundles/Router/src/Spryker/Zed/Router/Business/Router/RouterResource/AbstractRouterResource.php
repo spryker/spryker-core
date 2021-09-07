@@ -24,7 +24,13 @@ use Symfony\Component\Finder\SplFileInfo;
 
 abstract class AbstractRouterResource implements ResourceInterface
 {
+    /**
+     * @var int
+     */
     public const MODULE_NAME_POSITION = 2;
+    /**
+     * @var int
+     */
     public const CONTROLLER_NAME_POSITION = 5;
 
     /**

@@ -15,9 +15,18 @@ use Spryker\Zed\CompanyRoleGui\Dependency\Facade\CompanyRoleGuiToCompanyRoleFaca
 
 class CompanyUserRoleFormDataProvider
 {
+    /**
+     * @var string
+     */
     protected const OPTION_ATTRIBUTE_DATA = 'data-id_company';
+    /**
+     * @var string
+     */
     protected const OPTION_IS_DEFAULT = 'data-is_default';
 
+    /**
+     * @var string
+     */
     protected const FORMAT_NAME = '%s (id: %s)';
 
     /**

@@ -18,12 +18,27 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class FilterPreferencesController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID = 'id';
+    /**
+     * @var string
+     */
     public const PARAM_TERM = 'term';
 
+    /**
+     * @var string
+     */
     public const MESSAGE_FILTER_PREFERENCE_CREATE_SUCCESS = 'Filter preference was created successfully.';
+    /**
+     * @var string
+     */
     public const MESSAGE_FILTER_PREFERENCE_UPDATE_SUCCESS = 'Filter preference was updated successfully.';
 
+    /**
+     * @var string
+     */
     public const REDIRECT_URL_DEFAULT = '/product-search/filter-preferences';
 
     /**

@@ -29,10 +29,22 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class AclRoleDataImportPluginTest extends Unit
 {
+    /**
+     * @var int
+     */
     protected const EXPECTED_IMPORT_COUNT = 3;
 
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_NAME_1 = 'User';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_NAME_2 = 'Moderator';
+    /**
+     * @var string
+     */
     protected const ACL_ROLE_NAME_3 = 'Administrator';
 
     /**

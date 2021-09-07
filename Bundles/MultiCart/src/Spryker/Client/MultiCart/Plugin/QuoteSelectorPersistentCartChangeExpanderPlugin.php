@@ -12,6 +12,9 @@ use Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChang
 
 class QuoteSelectorPersistentCartChangeExpanderPlugin implements PersistentCartChangeExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_QUOTE = 'id_quote';
 
     /**

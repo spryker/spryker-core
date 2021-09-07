@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\PriceProductScheduleRedirectTransfer;
 
 class PriceProductScheduleRedirectToScheduleList implements PriceProductScheduleRedirectInterface
 {
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL_SCHEDULE_LIST_PATTERN = '/price-product-schedule-gui/edit-schedule-list?id-price-product-schedule-list=%d';
 
     /**

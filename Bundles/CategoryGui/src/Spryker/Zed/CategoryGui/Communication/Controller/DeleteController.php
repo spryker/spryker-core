@@ -22,14 +22,24 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class DeleteController extends CategoryAbstractController
 {
+    /**
+     * @var string
+     */
     protected const REQUEST_PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @uses \Spryker\Zed\CategoryGui\Communication\Controller\ListController::indexAction()
+     * @var string
      */
     protected const ROUTE_CATEGORY_LIST = '/category-gui/list';
+    /**
+     * @var string
+     */
     protected const ROUTE_DELETE_CATEGORY = '/category-gui/delete';
 
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_ROOT_CATEGORY_IS_NOT_REMOVABLE = 'The root category cannot be deleted.';
 
     /**

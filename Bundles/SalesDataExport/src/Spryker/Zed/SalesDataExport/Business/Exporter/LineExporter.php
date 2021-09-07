@@ -16,6 +16,9 @@ use Spryker\Zed\SalesDataExport\SalesDataExportConfig;
 
 class LineExporter implements ExporterInterface
 {
+    /**
+     * @var int
+     */
     protected const READ_BATCH_SIZE = 100;
 
     /**

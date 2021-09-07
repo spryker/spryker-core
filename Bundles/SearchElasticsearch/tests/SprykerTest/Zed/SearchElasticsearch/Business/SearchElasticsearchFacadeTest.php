@@ -32,12 +32,33 @@ use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
  */
 class SearchElasticsearchFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CURRENT_STORE = 'DE';
+    /**
+     * @var string
+     */
     protected const FIXTURE_SOURCE_IDENTIFIER = 'index-name';
+    /**
+     * @var string
+     */
     protected const DOCUMENT_CONTENT_KEY = '_source';
+    /**
+     * @var string
+     */
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
+    /**
+     * @var string
+     */
     protected const REPOSITORY_NAME = 'search_test_repository';
+    /**
+     * @var string
+     */
     protected const REPOSITORY_TYPE_FILESYSTEM = 'fs';
+    /**
+     * @var string
+     */
     protected const SNAPSHOT_NAME = 'search_test_snapshot';
 
     /**

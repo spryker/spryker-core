@@ -12,7 +12,13 @@ namespace Spryker\Shared\Testify;
  */
 class TestifyConstants
 {
+    /**
+     * @var string
+     */
     public const BOOTSTRAP_CLASS_YVES = 'TESTIFY_CONSTANTS:BOOTSTRAP_CLASS_YVES';
+    /**
+     * @var string
+     */
     public const BOOTSTRAP_CLASS_ZED = 'TESTIFY_CONSTANTS:BOOTSTRAP_CLASS_ZED';
 
     /**
@@ -20,12 +26,15 @@ class TestifyConstants
      * - Glue application domain to test end to end against.
      *
      * @api
+     * @var string
      */
     public const GLUE_APPLICATION_DOMAIN = 'TESTIFY_CONSTANTS:GLUE_APPLICATION_DOMAIN';
 
     /**
      * Specification:
      * - Folder in which the aggregated Glue OpenApi3 schema is saved.
+     *
+     * @var string
      */
     public const GLUE_OPEN_API_SCHEMA = 'TESTIFY_CONSTANTS:GLUE_OPEN_API_SCHEMA';
 
@@ -33,6 +42,8 @@ class TestifyConstants
      * Specification:
      * - Host to be used for Presentation tests.
      * - When selenium server is installed on host, tests run in the hosts browser.
+     *
+     * @var string
      */
     public const WEB_DRIVER_HOST = 'TESTIFY_CONSTANTS:WEB_DRIVER_HOST';
 }

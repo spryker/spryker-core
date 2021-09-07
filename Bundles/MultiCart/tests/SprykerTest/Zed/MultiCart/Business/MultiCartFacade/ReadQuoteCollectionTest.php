@@ -29,6 +29,9 @@ use Spryker\Zed\MultiCart\Dependency\Facade\MultiCartToQuoteFacadeBridge;
  */
 class ReadQuoteCollectionTest extends Unit
 {
+    /**
+     * @var array
+     */
     protected const COLLECTION_DATA = [
         [
             'id_quote' => 1,
@@ -51,6 +54,9 @@ class ReadQuoteCollectionTest extends Unit
         ],
     ];
 
+    /**
+     * @var array
+     */
     protected const CUSTOMER_DATA = [
         'customer_reference' => 'tester-de',
         'email' => 'tester@test.com',

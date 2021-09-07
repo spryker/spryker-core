@@ -16,10 +16,19 @@ use Spryker\Zed\StockGui\Exception\MissingStoreRelationFormTypePluginException;
 
 class StockGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_STOCK = 'FACADE_STOCK';
 
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_STOCK = 'PROPEL_QUERY_STOCK';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**

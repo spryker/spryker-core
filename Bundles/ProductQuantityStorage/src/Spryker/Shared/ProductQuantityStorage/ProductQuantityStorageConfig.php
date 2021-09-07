@@ -16,6 +16,7 @@ class ProductQuantityStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_QUANTITY_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
@@ -24,6 +25,7 @@ class ProductQuantityStorageConfig extends AbstractBundleConfig
      * - Queue name as used for processing price messages
      *
      * @api
+     * @var string
      */
     public const PRODUCT_QUANTITY_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
 
@@ -32,6 +34,7 @@ class ProductQuantityStorageConfig extends AbstractBundleConfig
      * - Key generation resource name of product quantity.
      *
      * @api
+     * @var string
      */
     public const PRODUCT_QUANTITY_RESOURCE_NAME = 'product_quantity';
 }

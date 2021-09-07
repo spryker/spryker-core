@@ -14,12 +14,33 @@ use Twig\Environment;
 
 class IndexMapGenerator implements IndexMapGeneratorInterface
 {
+    /**
+     * @var string
+     */
     public const CLASS_NAME_SUFFIX = 'IndexMap';
+    /**
+     * @var string
+     */
     public const CLASS_EXTENSION = '.php';
+    /**
+     * @var string
+     */
     public const PROPERTIES = 'properties';
+    /**
+     * @var string
+     */
     public const PROPERTY_PATH_SEPARATOR = '.';
+    /**
+     * @var string
+     */
     public const TEMPLATE_VARIABLE_CLASS_NAME = 'className';
+    /**
+     * @var string
+     */
     public const TEMPLATE_VARIABLE_CONSTANTS = 'constants';
+    /**
+     * @var string
+     */
     public const TEMPLATE_VARIABLE_METADATA = 'metadata';
 
     /**

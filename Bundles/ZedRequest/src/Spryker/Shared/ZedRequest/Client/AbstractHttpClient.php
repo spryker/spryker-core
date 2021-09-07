@@ -30,65 +30,120 @@ use Throwable;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
+    /**
+     * @var string
+     */
     public const META_TRANSFER_ERROR =
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
     /**
      * @deprecated not valid constant name. Use ZED_REQUEST_ERROR instead
+     * @var string
      */
     public const HOST_NAME_ERROR =
         'Incorrect HOST_ZED config, expected `%s`, got `%s`. Set the URLs in your Shared/config_default_%s.php or env specific config files.';
 
+    /**
+     * @var string
+     */
     public const HEADER_USER_AGENT = 'User-Agent';
+    /**
+     * @var string
+     */
     public const HEADER_HOST_YVES = 'X-Yves-Host';
+    /**
+     * @var string
+     */
     public const HEADER_INTERNAL_REQUEST = 'X-Internal-Request';
+    /**
+     * @var string
+     */
     public const HEADER_HOST_ZED = 'X-Zed-Host';
+    /**
+     * @var string
+     */
     protected const SERVER_HTTP_HOST = 'HTTP_HOST';
+    /**
+     * @var string
+     */
     protected const SERVER_PORT = 'SERVER_PORT';
+    /**
+     * @var int
+     */
     protected const DEFAULT_PORT = 80;
+    /**
+     * @var int
+     */
     protected const DEFAULT_SSL_PORT = 443;
 
+    /**
+     * @var string
+     */
     protected const CONFIG_FILE_PREFIX = '/config/Shared/config_';
+    /**
+     * @var string
+     */
     protected const CONFIG_FILE_SUFFIX = '.php';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_CONFIG = 'default';
 
+    /**
+     * @var string
+     */
     protected const ZED_API_SSL_ENABLED = 'ZED_API_SSL_ENABLED';
 
+    /**
+     * @var string
+     */
     protected const ZED_REQUEST_ERROR = 'Failed to complete request with server authority %s.
 Configured with %s %s:%s in %s. Error: Stacktrace:';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     * @var string
      */
     public const EVENT_FIELD_TRANSFER_DATA = 'transfer_data';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     * @var string
      */
     public const EVENT_FIELD_TRANSFER_CLASS = 'transfer_class';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     * @var string
      */
     public const EVENT_FIELD_PATH_INFO = 'path_info';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     * @var string
      */
     public const EVENT_FIELD_SUB_TYPE = 'sub_type';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     * @var string
      */
     public const EVENT_NAME_TRANSFER_REQUEST = 'transfer_request';
 
     /**
      * @deprecated Will be removed with next major. Logging is done by Log bundle.
+     * @var string
      */
     public const EVENT_NAME_TRANSFER_RESPONSE = 'transfer_response';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_XDEBUG_PROFILER_NAME = 'XDEBUG_PROFILE';
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_XDEBUG_SESSIOIN_NAME = 'XDEBUG_SESSION';
 
     /**

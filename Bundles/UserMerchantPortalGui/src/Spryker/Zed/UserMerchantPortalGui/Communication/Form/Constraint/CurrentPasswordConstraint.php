@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint;
 
 class CurrentPasswordConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_MERCHANT_USER_FACADE = 'merchantUserFacade';
 
     /**

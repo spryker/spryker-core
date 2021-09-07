@@ -19,7 +19,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateIndexMapConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'search:setup:index-map';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will generate the PageIndexMap without requiring the actual Elasticsearch index';
 
     /**

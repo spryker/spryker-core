@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantRelationshipRepository extends AbstractRepository implements MerchantRelationshipRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_MAX_ID = 'MAX_ID';
 
     /**

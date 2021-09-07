@@ -22,6 +22,9 @@ use Codeception\Test\Unit;
  */
 class DeleteCollectionByReturnReasonEventsTest extends Unit
 {
+    /**
+     * @var array
+     */
     protected const RETURN_REASON_GLOSSARY_KEYS = [
         'return-reason-1',
         'return-reason-2',

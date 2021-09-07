@@ -16,7 +16,13 @@ use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterfac
  */
 class CartExpanderStrategyResolver implements CartExpanderStrategyResolverInterface
 {
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT = 'STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT';
+    /**
+     * @var string
+     */
     public const STRATEGY_KEY_WITH_MULTI_SHIPMENT = 'STRATEGY_KEY_WITH_MULTI_SHIPMENT';
 
     /**

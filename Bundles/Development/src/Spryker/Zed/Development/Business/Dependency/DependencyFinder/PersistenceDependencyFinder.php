@@ -13,6 +13,9 @@ use Spryker\Zed\Development\Business\Dependency\SchemaParser\PropelSchemaParserI
 
 class PersistenceDependencyFinder implements DependencyFinderInterface
 {
+    /**
+     * @var string
+     */
     public const TYPE_PERSISTENCE = 'persistence';
 
     /**

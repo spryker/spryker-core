@@ -15,7 +15,13 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  */
 class IndexController extends AbstractController
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_SYNC = 'Permission plugins have been synchronized';
+    /**
+     * @var string
+     */
     protected const URL_REDIRECT = '/';
 
     /**

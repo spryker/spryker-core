@@ -11,6 +11,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueValue extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_PRODUCT_OPTION_QUERY_CONTAINER = 'productOptionQueryContainer';
 
     /**

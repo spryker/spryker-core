@@ -33,6 +33,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ShipmentRepository extends AbstractRepository implements ShipmentRepositoryInterface
 {
+    /**
+     * @var string
+     */
     protected const COL_MAX_TAX_RATE = 'maxTaxRate';
 
     /**

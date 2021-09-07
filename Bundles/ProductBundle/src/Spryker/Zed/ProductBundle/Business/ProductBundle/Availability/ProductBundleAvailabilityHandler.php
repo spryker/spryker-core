@@ -17,6 +17,9 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
 
 class ProductBundleAvailabilityHandler implements ProductBundleAvailabilityHandlerInterface
 {
+    /**
+     * @var int
+     */
     protected const DIVISION_SCALE = 10;
 
     /**

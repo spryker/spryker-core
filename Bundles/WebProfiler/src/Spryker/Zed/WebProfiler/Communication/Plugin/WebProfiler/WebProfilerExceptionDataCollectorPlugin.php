@@ -14,7 +14,13 @@ use Symfony\Component\HttpKernel\DataCollector\ExceptionDataCollector;
 
 class WebProfilerExceptionDataCollectorPlugin implements WebProfilerDataCollectorPluginInterface
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'exception';
+    /**
+     * @var string
+     */
     protected const TEMPLATE = '@WebProfiler/Collector/exception.html.twig';
 
     /**

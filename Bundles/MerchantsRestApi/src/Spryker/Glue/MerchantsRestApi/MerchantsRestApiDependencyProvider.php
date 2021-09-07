@@ -18,10 +18,22 @@ use Spryker\Glue\MerchantsRestApi\Dependency\Client\MerchantsRestApiToMerchantSt
  */
 class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
+    /**
+     * @var string
+     */
     public const CLIENT_MERCHANT_SEARCH = 'CLIENT_MERCHANT_SEARCH';
+    /**
+     * @var string
+     */
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_MERCHANT_REST_ATTRIBUTES_MAPPER = 'PLUGINS_MERCHANT_REST_ATTRIBUTES_MAPPER';
 
     /**

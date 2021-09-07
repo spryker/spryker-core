@@ -12,13 +12,20 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class StorageConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_PAGE_LENGTH = 100;
 
     /**
      * @deprecated Use {@link \Spryker\Zed\StorageRedis\StorageRedisConfig::DEFAULT_REDIS_DATABASE} instead.
+     * @var int
      */
     public const DEFAULT_REDIS_DATABASE = 0;
 
+    /**
+     * @var int
+     */
     protected const PROCESS_TIMEOUT = 60;
 
     /**

@@ -16,6 +16,9 @@ use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInter
 
 class MerchantOrderItemWriter implements MerchantOrderItemWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_MERCHANT_ORDER_ITEM_NOT_FOUND = 'Merchant order item not found.';
 
     /**

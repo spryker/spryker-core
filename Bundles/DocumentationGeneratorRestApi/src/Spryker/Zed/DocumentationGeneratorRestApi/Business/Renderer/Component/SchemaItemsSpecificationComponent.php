@@ -16,11 +16,29 @@ use Generated\Shared\Transfer\SchemaItemsComponentTransfer;
  */
 class SchemaItemsSpecificationComponent implements SchemaItemsSpecificationComponentInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_REF = '$ref';
+    /**
+     * @var string
+     */
     protected const KEY_ITEMS = 'items';
+    /**
+     * @var string
+     */
     protected const KEY_ONEOF = 'oneOf';
+    /**
+     * @var string
+     */
     protected const KEY_TYPE = 'type';
+    /**
+     * @var string
+     */
     protected const KEY_NULLABLE = 'nullable';
+    /**
+     * @var string
+     */
     protected const VALUE_TYPE_ARRAY = 'array';
 
     /**

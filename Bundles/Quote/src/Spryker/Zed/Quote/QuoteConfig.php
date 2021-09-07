@@ -16,6 +16,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class QuoteConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const DEFAULT_GUEST_QUOTE_LIFETIME = 'P01M';
 
     /**

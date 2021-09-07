@@ -74,8 +74,14 @@ use Spryker\Zed\UrlStorage\Communication\Plugin\Synchronization\UrlSynchronizati
  */
 class SynchronizationFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PARAM_PROJECT = 'PROJECT';
 
+    /**
+     * @var string
+     */
     protected const PROJECT_SUITE = 'suite';
 
     /**

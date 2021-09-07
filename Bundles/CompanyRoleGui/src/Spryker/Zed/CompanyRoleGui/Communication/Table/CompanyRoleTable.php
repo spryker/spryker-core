@@ -16,19 +16,49 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CompanyRoleTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     protected const COL_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     protected const HEADER_ID_COMPANY_ROLE = 'Role ID';
+    /**
+     * @var string
+     */
     protected const HEADER_NAME_COMPANY_ROLE = 'Name';
+    /**
+     * @var string
+     */
     protected const HEADER_NAME_COMPANY = 'Company Name';
+    /**
+     * @var string
+     */
     protected const HEADER_ACTIONS = 'Actions';
 
+    /**
+     * @var string
+     */
     protected const PARAM_ID_COMPANY_ROLE = 'id-company-role';
 
+    /**
+     * @var string
+     */
     protected const UPDATE_ROLE_URL = '/company-role-gui/edit-company-role';
+    /**
+     * @var string
+     */
     protected const DELETE_ROLE_URL = '/company-role-gui/delete-company-role/confirm-delete';
 
+    /**
+     * @var string
+     */
     protected const BUTTON_TITLE_DELETE = 'Delete';
+    /**
+     * @var string
+     */
     protected const BUTTON_TITLE_EDIT = 'Edit';
 
     /**

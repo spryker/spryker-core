@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_MERCHANT_ID = 'merchant-id';
 
     /**

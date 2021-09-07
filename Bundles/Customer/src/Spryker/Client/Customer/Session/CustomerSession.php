@@ -13,6 +13,9 @@ use Spryker\Client\Session\SessionClientInterface;
 
 class CustomerSession implements CustomerSessionInterface
 {
+    /**
+     * @var string
+     */
     public const SESSION_KEY = 'customer data';
 
     /**

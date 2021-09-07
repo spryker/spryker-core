@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class OrderPaymentsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const PLUGINS_ORDER_PAYMENT_UPDATER = 'PLUGINS_ORDER_PAYMENT_UPDATER';
 
     /**

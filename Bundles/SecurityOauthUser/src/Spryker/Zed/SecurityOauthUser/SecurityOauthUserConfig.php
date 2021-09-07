@@ -14,47 +14,77 @@ class SecurityOauthUserConfig extends AbstractBundleConfig
     /**
      * Specification:
      *  - If the user does not exist it will be created automatically based on data from an external service.
+     *
+     * @var string
      */
     public const AUTHENTICATION_STRATEGY_CREATE_USER_ON_FIRST_LOGIN = 'AUTHENTICATION_STRATEGY_CREATE_USER_ON_FIRST_LOGIN';
 
     /**
      * Specification:
      *  - Accepts only existing users for authentication.
+     *
+     * @var string
      */
     public const AUTHENTICATION_STRATEGY_ACCEPT_ONLY_EXISTING_USERS = 'AUTHENTICATION_STRATEGY_ACCEPT_ONLY_EXISTING_USERS';
 
+    /**
+     * @var string
+     */
     public const REQUEST_PARAMETER_AUTHENTICATION_CODE = 'code';
+    /**
+     * @var string
+     */
     public const REQUEST_PARAMETER_AUTHENTICATION_STATE = 'state';
 
     /**
      * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::ROLE_BACK_OFFICE_USER
+     * @var string
      */
     public const ROLE_BACK_OFFICE_USER = 'ROLE_BACK_OFFICE_USER';
+    /**
+     * @var string
+     */
     public const ROLE_OAUTH_USER = 'ROLE_OAUTH_USER';
+    /**
+     * @var string
+     */
     public const ROUTE_NAME_OAUTH_USER_LOGIN = 'security-oauth-user:login';
 
     /**
      * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     * @var string
      */
     protected const OAUTH_USER_STATUS_ACTIVE = 'active';
 
+    /**
+     * @var string
+     */
     protected const BACK_OFFICE_ROUTE_PATTERN = '^/';
+    /**
+     * @var string
+     */
     protected const IGNORABLE_ROUTE_PATTERN = '^/security-oauth-user|^/security-gui';
 
+    /**
+     * @var string
+     */
     protected const HOME_PATH = '/';
 
     /**
      * @uses \Spryker\Zed\SecurityGui\SecurityGuiConfig::LOGIN_PATH
+     * @var string
      */
     protected const LOGIN_PATH = '/security-gui/login';
 
     /**
      * @uses \Spryker\Zed\SecurityGui\Communication\Plugin\Security\UserSecurityPlugin::PATH_LOGOUT
+     * @var string
      */
     protected const LOGOUT_PATH = '/auth/logout';
 
     /**
      * @uses \Spryker\Shared\Acl\AclConstants::ROOT_GROUP
+     * @var string
      */
     protected const OAUTH_USER_GROUP_NAME = 'root_group';
 

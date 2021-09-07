@@ -18,6 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Container implements ContainerInterface, ArrayAccess
 {
+    /**
+     * @var string
+     */
     public const TRIGGER_ERROR = 'container_trigger_error';
 
     /**

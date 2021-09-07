@@ -9,5 +9,8 @@ namespace Spryker\Zed\AclDataImport\Business\DataSet;
 
 interface AclGroupDataImportInterface
 {
+    /**
+     * @var string
+     */
     public const ACL_GROUP_NAME = 'name';
 }

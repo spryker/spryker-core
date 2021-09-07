@@ -16,6 +16,9 @@ use Spryker\Zed\ProductConfigurationCart\Dependency\Service\ProductConfiguration
  */
 class ProductConfigurationCartDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_PRODUCT_CONFIGURATION = 'SERVICE_PRODUCT_CONFIGURATION';
 
     /**

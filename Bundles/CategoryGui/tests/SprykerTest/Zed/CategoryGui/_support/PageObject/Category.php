@@ -9,21 +9,63 @@ namespace SprykerTest\Zed\CategoryGui\PageObject;
 
 class Category
 {
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_KEY = 'category[category_key]';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_PARENT = 'category[parent_category_node]';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_TEMPLATE = 'category[fk_category_template]';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_IS_ACTIVE = 'category[is_active]';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_IS_IN_MENU = 'category[is_in_menu]';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_IS_MAIN = 'category[is_main]';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_IS_CLICKABLE = 'category[is_clickable]';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_IS_SEARCHABLE = 'category[is_searchable]';
 
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_NAME_PATTERN = 'category[localized_attributes][%d][name]';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_TITLE_PATTERN = 'category[localized_attributes][%d][meta_title]';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_DESCRIPTION_PATTERN = 'category[localized_attributes][%d][meta_description]';
+    /**
+     * @var string
+     */
     public const FORM_FIELD_CATEGORY_KEYWORDS_PATTERN = 'category[localized_attributes][%d][meta_keywords]';
 
+    /**
+     * @var string
+     */
     public const CATEGORY_A = 'category-a';
+    /**
+     * @var string
+     */
     public const CATEGORY_B = 'category-b';
 
     /**

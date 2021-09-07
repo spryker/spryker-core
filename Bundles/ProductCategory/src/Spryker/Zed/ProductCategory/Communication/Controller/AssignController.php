@@ -21,6 +21,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AssignController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_CATEGORY = 'id-category';
 
     /**

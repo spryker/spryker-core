@@ -16,9 +16,18 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class MerchantUserStatusController extends AbstractCrudMerchantUserController
 {
+    /**
+     * @var string
+     */
     public const PARAM_MERCHANT_USER_ID = 'merchant-user-id';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS = 'User status can\'t be updated.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE = 'User status has been updated.';
 
     /**

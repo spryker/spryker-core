@@ -18,7 +18,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InitializeDatabaseConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'setup:init-db';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'Fill the database with required data';
 
     /**

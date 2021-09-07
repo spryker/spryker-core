@@ -23,7 +23,13 @@ use Codeception\Test\Unit;
  */
 class ArchitectureSnifferConfigurationBuilderTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CONFIG_PRIORITY_NAME = 'priority';
+    /**
+     * @var string
+     */
     protected const CONFIG_IGNORE_ERRORS = 'ignoreErrors';
 
     /**

@@ -14,6 +14,9 @@ use Spryker\Zed\MerchantRelationshipProductList\Business\ProductList\ProductList
 
 class CustomerExpander implements CustomerExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const TYPE_WHITELIST = 'whitelist';
 
     /**

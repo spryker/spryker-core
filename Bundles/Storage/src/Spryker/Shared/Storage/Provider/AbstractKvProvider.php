@@ -19,20 +19,25 @@ abstract class AbstractKvProvider extends AbstractClientProvider
 {
     /**
      * @deprecated Not used.
+     * @var string
      */
     public const METHOD_PREFIX = 'createClient';
 
+    /**
+     * @var string
+     */
     public const KV_ADAPTER_REDIS = 'redis';
 
     /**
      * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_SCHEME.
+     * @var string
      */
     protected const STORAGE_REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
 
     /**
      * Default Redis database number
      *
-     * @const int
+     * @var int
      */
     public const DEFAULT_REDIS_DATABASE = 0;
 

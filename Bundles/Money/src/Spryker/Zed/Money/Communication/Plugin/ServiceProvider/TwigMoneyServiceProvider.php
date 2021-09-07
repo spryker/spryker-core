@@ -24,7 +24,13 @@ use Twig\TwigFunction;
  */
 class TwigMoneyServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+    /**
+     * @var string
+     */
     public const FUNCTION_NAME_MONEY_COLLECTION = 'form_money_collection';
+    /**
+     * @var string
+     */
     public const TEMPLATE_PATH_MONEY_TABLE = '@Money/Form/Type/money_table.twig';
 
     /**

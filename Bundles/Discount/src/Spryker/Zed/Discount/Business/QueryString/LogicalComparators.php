@@ -9,7 +9,13 @@ namespace Spryker\Zed\Discount\Business\QueryString;
 
 class LogicalComparators
 {
+    /**
+     * @var string
+     */
     public const COMPARATOR_AND = 'and';
+    /**
+     * @var string
+     */
     public const COMPARATOR_OR = 'or';
 
     /**

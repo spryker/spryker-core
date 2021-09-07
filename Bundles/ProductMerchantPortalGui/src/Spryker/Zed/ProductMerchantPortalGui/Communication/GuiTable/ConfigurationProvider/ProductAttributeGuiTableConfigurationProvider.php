@@ -15,10 +15,22 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttri
 
 class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeGuiTableConfigurationProviderInterface
 {
+    /**
+     * @var string
+     */
     public const COL_KEY_ATTRIBUTE_NAME = 'attribute_name';
+    /**
+     * @var string
+     */
     public const COL_KEY_ATTRIBUTE_DEFAULT = 'attribute_default';
 
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_ATTRIBUTE_NAME = 'Attribute';
+    /**
+     * @var string
+     */
     protected const TITLE_COLUMN_ATTRIBUTE_DEFAULT = 'Default';
 
     /**

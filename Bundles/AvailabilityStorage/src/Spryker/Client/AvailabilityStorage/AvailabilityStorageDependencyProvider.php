@@ -17,10 +17,19 @@ use Spryker\Client\Kernel\Container;
  */
 class AvailabilityStorageDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_AVAILABILITY_STORAGE_STRATEGY = 'PLUGINS_AVAILABILITY_STORAGE_STRATEGY';
 
     /**

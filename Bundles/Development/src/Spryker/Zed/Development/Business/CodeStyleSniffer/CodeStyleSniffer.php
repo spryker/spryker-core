@@ -19,14 +19,32 @@ use Symfony\Component\Process\Process;
 
 class CodeStyleSniffer
 {
+    /**
+     * @var int
+     */
     protected const CODE_SUCCESS = 0;
 
+    /**
+     * @var string
+     */
     protected const OPTION_IGNORE = 'ignore';
 
+    /**
+     * @var array
+     */
     protected const APPLICATION_NAMESPACES = ['Orm'];
+    /**
+     * @var array
+     */
     protected const APPLICATION_LAYERS = ['Zed', 'Client', 'Yves', 'Service', 'Shared'];
 
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER_SHOP = 'SprykerShop';
+    /**
+     * @var string
+     */
     protected const NAMESPACE_SPRYKER = 'Spryker';
 
     /**

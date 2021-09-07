@@ -14,9 +14,18 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class StoreTable extends AbstractTable
 {
+    /**
+     * @var string
+     */
     public const COL_ID_STORE = 'id_store';
+    /**
+     * @var string
+     */
     public const COL_NAME = 'name';
 
+    /**
+     * @var string
+     */
     public const IDENTIFIER = 'store_data_table';
 
     /**

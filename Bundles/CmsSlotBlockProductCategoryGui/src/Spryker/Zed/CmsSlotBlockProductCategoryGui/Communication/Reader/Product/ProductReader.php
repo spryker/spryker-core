@@ -15,12 +15,30 @@ use Spryker\Zed\CmsSlotBlockProductCategoryGui\Persistence\CmsSlotBlockProductCa
 
 class ProductReader implements ProductReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const KEY_RESULTS = 'results';
+    /**
+     * @var string
+     */
     protected const KEY_PAGINATION = 'pagination';
+    /**
+     * @var string
+     */
     protected const KEY_PAGINATION_MORE = 'more';
+    /**
+     * @var string
+     */
     protected const KEY_DATA_ID = 'id';
+    /**
+     * @var string
+     */
     protected const KEY_DATA_TEXT = 'text';
 
+    /**
+     * @var int
+     */
     protected const DEFAULT_ITEMS_PER_PAGE = 10;
 
     /**

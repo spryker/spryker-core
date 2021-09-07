@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class UniqueStoreCurrencyVolumeQuantityConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE = 'The set of Store, Currency, and Quantity needs to be unique.';
 
     /**

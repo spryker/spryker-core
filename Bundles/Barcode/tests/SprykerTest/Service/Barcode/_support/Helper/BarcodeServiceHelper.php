@@ -19,6 +19,9 @@ class BarcodeServiceHelper extends Module
 {
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const GENERATED_CODE = 'generated string';
 
     /**

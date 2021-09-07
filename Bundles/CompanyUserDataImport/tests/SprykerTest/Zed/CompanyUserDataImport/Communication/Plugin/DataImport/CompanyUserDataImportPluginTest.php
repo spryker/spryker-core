@@ -31,8 +31,17 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class CompanyUserDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const CUSTOMER_REFERENCE_1 = 'DE--8';
+    /**
+     * @var string
+     */
     protected const CUSTOMER_REFERENCE_2 = 'DE--9';
+    /**
+     * @var string
+     */
     protected const COMPANY_KEY = 'Test_ltd';
 
     /**

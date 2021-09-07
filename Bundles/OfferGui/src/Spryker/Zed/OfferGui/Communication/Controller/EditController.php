@@ -18,11 +18,26 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_OFFER = 'id-offer';
+    /**
+     * @var string
+     */
     public const PARAM_SUBMIT_RELOAD = 'submit-reload';
+    /**
+     * @var string
+     */
     public const PARAM_SUBMIT_PERSIST = 'submit-persist';
 
+    /**
+     * @var string
+     */
     protected const MESSAGE_OFFER_UPDATE_SUCCESS = 'Offer was updated successfully.';
+    /**
+     * @var string
+     */
     protected const MESSAGE_OFFER_RELOAD_SUCCESS = 'Offer was reloaded successfully.';
 
     /**

@@ -17,16 +17,40 @@ use Spryker\Zed\Kernel\Container;
  */
 class AclEntityDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_USER = 'FACADE_USER';
+    /**
+     * @var string
+     */
     public const FACADE_ACL = 'FACADE_ACL';
 
+    /**
+     * @var string
+     */
     public const SERVICE_ACL_ENTITY = 'SERVICE_ACL_ENTITY';
 
+    /**
+     * @var string
+     */
     public const PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER = 'PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER';
+    /**
+     * @var string
+     */
     public const PLUGINS_ACL_ENTITY_DISABLER = 'PLUGINS_ACL_ENTITY_DISABLER';
+    /**
+     * @var string
+     */
     public const PLUGINS_ACL_ENTITY_ENABLER = 'PLUGINS_ACL_ENTITY_ENABLER';
 
+    /**
+     * @var string
+     */
     public const IS_ACL_ENTITY_ENABLED = 'IS_ACL_ENTITY_ENABLED';
+    /**
+     * @var string
+     */
     public const PARAM_IS_ACL_ENTITY_ENABLED = 'PARAM_IS_ACL_ENTITY_ENABLED';
 
     /**

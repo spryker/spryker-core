@@ -31,14 +31,29 @@ class AuthRestApiBusinessTester extends Actor
 {
     use _generated\AuthRestApiBusinessTesterActions;
 
+    /**
+     * @var string
+     */
     protected const TEST_CUSTOMER_REFERENCE = 'DE--666';
 
+    /**
+     * @var string
+     */
     protected const TEST_ANONYMOUS_CUSTOMER_REFERENCE = 'anonymous:DE--666';
 
+    /**
+     * @var string
+     */
     protected const TEST_GRANT_TYPE = 'password';
 
+    /**
+     * @var string
+     */
     protected const TEST_USERNAME = 'test username';
 
+    /**
+     * @var string
+     */
     protected const TEST_PASSWORD = 'test password';
 
     /**

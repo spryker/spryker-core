@@ -30,10 +30,22 @@ use Spryker\DecimalObject\Decimal;
  */
 class OmsFacadeReservationsTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const STORE_NAME_AT = 'AT';
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
 
+    /**
+     * @var string
+     */
     protected const TEST_SKU_1 = 'test-sku-1';
+    /**
+     * @var string
+     */
     protected const TEST_SKU_2 = 'test-sku-2';
 
     /**

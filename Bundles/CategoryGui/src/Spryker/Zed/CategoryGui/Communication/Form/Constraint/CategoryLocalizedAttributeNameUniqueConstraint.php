@@ -12,10 +12,22 @@ use Symfony\Component\Validator\Constraint;
 
 class CategoryLocalizedAttributeNameUniqueConstraint extends Constraint
 {
+    /**
+     * @var string
+     */
     public const OPTION_CATEGORY_FACADE = 'categoryFacade';
+    /**
+     * @var string
+     */
     public const OPTION_TRANSLATOR_FACADE = 'translatorFacade';
 
+    /**
+     * @var string
+     */
     protected const PARAMETER_CATEGORY_NAME = '%categoryName%';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE = 'Category with name "%categoryName%" already in use in this category level, please choose another one.';
 
     /**

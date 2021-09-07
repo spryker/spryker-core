@@ -15,6 +15,9 @@ use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 
 class QuoteChangeObserver implements QuoteChangeObserverInterface
 {
+    /**
+     * @var string
+     */
     public const CART_SYNCHRONIZE_ITEMS_PRICE_CHANGED = 'cart.validate.items.price.changed';
 
     /**

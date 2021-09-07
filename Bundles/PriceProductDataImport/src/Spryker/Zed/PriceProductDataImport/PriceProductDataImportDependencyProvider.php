@@ -17,7 +17,13 @@ use Spryker\Zed\PriceProductDataImport\Dependency\Service\PriceProductDataImport
  */
 class PriceProductDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**

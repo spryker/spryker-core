@@ -19,7 +19,13 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class ProductAttributeValueForm extends AbstractType
 {
+    /**
+     * @var string
+     */
     protected const FIELD_VALUE = 'value';
+    /**
+     * @var string
+     */
     protected const FIELD_NAME = 'name';
 
     /**

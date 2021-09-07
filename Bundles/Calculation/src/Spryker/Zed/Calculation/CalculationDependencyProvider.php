@@ -16,10 +16,22 @@ use Spryker\Zed\Kernel\Container;
  */
 class CalculationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const QUOTE_CALCULATOR_PLUGIN_STACK = 'quote calculator plugin stack';
+    /**
+     * @var string
+     */
     public const ORDER_CALCULATOR_PLUGIN_STACK = 'order calculator plugin stack';
+    /**
+     * @var string
+     */
     public const PLUGINS_QUOTE_POST_RECALCULATE = 'PLUGINS_QUOTE_POST_RECALCULATE';
 
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_TEXT = 'util text service';
 
     /**

@@ -34,9 +34,18 @@ use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
  */
 class AvailabilityHandlerTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const PRODUCT_ABSTRACT_SKU = 'sku-123';
+    /**
+     * @var string
+     */
     public const PRODUCT_SKU = 'sku-123-321';
 
+    /**
+     * @var string
+     */
     protected const STORE_NAME = 'DE';
 
     /**

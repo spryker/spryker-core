@@ -13,6 +13,9 @@ use Spryker\Zed\Touch\TouchConfig;
 
 class Touch implements TouchInterface
 {
+    /**
+     * @var int
+     */
     public const BULK_UPDATE_CHUNK_SIZE = 250;
 
     /**

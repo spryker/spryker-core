@@ -17,7 +17,13 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class SearchConsole extends Console
 {
+    /**
+     * @var string
+     */
     public const COMMAND_NAME = 'search:setup';
+    /**
+     * @var string
+     */
     public const DESCRIPTION = 'This command will run installer for search';
 
     /**

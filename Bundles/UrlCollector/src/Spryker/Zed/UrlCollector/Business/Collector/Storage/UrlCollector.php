@@ -26,9 +26,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UrlCollector extends AbstractStoragePropelCollector
 {
+    /**
+     * @var string
+     */
     public const FK_RESOURCE_ = 'fk_resource_';
+    /**
+     * @var string
+     */
     public const RESOURCE_VALUE = 'value';
+    /**
+     * @var string
+     */
     public const RESOURCE_TYPE = 'type';
+    /**
+     * @var string
+     */
     public const KEYS_RESOURCE_TYPE_SUFFIX = ' keys';
 
     /**

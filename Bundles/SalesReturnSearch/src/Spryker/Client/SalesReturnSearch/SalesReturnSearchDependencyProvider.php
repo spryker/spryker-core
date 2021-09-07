@@ -18,10 +18,22 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
  */
 class SalesReturnSearchDependencyProvider extends AbstractDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const CLIENT_SEARCH = 'CLIENT_SEARCH';
 
+    /**
+     * @var string
+     */
     public const PLUGIN_RETURN_REASON_SEARCH_QUERY = 'PLUGIN_RETURN_REASON_SEARCH_QUERY';
+    /**
+     * @var string
+     */
     public const PLUGINS_RETURN_REASON_SEARCH_RESULT_FORMATTER = 'PLUGINS_RETURN_REASON_SEARCH_RESULT_FORMATTER';
+    /**
+     * @var string
+     */
     public const PLUGINS_RETURN_REASON_SEARCH_QUERY_EXPANDER = 'PLUGINS_RETURN_REASON_SEARCH_QUERY_EXPANDER';
 
     /**

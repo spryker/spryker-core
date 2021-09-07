@@ -20,16 +20,19 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
 
     /**
      * @uses \Spryker\Client\Catalog\CatalogConfig::PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME
+     * @var string
      */
     protected const REQUEST_PARAM_ITEMS_PER_PAGE = 'ipp';
 
     /**
      * @see \SprykerShop\Yves\CatalogPage\CatalogPageConfig::CATALOG_PAGE_LIMIT
+     * @var int
      */
     protected const REQUEST_PARAM_ITEMS_PER_PAGE_VALUE = 1000;
 
     /**
      * @uses \Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\ProductConcreteCatalogSearchResultFormatterPlugin::NAME
+     * @var string
      */
     protected const FORMATTED_RESULT_KEY = 'ProductConcreteCatalogSearchResultFormatterPlugin';
 
@@ -59,6 +62,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
                 static::REQUEST_PARAM_ITEMS_PER_PAGE => static::REQUEST_PARAM_ITEMS_PER_PAGE_VALUE,
             ]);
 
+        /** @var array $searchResult */
         $searchResult = $this->catalogClient->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
         $productConcretePageSearchTransfers = $searchResult[static::FORMATTED_RESULT_KEY] ?? [];
 

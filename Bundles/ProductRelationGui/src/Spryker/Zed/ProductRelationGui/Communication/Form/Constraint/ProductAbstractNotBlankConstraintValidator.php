@@ -14,6 +14,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ProductAbstractNotBlankConstraintValidator extends ConstraintValidator
 {
+    /**
+     * @var string
+     */
     protected const VIOLATION_MESSAGE = 'Abstract product is not selected.';
 
     /**

@@ -34,6 +34,9 @@ class SecurityHelper extends Module
     use CommunicationHelperTrait;
     use BusinessHelperTrait;
 
+    /**
+     * @var string
+     */
     protected const MODULE_NAME = 'Security';
 
     /**

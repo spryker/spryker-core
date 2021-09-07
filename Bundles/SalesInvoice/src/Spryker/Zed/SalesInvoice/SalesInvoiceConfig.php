@@ -16,6 +16,9 @@ use Spryker\Zed\SalesInvoice\Business\Exception\OrderInvoiceTemplatePathNotConfi
  */
 class SalesInvoiceConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const ORDER_INVOICE_MAIL_TYPE = 'order invoice';
 
     /**

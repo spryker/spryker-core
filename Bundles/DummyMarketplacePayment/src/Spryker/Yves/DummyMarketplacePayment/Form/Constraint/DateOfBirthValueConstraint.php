@@ -11,7 +11,13 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class DateOfBirthValueConstraint extends SymfonyConstraint
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE = 'checkout.step.payment.must_be_older_than_18_years';
+    /**
+     * @var string
+     */
     protected const MINIMAL_DATE = '-18 years';
 
     /**

@@ -45,10 +45,22 @@ use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginI
  */
 class CategoryFacadeTest extends Unit
 {
+    /**
+     * @var int
+     */
     public const CATEGORY_ID_ROOT = 1;
 
+    /**
+     * @var string
+     */
     protected const TEST_LOCALE = 'en_US';
+    /**
+     * @var string
+     */
     protected const TEST_STORE_DE = 'DE';
+    /**
+     * @var string
+     */
     protected const TEST_STORE_AT = 'AT';
 
     /**

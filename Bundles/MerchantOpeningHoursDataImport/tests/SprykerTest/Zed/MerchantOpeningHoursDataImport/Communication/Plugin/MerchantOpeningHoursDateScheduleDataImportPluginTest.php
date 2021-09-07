@@ -27,6 +27,9 @@ use Spryker\Zed\MerchantOpeningHoursDataImport\MerchantOpeningHoursDataImportCon
  */
 class MerchantOpeningHoursDateScheduleDataImportPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     public const MERCHANT_REFERENCE = 'merchant-opening-hours-data-import-test-reference';
 
     /**

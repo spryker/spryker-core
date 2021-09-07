@@ -18,10 +18,14 @@ use Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices;
 
 class RememberMeSecurityPlugin implements SecurityPluginInterface
 {
+    /**
+     * @var int
+     */
     protected const LIFETIME_ONE_YEAR = 31536000;
 
     /**
      * @uses \Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin::SERVICE_DISPATCHER
+     * @var string
      */
     protected const SERVICE_DISPATCHER = 'dispatcher';
 

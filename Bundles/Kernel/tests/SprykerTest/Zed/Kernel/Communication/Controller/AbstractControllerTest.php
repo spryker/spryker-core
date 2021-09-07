@@ -26,6 +26,7 @@ class AbstractControllerTest extends Unit
 {
     /**
      * @deprecated Use PHPUnit's additional internal methods methods instead of the deprecated `assertInternalType()`.
+     * @var string
      */
     public const EXPECTED_INTERNAL_TYPE = 'int';
 

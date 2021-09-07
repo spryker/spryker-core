@@ -23,8 +23,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CustomerWriter implements CustomerWriterInterface
 {
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_CUSTOMER_EMAIL_INVALID = 'customer.email.format.invalid';
+    /**
+     * @var string
+     */
     protected const ERROR_CUSTOMER_PASSWORD_INVALID = 'customer.password.invalid';
 
     /**

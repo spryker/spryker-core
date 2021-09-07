@@ -12,9 +12,18 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class UserConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const KEY_INSTALLER_DATA = 'installer_data';
 
+    /**
+     * @var int
+     */
     protected const MIN_LENGTH_USER_PASSWORD = 8;
+    /**
+     * @var int
+     */
     protected const MAX_LENGTH_USER_PASSWORD = 72;
 
     /**

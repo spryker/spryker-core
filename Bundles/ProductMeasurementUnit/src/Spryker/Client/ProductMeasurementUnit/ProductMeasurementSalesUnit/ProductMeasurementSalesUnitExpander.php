@@ -15,6 +15,9 @@ use Spryker\Client\ProductMeasurementUnit\Exception\InvalidItemCountException;
 
 class ProductMeasurementSalesUnitExpander implements ProductMeasurementSalesUnitExpanderInterface
 {
+    /**
+     * @var string
+     */
     protected const PARAM_ID_SALES_UNIT = 'id-product-measurement-sales-unit';
 
     /**

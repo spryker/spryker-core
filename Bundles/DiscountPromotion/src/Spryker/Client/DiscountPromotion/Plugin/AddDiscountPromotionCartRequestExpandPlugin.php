@@ -12,6 +12,9 @@ use Spryker\Client\CartExtension\Dependency\Plugin\CartChangeRequestExpanderPlug
 
 class AddDiscountPromotionCartRequestExpandPlugin implements CartChangeRequestExpanderPluginInterface
 {
+    /**
+     * @var string
+     */
     public const URL_PARAM_ID_DISCOUNT_PROMOTION = 'idDiscountPromotion';
 
     /**

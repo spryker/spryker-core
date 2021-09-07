@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\CartCodeResponseTransfer;
 
 class RecalculationResultProcessor implements RecalculationResultProcessorInterface
 {
+    /**
+     * @var string
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**

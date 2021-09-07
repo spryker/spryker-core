@@ -15,6 +15,9 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class RouterDebugBackendGatewayConsole extends AbstractRouterDebugConsole
 {
+    /**
+     * @var string
+     */
     protected const NAME = 'router:debug:backend-gateway';
 
     /**

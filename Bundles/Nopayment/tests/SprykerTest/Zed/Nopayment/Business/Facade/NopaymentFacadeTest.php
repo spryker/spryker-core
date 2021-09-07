@@ -35,9 +35,21 @@ use Spryker\Zed\Nopayment\NopaymentConfig;
  */
 class NopaymentFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_WHITELISTED = 'PAYMENT_METHOD_WHITELISTED';
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_NOPAYMENT_ONE = 'PAYMENT_METHOD_NOPAYMENT_ONE';
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_NOPAYMENT_TWO = 'PAYMENT_METHOD_NOPAYMENT_TWO';
+    /**
+     * @var string
+     */
     protected const PAYMENT_METHOD_NOT_NOPAYMENT = 'PAYMENT_METHOD_NOT_ALLOWED_AT_ALL';
 
     /**

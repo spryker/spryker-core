@@ -26,7 +26,13 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  */
 class GetUniqueOrderItemsTest extends Test
 {
+    /**
+     * @var string
+     */
     protected const FAKE_GROUP_KEY_1 = 'FAKE_GROUP_KEY_1';
+    /**
+     * @var string
+     */
     protected const FAKE_GROUP_KEY_2 = 'FAKE_GROUP_KEY_2';
 
     /**

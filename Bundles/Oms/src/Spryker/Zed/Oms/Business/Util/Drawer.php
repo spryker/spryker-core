@@ -24,10 +24,22 @@ use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
 
 class Drawer implements DrawerInterface
 {
+    /**
+     * @var string
+     */
     public const ATTRIBUTE_FONT_SIZE = 'fontsize';
 
+    /**
+     * @var string
+     */
     public const EDGE_UPPER_HALF = 'upper half';
+    /**
+     * @var string
+     */
     public const EDGE_LOWER_HALF = 'lower half';
+    /**
+     * @var string
+     */
     public const EDGE_FULL = 'edge full';
 
     /**

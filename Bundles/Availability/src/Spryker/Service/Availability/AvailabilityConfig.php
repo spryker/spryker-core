@@ -11,6 +11,9 @@ use Spryker\Service\Kernel\AbstractBundleConfig;
 
 class AvailabilityConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const PATTERN_IS_NEVER_OUT_OF_STOCK = '/true|1/i';
 
     /**

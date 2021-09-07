@@ -16,7 +16,13 @@ class CustomerNoteDataHelper extends Module
 {
     use LocatorHelperTrait;
 
+    /**
+     * @var string
+     */
     public const TEST_NOTE_AUTHOR = 'test_author';
+    /**
+     * @var string
+     */
     public const TEST_NOTE_MESSAGE = 'test_message';
 
     /**

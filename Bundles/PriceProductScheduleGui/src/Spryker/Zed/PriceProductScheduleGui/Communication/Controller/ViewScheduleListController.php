@@ -20,8 +20,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ViewScheduleListController extends AbstractController
 {
+    /**
+     * @var string
+     */
     public const PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST = 'id-price-product-schedule-list';
+    /**
+     * @var string
+     */
     protected const REDIRECT_URL = '/price-product-schedule-gui/import';
+    /**
+     * @var string
+     */
     protected const FORMAT_DATE_TIME = 'Y-m-d e H:i:s';
 
     /**

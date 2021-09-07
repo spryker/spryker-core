@@ -17,6 +17,9 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
  */
 class TwigConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     protected const APPLICATION_YVES = 'YVES';
 
     /**

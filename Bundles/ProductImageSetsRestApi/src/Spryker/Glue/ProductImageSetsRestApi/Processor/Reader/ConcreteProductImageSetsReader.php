@@ -23,7 +23,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderInterface
 {
+    /**
+     * @var string
+     */
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
+    /**
+     * @var string
+     */
     protected const SELF_LINK_FORMAT = '%s/%s/%s';
 
     /**

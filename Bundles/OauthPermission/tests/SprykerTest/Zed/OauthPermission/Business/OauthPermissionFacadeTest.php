@@ -30,8 +30,14 @@ use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInt
  */
 class OauthPermissionFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const PERMISSION_PLUGIN_KEY = 'TestPermissionPlugin';
 
+    /**
+     * @var string
+     */
     protected const KEY_PERMISSIONS = 'permissions';
 
     /**

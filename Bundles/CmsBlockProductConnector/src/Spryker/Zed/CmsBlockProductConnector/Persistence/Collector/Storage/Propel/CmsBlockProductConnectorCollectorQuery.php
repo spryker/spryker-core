@@ -15,6 +15,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 class CmsBlockProductConnectorCollectorQuery extends AbstractPropelCollectorQuery
 {
+    /**
+     * @var string
+     */
     public const COL_CMS_BLOCK_NAMES = 'cms_block_names';
 
     /**

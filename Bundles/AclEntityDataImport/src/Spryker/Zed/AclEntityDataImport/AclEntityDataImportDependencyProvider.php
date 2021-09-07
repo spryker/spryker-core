@@ -15,6 +15,9 @@ use Spryker\Zed\Kernel\Container;
  */
 class AclEntityDataImportDependencyProvider extends DataImportDependencyProvider
 {
+    /**
+     * @var string
+     */
     public const SERVICE_ACL_ENTITY = 'SERVICE_ACL_ENTITY';
 
     /**

@@ -21,9 +21,21 @@ use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
  */
 class PageDataMapper implements PageDataMapperInterface
 {
+    /**
+     * @var string
+     */
     public const FACET_NAME = 'facet-name';
+    /**
+     * @var string
+     */
     public const FACET_VALUE = 'facet-value';
+    /**
+     * @var string
+     */
     public const ALL_PARENTS = 'all-parents';
+    /**
+     * @var string
+     */
     public const DIRECT_PARENTS = 'direct-parents';
 
     /**

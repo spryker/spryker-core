@@ -26,6 +26,9 @@ use Spryker\Glue\ProductConfigurationsRestApi\Plugin\CartsRestApi\ProductConfigu
  */
 class ProductConfigurationCartItemExpanderPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
     protected const TEST_SKU = 'test-sku';
 
     /**

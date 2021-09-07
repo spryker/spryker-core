@@ -23,15 +23,45 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface;
 class OrdersTable extends AbstractTable
 {
     public const URL = SalesTablePluginInterface::ROW_ACTIONS;
+    /**
+     * @var string
+     */
     public const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
+    /**
+     * @var string
+     */
     public const ID_ORDER_ITEM_STATE = 'id-order-item-state';
+    /**
+     * @var string
+     */
     public const FILTER = 'filter';
+    /**
+     * @var string
+     */
     public const URL_SALES_DETAIL = '/sales/detail';
+    /**
+     * @var string
+     */
     public const PARAM_ID_SALES_ORDER = 'id-sales-order';
+    /**
+     * @var string
+     */
     public const GRAND_TOTAL = 'GrandTotal';
+    /**
+     * @var string
+     */
     public const ITEM_STATE_NAMES_CSV = 'item_state_names_csv';
+    /**
+     * @var string
+     */
     public const NUMBER_OF_ORDER_ITEMS = 'number_of_order_items';
+    /**
+     * @var string
+     */
     protected const COLUMN_SEPARATOR = ' ';
+    /**
+     * @var string
+     */
     protected const FULL_NAME_SEARCHABLE_FIELD_PATTERN = 'CONCAT(%s,\'%s\',%s)';
 
     /**

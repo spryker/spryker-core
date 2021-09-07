@@ -14,6 +14,9 @@ use Spryker\Zed\ProductConfigurationCart\Business\Comparator\ItemComparatorInter
 
 class ProductConfigurationCartItemQuantityCounter implements ProductConfigurationCartItemQuantityCounterInterface
 {
+    /**
+     * @var int
+     */
     protected const DEFAULT_ITEM_QUANTITY = 0;
 
     /**
