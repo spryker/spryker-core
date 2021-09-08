@@ -127,7 +127,7 @@ SCRIPT;
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     protected function getAllowedArrayFilters()
     {
@@ -381,7 +381,7 @@ SCRIPT;
         }
 
         $script .= "
-        
+
         \$query = \$this->addUsingAlias($qualifiedName, \$$variableName, \$comparison);
 ";
         if ($col->isTextType() && filter_var($col->getAttribute(static::ATTRIBUTE_CASE_INSENSITIVE), FILTER_VALIDATE_BOOLEAN) === true) {
@@ -396,25 +396,6 @@ SCRIPT;
         return \$query;
     }
 ";
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function addClassOpen(&$script)
-    {
-        parent::addClassOpen($script);
-
-        $search = [
-            ' findOne(ConnectionInterface',
-            ' findOneBy',
-        ];
-        $replace = [
-            '|null findOne(ConnectionInterface',
-            '|null findOneBy',
-        ];
-
-        $script = str_replace($search, $replace, $script);
     }
 
     /**
@@ -450,7 +431,7 @@ SCRIPT;
     public function forUpdate(\$isForUpdateEnabled)
     {
         \$this->isForUpdateEnabled = \$isForUpdateEnabled;
-        
+
         return \$this;
     }
 
@@ -468,7 +449,7 @@ SCRIPT;
 
         return \$sql;
     }
-    
+
     /**
      * Clear the conditions to allow the reuse of the query object.
      * The ModelCriteria's Model and alias 'all the properties set by construct) will remain.
@@ -480,7 +461,7 @@ SCRIPT;
         parent::clear();
 
         \$this->forUpdate(false);
-        
+
         return \$this;
     }\n
     ";

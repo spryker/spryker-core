@@ -26,6 +26,7 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      * @var string
      */
     protected const DATA_SOURCE_NAME = 'zed';
+    protected const LOAD_DATABASE_MAPS_NAME = 'loadDatabase.php';
 
     /**
      * {@inheritDoc}
@@ -43,6 +44,8 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
         $manager->setName(static::DATA_SOURCE_NAME);
         $manager->setWriteConfiguration($this->getPropelWriteConfiguration());
         $manager->setReadConfiguration($this->getPropelReadConfiguration());
+
+        $this->registerTableMaps();
 
         $serviceContainer = $this->getServiceContainer();
         $serviceContainer->setAdapterClass(static::DATA_SOURCE_NAME, $this->getConfig()->getCurrentDatabaseEngine());
@@ -69,6 +72,18 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
         $serviceContainer = Propel::getServiceContainer();
 
         return $serviceContainer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerTableMaps(): void
+    {
+        $loadDatabaseMapsPath = $this->getConfig()->getPropelConfig()['paths']['loaderScriptDir'] . DIRECTORY_SEPARATOR . static::LOAD_DATABASE_MAPS_NAME;
+
+        if (file_exists($loadDatabaseMapsPath)) {
+            require_once $loadDatabaseMapsPath;
+        }
     }
 
     /**
