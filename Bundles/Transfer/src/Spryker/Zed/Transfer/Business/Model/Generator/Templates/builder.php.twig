@@ -44,11 +44,14 @@ class {{ className }} extends AbstractDataBuilder
     ];
 
     /**
-     * @return \Generated\Shared\Transfer\{{ transferName }}|\Spryker\Shared\Kernel\Transfer\AbstractTransfer
+     * @return \Generated\Shared\Transfer\{{ transferName }}
      */
     public function build()
     {
-         return parent::build();
+        /** @var \Generated\Shared\Transfer\{{ transferName }} $transfer */
+        $transfer = parent::build();
+
+        return $transfer;
     }
 
     /**
