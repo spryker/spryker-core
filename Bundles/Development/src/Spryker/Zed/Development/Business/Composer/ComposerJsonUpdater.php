@@ -10,6 +10,7 @@ namespace Spryker\Zed\Development\Business\Composer;
 use Laminas\Filter\Word\CamelCaseToDash;
 use RuntimeException;
 use Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface;
+use Spryker\Zed\Development\Business\Composer\Util\ComposerJson;
 use Spryker\Zed\Development\Business\Exception\DependencyTree\InvalidComposerJsonException;
 use Symfony\Component\Finder\SplFileInfo;
 
@@ -72,14 +73,12 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
      * @param \Symfony\Component\Finder\SplFileInfo $composerJsonFile
      * @param bool $dryRun
      *
-     * @throws \RuntimeException
-     *
      * @return bool
      */
     protected function updateComposerJsonFile(SplFileInfo $composerJsonFile, $dryRun = false)
     {
         $composerJson = $composerJsonFile->getContents();
-        $composerJsonArray = json_decode($composerJson, true);
+        $composerJsonArray = ComposerJson::fromString($composerJson);
 
         if (!empty($composerJsonArray['abandoned'])) {
             return false;
@@ -91,11 +90,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
         $composerJsonArray = $this->clean($composerJsonArray);
         $composerJsonArray = $this->order($composerJsonArray);
 
-        $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-        if ($modifiedComposerJson === false) {
-            throw new RuntimeException('Cannot create composer.json file for ' . $composerJsonArray['name']);
-        }
-        $modifiedComposerJson .= PHP_EOL;
+        $modifiedComposerJson = ComposerJson::toString($composerJsonArray);
 
         if ($modifiedComposerJson === $composerJson) {
             return false;
