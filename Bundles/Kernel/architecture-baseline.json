@@ -1,12 +1,5 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/AbstractService.php",
-        "description": "\n      Service: The class Spryker\\Service\\Kernel\\AbstractService does not implement an interface AbstractServiceInterface which violates rule: \"Must implement an interface with same name and suffix 'Interface'.\"\n    ",
-        "rule": "ServiceRule",
-        "ruleset": "Spryker Service",
-        "priority": "1"
-    },
-    {
         "fileName": "/vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Service/Kernel/AbstractServiceFactory.php",
         "description": "\n      Factories: The factory method setContainer() violates rule \"Factories should only contain get*() and create*() methods.\"\n    ",
         "rule": "FactoryOnlyGetAndCreateRule",

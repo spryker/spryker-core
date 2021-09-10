@@ -1,12 +1,5 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Client/ZedClient.php",
-        "description": "\n      Client: The class Spryker\\Client\\ZedRequest\\Client\\ZedClient does not implement an interface ZedClientInterface which violates rule: \"Must implement an interface with same name and suffix 'Interface'.\"\n    ",
-        "rule": "ClientRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    },
-    {
         "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Dependency/Client/ZedRequestToMessengerClientInterface.php",
         "description": "\n      Bridges: The bridge interface has incorrect method 'addErrorMessage' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
         "rule": "BridgeMethodsRule",
@@ -39,13 +32,6 @@
         "description": "\n      Access: Method Spryker\\Shared\\ZedRequest\\Client\\AbstractHttpClient::getRequest() accesses Spryker\\Client\\ZedRequest\\Client\\Request which violates rule \"No call from Shared to Client\"\n    ",
         "rule": "LayerAccessRule",
         "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Shared/ZedRequest/Client/LoggableZedClient.php",
-        "description": "\n      Client: The class Spryker\\Shared\\ZedRequest\\Client\\LoggableZedClient does not implement an interface LoggableZedClientInterface which violates rule: \"Must implement an interface with same name and suffix 'Interface'.\"\n    ",
-        "rule": "ClientRule",
-        "ruleset": "Spryker Client",
         "priority": "1"
     },
     {

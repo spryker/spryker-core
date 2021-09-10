@@ -1,9 +1,1 @@
-[
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/Discount/src/Spryker/Client/Discount/DiscountClient.php",
-        "description": "\n      Client: The class Spryker\\Client\\Discount\\DiscountClient does not implement an interface DiscountClientInterface which violates rule: \"Must implement an interface with same name and suffix 'Interface'.\"\n    ",
-        "rule": "ClientRule",
-        "ruleset": "Spryker Client",
-        "priority": "1"
-    }
-]
+[]
