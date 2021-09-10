@@ -429,16 +429,14 @@ class DiscountFacadeTest extends Unit
             DiscountVoucherTransfer::MAX_NUMBER_OF_USES => $maxNumberOfUses,
             DiscountVoucherTransfer::CUSTOM_CODE => 'functional spryker test voucher',
             DiscountVoucherTransfer::QUANTITY => 1,
-            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
         ]);
         $this->updateVoucherCodesWithNumberOfUses($discountVoucherTransfer, $maxNumberOfUses);
         $quoteTransfer = $this->getQuoteWithVoucherDiscount($discountVoucherTransfer);
 
         $discountVoucherTransfer2 = $this->getDiscountVoucher([
             DiscountVoucherTransfer::MAX_NUMBER_OF_USES => $maxNumberOfUses,
-            DiscountVoucherTransfer::CUSTOM_CODE => 'functional spryker test voucher',
+            DiscountVoucherTransfer::CUSTOM_CODE => 'second functional spryker test voucher',
             DiscountVoucherTransfer::QUANTITY => 1,
-            DiscountVoucherTransfer::RANDOM_GENERATED_CODE_LENGTH => 3,
         ]);
         $this->updateVoucherCodesWithNumberOfUses($discountVoucherTransfer2, $maxNumberOfUses);
         $quoteTransfer->addVoucherDiscount(
