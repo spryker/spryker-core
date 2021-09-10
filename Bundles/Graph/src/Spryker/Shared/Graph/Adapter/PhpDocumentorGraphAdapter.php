@@ -161,7 +161,8 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
             if (strip_tags($value) !== $value) {
                 $value = '<' . $value . '>';
             }
-            $element->setAttribute($attribute, $value);
+            $setter = 'set' . ucfirst($attribute);
+            $element->$setter($value);
         }
     }
 }

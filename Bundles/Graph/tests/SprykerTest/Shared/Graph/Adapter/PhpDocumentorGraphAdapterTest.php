@@ -45,7 +45,7 @@ class PhpDocumentorGraphAdapterTest extends Unit
     /**
      * @var array
      */
-    public const ATTRIBUTES = ['attribute' => 'value', 'html attribute' => '<h1>Html Value</h1>'];
+    public const ATTRIBUTES = ['label' => 'label value'];
 
     /**
      * @return void
@@ -152,6 +152,23 @@ class PhpDocumentorGraphAdapterTest extends Unit
         $adapter->create(self::GRAPH_NAME);
 
         $this->assertIsString($adapter->render('svg'));
+    }
+
+    /**
+     * @return void
+     */
+    public function testRenderAttributes(): void
+    {
+        $adapter = new PhpDocumentorGraphAdapter();
+        $adapter->create(self::GRAPH_NAME);
+        $adapter->addNode(self::NODE_A, ['label' => 'Node 1']);
+        $adapter->addNode(self::NODE_B);
+        $adapter->addEdge(self::NODE_A, self::NODE_B, ['label' => 'Arrow 1']);
+
+        $renderingResult = $adapter->render('dot');
+
+        $this->assertStringContainsString('label="Node 1"', $renderingResult);
+        $this->assertStringContainsString('label="Arrow 1"', $renderingResult);
     }
 
     /**
