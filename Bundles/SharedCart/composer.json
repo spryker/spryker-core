@@ -23,6 +23,7 @@
         "spryker/quote-extension": "^1.7.0",
         "spryker/resource-share-extension": "^1.0.0",
         "spryker/store": "^1.0.0",
+        "spryker/transfer": "^3.25.0",
         "spryker/zed-request": "^3.0.0"
     },
     "require-dev": {

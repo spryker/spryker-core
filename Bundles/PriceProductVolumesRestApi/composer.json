@@ -7,7 +7,8 @@
         "php": ">=7.3",
         "spryker/kernel": "^3.30.0",
         "spryker/price-product-volume": "^3.1.0",
-        "spryker/product-prices-rest-api-extension": "^1.0.0"
+        "spryker/product-prices-rest-api-extension": "^1.0.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
