@@ -205,7 +205,6 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         array &$concreteDescriptions,
         array &$concreteLocalizedAttributes
     ) {
-        $concreteNames = [];
         foreach ($concreteProductLocalizedAttributes as $concreteProductLocalizedAttribute) {
             if ($concreteProductLocalizedAttribute['fk_locale'] === $idLocale) {
                 $concreteNames[] = $concreteProductLocalizedAttribute['name'];
