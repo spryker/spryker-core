@@ -18,6 +18,7 @@
 
     <transfer name="ProductConcretePageSearch">
         <property name="fkProduct" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>
