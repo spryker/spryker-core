@@ -38,7 +38,7 @@
                 {
                     "string_sort": {
                         "mapping": {
-                            "analyzer": "lowercase_keyword_analyzer",
+                            "normalizer": "lowercase_normalizer",
                             "type": "keyword"
                         },
                         "path_match": "string-sort.*"
