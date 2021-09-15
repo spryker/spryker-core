@@ -10,8 +10,8 @@ namespace Spryker\Zed\Development\Communication\Console;
 use Generated\Shared\Transfer\ModuleDependencyTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
 use Generated\Shared\Transfer\ValidationMessageTransfer;
+use Spryker\Zed\Development\Business\Composer\Util\ComposerJson;
 use Spryker\Zed\Development\Business\Dependency\Validator\ValidationRules\ValidationRuleInterface;
-use stdClass;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -46,7 +46,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
 
         $this
             ->setName(static::COMMAND_NAME)
-            ->addOption(static::OPTION_DRY_RUN, 'd', InputOption::VALUE_NONE, 'Dry-run the command, changed composer.json will not be saved.')
+            ->addOption(static::OPTION_DRY_RUN, static::OPTION_DRY_RUN_SHORT, InputOption::VALUE_NONE, 'Dry-run the command, changed composer.json will not be saved.')
             ->setDescription('Fix dependency violations in composer.json.');
     }
 
@@ -146,8 +146,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
     protected function getComposerJsonAsArray(ModuleTransfer $moduleTransfer): array
     {
         $composerJsonFile = $moduleTransfer->getPath() . '/composer.json';
-        $composerJsonContent = file_get_contents($composerJsonFile);
-        $composerJsonArray = json_decode($composerJsonContent, true);
+        $composerJsonArray = ComposerJson::fromFile($composerJsonFile);
 
         return $composerJsonArray;
     }
@@ -168,13 +167,7 @@ class DependencyViolationFixConsole extends AbstractCoreModuleAwareConsole
         $composerJsonArray = $this->orderEntriesInComposerJsonArray($composerJsonArray);
         $composerJsonArray = $this->removeEmptyEntriesInComposerJsonArray($composerJsonArray);
 
-        if (isset($composerJsonArray['scripts']) && empty($composerJsonArray['scripts'])) {
-            $composerJsonArray['scripts'] = new stdClass();
-        }
-        $modifiedComposerJson = json_encode($composerJsonArray, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
-        $modifiedComposerJson .= PHP_EOL;
-
-        file_put_contents($composerJsonFile, $modifiedComposerJson);
+        ComposerJson::toFile($composerJsonFile, $composerJsonArray);
     }
 
     /**

@@ -13,6 +13,7 @@
         "spryker/storage": "^3.4.1",
         "spryker/symfony": "^3.1.0",
         "spryker/synchronization-extension": "^1.2.0",
+        "spryker/transfer": "^3.25.0",
         "spryker/util-encoding": "^2.0.0"
     },
     "require-dev": {

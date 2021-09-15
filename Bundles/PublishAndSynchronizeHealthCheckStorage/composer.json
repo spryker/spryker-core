@@ -11,7 +11,8 @@
         "spryker/publish-and-synchronize-health-check": "^1.0.0",
         "spryker/publisher-extension": "^1.0.0",
         "spryker/storage": "^3.16.0",
-        "spryker/synchronization-behavior": "^1.8.0"
+        "spryker/synchronization-behavior": "^1.8.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

@@ -26,6 +26,10 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      * @var string
      */
     protected const DATA_SOURCE_NAME = 'zed';
+
+    /**
+     * @var string
+     */
     protected const LOAD_DATABASE_MAPS_NAME = 'loadDatabase.php';
 
     /**

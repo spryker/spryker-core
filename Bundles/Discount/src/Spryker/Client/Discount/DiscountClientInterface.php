@@ -7,11 +7,6 @@
 
 namespace Spryker\Client\Discount;
 
-use Spryker\Client\Kernel\AbstractClient;
-
-/**
- * @method \Spryker\Client\Discount\DiscountFactory getFactory()
- */
-class DiscountClient extends AbstractClient implements DiscountClientInterface
+interface DiscountClientInterface
 {
 }
