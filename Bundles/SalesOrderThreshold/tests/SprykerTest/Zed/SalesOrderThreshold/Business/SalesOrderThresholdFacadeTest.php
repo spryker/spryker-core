@@ -43,7 +43,7 @@ class SalesOrderThresholdFacadeTest extends SalesOrderThresholdMocks
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface>
      */
     protected $strategies;
 

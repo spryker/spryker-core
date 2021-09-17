@@ -27,7 +27,7 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getProductSuperAttributesIndexedByAttributeKey(): array
     {
@@ -43,9 +43,9 @@ class ProductAttributeReader implements ProductAttributeReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     protected function indexProductManagementAttributesByAttributeKey(ArrayObject $productManagementAttributeTransfers): array
     {

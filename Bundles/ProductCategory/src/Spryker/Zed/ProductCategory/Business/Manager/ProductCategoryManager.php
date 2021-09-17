@@ -62,7 +62,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getAbstractProductTransferCollectionByCategory(
         $idCategory,
@@ -91,7 +91,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale)
     {
@@ -278,7 +278,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param int $idCategoryNode
      *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>
      */
     protected function findProductMappingsOfChildCategories($idCategoryNode)
     {

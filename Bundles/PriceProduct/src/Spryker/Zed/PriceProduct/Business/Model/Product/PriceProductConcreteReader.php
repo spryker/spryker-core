@@ -58,7 +58,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     protected $pluginExecutor;
 
     /**
-     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[]
+     * @var array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface>
      */
     protected $priceProductExternalProviderPlugins;
 
@@ -70,7 +70,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductExpanderInterface $priceProductExpander
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader\PriceProductReaderPluginExecutorInterface $pluginExecutor
-     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[] $priceProductExternalProviderPlugins
+     * @param array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface> $priceProductExternalProviderPlugins
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
@@ -107,7 +107,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesBySkuForCurrentStore(
         string $sku,
@@ -136,7 +136,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesById(
         int $idProductConcrete,
@@ -178,7 +178,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesBySkuAndCriteria(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
@@ -220,7 +220,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesWithoutPriceExtraction(
         int $idProductConcrete,
@@ -243,10 +243,10 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getProductConcretePricesByConcreteSkusAndCriteria(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
@@ -285,9 +285,9 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer[]>
      */
     protected function indexPriceProductTransferByProductSku(array $priceProductTransfers): array
     {
@@ -302,11 +302,11 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param string[] $skus
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<string> $skus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function executePriceProductExternalProviderPlugins(
         array $priceProductTransfers,

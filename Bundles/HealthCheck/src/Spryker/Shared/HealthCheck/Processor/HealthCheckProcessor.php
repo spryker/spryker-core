@@ -30,7 +30,7 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     protected $responseProcessor;
 
     /**
-     * @var \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[]
+     * @var array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface>
      */
     protected $healthCheckPlugins;
 
@@ -38,7 +38,7 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
      * @param \Spryker\Shared\HealthCheck\Validator\ValidatorInterface $validator
      * @param \Spryker\Shared\HealthCheck\ChainFilter\ChainFilterInterface $chainFilter
      * @param \Spryker\Shared\HealthCheck\Processor\ResponseProcessorInterface $responseProcessor
-     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
+     * @param array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface> $healthCheckPlugins
      */
     public function __construct(
         ValidatorInterface $validator,
@@ -90,7 +90,7 @@ class HealthCheckProcessor implements HealthCheckProcessorInterface
     }
 
     /**
-     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $filteredHealthCheckPlugins
+     * @param array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface> $filteredHealthCheckPlugins
      *
      * @return \Generated\Shared\Transfer\HealthCheckResponseTransfer
      */

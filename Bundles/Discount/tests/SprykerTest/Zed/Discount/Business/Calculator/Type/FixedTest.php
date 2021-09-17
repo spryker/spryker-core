@@ -103,7 +103,7 @@ class FixedTest extends Unit
     /**
      * @param array $grossPrices
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getItems(array $grossPrices): array
     {

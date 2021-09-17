@@ -72,32 +72,32 @@ class MerchantTable extends AbstractTable
     protected $merchantFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface>
      */
     protected $merchantTableActionExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface>
      */
     protected $merchantTableHeaderExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface>
      */
     protected $merchantTableDataExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface>
      */
     protected $merchantTableConfigExpanderPlugins;
 
     /**
      * @param \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery
      * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
-     * @param \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface[] $merchantTableActionExpanderPlugins
-     * @param \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface[] $merchantTableHeaderExpanderPlugins
-     * @param \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface[] $merchantTableDataExpanderPlugins
-     * @param \Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface[] $merchantTableConfigExpanderPlugins
+     * @param array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableActionExpanderPluginInterface> $merchantTableActionExpanderPlugins
+     * @param array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableHeaderExpanderPluginInterface> $merchantTableHeaderExpanderPlugins
+     * @param array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableDataExpanderPluginInterface> $merchantTableDataExpanderPlugins
+     * @param array<\Spryker\Zed\MerchantGuiExtension\Dependency\Plugin\MerchantTableConfigExpanderPluginInterface> $merchantTableConfigExpanderPlugins
      */
     public function __construct(
         SpyMerchantQuery $merchantQuery,
@@ -352,7 +352,7 @@ class MerchantTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateMerchantTableActionButtons(array $item): array
     {
@@ -374,7 +374,7 @@ class MerchantTable extends AbstractTable
     /**
      * @param array $item
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     protected function executeActionButtonExpanderPlugins(array $item): array
     {

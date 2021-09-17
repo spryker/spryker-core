@@ -37,7 +37,7 @@ class QueryContainerExporter implements ExporterInterface
     protected $queueMessageCreator;
 
     /**
-     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[]
+     * @var array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface>
      */
     protected $synchronizationDataPlugins;
 
@@ -70,8 +70,8 @@ class QueryContainerExporter implements ExporterInterface
     }
 
     /**
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[] $plugins
-     * @param int[] $ids
+     * @param array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface> $plugins
+     * @param array<int> $ids
      *
      * @return void
      */
@@ -89,7 +89,7 @@ class QueryContainerExporter implements ExporterInterface
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int> $ids
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
      *
      * @return void
@@ -102,7 +102,7 @@ class QueryContainerExporter implements ExporterInterface
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int> $ids
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
      *
      * @return \Iterator

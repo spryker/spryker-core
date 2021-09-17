@@ -192,7 +192,7 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param int $idProductAbstract
-     * @param int[] $idStores
+     * @param array<int> $idStores
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery
      */

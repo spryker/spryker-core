@@ -23,7 +23,7 @@ class MerchantProductSearchToProductPageSearchFacadeBridge implements MerchantPr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param array $pageDataExpanderPluginNames
      *
      * @return void

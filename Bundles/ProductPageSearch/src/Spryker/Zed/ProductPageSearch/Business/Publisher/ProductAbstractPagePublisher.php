@@ -48,12 +48,12 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface>
      */
     protected $productPageDataLoaderPlugins = [];
 
     /**
-     * @var \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[]
+     * @var array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface>
      */
     protected $pageDataExpanderPlugins = [];
 
@@ -84,8 +84,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
     /**
      * @param \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
-     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface[] $productPageDataLoaderPlugins
+     * @param array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface> $pageDataExpanderPlugins
+     * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface> $productPageDataLoaderPlugins
      * @param \Spryker\Zed\ProductPageSearch\Business\Mapper\ProductPageSearchMapperInterface $productPageSearchMapper
      * @param \Spryker\Zed\ProductPageSearch\Business\Model\ProductPageSearchWriterInterface $productPageSearchWriter
      * @param \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig $productPageSearchConfig
@@ -113,7 +113,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -123,8 +123,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param string[] $pageDataExpanderPluginNames
+     * @param array<int> $productAbstractIds
+     * @param array<string> $pageDataExpanderPluginNames
      *
      * @return void
      */
@@ -147,7 +147,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -159,7 +159,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
+     * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
      *
      * @return void
      */
@@ -171,8 +171,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param string[] $pageDataExpanderPluginNames
+     * @param array<int> $productAbstractIds
+     * @param array<string> $pageDataExpanderPluginNames
      * @param bool $isRefresh
      *
      * @return void
@@ -223,8 +223,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
     /**
      * @param array $productAbstractLocalizedEntities
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
+     * @param array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface> $pageDataExpanderPlugins
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      * @param bool $isRefresh
      *
@@ -284,7 +284,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity
      * @param string $storeName
      * @param string $localeName
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface> $pageDataExpanderPlugins
      * @param bool $isRefresh
      *
      * @return void
@@ -379,9 +379,9 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param string[] $pageDataExpanderPluginNames
+     * @param array<string> $pageDataExpanderPluginNames
      *
-     * @return \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[]
+     * @return array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface>
      */
     protected function getPageDataExpanderPlugins(array $pageDataExpanderPluginNames)
     {
@@ -414,7 +414,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
+     * @param array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface> $pageDataExpanderPlugins
      * @param array $productAbstractLocalizedEntity
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
      *
@@ -437,7 +437,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * - ProductAbstractLocalizedEntities are paired multiple times per store.
      *
      * @param array $productAbstractLocalizedEntities
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
+     * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
      * @return array
@@ -469,7 +469,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -495,8 +495,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param string[] $localeIsoCodes
+     * @param array<int> $productAbstractIds
+     * @param array<string> $localeIsoCodes
      *
      * @return array
      */
@@ -510,8 +510,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param string[] $localeIsoCodes
+     * @param array<int> $productAbstractIds
+     * @param array<string> $localeIsoCodes
      *
      * @return array
      */
@@ -524,8 +524,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productConcreteIds
-     * @param string[] $localeIsoCodes
+     * @param array<int> $productConcreteIds
+     * @param array<string> $localeIsoCodes
      *
      * @return array
      */
@@ -606,7 +606,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -616,9 +616,9 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[]
+     * @return array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch>
      */
     protected function findProductAbstractPageSearchEntities(array $productAbstractIds)
     {
@@ -626,7 +626,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch[] $productAbstractPageSearchEntities
+     * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
      *
      * @return array
      */
@@ -703,7 +703,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
     /**
      * @param array $productAbstractLocalizedEntities
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */

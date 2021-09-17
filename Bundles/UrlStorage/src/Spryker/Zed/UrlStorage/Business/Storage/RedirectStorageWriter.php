@@ -65,7 +65,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     }
 
     /**
-     * @param int[] $redirectIds
+     * @param array<int> $redirectIds
      *
      * @return void
      */
@@ -116,7 +116,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     }
 
     /**
-     * @param int[] $redirectIds
+     * @param array<int> $redirectIds
      *
      * @return array
      */
@@ -126,7 +126,7 @@ class RedirectStorageWriter implements RedirectStorageWriterInterface
     }
 
     /**
-     * @param int[] $redirectIds
+     * @param array<int> $redirectIds
      *
      * @return array
      */

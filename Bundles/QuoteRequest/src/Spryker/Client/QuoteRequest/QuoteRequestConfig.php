@@ -17,7 +17,7 @@ class QuoteRequestConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCancelableStatuses(): array
     {

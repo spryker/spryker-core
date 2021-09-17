@@ -46,12 +46,12 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
     protected $salesFacade;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $merchantOrderItemIds;
 
     /**
-     * @var array|\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface>
      */
     protected $merchantOrderItemTableExpanderPlugins;
 
@@ -60,8 +60,8 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToSalesFacadeInterface $salesFacade
-     * @param int[] $merchantOrderItemIds
-     * @param \Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[] $merchantOrderItemTableExpanderPlugins
+     * @param array<int> $merchantOrderItemIds
+     * @param array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface> $merchantOrderItemTableExpanderPlugins
      */
     public function __construct(
         SalesMerchantPortalGuiRepositoryInterface $salesMerchantPortalGuiRepository,
@@ -159,7 +159,7 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\GuiTableDataResponseTransfer $guiTableDataResponseTransfer
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
      * @return \Generated\Shared\Transfer\GuiTableDataResponseTransfer
      */
@@ -178,7 +178,7 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\GuiTableDataResponseTransfer $guiTableDataResponseTransfer
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
      * @return \Generated\Shared\Transfer\GuiTableDataResponseTransfer
      */

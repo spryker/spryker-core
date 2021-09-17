@@ -113,7 +113,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[]
+     * @return array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface>
      */
     public function getDataImportBeforeImportHookPlugins()
     {
@@ -121,7 +121,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface[]
+     * @return array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface>
      */
     public function getDataImportAfterImportHookPlugins()
     {
@@ -129,7 +129,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
-     * @return \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
+     * @return array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface>
      */
     public function getDefaultDataImportWriterPlugins()
     {
@@ -165,7 +165,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[]
+     * @return array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface>
      */
     public function getDataImporterPlugins(): array
     {

@@ -53,7 +53,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     }
 
     /**
-     * @param mixed[] $initialDataRow
+     * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array $propertyPath
      *
@@ -176,7 +176,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     }
 
     /**
-     * @param mixed[] $initialDataRow
+     * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array $propertyPath
      *

@@ -12,7 +12,7 @@ use Spryker\Service\UtilSanitize\UtilSanitizeConfig;
 class StringSanitizer implements StringSanitizerInterface
 {
     /**
-     * @var \Spryker\Service\UtilSanitizeExtension\Dependency\Plugin\StringSanitizerPluginInterface[]
+     * @var array<\Spryker\Service\UtilSanitizeExtension\Dependency\Plugin\StringSanitizerPluginInterface>
      */
     protected $sanitizerPlugins;
 
@@ -22,7 +22,7 @@ class StringSanitizer implements StringSanitizerInterface
     protected $config;
 
     /**
-     * @param \Spryker\Service\UtilSanitizeExtension\Dependency\Plugin\StringSanitizerPluginInterface[] $sanitizerPlugins
+     * @param array<\Spryker\Service\UtilSanitizeExtension\Dependency\Plugin\StringSanitizerPluginInterface> $sanitizerPlugins
      * @param \Spryker\Service\UtilSanitize\UtilSanitizeConfig $config
      */
     public function __construct(array $sanitizerPlugins, UtilSanitizeConfig $config)

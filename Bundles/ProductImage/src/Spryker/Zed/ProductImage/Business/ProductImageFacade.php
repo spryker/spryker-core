@@ -60,7 +60,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract)
     {
@@ -76,7 +76,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductId($idProduct)
     {
@@ -92,7 +92,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array
     {
@@ -221,7 +221,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getCombinedAbstractImageSets($idProductAbstract, $idLocale)
     {
@@ -239,7 +239,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale)
     {
@@ -269,10 +269,10 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $productImageSetName
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
      */
     public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array
     {
@@ -288,7 +288,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array
     {
@@ -300,10 +300,10 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @param string $localeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject
     {

@@ -18,7 +18,7 @@ class EncoderMatcher implements EncoderMatcherInterface
     public const DEFAULT_FORMAT = 'json';
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface>
      */
     protected $encoders;
 

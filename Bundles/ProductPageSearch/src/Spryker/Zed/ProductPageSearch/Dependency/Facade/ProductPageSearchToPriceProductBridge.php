@@ -36,7 +36,7 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return array
      */
@@ -49,7 +49,7 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtraction(
         int $idProductAbstract,
@@ -59,9 +59,9 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn(array $productAbstractIds): array
     {
@@ -79,10 +79,10 @@ class ProductPageSearchToPriceProductBridge implements ProductPageSearchToPriceP
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(
         array $productAbstractIds,

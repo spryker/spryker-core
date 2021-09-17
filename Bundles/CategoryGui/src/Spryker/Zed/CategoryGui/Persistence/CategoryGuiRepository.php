@@ -57,7 +57,7 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
     /**
      * @module Category
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexedCategoryTemplateNames(): array
     {
@@ -73,7 +73,7 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      * @param int $idParentNode
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getChildrenCategoryNodeNames(int $idParentNode, int $idLocale): array
     {
@@ -96,9 +96,9 @@ class CategoryGuiRepository extends AbstractRepository implements CategoryGuiRep
      * @module Category
      * @module Store
      *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getCategoryStoreNamesGroupedByIdCategory(array $categoryIds): array
     {

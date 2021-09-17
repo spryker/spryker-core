@@ -190,7 +190,7 @@ class ShipmentFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getShippingAddressesOptions(OrderTransfer $orderTransfer): array
     {
@@ -233,9 +233,9 @@ class ShipmentFormDataProvider
     }
 
     /**
-     * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
+     * @param \ArrayObject|iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCustomerAddressChoices(iterable $customerAddressesCollection): array
     {
@@ -254,9 +254,9 @@ class ShipmentFormDataProvider
     }
 
     /**
-     * @param iterable|string[] $choices
+     * @param iterable<string> $choices
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function sanitizeDuplicatedCustomerAddressChoices(iterable $choices): array
     {
@@ -294,7 +294,7 @@ class ShipmentFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getShippingMethodsOptions(): array
     {
@@ -317,7 +317,7 @@ class ShipmentFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSalutationOptions(): array
     {

@@ -29,7 +29,7 @@ interface CmsSlotBlockRepositoryInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array;
 

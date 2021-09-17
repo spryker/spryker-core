@@ -27,13 +27,13 @@ class MerchantUser implements MerchantUserInterface
     protected $password;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $roles = [];
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
-     * @param string[] $roles
+     * @param array<string> $roles
      */
     public function __construct(MerchantUserTransfer $merchantUserTransfer, array $roles = [])
     {
@@ -50,7 +50,7 @@ class MerchantUser implements MerchantUserInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getRoles()
     {

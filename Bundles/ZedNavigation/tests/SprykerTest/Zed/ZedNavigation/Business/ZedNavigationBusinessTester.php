@@ -162,7 +162,7 @@ class ZedNavigationBusinessTester extends Unit
     }
 
     /**
-     * @param string[] $navigationItem
+     * @param array<string> $navigationItem
      *
      * @return string
      */
@@ -185,7 +185,7 @@ class ZedNavigationBusinessTester extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[] $plugins
+     * @param array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface> $plugins
      *
      * @return void
      */

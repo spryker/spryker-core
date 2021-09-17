@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Router as SymfonyRouter;
 class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
 {
     /**
-     * @var \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     * @var array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface>
      */
     protected $routerEnhancerPlugins;
 
@@ -30,7 +30,7 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
     /**
      * @param \Symfony\Component\Config\Loader\LoaderInterface $loader
      * @param mixed $resource
-     * @param \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[] $routerEnhancerPlugins
+     * @param array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface> $routerEnhancerPlugins
      * @param array $options
      */
     public function __construct(LoaderInterface $loader, $resource, array $routerEnhancerPlugins, array $options = [])
@@ -114,7 +114,7 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
     /**
      * @param string $cacheDir
      *
-     * @return string[]
+     * @return array<string>
      */
     public function warmUp($cacheDir): array
     {

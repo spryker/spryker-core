@@ -149,7 +149,7 @@ class AbstractProductFormDataProvider
     protected $priceProductFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Everon\Component\Collection\CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     protected $attributeTransferCollection;
 
@@ -313,7 +313,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSetTransferCollection
+     * @param array<\Generated\Shared\Transfer\ProductImageSetTransfer> $imageSetTransferCollection
      *
      * @return array
      */
@@ -844,7 +844,7 @@ class AbstractProductFormDataProvider
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $formData
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getProductAbstractPricesByPriceDimension(ProductAbstractTransfer $productAbstractTransfer, array $formData): ArrayObject
     {
@@ -870,7 +870,7 @@ class AbstractProductFormDataProvider
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $formData
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getProductConcretePricesByPriceDimension(
         ProductConcreteTransfer $productTransfer,

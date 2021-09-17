@@ -39,7 +39,7 @@ class MerchantOmsConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getMerchantOmsProcesses(): array
     {
@@ -51,7 +51,7 @@ class MerchantOmsConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getMerchantProcessInitialStateMap(): array
     {

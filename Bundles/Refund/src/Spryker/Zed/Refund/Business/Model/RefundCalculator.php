@@ -14,7 +14,7 @@ use Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 class RefundCalculator implements RefundCalculatorInterface
 {
     /**
-     * @var \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[]
+     * @var array<\Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface>
      */
     protected $refundCalculatorPlugins;
 
@@ -24,7 +24,7 @@ class RefundCalculator implements RefundCalculatorInterface
     protected $salesFacade;
 
     /**
-     * @param \Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface[] $refundCalculatorPlugins
+     * @param array<\Spryker\Zed\Refund\Dependency\Plugin\RefundCalculatorPluginInterface> $refundCalculatorPlugins
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $salesFacade
      */
     public function __construct(
@@ -36,7 +36,7 @@ class RefundCalculator implements RefundCalculatorInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItems
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      *
      * @return \Generated\Shared\Transfer\RefundTransfer

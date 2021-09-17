@@ -64,7 +64,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[]
+     * @return array<\Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface>
      */
     public function getCustomerSessionGetPlugins()
     {
@@ -72,7 +72,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface[]
+     * @return array<\Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface>
      */
     public function getCustomerSessionSetPlugin()
     {
@@ -80,7 +80,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface[]
+     * @return array<\Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface>
      */
     public function getDefaultAddressChangePlugins()
     {
@@ -96,7 +96,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface[]
+     * @return array<\Spryker\Client\CustomerExtension\Dependency\Plugin\CustomerSecuredPatternRulePluginInterface>
      */
     public function getCustomerSecuredPatternRulePlugins(): array
     {

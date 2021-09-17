@@ -33,7 +33,7 @@ class ContentGuiToLocaleFacadeBridge implements ContentGuiToLocaleFacadeInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection(): array
     {
@@ -41,7 +41,7 @@ class ContentGuiToLocaleFacadeBridge implements ContentGuiToLocaleFacadeInterfac
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales(): array
     {

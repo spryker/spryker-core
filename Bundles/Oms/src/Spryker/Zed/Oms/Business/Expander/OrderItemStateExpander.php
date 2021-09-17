@@ -45,9 +45,9 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithItemState(array $itemTransfers): array
     {
@@ -74,9 +74,9 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIds(array $itemTransfers): array
     {
@@ -90,9 +90,9 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function mapItemsByIdSalesOrderItem(array $itemTransfers): array
     {

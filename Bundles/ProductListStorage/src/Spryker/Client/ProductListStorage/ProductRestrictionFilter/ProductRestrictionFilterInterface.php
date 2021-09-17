@@ -10,9 +10,9 @@ namespace Spryker\Client\ProductListStorage\ProductRestrictionFilter;
 interface ProductRestrictionFilterInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function filterRestrictedProducts(array $productIds): array;
 }

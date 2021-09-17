@@ -15,16 +15,16 @@ interface ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
     public function validateVolumePrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractPriceProductVolumeTransfersFromArray(array $priceProductTransfers): array;
 }

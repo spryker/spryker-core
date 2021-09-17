@@ -25,9 +25,9 @@ class CurrencyBulkReader implements CurrencyBulkReaderInterface
     }
 
     /**
-     * @param string[] $isoCodes
+     * @param array<string> $isoCodes
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     public function getCurrencyTransfersByIsoCodes(array $isoCodes): array
     {

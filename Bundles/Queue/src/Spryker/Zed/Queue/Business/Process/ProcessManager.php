@@ -60,7 +60,7 @@ class ProcessManager implements ProcessManagerInterface
      */
     public function getBusyProcessNumber($queueName)
     {
-        /** @var int[] $processIds */
+        /** @var array<int> $processIds */
         $processIds = $this->queryContainer
             ->queryProcessesByServerIdAndQueueName($this->serverUniqueId, $queueName)
             ->find();
@@ -75,7 +75,7 @@ class ProcessManager implements ProcessManagerInterface
      */
     public function flushIdleProcesses()
     {
-        /** @var int[] $processIds */
+        /** @var array<int> $processIds */
         $processIds = $this->queryContainer
             ->queryProcessesByServerId($this->serverUniqueId)
             ->find();

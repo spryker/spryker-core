@@ -19,9 +19,9 @@ interface ProductListSearchFacadeInterface
      *
      * @api
      *
-     * @param int[] $concreteIds
+     * @param array<int> $concreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByConcreteIds(array $concreteIds): array;
 
@@ -31,9 +31,9 @@ interface ProductListSearchFacadeInterface
      *
      * @api
      *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
 

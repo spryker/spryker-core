@@ -158,7 +158,7 @@ class AttributeWriter implements AttributeWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSearchAttributeTransfer[] $productSearchAttributes
+     * @param array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer> $productSearchAttributes
      *
      * @throws \Exception
      *

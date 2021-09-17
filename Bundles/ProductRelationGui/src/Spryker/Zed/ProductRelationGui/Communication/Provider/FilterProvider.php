@@ -114,7 +114,7 @@ class FilterProvider implements FilterProviderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getTextOperators(): array
     {

@@ -47,12 +47,12 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenReaderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenReaderPluginInterface>
      */
     protected $oauthRefreshTokenReaderPlugins;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface>
      */
     protected $oauthRefreshTokensReaderPlugins;
 
@@ -60,8 +60,8 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
      * @param \Spryker\Zed\Oauth\Business\Model\League\Repositories\RefreshTokenRepositoryInterface $refreshTokenRepository
      * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenReaderPluginInterface[] $oauthRefreshTokenReaderPlugins
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface[] $oauthRefreshTokensReaderPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenReaderPluginInterface> $oauthRefreshTokenReaderPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface> $oauthRefreshTokensReaderPlugins
      */
     public function __construct(
         RefreshTokenRepositoryInterface $refreshTokenRepository,
@@ -158,7 +158,7 @@ class OauthRefreshTokenRevoker implements OauthRefreshTokenRevokerInterface
     /**
      * @param \Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer>
      */
     protected function getOauthRefreshTokens(OauthTokenCriteriaFilterTransfer $oauthTokenCriteriaFilterTransfer): ArrayObject
     {

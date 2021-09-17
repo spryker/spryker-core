@@ -106,9 +106,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithAmountSalesUnit(array $itemTransfers): array
     {
@@ -129,9 +129,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithAmountLeadProduct(array $itemTransfers): array
     {
@@ -149,9 +149,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[] $productMeasurementSalesUnitTransfers
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer> $productMeasurementSalesUnitTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     protected function translateProductMeasurementSalesUnits(array $productMeasurementSalesUnitTransfers): array
     {
@@ -163,9 +163,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function getMappedLeadProductsFromOrderItems(array $itemTransfers): array
     {
@@ -179,10 +179,10 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     * @param string[] $mappedLeadProductSkus
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param array<string> $mappedLeadProductSkus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function mapProductConcreteTransfersByIdSalesOrderItem(
         array $productConcreteTransfers,
@@ -203,9 +203,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function indexProductConcreteTransfersBySku(array $productConcreteTransfers): array
     {
@@ -219,9 +219,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIds(array $itemTransfers): array
     {

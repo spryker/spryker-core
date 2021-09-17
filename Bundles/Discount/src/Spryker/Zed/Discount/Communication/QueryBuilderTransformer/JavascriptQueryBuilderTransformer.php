@@ -17,7 +17,7 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
     protected $discountFacade;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $queryOperatorMapping = [
         '=' => 'equal',
@@ -72,7 +72,7 @@ class JavascriptQueryBuilderTransformer implements JavascriptQueryBuilderTransfo
      * @param string $type
      * @param string $ruleField
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function transformComparators($type, $ruleField)
     {

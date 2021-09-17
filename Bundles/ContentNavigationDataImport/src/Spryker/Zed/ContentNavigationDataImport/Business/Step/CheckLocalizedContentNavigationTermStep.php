@@ -80,7 +80,7 @@ class CheckLocalizedContentNavigationTermStep implements DataImportStepInterface
     /**
      * @param \Generated\Shared\Transfer\ContentValidationResponseTransfer $contentValidationResponseTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getErrorMessages(ContentValidationResponseTransfer $contentValidationResponseTransfer): array
     {

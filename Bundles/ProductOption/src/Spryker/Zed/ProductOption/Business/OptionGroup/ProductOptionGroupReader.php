@@ -41,7 +41,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionGroupExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionGroupExpanderPluginInterface>
      */
     protected $productOptionGroupExpanderPlugins;
 
@@ -50,7 +50,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToGlossaryFacadeInterface $glossaryFacade
      * @param \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionGroupExpanderPluginInterface[] $productOptionGroupExpanderPlugins
+     * @param array<\Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionGroupExpanderPluginInterface> $productOptionGroupExpanderPlugins
      */
     public function __construct(
         ProductOptionValuePriceHydratorInterface $productOptionValuePriceHydrator,
@@ -123,11 +123,11 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $availableLocales
      * @param string $translationKey
      * @param string $relatedOptionHash
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTranslationTransfer>
      */
     protected function getOptionTranslations(array $availableLocales, $translationKey, $relatedOptionHash)
     {
@@ -153,7 +153,7 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
 
     /**
      * @param string $identifierGroup
-     * @param int|string $identifier
+     * @param string|int $identifier
      *
      * @return string
      */
@@ -165,9 +165,9 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $productOptionGroupEntity
      * @param \Generated\Shared\Transfer\ProductOptionGroupTransfer $productOptionGroupTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $availableLocales
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTranslationTransfer>
      */
     protected function hydrateProductOptionValues(
         SpyProductOptionGroup $productOptionGroupEntity,
@@ -200,13 +200,9 @@ class ProductOptionGroupReader implements ProductOptionGroupReaderInterface
     }
 
     /**
-     * @phpstan-param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>|\Generated\Shared\Transfer\MoneyValueTransfer[]
-     *
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue $productOptionValueEntity
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     protected function getPriceCollection(SpyProductOptionValue $productOptionValueEntity)
     {

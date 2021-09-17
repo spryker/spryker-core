@@ -34,7 +34,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
     protected $checkoutExpander;
 
     /**
-     * @var \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[]
+     * @var array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface>
      */
     protected $quoteMapperPlugins;
 
@@ -42,7 +42,7 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      * @param \Spryker\Zed\CheckoutRestApi\Dependency\Facade\CheckoutRestApiToCalculationFacadeInterface $calculationFacade
      * @param \Spryker\Zed\CheckoutRestApi\Business\Validator\CheckoutValidatorInterface $checkoutValidator
      * @param \Spryker\Zed\CheckoutRestApi\Business\Expander\CheckoutExpanderInterface $checkoutExpander
-     * @param \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface[] $quoteMapperPlugins
+     * @param array<\Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface> $quoteMapperPlugins
      */
     public function __construct(
         CheckoutRestApiToCalculationFacadeInterface $calculationFacade,

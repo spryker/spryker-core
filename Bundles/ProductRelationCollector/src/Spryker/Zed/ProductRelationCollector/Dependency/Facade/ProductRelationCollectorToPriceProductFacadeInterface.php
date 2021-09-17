@@ -20,7 +20,7 @@ interface ProductRelationCollectorToPriceProductFacadeInterface
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findPricesBySkuForCurrentStore($sku);
 

@@ -33,7 +33,7 @@ class MerchantStorageToStorageClientBridge implements MerchantStorageToStorageCl
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

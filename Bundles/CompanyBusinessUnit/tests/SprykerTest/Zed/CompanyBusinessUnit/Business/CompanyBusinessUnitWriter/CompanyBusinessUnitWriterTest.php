@@ -174,7 +174,7 @@ class CompanyBusinessUnitWriterTest extends Test
     /**
      * @param array $hierarchy Elements are arrays in [ id => parentId ] structure
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyBusinessUnitTransfer>
      */
     protected function createNodeHierarchy(array $hierarchy): array
     {

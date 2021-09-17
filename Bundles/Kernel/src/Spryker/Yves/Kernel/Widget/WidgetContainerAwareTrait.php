@@ -15,12 +15,12 @@ use Spryker\Yves\Kernel\Exception\UniqueWidgetNameException;
 trait WidgetContainerAwareTrait
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $widgets = [];
 
     /**
-     * @param string[] $widgetClassNames
+     * @param array<string> $widgetClassNames
      *
      * @return $this
      */

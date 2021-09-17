@@ -25,7 +25,7 @@ class DefaultCodeBucketConfig extends AbstractCodeBucketConfig
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCodeBuckets(): array
     {

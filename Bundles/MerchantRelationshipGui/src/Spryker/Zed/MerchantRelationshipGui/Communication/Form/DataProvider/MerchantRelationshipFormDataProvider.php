@@ -97,7 +97,7 @@ class MerchantRelationshipFormDataProvider
      * @param bool $isPersistenceForm
      * @param int|null $idCompany
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getOptions(bool $isPersistenceForm, ?int $idCompany = null): array
     {
@@ -114,7 +114,7 @@ class MerchantRelationshipFormDataProvider
     /**
      * @param int|null $idCompany
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getAssigneeCompanyBusinessUnitChoices(?int $idCompany = null): array
     {
@@ -140,7 +140,7 @@ class MerchantRelationshipFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCompanyChoices(): array
     {
@@ -158,7 +158,7 @@ class MerchantRelationshipFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getMerchantChoices(): array
     {

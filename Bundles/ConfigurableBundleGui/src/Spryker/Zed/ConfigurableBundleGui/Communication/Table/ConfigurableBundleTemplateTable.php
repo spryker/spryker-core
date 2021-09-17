@@ -150,7 +150,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate[] $configurableBundleTemplateEntityCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate> $configurableBundleTemplateEntityCollection */
         $configurableBundleTemplateEntityCollection = $this->runQuery(
             $this->prepareQuery($this->configurableBundleTemplatePropelQuery),
             $config,
@@ -197,7 +197,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate[] $configurableBundleTemplateEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplate> $configurableBundleTemplateEntityCollection
      *
      * @return array
      */

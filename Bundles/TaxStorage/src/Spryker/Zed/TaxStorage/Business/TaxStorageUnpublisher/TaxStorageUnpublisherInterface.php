@@ -10,7 +10,7 @@ namespace Spryker\Zed\TaxStorage\Business\TaxStorageUnpublisher;
 interface TaxStorageUnpublisherInterface
 {
     /**
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
      * @return void
      */

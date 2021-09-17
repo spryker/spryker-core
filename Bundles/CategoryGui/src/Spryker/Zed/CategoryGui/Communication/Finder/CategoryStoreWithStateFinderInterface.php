@@ -21,7 +21,7 @@ interface CategoryStoreWithStateFinderInterface
     /**
      * @param int $idCategoryNode
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getInactiveStoreIdsByIdCategoryNode(int $idCategoryNode): array;
 }

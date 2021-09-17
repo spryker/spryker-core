@@ -145,7 +145,7 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getZedDataSourceNames(): array
     {
@@ -185,7 +185,7 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getYvesDataSourceNames(): array
     {

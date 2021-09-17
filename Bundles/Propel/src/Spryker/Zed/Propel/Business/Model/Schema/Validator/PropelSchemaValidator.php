@@ -104,9 +104,9 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     }
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo[] $schemaFiles
+     * @param array<\Symfony\Component\Finder\SplFileInfo> $schemaFiles
      *
-     * @return \ArrayObject|\SimpleXMLElement[]
+     * @return \ArrayObject<int, \SimpleXMLElement>
      */
     protected function createXmlElements(array $schemaFiles): ArrayObject
     {
@@ -130,7 +130,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
 
     /**
      * @param \SimpleXMLElement $mergeTargetXmlElement
-     * @param \ArrayObject|\SimpleXMLElement[] $schemaXmlElements
+     * @param \ArrayObject<int, \SimpleXMLElement> $schemaXmlElements
      * @param string $fileName
      *
      * @return void
@@ -171,7 +171,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
 
     /**
      * @param \SimpleXMLElement $toXmlElement
-     * @param \ArrayObject|\SimpleXMLElement[] $toXmlElements
+     * @param \ArrayObject<int, \SimpleXMLElement> $toXmlElements
      * @param string $fromXmlElementName
      * @param string $fromXmlChildTagName
      * @param \SimpleXMLElement $fromXmlChildElement
@@ -195,7 +195,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     /**
      * @param \SimpleXMLElement $toXmlElement
      *
-     * @return \ArrayObject|\SimpleXMLElement[]
+     * @return \ArrayObject<int, \SimpleXMLElement>
      */
     protected function retrieveToXmlElements(SimpleXMLElement $toXmlElement): ArrayObject
     {

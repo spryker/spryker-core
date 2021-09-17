@@ -19,9 +19,9 @@ interface OrderExpanderInterface
     public function expandOrderWithOmsStates(OrderTransfer $orderTransfer): OrderTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function setOrderIsCancellableByItemState(array $orderTransfers): array;
 }

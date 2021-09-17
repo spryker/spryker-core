@@ -164,7 +164,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTableActionExpanderPluginInterface>
      */
     protected function getUserTableActionExpanderPlugins(): array
     {
@@ -174,7 +174,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link \Spryker\Zed\User\UserDependencyProvider::getUserTableActionExpanderPlugins()} instead.
      *
-     * @return \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface>
      */
     protected function getUsersTableExtenderPlugins()
     {
@@ -196,7 +196,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface>
      */
     protected function getPostSavePlugins(): array
     {
@@ -218,7 +218,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[]
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface>
      */
     protected function getUserPreSavePlugins(): array
     {
@@ -240,7 +240,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[]
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface>
      */
     protected function getUserTransferExpanderPlugins(): array
     {
@@ -262,7 +262,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTableConfigExpanderPluginInterface>
      */
     protected function getUserTableConfigExpanderPlugins(): array
     {
@@ -284,7 +284,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTableDataExpanderPluginInterface>
      */
     protected function getUserTableDataExpanderPlugins(): array
     {
@@ -306,7 +306,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserFormExpanderPluginInterface>
      */
     protected function getUserFormExpanderPlugins(): array
     {

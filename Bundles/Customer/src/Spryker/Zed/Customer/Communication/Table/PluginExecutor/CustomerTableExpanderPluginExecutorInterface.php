@@ -12,7 +12,7 @@ interface CustomerTableExpanderPluginExecutorInterface
     /**
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function executeActionExpanderPlugins(int $idCustomer): array;
 }

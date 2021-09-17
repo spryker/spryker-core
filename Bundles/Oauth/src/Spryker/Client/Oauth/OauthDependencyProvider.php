@@ -74,7 +74,7 @@ class OauthDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface[]
+     * @return array<\Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface>
      */
     protected function getKeyLoaderPlugins(): array
     {
@@ -96,7 +96,7 @@ class OauthDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
+     * @return array<\Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface>
      */
     protected function getAuthorizationValidatorPlugins(): array
     {

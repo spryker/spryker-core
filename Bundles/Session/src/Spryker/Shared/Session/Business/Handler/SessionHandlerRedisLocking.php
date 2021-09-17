@@ -171,7 +171,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
     }
 
     /**
-     * @param int|string $maxLifeTime
+     * @param string|int $maxLifeTime
      *
      * @return bool
      */

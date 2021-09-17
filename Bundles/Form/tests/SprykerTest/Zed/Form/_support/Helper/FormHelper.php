@@ -41,7 +41,7 @@ class FormHelper extends Module
     protected const CONFIG_KEY_FORM_PLUGINS = 'formPlugins';
 
     /**
-     * @var \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
+     * @var array<\Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface>
      */
     protected $formPlugins = [];
 

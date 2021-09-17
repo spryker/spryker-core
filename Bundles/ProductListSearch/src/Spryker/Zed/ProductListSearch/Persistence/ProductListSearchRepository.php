@@ -66,9 +66,9 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
     /**
      * @uses SpyProductQuery
      *
-     * @param int[] $concreteIds
+     * @param array<int> $concreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByConcreteIds(array $concreteIds): array
     {
@@ -88,7 +88,7 @@ class ProductListSearchRepository extends AbstractRepository implements ProductL
      *
      * @param array $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {

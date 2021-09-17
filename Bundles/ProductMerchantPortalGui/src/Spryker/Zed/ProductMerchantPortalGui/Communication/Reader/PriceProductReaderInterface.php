@@ -14,7 +14,7 @@ interface PriceProductReaderInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getPriceProducts(PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer): array;
 }

@@ -32,7 +32,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAdminRolePermissionKeys(): array
     {
@@ -42,7 +42,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\CompanyRoleTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyRoleTransfer>
      */
     public function getPredefinedCompanyRoles(): array
     {
@@ -65,7 +65,7 @@ class CompanyRoleConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param string[] $permissionKeys
+     * @param array<string> $permissionKeys
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */

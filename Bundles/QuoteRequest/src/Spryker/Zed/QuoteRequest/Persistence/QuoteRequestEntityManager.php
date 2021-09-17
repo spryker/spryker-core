@@ -136,7 +136,7 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
     }
 
     /**
-     * @param int[] $quoteRequestIds
+     * @param array<int> $quoteRequestIds
      *
      * @return void
      */
@@ -149,7 +149,7 @@ class QuoteRequestEntityManager extends AbstractEntityManager implements QuoteRe
     }
 
     /**
-     * @param int[] $quoteRequestIds
+     * @param array<int> $quoteRequestIds
      *
      * @return void
      */

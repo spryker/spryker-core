@@ -122,7 +122,7 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCorePropelSchemaPathPatterns()
     {
@@ -214,7 +214,7 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTableElementHierarchy(): array
     {
@@ -245,7 +245,7 @@ class PropelConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return int|float|null
+     * @return float|int|null
      */
     public function getProcessTimeout()
     {

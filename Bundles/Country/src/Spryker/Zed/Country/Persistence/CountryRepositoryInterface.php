@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CountryCollectionTransfer;
 interface CountryRepositoryInterface
 {
     /**
-     * @param string[] $iso2Codes
+     * @param array<string> $iso2Codes
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */

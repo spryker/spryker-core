@@ -60,7 +60,7 @@ class GlossaryStorageQueryContainer extends AbstractQueryContainer implements Gl
      *
      * @api
      *
-     * @param int[] $glossaryKeysIds
+     * @param array<int> $glossaryKeysIds
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */

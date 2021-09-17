@@ -19,13 +19,13 @@ class IndexInstallBroker implements IndexInstallBrokerInterface
     protected $indexDefinitionBuilder;
 
     /**
-     * @var \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\InstallerInterface[]
+     * @var array<\Spryker\Zed\SearchElasticsearch\Business\Installer\Index\InstallerInterface>
      */
     protected $installer;
 
     /**
      * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilderInterface $indexDefinitionBuilder
-     * @param \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\InstallerInterface[] $installer
+     * @param array<\Spryker\Zed\SearchElasticsearch\Business\Installer\Index\InstallerInterface> $installer
      */
     public function __construct(IndexDefinitionBuilderInterface $indexDefinitionBuilder, array $installer)
     {

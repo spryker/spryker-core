@@ -60,7 +60,7 @@ class CalculatorForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */

@@ -40,9 +40,9 @@ class ContentStorageMapper implements ContentStorageMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Content\Persistence\SpyContent[] $contentEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Content\Persistence\SpyContent> $contentEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentTransfer>
      */
     public function mapContentEntityCollectionToContentTransfers(ObjectCollection $contentEntityCollection): array
     {

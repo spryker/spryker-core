@@ -21,13 +21,13 @@ class AuthenticationStrategyExecutor implements AuthenticationStrategyExecutorIn
     protected $securityOauthUserConfig;
 
     /**
-     * @var \Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface[]
+     * @var array<\Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface>
      */
     protected $authenticationStrategies;
 
     /**
      * @param \Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig $securityOauthUserConfig
-     * @param \Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface[] $authenticationStrategies
+     * @param array<\Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface> $authenticationStrategies
      */
     public function __construct(
         SecurityOauthUserConfig $securityOauthUserConfig,

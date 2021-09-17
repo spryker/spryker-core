@@ -47,7 +47,7 @@ class UtilSanitizeDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Service\UtilSanitizeExtension\Dependency\Plugin\StringSanitizerPluginInterface[]
+     * @return array<\Spryker\Service\UtilSanitizeExtension\Dependency\Plugin\StringSanitizerPluginInterface>
      */
     protected function getStringSanitizerPlugins(): array
     {

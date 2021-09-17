@@ -102,7 +102,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NavigationTreeTransfer[][] $navigationTreeTransfers
+     * @param array<\Generated\Shared\Transfer\NavigationTreeTransfer[]> $navigationTreeTransfers
      * @param array $spyNavigationMenuTranslationStorageEntities
      *
      * @return void
@@ -149,7 +149,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     /**
      * @param array $navigationIds
      *
-     * @return \Generated\Shared\Transfer\NavigationTreeTransfer[][]
+     * @return array<\Generated\Shared\Transfer\NavigationTreeTransfer[]>
      */
     protected function getNavigationTreeTransfer(array $navigationIds)
     {
@@ -174,7 +174,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSharedPersistenceLocaleNames(): array
     {
@@ -224,9 +224,9 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NavigationTreeNodeTransfer[]|\ArrayObject $navigationTreeNodeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\NavigationTreeNodeTransfer> $navigationTreeNodeTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\NavigationNodeStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\NavigationNodeStorageTransfer>
      */
     protected function mapToNavigationNodeStorageTransfer(ArrayObject $navigationTreeNodeTransfers)
     {

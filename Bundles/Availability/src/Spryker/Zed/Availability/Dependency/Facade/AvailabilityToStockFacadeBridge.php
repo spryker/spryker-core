@@ -70,7 +70,7 @@ class AvailabilityToStockFacadeBridge implements AvailabilityToStockFacadeInterf
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getStoreToWarehouseMapping()
     {
@@ -80,7 +80,7 @@ class AvailabilityToStockFacadeBridge implements AvailabilityToStockFacadeInterf
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductStockIsDefined(string $sku): array
     {

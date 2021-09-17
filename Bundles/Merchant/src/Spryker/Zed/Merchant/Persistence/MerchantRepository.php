@@ -45,7 +45,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
         $merchantQuery = $this->applyFilters($merchantQuery, $merchantCriteriaTransfer);
         $merchantQuery = $this->buildQueryFromCriteria($merchantQuery, $filterTransfer)->setFormatter(ObjectFormatter::class);
 
-        /** @var \Orm\Zed\Merchant\Persistence\SpyMerchant[] $merchantCollection */
+        /** @var array<\Orm\Zed\Merchant\Persistence\SpyMerchant> $merchantCollection */
         $merchantCollection = $this->getPaginatedCollection($merchantQuery, $merchantCriteriaTransfer->getPagination());
 
         $merchantCollectionTransfer = $this->getFactory()
@@ -77,13 +77,13 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return \Generated\Shared\Transfer\StoreRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreRelationTransfer>
      */
     public function getMerchantStoreRelationMapByMerchantIds(array $merchantIds): array
     {
-        /** @var \Generated\Shared\Transfer\StoreRelationTransfer[] $storeRelationTransfers */
+        /** @var array<\Generated\Shared\Transfer\StoreRelationTransfer> $storeRelationTransfers */
         $storeRelationTransfers = [];
 
         $merchantStoreEntities = $this->getFactory()
@@ -105,10 +105,10 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore[]|\Propel\Runtime\Collection\ObjectCollection $merchantStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore> $merchantStoreEntities
      * @param int $idMerchant
      *
-     * @return \Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore[]
+     * @return array<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore>
      */
     protected function filterMerchantStoresById(ObjectCollection $merchantStoreEntities, int $idMerchant): array
     {
@@ -123,9 +123,9 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[][]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer[]>
      */
     public function getUrlsMapByMerchantIds(array $merchantIds): array
     {
@@ -201,7 +201,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return mixed|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>|\Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

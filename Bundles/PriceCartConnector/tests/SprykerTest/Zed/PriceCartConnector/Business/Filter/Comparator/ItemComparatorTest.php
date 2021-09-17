@@ -98,7 +98,7 @@ class ItemComparatorTest extends Unit
     }
 
     /**
-     * @param string[] $itemFieldsForIsSameItemComparison
+     * @param array<string> $itemFieldsForIsSameItemComparison
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilter
      */
@@ -111,7 +111,7 @@ class ItemComparatorTest extends Unit
     }
 
     /**
-     * @param string[] $itemFieldsForIsSameItemComparison
+     * @param array<string> $itemFieldsForIsSameItemComparison
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
      */

@@ -67,7 +67,7 @@ class CartValidator implements CartValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getItemsWithDiscountPromotion(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -84,7 +84,7 @@ class CartValidator implements CartValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\PromotionItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\PromotionItemTransfer[]>
      */
     protected function groupAvailableQuotePromotionItemsById(CartChangeTransfer $cartChangeTransfer): array
     {

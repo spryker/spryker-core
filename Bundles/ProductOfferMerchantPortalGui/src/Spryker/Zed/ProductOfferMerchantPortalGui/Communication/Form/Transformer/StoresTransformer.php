@@ -16,9 +16,9 @@ class StoresTransformer implements DataTransformerInterface
     /**
      * @phpstan-param array<\Generated\Shared\Transfer\StoreTransfer>|null $storeTransfers
      *
-     * @param \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject|null $storeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>|null $storeTransfers
      *
-     * @return int[]|null
+     * @return array<int>|null
      */
     public function transform($storeTransfers): ?array
     {
@@ -38,11 +38,9 @@ class StoresTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>|null
+     * @param array<int>|null $storeIds
      *
-     * @param int[]|null $storeIds
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject|null
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>|null
      */
     public function reverseTransform($storeIds): ?ArrayObject
     {

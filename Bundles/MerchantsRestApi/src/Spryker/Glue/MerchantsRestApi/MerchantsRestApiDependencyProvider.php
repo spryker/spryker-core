@@ -117,7 +117,7 @@ class MerchantsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttributesMapperPluginInterface>
      */
     public function getMerchantRestAttributesMapperPlugins(): array
     {

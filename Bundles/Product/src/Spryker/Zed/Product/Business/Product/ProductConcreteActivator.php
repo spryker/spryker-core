@@ -108,7 +108,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
      * @return void
      */
@@ -150,7 +150,7 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
      * @return void
      */

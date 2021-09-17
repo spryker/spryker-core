@@ -16,7 +16,7 @@ class ConfigurableBundleCartRepository extends AbstractRepository implements Con
 {
     /**
      * @param string $configurableBundleTemplateUuid
-     * @param string[] $configurableBundleTemplateSlotUuids
+     * @param array<string> $configurableBundleTemplateSlotUuids
      *
      * @return bool
      */

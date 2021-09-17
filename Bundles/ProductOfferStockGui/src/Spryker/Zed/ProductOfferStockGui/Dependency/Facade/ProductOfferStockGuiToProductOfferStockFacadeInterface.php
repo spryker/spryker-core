@@ -13,11 +13,9 @@ use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 interface ProductOfferStockGuiToProductOfferStockFacadeInterface
 {
     /**
-     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\ProductOfferStockTransfer>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      */
     public function getProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject;
 }

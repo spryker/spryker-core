@@ -32,11 +32,11 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer[] $quoteRequestTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestTransfer> $quoteRequestTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     public function expandRestQuoteRequestItemWithConfiguredBundle(
         array $restQuoteRequestsAttributesTransfers,
@@ -69,10 +69,10 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param string[] $glossaryStorageKeys
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param array<string> $glossaryStorageKeys
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function expandGlossaryStorageKeysByConfiguredBundleTemplateName(ArrayObject $itemTransfers, array $glossaryStorageKeys): array
     {
@@ -94,7 +94,7 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\RestQuoteRequestItemTransfer[] $restQuoteRequestItemsByGroupKey
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestItemTransfer> $restQuoteRequestItemsByGroupKey
      *
      * @return bool
      */
@@ -132,10 +132,10 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
-     * @param string[] $translations
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
+     * @param array<string> $translations
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     protected function setTranslations(
         array $restQuoteRequestsAttributesTransfers,
@@ -157,7 +157,7 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\RestQuoteRequestItemTransfer $restQuoteRequestItemTransfer
-     * @param string[] $translations
+     * @param array<string> $translations
      *
      * @return \Generated\Shared\Transfer\RestQuoteRequestItemTransfer
      */
@@ -181,9 +181,9 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestItemTransfer[] $restQuoteRequestItemTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestItemTransfer> $restQuoteRequestItemTransfers
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestItemTransfer>
      */
     protected function getRestQuoteRequestsItemTransferIndexedByGroupKey(array $restQuoteRequestItemTransfers): array
     {
@@ -196,9 +196,9 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     protected function getRestQuoteRequestsAttributesTransfersIndexedByQuoteRequestReference(array $restQuoteRequestsAttributesTransfers): array
     {

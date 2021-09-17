@@ -31,7 +31,7 @@ class ProductConcreteRelationConfigurableBundleTemplateSlotEditSubTabsProviderPl
      *
      * @api
      *
-     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface[]
+     * @return array<\Spryker\Zed\Gui\Communication\Tabs\TabsInterface>
      */
     public function provideSubTabs(): array
     {

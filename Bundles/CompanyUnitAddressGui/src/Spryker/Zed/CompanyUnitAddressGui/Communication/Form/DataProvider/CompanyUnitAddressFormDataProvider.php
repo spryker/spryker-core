@@ -46,7 +46,7 @@ class CompanyUnitAddressFormDataProvider
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getOptions(): array
     {
@@ -74,7 +74,7 @@ class CompanyUnitAddressFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function prepareCompanyChoices(): array
     {
@@ -92,7 +92,7 @@ class CompanyUnitAddressFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function prepareCountryChoices(): array
     {

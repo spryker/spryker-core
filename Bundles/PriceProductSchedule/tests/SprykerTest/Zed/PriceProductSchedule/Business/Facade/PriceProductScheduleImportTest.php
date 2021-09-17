@@ -207,7 +207,7 @@ class PriceProductScheduleImportTest extends Unit
     /**
      * @param int $itemsCount
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductScheduleImportTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductScheduleImportTransfer>
      */
     protected function prepareValidPriceProductScheduleImportData(int $itemsCount): ArrayObject
     {

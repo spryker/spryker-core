@@ -45,9 +45,9 @@ class MerchantProductToProductFacadeBridge implements MerchantProductToProductFa
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array
     {

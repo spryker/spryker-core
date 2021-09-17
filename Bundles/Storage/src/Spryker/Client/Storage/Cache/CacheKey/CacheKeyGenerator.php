@@ -112,7 +112,7 @@ class CacheKeyGenerator implements CacheKeyGeneratorInterface
     }
 
     /**
-     * @param string[] $queryStringParameters
+     * @param array<string> $queryStringParameters
      *
      * @return string
      */

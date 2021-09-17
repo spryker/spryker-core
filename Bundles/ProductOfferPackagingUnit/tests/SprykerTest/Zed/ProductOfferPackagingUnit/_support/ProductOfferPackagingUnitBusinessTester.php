@@ -82,7 +82,7 @@ class ProductOfferPackagingUnitBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[] $salesAggregationTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer> $salesAggregationTransfers
      *
      * @return \Spryker\DecimalObject\Decimal
      */

@@ -257,7 +257,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      *
      * @api
      *
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

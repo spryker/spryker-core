@@ -25,9 +25,9 @@ class ItemMetadataExpander implements ItemMetadataExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithMetadata(array $itemTransfers): array
     {
@@ -46,9 +46,9 @@ class ItemMetadataExpander implements ItemMetadataExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIds(array $itemTransfers): array
     {
@@ -62,9 +62,9 @@ class ItemMetadataExpander implements ItemMetadataExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemMetadataTransfer[] $itemMetadataTransfers
+     * @param array<\Generated\Shared\Transfer\ItemMetadataTransfer> $itemMetadataTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemMetadataTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemMetadataTransfer>
      */
     protected function mapItemMetadataTransfersByIdSalesOrderItem(array $itemMetadataTransfers): array
     {

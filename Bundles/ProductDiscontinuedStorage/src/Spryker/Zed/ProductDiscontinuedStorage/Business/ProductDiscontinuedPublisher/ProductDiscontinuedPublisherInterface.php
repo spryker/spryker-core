@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedPub
 interface ProductDiscontinuedPublisherInterface
 {
     /**
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
      * @return void
      */

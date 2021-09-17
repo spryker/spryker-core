@@ -15,7 +15,7 @@ interface RefreshTokenRepositoryInterface extends LeagueRefreshTokenRepositoryIn
     /**
      * Revoke all refresh tokens.
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer> $oauthRefreshTokenTransfers
      *
      * @return void
      */

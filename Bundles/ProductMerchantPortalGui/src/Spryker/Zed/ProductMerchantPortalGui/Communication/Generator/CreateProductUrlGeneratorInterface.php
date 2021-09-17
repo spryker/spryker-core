@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Generator;
 interface CreateProductUrlGeneratorInterface
 {
     /**
-     * @param mixed[] $formData
+     * @param array<mixed> $formData
      * @param bool $isSingleConcrete
      *
      * @return string

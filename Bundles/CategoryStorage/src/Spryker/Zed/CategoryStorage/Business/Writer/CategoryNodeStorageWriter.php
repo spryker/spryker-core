@@ -73,7 +73,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
@@ -95,7 +95,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -119,7 +119,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -144,7 +144,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][] $categoryNodeStorageTransferTreesIndexedByStoreAndLocale
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer[][]> $categoryNodeStorageTransferTreesIndexedByStoreAndLocale
      *
      * @return void
      */
@@ -162,7 +162,7 @@ class CategoryNodeStorageWriter implements CategoryNodeStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransferTrees
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryNodeStorageTransferTrees
      * @param string $storeName
      * @param string $localeName
      *

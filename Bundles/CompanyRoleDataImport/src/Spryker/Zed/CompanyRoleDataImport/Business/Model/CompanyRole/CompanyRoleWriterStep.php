@@ -18,7 +18,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CompanyRoleWriterStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCompanyListCache = [];
 

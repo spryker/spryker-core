@@ -123,7 +123,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     }
 
     /**
-     * @return int[][]
+     * @return array<int[]>
      */
     public function getOptions(): array
     {
@@ -134,7 +134,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getProductCategoryTree(): array
     {
@@ -154,7 +154,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getStoreChoices(): array
     {
@@ -176,7 +176,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getCategoryTreeArray(NodeCollectionTransfer $nodeCollectionTransfer): array
     {
@@ -210,7 +210,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductCategoryChoices(): array
     {
@@ -223,7 +223,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryIds(CategoryCollectionTransfer $categoryCollectionTransfer): array
     {

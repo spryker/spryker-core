@@ -15,7 +15,7 @@ use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterfa
 interface CartValidatorStrategyResolverInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartValidatorInterface
      */

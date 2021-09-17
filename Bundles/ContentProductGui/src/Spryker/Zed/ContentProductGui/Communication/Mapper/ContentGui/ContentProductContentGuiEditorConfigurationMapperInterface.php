@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentProductGui\Communication\Mapper\ContentGui;
 interface ContentProductContentGuiEditorConfigurationMapperInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer>
      */
     public function getTemplates(): array;
 

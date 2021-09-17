@@ -133,7 +133,7 @@ class GraphController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function drawPreviewVersionAction(Request $request)
     {
@@ -153,7 +153,7 @@ class GraphController extends AbstractController
     /**
      * @param string $format
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStreamedResponseHeaders($format)
     {

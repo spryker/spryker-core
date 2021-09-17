@@ -94,7 +94,7 @@ class BusinessHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object
      */
     public function mockFactoryMethod(string $methodName, $return)
     {

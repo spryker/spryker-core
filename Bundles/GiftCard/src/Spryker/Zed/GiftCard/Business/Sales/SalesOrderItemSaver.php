@@ -24,12 +24,12 @@ class SalesOrderItemSaver implements SalesOrderItemSaverInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface[]
+     * @var array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface>
      */
     protected $attributePlugins;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface[] $attributePlugins
+     * @param array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface> $attributePlugins
      * @param \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
@@ -119,7 +119,7 @@ class SalesOrderItemSaver implements SalesOrderItemSaverInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getAttributes(ItemTransfer $itemTransfer)
     {

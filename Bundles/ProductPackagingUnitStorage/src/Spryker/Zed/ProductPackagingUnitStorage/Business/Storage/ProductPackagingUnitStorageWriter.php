@@ -35,7 +35,7 @@ class ProductPackagingUnitStorageWriter implements ProductPackagingUnitStorageWr
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -48,7 +48,7 @@ class ProductPackagingUnitStorageWriter implements ProductPackagingUnitStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer[] $productPackagingUnitStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductPackagingUnitStorageTransfer> $productPackagingUnitStorageTransfers
      *
      * @return void
      */
@@ -60,7 +60,7 @@ class ProductPackagingUnitStorageWriter implements ProductPackagingUnitStorageWr
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */

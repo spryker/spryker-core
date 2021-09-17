@@ -106,7 +106,7 @@ class CmsBlockStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[]
+     * @return array<\Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface>
      */
     protected function getCmsBlockStorageReaderPlugins(): array
     {

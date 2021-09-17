@@ -23,7 +23,7 @@ interface MerchantOmsToStateMachineFacadeInterface
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
      * @return int
      */
@@ -41,21 +41,21 @@ interface MerchantOmsToStateMachineFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProcessStateNames(StateMachineProcessTransfer $stateMachineProcessTransfer): array;
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 }

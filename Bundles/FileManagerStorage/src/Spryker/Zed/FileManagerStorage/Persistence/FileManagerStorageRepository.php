@@ -23,7 +23,7 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
     /**
      * @param array $fileIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FileTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer>
      */
     public function findFilesByIds(array $fileIds)
     {
@@ -49,7 +49,7 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
     /**
      * @param array $fileStorageIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileStorageTransfer>
      */
     public function findFileStoragesByIds(array $fileStorageIds)
     {
@@ -75,9 +75,9 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $fileManagerStorageIds
+     * @param array<int> $fileManagerStorageIds
      *
-     * @return \Generated\Shared\Transfer\FileStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\FileStorageTransfer>
      */
     public function getFilteredFileStorageTransfers(FilterTransfer $filterTransfer, array $fileManagerStorageIds = []): array
     {

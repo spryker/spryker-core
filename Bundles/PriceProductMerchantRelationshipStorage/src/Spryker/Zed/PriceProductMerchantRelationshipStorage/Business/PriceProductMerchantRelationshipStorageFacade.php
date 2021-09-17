@@ -55,7 +55,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
      * @return void
      */
@@ -70,7 +70,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param array<int> $priceProductMerchantRelationshipIds
      *
      * @return void
      */
@@ -100,7 +100,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -115,7 +115,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param array<int> $priceProductMerchantRelationshipIds
      *
      * @return void
      */
@@ -130,7 +130,7 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */

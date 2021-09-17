@@ -56,7 +56,7 @@ class PriceManager implements PriceManagerInterface
     protected $priceProductService;
 
     /**
-     * @var \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface>
      */
     protected $priceProductExpanderPlugins;
 
@@ -65,7 +65,7 @@ class PriceManager implements PriceManagerInterface
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface $priceProductFilter
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface $priceProductService
-     * @param \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface[] $priceProductExpanderPlugins
+     * @param array<\Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface> $priceProductExpanderPlugins
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
@@ -122,7 +122,7 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceFilterTransfer
      *
      * @throws \Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException
@@ -153,7 +153,7 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductFilterTransfer>
      */
     protected function createPriceProductFilterTransfers(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -316,10 +316,10 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function executePriceProductExpanderPlugins(array $priceProductTransfers, CartChangeTransfer $cartChangeTransfer): array
     {

@@ -45,7 +45,7 @@ class DeleteController extends CategoryAbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -82,7 +82,7 @@ class DeleteController extends CategoryAbstractController
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     protected function getUrls(CategoryTransfer $categoryTransfer): array
     {

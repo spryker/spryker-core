@@ -23,7 +23,7 @@ class SalesOrderThresholdGuiToLocaleFacadeBridge implements SalesOrderThresholdG
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection(): array
     {

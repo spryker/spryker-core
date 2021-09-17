@@ -55,9 +55,9 @@ class CustomerGroup implements CustomerGroupInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer[] $customerGroupToCustomerCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer> $customerGroupToCustomerCollection
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupToCustomerTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CustomerGroupToCustomerTransfer>
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $customerGroupToCustomerCollection)
     {
@@ -264,7 +264,7 @@ class CustomerGroup implements CustomerGroupInterface
     /**
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\CustomerGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\CustomerGroupTransfer>
      */
     protected function findCustomerGroupsByIdCustomer($idCustomer)
     {

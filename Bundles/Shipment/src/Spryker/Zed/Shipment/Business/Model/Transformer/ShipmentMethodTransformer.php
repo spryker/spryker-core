@@ -60,7 +60,7 @@ class ShipmentMethodTransformer implements ShipmentMethodTransformerInterface
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $methodEntity
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     protected function getPriceCollection(SpyShipmentMethod $methodEntity)
     {

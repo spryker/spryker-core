@@ -34,7 +34,7 @@ interface ConfigurableBundleStorageReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer>
      */
     public function getConfigurableBundleTemplateStorageCollection(
         ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer

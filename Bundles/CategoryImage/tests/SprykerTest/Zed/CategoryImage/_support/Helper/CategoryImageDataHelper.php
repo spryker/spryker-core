@@ -92,7 +92,7 @@ class CategoryImageDataHelper extends Module
     }
 
     /**
-     * @param int[] $sortOrders
+     * @param array<int> $sortOrders
      *
      * @return \Generated\Shared\Transfer\CategoryImageSetTransfer
      */

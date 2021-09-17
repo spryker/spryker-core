@@ -301,7 +301,7 @@ class ProductRelationTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelation $productRelationEntity
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function buildActions(SpyProductRelation $productRelationEntity): array
     {

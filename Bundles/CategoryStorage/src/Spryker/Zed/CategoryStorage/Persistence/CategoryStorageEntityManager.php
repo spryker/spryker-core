@@ -43,7 +43,7 @@ class CategoryStorageEntityManager extends AbstractEntityManager implements Cate
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      * @param string $localeName
      * @param string $storeName
      *
@@ -65,7 +65,7 @@ class CategoryStorageEntityManager extends AbstractEntityManager implements Cate
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */

@@ -64,9 +64,9 @@ class ProductOfferMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore[] $productOfferStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore> $productOfferStoreEntities
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function mapProductOfferStoreEntitiesToStoreTransfers(ObjectCollection $productOfferStoreEntities): array
     {

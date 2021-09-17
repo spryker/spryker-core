@@ -86,7 +86,7 @@ class ResourceShareDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[]
+     * @return array<\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface>
      */
     protected function getAfterZedResourceShareActivatorStrategyPlugins(): array
     {
@@ -94,7 +94,7 @@ class ResourceShareDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[]
+     * @return array<\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface>
      */
     protected function getBeforeZedResourceShareActivatorStrategyPlugins(): array
     {

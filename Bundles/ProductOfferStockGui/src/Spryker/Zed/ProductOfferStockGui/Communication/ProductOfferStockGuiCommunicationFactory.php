@@ -38,7 +38,7 @@ class ProductOfferStockGuiCommunicationFactory extends AbstractCommunicationFact
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface>
      */
     public function getProductOfferStockTableExpanderPlugins(): array
     {

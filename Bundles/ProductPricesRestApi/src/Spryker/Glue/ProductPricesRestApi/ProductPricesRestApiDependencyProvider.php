@@ -179,7 +179,7 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
-     * @return \Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface>
      */
     protected function getRestProductPricesAttributesMapperPlugins(): array
     {

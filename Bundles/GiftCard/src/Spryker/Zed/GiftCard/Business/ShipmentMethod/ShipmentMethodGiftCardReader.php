@@ -33,7 +33,7 @@ class ShipmentMethodGiftCardReader implements ShipmentMethodGiftCardReaderInterf
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getGiftCardOnlyShipmentMethods(): array
     {

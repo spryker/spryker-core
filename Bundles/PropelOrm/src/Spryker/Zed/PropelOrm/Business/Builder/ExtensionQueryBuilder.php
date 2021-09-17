@@ -46,7 +46,7 @@ class ExtensionQueryBuilder extends PropelExtensionQueryObjectBuilder
     }
 
     /**
-     * @param string[] $classes
+     * @param array<string> $classes
      * @param string $namespace
      * @param string $script
      *

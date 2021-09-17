@@ -25,7 +25,7 @@ class CategoryTreeBuilder implements CategoryTreeBuilderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[][]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]>
      */
     public function buildCategoryTree(): array
     {
@@ -47,11 +47,11 @@ class CategoryTreeBuilder implements CategoryTreeBuilderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[][] $categoryTree
+     * @param array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]> $categoryTree
      * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[] $categoryNodeAggregationTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer> $categoryNodeAggregationTransfers
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[][]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]>
      */
     protected function buildCategoryTreeByIdCategoryNode(
         array $categoryTree,
@@ -68,9 +68,9 @@ class CategoryTreeBuilder implements CategoryTreeBuilderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[] $categoryNodeAggregationTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer> $categoryNodeAggregationTransfers
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[][]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]>
      */
     protected function formatCategoryNodeAggregations(array $categoryNodeAggregationTransfers): array
     {

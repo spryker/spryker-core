@@ -35,7 +35,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     /**
      * @deprecated Unused method will be removed in next major
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCurrentStoreAvailableCurrencyIsoCodes()
     {
@@ -63,7 +63,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     /**
      * @deprecated Unused method will be removed in next major
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCurrentAvailableLocaleIsoCodes()
     {
@@ -71,7 +71,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAllStoreNames()
     {
@@ -111,7 +111,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getStoresWithSharedPersistence()
     {
@@ -119,7 +119,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCountries()
     {

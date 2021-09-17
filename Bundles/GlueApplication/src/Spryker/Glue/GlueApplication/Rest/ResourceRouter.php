@@ -39,7 +39,7 @@ class ResourceRouter implements ResourceRouterInterface
     protected $resourceRouteLoader;
 
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface>
      */
     protected $routerParameterExpanderPlugins;
 
@@ -48,7 +48,7 @@ class ResourceRouter implements ResourceRouterInterface
      * @param \Spryker\Service\Container\ContainerInterface $application
      * @param \Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface $uriParser
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface $resourceRouteLoader
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface[] $routerParameterExpanderPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface> $routerParameterExpanderPlugins
      */
     public function __construct(
         HttpRequestValidatorInterface $requestHeaderValidator,

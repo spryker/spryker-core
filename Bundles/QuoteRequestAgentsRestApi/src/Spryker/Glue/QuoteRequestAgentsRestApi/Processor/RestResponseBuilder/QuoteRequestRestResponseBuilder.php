@@ -42,7 +42,7 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
     /**
      * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
-     * @param \Generated\Shared\Transfer\MessageTransfer[]|\ArrayObject $messageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

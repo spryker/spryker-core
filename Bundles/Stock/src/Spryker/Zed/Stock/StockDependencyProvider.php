@@ -221,7 +221,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     * @return array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface>
      */
     protected function getStockUpdateHandlerPlugins(Container $container)
     {
@@ -229,7 +229,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface>
      */
     protected function getStockCollectionExpanderPlugins(): array
     {
@@ -237,7 +237,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface>
      */
     protected function getStockPostCreatePlugins(): array
     {
@@ -245,7 +245,7 @@ class StockDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface>
      */
     protected function getStockPostUpdatePlugins(): array
     {

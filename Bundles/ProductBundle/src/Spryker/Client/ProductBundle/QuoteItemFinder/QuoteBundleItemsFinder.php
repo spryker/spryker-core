@@ -17,7 +17,7 @@ class QuoteBundleItemsFinder implements QuoteBundleItemsFinderInterface
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function findBundledItems(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): array
     {
@@ -36,7 +36,7 @@ class QuoteBundleItemsFinder implements QuoteBundleItemsFinderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function findBundleItems(QuoteTransfer $quoteTransfer, $groupKey): array
     {

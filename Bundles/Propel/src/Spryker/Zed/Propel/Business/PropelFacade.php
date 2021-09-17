@@ -139,7 +139,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      *
      * @deprecated Please add the Commands directly to your ConsoleDependencyProvider.
      *
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     public function getConsoleCommands()
     {

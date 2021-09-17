@@ -18,7 +18,7 @@ class CategoryKeysToIdsConditionResolver implements ConditionResolverInterface
     protected const KEY_CONDITION_CATEGORY_IDS = 'categoryIds';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $categoryIdsBuffer = [];
 
@@ -37,11 +37,11 @@ class CategoryKeysToIdsConditionResolver implements ConditionResolverInterface
     }
 
     /**
-     * @param string[] $categoryKeys
+     * @param array<string> $categoryKeys
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryIdsFromKeys(array $categoryKeys): array
     {

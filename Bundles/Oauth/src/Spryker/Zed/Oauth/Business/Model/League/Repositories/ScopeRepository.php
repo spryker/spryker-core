@@ -22,7 +22,7 @@ class ScopeRepository implements ScopeRepositoryInterface
     protected $oauthRepository;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface>
      */
     protected $scopeProviderPlugins;
 
@@ -61,12 +61,12 @@ class ScopeRepository implements ScopeRepositoryInterface
      * Given a client, grant type and optional user identifier validate the set of scopes requested are valid and optionally
      * append additional scopes or remove requested scopes.
      *
-     * @param \League\OAuth2\Server\Entities\ScopeEntityInterface[] $scopes
+     * @param array<\League\OAuth2\Server\Entities\ScopeEntityInterface> $scopes
      * @param string $grantType
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
      * @param string|null $userIdentifier
      *
-     * @return \League\OAuth2\Server\Entities\ScopeEntityInterface[]
+     * @return array<\League\OAuth2\Server\Entities\ScopeEntityInterface>
      */
     public function finalizeScopes(
         array $scopes,
@@ -115,7 +115,7 @@ class ScopeRepository implements ScopeRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     * @return array<\Generated\Shared\Transfer\OauthScopeTransfer>
      */
     protected function getProvidedScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array
     {
@@ -132,7 +132,7 @@ class ScopeRepository implements ScopeRepositoryInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $providedScopes
+     * @param array<\Generated\Shared\Transfer\OauthScopeTransfer> $providedScopes
      *
      * @return array
      */

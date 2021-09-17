@@ -45,13 +45,13 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     protected $availabilityFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface>
      */
     protected $cartItemQuantityCounterStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\AvailabilityCartConnector\Dependency\Facade\AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade
-     * @param \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[] $cartItemQuantityCounterStrategyPlugins
+     * @param array<\Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface> $cartItemQuantityCounterStrategyPlugins
      */
     public function __construct(
         AvailabilityCartConnectorToAvailabilityInterface $availabilityFacade,
@@ -106,7 +106,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -192,7 +192,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return int
@@ -217,7 +217,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      * @param string $sku
      *
      * @return int

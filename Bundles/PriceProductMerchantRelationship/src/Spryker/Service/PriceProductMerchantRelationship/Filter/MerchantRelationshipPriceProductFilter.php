@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 class MerchantRelationshipPriceProductFilter implements MerchantRelationshipPriceProductFilterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function filterPriceProductsByMerchantRelationship(
         array $priceProductTransfers,
@@ -43,10 +43,10 @@ class MerchantRelationshipPriceProductFilter implements MerchantRelationshipPric
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function filterOutPriceProductTransfersWithIncorrectMerchantRelationship(
         array $priceProductTransfers,

@@ -118,14 +118,14 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductReviewsResourceCollection(array $productAbstractIds, FilterTransfer $filterTransfer): array
     {
-        /** @var \Generated\Shared\Transfer\ProductReviewTransfer[] $productReviewTransfers */
+        /** @var array<\Generated\Shared\Transfer\ProductReviewTransfer> $productReviewTransfers */
         $productReviewTransfers = $this->getBulkProductReviewsInSearch(
             $productAbstractIds,
             $filterTransfer
@@ -167,7 +167,7 @@ class ProductReviewReader implements ProductReviewReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
      * @return array

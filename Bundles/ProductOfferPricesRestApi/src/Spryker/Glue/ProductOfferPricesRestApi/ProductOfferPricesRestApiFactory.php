@@ -102,7 +102,7 @@ class ProductOfferPricesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductOfferPricesRestApiExtension\Dependency\Plugin\RestProductOfferPricesAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\ProductOfferPricesRestApiExtension\Dependency\Plugin\RestProductOfferPricesAttributesMapperPluginInterface>
      */
     public function getRestProductOfferPricesAttributesMapperPlugins(): array
     {

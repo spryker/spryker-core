@@ -76,7 +76,7 @@ class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderIn
 
     /**
      * @param \Generated\Shared\Transfer\ProductListUsedByTableTransfer $productListUsedByTableTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer[] $configurableBundleTemplateSlotTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer> $configurableBundleTemplateSlotTransfers
      *
      * @return \Generated\Shared\Transfer\ProductListUsedByTableTransfer
      */

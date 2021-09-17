@@ -44,7 +44,7 @@ class BarcodeDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[]
+     * @return array<\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface>
      */
     protected function getBarcodeGeneratorPlugins(): array
     {

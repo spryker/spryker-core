@@ -124,7 +124,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCsvHeaders(): array
     {
@@ -248,10 +248,10 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param string[] $buttons
+     * @param array<string> $buttons
      * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function expandLinks(array $buttons, SpyCustomer $customer): array
     {

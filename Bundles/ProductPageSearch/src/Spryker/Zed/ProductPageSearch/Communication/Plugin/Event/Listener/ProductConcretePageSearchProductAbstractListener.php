@@ -17,7 +17,7 @@ class ProductConcretePageSearchProductAbstractListener extends AbstractProductCo
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
@@ -41,9 +41,9 @@ class ProductConcretePageSearchProductAbstractListener extends AbstractProductCo
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductIds(array $productAbstractIds): array
     {

@@ -45,10 +45,10 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param mixed[] $initialData
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<mixed> $initialData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function mapValidationResponseTransferToInitialData(
         ValidationResponseTransfer $validationResponseTransfer,
@@ -74,10 +74,10 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param mixed[] $initialData
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<mixed> $initialData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function addValidationErrorToInitialData(
         ValidationErrorTransfer $validationErrorTransfer,
@@ -130,7 +130,7 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     /**
      * @param string $propertyPath
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractPropertyPathValues(string $propertyPath): array
     {
@@ -150,8 +150,8 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param mixed[] $propertyPath
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<mixed> $propertyPath
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */

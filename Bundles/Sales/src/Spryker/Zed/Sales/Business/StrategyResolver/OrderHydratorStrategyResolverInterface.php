@@ -15,14 +15,14 @@ use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface;
 interface OrderHydratorStrategyResolverInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */
     public function resolve(iterable $itemTransfers): OrderHydratorInterface;
 
     /**
-     * @param iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
+     * @param iterable<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
      *
      * @return \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface
      */

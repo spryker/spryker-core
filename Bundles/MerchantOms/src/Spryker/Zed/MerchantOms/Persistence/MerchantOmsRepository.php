@@ -17,11 +17,11 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRepositoryInterface
 {
     /**
-     * @phpstan-param mixed[] $stateIds
+     * @phpstan-param array<mixed> $stateIds
      *
      * @param array $stateIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateMachineItemsByStateIds(array $stateIds): array
     {
@@ -73,9 +73,9 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
     /**
      * @module StateMachine
      *
-     * @param int[] $merchantOrderItemIds
+     * @param array<int> $merchantOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function findStateHistoryByMerchantOrderIds(array $merchantOrderItemIds): array
     {

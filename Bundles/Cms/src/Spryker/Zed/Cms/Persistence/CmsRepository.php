@@ -21,7 +21,7 @@ class CmsRepository extends AbstractRepository implements CmsRepositoryInterface
      *
      * @param int $idCmsPage
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>
      */
     public function getRelatedStoresByIdCmsPage(int $idCmsPage): ArrayObject
     {

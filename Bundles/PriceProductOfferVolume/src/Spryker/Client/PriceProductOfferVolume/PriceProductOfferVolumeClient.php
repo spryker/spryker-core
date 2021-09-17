@@ -19,9 +19,9 @@ class PriceProductOfferVolumeClient extends AbstractClient implements PriceProdu
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractProductPrices(array $priceProductTransfers): array
     {

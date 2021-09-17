@@ -10,14 +10,14 @@ namespace Spryker\Zed\ProductCategoryStorage\Business\Writer\ProductCategory;
 interface ProductCategoryStorageByProductCategoryEventsWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
     public function writeCollectionByProductCategoryPublishingEvents(array $eventEntityTransfers): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

@@ -34,7 +34,7 @@ interface ZedRequestClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseInfoMessages();
 
@@ -44,7 +44,7 @@ interface ZedRequestClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages();
 
@@ -54,7 +54,7 @@ interface ZedRequestClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseSuccessMessages();
 
@@ -78,7 +78,7 @@ interface ZedRequestClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesInfoMessages(): array;
 
@@ -88,7 +88,7 @@ interface ZedRequestClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesErrorMessages(): array;
 
@@ -98,7 +98,7 @@ interface ZedRequestClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesSuccessMessages(): array;
 

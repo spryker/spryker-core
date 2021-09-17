@@ -109,7 +109,7 @@ class CategoryFinder implements CategoryFinderInterface
     /**
      * @param int|null $idCategory
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return array<\Generated\Shared\Transfer\NodeTransfer>
      */
     public function getCategoryNodes(?int $idCategory = null): array
     {
@@ -130,10 +130,10 @@ class CategoryFinder implements CategoryFinderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return array<\Generated\Shared\Transfer\NodeTransfer>
      */
     protected function extractNodesFromCategory(array $nodeTransfers, CategoryTransfer $categoryTransfer): array
     {

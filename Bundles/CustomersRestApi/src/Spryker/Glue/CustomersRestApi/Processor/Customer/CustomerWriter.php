@@ -67,7 +67,7 @@ class CustomerWriter implements CustomerWriterInterface
     protected $customerReader;
 
     /**
-     * @var \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface[]
+     * @var array<\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface>
      */
     protected $customerPostCreatePlugins;
 
@@ -78,7 +78,7 @@ class CustomerWriter implements CustomerWriterInterface
      * @param \Spryker\Glue\CustomersRestApi\Processor\Mapper\CustomerResourceMapperInterface $customerResourceMapper
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiErrorInterface $restApiError
      * @param \Spryker\Glue\CustomersRestApi\Processor\Validation\RestApiValidatorInterface $restApiValidator
-     * @param \Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface[] $customerPostCreatePlugins
+     * @param array<\Spryker\Glue\CustomersRestApiExtension\Dependency\Plugin\CustomerPostCreatePluginInterface> $customerPostCreatePlugins
      */
     public function __construct(
         CustomersRestApiToCustomerClientInterface $customerClient,

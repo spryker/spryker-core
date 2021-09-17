@@ -12,10 +12,10 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface ShipmentMethodSorterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[] $restShipmentMethodAttributeTransfers
+     * @param array<\Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer> $restShipmentMethodAttributeTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestShipmentMethodsAttributesTransfer>
      */
     public function sortRestShipmentMethodsAttributesTransfers(
         array $restShipmentMethodAttributeTransfers,

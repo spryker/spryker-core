@@ -38,7 +38,7 @@ class ConfigHelper extends Module
     protected $configCache;
 
     /**
-     * @var \Spryker\Shared\Kernel\AbstractBundleConfig[]
+     * @var array<\Spryker\Shared\Kernel\AbstractBundleConfig>
      */
     protected $configStubs = [];
 
@@ -48,7 +48,7 @@ class ConfigHelper extends Module
     protected $mockedConfigMethods = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\AbstractSharedConfig[]
+     * @var array<\Spryker\Shared\Kernel\AbstractSharedConfig>
      */
     protected $sharedConfigStubs = [];
 
@@ -81,7 +81,7 @@ class ConfigHelper extends Module
 
     /**
      * @param string $key
-     * @param array|bool|float|int|string $value
+     * @param array|string|float|int|bool $value
      *
      * @return void
      */
@@ -95,7 +95,7 @@ class ConfigHelper extends Module
 
     /**
      * @param string $key
-     * @param array|bool|float|int|string $value
+     * @param array|string|float|int|bool $value
      *
      * @return void
      */

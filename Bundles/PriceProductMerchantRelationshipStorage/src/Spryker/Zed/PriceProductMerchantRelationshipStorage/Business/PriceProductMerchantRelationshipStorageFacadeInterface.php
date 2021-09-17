@@ -49,7 +49,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
      * @return void
      */
@@ -63,7 +63,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
      * @return void
      */
@@ -77,7 +77,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param array<int> $priceProductMerchantRelationshipIds
      *
      * @return void
      */
@@ -91,7 +91,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -105,7 +105,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param array<int> $priceProductMerchantRelationshipIds
      *
      * @return void
      */
@@ -119,7 +119,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */

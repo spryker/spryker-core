@@ -45,42 +45,42 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     protected $oauthRefreshTokenMapper;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface>
      */
     protected $userProviderPlugins;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface>
      */
     protected $scopeProviderPlugins;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface>
      */
     protected $oauthUserIdentifierFilterPlugins;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface>
      */
     protected $oauthRefreshTokenRevokePlugins;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPluginInterface>
      */
     protected $oauthRefreshTokensRevokePlugins;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface>
      */
     protected $oauthRefreshTokenCheckerPlugins;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface>
      */
     protected $oauthRefreshTokenSaverPlugins;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface>
      */
     protected $oauthRefreshTokenPersistencePlugins;
 
@@ -90,13 +90,13 @@ class RepositoryBuilder implements RepositoryBuilderInterface
      * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\Oauth\Business\Mapper\OauthRefreshTokenMapperInterface $oauthRefreshTokenMapper
      * @param array $userProviderPlugins
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface[] $scopeProviderPlugins
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[] $oauthUserIdentifierFilterPlugins
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface[] $oauthRefreshTokenRevokePlugins
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPluginInterface[] $oauthRefreshTokensRevokePlugins
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface[] $oauthRefreshTokenCheckerPlugins
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[] $oauthRefreshTokenSaverPlugins
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface[] $oauthRefreshTokenPersistencePlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface> $scopeProviderPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface> $oauthUserIdentifierFilterPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface> $oauthRefreshTokenRevokePlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPluginInterface> $oauthRefreshTokensRevokePlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface> $oauthRefreshTokenCheckerPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface> $oauthRefreshTokenSaverPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface> $oauthRefreshTokenPersistencePlugins
      */
     public function __construct(
         OauthRepositoryInterface $oauthRepository,

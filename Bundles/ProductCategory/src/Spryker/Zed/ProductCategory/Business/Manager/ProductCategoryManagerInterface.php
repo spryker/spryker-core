@@ -16,7 +16,7 @@ interface ProductCategoryManagerInterface
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getAbstractProductTransferCollectionByCategory($idCategory, LocaleTransfer $localeTransfer);
 
@@ -24,7 +24,7 @@ interface ProductCategoryManagerInterface
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale);
 

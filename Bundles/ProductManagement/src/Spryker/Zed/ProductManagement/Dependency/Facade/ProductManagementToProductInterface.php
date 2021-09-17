@@ -60,7 +60,7 @@ interface ProductManagementToProductInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @return int
      */
@@ -68,7 +68,7 @@ interface ProductManagementToProductInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @throws \Exception
      *
@@ -93,7 +93,7 @@ interface ProductManagementToProductInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract);
 
@@ -117,7 +117,7 @@ interface ProductManagementToProductInterface
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection);
 

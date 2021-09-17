@@ -22,7 +22,7 @@ interface CategoryGuiToLocaleFacadeInterface
     public function getLocale($localeName);
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 }

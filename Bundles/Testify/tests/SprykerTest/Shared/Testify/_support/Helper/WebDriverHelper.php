@@ -97,7 +97,7 @@ class WebDriverHelper extends Extension
     ];
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     public static $events = [
         Events::SUITE_INIT => 'suiteInit',
@@ -320,7 +320,7 @@ class WebDriverHelper extends Extension
     /**
      * @throws \Codeception\Exception\ExtensionException
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCommandParametersMapping(): array
     {
@@ -362,7 +362,7 @@ class WebDriverHelper extends Extension
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getWebDriverConfig(): array
     {

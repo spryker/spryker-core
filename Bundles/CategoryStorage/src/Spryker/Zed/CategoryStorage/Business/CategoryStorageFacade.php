@@ -23,7 +23,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @deprecated Will be removed in the next major without replacement.
      *
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
@@ -39,7 +39,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @deprecated Will be removed in the next major without replacement.
      *
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
@@ -81,7 +81,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -97,7 +97,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -139,9 +139,9 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array
     {
@@ -156,9 +156,9 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $categoryTreeStorageIds
+     * @param array<int> $categoryTreeStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(int $offset, int $limit, array $categoryTreeStorageIds): array
     {
@@ -171,7 +171,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -187,7 +187,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -203,7 +203,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -219,7 +219,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -235,7 +235,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -251,7 +251,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -267,7 +267,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -283,7 +283,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -299,7 +299,7 @@ class CategoryStorageFacade extends AbstractFacade implements CategoryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

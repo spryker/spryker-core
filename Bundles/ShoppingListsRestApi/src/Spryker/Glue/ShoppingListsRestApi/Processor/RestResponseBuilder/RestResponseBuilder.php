@@ -49,7 +49,7 @@ class RestResponseBuilder implements RestResponseBuilderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param string[] $errorIdentifiers
+     * @param array<string> $errorIdentifiers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

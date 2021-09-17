@@ -12,7 +12,7 @@ interface CompanyBusinessUnitPriceProductMapperInterface
     /**
      * @param array $priceProductMerchantRelationships
      *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer>
      */
     public function mapPriceProductMerchantRelationshipArrayToTransfers(array $priceProductMerchantRelationships): array;
 }

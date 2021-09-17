@@ -76,7 +76,7 @@ class CustomerRestResponseBuilder implements CustomerRestResponseBuilderInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CustomerErrorTransfer[] $customerErrorTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CustomerErrorTransfer> $customerErrorTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -124,7 +124,7 @@ class CustomerRestResponseBuilder implements CustomerRestResponseBuilderInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CustomerErrorTransfer[] $customerErrorTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CustomerErrorTransfer> $customerErrorTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface $restResponse
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

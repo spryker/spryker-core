@@ -130,7 +130,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
      *
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getMerchantSkusIndexedByProductOfferReferences(
         ProductOfferCollectionTransfer $productOfferCollectionTransfer

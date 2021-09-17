@@ -70,7 +70,7 @@ class RunnerConsole extends Console
     public const OPTION_TASK_BUILD_ZED_SHORT = 'z';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $commands = [
         self::OPTION_TASK_BUILD_ALL => 'spy-setup all',

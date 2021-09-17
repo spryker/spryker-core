@@ -25,14 +25,14 @@ class RelatedProductReader implements RelatedProductReaderInterface
     protected $productStorageClient;
 
     /**
-     * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @var array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     protected $productViewExpanderPlugins;
 
     /**
      * @param \Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader
      * @param \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface $productStorageClient
-     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $productViewExpanderPlugins
+     * @param array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface> $productViewExpanderPlugins
      */
     public function __construct(
         ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader,
@@ -49,7 +49,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function findRelatedProducts(int $idProductAbstract, string $localeName, string $storeName)
     {
@@ -65,7 +65,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
      * @param array $productStorageData
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function mapProductViewTransfers(array $productStorageData, string $localeName): array
     {
@@ -81,7 +81,7 @@ class RelatedProductReader implements RelatedProductReaderInterface
      * @param int $idProductAbstract
      * @param string $storeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findRelatedAbstractProductIds(int $idProductAbstract, string $storeName): array
     {

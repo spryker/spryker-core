@@ -53,9 +53,9 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array
     {
@@ -86,9 +86,9 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expandProductConcreteTransferWithBaseMeasurementUnit(array $productConcreteTransfers): array
     {
@@ -108,10 +108,10 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[] $productMeasurementUnitTransfers
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer> $productMeasurementUnitTransfers
      * @param array $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     protected function getIndexedProductMeasurementUnitTransfers(
         array $productMeasurementUnitTransfers,

@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductLabelStorage\Business\Mapper;
 interface ProductLabelDictionaryItemMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransfers
+     * @param array<\Generated\Shared\Transfer\ProductLabelTransfer> $productLabelTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
      */
     public function mapProductLabelTransfersToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
         array $productLabelTransfers

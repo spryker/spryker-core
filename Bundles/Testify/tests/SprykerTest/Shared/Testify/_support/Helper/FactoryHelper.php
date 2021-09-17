@@ -38,7 +38,7 @@ class FactoryHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Shared\Kernel\AbstractSharedFactory
+     * @return \Spryker\Shared\Kernel\AbstractSharedFactory|object
      */
     public function mockSharedFactoryMethod(string $methodName, $return)
     {

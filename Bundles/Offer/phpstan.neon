@@ -2,4 +2,3 @@ parameters:
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Parameter \#1 \$offerTransfers of method .+OfferHydratorInterface::hydrateQuoteWithCustomer\(\) expects ArrayObject&iterable<.+OfferTransfer>, ArrayObject<int, .+OfferTransfer\|null> given#'

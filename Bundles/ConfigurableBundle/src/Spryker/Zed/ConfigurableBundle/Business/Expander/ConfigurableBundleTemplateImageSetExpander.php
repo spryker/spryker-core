@@ -38,7 +38,7 @@ class ConfigurableBundleTemplateImageSetExpander implements ConfigurableBundleTe
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
@@ -58,9 +58,9 @@ class ConfigurableBundleTemplateImageSetExpander implements ConfigurableBundleTe
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractLocaleIds(ArrayObject $localeTransfers): array
     {

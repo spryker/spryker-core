@@ -10,14 +10,14 @@ namespace Spryker\Zed\ProductListGui\Dependency\Facade;
 interface ProductListGuiToProductFacadeInterface
 {
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByConcreteSkus(array $skus): array;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */

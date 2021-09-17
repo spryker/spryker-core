@@ -57,7 +57,7 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -70,7 +70,7 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -102,7 +102,7 @@ class ProductLabelSearchWriter implements ProductLabelSearchWriterInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

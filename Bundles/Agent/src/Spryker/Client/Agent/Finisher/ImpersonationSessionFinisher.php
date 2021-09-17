@@ -17,13 +17,13 @@ class ImpersonationSessionFinisher implements ImpersonationSessionFinisherInterf
     protected $customerClient;
 
     /**
-     * @var \Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface[]
+     * @var array<\Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface>
      */
     protected $impersonationSessionFinisherPlugins;
 
     /**
      * @param \Spryker\Client\Agent\Dependency\Client\AgentToCustomerClientInterface $customerClient
-     * @param \Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface[] $impersonationSessionFinisherPlugins
+     * @param array<\Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface> $impersonationSessionFinisherPlugins
      */
     public function __construct(
         AgentToCustomerClientInterface $customerClient,

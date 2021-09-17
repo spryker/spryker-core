@@ -34,8 +34,8 @@ class CmsBlockStorageCommunicationTester extends Actor
     use _generated\CmsBlockStorageCommunicationTesterActions;
 
     /**
-     * @param int[] $storeIds
-     * @param int[] $localeIds
+     * @param array<int> $storeIds
+     * @param array<int> $localeIds
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */

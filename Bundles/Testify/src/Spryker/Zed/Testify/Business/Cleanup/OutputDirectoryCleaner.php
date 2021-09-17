@@ -13,12 +13,12 @@ use Symfony\Component\Finder\Finder;
 class OutputDirectoryCleaner implements OutputDirectoryCleanerInterface
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $directories;
 
     /**
-     * @param string[] $directories
+     * @param array<string> $directories
      */
     public function __construct(array $directories)
     {
@@ -26,7 +26,7 @@ class OutputDirectoryCleaner implements OutputDirectoryCleanerInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function cleanup(): array
     {

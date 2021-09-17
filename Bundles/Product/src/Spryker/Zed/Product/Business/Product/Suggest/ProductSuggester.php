@@ -50,7 +50,7 @@ class ProductSuggester implements ProductSuggesterInterface
      * @param string $suggestion
      * @param int|null $limit
      *
-     * @return string[]
+     * @return array<string>
      */
     public function suggestProductAbstract(string $suggestion, ?int $limit = null): array
     {
@@ -84,7 +84,7 @@ class ProductSuggester implements ProductSuggesterInterface
      * @param string $suggestion
      * @param int|null $limit
      *
-     * @return string[]
+     * @return array<string>
      */
     public function suggestProductConcrete(string $suggestion, ?int $limit = null): array
     {

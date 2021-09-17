@@ -17,7 +17,7 @@ class SalesPaymentRepository extends AbstractRepository implements SalesPaymentR
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\SalesPaymentTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesPaymentTransfer>
      */
     public function getSalesPaymentsByIdSalesOrder(int $idSalesOrder): array
     {

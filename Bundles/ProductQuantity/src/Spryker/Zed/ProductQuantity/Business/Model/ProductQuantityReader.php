@@ -32,9 +32,9 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfersByProductIds(array $productIds): array
     {
@@ -48,7 +48,7 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfers(): array
     {
@@ -62,9 +62,9 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
     }
 
     /**
-     * @param string[] $productSkus
+     * @param array<string> $productSkus
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfersByProductSku(array $productSkus): array
     {
@@ -80,7 +80,7 @@ class ProductQuantityReader implements ProductQuantityReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array
     {

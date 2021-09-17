@@ -15,9 +15,9 @@ interface FormErrorsMapperInterface
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      *
      * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
-     * @param mixed[] $errors
+     * @param array<mixed> $errors
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function mapAddProductConcreteFormErrorsToErrorsData(
         FormInterface $addProductConcreteForm,
@@ -28,9 +28,9 @@ interface FormErrorsMapperInterface
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      *
      * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
-     * @param mixed[] $errors
+     * @param array<mixed> $errors
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function mapAddProductConcreteFormAttributesErrorsToErrorsData(
         FormInterface $addProductConcreteForm,

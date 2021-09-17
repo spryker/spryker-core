@@ -13,18 +13,18 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class ControllerCallbacks implements ControllerCallbacksInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface>
      */
     protected $controllerBeforeActionPlugins = [];
 
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerAfterActionPluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerAfterActionPluginInterface>
      */
     protected $controllerAfterActionPlugins = [];
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface[] $controllerBeforeActionPlugins
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerAfterActionPluginInterface[] $controllerAfterActionPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface> $controllerBeforeActionPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerAfterActionPluginInterface> $controllerAfterActionPlugins
      */
     public function __construct(array $controllerBeforeActionPlugins, array $controllerAfterActionPlugins)
     {

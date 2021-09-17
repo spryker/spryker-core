@@ -10,16 +10,16 @@ namespace Spryker\Zed\GiftCard\Persistence;
 interface GiftCardRepositoryInterface
 {
     /**
-     * @param string[] $abstractSkus
+     * @param array<string> $abstractSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer>
      */
     public function getGiftCardAbstractConfigurationsForProductAbstractByAbstractSkus(array $abstractSkus): array;
 
     /**
-     * @param string[] $concreteSkus
+     * @param array<string> $concreteSkus
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer>
      */
     public function getGiftCardConcreteConfigurationsForProductByConcreteSkus(array $concreteSkus): array;
 }

@@ -218,7 +218,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyBusinessUnitTransfer>
      */
     protected function getCompanyBusinessUnits(): array
     {
@@ -233,7 +233,7 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[] $companyBusinessUnitMap
+     * @param array<\Generated\Shared\Transfer\CompanyBusinessUnitTransfer> $companyBusinessUnitMap
      * @param int $entryCompanyBusinessUnitId
      *
      * @return bool

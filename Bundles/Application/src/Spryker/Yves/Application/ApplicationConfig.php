@@ -119,7 +119,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSecurityHeaders(): array
     {
@@ -140,9 +140,9 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @deprecated {@link https://www.w3.org/TR/permissions-policy-1/#introduction}
      *
-     * @param string[] $headers
+     * @param array<string> $headers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addFeaturePolicyHeader(array $headers): array
     {

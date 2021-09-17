@@ -69,8 +69,8 @@ class PriceProductServiceTest extends Unit
     /**
      * @dataProvider getPriceProductTransfersWithAllData
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $concretePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $abstractPriceProductTransfers
      *
      * @return void
      */
@@ -100,8 +100,8 @@ class PriceProductServiceTest extends Unit
     /**
      * @dataProvider getPriceProductTransfersWithPartialConcreteData
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $concretePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $abstractPriceProductTransfers
      *
      * @return void
      */
@@ -132,8 +132,8 @@ class PriceProductServiceTest extends Unit
     /**
      * @dataProvider getPriceProductTransfersWithPartialConcreteData
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $concretePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $abstractPriceProductTransfers
      *
      * @return void
      */
@@ -171,8 +171,8 @@ class PriceProductServiceTest extends Unit
     /**
      * @dataProvider getPriceProductTransfersWithMoreConcreteData
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $concretePriceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $abstractPriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $concretePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $abstractPriceProductTransfers
      *
      * @return void
      */
@@ -331,7 +331,7 @@ class PriceProductServiceTest extends Unit
     /**
      * @dataProvider getDifferentPriceModeProductPricesData
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param int $expectedProductPrice
      * @param string $priceMode
      *
@@ -420,7 +420,7 @@ class PriceProductServiceTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     protected function getSinglePriceProductTransfers(): array
     {
@@ -434,7 +434,7 @@ class PriceProductServiceTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     protected function getMultiplePriceProductTransfers(): array
     {
@@ -495,9 +495,9 @@ class PriceProductServiceTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function prefillTransferWithDataForPriceGrouping(array $priceProductTransfers): array
     {

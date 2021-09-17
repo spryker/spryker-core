@@ -10,11 +10,11 @@ namespace Spryker\Glue\MerchantsRestApi\Dependency\Client;
 interface MerchantsRestApiToGlossaryStorageClientInterface
 {
     /**
-     * @param string[] $keyNames
+     * @param array<string> $keyNames
      * @param string $localeName
-     * @param string[][] $parameters
+     * @param array<string[]> $parameters
      *
-     * @return string[]
+     * @return array<string>
      */
     public function translateBulk(array $keyNames, string $localeName, array $parameters = []): array;
 }

@@ -21,7 +21,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
     protected $cmsSlotFacade;
 
     /**
-     * @var bool[]
+     * @var array<bool>
      */
     protected $validCmsSlotBuffer = [];
 
@@ -34,7 +34,7 @@ class CmsSlotBlockValidator implements CmsSlotBlockValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */

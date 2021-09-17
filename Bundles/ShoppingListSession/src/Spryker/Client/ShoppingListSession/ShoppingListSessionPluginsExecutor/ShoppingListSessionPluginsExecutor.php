@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ShoppingListSessionTransfer;
 class ShoppingListSessionPluginsExecutor implements ShoppingListSessionPluginsExecutorInterface
 {
     /**
-     * @var \Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[]
+     * @var array<\Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface>
      */
     protected $shoppingListCollectionOutdatedPlugins;
 
     /**
-     * @param \Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[] $shoppingListCollectionOutdatedPlugins
+     * @param array<\Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface> $shoppingListCollectionOutdatedPlugins
      */
     public function __construct(array $shoppingListCollectionOutdatedPlugins)
     {

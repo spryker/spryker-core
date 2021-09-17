@@ -34,9 +34,9 @@ class CategoryTreeStorageMapper
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $categoryTreeStorageEntities
-     * @param \Generated\Shared\Transfer\CategoryTreeStorageTransfer[] $categoryTreeStorageTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryTreeStorageTransfer> $categoryTreeStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\CategoryTreeStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryTreeStorageTransfer>
      */
     public function mapCategoryTreeStorageEntitiesToCategoryTreeStorageTransfers(
         ObjectCollection $categoryTreeStorageEntities,

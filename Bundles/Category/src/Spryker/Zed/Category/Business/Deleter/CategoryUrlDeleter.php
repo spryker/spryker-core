@@ -77,7 +77,7 @@ class CategoryUrlDeleter implements CategoryUrlDeleterInterface
     /**
      * @param int $idCategory
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryNodeIdsForCategory(int $idCategory): array
     {

@@ -178,7 +178,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             return $loader;
         });
 
-        /** @var \SplFileInfo[] $files */
+        /** @var array<\SplFileInfo> $files */
         $files = new FilesystemIterator($path, FilesystemIterator::SKIP_DOTS | FilesystemIterator::KEY_AS_PATHNAME);
 
         $typeTemplates = [];

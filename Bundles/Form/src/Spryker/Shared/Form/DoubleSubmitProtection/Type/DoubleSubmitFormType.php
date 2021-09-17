@@ -146,7 +146,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public static function getExtendedTypes(): iterable
     {

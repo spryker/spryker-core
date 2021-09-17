@@ -21,10 +21,10 @@ interface ProductConcreteStorageReaderInterface
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByMapping(string $mappingType, array $identifiers, string $localeName): array;
 
@@ -38,7 +38,7 @@ interface ProductConcreteStorageReaderInterface
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array
@@ -46,9 +46,9 @@ interface ProductConcreteStorageReaderInterface
     public function getBulkProductConcreteStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer>
      */
     public function getProductConcreteStorageTransfersForCurrentLocale(array $productIds): array;
 
@@ -77,7 +77,7 @@ interface ProductConcreteStorageReaderInterface
     public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param string $localeName
      *
      * @return array
@@ -85,9 +85,9 @@ interface ProductConcreteStorageReaderInterface
     public function getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName(array $productConcreteIds, string $localeName): array;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function filterRestrictedProductConcreteIds(array $productConcreteIds): array;
 }

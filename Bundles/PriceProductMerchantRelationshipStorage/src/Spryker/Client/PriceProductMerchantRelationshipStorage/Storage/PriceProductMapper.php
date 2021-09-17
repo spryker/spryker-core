@@ -48,7 +48,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapPriceProductStorageTransferToPriceProductTransfers(
         PriceProductStorageTransfer $priceProductStorageTransfer
@@ -92,7 +92,7 @@ class PriceProductMapper implements PriceProductMapperInterface
      * @param int $idMerchantRelationship
      * @param string $currencyCode
      * @param string $priceType
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */

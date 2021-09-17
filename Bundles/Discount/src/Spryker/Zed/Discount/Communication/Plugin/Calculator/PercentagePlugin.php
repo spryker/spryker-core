@@ -28,7 +28,7 @@ class PercentagePlugin extends AbstractPlugin implements DiscountCalculatorPlugi
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $discountableItems
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int

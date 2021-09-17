@@ -21,7 +21,7 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPriceModes()
     {

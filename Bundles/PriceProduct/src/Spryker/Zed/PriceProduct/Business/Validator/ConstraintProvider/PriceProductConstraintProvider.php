@@ -28,12 +28,12 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
     protected const MESSAGE_VALUE_CANNOT_BE_EMPTY = 'This field is missing.';
 
     /**
-     * @var \Symfony\Component\Validator\Constraint[]
+     * @var array<\Symfony\Component\Validator\Constraint>
      */
     protected $priceProductConstraints;
 
     /**
-     * @param \Symfony\Component\Validator\Constraint[] $priceProductConstraints
+     * @param array<\Symfony\Component\Validator\Constraint> $priceProductConstraints
      */
     public function __construct(array $priceProductConstraints)
     {
@@ -41,7 +41,7 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function getConstraints(): array
     {

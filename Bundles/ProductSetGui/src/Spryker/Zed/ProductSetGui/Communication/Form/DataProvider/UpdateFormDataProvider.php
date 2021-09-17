@@ -233,7 +233,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      * @param \Generated\Shared\Transfer\ProductSetTransfer $productSetTransfer
      * @param int|null $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     protected function getLocalizeImageSetTransfers(ProductSetTransfer $productSetTransfer, $idLocale = null)
     {
@@ -256,7 +256,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @param int|null $idLocale
      *
      * @return array

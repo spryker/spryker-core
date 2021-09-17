@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface CalculatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\CollectedDiscountTransfer[]
+     * @return array<\Generated\Shared\Transfer\CollectedDiscountTransfer>
      */
     public function calculate(array $discounts, QuoteTransfer $quoteTransfer);
 }

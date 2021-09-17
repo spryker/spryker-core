@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantCategoryDataImport\Business\DataSet\MerchantCategoryData
 class CategoryKeyToIdCategoryStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCategoryCache = [];
 

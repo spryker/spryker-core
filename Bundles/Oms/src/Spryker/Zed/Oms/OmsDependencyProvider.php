@@ -211,7 +211,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[]
+     * @return array<\Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface>
      */
     protected function getReservationHandlerPlugins(Container $container)
     {
@@ -221,7 +221,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link getOmsReservationAggregationPlugins()} instead.
      *
-     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface>
      */
     protected function getReservationAggregationStrategyPlugins(): array
     {
@@ -229,7 +229,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface[]
+     * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface>
      */
     protected function getOmsReservationAggregationPlugins(): array
     {
@@ -251,7 +251,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[]
+     * @return array<\Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface>
      */
     protected function getReservationExportPlugins()
     {
@@ -447,7 +447,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface>
      */
     protected function getOmsOrderMailExpanderPlugins(Container $container)
     {
@@ -471,7 +471,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[]
+     * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface>
      */
     protected function getOmsManualEventGrouperPlugins(Container $container)
     {
@@ -507,7 +507,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface>
      */
     protected function getOmsReservationReaderStrategyPlugins(): array
     {
@@ -529,7 +529,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface>
      */
     protected function getOmsReservationWriterStrategyPlugins(): array
     {
@@ -551,7 +551,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface>
      */
     protected function getReservationPostSaveTerminationAwareStrategyPlugins(): array
     {
@@ -573,7 +573,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface[]
+     * @return array<\Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface>
      */
     protected function getTimeoutProcessorPlugins(): array
     {

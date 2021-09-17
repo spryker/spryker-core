@@ -37,19 +37,19 @@ class ReservationReader implements ReservationReaderInterface
     protected $activeProcessFetcher;
 
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface>
      */
     protected $omsReservationReaderStrategyPlugins;
 
     /**
      * @deprecated Use {@link omsReservationAggregationPlugins} instead.
      *
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface>
      */
     protected $reservationAggregationPlugins;
 
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface[]
+     * @var array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface>
      */
     protected $omsReservationAggregationPlugins;
 
@@ -57,9 +57,9 @@ class ReservationReader implements ReservationReaderInterface
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Oms\Business\Util\ActiveProcessFetcherInterface $activeProcessFetcher
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[] $omsReservationReaderStrategyPlugins
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[] $reservationAggregationPlugins
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface[] $omsReservationAggregationPlugins
+     * @param array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface> $omsReservationReaderStrategyPlugins
+     * @param array<\Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface> $reservationAggregationPlugins
+     * @param array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface> $omsReservationAggregationPlugins
      */
     public function __construct(
         OmsRepositoryInterface $omsRepository,
@@ -95,7 +95,7 @@ class ReservationReader implements ReservationReaderInterface
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -233,7 +233,7 @@ class ReservationReader implements ReservationReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     protected function aggregateReservations(
         ReservationRequestTransfer $reservationRequestTransfer
@@ -251,7 +251,7 @@ class ReservationReader implements ReservationReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
-     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[] $salesAggregationTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer> $salesAggregationTransfers
      *
      * @return \Spryker\DecimalObject\Decimal
      */
@@ -276,7 +276,7 @@ class ReservationReader implements ReservationReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     protected function aggregateSalesOrderItemReservations(
         OmsStateCollectionTransfer $reservedStates,

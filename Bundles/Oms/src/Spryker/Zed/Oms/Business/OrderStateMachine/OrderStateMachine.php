@@ -200,8 +200,8 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param string $eventId
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-     * @param array|\Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject|array $data
      *
      * @return array
      */
@@ -279,7 +279,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param array $data
      *
      * @return array
@@ -300,7 +300,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param int[] $orderItemIds
+     * @param array<int> $orderItemIds
      * @param array $data
      *
      * @return array
@@ -371,7 +371,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $transitions
+     * @param array<\Spryker\Zed\Oms\Business\Process\TransitionInterface> $transitions
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $sourceState
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
@@ -421,9 +421,9 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
-     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
     protected function getProcesses(array $orderItems)
     {
@@ -442,10 +442,10 @@ class OrderStateMachine implements OrderStateMachineInterface
      * Filters out all items that are not affected by the current event
      *
      * @param string $eventId
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     protected function filterAffectedOrderItems($eventId, array $orderItems, $processes)
     {
@@ -467,8 +467,8 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param string $eventId
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
      *
      * @return array
      */
@@ -521,14 +521,14 @@ class OrderStateMachine implements OrderStateMachineInterface
      * - For CommandByOrderInterface the command will be taken from the first order item
      *
      * @param string $eventId
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
      *
      * @throws \LogicException
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|null
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>|null
      */
     protected function runCommand($eventId, array $orderItems, array $processes, ReadOnlyArrayObject $data, TransitionLogInterface $log)
     {
@@ -591,7 +591,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param string $eventId
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param array $sourceStateBuffer
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
      *
@@ -628,7 +628,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param array $stateToTransitionsMap
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param array $sourceStateBuffer
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
      *
@@ -688,13 +688,13 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
      * @param array $sourceStateBuffer
      *
      * @throws \LogicException
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[][]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]>
      */
     protected function filterItemsWithOnEnterEvent(array $orderItems, array $processes, array $sourceStateBuffer)
     {
@@ -738,7 +738,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param array|\Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
+     * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject|array $data
      *
      * @return \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject
      */
@@ -771,7 +771,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[][] $orderItemsWithOnEnterEvent
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]> $orderItemsWithOnEnterEvent
      * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
      *
      * @return void
@@ -786,7 +786,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $transitions
+     * @param array<\Spryker\Zed\Oms\Business\Process\TransitionInterface> $transitions
      *
      * @return array
      */
@@ -809,7 +809,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     protected function getOrderItemsByState(
         array $states,
@@ -865,9 +865,9 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
      * @param array $sourceStateBuffer
      *
      * @return void
@@ -945,7 +945,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return \Spryker\Zed\Oms\Business\Util\TransitionLogInterface
      */
@@ -959,7 +959,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $log
      *
      * @return void
@@ -1017,8 +1017,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
      *
      * @throws \LogicException
      *
@@ -1066,7 +1066,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param string $eventId
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return void
      */
@@ -1087,7 +1087,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
      * @return array
      */
@@ -1103,8 +1103,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface[] $processes
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
+     * @param array<\Spryker\Zed\Oms\Business\Process\ProcessInterface> $processes
      * @param array $sourceStateBuffer
      *
      * @return void

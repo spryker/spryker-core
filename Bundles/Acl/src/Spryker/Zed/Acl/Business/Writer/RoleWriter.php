@@ -26,14 +26,14 @@ class RoleWriter implements RoleWriterInterface
     protected $aclRepository;
 
     /**
-     * @var \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface[]
+     * @var array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface>
      */
     protected $aclRolePostSavePlugins;
 
     /**
      * @param \Spryker\Zed\Acl\Persistence\AclEntityManagerInterface $aclEntityManager
      * @param \Spryker\Zed\Acl\Persistence\AclRepositoryInterface $aclRepository
-     * @param \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface[] $aclRolePostSavePlugins
+     * @param array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface> $aclRolePostSavePlugins
      */
     public function __construct(
         AclEntityManagerInterface $aclEntityManager,

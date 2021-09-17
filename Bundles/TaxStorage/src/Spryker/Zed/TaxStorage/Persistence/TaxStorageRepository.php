@@ -18,9 +18,9 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
     /**
      * @module Tax
      *
-     * @param int[] $taxRateIds
+     * @param array<int> $taxRateIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array
     {
@@ -42,9 +42,9 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
     /**
      * @module Tax
      *
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
-     * @return \Generated\Shared\Transfer\TaxSetStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\TaxSetStorageTransfer>
      */
     public function findTaxSetsByIds(array $taxSetIds): array
     {
@@ -64,9 +64,9 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
     }
 
     /**
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersFromTaxSetStoragesByIdTaxSets(array $taxSetIds): array
     {
@@ -86,7 +86,7 @@ class TaxStorageRepository extends AbstractRepository implements TaxStorageRepos
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getAllSynchronizationDataTransfersFromTaxSetStorages(): array
     {

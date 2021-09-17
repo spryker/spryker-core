@@ -57,7 +57,7 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     protected static $currentStoreTransferBuffer;
 
     /**
-     * @var string[] Keys are currency ids, values are currency codes.
+     * @var array<string> Keys are currency ids, values are currency codes.
      */
     protected static $currencyCodeBuffer = [];
 
@@ -127,10 +127,10 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] $priceCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice> $priceCollection
      * @param int $idCurrency
      *
-     * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[] Keys are store ids, values are ProductOptionValuePrice entities.
+     * @return array<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice> Keys are store ids, values are ProductOptionValuePrice entities.
      */
     protected function getCurrencyFilteredPriceMap(ObjectCollection $priceCollection, $idCurrency)
     {

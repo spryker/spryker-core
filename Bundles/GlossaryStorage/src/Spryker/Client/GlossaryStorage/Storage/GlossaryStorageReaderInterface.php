@@ -19,11 +19,11 @@ interface GlossaryStorageReaderInterface
     public function translate(string $keyName, string $localeName, array $parameters = []): string;
 
     /**
-     * @param string[] $keyNames
+     * @param array<string> $keyNames
      * @param string $localeName
-     * @param string[][] $parameters
+     * @param array<string[]> $parameters
      *
-     * @return string[]
+     * @return array<string>
      */
     public function translateBulk(array $keyNames, string $localeName, array $parameters = []): array;
 }

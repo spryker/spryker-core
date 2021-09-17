@@ -109,7 +109,7 @@ class PriceProductOfferVolumeValidator implements PriceProductOfferVolumeValidat
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $volumePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $volumePriceProductTransfers
      * @param \Symfony\Component\Validator\ConstraintViolationListInterface $constraintViolationList
      * @param int $priceProductOfferIndex
      * @param int $priceProductIndex

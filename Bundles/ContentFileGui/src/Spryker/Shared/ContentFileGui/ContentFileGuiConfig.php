@@ -68,7 +68,7 @@ class ContentFileGuiConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getContentWidgetTemplates(): array
     {

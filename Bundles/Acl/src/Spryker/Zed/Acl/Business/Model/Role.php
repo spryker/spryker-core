@@ -31,20 +31,20 @@ class Role implements RoleInterface
     protected $group;
 
     /**
-     * @var \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolesExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclRolesExpanderPluginInterface>
      */
     protected $aclRolesExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface[]
+     * @var array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface>
      */
     protected $aclRolePostSavePlugins;
 
     /**
      * @param \Spryker\Zed\Acl\Business\Model\GroupInterface $group
      * @param \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolesExpanderPluginInterface[] $aclRolesExpanderPlugins
-     * @param \Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface[] $aclRolePostSavePlugins
+     * @param array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclRolesExpanderPluginInterface> $aclRolesExpanderPlugins
+     * @param array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclRolePostSavePluginInterface> $aclRolePostSavePlugins
      */
     public function __construct(
         GroupInterface $group,

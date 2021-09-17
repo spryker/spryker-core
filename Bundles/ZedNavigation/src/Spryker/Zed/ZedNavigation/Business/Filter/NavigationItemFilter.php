@@ -14,18 +14,18 @@ use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter;
 class NavigationItemFilter implements NavigationItemFilterInterface
 {
     /**
-     * @var \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
+     * @var array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface>
      */
     protected $navigationItemFilterPlugins;
 
     /**
-     * @var \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[]
+     * @var array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface>
      */
     protected $navigationItemCollectionFilterPlugins;
 
     /**
-     * @param \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[] $navigationItemFilterPlugins
-     * @param \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[] $navigationItemCollectionFilterPlugins
+     * @param array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface> $navigationItemFilterPlugins
+     * @param array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface> $navigationItemCollectionFilterPlugins
      */
     public function __construct(array $navigationItemFilterPlugins, array $navigationItemCollectionFilterPlugins)
     {
@@ -179,7 +179,7 @@ class NavigationItemFilter implements NavigationItemFilterInterface
     }
 
     /**
-     * @param string[] $navigationItem
+     * @param array<string> $navigationItem
      *
      * @return string
      */

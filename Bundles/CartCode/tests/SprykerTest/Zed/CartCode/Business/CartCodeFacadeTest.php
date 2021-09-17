@@ -272,7 +272,7 @@ class CartCodeFacadeTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $pluginStack
+     * @param array<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface> $pluginStack
      *
      * @return void
      */

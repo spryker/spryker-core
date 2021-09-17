@@ -19,9 +19,9 @@ interface ProductListProductConcreteStorageReaderInterface
     public function findProductConcreteProductListStorage(int $idProduct): ?ProductConcreteProductListStorageTransfer;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer>
      */
     public function getProductConcreteProductListStorageTransfersByProductConcreteIds(array $productConcreteIds): array;
 }

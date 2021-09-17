@@ -48,7 +48,7 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
     protected $aclEntityRuleCollectionTransferSorter;
 
     /**
-     * @var \Closure[]
+     * @var array<\Closure>
      */
     protected $aclQueryDirectorStrategyContainer;
 
@@ -64,7 +64,7 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
      * @param \Spryker\Zed\AclEntity\Persistence\Filter\AclEntityRuleCollectionTransferFilterInterface $aclEntityRuleCollectionTransferFilter
      * @param \Spryker\Zed\AclEntity\Persistence\Sorter\AclEntityRuleCollectionTransferSorterInterface $aclEntityRuleCollectionTransferSorter
      * @param \Spryker\Zed\AclEntity\Persistence\Propel\QueryMerger\AclEntityQueryMergerInterface $queryMerger
-     * @param \Closure[] $aclQueryDirectorStrategyContainer
+     * @param array<\Closure> $aclQueryDirectorStrategyContainer
      */
     public function __construct(
         AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer,
@@ -235,7 +235,7 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
      * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer[] $parentAclEntityRules
+     * @param array<\Generated\Shared\Transfer\AclEntityRuleCollectionTransfer> $parentAclEntityRules
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -484,7 +484,7 @@ class InheritedScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategy
     /**
      * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer[]
+     * @return array<\Generated\Shared\Transfer\AclEntityRuleCollectionTransfer>
      */
     protected function getGroupedAclEntityRulesByAclGroupId(
         AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer

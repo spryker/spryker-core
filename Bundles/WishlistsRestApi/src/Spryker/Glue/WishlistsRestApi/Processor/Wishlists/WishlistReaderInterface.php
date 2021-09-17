@@ -22,7 +22,7 @@ interface WishlistReaderInterface
     /**
      * @param string $customerReference
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getWishlistsByCustomerReference(string $customerReference): array;
 }

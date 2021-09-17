@@ -72,12 +72,12 @@ interface EventInterface
     /**
      * @param \Spryker\Zed\Oms\Business\Process\StateInterface $sourceState
      *
-     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\TransitionInterface>
      */
     public function getTransitionsBySource(StateInterface $sourceState);
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\TransitionInterface>
      */
     public function getTransitions();
 

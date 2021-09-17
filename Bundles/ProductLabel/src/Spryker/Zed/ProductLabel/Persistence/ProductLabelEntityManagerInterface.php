@@ -21,7 +21,7 @@ interface ProductLabelEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function updateProductLabel(ProductLabelTransfer $productLabelTransfer): array;
 
@@ -48,14 +48,14 @@ interface ProductLabelEntityManagerInterface
 
     /**
      * @param int $idProductLabel
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
     public function deleteProductLabelProductAbstractRelations(int $idProductLabel, array $productAbstractIds = []): void;
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idProductLabel
      *
      * @return void
@@ -63,7 +63,7 @@ interface ProductLabelEntityManagerInterface
     public function removeProductLabelStoreRelationForStores(array $idStores, int $idProductLabel): void;
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idProductLabel
      *
      * @return void

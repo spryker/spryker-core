@@ -18,9 +18,9 @@ class ProductOfferStockMapper
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productOfferStockEntities
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[] $productOfferStockTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      */
     public function mapProductOfferStockEntityCollectionToProductOfferStockTransfers(
         ObjectCollection $productOfferStockEntities,

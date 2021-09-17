@@ -699,7 +699,7 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     * @param array<\Generated\Shared\Transfer\ShoppingListItemTransfer> $shoppingListItemTransfers
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */

@@ -53,7 +53,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getConfigurationSignature(): array
     {

@@ -26,7 +26,7 @@ class RelationResolver implements RelationResolverInterface
     protected const RELATION_GETTER_TEMPLATE = 'get%s';
 
     /**
-     * @var \Closure[]
+     * @var array<\Closure>
      */
     protected $strategyContainer;
 
@@ -36,7 +36,7 @@ class RelationResolver implements RelationResolverInterface
     protected $aclEntityMetadataReader;
 
     /**
-     * @param \Closure[] $strategyContainer
+     * @param array<\Closure> $strategyContainer
      * @param \Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface $aclEntityMetadataReader
      */
     public function __construct(array $strategyContainer, AclEntityMetadataReaderInterface $aclEntityMetadataReader)

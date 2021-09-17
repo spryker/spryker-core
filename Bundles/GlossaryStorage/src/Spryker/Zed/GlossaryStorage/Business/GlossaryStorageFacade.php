@@ -49,7 +49,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -63,7 +63,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -77,7 +77,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -94,7 +94,7 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
     public function findFilteredGlossaryKeyEntities(int $offset, int $limit): array
     {
@@ -108,9 +108,9 @@ class GlossaryStorageFacade extends AbstractFacade implements GlossaryStorageFac
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function findGlossaryStorageDataTransferByIds(int $offset, int $limit, array $ids): array
     {

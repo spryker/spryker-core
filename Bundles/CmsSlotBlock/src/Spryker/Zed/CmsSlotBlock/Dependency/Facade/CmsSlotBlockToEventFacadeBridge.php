@@ -24,7 +24,7 @@ class CmsSlotBlockToEventFacadeBridge implements CmsSlotBlockToEventFacadeInterf
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $transfers
      *
      * @return void
      */

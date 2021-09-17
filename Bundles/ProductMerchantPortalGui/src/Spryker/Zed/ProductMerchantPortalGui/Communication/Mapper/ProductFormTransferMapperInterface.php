@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 interface ProductFormTransferMapperInterface
 {
     /**
-     * @param mixed[] $addProductConcreteFormData
+     * @param array<mixed> $addProductConcreteFormData
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $defaultStoreDefaultLocaleTransfer
      *

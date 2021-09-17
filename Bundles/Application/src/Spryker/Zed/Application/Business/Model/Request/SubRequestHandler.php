@@ -67,7 +67,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
     /**
      * @param string $url
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractUrlParts($url)
     {
@@ -75,7 +75,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
     }
 
     /**
-     * @param string[] $urlParts
+     * @param array<string> $urlParts
      *
      * @throws \Spryker\Zed\Application\Business\Exception\UrlInvalidException
      *
@@ -92,7 +92,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $subRequest
-     * @param string[] $urlParts
+     * @param array<string> $urlParts
      *
      * @return void
      */

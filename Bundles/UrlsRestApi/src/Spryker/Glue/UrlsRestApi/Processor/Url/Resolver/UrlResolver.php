@@ -32,14 +32,14 @@ class UrlResolver implements UrlResolverInterface
     protected $urlResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface[]
+     * @var array<\Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface>
      */
     protected $restUrlResolverAttributesTransferProviderPlugins;
 
     /**
      * @param \Spryker\Glue\UrlsRestApi\Dependency\Client\UrlsRestApiToUrlStorageClientInterface $urlStorageClient
      * @param \Spryker\Glue\UrlsRestApi\Processor\Url\ResponseBuilder\UrlResponseBuilderInterface $urlResponseBuilder
-     * @param \Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface[] $restUrlResolverAttributesTransferProviderPlugins
+     * @param array<\Spryker\Glue\UrlsRestApiExtension\Dependency\Plugin\RestUrlResolverAttributesTransferProviderPluginInterface> $restUrlResolverAttributesTransferProviderPlugins
      */
     public function __construct(
         UrlsRestApiToUrlStorageClientInterface $urlStorageClient,

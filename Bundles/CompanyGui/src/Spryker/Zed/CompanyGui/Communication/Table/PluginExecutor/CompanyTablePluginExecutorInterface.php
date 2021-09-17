@@ -14,7 +14,7 @@ interface CompanyTablePluginExecutorInterface
     /**
      * @param array $item
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function executeTableActionExpanderPlugins(array $item): array;
 

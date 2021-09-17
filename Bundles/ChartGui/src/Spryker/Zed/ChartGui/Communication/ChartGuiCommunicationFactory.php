@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class ChartGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
+     * @return array<\Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface>
      */
     public function getTwigChartFunctionPlugins(): array
     {
@@ -25,7 +25,7 @@ class ChartGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     * @return array<\Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface>
      */
     public function getChartPlugins(): array
     {

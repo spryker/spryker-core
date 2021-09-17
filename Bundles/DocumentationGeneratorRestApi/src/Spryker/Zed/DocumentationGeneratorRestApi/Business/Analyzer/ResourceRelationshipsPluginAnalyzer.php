@@ -12,12 +12,12 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 class ResourceRelationshipsPluginAnalyzer implements ResourceRelationshipsPluginAnalyzerInterface
 {
     /**
-     * @var \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[]
+     * @var array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface>
      */
     protected $resourceRelationshipCollectionPlugins;
 
     /**
-     * @param \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[] $resourceRelationshipCollectionPlugins
+     * @param array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface> $resourceRelationshipCollectionPlugins
      */
     public function __construct(array $resourceRelationshipCollectionPlugins)
     {
@@ -27,7 +27,7 @@ class ResourceRelationshipsPluginAnalyzer implements ResourceRelationshipsPlugin
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
      */
     public function getResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $plugin): array
     {

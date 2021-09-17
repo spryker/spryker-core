@@ -92,7 +92,7 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCustomerShippingAddressUuids(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -112,7 +112,7 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractShippingAddressUuids(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -132,7 +132,7 @@ class CustomerAddressValidator implements CustomerAddressValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param string $message
-     * @param string[] $parameters
+     * @param array<string> $parameters
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

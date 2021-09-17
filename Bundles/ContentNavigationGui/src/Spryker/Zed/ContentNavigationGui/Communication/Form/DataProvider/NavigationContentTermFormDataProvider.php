@@ -30,7 +30,7 @@ class NavigationContentTermFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getNavigationChoices(): array
     {

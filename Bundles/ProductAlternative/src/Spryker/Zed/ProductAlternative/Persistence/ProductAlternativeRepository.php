@@ -68,7 +68,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     /**
      * @modules Product
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
@@ -253,7 +253,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     /**
      * @modules Product
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array
     {

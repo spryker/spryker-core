@@ -205,7 +205,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      *
      * @param int $idLocale
      * @param int $idStore
-     * @param int[] $stockIds
+     * @param array<int> $stockIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -372,10 +372,10 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param int $idLocale
      * @param int $idStore
-     * @param string[] $stockNames
+     * @param array<string> $stockNames
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -484,7 +484,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
 
     /**
      * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $query
-     * @param int[] $stockIds
+     * @param array<int> $stockIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */

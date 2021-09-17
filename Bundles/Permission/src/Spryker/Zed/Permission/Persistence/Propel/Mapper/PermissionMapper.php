@@ -15,7 +15,7 @@ use Traversable;
 class PermissionMapper
 {
     /**
-     * @param \Traversable|\Orm\Zed\Permission\Persistence\SpyPermission[] $permissionEntityCollection
+     * @param \Traversable<\Orm\Zed\Permission\Persistence\SpyPermission> $permissionEntityCollection
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer

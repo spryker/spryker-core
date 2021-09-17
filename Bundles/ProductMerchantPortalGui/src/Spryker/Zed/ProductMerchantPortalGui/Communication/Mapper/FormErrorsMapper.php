@@ -26,9 +26,9 @@ class FormErrorsMapper implements FormErrorsMapperInterface
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      *
      * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
-     * @param mixed[] $errors
+     * @param array<mixed> $errors
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function mapAddProductConcreteFormErrorsToErrorsData(
         FormInterface $addProductConcreteForm,
@@ -62,9 +62,9 @@ class FormErrorsMapper implements FormErrorsMapperInterface
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      *
      * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
-     * @param mixed[] $errors
+     * @param array<mixed> $errors
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function mapAddProductConcreteFormAttributesErrorsToErrorsData(
         FormInterface $addProductConcreteForm,
@@ -99,9 +99,9 @@ class FormErrorsMapper implements FormErrorsMapperInterface
     }
 
     /**
-     * @param mixed[] $errors
+     * @param array<mixed> $errors
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function addEmptyErrors(array $errors): array
     {

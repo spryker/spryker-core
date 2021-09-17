@@ -21,9 +21,9 @@ class ProductAbstractListStorageRestrictionFilterPlugin extends AbstractPlugin i
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function filter(array $productAbstractIds): array
     {

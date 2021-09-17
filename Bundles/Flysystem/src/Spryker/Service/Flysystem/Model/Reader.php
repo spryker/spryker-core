@@ -191,7 +191,7 @@ class Reader implements ReaderInterface
      * @param string $directory
      * @param bool $recursive
      *
-     * @return \Generated\Shared\Transfer\FlysystemResourceTransfer[]
+     * @return array<\Generated\Shared\Transfer\FlysystemResourceTransfer>
      */
     public function listContents($filesystemName, $directory = '', $recursive = false)
     {

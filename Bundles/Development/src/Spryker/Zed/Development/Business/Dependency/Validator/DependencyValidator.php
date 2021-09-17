@@ -75,7 +75,7 @@ class DependencyValidator implements DependencyValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\DependencyValidationRequestTransfer $dependencyValidationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ModuleDependencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleDependencyTransfer>
      */
     protected function buildModuleDependencyTransferCollection(DependencyValidationRequestTransfer $dependencyValidationRequestTransfer): array
     {
@@ -107,7 +107,7 @@ class DependencyValidator implements DependencyValidatorInterface
     /**
      * @param array $composerDependencies
      *
-     * @return \Generated\Shared\Transfer\ModuleDependencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleDependencyTransfer>
      */
     protected function formatDependencies(array $composerDependencies): array
     {

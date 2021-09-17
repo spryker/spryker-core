@@ -19,7 +19,7 @@ class OrderItemsOmsTriggerFormDataProvider
     /**
      * @param string $redirectUrl
      * @param string $event
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
      * @return array
      */

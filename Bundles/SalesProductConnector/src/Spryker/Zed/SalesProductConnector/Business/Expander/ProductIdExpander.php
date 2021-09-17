@@ -25,9 +25,9 @@ class ProductIdExpander implements ProductIdExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithProduct(array $itemTransfers): array
     {
@@ -51,9 +51,9 @@ class ProductIdExpander implements ProductIdExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractProductConcreteSkus(array $itemTransfers): array
     {
@@ -67,9 +67,9 @@ class ProductIdExpander implements ProductIdExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function mapProductConcreteTransfersBySku(array $productConcreteTransfers): array
     {

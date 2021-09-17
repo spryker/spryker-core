@@ -10,9 +10,9 @@ namespace Spryker\Zed\MerchantProductOptionStorage\Business\Filter;
 interface MerchantProductOptionFilterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     public function filterProductOptions(array $productOptionTransfers): array;
 }

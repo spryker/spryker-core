@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FacetConfigTransfer;
 class FacetConfig implements FacetConfigInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @var array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     protected $facetConfigTransfers = [];
 
@@ -41,7 +41,7 @@ class FacetConfig implements FacetConfigInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     public function getAll(): array
     {
@@ -49,7 +49,7 @@ class FacetConfig implements FacetConfigInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getParamNames(): array
     {
@@ -59,7 +59,7 @@ class FacetConfig implements FacetConfigInterface
     /**
      * @param array $requestParameters
      *
-     * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     public function getActive(array $requestParameters): array
     {
@@ -77,7 +77,7 @@ class FacetConfig implements FacetConfigInterface
     /**
      * @param array $requestParameters
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getActiveParamNames(array $requestParameters): array
     {

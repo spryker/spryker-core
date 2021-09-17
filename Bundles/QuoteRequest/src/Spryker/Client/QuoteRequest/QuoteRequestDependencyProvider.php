@@ -128,7 +128,7 @@ class QuoteRequestDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface[]
+     * @return array<\Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface>
      */
     protected function getQuoteRequestQuoteCheckPlugins(): array
     {

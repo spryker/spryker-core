@@ -50,7 +50,7 @@ class ProductConcreteViewTransferFinder extends AbstractProductViewTransferFinde
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $localeName
      *
      * @return array

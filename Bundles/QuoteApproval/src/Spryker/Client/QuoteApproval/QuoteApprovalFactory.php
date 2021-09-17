@@ -124,7 +124,7 @@ class QuoteApprovalFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface[]
+     * @return array<\Spryker\Client\QuoteApprovalExtension\Dependency\Plugin\QuoteApplicableForApprovalCheckPluginInterface>
      */
     public function getQuoteApplicableForApprovalCheckPlugins(): array
     {

@@ -66,7 +66,7 @@ class CategoryNodePublisher implements CategoryNodePublisherInterface
     }
 
     /**
-     * @param int[] $categoryNodeIdsToTrigger
+     * @param array<int> $categoryNodeIdsToTrigger
      *
      * @return void
      */

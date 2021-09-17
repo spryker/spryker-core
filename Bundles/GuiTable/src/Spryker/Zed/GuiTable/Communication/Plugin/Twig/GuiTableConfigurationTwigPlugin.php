@@ -20,7 +20,7 @@ class GuiTableConfigurationTwigPlugin extends AbstractTwigExtensionPlugin
      *
      * @api
      *
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getFunctions(): array
     {

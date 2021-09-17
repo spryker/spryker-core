@@ -39,7 +39,7 @@ abstract class AbstractUpdateProductController extends AbstractController
      * @param string $tableViewName
      * @param array|null $requestTableData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getDefaultInitialData(string $tableViewName, ?array $requestTableData): array
     {
@@ -63,9 +63,9 @@ abstract class AbstractUpdateProductController extends AbstractController
     }
 
     /**
-     * @param mixed[] $responseData
+     * @param array<mixed> $responseData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function addSuccessResponseDataToResponse(array $responseData): array
     {

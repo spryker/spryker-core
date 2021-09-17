@@ -55,7 +55,7 @@ class ConfiguredBundleItemCleaner implements ConfiguredBundleItemCleanerInterfac
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractConfigurableBundleTemplateUuids(QuoteTransfer $quoteTransfer): array
     {

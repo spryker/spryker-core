@@ -29,7 +29,7 @@ interface ProductAlternativeRepositoryInterface
     public function findProductAlternativeByIdProductAlternative(int $idProductAlternative): ?ProductAlternativeTransfer;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
@@ -58,7 +58,7 @@ interface ProductAlternativeRepositoryInterface
     ): ProductAlternativeListItemTransfer;
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array;
 }

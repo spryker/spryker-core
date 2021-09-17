@@ -38,7 +38,7 @@ class AclEntityRulePermissionMaskToBinaryStep implements DataImportStepInterface
     protected const OPERATION_DELETE = 'D';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $permissionMaskBinaryMap = [
         self::OPERATION_CREATE => AclEntityConstants::OPERATION_MASK_CREATE,

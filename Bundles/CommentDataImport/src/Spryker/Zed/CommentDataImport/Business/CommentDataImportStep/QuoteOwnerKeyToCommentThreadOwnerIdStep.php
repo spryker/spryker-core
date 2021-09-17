@@ -22,7 +22,7 @@ class QuoteOwnerKeyToCommentThreadOwnerIdStep implements DataImportStepInterface
     protected const OWNER_TYPE = 'quote';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idQuoteBuffer;
 

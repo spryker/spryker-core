@@ -91,7 +91,7 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
      *
      * @param string $currentStatus
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getApplicableMerchantStatuses(string $currentStatus): array
     {

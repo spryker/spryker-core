@@ -54,7 +54,7 @@ interface AbstractZedClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getInfoStatusMessages(): array;
 
@@ -64,7 +64,7 @@ interface AbstractZedClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getErrorStatusMessages(): array;
 
@@ -74,7 +74,7 @@ interface AbstractZedClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getSuccessStatusMessages(): array;
 }

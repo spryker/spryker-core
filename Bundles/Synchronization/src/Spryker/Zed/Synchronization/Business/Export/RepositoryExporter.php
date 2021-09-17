@@ -32,7 +32,7 @@ class RepositoryExporter implements ExporterInterface
     protected $queueMessageCreator;
 
     /**
-     * @var \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface[]
+     * @var array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface>
      */
     protected $synchronizationDataPlugins;
 
@@ -65,8 +65,8 @@ class RepositoryExporter implements ExporterInterface
     }
 
     /**
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface[]|\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface[] $plugins
-     * @param int[] $ids
+     * @param array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface|\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface> $plugins
+     * @param array<int> $ids
      *
      * @return void
      */
@@ -111,7 +111,7 @@ class RepositoryExporter implements ExporterInterface
 
     /**
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface $plugin
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return void
      */
@@ -123,7 +123,7 @@ class RepositoryExporter implements ExporterInterface
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int> $ids
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface $plugin
      *
      * @return \Iterator
@@ -177,7 +177,7 @@ class RepositoryExporter implements ExporterInterface
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
      * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
      *
-     * @return \Generated\Shared\Transfer\SynchronizationQueueMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationQueueMessageTransfer>
      */
     protected function createSynchronizationQueueMessageTransfers(
         SynchronizationDataPluginInterface $plugin,

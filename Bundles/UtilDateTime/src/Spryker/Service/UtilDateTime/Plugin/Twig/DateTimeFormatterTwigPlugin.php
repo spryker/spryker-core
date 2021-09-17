@@ -25,7 +25,7 @@ class DateTimeFormatterTwigPlugin extends AbstractTwigExtensionPlugin
     ];
 
     /**
-     * @return \Twig\TwigFilter[]
+     * @return array<\Twig\TwigFilter>
      */
     public function getFilters(): array
     {

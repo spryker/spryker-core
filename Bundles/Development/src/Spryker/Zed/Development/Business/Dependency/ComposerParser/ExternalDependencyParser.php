@@ -19,7 +19,7 @@ class ExternalDependencyParser implements ExternalDependencyParserInterface
     protected $config;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $resolvedComposerNameByClassNameMap = [];
 

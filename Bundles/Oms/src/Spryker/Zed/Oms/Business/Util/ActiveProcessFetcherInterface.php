@@ -10,14 +10,14 @@ namespace Spryker\Zed\Oms\Business\Util;
 interface ActiveProcessFetcherInterface
 {
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\StateInterface>
      */
     public function getReservedStatesFromAllActiveProcesses(): array;
 
     /**
      * @param string $processName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getReservedStateNamesForActiveProcessByProcessName(string $processName): array;
 }

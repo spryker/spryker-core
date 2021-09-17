@@ -226,7 +226,7 @@ class ApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSafeHeaderDataKeys(): array
     {
@@ -239,7 +239,7 @@ class ApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSafeServerDataKeys(): array
     {

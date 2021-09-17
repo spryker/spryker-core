@@ -13,7 +13,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 class DownloadTable extends FooTable
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCsvHeaders(): array
     {

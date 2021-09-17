@@ -31,7 +31,7 @@ interface MerchantCategoryFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $transfers
      *
      * @return void
      */

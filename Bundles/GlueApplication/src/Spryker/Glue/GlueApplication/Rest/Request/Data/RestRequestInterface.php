@@ -26,12 +26,12 @@ interface RestRequestInterface
     public function getResource(): RestResourceInterface;
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface>
      */
     public function getFilters(): array;
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface>
      */
     public function getSort(): array;
 
@@ -41,7 +41,7 @@ interface RestRequestInterface
     public function getPage(): ?PageInterface;
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SparseFieldInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SparseFieldInterface>
      */
     public function getFields(): array;
 
@@ -56,7 +56,7 @@ interface RestRequestInterface
     public function getRouteContext(): array;
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getParentResources(): array;
 
@@ -121,7 +121,7 @@ interface RestRequestInterface
     /**
      * @param string $resource
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface>
      */
     public function getFiltersByResource(string $resource): array;
 
@@ -138,7 +138,7 @@ interface RestRequestInterface
     public function setPage(PageInterface $page): void;
 
     /**
-     * @param string[] $excludeParams
+     * @param array<string> $excludeParams
      *
      * @return string
      */

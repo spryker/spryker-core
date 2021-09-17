@@ -23,7 +23,7 @@ class MerchantProductWritePublisherPlugin extends AbstractPlugin implements Publ
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
@@ -38,7 +38,7 @@ class MerchantProductWritePublisherPlugin extends AbstractPlugin implements Publ
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSubscribedEvents(): array
     {

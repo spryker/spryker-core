@@ -16,12 +16,12 @@ class ExceptionHandlerDispatcher
     use LoggerTrait;
 
     /**
-     * @var \Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface[]
+     * @var array<\Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface>
      */
     protected $exceptionHandlers;
 
     /**
-     * @param \Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface[] $exceptionHandlers
+     * @param array<\Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface> $exceptionHandlers
      */
     public function __construct(array $exceptionHandlers)
     {

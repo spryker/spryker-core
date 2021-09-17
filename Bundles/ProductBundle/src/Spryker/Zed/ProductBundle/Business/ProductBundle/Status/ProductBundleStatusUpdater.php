@@ -62,7 +62,7 @@ class ProductBundleStatusUpdater implements ProductBundleStatusUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductBundleTransfer[] $productBundleTransfers
+     * @param array<\Generated\Shared\Transfer\ProductBundleTransfer> $productBundleTransfers
      *
      * @return void
      */

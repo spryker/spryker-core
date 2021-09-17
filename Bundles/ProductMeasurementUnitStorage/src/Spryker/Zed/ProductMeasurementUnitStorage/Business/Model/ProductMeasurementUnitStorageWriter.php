@@ -47,7 +47,7 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     }
 
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
      * @return void
      */
@@ -91,7 +91,7 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[] $mappedProductMeasurementUnitStorageEntities
+     * @param array<\Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer> $mappedProductMeasurementUnitStorageEntities
      * @param int $idProductMeasurementUnit
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer
@@ -108,7 +108,7 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[] $productMeasurementUnitStorageEntities
+     * @param array<\Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer> $productMeasurementUnitStorageEntities
      *
      * @return void
      */
@@ -122,9 +122,9 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     }
 
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     protected function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
     {
@@ -132,9 +132,9 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     }
 
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer>
      */
     protected function findProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds): array
     {
@@ -142,9 +142,9 @@ class ProductMeasurementUnitStorageWriter implements ProductMeasurementUnitStora
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[] $productMeasurementUnitStorageEntities
+     * @param array<\Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer> $productMeasurementUnitStorageEntities
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer>
      */
     protected function mapProductMeasurementUnitStorageEntities(array $productMeasurementUnitStorageEntities): array
     {

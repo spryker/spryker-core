@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\OauthUserRestrictionResponseTransfer;
 class OauthUserRestrictionChecker implements OauthUserRestrictionCheckerInterface
 {
     /**
-     * @var \Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserRestrictionPluginInterface[]
+     * @var array<\Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserRestrictionPluginInterface>
      */
     protected $oauthUserRestrictionPlugins;
 
     /**
-     * @param \Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserRestrictionPluginInterface[] $oauthUserRestrictionPlugins
+     * @param array<\Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserRestrictionPluginInterface> $oauthUserRestrictionPlugins
      */
     public function __construct(array $oauthUserRestrictionPlugins)
     {

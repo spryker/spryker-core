@@ -20,7 +20,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
     protected $priceCalculationHelper;
 
     /**
-     * @var array|float[]
+     * @var array<float>
      */
     protected static $roundingErrorBucket = [
          self::DEFAULT_BUCKET_NAME => 0,

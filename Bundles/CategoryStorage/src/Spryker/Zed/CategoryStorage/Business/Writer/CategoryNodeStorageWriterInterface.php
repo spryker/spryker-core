@@ -12,21 +12,21 @@ use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 interface CategoryNodeStorageWriterInterface
 {
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
     public function writeCategoryNodeStorageCollection(array $categoryNodeIds): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
     public function writeCategoryNodeStorageCollectionByParentCategoryEvents(array $eventEntityTransfers): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

@@ -175,7 +175,7 @@ class SynchronizationSearch implements SynchronizationInterface
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\SearchDocumentTransfer[]
+     * @return array<\Generated\Shared\Transfer\SearchDocumentTransfer>
      */
     protected function prepareSearchDocumentTransfers(array $data): array
     {

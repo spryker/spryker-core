@@ -153,7 +153,7 @@ abstract class AbstractCustomerTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer[]|\Propel\Runtime\Collection\ObjectCollection $customerEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerEntities
      *
      * @return array
      */

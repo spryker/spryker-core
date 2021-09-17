@@ -32,7 +32,7 @@ class CurrencyReader implements CurrencyReaderInterface
     protected $storeFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @var array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected static $currencyCache = [];
 
@@ -92,7 +92,7 @@ class CurrencyReader implements CurrencyReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
     public function getAllStoresWithCurrencies()
     {

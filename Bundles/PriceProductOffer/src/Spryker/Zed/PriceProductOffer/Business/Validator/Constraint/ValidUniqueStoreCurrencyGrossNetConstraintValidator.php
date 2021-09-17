@@ -53,6 +53,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
                 return;
             }
 
+            /** @var \ArrayObject<\Generated\Shared\Transfer\PriceProductTransfer> $persistedPriceProductTransfers */
             $persistedPriceProductTransfers = $this->getProductOfferPrices(
                 $priceProductTransfer,
                 $constraint
@@ -74,7 +75,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint $constraint
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getProductOfferPrices(
         PriceProductTransfer $priceProductTransfer,

@@ -177,7 +177,7 @@ class Index implements IndexInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexNames(): array
     {
@@ -264,7 +264,7 @@ class Index implements IndexInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getAvailableIndexNames(): array
     {

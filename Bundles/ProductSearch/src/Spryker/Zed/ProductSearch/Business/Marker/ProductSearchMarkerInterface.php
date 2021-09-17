@@ -11,7 +11,7 @@ interface ProductSearchMarkerInterface
 {
     /**
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      *
      * @return void
      */
@@ -19,7 +19,7 @@ interface ProductSearchMarkerInterface
 
     /**
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      *
      * @return void
      */

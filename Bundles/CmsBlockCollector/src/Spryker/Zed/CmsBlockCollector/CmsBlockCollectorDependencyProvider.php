@@ -111,7 +111,7 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * Stack of plugins which run during data collection for each item.
      *
-     * @return \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface>
      */
     protected function getCollectorDataExpanderPlugins()
     {

@@ -66,7 +66,7 @@ class OauthRevokeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
+     * @return array<\Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface>
      */
     public function getOauthUserIdentifierFilterPlugins(): array
     {

@@ -45,7 +45,7 @@ class ResourceShareFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[]
+     * @return array<\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface>
      */
     public function getAfterZedResourceShareActivatorStrategyPlugins(): array
     {
@@ -53,7 +53,7 @@ class ResourceShareFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[]
+     * @return array<\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface>
      */
     public function getBeforeZedResourceShareActivatorStrategyPlugins(): array
     {

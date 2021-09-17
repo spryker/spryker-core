@@ -44,12 +44,12 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
     protected $shoppingListRepository;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[]
+     * @var array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface>
      */
     protected $quoteItemExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[]
+     * @var array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface>
      */
     protected $itemToShoppingListItemMapperPlugins;
 
@@ -58,8 +58,8 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
      * @param \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface $shoppingListRepository
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\ShoppingList\Business\Model\ShoppingListItemOperationInterface $shoppingListItemOperation
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface[] $quoteItemExpanderPlugins
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface[] $itemToShoppingListItemMapperPlugins
+     * @param array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\QuoteItemsPreConvertPluginInterface> $quoteItemExpanderPlugins
+     * @param array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemToShoppingListItemMapperPluginInterface> $itemToShoppingListItemMapperPlugins
      */
     public function __construct(
         ShoppingListResolverInterface $shoppingListResolver,

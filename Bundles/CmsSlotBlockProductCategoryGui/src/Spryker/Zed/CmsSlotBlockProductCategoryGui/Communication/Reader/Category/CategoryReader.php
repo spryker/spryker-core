@@ -35,7 +35,7 @@ class CategoryReader implements CategoryReaderInterface
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getCategories(): array
     {

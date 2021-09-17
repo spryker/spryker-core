@@ -141,10 +141,10 @@ class DataImportExecutor implements DataImportExecutorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\DataImportConfigurationActionTransfer[] $dataImportConfigurationActionTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DataImportConfigurationActionTransfer> $dataImportConfigurationActionTransfers
      * @param string $importerType
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DataImportConfigurationActionTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\DataImportConfigurationActionTransfer>
      */
     protected function filterDataImportConfigurationActionTransfersByImporterType(
         ArrayObject $dataImportConfigurationActionTransfers,

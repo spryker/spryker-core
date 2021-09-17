@@ -47,7 +47,7 @@ class VoucherForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */
@@ -164,7 +164,7 @@ class VoucherForm extends AbstractType
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function createCodeLengthRangeList()
     {

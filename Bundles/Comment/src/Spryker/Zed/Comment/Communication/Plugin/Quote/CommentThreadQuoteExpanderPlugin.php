@@ -29,12 +29,12 @@ class CommentThreadQuoteExpanderPlugin extends AbstractPlugin implements QuoteEx
     protected const COMMENT_THREAD_QUOTE_OWNER_TYPE = 'quote';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $quoteIds = [];
 
     /**
-     * @var \Generated\Shared\Transfer\CommentThreadTransfer[]
+     * @var array<\Generated\Shared\Transfer\CommentThreadTransfer>
      */
     protected $commentsByIdQuote = [];
 

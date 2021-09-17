@@ -68,7 +68,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\ShipmentsRestApiExtension\Dependency\Plugin\AddressProviderStrategyPluginInterface>
      */
     protected function getAddressProviderStrategyPlugins(): array
     {

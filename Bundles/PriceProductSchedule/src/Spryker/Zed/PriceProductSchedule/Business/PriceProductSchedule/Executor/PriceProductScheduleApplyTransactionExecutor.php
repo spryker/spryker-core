@@ -50,7 +50,7 @@ class PriceProductScheduleApplyTransactionExecutor implements PriceProductSchedu
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer[] $priceProductScheduleForEnable
+     * @param array<\Generated\Shared\Transfer\PriceProductScheduleTransfer> $priceProductScheduleForEnable
      *
      * @return void
      */

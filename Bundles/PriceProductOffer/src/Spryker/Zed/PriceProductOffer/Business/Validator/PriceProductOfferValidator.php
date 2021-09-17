@@ -36,7 +36,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
     protected $validator;
 
     /**
-     * @var \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferValidatorPluginInterface[]
+     * @var array<\Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferValidatorPluginInterface>
      */
     protected $priceProductOfferValidatorPlugins;
 
@@ -49,7 +49,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
      * @param \Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductOfferConstraintProviderInterface $priceProductOfferConstraintProvider
      * @param \Spryker\Zed\PriceProductOffer\Business\Validator\PriceProductConstraintProviderInterface $priceProductConstraintProvider
      * @param \Spryker\Zed\PriceProductOffer\Dependency\External\PriceProductOfferToValidationAdapterInterface $validationAdapter
-     * @param \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferValidatorPluginInterface[] $priceProductOfferValidatorPlugins
+     * @param array<\Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferValidatorPluginInterface> $priceProductOfferValidatorPlugins
      * @param \Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
@@ -91,7 +91,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductOfferTransfer[] $priceProductOfferTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductOfferTransfer> $priceProductOfferTransfers
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer

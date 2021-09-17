@@ -43,9 +43,9 @@ class MerchantOpeningHoursRestResponseBuilder implements MerchantOpeningHoursRes
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer> $merchantOpeningHoursStorageTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createMerchantOpeningHoursRestResources(array $merchantOpeningHoursStorageTransfers): array
     {

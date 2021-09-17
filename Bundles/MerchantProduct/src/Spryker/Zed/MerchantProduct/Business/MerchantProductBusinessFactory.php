@@ -73,7 +73,7 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function getMerchantProductConstraints(): array
     {

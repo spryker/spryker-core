@@ -20,7 +20,7 @@ class ProductOfferToIdProductStep implements DataImportStepInterface
     protected const CONCRETE_SKU = PriceProductOfferDataSetInterface::CONCRETE_SKU;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idProductCache = [];
 

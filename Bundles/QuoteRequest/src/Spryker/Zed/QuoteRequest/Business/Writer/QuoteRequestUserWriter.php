@@ -79,7 +79,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
     protected $quoteRequestUserStatus;
 
     /**
-     * @var \Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestUserValidatorPluginInterface[]
+     * @var array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestUserValidatorPluginInterface>
      */
     protected $quoteRequestUserValidatorPlugins;
 
@@ -90,7 +90,7 @@ class QuoteRequestUserWriter implements QuoteRequestUserWriterInterface
      * @param \Spryker\Zed\QuoteRequest\Business\ReferenceGenerator\QuoteRequestReferenceGeneratorInterface $quoteRequestReferenceGenerator
      * @param \Spryker\Zed\QuoteRequest\Business\Sanitizer\QuoteRequestVersionSanitizerInterface $quoteRequestVersionSanitizer
      * @param \Spryker\Zed\QuoteRequest\Business\Status\QuoteRequestUserStatusInterface $quoteRequestUserStatus
-     * @param \Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestUserValidatorPluginInterface[] $quoteRequestUserValidatorPlugins
+     * @param array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestUserValidatorPluginInterface> $quoteRequestUserValidatorPlugins
      */
     public function __construct(
         QuoteRequestConfig $quoteRequestConfig,

@@ -127,7 +127,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
+     * @return array<\Spryker\Zed\Search\Dependency\Plugin\PageMapInterface>
      */
     protected function getSearchPageMapPlugins()
     {
@@ -149,7 +149,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     * @return array<\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface>
      */
     protected function getSearchSourceInstallerPlugins(): array
     {
@@ -171,7 +171,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     * @return array<\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface>
      */
     protected function getSearchMapInstallerPlugins(): array
     {

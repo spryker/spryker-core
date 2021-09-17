@@ -47,7 +47,7 @@ class ProductLabelStorageBusinessTester extends Actor
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractLabelStorageIdsByIdProductAbstract(int $idProductAbstract): array
     {

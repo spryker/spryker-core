@@ -50,7 +50,7 @@ class CategoryTreeStorageReader implements CategoryTreeStorageReaderInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     public function getCategories(string $localeName, string $storeName): ArrayObject
     {

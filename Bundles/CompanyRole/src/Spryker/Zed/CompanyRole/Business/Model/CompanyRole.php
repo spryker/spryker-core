@@ -106,7 +106,7 @@ class CompanyRole implements CompanyRoleInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
-     * @param \Generated\Shared\Transfer\CompanyRoleTransfer[] $companyRoles
+     * @param array<\Generated\Shared\Transfer\CompanyRoleTransfer> $companyRoles
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
      */

@@ -14,7 +14,7 @@ use Iterator;
 class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
 {
     /**
-     * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface[]
+     * @var array<\Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface>
      */
     protected $subForms = [];
 

@@ -17,7 +17,7 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
     protected $giftCardReader;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface[]
+     * @var array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface>
      */
     protected $codeCandidateValidatorPlugins;
 
@@ -28,7 +28,7 @@ class GiftCardCodeGenerator implements GiftCardCodeGeneratorInterface
 
     /**
      * @param \Spryker\Zed\GiftCard\Business\GiftCard\GiftCardReaderInterface $giftCardReader
-     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface[] $codeCandidateValidatorPlugins
+     * @param array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface> $codeCandidateValidatorPlugins
      * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
     public function __construct(

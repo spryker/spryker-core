@@ -62,7 +62,7 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getQuotePaymentMethodsKeys(QuoteTransfer $quoteTransfer): array
     {
@@ -81,7 +81,7 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $availablePaymentMethods
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPaymentSelections(PaymentMethodsTransfer $availablePaymentMethods): array
     {

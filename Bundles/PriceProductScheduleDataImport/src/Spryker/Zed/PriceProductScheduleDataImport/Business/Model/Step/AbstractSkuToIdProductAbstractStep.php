@@ -22,7 +22,7 @@ class AbstractSkuToIdProductAbstractStep implements DataImportStepInterface
     protected const EXCEPTION_MESSAGE = 'Could not find abstract product by sku "%s"';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idProductAbstractCache = [];
 

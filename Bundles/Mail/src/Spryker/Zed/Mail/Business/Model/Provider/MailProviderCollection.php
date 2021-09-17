@@ -49,7 +49,7 @@ class MailProviderCollection implements MailProviderCollectionAddInterface, Mail
     /**
      * @param string $mailType
      *
-     * @return \Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface[]
+     * @return array<\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface>
      */
     public function getProviderForMailType($mailType)
     {

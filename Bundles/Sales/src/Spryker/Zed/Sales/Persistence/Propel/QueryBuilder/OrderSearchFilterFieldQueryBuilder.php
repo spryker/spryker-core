@@ -254,7 +254,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getMappedSearchTypes(): array
     {

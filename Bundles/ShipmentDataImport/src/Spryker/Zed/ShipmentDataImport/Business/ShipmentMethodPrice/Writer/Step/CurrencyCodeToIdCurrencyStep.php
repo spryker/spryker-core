@@ -17,7 +17,7 @@ use Spryker\Zed\ShipmentDataImport\Business\ShipmentMethodPrice\Writer\DataSet\S
 class CurrencyCodeToIdCurrencyStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected static $idCurrencyCache = [];
 

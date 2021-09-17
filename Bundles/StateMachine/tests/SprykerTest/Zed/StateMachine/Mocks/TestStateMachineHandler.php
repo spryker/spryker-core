@@ -18,14 +18,14 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     protected $itemStateUpdated;
 
     /**
-     * @var \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @var array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     protected $stateMachineItems;
 
     /**
      * List of command plugins for this state machine for all processes.
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
      */
     public function getCommandPlugins(): array
     {
@@ -38,7 +38,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * List of condition plugins for this state machine for all processes.
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface>
      */
     public function getConditionPlugins(): array
     {
@@ -61,7 +61,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * List of active processes used for this state machine
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getActiveProcesses(): array
     {
@@ -99,9 +99,9 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     /**
      * This method should return all item identifiers which are in passed state ids.
      *
-     * @param int[] $stateIds
+     * @param array<int> $stateIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateMachineItemsByStateIds(array $stateIds = []): array
     {
@@ -124,7 +124,7 @@ class TestStateMachineHandler implements StateMachineHandlerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
      * @return void
      */

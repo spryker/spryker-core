@@ -46,7 +46,7 @@ class ProductConfigurationPriceReader implements ProductConfigurationPriceReader
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesByIdProductConcrete(int $idProductConcrete): array
     {

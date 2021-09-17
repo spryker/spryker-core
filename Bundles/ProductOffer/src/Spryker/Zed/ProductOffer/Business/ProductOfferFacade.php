@@ -126,7 +126,7 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @param string $currentStatus
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getApplicableApprovalStatuses(string $currentStatus): array
     {
@@ -157,9 +157,7 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @api
      *
-     * @phpstan-param \ArrayObject<string, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer

@@ -65,7 +65,7 @@ class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductSetTransfer> $productSetTransfers
      *
      * @return void
      */

@@ -110,7 +110,7 @@ class SalesProductConfigurationClientTest extends Unit
         $orderTransfer->setItems($salesOrderItems);
 
         //Act
-        /** @var \Generated\Shared\Transfer\ItemTransfer[] $itemTransferExpandedCollection */
+        /** @var array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferExpandedCollection */
         $itemTransferExpandedCollection = $this->tester->getClient()->expandItemsWithProductConfiguration([$itemTransfer], $orderTransfer);
 
         $productConfigurationInstance = array_shift($itemTransferExpandedCollection)

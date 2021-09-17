@@ -33,7 +33,7 @@ class ConfigurableBundleStorageToStorageClientBridge implements ConfigurableBund
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

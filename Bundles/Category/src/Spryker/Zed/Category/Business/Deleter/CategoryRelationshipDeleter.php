@@ -35,7 +35,7 @@ class CategoryRelationshipDeleter implements CategoryRelationshipDeleterInterfac
     protected $categoryStoreDeleter;
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
+     * @var array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface>
      */
     protected $categoryRelationDeletePlugins;
 
@@ -44,7 +44,7 @@ class CategoryRelationshipDeleter implements CategoryRelationshipDeleterInterfac
      * @param \Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleterInterface $categoryUrlDeleter
      * @param \Spryker\Zed\Category\Business\Deleter\CategoryNodeDeleterInterface $categoryNodeDeleter
      * @param \Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleterInterface $categoryStoreDeleter
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[] $categoryRelationDeletePlugins
+     * @param array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface> $categoryRelationDeletePlugins
      */
     public function __construct(
         CategoryAttributeDeleterInterface $categoryAttributeDeleter,

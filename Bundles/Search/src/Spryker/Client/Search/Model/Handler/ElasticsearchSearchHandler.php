@@ -33,10 +33,10 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
 
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
-     * @param mixed[] $requestParameters
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
+     * @param array<mixed> $requestParameters
      *
-     * @return mixed[]|\Elastica\ResultSet
+     * @return \Elastica\ResultSet|array<mixed>
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
@@ -50,11 +50,11 @@ class ElasticsearchSearchHandler implements SearchHandlerInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
      * @param \Elastica\ResultSet $rawSearchResult
-     * @param mixed[] $requestParameters
+     * @param array<mixed> $requestParameters
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function formatSearchResults(array $resultFormatters, ResultSet $rawSearchResult, array $requestParameters)
     {

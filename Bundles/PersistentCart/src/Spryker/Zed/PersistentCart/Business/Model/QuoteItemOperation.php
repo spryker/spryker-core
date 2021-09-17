@@ -74,7 +74,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -99,7 +99,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -120,7 +120,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -206,7 +206,7 @@ class QuoteItemOperation implements QuoteItemOperationInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */

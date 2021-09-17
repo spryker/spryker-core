@@ -17,7 +17,7 @@ interface TaxStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
      * @return void
      */
@@ -30,7 +30,7 @@ interface TaxStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
      * @return void
      */
@@ -44,7 +44,7 @@ interface TaxStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $taxRateIds
+     * @param array<int> $taxRateIds
      *
      * @return void
      */

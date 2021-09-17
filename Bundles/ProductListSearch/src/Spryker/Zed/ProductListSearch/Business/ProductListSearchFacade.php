@@ -23,9 +23,9 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
      *
      * @api
      *
-     * @param int[] $concreteIds
+     * @param array<int> $concreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByConcreteIds(array $concreteIds): array
     {
@@ -39,9 +39,9 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
      *
      * @api
      *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {

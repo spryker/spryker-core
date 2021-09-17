@@ -18,12 +18,12 @@ class ProductStorageToProductConcreteTransferDataMapper implements ProductStorag
     protected const ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
-     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
+     * @var array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface>
      */
     protected $productConcreteExpanderPlugins;
 
     /**
-     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[] $productConcreteExpanderPlugins
+     * @param array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface> $productConcreteExpanderPlugins
      */
     public function __construct(array $productConcreteExpanderPlugins)
     {

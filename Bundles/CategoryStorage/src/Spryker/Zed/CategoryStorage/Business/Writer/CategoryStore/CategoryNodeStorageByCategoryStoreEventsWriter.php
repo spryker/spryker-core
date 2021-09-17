@@ -37,7 +37,7 @@ class CategoryNodeStorageByCategoryStoreEventsWriter implements CategoryNodeStor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class CategoryNodeStorageByCategoryStoreEventsWriter implements CategoryNodeStor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

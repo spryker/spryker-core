@@ -76,11 +76,11 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $indexResultDiscountTransferCollection
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $indexSourceDiscountTransferCollection
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $indexResultDiscountTransferCollection
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $indexSourceDiscountTransferCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function checkRemovedDiscountsItemsSku(
         array $indexResultDiscountTransferCollection,
@@ -101,11 +101,11 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $indexResultDiscountTransferCollection
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $indexSourceDiscountTransferCollection
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $indexResultDiscountTransferCollection
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $indexSourceDiscountTransferCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function checkCurrentDiscountsDiffItemsSku(
         array $indexResultDiscountTransferCollection,
@@ -129,9 +129,9 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $discountTransferCollection
      *
-     * @return \Generated\Shared\Transfer\DiscountTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountTransfer>
      */
     protected function indexDiscountTransferCollection(ArrayObject $discountTransferCollection): array
     {
@@ -150,7 +150,7 @@ class QuoteChangeObserver implements QuoteChangeObserverInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idDiscount
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function findItemsWithAppliedDiscounts(QuoteTransfer $quoteTransfer, int $idDiscount): array
     {

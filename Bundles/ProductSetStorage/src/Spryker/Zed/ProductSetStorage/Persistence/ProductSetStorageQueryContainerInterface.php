@@ -32,7 +32,7 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
      *
      * @api
      *
-     * @param int[] $productSetIds
+     * @param array<int> $productSetIds
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetDataQuery
      */
@@ -80,7 +80,7 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
      *
      * @api
      *
-     * @param int[] $productSetIds
+     * @param array<int> $productSetIds
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */

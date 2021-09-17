@@ -23,7 +23,7 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -39,7 +39,7 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -58,7 +58,7 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $productConfigurationStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getFilteredProductConfigurationStorageDataTransfers(
         FilterTransfer $filterTransfer,

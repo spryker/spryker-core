@@ -110,7 +110,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockCategoriesTransfer[] $cmsBlockCategoriesTransferCollection
+     * @param array<\Generated\Shared\Transfer\CmsBlockCategoriesTransfer> $cmsBlockCategoriesTransferCollection
      * @param array $spyCmsBlockCategoryStorageEntities
      *
      * @return void

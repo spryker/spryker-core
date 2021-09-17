@@ -15,7 +15,7 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem;
 class ShoppingListItemMapper implements ShoppingListItemMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer[] $itemEntityTransferCollection
+     * @param array<\Generated\Shared\Transfer\SpyShoppingListItemEntityTransfer> $itemEntityTransferCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */

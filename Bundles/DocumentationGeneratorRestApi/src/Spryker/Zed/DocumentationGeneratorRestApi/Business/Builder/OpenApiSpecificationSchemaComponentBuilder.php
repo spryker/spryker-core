@@ -236,7 +236,7 @@ class OpenApiSpecificationSchemaComponentBuilder implements SchemaComponentBuild
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[] $resourceRelationships
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface> $resourceRelationships
      *
      * @return \Generated\Shared\Transfer\SchemaItemsTransfer
      */

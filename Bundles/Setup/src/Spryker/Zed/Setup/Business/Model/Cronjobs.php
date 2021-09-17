@@ -567,7 +567,7 @@ cd %s
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getHeaders(): array
     {

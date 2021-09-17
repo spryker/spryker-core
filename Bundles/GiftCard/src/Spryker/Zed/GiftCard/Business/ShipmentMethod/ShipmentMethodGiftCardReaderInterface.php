@@ -13,7 +13,7 @@ namespace Spryker\Zed\GiftCard\Business\ShipmentMethod;
 interface ShipmentMethodGiftCardReaderInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getGiftCardOnlyShipmentMethods(): array;
 }

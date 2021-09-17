@@ -45,12 +45,12 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected const DEFAULT_UI_DATE_FORMAT = 'dd.MM.y';
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer[]
+     * @var array<\Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
      */
     protected $columns;
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer[]
+     * @var array<\Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
      */
     protected $editableColumns;
 
@@ -60,12 +60,12 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $title;
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableFilterTransfer[]
+     * @var array<\Generated\Shared\Transfer\GuiTableFilterTransfer>
      */
     protected $filters = [];
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableRowActionTransfer[]
+     * @var array<\Generated\Shared\Transfer\GuiTableRowActionTransfer>
      */
     protected $rowActions = [];
 
@@ -85,7 +85,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $availableRowActionsPath;
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableBatchActionTransfer[]
+     * @var array<\Generated\Shared\Transfer\GuiTableBatchActionTransfer>
      */
     protected $batchActions = [];
 
@@ -110,7 +110,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $dataSourceUrl;
 
     /**
-     * @var string[][]
+     * @var array<string[]>
      */
     protected $dataSourceInlineData;
 
@@ -244,7 +244,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param bool $isSortable
      * @param bool $isHideable
      * @param string|null $color
-     * @param mixed[]|null $colorMapping
+     * @param array<mixed>|null $colorMapping
      *
      * @return $this
      */
@@ -336,7 +336,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param string[] $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
+     * @param array<string> $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
      *
      * @return $this
      */
@@ -370,7 +370,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param \Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer[] $options
+     * @param array<\Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer> $options
      *
      * @return $this
      */
@@ -798,7 +798,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @param string[][] $data
+     * @param array<string[]> $data
      *
      * @return $this
      */

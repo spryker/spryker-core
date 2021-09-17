@@ -153,7 +153,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param string $directory
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return array
      */
@@ -189,7 +189,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
     /**
      * @param array $fileViolations
      * @param string $directory
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return array
      */
@@ -509,7 +509,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param array $fileResult
-     * @param string[] $ignoreErrorPatterns
+     * @param array<string> $ignoreErrorPatterns
      *
      * @return array
      */
@@ -544,7 +544,7 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
 
     /**
      * @param array $violation
-     * @param string[] $ignoreErrorPatterns
+     * @param array<string> $ignoreErrorPatterns
      *
      * @return bool
      */

@@ -302,7 +302,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctOrderStates($idSalesOrder)
     {
@@ -433,9 +433,9 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @deprecated Use {@link \Spryker\Zed\Sales\Business\SalesFacade::getUniqueItemsFromOrder()} instead.
      *
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getUniqueOrderItems(iterable $itemTransfers): array
     {
@@ -467,7 +467,7 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array
     {
@@ -513,9 +513,9 @@ class SalesFacade extends AbstractFacade implements SalesFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array
     {

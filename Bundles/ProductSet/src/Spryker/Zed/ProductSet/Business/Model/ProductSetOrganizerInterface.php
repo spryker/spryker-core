@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductSet\Business\Model;
 interface ProductSetOrganizerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductSetTransfer> $productSetTransfers
      *
      * @return void
      */

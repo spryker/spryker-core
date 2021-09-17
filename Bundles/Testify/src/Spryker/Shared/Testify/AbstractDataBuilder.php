@@ -258,7 +258,7 @@ abstract class AbstractDataBuilder
      *
      * @param string $rule
      *
-     * @return bool|string
+     * @return string|bool
      */
     protected function generateFromRule($rule)
     {

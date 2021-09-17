@@ -14,12 +14,12 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface;
 class DatabaseDetermineStrategy implements DetermineStrategyInterface
 {
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface[]
+     * @var array<\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface>
      */
     protected $dataSetWriters;
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface[] $dataSetWriters
+     * @param array<\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetWriterInterface> $dataSetWriters
      */
     public function __construct(array $dataSetWriters)
     {

@@ -49,7 +49,7 @@ class CategoryFilterOptionsProvider implements CategoryFilterOptionsProviderInte
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer[]
+     * @return array<\Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer>
      */
     public function getCategoryFilterOptionsTree(): array
     {
@@ -72,7 +72,7 @@ class CategoryFilterOptionsProvider implements CategoryFilterOptionsProviderInte
     /**
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer[]
+     * @return array<\Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer>
      */
     protected function getCategoryChildren(NodeCollectionTransfer $nodeCollectionTransfer): array
     {

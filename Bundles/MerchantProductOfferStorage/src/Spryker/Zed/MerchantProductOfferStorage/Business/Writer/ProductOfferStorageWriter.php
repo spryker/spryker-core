@@ -52,7 +52,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $storeFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     * @var array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected $storeTransfers;
 
@@ -86,7 +86,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -102,7 +102,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      *
      * @return void
      */
@@ -162,7 +162,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function getStoreTransfers(): array
     {

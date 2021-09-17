@@ -121,7 +121,7 @@ class StateUpdaterTest extends StateMachineMocks
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     protected function createStateMachineItems(): array
     {
@@ -145,7 +145,7 @@ class StateUpdaterTest extends StateMachineMocks
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\Process[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\Process>
      */
     protected function createProcesses(): array
     {
@@ -159,7 +159,7 @@ class StateUpdaterTest extends StateMachineMocks
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\State[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\State>
      */
     protected function createSourceStateBuffer(): array
     {

@@ -28,7 +28,7 @@ class ProductMerchantPortalGuiToPriceProductFacadeBridge implements ProductMerch
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
     public function getPriceTypeValues()
     {
@@ -48,7 +48,7 @@ class ProductMerchantPortalGuiToPriceProductFacadeBridge implements ProductMerch
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
@@ -65,7 +65,7 @@ class ProductMerchantPortalGuiToPriceProductFacadeBridge implements ProductMerch
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtraction(
         int $idProductAbstract,
@@ -80,7 +80,7 @@ class ProductMerchantPortalGuiToPriceProductFacadeBridge implements ProductMerch
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesWithoutPriceExtraction(
         int $idProductConcrete,
@@ -95,7 +95,7 @@ class ProductMerchantPortalGuiToPriceProductFacadeBridge implements ProductMerch
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPrices(
         int $idProductAbstract,
@@ -110,7 +110,7 @@ class ProductMerchantPortalGuiToPriceProductFacadeBridge implements ProductMerch
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePrices(
         int $idProductConcrete,

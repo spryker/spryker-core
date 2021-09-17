@@ -18,12 +18,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class StepCollection implements StepCollectionInterface
 {
     /**
-     * @var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     * @var array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface>
      */
     protected $steps = [];
 
     /**
-     * @var \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     * @var array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface>
      */
     protected $completedSteps = [];
 
@@ -84,7 +84,7 @@ class StepCollection implements StepCollectionInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepInterface[]
+     * @return array<\Spryker\Yves\StepEngine\Dependency\Step\StepInterface>
      */
     protected function getCompletedSteps(AbstractTransfer $quoteTransfer)
     {

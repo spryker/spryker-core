@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantDataImport\Business\MerchantStore\DataSet\MerchantStoreD
 class MerchantReferenceToIdMerchantStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idMerchantCache = [];
 

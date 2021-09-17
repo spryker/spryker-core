@@ -48,7 +48,7 @@ interface ResponseInterface
     public function fromArray(array $values);
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getErrorMessages();
 
@@ -74,7 +74,7 @@ interface ResponseInterface
     public function addErrorMessage(MessageTransfer $errorMessage);
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getInfoMessages();
 
@@ -100,7 +100,7 @@ interface ResponseInterface
     public function addInfoMessages(array $messages);
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getSuccessMessages();
 

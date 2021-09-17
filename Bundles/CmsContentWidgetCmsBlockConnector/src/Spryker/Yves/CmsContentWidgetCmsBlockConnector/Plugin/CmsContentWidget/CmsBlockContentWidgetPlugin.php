@@ -67,7 +67,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     /**
      * @param \Twig\Environment $twig
      * @param array $context
-     * @param string[] $blockNames
+     * @param array<string> $blockNames
      * @param string|null $templateIdentifier
      *
      * @return string
@@ -113,7 +113,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param string[] $blockNames
+     * @param array<string> $blockNames
      *
      * @return array
      */

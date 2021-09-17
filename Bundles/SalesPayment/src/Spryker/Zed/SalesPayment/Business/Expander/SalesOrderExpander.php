@@ -14,7 +14,7 @@ use Spryker\Zed\SalesPayment\Persistence\SalesPaymentRepositoryInterface;
 class SalesOrderExpander implements SalesOrderExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface[] $orderPaymentExpanderPlugins
+     * @var array<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface> $orderPaymentExpanderPlugins
      */
     protected $orderPaymentExpanderPlugins;
 
@@ -25,7 +25,7 @@ class SalesOrderExpander implements SalesOrderExpanderInterface
 
     /**
      * @param \Spryker\Zed\SalesPayment\Persistence\SalesPaymentRepositoryInterface $salesPaymentRepository
-     * @param \Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface[] $orderPaymentExpanderPlugins
+     * @param array<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface> $orderPaymentExpanderPlugins
      */
     public function __construct(
         SalesPaymentRepositoryInterface $salesPaymentRepository,

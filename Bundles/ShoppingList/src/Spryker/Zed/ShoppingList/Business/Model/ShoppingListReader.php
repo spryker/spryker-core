@@ -531,7 +531,7 @@ class ShoppingListReader implements ShoppingListReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getShoppingListItemsSkus(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): array
     {
@@ -543,9 +543,9 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function getKeyedProductConcreteTransfers(array $productConcreteTransfers): array
     {
@@ -559,10 +559,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $keyedProductConcreteTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemTransfer> $shoppingListItemTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $keyedProductConcreteTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemTransfer>
      */
     protected function mapProductConcreteIdToShoppingListItem(ArrayObject $shoppingListItemTransfers, array $keyedProductConcreteTransfers): ArrayObject
     {

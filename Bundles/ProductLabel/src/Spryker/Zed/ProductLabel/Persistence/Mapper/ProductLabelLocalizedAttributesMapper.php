@@ -31,10 +31,10 @@ class ProductLabelLocalizedAttributesMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes[] $productLabelLocalizedAttributesEntities
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $productLabelLocalizedAttributesTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes> $productLabelLocalizedAttributesEntities
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer> $productLabelLocalizedAttributesTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer>
      */
     public function mapProductLabelLocalizedAttributesEntitiesToProductLabelLocalizedAttributesTransfers(
         ObjectCollection $productLabelLocalizedAttributesEntities,

@@ -100,7 +100,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */
@@ -121,7 +121,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
@@ -145,7 +145,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilter
      *
@@ -274,11 +274,11 @@ class ProductPriceResolver implements ProductPriceResolverInterface
      *
      * @param array $priceMap
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function convertPriceMapToPriceProductTransfers(array $priceMap): array
     {
-        /** @var \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers */
+        /** @var array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers */
         $priceProductTransfers = [];
 
         foreach ($priceMap as $currencyCode => $prices) {
@@ -341,9 +341,9 @@ class ProductPriceResolver implements ProductPriceResolverInterface
 
     /**
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
-     * @param string[] $priceDataByPriceType
+     * @param array<string> $priceDataByPriceType
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPriceDataByPriceType(MoneyValueTransfer $moneyValueTransfer, array $priceDataByPriceType): array
     {

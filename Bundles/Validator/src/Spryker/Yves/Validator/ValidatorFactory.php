@@ -41,7 +41,7 @@ class ValidatorFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface[]
+     * @return array<\Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface>
      */
     public function getValidatorPlugins(): array
     {
@@ -49,7 +49,7 @@ class ValidatorFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface[]
+     * @return array<\Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface>
      */
     public function getConstraintPlugins(): array
     {

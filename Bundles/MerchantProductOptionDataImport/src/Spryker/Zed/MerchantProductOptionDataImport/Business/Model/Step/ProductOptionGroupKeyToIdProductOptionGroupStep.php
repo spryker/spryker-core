@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantProductOptionDataImport\Business\Model\DataSet\MerchantP
 class ProductOptionGroupKeyToIdProductOptionGroupStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idProductOptionGroupCache = [];
 

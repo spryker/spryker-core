@@ -18,7 +18,7 @@ class CurrencyReaderWithCache implements CurrencyReaderInterface
     protected $currencyFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @var array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected static $currencyCache = [];
 
@@ -62,9 +62,9 @@ class CurrencyReaderWithCache implements CurrencyReaderInterface
     }
 
     /**
-     * @param string[] $isoCodes
+     * @param array<string> $isoCodes
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     public function getCurrencyTransfersFromIsoCodes(array $isoCodes): array
     {

@@ -82,7 +82,7 @@ class ProductMeasurementSalesUnitExpander implements ProductMeasurementSalesUnit
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @throws \Spryker\Client\ProductMeasurementUnit\Exception\InvalidItemCountException
      *

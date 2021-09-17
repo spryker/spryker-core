@@ -175,7 +175,7 @@ class ProductFormEditDataProvider extends AbstractProductFormDataProvider
 
     /**
      * @param string $localeCode
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      *
      * @return bool
      */

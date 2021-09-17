@@ -10,8 +10,8 @@ namespace Spryker\Zed\Synchronization\Business\Export;
 interface ExporterInterface
 {
     /**
-     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[] $plugins
-     * @param int[] $ids
+     * @param array<\Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface> $plugins
+     * @param array<int> $ids
      *
      * @return void
      */

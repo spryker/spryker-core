@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business\Phpstan\Config;
 interface PhpstanConfigFileManagerInterface
 {
     /**
-     * @param \SplFileInfo[] $configFiles
+     * @param array<\SplFileInfo> $configFiles
      * @param string $newConfigFileName
      *
      * @return string

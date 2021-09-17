@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 interface PriceProductOfferCreateGuiTableConfigurationProviderInterface
 {
     /**
-     * @param mixed[] $initialData
+     * @param array<mixed> $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */

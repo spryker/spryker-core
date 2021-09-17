@@ -20,7 +20,7 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
     protected $categoryTreeBuilder;
 
     /**
-     * @var \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[][]
+     * @var array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]>
      */
     protected static $categoryTree;
 
@@ -33,11 +33,11 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductCategoryTransfer[] $productCategoryTransfers
+     * @param array<\Generated\Shared\Transfer\ProductCategoryTransfer> $productCategoryTransfers
      * @param string $storeName
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
      */
     public function getProductCategoryStoragesFromCategoryTree(
         array $productCategoryTransfers,
@@ -58,7 +58,7 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
      * @param string $storeName
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
      */
     protected function generateProductCategoryStorageTransfers(
         ProductCategoryTransfer $productCategoryTransfer,
@@ -85,7 +85,7 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
      * @param string $storeName
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer>
      */
     protected function extractCategoryNodeAggregationsFromCategoryTree(
         NodeTransfer $nodeTransfer,
@@ -110,7 +110,7 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer>
      */
     protected function getCategoryNodeAggregationsFromCategoryTree(NodeTransfer $nodeTransfer): array
     {
@@ -122,9 +122,9 @@ class ProductCategoryStorageReader implements ProductCategoryStorageReaderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[] $categoryNodeAggregationTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer> $categoryNodeAggregationTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
      */
     protected function buildProductCategoryStorageTransfers(array $categoryNodeAggregationTransfers): array
     {

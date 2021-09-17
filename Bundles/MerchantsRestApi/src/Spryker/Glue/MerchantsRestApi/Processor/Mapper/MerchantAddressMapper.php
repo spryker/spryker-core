@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\RestMerchantAddressTransfer;
 class MerchantAddressMapper implements MerchantAddressMapperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer> $merchantStorageProfileAddressTransfers
      * @param \Generated\Shared\Transfer\RestMerchantAddressesAttributesTransfer $restMerchantAddressesAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\RestMerchantAddressesAttributesTransfer

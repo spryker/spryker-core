@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade;
 interface MerchantProductOfferStorageToEventBehaviorFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $columnName
      *
      * @return array
@@ -18,7 +18,7 @@ interface MerchantProductOfferStorageToEventBehaviorFacadeInterface
     public function getEventTransfersAdditionalValues(array $eventTransfers, string $columnName): array;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return array
      */

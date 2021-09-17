@@ -21,12 +21,12 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class QuoteRequestMapper implements QuoteRequestMapperInterface
 {
     /**
-     * @var \Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface[]
+     * @var array<\Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface>
      */
     protected $restQuoteRequestAttributesExpanderPlugins;
 
     /**
-     * @param \Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface[] $restQuoteRequestAttributesExpanderPlugins
+     * @param array<\Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface> $restQuoteRequestAttributesExpanderPlugins
      */
     public function __construct(array $restQuoteRequestAttributesExpanderPlugins)
     {
@@ -34,11 +34,11 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer[] $quoteRequestTransfers
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestTransfer> $quoteRequestTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     public function mapQuoteRequestTransfersToRestQuoteRequestsAttributesTransfers(
         array $quoteRequestTransfers,
@@ -133,7 +133,7 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteRequestTransfer $quoteRequestTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getQuoteRequestVersions(QuoteRequestTransfer $quoteRequestTransfer): array
     {
@@ -148,11 +148,11 @@ class QuoteRequestMapper implements QuoteRequestMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer[] $quoteRequestTransfers
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestTransfer> $quoteRequestTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     protected function expandRestQuoteRequestsAttributesTransfers(
         array $quoteRequestTransfers,

@@ -131,7 +131,7 @@ class DatasetForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function createDatasetConstraints()
     {
@@ -150,7 +150,7 @@ class DatasetForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getFieldDefaultConstraints()
     {

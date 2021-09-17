@@ -13,18 +13,18 @@ use Spryker\Zed\Customer\CustomerConfig;
 class CustomerPasswordPolicyValidator implements CustomerPasswordPolicyValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface[]
+     * @var array<\Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface>
      */
     protected $customerPasswordPolicies;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $customerPasswordAllowList = [];
 
     /**
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
-     * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface[] $customerPasswordPolicies
+     * @param array<\Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyInterface> $customerPasswordPolicies
      */
     public function __construct(CustomerConfig $customerConfig, array $customerPasswordPolicies)
     {

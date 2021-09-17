@@ -86,7 +86,7 @@ class ThresholdStrategyConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param string[] $fields
+     * @param array<string> $fields
      * @param array $formData
      *
      * @return bool

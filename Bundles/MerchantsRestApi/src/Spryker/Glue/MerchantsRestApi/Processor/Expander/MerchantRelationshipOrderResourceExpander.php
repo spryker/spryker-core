@@ -32,7 +32,7 @@ class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipO
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -56,9 +56,9 @@ class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipO
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getMerchantReferencesFromOrderResources(array $resources): array
     {
@@ -80,7 +80,7 @@ class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipO
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $orderResource
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $merchantsResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $merchantsResources
      *
      * @return void
      */
@@ -89,7 +89,7 @@ class MerchantRelationshipOrderResourceExpander implements MerchantRelationshipO
         $orderAttributes = $orderResource->getAttributes();
 
         if ($orderAttributes && $orderAttributes->offsetExists(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES)) {
-            /** @var string[] $merchantReferences */
+            /** @var array<string> $merchantReferences */
             $merchantReferences = $orderAttributes->offsetGet(static::RESOURCE_ATTRIBUTE_MERCHANT_REFERENCES);
 
             $foundMerchantReferences = array_intersect(array_keys($merchantsResources), $merchantReferences);

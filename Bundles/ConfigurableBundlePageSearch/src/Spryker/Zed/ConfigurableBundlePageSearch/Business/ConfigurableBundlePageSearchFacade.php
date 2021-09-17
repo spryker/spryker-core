@@ -25,7 +25,7 @@ class ConfigurableBundlePageSearchFacade extends AbstractFacade implements Confi
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -41,7 +41,7 @@ class ConfigurableBundlePageSearchFacade extends AbstractFacade implements Confi
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */

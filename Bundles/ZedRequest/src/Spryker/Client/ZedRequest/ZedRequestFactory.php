@@ -113,7 +113,7 @@ class ZedRequestFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface>
      */
     public function getHeaderExpanderPlugins(): array
     {
@@ -163,7 +163,7 @@ class ZedRequestFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface[]
+     * @return array<\Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface>
      */
     public function getMetaDataProviderPlugins()
     {

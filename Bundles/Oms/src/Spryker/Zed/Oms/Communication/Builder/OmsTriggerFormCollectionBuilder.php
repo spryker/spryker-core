@@ -26,10 +26,10 @@ class OmsTriggerFormCollectionBuilder implements OmsTriggerFormCollectionBuilder
 
     /**
      * @param string $redirectUrl
-     * @param string[] $events
+     * @param array<string> $events
      * @param int $idSalesOrder
      *
-     * @return \Symfony\Component\Form\FormView[]
+     * @return array<\Symfony\Component\Form\FormView>
      */
     public function buildOrderOmsTriggerFormCollection(string $redirectUrl, array $events, int $idSalesOrder): array
     {
@@ -66,8 +66,8 @@ class OmsTriggerFormCollectionBuilder implements OmsTriggerFormCollectionBuilder
 
     /**
      * @param string $redirectUrl
-     * @param string[] $events
-     * @param int[] $salesOrderItemIds
+     * @param array<string> $events
+     * @param array<int> $salesOrderItemIds
      *
      * @return array
      */

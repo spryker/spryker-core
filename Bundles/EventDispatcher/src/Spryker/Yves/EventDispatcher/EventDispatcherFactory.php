@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\AbstractFactory;
 class EventDispatcherFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
+     * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
      */
     public function getEventDispatcherPlugins(): array
     {

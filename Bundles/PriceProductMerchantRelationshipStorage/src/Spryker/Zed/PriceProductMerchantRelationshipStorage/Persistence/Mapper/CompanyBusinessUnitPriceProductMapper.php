@@ -20,7 +20,7 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
     /**
      * @param array $priceProductMerchantRelationshipsData
      *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer>
      */
     public function mapPriceProductMerchantRelationshipArrayToTransfers(array $priceProductMerchantRelationshipsData): array
     {

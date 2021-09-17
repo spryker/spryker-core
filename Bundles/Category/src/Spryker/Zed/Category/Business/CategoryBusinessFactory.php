@@ -470,7 +470,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
+     * @return array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationDeletePluginInterface>
      */
     public function getCategoryRelationDeletePlugins(): array
     {
@@ -478,7 +478,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface>
      */
     public function getCategoryRelationUpdatePlugins(): array
     {
@@ -486,7 +486,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface[]
+     * @return array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface>
      */
     public function getCategoryUrlPathPlugins(): array
     {
@@ -494,7 +494,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[]
+     * @return array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface>
      */
     public function getCategoryCreateAfterPlugins(): array
     {
@@ -502,7 +502,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface[]
+     * @return array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface>
      */
     public function getCategoryUpdateAfterPlugins(): array
     {
@@ -510,7 +510,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface>
      */
     public function getCategoryTransferExpanderPlugins(): array
     {

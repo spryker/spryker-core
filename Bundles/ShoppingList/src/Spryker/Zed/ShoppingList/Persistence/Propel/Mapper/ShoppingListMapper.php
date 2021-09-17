@@ -71,7 +71,7 @@ class ShoppingListMapper implements ShoppingListMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListEntityTransfer[] $shoppingListEntityTransferCollection
+     * @param array<\Generated\Shared\Transfer\SpyShoppingListEntityTransfer> $shoppingListEntityTransferCollection
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
      */

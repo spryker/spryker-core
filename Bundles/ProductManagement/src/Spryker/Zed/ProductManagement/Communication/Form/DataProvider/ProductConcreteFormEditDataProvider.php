@@ -38,7 +38,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
     protected $productStockHelper;
 
     /**
-     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface>
      */
     protected $formEditDataProviderExpanderPlugins;
 
@@ -56,7 +56,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
      * @param string $imageUrlPrefix
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreInterface $store
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductStockHelperInterface $productStockHelper
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface[] $formEditDataProviderExpanderPlugins
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditDataProviderExpanderPluginInterface> $formEditDataProviderExpanderPlugins
      * @param \Spryker\Zed\ProductManagement\Communication\Reader\ProductAttributeReaderInterface|null $productAttributeReader
      */
     public function __construct(
@@ -342,7 +342,7 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
     /**
      * @param string $localeCode
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      *
      * @return bool
      */

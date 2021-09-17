@@ -86,7 +86,7 @@ class GraphCommunicationFactoryTest extends Unit
     }
 
     /**
-     * @param string|object $return
+     * @param object|string $return
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Graph\GraphConfig
      */

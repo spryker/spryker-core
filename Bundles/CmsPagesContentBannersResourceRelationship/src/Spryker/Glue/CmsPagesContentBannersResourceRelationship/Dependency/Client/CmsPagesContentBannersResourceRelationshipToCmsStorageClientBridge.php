@@ -23,11 +23,11 @@ class CmsPagesContentBannersResourceRelationshipToCmsStorageClientBridge impleme
     }
 
     /**
-     * @param string[] $cmsPageUuids
+     * @param array<string> $cmsPageUuids
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CmsPageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsPageStorageTransfer>
      */
     public function getCmsPageStorageByUuids(array $cmsPageUuids, string $localeName, string $storeName): array
     {

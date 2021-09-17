@@ -12,10 +12,10 @@ use ArrayObject;
 interface ShipmentMethodCollectionRemoverInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodsTransferList
-     * @param int[] $shipmentMethodsTransferForRemoveIndexes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethodsTransferList
+     * @param array<int> $shipmentMethodsTransferForRemoveIndexes
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function remove(
         ArrayObject $shipmentMethodsTransferList,

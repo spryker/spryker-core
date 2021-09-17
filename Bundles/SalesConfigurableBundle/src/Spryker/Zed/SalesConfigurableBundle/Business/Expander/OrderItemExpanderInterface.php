@@ -10,9 +10,9 @@ namespace Spryker\Zed\SalesConfigurableBundle\Business\Expander;
 interface OrderItemExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array;
 }

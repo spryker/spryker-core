@@ -263,7 +263,7 @@ class OpenApiSpecificationPathGenerator implements PathGeneratorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PathSchemaDataTransfer[] $responseSchemas
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PathSchemaDataTransfer> $responseSchemas
      *
      * @return \Generated\Shared\Transfer\PathSchemaDataTransfer|null
      */

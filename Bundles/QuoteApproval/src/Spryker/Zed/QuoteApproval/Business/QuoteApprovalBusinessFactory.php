@@ -234,7 +234,7 @@ class QuoteApprovalBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface[]
+     * @return array<\Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface>
      */
     public function getQuoteApprovalUnlockPreCheckPlugins(): array
     {

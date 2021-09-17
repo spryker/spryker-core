@@ -76,42 +76,42 @@ class Operation implements OperationInterface
     protected $quoteFacade;
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface>
      */
     protected $itemExpanderPlugins = [];
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface>
      */
     protected $cartBeforePreCheckNormalizerPlugins = [];
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface>
      */
     protected $preCheckPlugins;
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface>
      */
     protected $cartRemovalPreCheckPlugins;
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface>
      */
     protected $postSavePlugins = [];
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\PreReloadItemsPluginInterface>
      */
     protected $preReloadPlugins = [];
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface>
      */
     protected $terminationPlugins = [];
 
     /**
-     * @var array|\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface>
      */
     protected $postReloadItemsPlugins = [];
 
@@ -120,13 +120,13 @@ class Operation implements OperationInterface
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[] $preCheckPlugins
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface[] $postSavePlugins
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface[] $terminationPlugins
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface[] $cartRemovalPreCheckPlugins
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface[] $postReloadItemsPlugins
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface[] $cartBeforePreCheckNormalizerPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface> $itemExpanderPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface> $preCheckPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface> $postSavePlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartTerminationPluginInterface> $terminationPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartRemovalPreCheckPluginInterface> $cartRemovalPreCheckPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\PostReloadItemsPluginInterface> $postReloadItemsPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartChangeTransferNormalizerPluginInterface> $cartBeforePreCheckNormalizerPlugins
      */
     public function __construct(
         StorageProviderInterface $cartStorageProvider,
@@ -494,7 +494,7 @@ class Operation implements OperationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $infoMessages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $infoMessages
      *
      * @return void
      */
@@ -508,7 +508,7 @@ class Operation implements OperationInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected function getNotificationMessages(CartChangeTransfer $cartChangeTransfer): array
     {

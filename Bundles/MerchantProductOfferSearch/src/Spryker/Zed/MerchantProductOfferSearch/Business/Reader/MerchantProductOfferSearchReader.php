@@ -25,9 +25,9 @@ class MerchantProductOfferSearchReader implements MerchantProductOfferSearchRead
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
      */
     public function getProductAbstractMerchantDataByProductAbstractIds(array $productAbstractIds): array
     {

@@ -234,7 +234,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface>
      */
     protected function getConfigurableBundleTemplatePageMapExpanderPlugins(): array
     {
@@ -242,7 +242,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface>
      */
     protected function getConfigurableBundleTemplateMapExpanderPlugins(): array
     {
@@ -250,7 +250,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractBundleDepen
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageMapExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageMapExpanderPluginInterface>
      */
     protected function getConfigurableBundleTemplatePageDataExpanderPlugins(): array
     {

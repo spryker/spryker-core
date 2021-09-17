@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ImportController extends AbstractController
 {
     /**
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction()
     {

@@ -25,12 +25,12 @@ class RequestBuilder implements RequestBuilderInterface
     protected $resource;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface>
      */
     protected $filters = [];
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface>
      */
     protected $sort = [];
 
@@ -50,7 +50,7 @@ class RequestBuilder implements RequestBuilderInterface
     protected $routeContext = [];
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     protected $parentResources = [];
 
@@ -60,7 +60,7 @@ class RequestBuilder implements RequestBuilderInterface
     protected $include = [];
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\SparseFieldInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SparseFieldInterface>
      */
     protected $fields = [];
 

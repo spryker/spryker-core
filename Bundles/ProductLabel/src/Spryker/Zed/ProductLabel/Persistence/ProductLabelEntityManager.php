@@ -44,7 +44,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      *
      * @throws \Spryker\Zed\ProductLabel\Persistence\Exception\MissingProductLabelException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function updateProductLabel(ProductLabelTransfer $productLabelTransfer): array
     {
@@ -111,7 +111,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
 
     /**
      * @param int $idProductLabel
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -129,7 +129,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idProductLabel
      *
      * @return void
@@ -149,7 +149,7 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idProductLabel
      *
      * @return void

@@ -43,7 +43,7 @@ class BusinessOnBehalfFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface[]
+     * @return array<\Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface>
      */
     public function getCompanyUserChangeAllowedCheckPlugins(): array
     {

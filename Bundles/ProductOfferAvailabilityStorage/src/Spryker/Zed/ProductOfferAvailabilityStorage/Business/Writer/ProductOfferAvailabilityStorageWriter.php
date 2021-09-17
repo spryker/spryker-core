@@ -67,7 +67,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -82,7 +82,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -97,7 +97,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -112,7 +112,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[] $productOfferAvailabilityRequestTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer> $productOfferAvailabilityRequestTransfers
      *
      * @return void
      */

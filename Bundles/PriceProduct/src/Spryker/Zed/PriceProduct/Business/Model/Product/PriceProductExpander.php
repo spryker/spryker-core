@@ -16,7 +16,7 @@ use Spryker\Zed\PriceProduct\PriceProductConfig;
 class PriceProductExpander implements PriceProductExpanderInterface
 {
     /**
-     * @var \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[]
+     * @var array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface>
      */
     protected $priceProductDimensionExpanderStrategyPlugins;
 
@@ -31,7 +31,7 @@ class PriceProductExpander implements PriceProductExpanderInterface
     protected $priceProductService;
 
     /**
-     * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[] $priceProductDimensionExpanderStrategyPlugins
+     * @param array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface> $priceProductDimensionExpanderStrategyPlugins
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $priceProductConfig
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
      */
@@ -46,9 +46,9 @@ class PriceProductExpander implements PriceProductExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function expandPriceProductTransfers(array $priceProductTransfers): array
     {

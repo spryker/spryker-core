@@ -37,9 +37,9 @@ interface ProductPageSearchMapperInterface
     ): SpyProductConcretePageSearch;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[] $productConcretePageSearchEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch> $productConcretePageSearchEntityCollection
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function mapProductConcretePageSearchEntityCollectionToSynchronizationDataTransfers(
         ObjectCollection $productConcretePageSearchEntityCollection

@@ -36,7 +36,7 @@ class TransferConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSourceDirectories()
     {
@@ -51,7 +51,7 @@ class TransferConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDataBuilderSourceDirectories()
     {
@@ -104,7 +104,7 @@ class TransferConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCoreSourceDirectoryGlobPatterns()
     {
@@ -132,7 +132,7 @@ class TransferConfig extends AbstractBundleConfig
      * This method can be used to extend the list of directories for transfer object
      * discovery in project implementations.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getAdditionalSourceDirectoryGlobPatterns()
     {
@@ -144,7 +144,7 @@ class TransferConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link \Spryker\Zed\Propel\Business\PropelFacadeInterface::getSchemaDirectory()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getEntitiesSourceDirectories()
     {
@@ -218,7 +218,7 @@ class TransferConfig extends AbstractBundleConfig
      *
      * @phpstan-return array<string, array<string, array<string, string>>>
      *
-     * @return string[][][]
+     * @return array<string[][]>
      */
     public function getTypeShims(): array
     {

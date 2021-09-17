@@ -39,7 +39,7 @@ interface MerchantRelationshipEntityManagerInterface
      * Specification:
      * - Creates a merchant relationship to company business unit relation entities.
      *
-     * @param int[] $assignedCompanyBusinessUnitIds
+     * @param array<int> $assignedCompanyBusinessUnitIds
      * @param int $idMerchantRelationship
      *
      * @return void
@@ -50,7 +50,7 @@ interface MerchantRelationshipEntityManagerInterface
      * Specification:
      * - Deletes a merchant relationship to company business unit relation entities.
      *
-     * @param int[] $assignedCompanyBusinessUnitIds
+     * @param array<int> $assignedCompanyBusinessUnitIds
      * @param int $idMerchantRelationship
      *
      * @return void

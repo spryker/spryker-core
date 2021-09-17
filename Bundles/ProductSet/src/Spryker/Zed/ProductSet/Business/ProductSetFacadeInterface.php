@@ -108,7 +108,7 @@ interface ProductSetFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductSetTransfer> $productSetTransfers
      *
      * @return void
      */
@@ -123,7 +123,7 @@ interface ProductSetFacadeInterface
      * @param int $idProductSet
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getCombinedProductSetImageSets($idProductSet, $idLocale);
 }

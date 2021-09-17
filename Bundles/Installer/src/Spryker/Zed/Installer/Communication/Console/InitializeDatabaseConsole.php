@@ -63,7 +63,7 @@ class InitializeDatabaseConsole extends Console
     }
 
     /**
-     * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
+     * @return array<\Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface>
      */
     protected function getInstallerPlugins()
     {

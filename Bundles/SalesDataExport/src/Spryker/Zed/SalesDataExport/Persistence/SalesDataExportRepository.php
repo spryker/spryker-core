@@ -335,7 +335,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSalesOrderSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -351,7 +351,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSalesOrderItemSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -367,7 +367,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSalesExpenseSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -379,9 +379,9 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     }
 
     /**
-     * @param int[] $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function getCommentsByOrderId(array $salesOrderIds): array
     {
@@ -403,7 +403,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      * - Compensates magic functionality of propel, so single-column select returns the same format as a multi-columns select
      *
      * @param array $rows
-     * @param string[] $selectedColumns
+     * @param array<string> $selectedColumns
      *
      * @return array
      */

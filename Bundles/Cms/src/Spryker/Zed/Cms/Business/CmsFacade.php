@@ -641,7 +641,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsVersionTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsVersionTransfer>
      */
     public function findAllCmsVersionByIdCmsPage(int $idCmsPage): array
     {

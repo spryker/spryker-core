@@ -45,12 +45,12 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     public const LIST_DELIMITER = ';';
 
     /**
-     * @var \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[]
+     * @var array<\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface>
      */
     protected $operators = [];
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[] $operators
+     * @param array<\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface> $operators
      */
     public function __construct(array $operators)
     {
@@ -94,9 +94,9 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @param string[] $acceptedTypes
+     * @param array<string> $acceptedTypes
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getOperatorExpressionsByTypes(array $acceptedTypes)
     {
@@ -112,7 +112,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableComparatorExpressions()
     {
@@ -141,7 +141,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCompoundComparatorExpressions()
     {
@@ -177,7 +177,7 @@ class ComparatorOperators implements ComparatorOperatorsInterface
     }
 
     /**
-     * @param string[] $withTypes
+     * @param array<string> $withTypes
      * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface $operator
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException

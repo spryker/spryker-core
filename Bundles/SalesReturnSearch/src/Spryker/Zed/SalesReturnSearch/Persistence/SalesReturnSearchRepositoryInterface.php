@@ -12,17 +12,17 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface SalesReturnSearchRepositoryInterface
 {
     /**
-     * @param int[] $returnReasonIds
+     * @param array<int> $returnReasonIds
      *
-     * @return \Generated\Shared\Transfer\ReturnReasonSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ReturnReasonSearchTransfer>
      */
     public function getReturnReasonSearchTransfersByReturnReasonIds(array $returnReasonIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $returnReasonIds
+     * @param array<int> $returnReasonIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getReturnReasonSynchronizationDataTransfersByIds(FilterTransfer $filterTransfer, array $returnReasonIds = []): array;
 }

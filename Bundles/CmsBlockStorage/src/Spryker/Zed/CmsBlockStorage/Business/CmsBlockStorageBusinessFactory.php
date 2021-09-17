@@ -43,7 +43,7 @@ class CmsBlockStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface>
      */
     protected function getContentWidgetDataExpanderPlugins(): array
     {

@@ -12,9 +12,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 interface PaidInterface
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     public function setAsPaid(array $orderItems): array;
 

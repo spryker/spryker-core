@@ -48,7 +48,7 @@ class CompanyMapper implements CompanyMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Company\Persistence\SpyCompany[] $companyEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Company\Persistence\SpyCompany> $companyEntities
      *
      * @return \Generated\Shared\Transfer\CompanyCollectionTransfer
      */

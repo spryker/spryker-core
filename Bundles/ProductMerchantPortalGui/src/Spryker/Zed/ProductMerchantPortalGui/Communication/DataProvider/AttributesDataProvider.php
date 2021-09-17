@@ -53,9 +53,9 @@ class AttributesDataProvider implements AttributesDataProviderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getProductAttributesData(array $productManagementAttributeTransfers): array
     {
@@ -83,10 +83,10 @@ class AttributesDataProvider implements AttributesDataProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getExistingConcreteProductData(
         MerchantProductTransfer $merchantProductTransfer,
@@ -112,7 +112,7 @@ class AttributesDataProvider implements AttributesDataProviderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param string[] $superAttributeKeys
+     * @param array<string> $superAttributeKeys
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
@@ -153,8 +153,8 @@ class AttributesDataProvider implements AttributesDataProviderInterface
     }
 
     /**
-     * @param mixed[] $a
-     * @param mixed[] $b
+     * @param array<mixed> $a
+     * @param array<mixed> $b
      *
      * @return int
      */

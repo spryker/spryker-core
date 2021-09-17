@@ -45,14 +45,14 @@ interface AvailabilityToStockFacadeInterface
     public function isNeverOutOfStockForStore($sku, StoreTransfer $storeTransfer);
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getStoreToWarehouseMapping();
 
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductStockIsDefined(string $sku): array;
 }

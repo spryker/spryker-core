@@ -38,7 +38,7 @@ class Installer implements InstallerInterface
     protected $userFacade;
 
     /**
-     * @var \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[]
+     * @var array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface>
      */
     protected $aclInstallerPlugins;
 
@@ -59,7 +59,7 @@ class Installer implements InstallerInterface
      * @param \Spryker\Zed\Acl\Dependency\Facade\AclToUserInterface $userFacade
      * @param \Spryker\Zed\Acl\Business\Acl\AclConfigReaderInterface $aclConfigReader
      * @param \Spryker\Zed\Acl\Business\Writer\RoleWriterInterface $roleWriter
-     * @param \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface[] $aclInstallerPlugins
+     * @param array<\Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface> $aclInstallerPlugins
      */
     public function __construct(
         GroupInterface $group,
@@ -202,7 +202,7 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RoleTransfer[]
+     * @return array<\Generated\Shared\Transfer\RoleTransfer>
      */
     protected function getRoles(): array
     {
@@ -218,7 +218,7 @@ class Installer implements InstallerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\GroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\GroupTransfer>
      */
     protected function getGroups(): array
     {

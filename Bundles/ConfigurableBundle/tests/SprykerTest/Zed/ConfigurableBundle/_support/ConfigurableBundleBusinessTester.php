@@ -156,7 +156,7 @@ class ConfigurableBundleBusinessTester extends Actor
     /**
      * @param array $data
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer>
      */
     public function createTemplateTranslationTransfersForAvailableLocales(array $data = []): ArrayObject
     {
@@ -175,7 +175,7 @@ class ConfigurableBundleBusinessTester extends Actor
     /**
      * @param array $data
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer>
      */
     public function createSlotTranslationTransfersForAvailableLocales(array $data = []): ArrayObject
     {

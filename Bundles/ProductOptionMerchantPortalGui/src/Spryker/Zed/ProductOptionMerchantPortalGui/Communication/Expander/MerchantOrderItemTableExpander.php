@@ -78,7 +78,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
     /**
      * @param \Generated\Shared\Transfer\GuiTableRowDataResponseTransfer $guiTableRowDataResponseTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductOptionsArray(GuiTableRowDataResponseTransfer $guiTableRowDataResponseTransfer): array
     {

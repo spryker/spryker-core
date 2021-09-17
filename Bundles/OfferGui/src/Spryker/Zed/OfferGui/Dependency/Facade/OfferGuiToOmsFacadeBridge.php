@@ -25,7 +25,7 @@ class OfferGuiToOmsFacadeBridge implements OfferGuiToOmsFacadeInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsByIdSalesOrder(int $idSalesOrder): array
     {
@@ -35,7 +35,7 @@ class OfferGuiToOmsFacadeBridge implements OfferGuiToOmsFacadeInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
     {

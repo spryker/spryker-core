@@ -127,7 +127,7 @@ class SwiftMailerTest extends Unit
      *
      * @dataProvider provideBccs
      *
-     * @param \Generated\Shared\Transfer\MailRecipientTransfer[] $bccMailRecipients
+     * @param array<\Generated\Shared\Transfer\MailRecipientTransfer> $bccMailRecipients
      *
      * @return void
      */
@@ -233,7 +233,7 @@ class SwiftMailerTest extends Unit
      *
      * @dataProvider sendMailAddsAttachmentsDataProvider
      *
-     * @param \Generated\Shared\Transfer\MailAttachmentTransfer[] $mailAttachmentTransfers
+     * @param array<\Generated\Shared\Transfer\MailAttachmentTransfer> $mailAttachmentTransfers
      *
      * @return void
      */

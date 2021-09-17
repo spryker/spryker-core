@@ -190,7 +190,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Use {@link \Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory::getNavigationItemCollectionFilterPlugins()} instead.
      *
-     * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
+     * @return array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface>
      */
     public function getNavigationItemFilterPlugins(): array
     {
@@ -198,7 +198,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[]
+     * @return array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface>
      */
     public function getNavigationItemCollectionFilterPlugins(): array
     {

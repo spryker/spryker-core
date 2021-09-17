@@ -57,11 +57,11 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
     /**
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
     {
-        /** @var int[]|null $ids */
+        /** @var array<int>|null $ids */
         $ids = $storeRelationTransfer->getIdStores();
         if ($ids === null) {
             return [];
@@ -71,7 +71,7 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idProductAbstract
      *
      * @return void
@@ -87,7 +87,7 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idProductAbstract
      *
      * @return void
@@ -110,7 +110,7 @@ class ProductAbstractStoreRelationWriter implements ProductAbstractStoreRelation
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStoresByIdProductAbstract($idProductAbstract)
     {

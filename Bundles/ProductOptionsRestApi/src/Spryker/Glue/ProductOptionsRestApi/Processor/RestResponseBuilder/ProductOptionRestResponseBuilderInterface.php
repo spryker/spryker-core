@@ -10,12 +10,12 @@ namespace Spryker\Glue\ProductOptionsRestApi\Processor\RestResponseBuilder;
 interface ProductOptionRestResponseBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer> $productAbstractOptionStorageTransfers
      * @param array $resourceMapping
      * @param string $parentResourceType
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function createProductOptionRestResources(
         array $productAbstractOptionStorageTransfers,

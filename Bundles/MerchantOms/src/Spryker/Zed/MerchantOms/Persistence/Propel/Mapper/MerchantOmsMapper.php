@@ -18,7 +18,7 @@ class MerchantOmsMapper
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $merchantSalesOrderItemEntities
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function mapMerchantSalesOrderItemEntityCollectionToStateMachineItemTransfers(
         ObjectCollection $merchantSalesOrderItemEntities

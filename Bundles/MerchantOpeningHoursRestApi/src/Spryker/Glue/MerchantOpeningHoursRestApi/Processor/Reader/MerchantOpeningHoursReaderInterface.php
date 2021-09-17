@@ -20,10 +20,10 @@ interface MerchantOpeningHoursReaderInterface
     public function getMerchantOpeningHours(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param string[] $merchantReferences
+     * @param array<string> $merchantReferences
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getMerchantOpeningHoursResources(array $merchantReferences, RestRequestInterface $restRequest): array;
 }

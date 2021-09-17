@@ -31,7 +31,7 @@ class ProductOptionValidator implements ProductOptionValidatorInterface
     protected $productOptionFacade;
 
     /**
-     * @var bool[]
+     * @var array<bool>
      */
     protected static $idProductOptionCache = [];
 

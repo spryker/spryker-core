@@ -13,12 +13,12 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductConcreteReadObserverInt
 class ProductConcreteReadObserverPluginManager implements ProductConcreteReadObserverInterface
 {
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface[]
+     * @var array<\Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface>
      */
     protected $readCollection;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface[] $readCollection
+     * @param array<\Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface> $readCollection
      */
     public function __construct(array $readCollection)
     {

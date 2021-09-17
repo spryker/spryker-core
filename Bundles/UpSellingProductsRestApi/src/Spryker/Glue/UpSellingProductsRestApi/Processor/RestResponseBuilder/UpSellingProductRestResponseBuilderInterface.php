@@ -14,7 +14,7 @@ interface UpSellingProductRestResponseBuilderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

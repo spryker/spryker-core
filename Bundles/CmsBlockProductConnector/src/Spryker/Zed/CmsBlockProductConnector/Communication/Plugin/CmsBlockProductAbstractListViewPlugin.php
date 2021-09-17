@@ -38,7 +38,7 @@ class CmsBlockProductAbstractListViewPlugin extends AbstractPlugin implements Cm
      * @param int $idCmsBlock
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRenderedList($idCmsBlock, $idLocale)
     {

@@ -10,7 +10,7 @@ namespace Spryker\Zed\AclEntity\Business\Reader;
 class AclEntityReader implements AclEntityReaderInterface
 {
     /**
-     * @var \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityDisablerPluginInterface[]
+     * @var array<\Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityDisablerPluginInterface>
      */
     protected $aclEntityDisablerPlugins;
 
@@ -21,7 +21,7 @@ class AclEntityReader implements AclEntityReaderInterface
 
     /**
      * @param bool $isAclEntityActive
-     * @param \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityDisablerPluginInterface[] $aclEntityDisablerPlugins
+     * @param array<\Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityDisablerPluginInterface> $aclEntityDisablerPlugins
      */
     public function __construct(bool $isAclEntityActive, array $aclEntityDisablerPlugins)
     {

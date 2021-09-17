@@ -47,7 +47,7 @@ class ShoppingListItemNoteReader implements ShoppingListItemNoteReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemNoteTransfer>
      */
     public function getShoppingListItemNoteTransfersByShoppingListItemCollection(
         ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
@@ -62,7 +62,7 @@ class ShoppingListItemNoteReader implements ShoppingListItemNoteReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getShoppingListItemIdsFromShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): array
     {

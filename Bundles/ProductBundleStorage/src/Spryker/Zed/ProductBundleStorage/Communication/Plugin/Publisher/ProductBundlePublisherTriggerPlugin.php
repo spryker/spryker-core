@@ -41,7 +41,7 @@ class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements Publ
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductBundleTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

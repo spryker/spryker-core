@@ -39,7 +39,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductStorageTransfer $priceProductStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapPriceProductStorageTransferToPriceProductTransfers(PriceProductStorageTransfer $priceProductStorageTransfer): array
     {
@@ -52,7 +52,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param array $prices
      * @param string $currencyCode
      *
@@ -127,7 +127,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     /**
      * @param string $currencyCode
      * @param string $priceType
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */

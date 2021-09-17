@@ -15,12 +15,12 @@ use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 class MerchantMapper implements MerchantMapperInterface
 {
     /**
-     * @var \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttributesMapperPluginInterface[]
+     * @var array<\Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttributesMapperPluginInterface>
      */
     protected $merchantRestAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttributesMapperPluginInterface[] $merchantRestAttributesMapperPlugins
+     * @param array<\Spryker\Glue\MerchantsRestApiExtension\Dependency\Plugin\MerchantRestAttributesMapperPluginInterface> $merchantRestAttributesMapperPlugins
      */
     public function __construct(array $merchantRestAttributesMapperPlugins)
     {
@@ -70,7 +70,7 @@ class MerchantMapper implements MerchantMapperInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[] $urlCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer> $urlCollection
      * @param string $localeName
      *
      * @return string|null

@@ -20,7 +20,7 @@ interface ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeIn
     public function markProductAsDiscontinued(ProductDiscontinueRequestTransfer $productDiscontinueRequestTransfer): ProductDiscontinuedResponseTransfer;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return bool
      */

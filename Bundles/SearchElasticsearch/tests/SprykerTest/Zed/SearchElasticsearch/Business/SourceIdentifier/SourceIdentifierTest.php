@@ -28,7 +28,7 @@ class SourceIdentifierTest extends Unit
     /**
      * @dataProvider sourceIdentifierTranslationDataProvider
      *
-     * @param string[] $supportedSourceIdentifiers
+     * @param array<string> $supportedSourceIdentifiers
      * @param string|null $expectedIndexName
      * @param string $indexPrefix
      * @param string $sourceIdentifier

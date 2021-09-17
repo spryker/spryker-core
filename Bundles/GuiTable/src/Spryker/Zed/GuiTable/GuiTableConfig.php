@@ -26,7 +26,7 @@ class GuiTableConfig extends AbstractBundleConfig implements GuiTableConfigInter
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDefaultEnabledFeatures(): array
     {
@@ -43,7 +43,7 @@ class GuiTableConfig extends AbstractBundleConfig implements GuiTableConfigInter
     /**
      * @api
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getDefaultAvailablePageSizes(): array
     {

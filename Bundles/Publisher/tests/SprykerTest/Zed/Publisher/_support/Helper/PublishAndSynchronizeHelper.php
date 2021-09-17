@@ -169,7 +169,7 @@ class PublishAndSynchronizeHelper extends AbstractHelper
 
     /**
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransferCollection
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransferCollection
      *
      * @return void
      */

@@ -40,7 +40,7 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface>
      */
     protected $customerExpanderPlugins;
 
@@ -48,7 +48,7 @@ class CompanyUserAccessTokenReader implements CompanyUserAccessTokenReaderInterf
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToOauthFacadeInterface $oauthFacade
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Service\OauthCompanyUserToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\OauthCompanyUser\Dependency\Facade\OauthCompanyUserToCustomerFacadeInterface $customerFacade
-     * @param \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface[] $customerExpanderPlugins
+     * @param array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface> $customerExpanderPlugins
      */
     public function __construct(
         OauthCompanyUserToOauthFacadeInterface $oauthFacade,

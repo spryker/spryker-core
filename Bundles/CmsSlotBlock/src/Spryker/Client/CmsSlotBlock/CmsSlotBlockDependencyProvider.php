@@ -47,7 +47,7 @@ class CmsSlotBlockDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface[]
+     * @return array<\Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface>
      */
     protected function getCmsSlotBlockVisibilityResolverPlugins(): array
     {

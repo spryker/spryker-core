@@ -156,9 +156,9 @@ class CmsPageReader implements CmsPageReaderInterface
     }
 
     /**
-     * @param array[] $cmsPages
+     * @param array<array> $cmsPages
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCmsPageIds(array $cmsPages): array
     {

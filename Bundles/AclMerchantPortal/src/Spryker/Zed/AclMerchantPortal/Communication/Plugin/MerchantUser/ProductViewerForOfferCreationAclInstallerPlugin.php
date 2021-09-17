@@ -25,7 +25,7 @@ class ProductViewerForOfferCreationAclInstallerPlugin extends AbstractPlugin imp
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\RoleTransfer[]
+     * @return array<\Generated\Shared\Transfer\RoleTransfer>
      */
     public function getRoles(): array
     {
@@ -49,7 +49,7 @@ class ProductViewerForOfferCreationAclInstallerPlugin extends AbstractPlugin imp
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\GroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\GroupTransfer>
      */
     public function getGroups(): array
     {

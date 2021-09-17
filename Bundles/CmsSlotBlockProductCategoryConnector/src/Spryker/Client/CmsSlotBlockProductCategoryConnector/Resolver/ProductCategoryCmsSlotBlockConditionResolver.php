@@ -68,7 +68,7 @@ class ProductCategoryCmsSlotBlockConditionResolver implements ProductCategoryCms
 
     /**
      * @param int $idProductAbstract
-     * @param int[] $conditionCategoryIds
+     * @param array<int> $conditionCategoryIds
      *
      * @return bool
      */

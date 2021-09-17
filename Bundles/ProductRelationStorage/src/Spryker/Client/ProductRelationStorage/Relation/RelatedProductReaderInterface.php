@@ -14,7 +14,7 @@ interface RelatedProductReaderInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function findRelatedProducts(int $idProductAbstract, string $localeName, string $storeName);
 
@@ -22,7 +22,7 @@ interface RelatedProductReaderInterface
      * @param int $idProductAbstract
      * @param string $storeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findRelatedAbstractProductIds(int $idProductAbstract, string $storeName): array;
 }

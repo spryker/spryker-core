@@ -46,7 +46,7 @@ class FormCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
+     * @return array<\Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface>
      */
     public function getFormPlugins(): array
     {

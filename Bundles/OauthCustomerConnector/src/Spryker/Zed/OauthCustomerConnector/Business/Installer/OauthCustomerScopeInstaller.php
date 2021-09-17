@@ -58,9 +58,9 @@ class OauthCustomerScopeInstaller implements OauthCustomerScopeInstallerInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
+     * @param array<\Generated\Shared\Transfer\OauthScopeTransfer> $oauthScopeTransfers
      *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     * @return array<\Generated\Shared\Transfer\OauthScopeTransfer>
      */
     protected function mapScopesByIdentifiers(array $oauthScopeTransfers): array
     {
@@ -76,7 +76,7 @@ class OauthCustomerScopeInstaller implements OauthCustomerScopeInstallerInterfac
 
     /**
      * @param string $oauthScopeIdentifier
-     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransferMap
+     * @param array<\Generated\Shared\Transfer\OauthScopeTransfer> $oauthScopeTransferMap
      *
      * @return bool
      */
@@ -90,7 +90,7 @@ class OauthCustomerScopeInstaller implements OauthCustomerScopeInstallerInterfac
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCustomerScopes(): array
     {

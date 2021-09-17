@@ -10,7 +10,7 @@ namespace Spryker\Zed\Discount\Business\QueryString\Specification\MetaData;
 interface MetaDataProviderInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableFields();
 
@@ -26,29 +26,29 @@ interface MetaDataProviderInterface
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAcceptedTypesByFieldName($fieldName);
 
     /**
      * @param string $fieldName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableOperatorExpressionsForField($fieldName);
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableComparatorExpressions();
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getLogicalComparators();
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCompoundExpressions();
 

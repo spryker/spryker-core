@@ -42,7 +42,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     protected $isSendingToQueue = true;
 
     /**
-     * @var string[] Keys are store ids, values are store names.
+     * @var array<string> Keys are store ids, values are store names.
      */
     protected $storeNameMapBuffer;
 
@@ -65,7 +65,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -81,7 +81,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -199,7 +199,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIdMap Keys are product concrete ids, values are product abstract ids
+     * @param array<int> $productAbstractIdMap Keys are product concrete ids, values are product abstract ids
      *
      * @return array First level keys are product concrete ids, second level keys are store names, values are grouped prices.
      */
@@ -238,7 +238,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage[] $priceProductConcreteStorageEntities
+     * @param array<\Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage> $priceProductConcreteStorageEntities
      *
      * @return array
      */
@@ -253,9 +253,9 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[] Keys are product concrete ids, values are product abstract ids
+     * @return array<int> Keys are product concrete ids, values are product abstract ids
      */
     protected function getProductAbstractIdMap(array $productConcreteIds)
     {
@@ -293,9 +293,9 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage[]
+     * @return array<\Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage>
      */
     protected function findPriceProductConcreteStorageEntities(array $productConcreteIds)
     {

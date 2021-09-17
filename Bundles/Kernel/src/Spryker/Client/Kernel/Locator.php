@@ -19,7 +19,7 @@ class Locator implements LocatorLocatorInterface
     protected $bundleProxy;
 
     /**
-     * @var \Spryker\Shared\Kernel\AbstractLocator[]
+     * @var array<\Spryker\Shared\Kernel\AbstractLocator>
      */
     protected $locator;
 

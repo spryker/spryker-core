@@ -53,7 +53,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     /**
      * @param int $idOrderItem
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEvents($idOrderItem)
     {
@@ -64,7 +64,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag)
     {
@@ -74,7 +74,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {

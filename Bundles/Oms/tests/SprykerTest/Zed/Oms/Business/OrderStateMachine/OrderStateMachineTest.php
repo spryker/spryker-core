@@ -163,7 +163,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @return array[]
+     * @return array<array>
      */
     public function conditionDataProvider(): array
     {
@@ -187,7 +187,7 @@ class OrderStateMachineTest extends Unit
      * @param int $expectedAffectedOrderItemsCount
      * @param string|null $storeName
      * @param int|null $limit
-     * @param int[] $omsProcessorIdentifiers
+     * @param array<int> $omsProcessorIdentifiers
      *
      * @return void
      */
@@ -324,7 +324,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItems
      * @param string $expectedOrderItemStateAfterTransition
      *
      * @return void

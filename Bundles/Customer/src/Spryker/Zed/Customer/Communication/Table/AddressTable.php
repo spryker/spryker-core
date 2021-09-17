@@ -122,7 +122,7 @@ class AddressTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection|array
      */
     protected function prepareData(TableConfiguration $config)
     {

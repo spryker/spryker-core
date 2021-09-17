@@ -25,10 +25,10 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer> $merchantOpeningHoursStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer>
      */
     public function translateMerchantOpeningHoursTransfers(array $merchantOpeningHoursStorageTransfers, string $localeName): array
     {
@@ -40,9 +40,9 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer> $merchantOpeningHoursStorageTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getScheduleNoteGlossaryKeys(array $merchantOpeningHoursStorageTransfers): array
     {
@@ -57,10 +57,10 @@ class MerchantOpeningHoursTranslator implements MerchantOpeningHoursTranslatorIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
-     * @param string[] $translatedNotes
+     * @param array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer> $merchantOpeningHoursStorageTransfers
+     * @param array<string> $translatedNotes
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer>
      */
     protected function updateDateScheduleTransfers(array $merchantOpeningHoursStorageTransfers, array $translatedNotes): array
     {

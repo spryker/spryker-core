@@ -11,7 +11,7 @@ trait ConfigHelperTrait
 {
     /**
      * @param string $key
-     * @param string|int|array|float|bool $value
+     * @param array|string|float|int|bool $value
      *
      * @return void
      */

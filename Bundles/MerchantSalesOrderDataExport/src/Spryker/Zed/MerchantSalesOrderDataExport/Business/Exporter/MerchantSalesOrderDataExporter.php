@@ -193,7 +193,7 @@ class MerchantSalesOrderDataExporter implements MerchantSalesOrderDataExporterIn
     }
 
     /**
-     * @param mixed[] $exportData
+     * @param array<mixed> $exportData
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      * @param \Generated\Shared\Transfer\DataExportBatchTransfer $dataExportBatchTransfer
      *

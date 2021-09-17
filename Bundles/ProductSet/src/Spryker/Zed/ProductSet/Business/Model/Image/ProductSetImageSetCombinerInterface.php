@@ -13,7 +13,7 @@ interface ProductSetImageSetCombinerInterface
      * @param int $idProductSet
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getCombinedProductSetImageSets($idProductSet, $idLocale);
 }

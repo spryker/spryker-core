@@ -757,7 +757,7 @@ class CheckoutFacadeTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getOrderItemsSkuList(OrderTransfer $orderTransfer): array
     {

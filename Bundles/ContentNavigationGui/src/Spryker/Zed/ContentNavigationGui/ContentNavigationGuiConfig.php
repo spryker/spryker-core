@@ -17,7 +17,7 @@ class ContentNavigationGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getContentWidgetTemplates(): array
     {

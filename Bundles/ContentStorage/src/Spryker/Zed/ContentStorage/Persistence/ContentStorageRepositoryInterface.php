@@ -15,21 +15,21 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ContentStorageRepositoryInterface
 {
     /**
-     * @param int[] $contentIds
+     * @param array<int> $contentIds
      *
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentStorageTransfer>
      */
     public function findContentStorageByContentIds(array $contentIds): array;
 
     /**
      * @param array $contentIds
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentTransfer>
      */
     public function findContentByIds(array $contentIds): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentStorageTransfer>
      */
     public function findAllContentStorage(): array;
 
@@ -38,14 +38,14 @@ interface ContentStorageRepositoryInterface
      *
      * @param array $contentIds
      *
-     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyContentEntityTransfer>
      */
     public function findContentByContentIds(array $contentIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentTransfer>
      */
     public function getContentTransfersByFilter(FilterTransfer $filterTransfer): array;
 }

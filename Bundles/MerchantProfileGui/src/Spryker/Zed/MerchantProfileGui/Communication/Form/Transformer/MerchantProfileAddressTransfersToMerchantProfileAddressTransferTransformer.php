@@ -21,7 +21,7 @@ class MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer> $value
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[] $value
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer> $value
      *
      * @return \Generated\Shared\Transfer\MerchantProfileAddressTransfer
      */
@@ -39,11 +39,9 @@ class MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer
     }
 
     /**
-     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer>
-     *
      * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $value
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>
      */
     public function reverseTransform($value): ArrayObject
     {

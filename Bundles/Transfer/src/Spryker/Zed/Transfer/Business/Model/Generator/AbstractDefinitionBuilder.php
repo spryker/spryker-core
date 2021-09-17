@@ -13,7 +13,7 @@ abstract class AbstractDefinitionBuilder implements DefinitionBuilderInterface
      * @param array $definitions
      * @param \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface $definitionClass
      *
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface[]
+     * @return array<\Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface>
      */
     protected function buildDefinitions(array $definitions, DefinitionInterface $definitionClass)
     {

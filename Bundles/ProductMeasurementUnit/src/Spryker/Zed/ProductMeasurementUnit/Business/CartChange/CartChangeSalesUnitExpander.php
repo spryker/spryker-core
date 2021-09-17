@@ -65,7 +65,7 @@ class CartChangeSalesUnitExpander implements CartChangeSalesUnitExpanderInterfac
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -81,7 +81,7 @@ class CartChangeSalesUnitExpander implements CartChangeSalesUnitExpanderInterfac
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param int[] $indexedProductMeasurementSalesUnitIds
+     * @param array<int> $indexedProductMeasurementSalesUnitIds
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */

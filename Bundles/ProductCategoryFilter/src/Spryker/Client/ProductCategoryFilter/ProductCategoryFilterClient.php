@@ -20,10 +20,10 @@ class ProductCategoryFilterClient extends AbstractClient implements ProductCateg
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facets
+     * @param array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer> $facets
      * @param array $productCategoryFilters
      *
-     * @return \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer>
      */
     public function updateFacetsByCategory(array $facets, array $productCategoryFilters)
     {

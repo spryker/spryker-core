@@ -40,7 +40,7 @@ class MerchantRelationshipSalesOrderThresholdGuiRepository extends AbstractRepos
      * @uses SalesOrderThreshold
      * @uses MerchantRelationshipSalesOrderThreshold
      *
-     * @param int[] $merchantRelationshipIds
+     * @param array<int> $merchantRelationshipIds
      *
      * @return \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery
      */

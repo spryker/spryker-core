@@ -61,9 +61,9 @@ class ProductExpander implements ProductExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function indexProductConcretesBySku(array $productConcreteTransfers): array
     {
@@ -112,7 +112,7 @@ class ProductExpander implements ProductExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getConcreteSkus(CartChangeTransfer $cartChangeTransfer): array
     {

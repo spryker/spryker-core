@@ -45,7 +45,7 @@ class MappingTypeAwareDocumentWriter implements DocumentWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -59,9 +59,9 @@ class MappingTypeAwareDocumentWriter implements DocumentWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
-     * @return \Elastica\Document[]
+     * @return array<\Elastica\Document>
      */
     protected function createElasticaDocuments(array $searchDocumentTransfers): array
     {
@@ -93,7 +93,7 @@ class MappingTypeAwareDocumentWriter implements DocumentWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */

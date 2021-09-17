@@ -17,12 +17,12 @@ use Symfony\Component\HttpFoundation\Response;
 class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
 {
     /**
-     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[]
+     * @var array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface>
      */
     protected $checkoutRequestAttributesValidatorPlugins;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface[]
+     * @var array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface>
      */
     protected $checkoutRequestValidatorPlugins;
 
@@ -32,8 +32,8 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
     protected $config;
 
     /**
-     * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface[] $checkoutRequestAttributesValidatorPlugins
-     * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface[] $checkoutRequestValidatorPlugins
+     * @param array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestAttributesValidatorPluginInterface> $checkoutRequestAttributesValidatorPlugins
+     * @param array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestValidatorPluginInterface> $checkoutRequestValidatorPlugins
      * @param \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig $config
      */
     public function __construct(

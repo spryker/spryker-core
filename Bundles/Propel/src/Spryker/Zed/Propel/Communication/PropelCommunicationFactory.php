@@ -38,7 +38,7 @@ class PropelCommunicationFactory extends AbstractCommunicationFactory
     public const LOGGER_NAME = 'defaultLogger';
 
     /**
-     * @return \Monolog\Logger[]
+     * @return array<\Monolog\Logger>
      */
     public function createLogger()
     {

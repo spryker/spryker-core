@@ -37,7 +37,7 @@ class AgentBusinessTester extends Actor
     /**
      * @param int $count
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return array<\Generated\Shared\Transfer\CustomerTransfer>
      */
     public function createCustomers(int $count = 10): array
     {

@@ -118,11 +118,11 @@ abstract class AbstractRepository
     }
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[] $collection
+     * @param array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface> $collection
      * @param string $relation
      * @param \Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria|null $criteria
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
+     * @return array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface>
      */
     public function populateCollectionWithRelation(array &$collection, $relation, ?Criteria $criteria = null)
     {

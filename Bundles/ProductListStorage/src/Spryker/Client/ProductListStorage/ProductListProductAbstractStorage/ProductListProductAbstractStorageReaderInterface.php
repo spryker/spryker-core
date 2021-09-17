@@ -19,9 +19,9 @@ interface ProductListProductAbstractStorageReaderInterface
     public function findProductAbstractProductListStorage(int $idProductAbstract): ?ProductAbstractProductListStorageTransfer;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer>
      */
     public function getProductAbstractProductListStorageTransfersByProductAbstractIds(array $productAbstractIds): array;
 }

@@ -17,9 +17,9 @@ use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationData
 class ProductMeasurementUnitStorageRepository extends AbstractRepository implements ProductMeasurementUnitStorageRepositoryInterface
 {
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer>
      */
     public function findProductMeasurementUnitStorageEntities(array $productMeasurementUnitIds): array
     {
@@ -35,7 +35,7 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductMeasurementUnitStorageEntityTransfer>
      */
     public function findAllProductMeasurementUnitStorageEntities(): array
     {
@@ -45,9 +45,9 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer>
      */
     public function findProductConcreteMeasurementUnitStorageEntities(array $productIds): array
     {
@@ -63,7 +63,7 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer>
      */
     public function findAllProductConcreteMeasurementUnitStorageEntities(): array
     {
@@ -74,9 +74,9 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function findFilteredProductMeasurementUnitStorageDataTransfers(FilterTransfer $filterTransfer, array $productMeasurementUnitIds = []): array
     {
@@ -93,9 +93,9 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductConcreteMeasurementUnitStorageEntityTransfer>
      */
     public function findFilteredProductConcreteMeasurementUnitStorageEntities(FilterTransfer $filterTransfer, array $productIds = []): array
     {
@@ -111,9 +111,9 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
     /**
      * @module ProductMeasurementUnit
      *
-     * @param int[] $salesUnitsIds
+     * @param array<int> $salesUnitsIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer>
      */
     public function getProductMeasurementSalesUnitEntityTransfersByIds(array $salesUnitsIds): array
     {
@@ -129,9 +129,9 @@ class ProductMeasurementUnitStorageRepository extends AbstractRepository impleme
     /**
      * @module ProductMeasurementUnit
      *
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer>
      */
     public function getProductMeasurementUnitEntityTransfersByIds(array $productMeasurementUnitIds): array
     {

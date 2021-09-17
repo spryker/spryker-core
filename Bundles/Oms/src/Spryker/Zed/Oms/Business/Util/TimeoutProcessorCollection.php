@@ -14,12 +14,12 @@ use Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface;
 class TimeoutProcessorCollection implements TimeoutProcessorCollectionInterface, HasAwareCollectionInterface
 {
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface[]
+     * @var array<\Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface>
      */
     protected $timeoutProcessorPlugins = [];
 
     /**
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface[] $timeoutProcessorPlugins
+     * @param array<\Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface> $timeoutProcessorPlugins
      */
     public function __construct(array $timeoutProcessorPlugins = [])
     {
@@ -55,7 +55,7 @@ class TimeoutProcessorCollection implements TimeoutProcessorCollectionInterface,
     }
 
     /**
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface[] $timeoutProcessorPlugins
+     * @param array<\Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface> $timeoutProcessorPlugins
      *
      * @return void
      */

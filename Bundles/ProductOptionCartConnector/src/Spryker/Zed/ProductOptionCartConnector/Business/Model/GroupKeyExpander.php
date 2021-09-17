@@ -64,7 +64,7 @@ class GroupKeyExpander implements GroupKeyExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $sortedProductOptions
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $sortedProductOptions
      *
      * @return string
      */

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CriteriaRangeFilterTransfer;
 interface DateRangeRequestFilterValueNormalizerInterface
 {
     /**
-     * @param int|string|bool|int[]|string[] $value
+     * @param array<int|string>|string|int|bool $value
      *
      * @return \Generated\Shared\Transfer\CriteriaRangeFilterTransfer|null
      */

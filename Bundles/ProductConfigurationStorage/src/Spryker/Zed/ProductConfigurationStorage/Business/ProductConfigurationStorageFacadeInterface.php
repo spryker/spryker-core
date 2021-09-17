@@ -20,7 +20,7 @@ interface ProductConfigurationStorageFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -35,7 +35,7 @@ interface ProductConfigurationStorageFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -50,7 +50,7 @@ interface ProductConfigurationStorageFacadeInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $productConfigurationStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getFilteredProductConfigurationStorageDataTransfers(
         FilterTransfer $filterTransfer,

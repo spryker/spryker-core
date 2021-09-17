@@ -25,9 +25,9 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function filterProductsWithoutMeasurementUnit(array $productConcreteTransfers): array
     {
@@ -49,11 +49,11 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     * @param int[] $productMeasurementSalesUnitCounts
-     * @param int[] $productMeasurementBaseUnitCounts
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param array<int> $productMeasurementSalesUnitCounts
+     * @param array<int> $productMeasurementBaseUnitCounts
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function getEligibleProductConcreteTransfers(
         array $productConcreteTransfers,
@@ -75,9 +75,9 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractProductConcreteIdsFromProductConcreteTransfers(array $productConcreteTransfers): array
     {
@@ -91,9 +91,9 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractProductAbstractIdsFromProductConcreteTransfers(array $productConcreteTransfers): array
     {

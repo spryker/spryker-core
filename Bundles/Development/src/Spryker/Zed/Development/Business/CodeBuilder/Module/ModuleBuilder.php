@@ -105,7 +105,7 @@ class ModuleBuilder
     /**
      * @param string $namespace
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getModuleNames($namespace)
     {

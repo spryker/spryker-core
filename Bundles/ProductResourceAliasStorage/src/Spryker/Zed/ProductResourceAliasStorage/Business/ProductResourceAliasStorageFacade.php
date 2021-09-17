@@ -21,7 +21,7 @@ class ProductResourceAliasStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class ProductResourceAliasStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */

@@ -393,7 +393,7 @@ class PageManager implements PageManagerInterface
     /**
      * @deprecated Will be removed in the next major release.
      *
-     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]|\ArrayObject $cmsPageLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer> $cmsPageLocalizedAttributesTransfers
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
      * @return void
@@ -413,7 +413,7 @@ class PageManager implements PageManagerInterface
     /**
      * @deprecated Will be removed in the next major release.
      *
-     * @param \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer[]|\ArrayObject $cmsPageLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CmsPageLocalizedAttributesTransfer> $cmsPageLocalizedAttributesTransfers
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $pageEntity
      *
      * @return void

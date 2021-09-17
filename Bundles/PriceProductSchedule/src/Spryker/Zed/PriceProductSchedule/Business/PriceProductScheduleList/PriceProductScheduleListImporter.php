@@ -33,7 +33,7 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
     protected $priceProductScheduleMapper;
 
     /**
-     * @var \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface[]
+     * @var array<\Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface>
      */
     protected $dataExpanderList;
 
@@ -41,7 +41,7 @@ class PriceProductScheduleListImporter implements PriceProductScheduleListImport
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleImportValidatorInterface $priceProductScheduleValidator
      * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleMapperInterface $priceProductScheduleMapper
-     * @param \Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface[] $dataExpanderList
+     * @param array<\Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\DataExpander\PriceProductTransferDataExpanderInterface> $dataExpanderList
      */
     public function __construct(
         PriceProductScheduleEntityManagerInterface $priceProductScheduleEntityManager,

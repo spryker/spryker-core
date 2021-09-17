@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class GiftCardDecisionRuleChecker implements GiftCardDecisionRuleCheckerInterface
 {
     /**
-     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface[]
+     * @var array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface>
      */
     protected $giftCardDecisionRulePlugins;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface[] $giftCardDecisionRulePlugins
+     * @param array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface> $giftCardDecisionRulePlugins
      */
     public function __construct(array $giftCardDecisionRulePlugins)
     {

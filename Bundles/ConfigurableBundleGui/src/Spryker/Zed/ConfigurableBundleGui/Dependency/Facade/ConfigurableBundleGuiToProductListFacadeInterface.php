@@ -10,9 +10,9 @@ namespace Spryker\Zed\ConfigurableBundleGui\Dependency\Facade;
 interface ConfigurableBundleGuiToProductListFacadeInterface
 {
     /**
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByProductListIds(array $productListIds): array;
 }

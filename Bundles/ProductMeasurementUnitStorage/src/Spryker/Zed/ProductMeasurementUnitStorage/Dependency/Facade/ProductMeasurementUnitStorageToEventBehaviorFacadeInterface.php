@@ -10,14 +10,14 @@ namespace Spryker\Zed\ProductMeasurementUnitStorage\Dependency\Facade;
 interface ProductMeasurementUnitStorageToEventBehaviorFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return array
      */
     public function getEventTransferIds(array $eventTransfers);
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $foreignKeyColumnName
      *
      * @return array

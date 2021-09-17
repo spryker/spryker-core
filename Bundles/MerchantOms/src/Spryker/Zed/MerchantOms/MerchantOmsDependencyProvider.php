@@ -218,7 +218,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface>
      */
     protected function getStateMachineConditionPlugins(): array
     {
@@ -226,7 +226,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
      */
     protected function getStateMachineCommandPlugins(): array
     {

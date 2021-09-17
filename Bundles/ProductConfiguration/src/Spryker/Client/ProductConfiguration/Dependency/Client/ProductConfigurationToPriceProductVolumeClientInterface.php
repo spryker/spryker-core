@@ -10,9 +10,9 @@ namespace Spryker\Client\ProductConfiguration\Dependency\Client;
 interface ProductConfigurationToPriceProductVolumeClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractProductPricesForProductAbstract(array $priceProductTransfers): array;
 }

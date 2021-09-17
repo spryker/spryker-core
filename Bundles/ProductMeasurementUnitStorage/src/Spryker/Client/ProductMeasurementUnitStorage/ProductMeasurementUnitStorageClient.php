@@ -72,7 +72,7 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>|null
      */
     public function findProductMeasurementSalesUnitByIdProduct(int $idProduct): ?array
     {
@@ -102,9 +102,9 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array
     {
@@ -118,9 +118,9 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array
     {
@@ -135,9 +135,9 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      * @api
      *
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array
     {
@@ -151,9 +151,9 @@ class ProductMeasurementUnitStorageClient extends AbstractClient implements Prod
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expandProductConcreteTransferWithBaseMeasurementUnit(array $productConcreteTransfers): array
     {

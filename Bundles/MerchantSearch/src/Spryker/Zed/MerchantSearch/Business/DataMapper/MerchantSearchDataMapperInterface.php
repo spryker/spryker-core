@@ -10,9 +10,9 @@ namespace Spryker\Zed\MerchantSearch\Business\DataMapper;
 interface MerchantSearchDataMapperInterface
 {
     /**
-     * @param string[] $data
+     * @param array<string> $data
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function mapMerchantDataToSearchData(array $data): array;
 }

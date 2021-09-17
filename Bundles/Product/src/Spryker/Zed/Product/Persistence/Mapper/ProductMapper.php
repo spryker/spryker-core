@@ -222,7 +222,7 @@ class ProductMapper implements ProductMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\Product\Persistence\SpyProduct[] $productEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntityCollection
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
@@ -245,9 +245,9 @@ class ProductMapper implements ProductMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\Product\Persistence\SpyProduct[] $productEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntityCollection
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     * @return array<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function getProductEntitiesIndexedBySku(Collection $productEntityCollection): array
     {

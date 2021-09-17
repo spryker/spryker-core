@@ -39,7 +39,7 @@ class PriceProductAbstractEventResourceQueryContainerPlugin extends AbstractPlug
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */

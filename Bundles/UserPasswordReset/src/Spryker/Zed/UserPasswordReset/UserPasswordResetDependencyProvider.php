@@ -93,7 +93,7 @@ class UserPasswordResetDependencyProvider extends AbstractBundleDependencyProvid
     }
 
     /**
-     * @return \Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface>
      */
     public function getUserPasswordResetRequestStrategyPlugins(): array
     {

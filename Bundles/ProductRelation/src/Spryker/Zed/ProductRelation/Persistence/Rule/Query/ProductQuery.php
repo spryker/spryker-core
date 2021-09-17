@@ -54,7 +54,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @return array|\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer
+     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer|array
      */
     public function getMappings()
     {
@@ -65,7 +65,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return array<\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer>
      */
     protected function buildProductMapping()
     {
@@ -100,7 +100,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return array<\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer>
      */
     protected function buildProductAttributeMap()
     {
@@ -215,7 +215,7 @@ class ProductQuery implements QueryInterface
     }
 
     /**
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKey[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAttributeKey>
      */
     protected function findProductAttributes()
     {

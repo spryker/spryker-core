@@ -12,7 +12,7 @@ class SalesExpenseMapper
     /**
      * @phpstan-var array<string, string>
      *
-     * @var string[]
+     * @var array<string>
      */
     protected $fieldMapping = [
         'order_reference' => 'Order.OrderReference',
@@ -36,7 +36,7 @@ class SalesExpenseMapper
     /**
      * @phpstan-return array<string, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFieldMapping(): array
     {
@@ -64,7 +64,7 @@ class SalesExpenseMapper
     /**
      * @phpstan-return array<string, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getFields(): array
     {

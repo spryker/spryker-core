@@ -40,7 +40,7 @@ class EditCompanyUserController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -79,7 +79,7 @@ class EditCompanyUserController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $companyUserForm
      * @param string $redirectUrl
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function updateCompanyUser(FormInterface $companyUserForm, string $redirectUrl)
     {

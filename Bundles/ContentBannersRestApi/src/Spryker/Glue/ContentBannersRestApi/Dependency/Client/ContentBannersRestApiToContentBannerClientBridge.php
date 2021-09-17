@@ -38,10 +38,10 @@ class ContentBannersRestApiToContentBannerClientBridge implements ContentBanners
     /**
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer>
      *
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentBannerTypeTransfer>
      */
     public function executeBannerTypeByKeys(array $contentKeys, string $localeName): array
     {

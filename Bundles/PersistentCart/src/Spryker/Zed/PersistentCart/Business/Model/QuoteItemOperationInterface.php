@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 interface QuoteItemOperationInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -21,7 +21,7 @@ interface QuoteItemOperationInterface
     public function addItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -29,7 +29,7 @@ interface QuoteItemOperationInterface
     public function addValidItems(array $itemTransferList, QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferList
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferList
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

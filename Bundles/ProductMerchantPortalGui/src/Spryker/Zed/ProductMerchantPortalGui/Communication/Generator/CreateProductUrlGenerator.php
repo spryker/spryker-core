@@ -40,7 +40,7 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
     protected const FIELD_SKU = 'sku';
 
     /**
-     * @param mixed[] $formData
+     * @param array<mixed> $formData
      * @param bool $isSingleConcrete
      *
      * @return string

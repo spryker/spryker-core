@@ -105,7 +105,7 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
     }
 
     /**
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      *
      * @return array
      */
@@ -155,10 +155,10 @@ class ContentProductAbstractListSkusToIdsStep implements DataImportStepInterface
     }
 
     /**
-     * @param string[] $productAbstractSkus
-     * @param int[] $productAbstractIds
+     * @param array<string> $productAbstractSkus
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function sortProductAbstractIds(array $productAbstractSkus, array $productAbstractIds): array
     {

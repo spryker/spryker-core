@@ -53,7 +53,7 @@ interface AttributeReaderInterface
     public function suggestUnusedKeys($searchText = '', $limit = 10);
 
     /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getProductAttributeCollection();
 }

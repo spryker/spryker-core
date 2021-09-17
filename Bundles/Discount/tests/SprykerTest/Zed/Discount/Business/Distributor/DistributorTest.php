@@ -287,7 +287,7 @@ class DistributorTest extends Unit
     /**
      * @param array $grossPrices
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     protected function getItems(array $grossPrices)
     {
@@ -512,7 +512,7 @@ class DistributorTest extends Unit
     /**
      * @param array $items
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     protected function createDiscountableObjects(array $items = []): ArrayObject
     {
@@ -561,7 +561,7 @@ class DistributorTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface>
      */
     protected function createDiscountableItemTransformerStrategyPlugins(): array
     {

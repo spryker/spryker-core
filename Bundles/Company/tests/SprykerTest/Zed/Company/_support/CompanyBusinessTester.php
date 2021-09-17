@@ -33,7 +33,7 @@ class CompanyBusinessTester extends Actor
     /**
      * @param int $idCompany
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>
      */
     public function getRelatedStoresByIdCompany(int $idCompany)
     {
@@ -50,7 +50,7 @@ class CompanyBusinessTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores(): array
     {

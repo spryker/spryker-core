@@ -153,7 +153,7 @@ class QuoteApprovalWriter implements QuoteApprovalWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[]|\ArrayObject $messageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return \Generated\Shared\Transfer\QuoteApprovalResponseTransfer
      */

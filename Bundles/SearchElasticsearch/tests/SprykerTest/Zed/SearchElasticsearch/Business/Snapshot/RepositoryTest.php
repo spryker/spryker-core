@@ -77,9 +77,9 @@ class RepositoryTest extends Unit
     /**
      * @dataProvider buildsSettingsWithLocationProvider
      *
-     * @param string[] $expectedSettings
+     * @param array<string> $expectedSettings
      * @param string $type
-     * @param string[] $inputSettings
+     * @param array<string> $inputSettings
      *
      * @return void
      */

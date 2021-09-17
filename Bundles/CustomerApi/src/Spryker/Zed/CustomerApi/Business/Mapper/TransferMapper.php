@@ -27,7 +27,7 @@ class TransferMapper implements TransferMapperInterface
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\CustomerApiTransfer[]
+     * @return array<\Generated\Shared\Transfer\CustomerApiTransfer>
      */
     public function toTransferCollection(array $data)
     {

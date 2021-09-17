@@ -234,7 +234,7 @@ class MerchantShipmentGroupFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getShippingAddressesOptions(MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -282,9 +282,9 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @param iterable|\ArrayObject|\Generated\Shared\Transfer\AddressTransfer[] $customerAddressesCollection
+     * @param iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCustomerAddressChoices(iterable $customerAddressesCollection): array
     {
@@ -303,9 +303,9 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @param iterable|string[] $choices
+     * @param iterable<string> $choices
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function sanitizeDuplicatedCustomerAddressChoices(iterable $choices): array
     {
@@ -346,7 +346,7 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getShippingMethodsOptions(): array
     {
@@ -369,7 +369,7 @@ class MerchantShipmentGroupFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSalutationOptions(): array
     {

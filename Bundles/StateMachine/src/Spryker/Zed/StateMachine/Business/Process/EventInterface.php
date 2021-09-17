@@ -77,12 +77,12 @@ interface EventInterface
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $sourceState
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getTransitionsBySource(StateInterface $sourceState);
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getTransitions();
 

@@ -13,14 +13,14 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface MerchantAddressRestResponseBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createMerchantAddressesRestResources(array $merchantStorageTransfers): array;
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer> $merchantStorageProfileAddressTransfers
      * @param string $merchantReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

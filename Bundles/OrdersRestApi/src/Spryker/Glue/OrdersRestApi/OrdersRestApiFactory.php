@@ -100,7 +100,7 @@ class OrdersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttributesMapperPluginInterface>
      */
     public function getRestOrderItemsAttributesMapperPlugins(): array
     {
@@ -108,7 +108,7 @@ class OrdersRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface>
      */
     public function getRestOrderDetailsAttributesMapperPlugins(): array
     {

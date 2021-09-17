@@ -20,12 +20,12 @@ class ProductConcreteRelationSubTabsProvider implements ProductConcreteRelationS
     ];
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditSubTabsProviderPluginInterface[]
+     * @var array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditSubTabsProviderPluginInterface>
      */
     protected $configurableBundleTemplateSlotEditSubTabsProviderPlugins;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditSubTabsProviderPluginInterface[] $configurableBundleTemplateSlotEditSubTabsProviderPlugins
+     * @param array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditSubTabsProviderPluginInterface> $configurableBundleTemplateSlotEditSubTabsProviderPlugins
      */
     public function __construct(array $configurableBundleTemplateSlotEditSubTabsProviderPlugins)
     {
@@ -33,7 +33,7 @@ class ProductConcreteRelationSubTabsProvider implements ProductConcreteRelationS
     }
 
     /**
-     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface[]
+     * @return array<\Spryker\Zed\Gui\Communication\Tabs\TabsInterface>
      */
     public function getSubTabs(): array
     {
@@ -49,7 +49,7 @@ class ProductConcreteRelationSubTabsProvider implements ProductConcreteRelationS
     }
 
     /**
-     * @param \Spryker\Zed\Gui\Communication\Tabs\TabsInterface[] $configurableBundleTemplateSlotEditSubTabs
+     * @param array<\Spryker\Zed\Gui\Communication\Tabs\TabsInterface> $configurableBundleTemplateSlotEditSubTabs
      *
      * @throws \Spryker\Zed\ConfigurableBundleGui\Communication\Exception\MissingTabsException
      *

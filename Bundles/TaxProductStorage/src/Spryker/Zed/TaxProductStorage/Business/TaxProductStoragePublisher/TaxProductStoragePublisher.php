@@ -35,7 +35,7 @@ class TaxProductStoragePublisher implements TaxProductStoragePublisherInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

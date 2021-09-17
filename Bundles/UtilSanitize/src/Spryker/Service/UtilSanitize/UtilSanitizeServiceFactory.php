@@ -46,7 +46,7 @@ class UtilSanitizeServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\UtilSanitizeExtension\Dependency\Plugin\StringSanitizerPluginInterface[]
+     * @return array<\Spryker\Service\UtilSanitizeExtension\Dependency\Plugin\StringSanitizerPluginInterface>
      */
     public function getStringSanitizerPlugins(): array
     {

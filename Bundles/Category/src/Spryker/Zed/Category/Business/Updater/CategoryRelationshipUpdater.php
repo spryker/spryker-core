@@ -42,7 +42,7 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
     protected $categoryStoreRelationUpdater;
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface>
      */
     protected $categoryRelationUpdatePlugins;
 
@@ -52,7 +52,7 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
      * @param \Spryker\Zed\Category\Business\Updater\CategoryAttributeUpdaterInterface $categoryAttributeUpdater
      * @param \Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSyncInterface $categoryTemplateSync
      * @param \Spryker\Zed\Category\Business\Updater\CategoryStoreRelationUpdaterInterface $categoryStoreRelationUpdater
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $categoryRelationUpdatePlugins
+     * @param array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface> $categoryRelationUpdatePlugins
      */
     public function __construct(
         CategoryNodeUpdaterInterface $categoryNodeUpdater,

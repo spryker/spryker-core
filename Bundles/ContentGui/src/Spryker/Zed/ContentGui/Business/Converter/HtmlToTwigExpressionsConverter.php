@@ -117,7 +117,7 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
      * @param \DOMText $twigExpression
      * @param \DOMNode $oldNode
      *
-     * @return \DOMNode[]
+     * @return array<\DOMNode>
      */
     protected function addReplacement(DOMText $twigExpression, DOMNode $oldNode): array
     {

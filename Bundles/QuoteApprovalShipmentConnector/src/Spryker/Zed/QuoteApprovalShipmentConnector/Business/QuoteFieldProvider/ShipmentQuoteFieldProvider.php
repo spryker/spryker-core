@@ -46,7 +46,7 @@ class ShipmentQuoteFieldProvider implements ShipmentQuoteFieldProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {

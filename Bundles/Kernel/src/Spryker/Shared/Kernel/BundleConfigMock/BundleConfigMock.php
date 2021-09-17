@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\AbstractBundleConfig;
 class BundleConfigMock
 {
     /**
-     * @var \Spryker\Shared\Kernel\AbstractBundleConfig[]
+     * @var array<\Spryker\Shared\Kernel\AbstractBundleConfig>
      */
     protected static $bundleConfigMocks = [];
 

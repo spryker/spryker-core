@@ -42,7 +42,7 @@ class MerchantWishlistValidator implements MerchantWishlistValidatorInterface
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     protected function validateWishlistItem(
         WishlistItemTransfer $wishlistItemTransfer,

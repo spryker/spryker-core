@@ -19,9 +19,9 @@ interface SalesOrderThresholdTranslationHydratorInterface
     public function hydrateLocalizedMessages(SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer[] $salesOrderThresholdTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer> $salesOrderThresholdTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>
      */
     public function expandWithLocalizedMessagesCollection(array $salesOrderThresholdTransfers): array;
 }

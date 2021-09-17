@@ -140,7 +140,7 @@ class PriceProductScheduleCsvExporter implements PriceProductScheduleCsvExporter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer[] $priceProductScheduleTransferCollection
+     * @param array<\Generated\Shared\Transfer\PriceProductScheduleTransfer> $priceProductScheduleTransferCollection
      *
      * @return array
      */

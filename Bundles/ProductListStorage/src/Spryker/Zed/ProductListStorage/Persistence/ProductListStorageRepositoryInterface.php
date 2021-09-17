@@ -12,47 +12,47 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductListStorageRepositoryInterface
 {
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     * @return array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage>
      */
     public function findProductAbstractProductListStorageEntities(array $productAbstractIds): array;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
+     * @return array<\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage>
      */
     public function findProductConcreteProductListStorageEntities(array $productConcreteIds): array;
 
     /**
-     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     * @return array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage>
      */
     public function findAllProductAbstractProductListStorageEntities(): array;
 
     /**
-     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage[]
+     * @return array<\Orm\Zed\ProductListStorage\Persistence\SpyProductConcreteProductListStorage>
      */
     public function findAllProductConcreteProductListStorageEntities(): array;
 
     /**
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByProductListIds(array $productListIds): array;
 
@@ -65,17 +65,17 @@ interface ProductListStorageRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductConcreteProductListStorageEntityTransfer>
      */
     public function findFilteredProductConcreteProductListStorageEntities(FilterTransfer $filterTransfer, array $productConcreteIds = []): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductAbstractProductListStorageEntityTransfer>
      */
     public function findFilteredProductAbstractProductListStorageEntities(FilterTransfer $filterTransfer, array $productAbstractIds = []): array;
 

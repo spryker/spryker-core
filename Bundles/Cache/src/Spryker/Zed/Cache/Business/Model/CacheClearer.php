@@ -42,7 +42,7 @@ class CacheClearer implements CacheClearerInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function clearCache()
     {
@@ -73,7 +73,7 @@ class CacheClearer implements CacheClearerInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function clearProjectSpecificCache(): array
     {
@@ -88,7 +88,7 @@ class CacheClearer implements CacheClearerInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function clearAutoLoaderCache()
     {
@@ -100,9 +100,9 @@ class CacheClearer implements CacheClearerInterface
 
     /**
      * @param string $directoryPattern
-     * @param string[] $stores
+     * @param array<string> $stores
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function clear($directoryPattern, array $stores)
     {

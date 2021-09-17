@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ListController extends AbstractController
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function indexAction(): array
     {

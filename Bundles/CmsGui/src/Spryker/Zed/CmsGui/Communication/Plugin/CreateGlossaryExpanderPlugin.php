@@ -25,7 +25,7 @@ class CreateGlossaryExpanderPlugin extends AbstractPlugin implements CreateGloss
      *
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function getViewActionButtons(CmsPageTransfer $cmsPageTransfer)
     {

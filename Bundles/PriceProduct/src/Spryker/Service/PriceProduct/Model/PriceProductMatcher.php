@@ -16,7 +16,7 @@ use Spryker\Shared\PriceProduct\PriceProductConfig;
 class PriceProductMatcher implements PriceProductMatcherInterface
 {
     /**
-     * @var \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[]
+     * @var array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface>
      */
     protected $priceProductFilterPlugins = [];
 
@@ -26,7 +26,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     protected $singlePriceProductFilterStrategy;
 
     /**
-     * @param \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[] $priceProductDecisionPlugins
+     * @param array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface> $priceProductDecisionPlugins
      * @param \Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface $singlePriceProductFilterStrategy
      */
     public function __construct(
@@ -38,7 +38,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
@@ -68,10 +68,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function filterProductPrices(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
@@ -87,10 +87,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param string $priceMode
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function filterProductPricesByPriceMode(array $priceProductTransfers, string $priceMode): array
     {
@@ -114,10 +114,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function applyPriceProductFilterPlugins(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer)
     {
@@ -129,10 +129,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findPricesByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
@@ -202,7 +202,7 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
@@ -225,10 +225,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function matchPricesByFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
@@ -246,10 +246,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findPricesByPriceProductFilter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {

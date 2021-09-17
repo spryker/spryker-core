@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade;
 interface ProductDiscontinuedStorageToLocaleFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 }

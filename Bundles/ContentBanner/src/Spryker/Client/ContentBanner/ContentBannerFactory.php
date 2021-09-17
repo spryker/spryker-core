@@ -29,7 +29,7 @@ class ContentBannerFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface[]
+     * @return array<\Spryker\Client\ContentBanner\Executor\ContentBannerTermExecutorInterface>
      */
     public function getContentBannerTermExecutorMap(): array
     {

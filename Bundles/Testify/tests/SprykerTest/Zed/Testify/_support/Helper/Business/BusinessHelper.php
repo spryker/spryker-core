@@ -53,7 +53,7 @@ class BusinessHelper extends AbstractHelper
     protected $dependencies = [];
 
     /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractFacade[]
+     * @var array<\Spryker\Zed\Kernel\Business\AbstractFacade>
      */
     protected $facadeStubs = [];
 
@@ -63,7 +63,7 @@ class BusinessHelper extends AbstractHelper
     protected $mockedFacadeMethods = [];
 
     /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractBusinessFactory[]
+     * @var array<\Spryker\Zed\Kernel\Business\AbstractBusinessFactory>
      */
     protected $factoryStubs = [];
 
@@ -73,7 +73,7 @@ class BusinessHelper extends AbstractHelper
     protected $mockedFactoryMethods = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\AbstractSharedFactory[]
+     * @var array<\Spryker\Shared\Kernel\AbstractSharedFactory>
      */
     protected $sharedFactoryStubs = [];
 
@@ -179,7 +179,7 @@ class BusinessHelper extends AbstractHelper
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object
      */
     public function mockFactoryMethod(string $methodName, $return, ?string $moduleName = null)
     {
@@ -209,7 +209,7 @@ class BusinessHelper extends AbstractHelper
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory|object
      */
     public function mockSharedFactoryMethod(string $methodName, $return, ?string $moduleName = null)
     {

@@ -123,7 +123,7 @@ class CartCodesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface[]
+     * @return array<\Spryker\Glue\CartCodesRestApiExtension\Dependency\Plugin\DiscountMapperPluginInterface>
      */
     public function getDiscountMapperPlugins(): array
     {

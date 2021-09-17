@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class SalesReturnSearchEntityManager extends AbstractEntityManager implements SalesReturnSearchEntityManagerInterface
 {
     /**
-     * @param int[] $returnReasonIds
+     * @param array<int> $returnReasonIds
      *
      * @return void
      */

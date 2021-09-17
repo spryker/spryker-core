@@ -176,7 +176,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface[]
+     * @return array<\Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface>
      */
     protected function getProductLabelRelationUpdaterPlugins()
     {

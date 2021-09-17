@@ -40,7 +40,7 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
     protected $urlPathGenerator;
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface[]
+     * @var array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface>
      */
     protected $categoryUrlPathPlugins;
 
@@ -48,7 +48,7 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface[] $categoryUrlPathPlugins
+     * @param array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface> $categoryUrlPathPlugins
      */
     public function __construct(
         CategoryToUrlInterface $urlFacade,
@@ -76,7 +76,7 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer[]|\ArrayObject $categoryLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
      *
      * @return void
      */
@@ -104,7 +104,7 @@ class CategoryUrlCreator implements CategoryUrlCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer[]|\ArrayObject $categoryLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
      *
      * @return void
      */

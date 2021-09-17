@@ -32,7 +32,7 @@ class SharedResolverTest extends Unit
     protected $tester;
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function resolverDataProvider(): array
     {
@@ -43,7 +43,7 @@ class SharedResolverTest extends Unit
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function resolverExceptionDataProvider(): array
     {

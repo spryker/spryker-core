@@ -156,11 +156,11 @@ class MyReturnsTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return (int|string|null)[][]
+     * @return array<array<int|string|null>>
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturn\Persistence\SpySalesReturn> $salesReturnEntityCollection */
         $salesReturnEntityCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
@@ -214,9 +214,9 @@ class MyReturnsTable extends AbstractTable
     /**
      * @phpstan-return array<array<string|int|null>>
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturn\Persistence\SpySalesReturn> $salesReturnEntityCollection
      *
-     * @return (int|string|null)[][]
+     * @return array<array<int|string|null>>
      */
     protected function mapReturns(ObjectCollection $salesReturnEntityCollection): array
     {
@@ -236,9 +236,9 @@ class MyReturnsTable extends AbstractTable
     }
 
     /**
-     * @param (int|string|null)[][] $returns
+     * @param array<array<int|string|null>> $returns
      *
-     * @return (int|string|null)[][]
+     * @return array<array<int|string|null>>
      */
     protected function expandReturnsWithItemStates(array $returns): array
     {
@@ -253,7 +253,7 @@ class MyReturnsTable extends AbstractTable
     /**
      * @param int $idSalesReturn
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getItemStateLabelsByIdSalesReturn(int $idSalesReturn): array
     {

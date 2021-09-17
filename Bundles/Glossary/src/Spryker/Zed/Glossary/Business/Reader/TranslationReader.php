@@ -26,9 +26,9 @@ class TranslationReader implements TranslationReaderInterface
 
     /**
      * @param string $glossaryKey
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     public function getTranslationsByGlossaryKeyAndLocaleTransfers(string $glossaryKey, array $localeTransfers): array
     {
@@ -40,10 +40,10 @@ class TranslationReader implements TranslationReaderInterface
     }
 
     /**
-     * @param string[] $glossaryKeys
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<string> $glossaryKeys
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     public function getTranslationsByGlossaryKeysAndLocaleTransfers(array $glossaryKeys, array $localeTransfers): array
     {
@@ -55,9 +55,9 @@ class TranslationReader implements TranslationReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getLocaleIsoCodes(array $localeTransfers): array
     {

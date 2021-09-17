@@ -104,7 +104,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     /**
      * @param int $idProductConcrete
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getData(int $idProductConcrete): array
     {
@@ -141,7 +141,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getOptions(): array
     {
@@ -154,8 +154,8 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteLocalizedAttributesTransfers
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $productConcreteLocalizedAttributesTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $productAbstractLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
      *
      * @return bool
      */
@@ -185,8 +185,8 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteAttributes
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractAttributes
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $productConcreteAttributes
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $productAbstractAttributes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productConcreteAttributes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $productAbstractAttributes
      *
      * @return bool
      */
@@ -214,8 +214,8 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfersToCompare
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfersToCompare
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfersToCompare
      *
      * @return bool
      */
@@ -230,7 +230,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      *
      * @return array
      */
@@ -262,7 +262,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
 
     /**
      * @param array $array
-     * @param string[] $exclusions
+     * @param array<string> $exclusions
      *
      * @return array
      */

@@ -29,7 +29,7 @@ class ContentNavigationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentNavigation\Executor\ContentNavigationTermExecutorInterface[]
+     * @return array<\Spryker\Client\ContentNavigation\Executor\ContentNavigationTermExecutorInterface>
      */
     public function getContentNavigationTermExecutorMap(): array
     {

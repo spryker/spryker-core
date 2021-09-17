@@ -47,7 +47,7 @@ class ProductPageSearchBusinessTester extends Actor
     protected $productAbstractTransfer;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     * @var array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected $storeTransfers;
 
@@ -77,7 +77,7 @@ class ProductPageSearchBusinessTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoreTransfers(): array
     {
@@ -85,7 +85,7 @@ class ProductPageSearchBusinessTester extends Actor
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getStoreNames(): array
     {

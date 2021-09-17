@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 class DiscountableItemFilter implements DiscountableItemFilterInterface
 {
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface>
      */
     protected $discountableItemFilterPlugins = [];
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface[] $discountableItemFilterPlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface> $discountableItemFilterPlugins
      */
     public function __construct(array $discountableItemFilterPlugins)
     {

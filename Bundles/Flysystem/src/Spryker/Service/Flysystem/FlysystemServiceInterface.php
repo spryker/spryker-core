@@ -145,7 +145,7 @@ interface FlysystemServiceInterface
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return \Generated\Shared\Transfer\FlysystemResourceTransfer[]
+     * @return array<\Generated\Shared\Transfer\FlysystemResourceTransfer>
      */
     public function listContents($filesystemName, $directory = '', $recursive = false);
 

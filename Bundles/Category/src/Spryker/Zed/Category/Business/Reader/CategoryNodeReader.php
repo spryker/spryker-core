@@ -28,7 +28,7 @@ class CategoryNodeReader implements CategoryNodeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return array<\Generated\Shared\Transfer\NodeTransfer>
      */
     public function getAllNodesByIdCategory(int $idCategory): array
     {

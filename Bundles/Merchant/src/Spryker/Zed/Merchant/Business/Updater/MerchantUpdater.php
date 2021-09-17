@@ -50,7 +50,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
     protected $merchantStatusValidator;
 
     /**
-     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface>
      */
     protected $merchantPostUpdatePlugins;
 
@@ -68,7 +68,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
      * @param \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface $merchantEntityManager
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
      * @param \Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface $merchantStatusValidator
-     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface[] $merchantPostUpdatePlugins
+     * @param array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostUpdatePluginInterface> $merchantPostUpdatePlugins
      * @param \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface $merchantUrlSaver
      * @param \Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface $eventFacade
      */
@@ -190,7 +190,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param int[] $storeIds
+     * @param array<int> $storeIds
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
@@ -213,7 +213,7 @@ class MerchantUpdater implements MerchantUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param int[] $storeIds
+     * @param array<int> $storeIds
      *
      * @return void
      */

@@ -26,7 +26,7 @@ class CategoryNodeDeletePublisherPlugin extends AbstractPlugin implements Publis
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
@@ -41,7 +41,7 @@ class CategoryNodeDeletePublisherPlugin extends AbstractPlugin implements Publis
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSubscribedEvents(): array
     {

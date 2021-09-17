@@ -118,7 +118,7 @@ class CartsRestApiTester extends Actor
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $expectedDiscountTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $expectedDiscountTransfers
      * @param \Generated\Shared\Transfer\RestCartsDiscountsTransfer $actualRestCartsDiscountsTransfer
      *
      * @return bool

@@ -19,7 +19,7 @@ interface ProductDiscontinuedGuiToLocaleFacadeInterface
     public function getLocale($localeName);
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales();
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductMeasurementUnitStorage\Business\Model;
 interface ProductMeasurementUnitStorageWriterInterface
 {
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
      * @return void
      */

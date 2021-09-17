@@ -10,7 +10,7 @@ namespace Spryker\Yves\StepEngine\Dependency\Plugin\Handler;
 class StepHandlerPluginCollection
 {
     /**
-     * @var \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface[]
+     * @var array<\Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface>
      */
     protected $stepHandler = [];
 

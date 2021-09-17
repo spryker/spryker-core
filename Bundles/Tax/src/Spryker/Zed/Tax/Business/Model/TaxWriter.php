@@ -31,7 +31,7 @@ class TaxWriter implements TaxWriterInterface
     protected $taxSettings;
 
     /**
-     * @var \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[]
+     * @var array<\Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface>
      */
     protected $taxChangePlugins;
 
@@ -43,7 +43,7 @@ class TaxWriter implements TaxWriterInterface
     /**
      * @param \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface $taxRepository
-     * @param \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[] $taxChangePlugins
+     * @param array<\Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface> $taxChangePlugins
      */
     public function __construct(
         TaxQueryContainerInterface $queryContainer,

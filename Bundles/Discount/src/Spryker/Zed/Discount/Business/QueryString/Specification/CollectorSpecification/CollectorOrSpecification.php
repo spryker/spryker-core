@@ -34,7 +34,7 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collect(QuoteTransfer $quoteTransfer)
     {
@@ -45,10 +45,10 @@ class CollectorOrSpecification implements CollectorSpecificationInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $leftArray
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $rightArray
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $leftArray
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $rightArray
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     protected function arrayMergeByObject(array $leftArray, array $rightArray)
     {

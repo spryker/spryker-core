@@ -30,12 +30,12 @@ class TopButtonsProvider implements TopButtonsProviderInterface
     ];
 
     /**
-     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface>
      */
     protected $productListTopButtonsExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface[] $productListTopButtonsExpanderPlugins
+     * @param array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTopButtonsExpanderPluginInterface> $productListTopButtonsExpanderPlugins
      */
     public function __construct(array $productListTopButtonsExpanderPlugins)
     {

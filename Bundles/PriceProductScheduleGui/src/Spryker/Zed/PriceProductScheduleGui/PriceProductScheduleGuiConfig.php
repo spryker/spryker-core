@@ -82,7 +82,7 @@ class PriceProductScheduleGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFieldsList(): array
     {

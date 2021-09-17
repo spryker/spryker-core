@@ -41,11 +41,11 @@ class ProductCategoryStorageClient extends AbstractClient implements ProductCate
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer>
      */
     public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName, string $storeName): array
     {

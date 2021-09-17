@@ -38,9 +38,9 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractProductPricesForProductAbstract(array $priceProductTransfers): array
     {
@@ -49,9 +49,9 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
 
     /**
      * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractProductPricesForProductConcrete(int $idProductConcrete, array $priceProductTransfers): array
     {
@@ -68,9 +68,9 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function extractPriceProductVolumeTransfersFromArray(array $priceProductTransfers): array
     {
@@ -86,7 +86,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractVolumePrices(PriceProductTransfer $priceProductTransfer): array
     {
@@ -129,7 +129,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractPriceProductVolumes(PriceProductTransfer $priceProductTransfer): array
     {

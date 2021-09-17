@@ -31,7 +31,7 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getLocalizedProductAbstractNamesByCategory(CategoryTransfer $categoryTransfer, LocaleTransfer $localeTransfer): array
     {

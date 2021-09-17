@@ -18,7 +18,7 @@ interface KeyLoaderPluginInterface
      *
      * @api
      *
-     * @return \League\OAuth2\Server\CryptKey[]
+     * @return array<\League\OAuth2\Server\CryptKey>
      */
     public function loadKeys(): array;
 }

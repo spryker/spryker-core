@@ -63,7 +63,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseException
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DatasetRowColumnValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\DatasetRowColumnValueTransfer>
      */
     public function parseFileToDataTransfers(DatasetFilePathTransfer $filePathTransfer): ArrayObject
     {
@@ -115,7 +115,7 @@ class Reader implements ReaderInterface
      *
      * @throws \Spryker\Zed\Dataset\Business\Exception\DatasetParseFormatException
      *
-     * @return \Generated\Shared\Transfer\DatasetColumnTransfer[]
+     * @return array<\Generated\Shared\Transfer\DatasetColumnTransfer>
      */
     protected function getDatasetColumnTransfers(CsvReaderInterface $readerAdapter): array
     {

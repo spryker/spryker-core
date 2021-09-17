@@ -19,7 +19,7 @@ interface EntityMapperInterface
     /**
      * @param array $productApiDataCollection
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     * @return array<\Orm\Zed\Product\Persistence\SpyProductAbstract>
      */
     public function toEntityCollection(array $productApiDataCollection);
 }

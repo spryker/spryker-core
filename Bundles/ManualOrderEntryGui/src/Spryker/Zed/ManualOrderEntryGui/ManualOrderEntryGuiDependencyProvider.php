@@ -327,7 +327,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[]
+     * @return array<\Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface>
      */
     protected function getPaymentSubFormPlugins(): array
     {
@@ -363,7 +363,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface[]
+     * @return array<\Spryker\Zed\ManualOrderEntryGui\Communication\Plugin\ManualOrderEntryFormPluginInterface>
      */
     protected function getManualOrderEntryFormPlugins(): array
     {
@@ -385,7 +385,7 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ManualOrderEntryGui\Dependency\Plugin\QuoteExpanderPluginInterface>
      */
     protected function getQuoteExpanderPlugins(): array
     {

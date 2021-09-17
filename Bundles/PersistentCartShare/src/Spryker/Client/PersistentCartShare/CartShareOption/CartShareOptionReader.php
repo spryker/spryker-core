@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\CustomerTransfer;
 class CartShareOptionReader implements CartShareOptionReaderInterface
 {
     /**
-     * @var \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface[]
+     * @var array<\Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface>
      */
     protected $cartShareOptionPlugins;
 
     /**
-     * @param \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface[] $cartShareOptionPlugins
+     * @param array<\Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface> $cartShareOptionPlugins
      */
     public function __construct(array $cartShareOptionPlugins)
     {
@@ -27,7 +27,7 @@ class CartShareOptionReader implements CartShareOptionReaderInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getCartShareOptions(?CustomerTransfer $customerTransfer): array
     {

@@ -15,7 +15,7 @@ interface PriceProductStorageToPriceProductFacadeInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPrices($idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
 
@@ -24,12 +24,12 @@ interface PriceProductStorageToPriceProductFacadeInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePrices($idProductConcrete, $idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return array
      */
@@ -39,7 +39,7 @@ interface PriceProductStorageToPriceProductFacadeInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtraction($idProductAbstract, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null);
 
@@ -48,7 +48,7 @@ interface PriceProductStorageToPriceProductFacadeInterface
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesWithoutPriceExtraction(
         $idProductConcrete,
@@ -57,10 +57,10 @@ interface PriceProductStorageToPriceProductFacadeInterface
     );
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(
         array $productAbstractIds,

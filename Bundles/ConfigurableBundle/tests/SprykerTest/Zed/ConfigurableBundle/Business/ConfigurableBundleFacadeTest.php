@@ -1195,7 +1195,7 @@ class ConfigurableBundleFacadeTest extends Unit
             ->getConfigurableBundleTemplate()
             ->getProductImageSets();
 
-        /** @var \ArrayObject|\Generated\Shared\Transfer\ProductImageTransfer[] $productImageTransfers */
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductImageTransfer> $productImageTransfers */
         $productImageTransfers = $productImageSetTransfers->offsetGet(0)->getProductImages();
 
         // Assert

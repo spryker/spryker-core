@@ -12,7 +12,7 @@ interface NavigationNodeReaderInterface
     /**
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\NavigationNodeTransfer[]
+     * @return array<\Generated\Shared\Transfer\NavigationNodeTransfer>
      */
     public function getNavigationNodesFromCmsPageId($idCmsPage);
 }

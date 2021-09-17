@@ -46,7 +46,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getConcreteAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array
     {
@@ -82,7 +82,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array
     {
@@ -97,7 +97,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      * @param string $concreteSku
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getAlternativeProductsByConcreteProductSku(string $concreteSku, string $localeName): array
     {
@@ -113,7 +113,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function getAlternativeProductsByAbstractProductSku(ProductViewTransfer $productViewTransfer, string $localeName): array
     {
@@ -129,7 +129,7 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
      * @param \Generated\Shared\Transfer\ProductAlternativeStorageTransfer $productAlternativeStorage
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     protected function mapProductAlternativeStorageToProductView(
         ProductAlternativeStorageTransfer $productAlternativeStorage,
@@ -205,10 +205,10 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
     }
 
     /**
-     * @param int[] $abstractProductIds
+     * @param array<int> $abstractProductIds
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function findConcreteProductIdsByAbstractProductIds(array $abstractProductIds, string $localeName): array
     {

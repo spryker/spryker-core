@@ -12,16 +12,16 @@ use ArrayObject;
 interface OrderItemsTableExpanderInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getColumnHeaders(): array;
 
     /**
      * @phpstan-return array<int, string[]>
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getColumnCellsContent(ArrayObject $itemTransfers): array;
 }

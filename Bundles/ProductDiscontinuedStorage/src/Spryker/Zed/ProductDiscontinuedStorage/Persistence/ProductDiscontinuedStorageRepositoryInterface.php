@@ -12,22 +12,22 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductDiscontinuedStorageRepositoryInterface
 {
     /**
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
-     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     * @return array<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage>
      */
     public function findProductDiscontinuedStorageEntitiesByIds(array $productDiscontinuedIds): array;
 
     /**
-     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     * @return array<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage>
      */
     public function findAllProductDiscontinuedStorageEntities(): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productDiscontinuedStorageEntityIds
+     * @param array<int> $productDiscontinuedStorageEntityIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductDiscontinuedStorageEntityTransfer>
      */
     public function findFilteredProductDiscontinuedStorageEntities(FilterTransfer $filterTransfer, array $productDiscontinuedStorageEntityIds = []): array;
 }

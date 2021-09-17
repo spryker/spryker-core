@@ -15,12 +15,12 @@ use Traversable;
 class QuoteMerger implements QuoteMergerInterface
 {
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface>
      */
     protected $cartAddItemStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategyPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface> $cartAddItemStrategyPlugins
      */
     public function __construct(array $cartAddItemStrategyPlugins)
     {
@@ -84,7 +84,7 @@ class QuoteMerger implements QuoteMergerInterface
     }
 
     /**
-     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
+     * @param \Traversable<\Generated\Shared\Transfer\ItemTransfer> $cartItems
      *
      * @return array
      */
@@ -110,7 +110,7 @@ class QuoteMerger implements QuoteMergerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $existingItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $existingItems
      * @param int $index
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *

@@ -51,7 +51,7 @@ class SalesConfig extends AbstractBundleConfig
      *
      * @phpstan-return array<string, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPaymentMethodStatemachineMapping()
     {
@@ -127,7 +127,7 @@ class SalesConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSalesDetailExternalBlocksUrls()
     {

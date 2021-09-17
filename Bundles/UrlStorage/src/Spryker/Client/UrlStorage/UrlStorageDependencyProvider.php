@@ -122,7 +122,7 @@ class UrlStorageDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface[]
+     * @return array<\Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface>
      */
     protected function getUrlStorageResourceMapperPlugins()
     {

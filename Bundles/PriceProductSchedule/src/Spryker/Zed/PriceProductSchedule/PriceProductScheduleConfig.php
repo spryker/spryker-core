@@ -106,7 +106,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFieldsList(): array
     {
@@ -126,7 +126,7 @@ class PriceProductScheduleConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFallbackPriceTypeList(): array
     {

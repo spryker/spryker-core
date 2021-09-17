@@ -12,7 +12,7 @@ interface SalesReclamationGuiToOmsFacadeInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 }

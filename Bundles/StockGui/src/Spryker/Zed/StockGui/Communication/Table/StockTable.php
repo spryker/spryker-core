@@ -147,7 +147,7 @@ class StockTable extends AbstractTable
     }
 
     /**
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      *
      * @return string
      */
@@ -168,7 +168,7 @@ class StockTable extends AbstractTable
     /**
      * @param int $idStock
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function createActionColumnButtons(int $idStock): array
     {

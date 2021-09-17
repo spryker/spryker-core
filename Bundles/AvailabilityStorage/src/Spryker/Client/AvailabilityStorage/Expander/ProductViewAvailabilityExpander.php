@@ -18,13 +18,13 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
     protected $availabilityStorageReader;
 
     /**
-     * @var \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface[]
+     * @var array<\Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface>
      */
     protected $availabilityStorageStrategyPlugins;
 
     /**
      * @param \Spryker\Client\AvailabilityStorage\Storage\AvailabilityStorageReaderInterface $availabilityStorageReader
-     * @param \Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface[] $availabilityStorageStrategyPlugins
+     * @param array<\Spryker\Client\AvailabilityStorageExtension\Dependency\Plugin\AvailabilityStorageStrategyPluginInterface> $availabilityStorageStrategyPlugins
      */
     public function __construct(
         AvailabilityStorageReaderInterface $availabilityStorageReader,

@@ -77,7 +77,7 @@ class SecurityOauthUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface[]
+     * @return array<\Spryker\Zed\SecurityOauthUser\Business\Strategy\AuthenticationStrategyInterface>
      */
     public function getAuthenticationStrategyList(): array
     {
@@ -132,7 +132,7 @@ class SecurityOauthUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStrategyPluginInterface>
      */
     public function getOauthUserClientStrategyPlugins(): array
     {
@@ -140,7 +140,7 @@ class SecurityOauthUserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserRestrictionPluginInterface[]
+     * @return array<\Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserRestrictionPluginInterface>
      */
     public function getOauthUserRestrictionPlugins(): array
     {

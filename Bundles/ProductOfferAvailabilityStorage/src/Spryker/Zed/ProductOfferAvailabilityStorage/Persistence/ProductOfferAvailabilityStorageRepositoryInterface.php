@@ -13,23 +13,23 @@ use Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabil
 interface ProductOfferAvailabilityStorageRepositoryInterface
 {
     /**
-     * @param string[] $productOfferStockIds
+     * @param array<string> $productOfferStockIds
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
      */
     public function getProductOfferAvailabilityRequestsByProductOfferStockIds(array $productOfferStockIds): array;
 
     /**
      * @param array $productOfferStockIds
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
      */
     public function getProductOfferAvailabilityRequestsByProductOfferIds(array $productOfferStockIds): array;
 
     /**
      * @param array $omsProductOfferReservationIds
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
      */
     public function getProductOfferAvailabilityRequestsByOmsProductOfferReservationIds(array $omsProductOfferReservationIds): array;
 
@@ -46,9 +46,9 @@ interface ProductOfferAvailabilityStorageRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer>
      */
     public function getFilteredProductOfferAvailabilityStorageEntityTransfers(FilterTransfer $filterTransfer, array $ids): array;
 }

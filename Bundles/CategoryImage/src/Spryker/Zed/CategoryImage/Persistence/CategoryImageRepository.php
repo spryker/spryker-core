@@ -21,7 +21,7 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
      * @param int $idCategory
      * @param array $excludeIdCategoryImageSets
      *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
     public function getCategoryImageSetsByIdCategory(int $idCategory, array $excludeIdCategoryImageSets = []): array
     {
@@ -43,11 +43,11 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
      * @param int $idCategoryImageSet
      * @param array $excludeIdCategoryImage
      *
-     * @return \Generated\Shared\Transfer\CategoryImageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryImageTransfer>
      */
     public function getCategoryImagesByCategoryImageSetId(int $idCategoryImageSet, array $excludeIdCategoryImage = []): array
     {
-        /** @var \Orm\Zed\CategoryImage\Persistence\SpyCategoryImage[]|\Propel\Runtime\Collection\ObjectCollection $categoryImageCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryImage\Persistence\SpyCategoryImage> $categoryImageCollection */
         $categoryImageCollection = SpyCategoryImageQuery::create()
             ->useSpyCategoryImageSetToCategoryImageQuery()
                 ->filterByFkCategoryImageSet($idCategoryImageSet)

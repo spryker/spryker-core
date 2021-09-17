@@ -15,12 +15,12 @@ interface GuiTableConfigInterface
     public function getDefaultDataSourceType(): string;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getDefaultEnabledFeatures(): array;
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getDefaultAvailablePageSizes(): array;
 

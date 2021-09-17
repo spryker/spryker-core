@@ -394,7 +394,7 @@ class TransferValidator implements TransferValidatorInterface
     }
 
     /**
-     * @param string[] $property
+     * @param array<string> $property
      *
      * @return bool
      */
@@ -404,7 +404,7 @@ class TransferValidator implements TransferValidatorInterface
     }
 
     /**
-     * @param string[] $property
+     * @param array<string> $property
      *
      * @return bool
      */
@@ -418,7 +418,7 @@ class TransferValidator implements TransferValidatorInterface
     }
 
     /**
-     * @param string[] $singulars
+     * @param array<string> $singulars
      *
      * @return bool
      */

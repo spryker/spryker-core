@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryPageSearch\Dependency\Facade;
 interface CategoryPageSearchToStoreFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores();
 }

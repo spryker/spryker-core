@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotStorage\Business\Publisher;
 interface CmsSlotStoragePublisherInterface
 {
     /**
-     * @param int[] $cmsSlotIds
+     * @param array<int> $cmsSlotIds
      *
      * @return void
      */

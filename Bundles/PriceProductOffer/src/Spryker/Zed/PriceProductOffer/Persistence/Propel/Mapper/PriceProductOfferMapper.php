@@ -47,9 +47,9 @@ class PriceProductOfferMapper
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $priceProductOfferEntities
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapPriceProductOfferEntitiesToPriceProductTransfers(
         ObjectCollection $priceProductOfferEntities,

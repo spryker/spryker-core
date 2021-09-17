@@ -25,7 +25,7 @@ class OrderCustomReferenceQuoteFieldsAllowedForSavingProviderPlugin extends Abst
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function execute(QuoteTransfer $quoteTransfer): array
     {

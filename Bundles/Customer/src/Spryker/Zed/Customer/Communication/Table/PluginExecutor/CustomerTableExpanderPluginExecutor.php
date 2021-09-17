@@ -13,12 +13,12 @@ namespace Spryker\Zed\Customer\Communication\Table\PluginExecutor;
 class CustomerTableExpanderPluginExecutor implements CustomerTableExpanderPluginExecutorInterface
 {
     /**
-     * @var array|\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface>
      */
     protected $customerTableActionExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface[] $customerTableActionExpanderPlugins
+     * @param array<\Spryker\Zed\CustomerExtension\Dependency\Plugin\CustomerTableActionExpanderPluginInterface> $customerTableActionExpanderPlugins
      */
     public function __construct(array $customerTableActionExpanderPlugins)
     {
@@ -28,7 +28,7 @@ class CustomerTableExpanderPluginExecutor implements CustomerTableExpanderPlugin
     /**
      * @param int $idCustomer
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function executeActionExpanderPlugins(int $idCustomer): array
     {

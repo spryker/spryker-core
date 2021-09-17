@@ -253,9 +253,9 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[]|\ArrayObject $nodeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryNodeIdsFromNodeTransfers(ArrayObject $nodeTransfers): array
     {
@@ -284,7 +284,7 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
     }
 
     /**
-     * @param int[] $extraParentCategoryNodeIdsToAdd
+     * @param array<int> $extraParentCategoryNodeIdsToAdd
      * @param \Generated\Shared\Transfer\NodeTransfer $newExtraParentNodeTransfer
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
@@ -304,7 +304,7 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $existingExtraParentNodeCollection
-     * @param int[] $extraParentNodeIdsToDelete
+     * @param array<int> $extraParentNodeIdsToDelete
      *
      * @return void
      */

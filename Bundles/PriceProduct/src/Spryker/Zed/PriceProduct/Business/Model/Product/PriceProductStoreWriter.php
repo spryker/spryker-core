@@ -313,7 +313,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer[] $priceProductStoreEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer> $priceProductStoreEntityTransfers
      *
      * @return void
      */

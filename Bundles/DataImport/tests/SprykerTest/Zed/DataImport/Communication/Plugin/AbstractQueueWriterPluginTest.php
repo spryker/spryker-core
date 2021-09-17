@@ -123,7 +123,7 @@ class AbstractQueueWriterPluginTest extends Unit
     /**
      * @param int $collectionSize
      *
-     * @return \Generated\Shared\Transfer\DataSetItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DataSetItemTransfer>
      */
     protected function getDataSetItemTransferCollection(int $collectionSize): array
     {

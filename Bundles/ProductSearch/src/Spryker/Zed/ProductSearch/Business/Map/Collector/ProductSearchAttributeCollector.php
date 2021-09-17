@@ -26,7 +26,7 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
     protected $productSearchConfig;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
+     * @var array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer>
      */
     protected static $attributeList;
 
@@ -41,7 +41,7 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeMapTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductSearchAttributeMapTransfer>
      */
     public function getProductSearchAttributeMap()
     {
@@ -62,7 +62,7 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer>
      */
     protected function getAttributeList()
     {
@@ -74,7 +74,7 @@ class ProductSearchAttributeCollector implements ProductSearchAttributeMapCollec
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer[] $availableProductSearchFilterConfigs
+     * @param array<\Generated\Shared\Transfer\FacetConfigTransfer> $availableProductSearchFilterConfigs
      * @param \Generated\Shared\Transfer\ProductSearchAttributeTransfer $productSearchAttributeTransfer
      *
      * @throws \Spryker\Zed\ProductSearch\Business\Exception\InvalidFilterTypeException

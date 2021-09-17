@@ -38,7 +38,7 @@ class ProductLabelRelationPostDeleteBulkProductDiscontinuedPlugin extends Abstra
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductConcreteIds(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): array
     {

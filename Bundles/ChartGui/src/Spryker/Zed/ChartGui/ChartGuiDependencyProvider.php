@@ -66,7 +66,7 @@ class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface[]
+     * @return array<\Spryker\Shared\Chart\Dependency\Plugin\TwigChartFunctionPluginInterface>
      */
     protected function getTwigChartFunctionPlugins(): array
     {
@@ -74,7 +74,7 @@ class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     * @return array<\Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface>
      */
     protected function getChartPlugins(): array
     {

@@ -27,10 +27,10 @@ interface AvailabilityRepositoryInterface
     ): ?ProductConcreteAvailabilityTransfer;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
      */
     public function getMappedProductConcreteAvailabilitiesByProductConcreteIds(
         array $productConcreteIds,
@@ -38,10 +38,10 @@ interface AvailabilityRepositoryInterface
     ): array;
 
     /**
-     * @param string[] $concreteSkus
+     * @param array<string> $concreteSkus
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
      */
     public function findProductConcreteAvailabilityBySkusAndStore(
         array $concreteSkus,
@@ -98,14 +98,14 @@ interface AvailabilityRepositoryInterface
     /**
      * @param string $productAbstractSku
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductConcreteSkusByAbstractProductSku(string $productAbstractSku): array;
 
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array;
 

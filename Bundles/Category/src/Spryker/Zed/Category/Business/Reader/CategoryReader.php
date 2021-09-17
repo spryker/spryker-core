@@ -33,7 +33,7 @@ class CategoryReader implements CategoryReaderInterface
     protected $categoryTreeReader;
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface>
      */
     protected $categoryTransferExpanderPlugins;
 
@@ -41,7 +41,7 @@ class CategoryReader implements CategoryReaderInterface
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      * @param \Spryker\Zed\Category\Business\Model\Category\CategoryHydratorInterface $categoryHydrator
      * @param \Spryker\Zed\Category\Business\Tree\CategoryTreeReaderInterface $categoryTreeReader
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[] $categoryTransferExpanderPlugins
+     * @param array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface> $categoryTransferExpanderPlugins
      */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,

@@ -42,9 +42,9 @@ class MerchantProductOptionFilter implements MerchantProductOptionFilterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     public function filterProductOptions(array $productOptionTransfers): array
     {
@@ -68,9 +68,9 @@ class MerchantProductOptionFilter implements MerchantProductOptionFilterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractProductOptionGroupIds(array $productOptionTransfers): array
     {
@@ -91,9 +91,9 @@ class MerchantProductOptionFilter implements MerchantProductOptionFilterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     protected function getProductOptionsGroupedByIdGroup(array $productOptionTransfers): array
     {

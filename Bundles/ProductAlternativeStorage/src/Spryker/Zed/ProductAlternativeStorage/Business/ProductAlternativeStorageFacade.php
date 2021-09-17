@@ -22,7 +22,7 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -69,9 +69,9 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productAlternativeStorageIds
+     * @param array<int> $productAlternativeStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(
         FilterTransfer $filterTransfer,
@@ -87,9 +87,9 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productReplacementForStorageIds
+     * @param array<int> $productReplacementForStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
         FilterTransfer $filterTransfer,

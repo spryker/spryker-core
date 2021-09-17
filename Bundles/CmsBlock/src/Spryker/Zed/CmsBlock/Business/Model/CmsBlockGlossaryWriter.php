@@ -380,7 +380,7 @@ class CmsBlockGlossaryWriter implements CmsBlockGlossaryWriterInterface
     }
 
     /**
-     * @param string[] $glossaryKeys
+     * @param array<string> $glossaryKeys
      *
      * @return void
      */

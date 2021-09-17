@@ -41,7 +41,7 @@ class GlossaryToLocaleBridge implements GlossaryToLocaleInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales()
     {

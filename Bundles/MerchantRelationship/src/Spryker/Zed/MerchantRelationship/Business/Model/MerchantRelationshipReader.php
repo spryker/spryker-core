@@ -84,7 +84,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     /**
      * @param int $idMerchantRelationship
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array
     {
@@ -94,7 +94,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
      */
     public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array
     {

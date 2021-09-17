@@ -62,7 +62,7 @@ class SharedCartPersistenceTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer>
      */
     public function getQuotePermissionGroupTransferCollection(): array
     {

@@ -59,9 +59,9 @@ class AvailabilityStorageMapper implements AvailabilityStorageMapperInterface
 
     /**
      * @param array $productConcreteAvailabilityDataItems
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[] $productConcreteAvailabilityTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer> $productConcreteAvailabilityTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
      */
     protected function mapProductConcreteAvailabilityDataToProductConcreteAvailabilityTransfers(
         array $productConcreteAvailabilityDataItems,

@@ -46,7 +46,7 @@ class QuoteWriter implements QuoteWriterInterface
     protected $quoteValidator;
 
     /**
-     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[]
+     * @var array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface>
      */
     protected $quoteExpandBeforeCreatePlugins;
 
@@ -62,7 +62,7 @@ class QuoteWriter implements QuoteWriterInterface
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface $quoteValidator
      * @param \Spryker\Zed\Quote\Business\Quote\QuoteFieldsConfiguratorInterface $quoteFieldsConfigurator
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface[] $quoteExpandBeforeCreatePlugins
+     * @param array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpandBeforeCreatePluginInterface> $quoteExpandBeforeCreatePlugins
      */
     public function __construct(
         QuoteEntityManagerInterface $quoteEntityManager,

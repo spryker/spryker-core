@@ -127,7 +127,7 @@ class PriceProductFilterTest extends Unit
     }
 
     /**
-     * @param string[] $itemFieldsForIsSameItemComparison
+     * @param array<string> $itemFieldsForIsSameItemComparison
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilter
      */
@@ -167,7 +167,7 @@ class PriceProductFilterTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface>
      */
     protected function createCartItemQuantityCounterStrategyPlugins()
     {
@@ -175,7 +175,7 @@ class PriceProductFilterTest extends Unit
     }
 
     /**
-     * @param string[] $itemFieldsForIsSameItemComparison
+     * @param array<string> $itemFieldsForIsSameItemComparison
      *
      * @return \Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface
      */
@@ -188,7 +188,7 @@ class PriceProductFilterTest extends Unit
     }
 
     /**
-     * @param string[] $itemFieldsForIsSameItemComparison
+     * @param array<string> $itemFieldsForIsSameItemComparison
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
      */

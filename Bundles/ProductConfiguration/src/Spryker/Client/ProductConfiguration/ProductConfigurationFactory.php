@@ -135,7 +135,7 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface[]
+     * @return array<\Spryker\Client\ProductConfiguration\Validator\ProductConfiguratorResponseValidatorInterface>
      */
     public function createProductConfiguratorCheckSumResponseValidators(): array
     {
@@ -249,7 +249,7 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderPluginInterface>
      */
     public function getProductConfiguratorRequestExpanderPlugins(): array
     {
@@ -281,7 +281,7 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationPriceExtractorPluginInterface[]
+     * @return array<\Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationPriceExtractorPluginInterface>
      */
     public function getPriceProductConfigurationPriceExtractorPlugins(): array
     {

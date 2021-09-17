@@ -147,9 +147,9 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
     /**
      * @param array $attributes
      * @param string $columnName
-     * @param string[][] $data
+     * @param array<string[]> $data
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function appendAttributes(
         array $attributes,
@@ -173,7 +173,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
      * @param string $orderBy
      * @param string $orderDirection
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function sortAttributesArray(array $attributes, string $orderBy, string $orderDirection): array
     {
@@ -220,7 +220,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSuperAttributeNames(ProductConcreteTransfer $productConcreteTransfer): array
     {

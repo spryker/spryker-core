@@ -69,7 +69,7 @@ interface CategoryGuiToCategoryFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array;
 }

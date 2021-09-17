@@ -23,7 +23,7 @@ class OmsDiscountConnectorToDiscountBridge implements OmsDiscountConnectorToDisc
     }
 
     /**
-     * @param string[] $codes
+     * @param array<string> $codes
      *
      * @return int
      */

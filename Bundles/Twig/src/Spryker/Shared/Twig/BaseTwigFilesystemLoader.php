@@ -24,7 +24,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
     protected const COMPONENT_DEFINITION_INDEX_THEME = 2;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $paths;
 
@@ -39,7 +39,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
     protected $templateNameExtractor;
 
     /**
-     * @param string[] $paths
+     * @param array<string> $paths
      * @param \Spryker\Shared\Twig\Cache\CacheInterface $cache
      * @param \Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface $templateNameExtractor
      */
@@ -82,7 +82,7 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
     /**
      * @param string $moduleOrganization
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPathsForBundle($moduleOrganization): array
     {

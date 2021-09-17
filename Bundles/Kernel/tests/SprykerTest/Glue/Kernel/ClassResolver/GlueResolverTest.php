@@ -36,7 +36,7 @@ class GlueResolverTest extends Unit
     protected $tester;
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function resolverDataProvider(): array
     {
@@ -49,7 +49,7 @@ class GlueResolverTest extends Unit
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function resolverExceptionDataProvider(): array
     {

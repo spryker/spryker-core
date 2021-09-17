@@ -15,7 +15,7 @@ use Spryker\Shared\Queue\QueueConfig;
 class QueueProxy implements QueueProxyInterface
 {
     /**
-     * @var \Spryker\Client\Queue\Model\Adapter\AdapterInterface[]
+     * @var array<\Spryker\Client\Queue\Model\Adapter\AdapterInterface>
      */
     protected $queueAdapters;
 
@@ -35,7 +35,7 @@ class QueueProxy implements QueueProxyInterface
     protected static $queueAdapterCache = [];
 
     /**
-     * @param \Spryker\Client\Queue\Model\Adapter\AdapterInterface[] $queueAdapters
+     * @param array<\Spryker\Client\Queue\Model\Adapter\AdapterInterface> $queueAdapters
      * @param array $queueConfiguration
      * @param array $queueDefaultConfiguration
      */
@@ -74,7 +74,7 @@ class QueueProxy implements QueueProxyInterface
 
     /**
      * @param string $queueName
-     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer[] $queueSendMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueSendMessageTransfer> $queueSendMessageTransfers
      *
      * @return void
      */
@@ -90,7 +90,7 @@ class QueueProxy implements QueueProxyInterface
      * @param int $chunkSize
      * @param array $options
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function receiveMessages($queueName, $chunkSize = 100, array $options = [])
     {

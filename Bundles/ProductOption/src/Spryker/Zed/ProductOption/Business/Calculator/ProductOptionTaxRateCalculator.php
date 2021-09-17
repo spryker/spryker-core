@@ -69,9 +69,9 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddressTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function recalculateByShippingAddressAndItemTransfers(?AddressTransfer $shippingAddressTransfer, ArrayObject $itemTransfers): ArrayObject
     {
@@ -98,9 +98,9 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getAllProductOptionValueIds(ArrayObject $itemTransfers)
     {
@@ -113,10 +113,10 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param array $taxRates
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function setItemsTaxRate(ArrayObject $itemTransfers, array $taxRates): ArrayObject
     {
@@ -147,7 +147,7 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductOptionValueIds(ItemTransfer $itemTransfer)
     {
@@ -173,10 +173,10 @@ class ProductOptionTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param int[] $productOptionValueIds
+     * @param array<int> $productOptionValueIds
      * @param string $countryIso2Code
      *
-     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
+     * @return array<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod>
      */
     protected function findTaxRatesByIdOptionValueAndCountryIso2Code(array $productOptionValueIds, $countryIso2Code)
     {

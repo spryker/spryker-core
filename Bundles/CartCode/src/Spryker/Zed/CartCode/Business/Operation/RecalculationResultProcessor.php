@@ -18,12 +18,12 @@ class RecalculationResultProcessor implements RecalculationResultProcessorInterf
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
-     * @var \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
+     * @var array<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface>
      */
     protected $cartCodePlugins;
 
     /**
-     * @param \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
+     * @param array<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface> $cartCodePlugins
      */
     public function __construct(array $cartCodePlugins = [])
     {

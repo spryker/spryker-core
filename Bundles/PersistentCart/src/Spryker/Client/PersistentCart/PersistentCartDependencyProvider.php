@@ -147,7 +147,7 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface[]
+     * @return array<\Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface>
      */
     protected function getQuoteUpdatePlugins(): array
     {
@@ -155,7 +155,7 @@ class PersistentCartDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
+     * @return array<\Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface>
      */
     protected function getChangeRequestExtendPlugins(): array
     {

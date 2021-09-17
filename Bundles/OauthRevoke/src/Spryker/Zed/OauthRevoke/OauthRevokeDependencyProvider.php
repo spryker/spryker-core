@@ -71,7 +71,7 @@ class OauthRevokeDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
+     * @return array<\Spryker\Zed\OauthRevokeExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface>
      */
     protected function getOauthUserIdentifierFilterPlugins(): array
     {

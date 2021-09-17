@@ -43,7 +43,7 @@ class QueueMessageProcessor implements QueueMessageProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
      * @return array
      */

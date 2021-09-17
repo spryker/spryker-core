@@ -48,7 +48,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
      * @module Store
      * @module Locale
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer>
      */
     public function getAllCategoryNodeAggregationsOrderedByDescendant(): array
     {
@@ -106,7 +106,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getAllCategoryNodeIds(): array
     {
@@ -121,7 +121,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     /**
      * @param int $idCategoryNode
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getAllCategoryIdsByCategoryNodeId(int $idCategoryNode): array
     {
@@ -140,9 +140,9 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     /**
      * @module Locale
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer>
      */
     public function getProductAbstractLocalizedAttributes(array $productAbstractIds): array
     {
@@ -161,9 +161,9 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryTransfer>
      */
     public function getProductCategoryWithCategoryNodes(array $productAbstractIds): array
     {
@@ -186,9 +186,9 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]>
      */
     public function getMappedProductAbstractCategoryStorages(array $productAbstractIds): array
     {
@@ -207,9 +207,9 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
@@ -224,9 +224,9 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     /**
      * @param int $offset
      * @param int $limit
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
         int $offset,
@@ -253,7 +253,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryTransfer>
      */
     public function getProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array
     {

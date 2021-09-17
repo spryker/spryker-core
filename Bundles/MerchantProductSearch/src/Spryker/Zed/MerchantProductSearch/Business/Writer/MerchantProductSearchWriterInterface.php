@@ -10,14 +10,14 @@ namespace Spryker\Zed\MerchantProductSearch\Business\Writer;
 interface MerchantProductSearchWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
     public function writeCollectionByIdMerchantEvents(array $eventTransfers): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */

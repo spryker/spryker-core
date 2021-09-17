@@ -21,7 +21,7 @@ class PriceCartConnectorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getItemFieldsForIsSameItemComparison()
     {

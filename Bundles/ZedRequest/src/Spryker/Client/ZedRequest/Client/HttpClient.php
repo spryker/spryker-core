@@ -22,7 +22,7 @@ class HttpClient extends AbstractHttpClient implements HttpClientInterface
     protected $config;
 
     /**
-     * @var \Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface[]
+     * @var array<\Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface>
      */
     protected $headerExpanderPlugins;
 

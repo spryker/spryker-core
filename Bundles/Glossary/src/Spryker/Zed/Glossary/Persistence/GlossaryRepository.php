@@ -19,13 +19,13 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
 {
     /**
      * @param string $glossaryKey
-     * @param string[] $localeIsoCodes
+     * @param array<string> $localeIsoCodes
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $glossaryKey, array $localeIsoCodes): array
     {
-        /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]|\Propel\Runtime\Collection\ObjectCollection $glossaryTranslationEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation> $glossaryTranslationEntities */
         $glossaryTranslationEntities = $this->getFactory()->createGlossaryTranslationQuery()
             ->useGlossaryKeyQuery()
                 ->filterByKey($glossaryKey)
@@ -43,14 +43,14 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
     }
 
     /**
-     * @param string[] $glossaryKeys
-     * @param string[] $localeIsoCodes
+     * @param array<string> $glossaryKeys
+     * @param array<string> $localeIsoCodes
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     public function getTranslationsByGlossaryKeysAndLocaleIsoCodes(array $glossaryKeys, array $localeIsoCodes): array
     {
-        /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]|\Propel\Runtime\Collection\ObjectCollection $glossaryTranslationEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation> $glossaryTranslationEntities */
         $glossaryTranslationEntities = $this->getFactory()->createGlossaryTranslationQuery()
             ->useGlossaryKeyQuery()
                 ->filterByKey_In($glossaryKeys)
@@ -68,9 +68,9 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
     }
 
     /**
-     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[]|\Propel\Runtime\Collection\ObjectCollection $glossaryTranslationEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation> $glossaryTranslationEntities
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     protected function mapGlossaryTranslationEntitiesToTranslationTransfers(ObjectCollection $glossaryTranslationEntities): array
     {
@@ -90,9 +90,9 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
     }
 
     /**
-     * @param string[] $glossaryKeys
+     * @param array<string> $glossaryKeys
      *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
     public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array
     {
@@ -108,9 +108,9 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Glossary\Persistence\SpyGlossaryKey[] $glossaryKeyEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Glossary\Persistence\SpyGlossaryKey> $glossaryKeyEntities
      *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
     protected function mapGlossaryKeyEntitiesToGlossaryKeyTransfers(ObjectCollection $glossaryKeyEntities): array
     {

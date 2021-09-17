@@ -49,7 +49,7 @@ interface DecisionRulePluginInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes();
 }

@@ -34,11 +34,11 @@ class ProductImagePageDataLoaderExpanderPlugin extends AbstractPlugin implements
     {
         $images = [];
         $imageSets = $productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getImages();
-        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $imageSetsByLocale */
+        /** @var array<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $imageSetsByLocale */
         $imageSetsByLocale = $imageSets[$productData['fk_locale']] ?? [];
 
         foreach ($imageSetsByLocale as $imageSet) {
-            /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage[] $imagesCollection */
+            /** @var array<\Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage> $imagesCollection */
             $imagesCollection = $imageSet->getSpyProductImageSetToProductImages();
             $images = array_merge($images, $this->generateImages($imagesCollection));
         }
@@ -47,7 +47,7 @@ class ProductImagePageDataLoaderExpanderPlugin extends AbstractPlugin implements
     }
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage[] $imagesCollection
+     * @param array<\Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage> $imagesCollection
      *
      * @return array
      */

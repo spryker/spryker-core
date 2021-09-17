@@ -25,13 +25,13 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
     protected $wishlistFacade;
 
     /**
-     * @var \Spryker\Zed\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesDeleteStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesDeleteStrategyPluginInterface>
      */
     protected $restWishlistItemsAttributesDeleteStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\WishlistsRestApi\Dependency\Facade\WishlistsRestApiToWishlistFacadeInterface $wishlistFacade
-     * @param \Spryker\Zed\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesDeleteStrategyPluginInterface[] $restWishlistItemsAttributesDeleteStrategyPlugins
+     * @param array<\Spryker\Zed\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesDeleteStrategyPluginInterface> $restWishlistItemsAttributesDeleteStrategyPlugins
      */
     public function __construct(
         WishlistsRestApiToWishlistFacadeInterface $wishlistFacade,
@@ -167,7 +167,7 @@ class WishlistItemDeleter implements WishlistItemDeleterInterface
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
      * @param \Generated\Shared\Transfer\WishlistItemRequestTransfer $wishlistItemRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
      *
      * @return void
      */

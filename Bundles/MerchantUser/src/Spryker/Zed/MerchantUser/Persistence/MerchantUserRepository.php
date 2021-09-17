@@ -41,7 +41,7 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     /**
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantUserTransfer>
      */
     public function find(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array
     {
@@ -64,7 +64,7 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
      *
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantUserTransfer>
      */
     public function getMerchantUsers(MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer): array
     {

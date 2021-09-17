@@ -86,7 +86,7 @@ class ValidatorResourceFileLoader implements TranslationResourceFileLoaderInterf
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getFilePaths(): array
     {

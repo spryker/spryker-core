@@ -23,7 +23,7 @@ interface ProductOfferStockRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      */
     public function find(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject;
 }

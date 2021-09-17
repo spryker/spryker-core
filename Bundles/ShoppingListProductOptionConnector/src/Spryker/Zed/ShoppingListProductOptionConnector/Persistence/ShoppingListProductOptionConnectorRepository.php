@@ -21,7 +21,7 @@ class ShoppingListProductOptionConnectorRepository extends AbstractRepository im
     /**
      * @param int $idShoppingListItem
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getShoppingListItemProductOptionIdsByIdShoppingListItem(int $idShoppingListItem): array
     {
@@ -38,7 +38,7 @@ class ShoppingListProductOptionConnectorRepository extends AbstractRepository im
      * @module ProductOption
      * @module ShoppingList
      *
-     * @param int[] $shoppingListItemIds
+     * @param array<int> $shoppingListItemIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer
      */

@@ -32,7 +32,7 @@ interface StoreFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores();
 
@@ -83,7 +83,7 @@ interface StoreFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
 
@@ -93,7 +93,7 @@ interface StoreFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCountries();
 
@@ -118,9 +118,9 @@ interface StoreFacadeInterface
      *
      * @api
      *
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array;
 
@@ -143,7 +143,7 @@ interface StoreFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresAvailableForCurrentPersistence(): array;
 }

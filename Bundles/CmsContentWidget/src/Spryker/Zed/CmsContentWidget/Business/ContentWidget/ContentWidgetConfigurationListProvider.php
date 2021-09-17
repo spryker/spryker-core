@@ -14,12 +14,12 @@ use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProv
 class ContentWidgetConfigurationListProvider implements ContentWidgetConfigurationListProviderInterface
 {
     /**
-     * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[]
+     * @var array<\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface>
      */
     protected $contentWidgetConfigurationProviders = [];
 
     /**
-     * @param \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[] $contentWidgetConfigurationProviders
+     * @param array<\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface> $contentWidgetConfigurationProviders
      */
     public function __construct(array $contentWidgetConfigurationProviders)
     {

@@ -49,7 +49,7 @@ class MerchantPortalApplicationDependencyProvider extends AbstractBundleDependen
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getMerchantPortalApplicationPlugins(): array
     {

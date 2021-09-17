@@ -64,7 +64,7 @@ class AvailabilityDataHelper extends Module
     /**
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
-     * @param string|int|float|null $quantity
+     * @param string|float|int|null $quantity
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer
      */

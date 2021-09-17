@@ -76,7 +76,7 @@ class TriggerEventFromCsvFileConsole extends Console
     protected $outputTable;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getMandatoryColumns(): array
     {
@@ -219,7 +219,7 @@ class TriggerEventFromCsvFileConsole extends Console
      */
     protected function getStartFromOption(): int
     {
-        /** @var bool|string|null $option */
+        /** @var string|bool|null $option */
         $option = $this->input->getOption(static::OPTION_START_FROM);
 
         return max((int)$option - 1, 0);

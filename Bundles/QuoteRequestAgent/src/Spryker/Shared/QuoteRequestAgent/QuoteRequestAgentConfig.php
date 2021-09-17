@@ -50,7 +50,7 @@ class QuoteRequestAgentConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCancelableStatuses(): array
     {
@@ -65,7 +65,7 @@ class QuoteRequestAgentConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRevisableStatuses(): array
     {

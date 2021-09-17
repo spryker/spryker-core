@@ -42,7 +42,7 @@ class ProductConcreteMeasurementUnitEventResourceBulkRepositoryPlugin extends Ab
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

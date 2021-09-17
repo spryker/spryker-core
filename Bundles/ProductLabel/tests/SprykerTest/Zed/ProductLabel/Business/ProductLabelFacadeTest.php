@@ -256,7 +256,7 @@ class ProductLabelFacadeTest extends Unit
 
         $this->assertSame(1, $persistedProductLabelTransfer->getLocalizedAttributesCollection()->count());
 
-        /** @var \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $localizedAttributesList */
+        /** @var array<\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer> $localizedAttributesList */
         $localizedAttributesList = $persistedProductLabelTransfer->getLocalizedAttributesCollection()->getArrayCopy();
         $this->assertSame($productLabelTransfer->getIdProductLabel(), $localizedAttributesList[0]->getFkProductLabel());
         $this->assertSame($localeTransfer->getIdLocale(), $localizedAttributesList[0]->getFkLocale());

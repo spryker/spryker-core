@@ -17,7 +17,7 @@ use Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface;
 class PaymentMethodReader implements PaymentMethodReaderInterface
 {
     /**
-     * @var \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface[]
+     * @var array<\Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface>
      */
     protected $paymentMethodFilterPlugins;
 
@@ -37,7 +37,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
     protected $paymentRepository;
 
     /**
-     * @param \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface[] $paymentMethodFilterPlugins
+     * @param array<\Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentMethodFilterPluginInterface> $paymentMethodFilterPlugins
      * @param \Spryker\Zed\Payment\PaymentConfig $paymentConfig
      * @param \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface $paymentRepository
@@ -111,7 +111,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
     }
 
     /**
-     * @param string[] $infrastructuralMethodNames
+     * @param array<string> $infrastructuralMethodNames
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
@@ -155,7 +155,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsFromPersistence
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPersistentPaymentMethodKeys(PaymentMethodsTransfer $paymentMethodsFromPersistence): array
     {

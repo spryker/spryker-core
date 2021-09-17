@@ -41,7 +41,7 @@ class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollecti
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $localizedAttributesTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer> $localizedAttributesTransferCollection
      *
      * @return void
      */
@@ -53,7 +53,7 @@ class LocalizedAttributesCollectionWriter implements LocalizedAttributesCollecti
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $localizedAttributesTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer> $localizedAttributesTransferCollection
      *
      * @return void
      */

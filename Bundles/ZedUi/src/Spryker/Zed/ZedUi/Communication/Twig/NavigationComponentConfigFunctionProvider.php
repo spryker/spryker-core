@@ -67,7 +67,7 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
     /**
      * @param array $navigationItems
      *
-     * @return \Spryker\Zed\ZedUi\Communication\Twig\NavigationItem[]
+     * @return array<\Spryker\Zed\ZedUi\Communication\Twig\NavigationItem>
      */
     protected function getMenuTree(array $navigationItems = []): array
     {

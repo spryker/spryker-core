@@ -13,7 +13,7 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 class ApiItemMapper implements ApiItemMapperInterface
 {
     /**
-     * @param array|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $data
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|array $data
      * @param string|null $id
      *
      * @return \Generated\Shared\Transfer\ApiItemTransfer

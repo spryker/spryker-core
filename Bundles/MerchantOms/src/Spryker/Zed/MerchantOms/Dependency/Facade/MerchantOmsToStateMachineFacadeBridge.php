@@ -64,7 +64,7 @@ class MerchantOmsToStateMachineFacadeBridge implements MerchantOmsToStateMachine
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProcessStateNames(StateMachineProcessTransfer $stateMachineProcessTransfer): array
     {
@@ -72,9 +72,9 @@ class MerchantOmsToStateMachineFacadeBridge implements MerchantOmsToStateMachine
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems)
     {
@@ -84,7 +84,7 @@ class MerchantOmsToStateMachineFacadeBridge implements MerchantOmsToStateMachine
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer)
     {

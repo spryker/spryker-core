@@ -33,7 +33,7 @@ abstract class AbstractCodeBucketConfig implements CodeBucketConfigInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     abstract public function getCodeBuckets(): array;
 

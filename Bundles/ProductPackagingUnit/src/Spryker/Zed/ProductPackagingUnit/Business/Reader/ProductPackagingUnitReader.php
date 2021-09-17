@@ -25,9 +25,9 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function filterProductsWithoutPackagingUnit(array $productConcreteTransfers): array
     {
@@ -42,10 +42,10 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
-     * @param int[] $productPackagingUnitCounts
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param array<int> $productPackagingUnitCounts
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function getEligibleProductConcreteTransfers(array $productConcreteTransfers, array $productPackagingUnitCounts): array
     {
@@ -63,9 +63,9 @@ class ProductPackagingUnitReader implements ProductPackagingUnitReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractProductConcreteIdsFromProductConcreteTransfers(array $productConcreteTransfers): array
     {

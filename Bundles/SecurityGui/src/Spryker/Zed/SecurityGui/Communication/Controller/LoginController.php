@@ -19,7 +19,7 @@ class LoginController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -41,7 +41,7 @@ class LoginController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\OauthAuthenticationLinkTransfer[]
+     * @return array<\Generated\Shared\Transfer\OauthAuthenticationLinkTransfer>
      */
     protected function executeAuthenticationLinkPlugins(): array
     {

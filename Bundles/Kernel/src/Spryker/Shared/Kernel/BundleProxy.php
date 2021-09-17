@@ -36,17 +36,17 @@ class BundleProxy
     protected $moduleName;
 
     /**
-     * @var \Spryker\Shared\Kernel\Locator\LocatorInterface[]
+     * @var array<\Spryker\Shared\Kernel\Locator\LocatorInterface>
      */
     protected $locators = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\Locator\LocatorMatcherInterface[]
+     * @var array<\Spryker\Shared\Kernel\Locator\LocatorMatcherInterface>
      */
     protected $locatorMatcherMap = [];
 
     /**
-     * @var \Spryker\Shared\Kernel\Locator\LocatorInterface[]
+     * @var array<\Spryker\Shared\Kernel\Locator\LocatorInterface>
      */
     protected $locatorMatcherByMethodNameMap = [];
 

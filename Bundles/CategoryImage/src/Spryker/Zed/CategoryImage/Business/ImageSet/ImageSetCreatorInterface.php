@@ -15,7 +15,7 @@ interface ImageSetCreatorInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
     public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): ArrayObject;
 }

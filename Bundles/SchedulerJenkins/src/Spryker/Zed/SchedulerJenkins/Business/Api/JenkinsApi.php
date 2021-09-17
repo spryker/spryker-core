@@ -236,7 +236,7 @@ class JenkinsApi implements JenkinsApiInterface
      *
      * @throws \Spryker\Zed\SchedulerJenkins\Business\Api\Exception\InvalidJenkinsConfiguration
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCrumbIssuer(ConfigurationProviderInterface $configurationProvider): array
     {

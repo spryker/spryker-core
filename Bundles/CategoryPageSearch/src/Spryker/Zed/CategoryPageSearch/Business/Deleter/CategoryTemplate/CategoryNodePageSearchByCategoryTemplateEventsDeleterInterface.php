@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryPageSearch\Business\Deleter\CategoryTemplate;
 interface CategoryNodePageSearchByCategoryTemplateEventsDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

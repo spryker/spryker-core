@@ -37,7 +37,7 @@ class FuzzyQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param mixed[] $requestParameters
+     * @param array<mixed> $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */

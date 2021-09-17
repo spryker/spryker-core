@@ -63,7 +63,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfig
      * @param array $requestParameters
      *
-     * @return \Elastica\Query\AbstractQuery[]
+     * @return array<\Elastica\Query\AbstractQuery>
      */
     protected function getFacetFilters(FacetConfigBuilderInterface $facetConfig, array $requestParameters = [])
     {
@@ -152,7 +152,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     /**
      * @param \Elastica\Query $query
      * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfig
-     * @param \Elastica\Query\AbstractQuery[] $facetFilters
+     * @param array<\Elastica\Query\AbstractQuery> $facetFilters
      * @param array $requestParameters
      *
      * @return void
@@ -182,7 +182,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
     /**
      * @param \Elastica\Query $query
-     * @param \Elastica\Query\AbstractQuery[] $facetFilters
+     * @param array<\Elastica\Query\AbstractQuery> $facetFilters
      *
      * @return void
      */
@@ -196,7 +196,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     }
 
     /**
-     * @param \Elastica\Query\AbstractQuery[] $facetFilters
+     * @param array<\Elastica\Query\AbstractQuery> $facetFilters
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param \Elastica\Query\BoolQuery $boolQuery
      * @param \Elastica\Aggregation\AbstractAggregation $facetAggregation
@@ -232,7 +232,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
     /**
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      * @param \Elastica\Query\BoolQuery $boolQuery
-     * @param \Elastica\Query\AbstractQuery[] $facetFilters
+     * @param array<\Elastica\Query\AbstractQuery> $facetFilters
      *
      * @return \Elastica\Query\BoolQuery
      */

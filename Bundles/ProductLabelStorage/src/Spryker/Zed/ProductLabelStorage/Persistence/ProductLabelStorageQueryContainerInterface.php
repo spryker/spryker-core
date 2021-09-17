@@ -18,7 +18,7 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery
      */
@@ -40,7 +40,7 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
@@ -52,7 +52,7 @@ interface ProductLabelStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $productLabelProductAbstractIds
+     * @param array<int> $productLabelProductAbstractIds
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */

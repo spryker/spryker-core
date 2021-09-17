@@ -52,7 +52,7 @@ interface RestReturnResponseBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createReturnItemRestResourcesFromReturnTransfer(ReturnTransfer $returnTransfer): array;
 }

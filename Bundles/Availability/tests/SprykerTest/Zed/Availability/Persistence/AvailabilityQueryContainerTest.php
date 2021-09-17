@@ -66,7 +66,7 @@ class AvailabilityQueryContainerTest extends Unit
     protected $storeTransfer;
 
     /**
-     * @var \Generated\Shared\Transfer\StockTransfer[]
+     * @var array<\Generated\Shared\Transfer\StockTransfer>
      */
     protected $stockTransfers = [];
 

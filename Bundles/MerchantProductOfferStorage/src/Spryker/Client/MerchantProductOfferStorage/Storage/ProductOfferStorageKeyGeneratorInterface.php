@@ -10,16 +10,16 @@ namespace Spryker\Client\MerchantProductOfferStorage\Storage;
 interface ProductOfferStorageKeyGeneratorInterface
 {
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return string[]
+     * @return array<string>
      */
     public function generateProductConcreteProductOffersKeys(array $productConcreteSkus): array;
 
     /**
-     * @param string[] $merchantProductOfferReferences
+     * @param array<string> $merchantProductOfferReferences
      *
-     * @return string[]
+     * @return array<string>
      */
     public function generateMerchantProductOfferKeys(array $merchantProductOfferReferences): array;
 

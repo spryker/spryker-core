@@ -17,7 +17,7 @@ use Spryker\Zed\ShoppingListDataImport\Business\DataSet\ShoppingListItemDataSetI
 class ProductConcreteSkuValidationStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $productConcreteSkuCache = [];
 

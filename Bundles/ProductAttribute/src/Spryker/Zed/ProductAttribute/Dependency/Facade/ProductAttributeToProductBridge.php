@@ -91,7 +91,7 @@ class ProductAttributeToProductBridge implements ProductAttributeToProductInterf
      * @deprecated Method will be removed without replacement.
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @return int
      */
@@ -102,7 +102,7 @@ class ProductAttributeToProductBridge implements ProductAttributeToProductInterf
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @return int
      */
@@ -154,7 +154,7 @@ class ProductAttributeToProductBridge implements ProductAttributeToProductInterf
     /**
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getConcreteProductsByAbstractProductId($idProductAbstract)
     {
@@ -185,7 +185,7 @@ class ProductAttributeToProductBridge implements ProductAttributeToProductInterf
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param array $attributeCollection
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
     {

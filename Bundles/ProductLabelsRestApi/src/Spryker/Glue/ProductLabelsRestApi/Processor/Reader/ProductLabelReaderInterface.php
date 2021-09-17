@@ -23,15 +23,15 @@ interface ProductLabelReaderInterface
      * @param string $sku
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductLabelsByAbstractSku(string $sku, string $localeName): array;
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductLabelsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array;
 }

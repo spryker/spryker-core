@@ -22,7 +22,7 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
     /**
      * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductOfferIds(MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer): array
     {

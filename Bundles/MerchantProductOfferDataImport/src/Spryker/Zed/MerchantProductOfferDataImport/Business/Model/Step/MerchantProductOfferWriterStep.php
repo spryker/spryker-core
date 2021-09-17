@@ -36,7 +36,7 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
     protected const DEFAULT_APPROVAL_STATUS = 'denied';
 
     /**
-     * @var \Generated\Shared\Transfer\EventEntityTransfer[]
+     * @var array<\Generated\Shared\Transfer\EventEntityTransfer>
      */
     protected $entityEventTransfers = [];
 

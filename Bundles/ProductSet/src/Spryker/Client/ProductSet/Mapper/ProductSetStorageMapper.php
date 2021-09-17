@@ -70,7 +70,7 @@ class ProductSetStorageMapper implements ProductSetStorageMapperInterface
     /**
      * @param array $images
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StorageProductImageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StorageProductImageTransfer>
      */
     protected function mapStorageProductImageCollection(array $images)
     {

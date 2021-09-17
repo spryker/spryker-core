@@ -41,7 +41,7 @@ class SalesPaymentWriter implements SalesPaymentWriterInterface
     {
         $idSalesOrder = $saveOrderTransfer->getIdSalesOrderOrFail();
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer, $idSalesOrder) {
+        $this->getTransactionHandler()->handleTransaction(function () use ($quoteTransfer, $idSalesOrder): void {
             $this->executeSavePaymentMethodsTransaction($quoteTransfer, $idSalesOrder);
         });
     }
@@ -61,7 +61,7 @@ class SalesPaymentWriter implements SalesPaymentWriterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentTransfer>
      */
     protected function getPaymentTransfers(QuoteTransfer $quoteTransfer): array
     {
@@ -80,7 +80,7 @@ class SalesPaymentWriter implements SalesPaymentWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PaymentTransfer[] $paymentTransfers
+     * @param array<\Generated\Shared\Transfer\PaymentTransfer> $paymentTransfers
      * @param int $idSalesOrder
      *
      * @return void

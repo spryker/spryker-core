@@ -71,7 +71,7 @@ class FileFormDataProvider
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function getAvailableLocales()
     {
@@ -84,7 +84,7 @@ class FileFormDataProvider
      */
     protected function getAllowedMimeTypes()
     {
-        /** @var \Generated\Shared\Transfer\MimeTypeTransfer[] $mimeTypes */
+        /** @var array<\Generated\Shared\Transfer\MimeTypeTransfer> $mimeTypes */
         $mimeTypes = $this->fileManagerFacade
             ->findAllowedMimeTypes()
             ->getItems()

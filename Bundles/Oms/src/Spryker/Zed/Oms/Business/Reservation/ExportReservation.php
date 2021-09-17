@@ -34,14 +34,14 @@ class ExportReservation implements ExportReservationInterface
     protected $omsQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[]
+     * @var array<\Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface>
      */
     protected $reservationExportPlugins;
 
     /**
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $omsQueryContainer
-     * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface[] $reservationExportPlugins
+     * @param array<\Spryker\Zed\Oms\Dependency\Plugin\ReservationExportPluginInterface> $reservationExportPlugins
      */
     public function __construct(
         OmsToStoreFacadeInterface $storeFacade,
@@ -166,7 +166,7 @@ class ExportReservation implements ExportReservationInterface
      * @param int $lastExportedVersion
      * @param int $maxVisibleVersion
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersion>
      */
     protected function findReservations($lastExportedVersion, $maxVisibleVersion)
     {

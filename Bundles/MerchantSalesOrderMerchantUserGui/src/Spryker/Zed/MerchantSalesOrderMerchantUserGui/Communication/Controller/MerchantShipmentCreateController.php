@@ -34,11 +34,11 @@ class MerchantShipmentCreateController extends AbstractMerchantShipmentControlle
     protected const MESSAGE_SHIPMENT_NOT_FOUND = 'Shipment for merchant reference %s not found.';
 
     /**
-     * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {

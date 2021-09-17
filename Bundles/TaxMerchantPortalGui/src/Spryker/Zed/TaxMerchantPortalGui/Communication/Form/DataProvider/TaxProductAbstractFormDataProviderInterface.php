@@ -10,7 +10,7 @@ namespace Spryker\Zed\TaxMerchantPortalGui\Communication\Form\DataProvider;
 interface TaxProductAbstractFormDataProviderInterface
 {
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getTaxChoices(): array;
 }

@@ -36,7 +36,7 @@ interface CommentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CommentsRequestTransfer $commentsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentThreadTransfer>
      */
     public function getCommentThreads(CommentsRequestTransfer $commentsRequestTransfer): array;
 

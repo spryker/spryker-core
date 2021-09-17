@@ -24,9 +24,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ProductOfferAvailabilityStorageRepository extends AbstractRepository implements ProductOfferAvailabilityStorageRepositoryInterface
 {
     /**
-     * @param string[] $productOfferStockIds
+     * @param array<string> $productOfferStockIds
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
      */
     public function getProductOfferAvailabilityRequestsByProductOfferStockIds(array $productOfferStockIds): array
     {
@@ -48,9 +48,9 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     }
 
     /**
-     * @param int[] $productOfferIds
+     * @param array<int> $productOfferIds
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
      */
     public function getProductOfferAvailabilityRequestsByProductOfferIds(array $productOfferIds): array
     {
@@ -72,9 +72,9 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     }
 
     /**
-     * @param int[] $omsProductOfferReservationIds
+     * @param array<int> $omsProductOfferReservationIds
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
      */
     public function getProductOfferAvailabilityRequestsByOmsProductOfferReservationIds(array $omsProductOfferReservationIds): array
     {
@@ -112,9 +112,9 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductOfferAvailabilityStorageEntityTransfer>
      */
     public function getFilteredProductOfferAvailabilityStorageEntityTransfers(FilterTransfer $filterTransfer, array $ids): array
     {
@@ -134,7 +134,7 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
      *
      * @param array $productOfferAvailabilityRequestsData
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer>
      */
     protected function convertProductOfferAvailabilityRequestsDataToTransfers(array $productOfferAvailabilityRequestsData): array
     {

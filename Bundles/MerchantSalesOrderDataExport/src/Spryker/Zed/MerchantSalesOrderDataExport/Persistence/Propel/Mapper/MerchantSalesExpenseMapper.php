@@ -44,7 +44,7 @@ class MerchantSalesExpenseMapper
     /**
      * @phpstan-return array<string, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFieldMapping(): array
     {
@@ -52,9 +52,9 @@ class MerchantSalesExpenseMapper
     }
 
     /**
-     * @param mixed[][] $merchantSalesExpenseRows
+     * @param array<mixed[]> $merchantSalesExpenseRows
      *
-     * @return mixed[][]
+     * @return array<mixed[]>
      */
     public function mapMerchantSalesExpenseDataByField(array $merchantSalesExpenseRows): array
     {

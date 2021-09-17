@@ -159,7 +159,7 @@ class AttributeMapTest extends Unit
     }
 
     /**
-     * @return array[]
+     * @return array<array>
      */
     public function generateAttributeMapBulkDataProvider(): array
     {

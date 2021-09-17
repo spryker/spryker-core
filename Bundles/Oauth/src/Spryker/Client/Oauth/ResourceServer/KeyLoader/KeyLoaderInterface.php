@@ -10,7 +10,7 @@ namespace Spryker\Client\Oauth\ResourceServer\KeyLoader;
 interface KeyLoaderInterface
 {
     /**
-     * @return \League\OAuth2\Server\CryptKey[]
+     * @return array<\League\OAuth2\Server\CryptKey>
      */
     public function loadKeys(): array;
 }

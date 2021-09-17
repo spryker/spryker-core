@@ -16,7 +16,7 @@ interface RouterEnhancerAwareInterface
      *
      * @api
      *
-     * @param \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[] $routerEnhancerPlugins
+     * @param array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface> $routerEnhancerPlugins
      *
      * @return void
      */

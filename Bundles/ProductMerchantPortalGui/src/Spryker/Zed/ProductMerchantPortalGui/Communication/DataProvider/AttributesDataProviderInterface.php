@@ -13,18 +13,18 @@ use Generated\Shared\Transfer\MerchantProductTransfer;
 interface AttributesDataProviderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getProductAttributesData(array $productManagementAttributeTransfers): array;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getExistingConcreteProductData(
         MerchantProductTransfer $merchantProductTransfer,

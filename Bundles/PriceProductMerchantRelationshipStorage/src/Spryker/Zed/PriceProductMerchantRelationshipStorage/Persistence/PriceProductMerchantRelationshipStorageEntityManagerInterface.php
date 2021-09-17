@@ -34,7 +34,7 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     ): void;
 
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage[] $priceProductAbstractMerchantRelationshipStorageEntities
+     * @param array<\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductAbstractMerchantRelationshipStorage> $priceProductAbstractMerchantRelationshipStorageEntities
      *
      * @return void
      */
@@ -63,7 +63,7 @@ interface PriceProductMerchantRelationshipStorageEntityManagerInterface
     ): void;
 
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[] $priceProductConcreteMerchantRelationshipStorageEntities
+     * @param array<\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage> $priceProductConcreteMerchantRelationshipStorageEntities
      *
      * @return void
      */

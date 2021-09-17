@@ -47,7 +47,7 @@ class FormDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface[]
+     * @return array<\Spryker\Shared\FormExtension\Dependency\Plugin\FormPluginInterface>
      */
     protected function getFormPlugins(): array
     {

@@ -19,7 +19,7 @@ class PriceProductStorageFacade extends AbstractFacade implements PriceProductSt
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class PriceProductStorageFacade extends AbstractFacade implements PriceProductSt
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -47,7 +47,7 @@ class PriceProductStorageFacade extends AbstractFacade implements PriceProductSt
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -61,7 +61,7 @@ class PriceProductStorageFacade extends AbstractFacade implements PriceProductSt
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

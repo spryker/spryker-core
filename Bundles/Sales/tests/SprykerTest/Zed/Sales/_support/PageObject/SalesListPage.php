@@ -35,7 +35,7 @@ class SalesListPage
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function grabOrderIdsFromGrid(): array
     {

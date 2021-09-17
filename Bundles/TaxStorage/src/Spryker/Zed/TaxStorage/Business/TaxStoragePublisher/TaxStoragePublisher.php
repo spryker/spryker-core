@@ -44,7 +44,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     }
 
     /**
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
      * @return void
      */
@@ -56,7 +56,7 @@ class TaxStoragePublisher implements TaxStoragePublisherInterface
     }
 
     /**
-     * @param int[] $taxRateIds
+     * @param array<int> $taxRateIds
      *
      * @return void
      */

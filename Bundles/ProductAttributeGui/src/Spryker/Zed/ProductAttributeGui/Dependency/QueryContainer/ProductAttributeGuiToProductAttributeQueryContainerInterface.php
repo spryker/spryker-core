@@ -15,7 +15,7 @@ interface ProductAttributeGuiToProductAttributeQueryContainerInterface
     public function queryProductAttributeKey();
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */

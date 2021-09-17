@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductRelationStorage\Business\Writer;
 interface ProductRelationStorageWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -19,7 +19,7 @@ interface ProductRelationStorageWriterInterface
     ): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -28,14 +28,14 @@ interface ProductRelationStorageWriterInterface
     ): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
     public function writeProductRelationStorageCollectionByProductRelationEvents(array $eventTransfers): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -44,7 +44,7 @@ interface ProductRelationStorageWriterInterface
     ): void;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -57,7 +57,7 @@ interface ProductRelationStorageWriterInterface
      *   {@link \Spryker\Zed\ProductRelationStorage\Business\Writer\ProductRelationStorageWriter::writeProductRelationStorageCollectionByProductRelationProductAbstractEvents()}
      *   instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

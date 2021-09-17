@@ -48,7 +48,7 @@ class AvailabilityStorageFacade extends AbstractFacade implements AvailabilitySt
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class AvailabilityStorageFacade extends AbstractFacade implements AvailabilitySt
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

@@ -23,7 +23,7 @@ interface ProductRelationStorageClientInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function findRelatedProducts($idProductAbstract, $localeName, string $storeName);
 
@@ -38,7 +38,7 @@ interface ProductRelationStorageClientInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName);
 
@@ -52,7 +52,7 @@ interface ProductRelationStorageClientInterface
      * @param int $idProductAbstract
      * @param string $storeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findRelatedAbstractProductIds(int $idProductAbstract, string $storeName): array;
 
@@ -65,7 +65,7 @@ interface ProductRelationStorageClientInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array;
 }

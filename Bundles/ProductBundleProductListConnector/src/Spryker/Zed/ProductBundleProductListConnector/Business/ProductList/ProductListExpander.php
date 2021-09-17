@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\ProductListTransfer;
 class ProductListExpander implements ProductListExpanderInterface
 {
     /**
-     * @var array|\Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListTypeExpanderInterface[]
+     * @var array<\Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListTypeExpanderInterface>
      */
     protected $productListTypeExpanderList;
 
     /**
-     * @param \Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListTypeExpanderInterface[] $productListTypeExpanderList
+     * @param array<\Spryker\Zed\ProductBundleProductListConnector\Business\ProductList\Type\ProductListTypeExpanderInterface> $productListTypeExpanderList
      */
     public function __construct(array $productListTypeExpanderList)
     {

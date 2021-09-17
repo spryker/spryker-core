@@ -194,7 +194,7 @@ class MerchantSalesOrderMapper
     /**
      * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities
      *
-     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $merchantSalesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities
      * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer

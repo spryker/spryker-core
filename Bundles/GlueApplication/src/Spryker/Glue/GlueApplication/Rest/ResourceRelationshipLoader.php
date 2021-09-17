@@ -27,7 +27,7 @@ class ResourceRelationshipLoader implements ResourceRelationshipLoaderInterface
     /**
      * @param string $resourceName
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[]
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
      */
     public function load(string $resourceName): array
     {

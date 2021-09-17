@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductBundleStorage\Dependency\Client;
 interface ProductBundleStorageToStorageClientInterface
 {
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

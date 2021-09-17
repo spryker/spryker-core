@@ -49,7 +49,7 @@ class StorageInstanceBuilder
     protected const STORAGE_REDIS_SCHEME = 'STORAGE_REDIS:STORAGE_REDIS_SCHEME';
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface[]|\Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface[]
+     * @var array<\Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadInterface|\Spryker\Zed\Collector\Business\Storage\Adapter\KeyValue\ReadWriteInterface>
      */
     protected static $storageInstances = [];
 

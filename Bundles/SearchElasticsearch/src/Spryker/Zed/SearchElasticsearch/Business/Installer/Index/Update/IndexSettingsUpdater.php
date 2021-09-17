@@ -84,7 +84,7 @@ class IndexSettingsUpdater implements InstallerInterface
      * @param \Elastica\Index $index
      * @param \Psr\Log\LoggerInterface $logger
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSettings(IndexDefinitionTransfer $indexDefinitionTransfer, Index $index, LoggerInterface $logger): array
     {
@@ -118,10 +118,10 @@ class IndexSettingsUpdater implements InstallerInterface
 
     /**
      * @param string $indexState
-     * @param string[] $settings
+     * @param array<string> $settings
      * @param \Psr\Log\LoggerInterface $logger
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterSettingsByIndexState(string $indexState, array $settings, LoggerInterface $logger): array
     {
@@ -201,7 +201,7 @@ class IndexSettingsUpdater implements InstallerInterface
     }
 
     /**
-     * @param string[] $settings
+     * @param array<string> $settings
      *
      * @return bool
      */

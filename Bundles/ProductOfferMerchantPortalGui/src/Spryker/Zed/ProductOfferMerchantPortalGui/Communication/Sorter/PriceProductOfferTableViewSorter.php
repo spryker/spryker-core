@@ -20,7 +20,7 @@ class PriceProductOfferTableViewSorter implements PriceProductOfferTableViewSort
     protected const DIRECTION_ASC = 'asc';
 
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStrategy\PriceProductOfferTableView\PriceProductOfferTableViewComparisonStrategyInterface[]
+     * @var array<\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStrategy\PriceProductOfferTableView\PriceProductOfferTableViewComparisonStrategyInterface>
      */
     protected $priceProductComparisonStrategies;
 
@@ -31,7 +31,7 @@ class PriceProductOfferTableViewSorter implements PriceProductOfferTableViewSort
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStrategy\PriceProductOfferTableView\PriceProductOfferTableViewComparisonStrategyInterface $defaultPriceProductComparisonStrategy
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStrategy\PriceProductOfferTableView\PriceProductOfferTableViewComparisonStrategyInterface[] $priceProductComparisonStrategies
+     * @param array<\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStrategy\PriceProductOfferTableView\PriceProductOfferTableViewComparisonStrategyInterface> $priceProductComparisonStrategies
      */
     public function __construct(
         PriceProductOfferTableViewComparisonStrategyInterface $defaultPriceProductComparisonStrategy,

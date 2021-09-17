@@ -31,7 +31,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     public const DEFAULT_SORT_PARAM_KEY = 'sort';
 
     /**
-     * @var \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @var array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     protected $sortConfigTransfers = [];
 
@@ -77,7 +77,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     public function getAll()
     {

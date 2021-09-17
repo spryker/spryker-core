@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\ProductD
 interface ProductAbstractRelationReaderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer>
      */
     public function findProductLabelProductAbstractRelationChanges(): array;
 }

@@ -66,7 +66,7 @@ class ProductPackagingUnitReservationHandler implements ProductPackagingUnitRese
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function aggregateProductPackagingUnitReservation(
         string $sku,

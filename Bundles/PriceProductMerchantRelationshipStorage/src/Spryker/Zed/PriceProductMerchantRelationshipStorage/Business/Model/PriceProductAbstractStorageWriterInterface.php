@@ -19,21 +19,21 @@ interface PriceProductAbstractStorageWriterInterface
     public function publishByBusinessUnitProducts(array $businessUnitProducts): void;
 
     /**
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
      * @return void
      */
     public function publishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void;
 
     /**
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param array<int> $priceProductMerchantRelationshipIds
      *
      * @return void
      */
     public function publishAbstractPriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

@@ -14,7 +14,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 abstract class AbstractRequiredFieldsValidatorStep implements DataImportStepInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     abstract public function getRequiredFieldList(): array;
 

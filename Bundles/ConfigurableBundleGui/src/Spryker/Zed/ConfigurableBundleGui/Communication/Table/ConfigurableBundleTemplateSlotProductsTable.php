@@ -154,7 +154,7 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getConfigurableBundleTemplateSlotProductIds(): array
     {

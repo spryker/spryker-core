@@ -90,7 +90,7 @@ class MerchantCheckoutValidator implements MerchantCheckoutValidatorInterface
         if (!$merchantReferences) {
             return $merchantTransfers;
         }
-        /** @var string[] $merchantReferences */
+        /** @var array<string> $merchantReferences */
         $merchantReferences = array_unique($merchantReferences);
 
         $merchantCollectionTransfer = $this->merchantFacade->get(

@@ -15,7 +15,7 @@ interface ChartFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getChartTypes(): array;
 

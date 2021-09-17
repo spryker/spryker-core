@@ -10,14 +10,14 @@ namespace Spryker\Zed\FileManagerStorage\Business\Storage;
 interface FileManagerStorageWriterInterface
 {
     /**
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      *
      * @return bool
      */
     public function publish(array $fileIds);
 
     /**
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      *
      * @return bool
      */

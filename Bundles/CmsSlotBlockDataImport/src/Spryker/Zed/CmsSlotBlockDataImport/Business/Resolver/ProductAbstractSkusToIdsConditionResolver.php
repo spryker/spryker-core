@@ -22,7 +22,7 @@ class ProductAbstractSkusToIdsConditionResolver implements ConditionResolverInte
     protected const BULK_SELECT_CHUNK_SIZE = 1000;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $productAbstractIdsBuffer = [];
 
@@ -41,9 +41,9 @@ class ProductAbstractSkusToIdsConditionResolver implements ConditionResolverInte
     }
 
     /**
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIdsFromSkus(array $productAbstractSkus): array
     {
@@ -72,12 +72,12 @@ class ProductAbstractSkusToIdsConditionResolver implements ConditionResolverInte
     }
 
     /**
-     * @param string[] $productAbstractSkus
-     * @param int[] $productAbstractIds
+     * @param array<string> $productAbstractSkus
+     * @param array<int> $productAbstractIds
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIdsFromDb(array $productAbstractSkus, array $productAbstractIds): array
     {

@@ -329,7 +329,7 @@ class ProductReviewTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
      *
-     * @return string|\DateTime
+     * @return \DateTime|string
      */
     protected function getCreatedAt(SpyProductReview $productReviewEntity)
     {

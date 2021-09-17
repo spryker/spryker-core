@@ -62,9 +62,9 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
 
     /**
      * @param int $parentIdCategoryNode
-     * @param int[] $storeIds
+     * @param array<int> $storeIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function filterOutStoreIdsMissingInParentCategoryStoreRelation(int $parentIdCategoryNode, array $storeIds): array
     {

@@ -241,7 +241,7 @@ class UsersTable extends AbstractTable
     /**
      * @param array $user
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateUsersTableExpanderPluginsActionButtons(array $user)
     {

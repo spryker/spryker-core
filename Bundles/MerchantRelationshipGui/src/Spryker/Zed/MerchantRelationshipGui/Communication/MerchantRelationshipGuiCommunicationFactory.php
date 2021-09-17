@@ -120,7 +120,7 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin\MerchantRelationshipCreateFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin\MerchantRelationshipCreateFormExpanderPluginInterface>
      */
     public function getMerchantRelationshipCreateFormExpanderPlugins(): array
     {
@@ -128,7 +128,7 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin\MerchantRelationshipEditFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\MerchantRelationshipGuiExtension\Dependency\Plugin\MerchantRelationshipEditFormExpanderPluginInterface>
      */
     public function getMerchantRelationshipEditFormExpanderPlugins(): array
     {

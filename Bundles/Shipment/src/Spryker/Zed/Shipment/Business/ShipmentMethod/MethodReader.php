@@ -46,7 +46,7 @@ class MethodReader implements MethodReaderInterface
     protected $methodDeliveryTimeReader;
 
     /**
-     * @var array|\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
+     * @var array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface>
      */
     protected $shipmentMethodFilters;
 
@@ -57,7 +57,7 @@ class MethodReader implements MethodReaderInterface
 
     /**
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface[] $shipmentMethodFilters
+     * @param array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface> $shipmentMethodFilters
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodAvailabilityCheckerInterface $methodAvailabilityChecker
      * @param \Spryker\Zed\Shipment\Business\ShipmentMethod\MethodPriceReaderInterface $methodPriceReader
@@ -121,7 +121,7 @@ class MethodReader implements MethodReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
      */
@@ -147,7 +147,7 @@ class MethodReader implements MethodReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer
@@ -173,7 +173,7 @@ class MethodReader implements MethodReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      *
      * @return void
      */
@@ -200,10 +200,10 @@ class MethodReader implements MethodReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface $shipmentMethodFilter
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     protected function applyShipmentFilterWithShipmentGroup(
         QuoteTransfer $quoteTransfer,
@@ -225,7 +225,7 @@ class MethodReader implements MethodReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $activeShipmentMethodTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentMethodTransfer> $activeShipmentMethodTransfers
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer|null $shipmentGroupTransfer
      *
@@ -324,7 +324,7 @@ class MethodReader implements MethodReaderInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupCollection
+     * @param iterable<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupCollection
      * @param string $shipmentHash
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer

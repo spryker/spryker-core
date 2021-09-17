@@ -17,14 +17,14 @@ class SynchronizationDataBulkRepositoryPluginIterator extends AbstractSynchroniz
     protected $plugin;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $filterIds;
 
     /**
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface $plugin
      * @param int $chunkSize
-     * @param int[] $ids
+     * @param array<int> $ids
      */
     public function __construct(SynchronizationDataBulkRepositoryPluginInterface $plugin, int $chunkSize, array $ids = [])
     {

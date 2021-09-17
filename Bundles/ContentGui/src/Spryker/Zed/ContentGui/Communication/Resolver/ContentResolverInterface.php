@@ -21,7 +21,7 @@ interface ContentResolverInterface
     public function getContentPlugin(string $termKey): ContentPluginInterface;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getTermKeys(): array;
 }

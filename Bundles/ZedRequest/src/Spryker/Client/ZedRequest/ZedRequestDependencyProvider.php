@@ -121,7 +121,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
      * Key value pair of mata data provider plugins, array key is the index key of transfer in
      * Spryker\Shared\ZedRequest\Client\AbstractRequest::metaTransfers, you can read back by this key in Zed.
      *
-     * @return \Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface[]
+     * @return array<\Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface>
      */
     protected function getMetaDataProviderPlugins()
     {
@@ -143,7 +143,7 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ZedRequestExtension\Dependency\Plugin\HeaderExpanderPluginInterface>
      */
     protected function getHeaderExpanderPlugins(): array
     {

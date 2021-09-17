@@ -17,10 +17,10 @@ interface PriceProductsMergerInterface
      *
      * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function merge(
         ArrayObject $priceProductTransfers,

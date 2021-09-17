@@ -113,7 +113,7 @@ interface PropelFacadeInterface
      *
      * @api
      *
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     public function getConsoleCommands();
 

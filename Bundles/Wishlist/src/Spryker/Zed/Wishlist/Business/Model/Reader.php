@@ -55,17 +55,17 @@ class Reader implements ReaderInterface
     protected $wishlistRepository;
 
     /**
-     * @var \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistReloadItemsPluginInterface[]
+     * @var array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistReloadItemsPluginInterface>
      */
     protected $wishlistReloadItemsPlugins;
 
     /**
-     * @var array|\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemsValidatorPluginInterface[]
+     * @var array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemsValidatorPluginInterface>
      */
     protected $wishlistItemsValidatorPlugins;
 
     /**
-     * @var \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface>
      */
     protected $wishlistItemExpanderPlugins;
 
@@ -74,9 +74,9 @@ class Reader implements ReaderInterface
      * @param \Spryker\Zed\Wishlist\Dependency\QueryContainer\WishlistToProductInterface $productQueryContainer
      * @param \Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapperInterface $transferMapper
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface $wishlistRepository
-     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistReloadItemsPluginInterface[] $wishlistReloadItemsPlugins
-     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemsValidatorPluginInterface[] $wishlistItemsValidatorPlugins
-     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface[] $wishlistItemExpanderPlugins
+     * @param array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistReloadItemsPluginInterface> $wishlistReloadItemsPlugins
+     * @param array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemsValidatorPluginInterface> $wishlistItemsValidatorPlugins
+     * @param array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistItemExpanderPluginInterface> $wishlistItemExpanderPlugins
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
@@ -142,7 +142,7 @@ class Reader implements ReaderInterface
 
         $itemPaginationModel = $this->getWishlistOverviewPaginationModel($wishlistOverviewRequestTransfer);
         $wishlistPaginationTransfer = $this->updatePaginationTransfer($wishlistPaginationTransfer, $itemPaginationModel);
-        /** @var \Orm\Zed\Wishlist\Persistence\SpyWishlistItem[]|\Propel\Runtime\Collection\ObjectCollection $wishlistItemCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem> $wishlistItemCollection */
         $wishlistItemCollection = $itemPaginationModel->getResults();
         $wishlistItems = $this->transferMapper->convertWishlistItemCollection($wishlistItemCollection);
 
@@ -269,7 +269,7 @@ class Reader implements ReaderInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
      *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItem[]|\Propel\Runtime\Util\PropelModelPager
+     * @return \Propel\Runtime\Util\PropelModelPager<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem>
      */
     protected function getWishlistOverviewPaginationModel(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
@@ -310,11 +310,9 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer>
-     *
      * @param int $idWishlist
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\WishlistItemMetaTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer>
      */
     protected function createWishlistItemMetaCollection($idWishlist)
     {
@@ -336,9 +334,9 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
+     * @param array<\Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\WishlistItemTransfer>
      */
     protected function expandProductId(array $wishlistItemCollection)
     {
@@ -356,9 +354,9 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $itemCollection
+     * @param array<\Generated\Shared\Transfer\WishlistItemTransfer> $itemCollection
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function getProductCollection(array $itemCollection)
     {
@@ -373,7 +371,7 @@ class Reader implements ReaderInterface
     /**
      * @phpstan-return array<int, string>
      *
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $itemCollection
+     * @param array<\Generated\Shared\Transfer\WishlistItemTransfer> $itemCollection
      *
      * @return array
      */

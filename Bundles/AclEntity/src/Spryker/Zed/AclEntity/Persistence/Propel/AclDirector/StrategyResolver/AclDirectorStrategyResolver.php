@@ -18,7 +18,7 @@ use Spryker\Zed\AclEntity\Persistence\Sorter\AclEntityRuleCollectionTransferSort
 class AclDirectorStrategyResolver implements AclDirectorStrategyResolverInterface
 {
     /**
-     * @var array|\Closure[]
+     * @var array<\Closure>
      */
     protected $strategyContainer;
 
@@ -33,7 +33,7 @@ class AclDirectorStrategyResolver implements AclDirectorStrategyResolverInterfac
     protected $aclEntityRuleCollectionTransferSorter;
 
     /**
-     * @param \Closure[] $strategyContainer
+     * @param array<\Closure> $strategyContainer
      * @param \Spryker\Zed\AclEntity\Persistence\Filter\AclEntityRuleCollectionTransferFilterInterface $aclEntityRuleCollectionTransferFilter
      * @param \Spryker\Zed\AclEntity\Persistence\Sorter\AclEntityRuleCollectionTransferSorterInterface $aclEntityRuleCollectionTransferSorter
      */

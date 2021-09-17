@@ -13,7 +13,7 @@ interface PriceProductMerchantRelationshipConcreteReaderInterface
      * @param int $idProductAbstract
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findPriceMerchantRelationshipConcrete(int $idProductAbstract, int $idCompanyBusinessUnit): array;
 }

@@ -37,9 +37,9 @@ class ProductOfferStorageKeyGenerator implements ProductOfferStorageKeyGenerator
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return string[]
+     * @return array<string>
      */
     public function generateProductConcreteProductOffersKeys(array $productConcreteSkus): array
     {
@@ -53,9 +53,9 @@ class ProductOfferStorageKeyGenerator implements ProductOfferStorageKeyGenerator
     }
 
     /**
-     * @param string[] $merchantProductOfferReferences
+     * @param array<string> $merchantProductOfferReferences
      *
-     * @return string[]
+     * @return array<string>
      */
     public function generateMerchantProductOfferKeys(array $merchantProductOfferReferences): array
     {

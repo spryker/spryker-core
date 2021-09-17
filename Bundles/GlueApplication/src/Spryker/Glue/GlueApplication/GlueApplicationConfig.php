@@ -111,7 +111,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCorsAllowedHeaders(): array
     {
@@ -129,7 +129,7 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSecurityHeaders(): array
     {

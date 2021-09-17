@@ -14,7 +14,7 @@ interface CategoryNodeExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function extractCategoryNodeIdsFromNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer): array;
 }

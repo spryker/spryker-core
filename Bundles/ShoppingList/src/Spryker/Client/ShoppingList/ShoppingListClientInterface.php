@@ -374,7 +374,7 @@ interface ShoppingListClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductViewTransfer[] $shoppingListItemProductViews
+     * @param array<\Generated\Shared\Transfer\ProductViewTransfer> $shoppingListItemProductViews
      *
      * @return int
      */

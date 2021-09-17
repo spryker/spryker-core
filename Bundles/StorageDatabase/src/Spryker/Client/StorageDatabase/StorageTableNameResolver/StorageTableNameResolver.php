@@ -24,7 +24,7 @@ EOT;
     protected $config;
 
     /**
-     * @var string[][]
+     * @var array<string[]>
      */
     protected $resourceNameToStorageTableMap;
 
@@ -142,7 +142,7 @@ EOT;
     /**
      * @param string $resourceName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStorageTableNamePartsForResourceName(string $resourceName): array
     {

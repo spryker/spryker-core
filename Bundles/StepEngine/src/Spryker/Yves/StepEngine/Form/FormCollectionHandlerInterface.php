@@ -15,7 +15,7 @@ interface FormCollectionHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Symfony\Component\Form\FormInterface[]
+     * @return array<\Symfony\Component\Form\FormInterface>
      */
     public function getForms(AbstractTransfer $quoteTransfer);
 

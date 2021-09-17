@@ -10,7 +10,7 @@ namespace Spryker\Zed\ConfigurableBundleStorage\Business\Unpublisher;
 interface ConfigurableBundleStorageUnpublisherInterface
 {
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */

@@ -55,7 +55,7 @@ class DiscountStoreRelationWriter implements DiscountStoreRelationWriterInterfac
     /**
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer)
     {
@@ -67,7 +67,7 @@ class DiscountStoreRelationWriter implements DiscountStoreRelationWriterInterfac
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idDiscount
      *
      * @return void
@@ -83,7 +83,7 @@ class DiscountStoreRelationWriter implements DiscountStoreRelationWriterInterfac
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idDiscount
      *
      * @return void
@@ -102,7 +102,7 @@ class DiscountStoreRelationWriter implements DiscountStoreRelationWriterInterfac
     /**
      * @param int $idDiscount
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStores($idDiscount)
     {

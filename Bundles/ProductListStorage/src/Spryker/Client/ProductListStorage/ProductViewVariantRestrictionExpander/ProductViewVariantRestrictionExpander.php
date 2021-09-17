@@ -71,7 +71,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
 
     /**
      * @param array $attributeVariants
-     * @param int[] $restrictedProductConcreteIds
+     * @param array<int> $restrictedProductConcreteIds
      *
      * @return array
      */
@@ -123,10 +123,10 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     }
 
     /**
-     * @param int[] $productConcreteIds
-     * @param int[] $restrictedProductConcreteIds
+     * @param array<int> $productConcreteIds
+     * @param array<int> $restrictedProductConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function filterProductConcreteIds(array $productConcreteIds, array $restrictedProductConcreteIds): array
     {
@@ -134,9 +134,9 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getRestrictedProductConcreteIds(array $productConcreteIds): array
     {
@@ -262,7 +262,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
 
     /**
      * @param array $attributeVariantValue
-     * @param int[] $restrictedProductIds
+     * @param array<int> $restrictedProductIds
      *
      * @return bool
      */

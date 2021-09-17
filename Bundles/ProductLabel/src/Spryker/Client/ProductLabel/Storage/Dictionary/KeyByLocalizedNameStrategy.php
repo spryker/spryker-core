@@ -14,7 +14,7 @@ class KeyByLocalizedNameStrategy implements KeyStrategyInterface
     /**
      * @param \Generated\Shared\Transfer\StorageProductLabelTransfer $storageProductLabelTransfer
      *
-     * @return int|string
+     * @return string|int
      */
     public function getDictionaryKey(StorageProductLabelTransfer $storageProductLabelTransfer)
     {

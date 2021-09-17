@@ -67,7 +67,7 @@ class SslPostAddRouteManipulatorPlugin extends AbstractPlugin implements PostAdd
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSslExcludedRouteNames(): array
     {

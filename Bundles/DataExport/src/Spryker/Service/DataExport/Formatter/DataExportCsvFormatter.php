@@ -85,9 +85,9 @@ class DataExportCsvFormatter implements DataExportFormatterInterface
     }
 
     /**
-     * @param string[] $rowData
+     * @param array<string> $rowData
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterOutNewlines(array $rowData): array
     {

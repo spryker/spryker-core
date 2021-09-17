@@ -121,7 +121,7 @@ class CompanyBusinessUnitTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer[]|\ArrayObject $customerCompanyBusinessUnitTreeNodes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CompanyBusinessUnitTreeNodeTransfer> $customerCompanyBusinessUnitTreeNodes
      *
      * @return array
      */

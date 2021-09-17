@@ -25,7 +25,7 @@ class CodeBucketConfig implements CodeBucketConfigInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCodeBuckets(): array
     {

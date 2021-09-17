@@ -63,7 +63,7 @@ class ConfigurableBundleStoragePublisher implements ConfigurableBundleStoragePub
     }
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */

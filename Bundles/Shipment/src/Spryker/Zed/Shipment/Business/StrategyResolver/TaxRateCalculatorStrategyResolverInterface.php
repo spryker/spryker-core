@@ -15,7 +15,7 @@ use Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface;
 interface TaxRateCalculatorStrategyResolverInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Spryker\Zed\Shipment\Business\Calculator\CalculatorInterface
      */

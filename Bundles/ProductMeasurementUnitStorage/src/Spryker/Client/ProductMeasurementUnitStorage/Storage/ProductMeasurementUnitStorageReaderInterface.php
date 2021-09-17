@@ -20,16 +20,16 @@ interface ProductMeasurementUnitStorageReaderInterface
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer>
      */
     public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array;
 
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitStorageTransfer>
      */
     public function getProductMeasurementUnitStorageCollection(array $productMeasurementUnitIds): array;
 }

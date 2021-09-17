@@ -33,7 +33,7 @@ class ContentStorageToStorageClientBridge implements ContentStorageToStorageClie
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

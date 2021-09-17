@@ -35,7 +35,7 @@ class RouterFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return array<\Spryker\Glue\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     public function getRouterPlugins(): array
     {
@@ -62,7 +62,7 @@ class RouterFactory extends AbstractFactory
     }
 
     /**
-     * @return \Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface[]
+     * @return array<\Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface>
      */
     public function getArgumentValueResolvers(): array
     {

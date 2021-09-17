@@ -61,7 +61,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $productOfferCriteriaTransferProvider;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $storeNamesList;
 
@@ -90,7 +90,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -108,14 +108,14 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
     public function writeCollectionByProductSkuEvents(array $eventTransfers): void
     {
         /**
-         * @var string[] $productSkus
+         * @var array<string> $productSkus
          */
         $productSkus = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
@@ -123,7 +123,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
      * @return void
      */
@@ -165,7 +165,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     /**
      * @phpstan-return array<mixed>
      *
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
      * @return array
@@ -195,7 +195,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @param string[] $storeNamesToRemove
+     * @param array<string> $storeNamesToRemove
      * @param string $productSku
      *
      * @return void
@@ -211,7 +211,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNamesList(): array
     {

@@ -34,7 +34,7 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -62,7 +62,7 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -91,9 +91,9 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductAbstractSkuList(array $resources): array
     {
@@ -126,9 +126,9 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductAbstractSkus(array $resources): array
     {

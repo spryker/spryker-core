@@ -44,17 +44,17 @@ class DataImporter implements
     protected $dataReader;
 
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface[]
+     * @var array<\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportInterface>
      */
     protected $beforeImportHooks = [];
 
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface[]
+     * @var array<\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportInterface>
      */
     protected $afterImportHooks = [];
 
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface[]
+     * @var array<\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface>
      */
     protected $dataSetStepBroker = [];
 

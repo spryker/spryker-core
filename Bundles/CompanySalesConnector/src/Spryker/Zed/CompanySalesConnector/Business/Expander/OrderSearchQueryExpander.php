@@ -73,7 +73,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     protected const DELIMITER_ORDER_BY = '::';
 
     /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
@@ -94,7 +94,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
@@ -120,7 +120,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer
@@ -151,7 +151,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param string $type
      *
      * @return \Generated\Shared\Transfer\FilterFieldTransfer|null

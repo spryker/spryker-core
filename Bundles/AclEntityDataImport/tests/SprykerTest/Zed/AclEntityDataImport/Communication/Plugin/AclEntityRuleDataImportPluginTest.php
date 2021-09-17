@@ -281,7 +281,7 @@ class AclEntityRuleDataImportPluginTest extends Unit
     }
 
     /**
-     * @return \string[][]
+     * @return array<\string[]>
      */
     public function importImportsAclEntityRuleWithEmptyRequiredFieldProvider(): array
     {

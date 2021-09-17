@@ -17,7 +17,7 @@ interface PriceProductStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -30,7 +30,7 @@ interface PriceProductStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -44,7 +44,7 @@ interface PriceProductStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -57,7 +57,7 @@ interface PriceProductStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

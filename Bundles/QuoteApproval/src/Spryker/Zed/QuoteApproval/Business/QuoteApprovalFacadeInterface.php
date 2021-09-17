@@ -69,7 +69,7 @@ interface QuoteApprovalFacadeInterface
      *
      * @param int $idQuote
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
     public function getQuoteApprovalsByIdQuote(int $idQuote): array;
 
@@ -81,7 +81,7 @@ interface QuoteApprovalFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
     public function getQuoteApprovals(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array;
 
@@ -166,7 +166,7 @@ interface QuoteApprovalFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQuoteFieldsAllowedForSavingByQuoteApprovalStatus(QuoteTransfer $quoteTransfer): array;
 

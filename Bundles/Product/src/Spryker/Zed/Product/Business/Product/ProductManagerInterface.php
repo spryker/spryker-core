@@ -13,7 +13,7 @@ interface ProductManagerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @throws \Exception
      *
@@ -23,7 +23,7 @@ interface ProductManagerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @throws \Exception
      *

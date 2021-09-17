@@ -405,7 +405,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     }
 
     /**
-     * @return \Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface>
      */
     protected function getMerchantOrderItemTableExpanderPlugins(): array
     {

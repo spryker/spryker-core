@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\TabsViewTransfer;
 class ProductFormEditTabs extends ProductFormAddTabs
 {
     /**
-     * @var array|\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface>
      */
     protected $productAbstractFormEditTabsExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface[] $productAbstractFormEditTabsExpanderPlugins
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractFormEditTabsExpanderPluginInterface> $productAbstractFormEditTabsExpanderPlugins
      */
     public function __construct(array $productAbstractFormEditTabsExpanderPlugins = [])
     {

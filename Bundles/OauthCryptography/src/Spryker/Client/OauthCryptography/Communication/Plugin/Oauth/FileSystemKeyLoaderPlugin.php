@@ -23,7 +23,7 @@ class FileSystemKeyLoaderPlugin extends AbstractPlugin implements KeyLoaderPlugi
      *
      * @api
      *
-     * @return \League\OAuth2\Server\CryptKey[]
+     * @return array<\League\OAuth2\Server\CryptKey>
      */
     public function loadKeys(): array
     {

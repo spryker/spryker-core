@@ -75,7 +75,7 @@ class CategoryStoreWithStateFinder implements CategoryStoreWithStateFinderInterf
     /**
      * @param int $idCategoryNode
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getInactiveStoreIdsByIdCategoryNode(int $idCategoryNode): array
     {

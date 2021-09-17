@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductRelationStorageRepositoryInterface
 {
     /**
-     * @param int[] $relationIds
+     * @param array<int> $relationIds
      *
      * @return array
      */
@@ -20,16 +20,16 @@ interface ProductRelationStorageRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function findProductRelationStorageDataTransferByIds(FilterTransfer $filterTransfer, array $ids): array;
 
     /**
      * @param int $idProductAbstract
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStoresByIdProductAbstractFromStorage(int $idProductAbstract): array;
 }

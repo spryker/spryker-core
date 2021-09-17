@@ -180,7 +180,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface[]
+     * @return array<\Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface>
      */
     protected function getOfferHydratorPlugins(): array
     {
@@ -204,7 +204,7 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface>
      */
     protected function getOfferDoUpdatePlugins(): array
     {

@@ -63,14 +63,14 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
     protected $productConfigurationService;
 
     /**
-     * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationPriceExtractorPluginInterface[]
+     * @var array<\Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationPriceExtractorPluginInterface>
      */
     protected $productConfigurationPriceExtractorPlugins;
 
     /**
      * @param \Spryker\Client\ProductConfiguration\Dependency\Service\ProductConfigurationToPriceProductServiceInterface $priceProductService
      * @param \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface $productConfigurationService
-     * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationPriceExtractorPluginInterface[] $productConfigurationPriceExtractorPlugins
+     * @param array<\Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationPriceExtractorPluginInterface> $productConfigurationPriceExtractorPlugins
      */
     public function __construct(
         ProductConfigurationToPriceProductServiceInterface $priceProductService,
@@ -144,9 +144,9 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function executeProductConfigurationPriceExtractorPlugins(array $priceProductTransfers): array
     {
@@ -162,7 +162,7 @@ class ProductConfigurationInstancePriceMapper implements ProductConfigurationIns
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param string $productConfigurationInstanceHash
      *
      * @return void

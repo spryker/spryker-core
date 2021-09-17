@@ -180,7 +180,7 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
     }
 
     /**
-     * @param \SimpleXMLElement[] $simpleXmlTableElements
+     * @param array<\SimpleXMLElement> $simpleXmlTableElements
      * @param string $module
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
@@ -268,7 +268,7 @@ class PropelAbstractClassValidator implements PropelAbstractClassValidatorInterf
     /**
      * @param \SimpleXMLElement $simpleXmlElement
      *
-     * @return \SimpleXMLElement[]
+     * @return array<\SimpleXMLElement>
      */
     protected function getSimpleXmlTableElements(SimpleXMLElement $simpleXmlElement)
     {

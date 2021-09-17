@@ -37,17 +37,17 @@ class State implements StateInterface
     protected $flags = [];
 
     /**
-     * @var \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
+     * @var array<\Spryker\Zed\Oms\Business\Process\TransitionInterface>
      */
     protected $outgoingTransitions = [];
 
     /**
-     * @var \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
+     * @var array<\Spryker\Zed\Oms\Business\Process\TransitionInterface>
      */
     protected $incomingTransitions = [];
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $incomingTransitions
+     * @param array<\Spryker\Zed\Oms\Business\Process\TransitionInterface> $incomingTransitions
      *
      * @return void
      */
@@ -57,7 +57,7 @@ class State implements StateInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\TransitionInterface>
      */
     public function getIncomingTransitions()
     {
@@ -73,7 +73,7 @@ class State implements StateInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $outgoingTransitions
+     * @param array<\Spryker\Zed\Oms\Business\Process\TransitionInterface> $outgoingTransitions
      *
      * @return void
      */
@@ -83,7 +83,7 @@ class State implements StateInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\TransitionInterface>
      */
     public function getOutgoingTransitions()
     {
@@ -101,7 +101,7 @@ class State implements StateInterface
     /**
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
-     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\TransitionInterface>
      */
     public function getOutgoingTransitionsByEvent(EventInterface $event)
     {
@@ -118,7 +118,7 @@ class State implements StateInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\EventInterface>
      */
     public function getEvents()
     {
@@ -314,7 +314,7 @@ class State implements StateInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\EventInterface>
      */
     public function getTimeoutEvents()
     {

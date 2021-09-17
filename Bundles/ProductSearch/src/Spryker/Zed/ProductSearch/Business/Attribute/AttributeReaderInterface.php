@@ -33,7 +33,7 @@ interface AttributeReaderInterface
     public function suggestKeys($searchText = '', $limit = 10);
 
     /**
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer>
      */
     public function getAttributeList();
 }

@@ -12,7 +12,7 @@ interface ProductAbstractLabelStorageWriterInterface
     /**
      * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriterInterface::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()} instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -21,21 +21,21 @@ interface ProductAbstractLabelStorageWriterInterface
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
     public function unpublish(array $productAbstractIds): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
     public function writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents(array $eventTransfers): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */

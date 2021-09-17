@@ -195,7 +195,7 @@ class OrderReturnTable extends AbstractTable
     }
 
     /**
-     * @param string[] $return
+     * @param array<string> $return
      *
      * @return string
      */
@@ -210,7 +210,7 @@ class OrderReturnTable extends AbstractTable
     }
 
     /**
-     * @param string[] $return
+     * @param array<string> $return
      *
      * @return string
      */

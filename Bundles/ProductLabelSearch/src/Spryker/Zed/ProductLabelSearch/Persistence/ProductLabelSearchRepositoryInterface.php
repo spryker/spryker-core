@@ -10,16 +10,16 @@ namespace Spryker\Zed\ProductLabelSearch\Persistence;
 interface ProductLabelSearchRepositoryInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductLabelEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductLabelEntityTransfer>
      */
     public function getProductLabelsByIdProductAbstractIn(array $productAbstractIds): array;
 
     /**
-     * @param int[] $productLabelIds
+     * @param array<int> $productLabelIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductLabelIds(array $productLabelIds): array;
 }

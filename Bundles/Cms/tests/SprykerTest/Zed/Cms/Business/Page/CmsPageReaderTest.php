@@ -143,7 +143,7 @@ class CmsPageReaderTest extends CmsMocks
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getAvailableLocales(): array
     {

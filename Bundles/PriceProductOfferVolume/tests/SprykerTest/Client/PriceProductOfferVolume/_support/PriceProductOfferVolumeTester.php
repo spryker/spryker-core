@@ -35,7 +35,7 @@ class PriceProductOfferVolumeTester extends Actor
     protected const PRICE_DATA_VOLUME = '{"volume_prices":[{"quantity":3,"net_price":350,"gross_price":385},{"quantity":8,"net_price":340,"gross_price":375}]}';
 
     /**
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function preparePriceProductsWithVolumePrices(): array
     {

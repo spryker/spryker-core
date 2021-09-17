@@ -12,22 +12,22 @@ interface ExporterPluginResolverInterface
     /**
      * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolverInterface::executeResolvedPluginsBySourcesWithIds()} instead.
      *
-     * @param string[] $resources
+     * @param array<string> $resources
      *
      * @return void
      */
     public function executeResolvedPluginsBySources(array $resources): void;
 
     /**
-     * @param string[] $resources
-     * @param int[] $ids
+     * @param array<string> $resources
+     * @param array<int> $ids
      *
      * @return void
      */
     public function executeResolvedPluginsBySourcesWithIds(array $resources, array $ids): void;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableResourceNames(): array;
 }

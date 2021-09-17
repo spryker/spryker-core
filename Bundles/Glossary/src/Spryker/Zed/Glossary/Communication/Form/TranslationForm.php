@@ -118,7 +118,7 @@ class TranslationForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getFieldDefaultConstraints()
     {
@@ -166,7 +166,7 @@ class TranslationForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function createGlossaryKeyConstraints()
     {

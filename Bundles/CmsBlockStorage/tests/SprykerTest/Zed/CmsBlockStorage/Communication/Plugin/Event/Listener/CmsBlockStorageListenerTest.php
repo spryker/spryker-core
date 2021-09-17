@@ -48,12 +48,12 @@ class CmsBlockStorageListenerTest extends Unit
     protected $tester;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $storeIds;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $localeIds;
 
@@ -205,7 +205,7 @@ class CmsBlockStorageListenerTest extends Unit
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getStoreIds(): array
     {
@@ -219,7 +219,7 @@ class CmsBlockStorageListenerTest extends Unit
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getLocaleIds(): array
     {

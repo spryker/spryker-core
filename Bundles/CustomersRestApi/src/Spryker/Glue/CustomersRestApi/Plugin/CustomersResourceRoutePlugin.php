@@ -68,7 +68,7 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer>
      */
     public function getRouteAuthorizationConfigurations(): array
     {

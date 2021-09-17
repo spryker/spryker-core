@@ -23,14 +23,14 @@ class ResourceServerCreator implements ResourceServerCreatorInterface
     protected $accessTokenRepository;
 
     /**
-     * @var \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
+     * @var array<\Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface>
      */
     protected $authorizationValidatorPlugins;
 
     /**
      * @param \Spryker\Client\Oauth\ResourceServer\KeyLoader\KeyLoaderInterface $keyLoader
      * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $accessTokenRepository
-     * @param \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[] $authorizationValidatorPlugins
+     * @param array<\Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface> $authorizationValidatorPlugins
      */
     public function __construct(
         KeyLoaderInterface $keyLoader,

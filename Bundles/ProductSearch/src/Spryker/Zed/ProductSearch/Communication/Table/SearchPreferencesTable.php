@@ -141,7 +141,7 @@ class SearchPreferencesTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKey[]
+     * @return array<\Orm\Zed\Product\Persistence\SpyProductAttributeKey>
      */
     protected function getProductAttributeKeys(TableConfiguration $config)
     {

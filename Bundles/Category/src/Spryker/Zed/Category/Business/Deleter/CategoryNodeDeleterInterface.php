@@ -24,7 +24,7 @@ interface CategoryNodeDeleterInterface
     public function deleteCategoryExtraParentNodesForCategory(int $idCategory): void;
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
      *
      * @return void
      */

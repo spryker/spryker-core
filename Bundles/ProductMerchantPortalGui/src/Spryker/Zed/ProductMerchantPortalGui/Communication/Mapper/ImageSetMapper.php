@@ -58,7 +58,7 @@ class ImageSetMapper implements ImageSetMapperInterface
     /**
      * @param \Symfony\Component\Form\FormErrorIterator $errors
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function mapErrorsToImageSetValidationData(FormErrorIterator $errors): array
     {

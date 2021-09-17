@@ -15,14 +15,14 @@ interface SearchConfigBuilderInterface
     public function build(): SearchConfigInterface;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface[] $searchConfigBuilderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigBuilderPluginInterface> $searchConfigBuilderPlugins
      *
      * @return void
      */
     public function setSearchConfigBuilderPlugins(array $searchConfigBuilderPlugins): void;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[] $searchConfigExpanderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface> $searchConfigExpanderPlugins
      *
      * @return void
      */

@@ -24,7 +24,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class StockRepository extends AbstractRepository implements StockRepositoryInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getStockNames(): array
     {
@@ -38,7 +38,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     /**
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStockNamesForStore(string $storeName): array
     {
@@ -77,7 +77,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     /**
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockTransfer>
      */
     public function getStocksWithRelatedStoresByCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): array
     {
@@ -118,7 +118,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     /**
      * @param int $idStock
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductsByIdStock(int $idStock): array
     {
@@ -158,7 +158,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductByProductAbstractSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): array
     {
@@ -186,7 +186,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function findProductStocksForStore(string $concreteSku, StoreTransfer $storeTransfer): array
     {
@@ -206,7 +206,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductsByProductConcreteSku(string $concreteSku): array
     {
@@ -283,7 +283,7 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
      *
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductStockIsDefined(string $sku): array
     {

@@ -75,14 +75,14 @@ interface ShoppingListRepositoryInterface
     public function findShoppingListItemsByIdShoppingList(int $idShoppingList): ShoppingListItemCollectionTransfer;
 
     /**
-     * @param int[] $shoppingListIds
+     * @param array<int> $shoppingListIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
     public function findCustomerShoppingListsItemsByIds(array $shoppingListIds): ShoppingListItemCollectionTransfer;
 
     /**
-     * @param int[] $shoppingListItemIds
+     * @param array<int> $shoppingListItemIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
@@ -112,7 +112,7 @@ interface ShoppingListRepositoryInterface
     /**
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]
+     * @return array<\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit>
      */
     public function findCompanyBusinessUnitSharedShoppingListsIds(int $idCompanyBusinessUnit);
 
@@ -120,7 +120,7 @@ interface ShoppingListRepositoryInterface
      * @param int $idCompanyBusinessUnit
      * @param string $shoppingListPermissionGroupName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(
         int $idCompanyBusinessUnit,
@@ -130,7 +130,7 @@ interface ShoppingListRepositoryInterface
     /**
      * @param int $idCompanyUser
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]
+     * @return array<\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser>
      */
     public function findCompanyUserSharedShoppingListsIds(int $idCompanyUser);
 
@@ -138,7 +138,7 @@ interface ShoppingListRepositoryInterface
      * @param int $idCompanyUser
      * @param string $shoppingListPermissionGroupName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCompanyUserSharedShoppingListIdsByPermissionGroupName(int $idCompanyUser, string $shoppingListPermissionGroupName): array;
 
@@ -198,7 +198,7 @@ interface ShoppingListRepositoryInterface
     /**
      * @param int $idCompanyUser
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getBlacklistedShoppingListIdsByIdCompanyUser(int $idCompanyUser): array;
 }

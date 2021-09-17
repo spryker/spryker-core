@@ -21,7 +21,7 @@ use Throwable;
 abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
 {
     /**
-     * @var \Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface[]
+     * @var array<\Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface>
      */
     protected $schedulerReaderPlugins;
 
@@ -36,7 +36,7 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
     protected $gracefulFacade;
 
     /**
-     * @param \Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface[] $schedulerReaderPlugins
+     * @param array<\Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface> $schedulerReaderPlugins
      * @param \Spryker\Zed\Scheduler\Business\Command\Filter\SchedulerFilterInterface $schedulerFilter
      * @param \Spryker\Zed\Scheduler\Dependency\Facade\SchedulerToGracefulRunnerFacadeInterface $gracefulFacade
      */

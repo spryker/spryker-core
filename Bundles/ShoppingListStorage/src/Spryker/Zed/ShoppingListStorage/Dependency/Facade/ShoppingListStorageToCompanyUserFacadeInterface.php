@@ -10,9 +10,9 @@ namespace Spryker\Zed\ShoppingListStorage\Dependency\Facade;
 interface ShoppingListStorageToCompanyUserFacadeInterface
 {
     /**
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
 }

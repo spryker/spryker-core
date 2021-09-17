@@ -10,21 +10,21 @@ namespace Spryker\Zed\SalesProductConnector\Persistence;
 interface SalesProductConnectorRepositoryInterface
 {
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ItemMetadataTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemMetadataTransfer>
      */
     public function getSalesOrderItemMetadataByOrderItemIds(array $salesOrderItemIds): array;
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param int $interval
      *
      * @return array

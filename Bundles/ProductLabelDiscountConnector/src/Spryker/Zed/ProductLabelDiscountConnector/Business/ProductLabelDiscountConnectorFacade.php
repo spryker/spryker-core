@@ -43,7 +43,7 @@ class ProductLabelDiscountConnectorFacade extends AbstractFacade implements Prod
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collectByProductLabel(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
@@ -57,7 +57,7 @@ class ProductLabelDiscountConnectorFacade extends AbstractFacade implements Prod
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function findAllLabels()
     {

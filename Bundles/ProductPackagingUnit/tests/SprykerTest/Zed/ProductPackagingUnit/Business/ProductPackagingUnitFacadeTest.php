@@ -855,7 +855,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     }
 
     /**
-     * @return object|\Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig
+     * @return \Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig|object
      */
     protected function getConfigStub()
     {
@@ -1311,7 +1311,7 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[] $salesAggregationTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer> $salesAggregationTransfers
      *
      * @return \Spryker\DecimalObject\Decimal
      */

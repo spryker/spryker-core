@@ -70,7 +70,7 @@ class MerchantUserUpdateFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStatusSelectChoices(): array
     {

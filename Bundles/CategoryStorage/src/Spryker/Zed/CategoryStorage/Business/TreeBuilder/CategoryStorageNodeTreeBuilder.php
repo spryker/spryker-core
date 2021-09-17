@@ -36,10 +36,10 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     }
 
     /**
-     * @param int[] $categoryNodeIds
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param array<int> $categoryNodeIds
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer[][]>
      */
     public function buildCategoryNodeStorageTransferTreesForLocaleAndStore(array $categoryNodeIds, array $nodeTransfers): array
     {
@@ -67,9 +67,9 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return array<\Generated\Shared\Transfer\NodeTransfer>
      */
     protected function indexCategoryNodesByIdCategoryNode(array $nodeTransfers): array
     {
@@ -83,7 +83,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getLocaleNameMapByStoreName(): array
     {
@@ -96,11 +96,11 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     }
 
     /**
-     * @param int[] $categoryNodeIds
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $indexedNodeTransfers
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $indexedCategoryNodeStorageTransfers
+     * @param array<int> $categoryNodeIds
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $indexedNodeTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $indexedCategoryNodeStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     protected function buildCategoryNodeStorageTransferTrees(
         array $categoryNodeIds,
@@ -138,8 +138,8 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
 
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $indexedNodeTransfers
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $indexedCategoryNodeStorageTransfers
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $indexedNodeTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $indexedCategoryNodeStorageTransfers
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
@@ -167,8 +167,8 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
 
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $indexedNodeTransfers
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $indexedCategoryNodeStorageTransfers
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $indexedNodeTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $indexedCategoryNodeStorageTransfers
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer
      */
@@ -200,10 +200,10 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
 
     /**
      * @param int $idCategoryNode
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $indexedNodeTransfers
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $indexedCategoryNodeStorageTransfers
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $indexedNodeTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $indexedCategoryNodeStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     protected function findChildren(int $idCategoryNode, array $indexedNodeTransfers, array $indexedCategoryNodeStorageTransfers): array
     {
@@ -221,9 +221,9 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
 
     /**
      * @param int $idParentCategoryNode
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $indexedCategoryNodeStorageTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $indexedCategoryNodeStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     protected function findParents(int $idParentCategoryNode, array $indexedCategoryNodeStorageTransfers): array
     {

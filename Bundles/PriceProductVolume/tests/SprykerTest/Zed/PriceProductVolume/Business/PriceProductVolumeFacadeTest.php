@@ -321,7 +321,7 @@ class PriceProductVolumeFacadeTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function preparePriceProductsWithoutVolumePrices(): array
     {
@@ -331,7 +331,7 @@ class PriceProductVolumeFacadeTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function preparePriceProductsWithVolumePrices(): array
     {

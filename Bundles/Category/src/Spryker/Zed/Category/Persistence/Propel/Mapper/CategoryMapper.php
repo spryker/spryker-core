@@ -89,7 +89,7 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryNodeEntities
+     * @param array<\Orm\Zed\Category\Persistence\SpyCategoryNode> $categoryNodeEntities
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
@@ -111,7 +111,7 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $nodeEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryNode> $nodeEntities
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
@@ -156,7 +156,7 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory[]|\Propel\Runtime\Collection\ObjectCollection $categoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategory> $categoryEntities
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
@@ -232,9 +232,9 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryAttribute[]|\Propel\Runtime\Collection\ObjectCollection $attributeCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryAttribute> $attributeCollection
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Orm\Zed\Url\Persistence\SpyUrl[]|\Propel\Runtime\Collection\ObjectCollection|null $urlEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Url\Persistence\SpyUrl>|null $urlEntities
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */

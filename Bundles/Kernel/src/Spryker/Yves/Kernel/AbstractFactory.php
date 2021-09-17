@@ -27,7 +27,7 @@ abstract class AbstractFactory implements FactoryInterface
     protected $client;
 
     /**
-     * @var \Spryker\Yves\Kernel\Container[]
+     * @var array<\Spryker\Yves\Kernel\Container>
      */
     protected static $containers = [];
 

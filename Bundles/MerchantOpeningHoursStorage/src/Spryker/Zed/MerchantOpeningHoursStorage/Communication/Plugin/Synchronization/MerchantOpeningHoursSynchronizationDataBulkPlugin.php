@@ -54,9 +54,9 @@ class MerchantOpeningHoursSynchronizationDataBulkPlugin extends AbstractPlugin i
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
@@ -130,7 +130,7 @@ class MerchantOpeningHoursSynchronizationDataBulkPlugin extends AbstractPlugin i
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaTransfer
      */

@@ -14,18 +14,18 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
 {
     /**
-     * @var array|\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @var array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface>
      */
     protected $quoteCalculators;
 
     /**
-     * @var \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[]
+     * @var array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface>
      */
     protected $quotePostRecalculatePlugins;
 
     /**
-     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] $quoteCalculators
-     * @param \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[] $quotePostRecalculatePlugins
+     * @param array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface> $quoteCalculators
+     * @param array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface> $quotePostRecalculatePlugins
      */
     public function __construct(
         array $quoteCalculators,

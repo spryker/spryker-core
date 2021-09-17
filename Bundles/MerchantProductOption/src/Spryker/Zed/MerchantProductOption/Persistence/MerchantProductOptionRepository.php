@@ -79,7 +79,7 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
     /**
      * @phpstan-return array<int|null>
      *
-     * @param int[] $productOptionGroupIds
+     * @param array<int> $productOptionGroupIds
      *
      * @return array
      */

@@ -49,7 +49,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[] $searchQueryExpanders
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface> $searchQueryExpanders
      * @param array $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
@@ -69,10 +69,10 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
      * @param array $requestParameters
      *
-     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
@@ -91,7 +91,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
      */
     public function searchKeys($searchString, $limit = null, $offset = null)
     {
@@ -135,7 +135,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -166,7 +166,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -203,7 +203,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return array|\Elastica\ResultSet|mixed (@deprecated Only mixed will be supported with the next major)
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
      */
     public function searchQueryString($searchString, $limit = null, $offset = null)
     {
@@ -263,7 +263,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClient::writeDocuments()} instead.
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -303,7 +303,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClient::deleteDocuments()} instead.
      *
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */

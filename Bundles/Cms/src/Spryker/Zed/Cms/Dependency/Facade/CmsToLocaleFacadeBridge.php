@@ -31,7 +31,7 @@ class CmsToLocaleFacadeBridge implements CmsToLocaleFacadeInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales()
     {

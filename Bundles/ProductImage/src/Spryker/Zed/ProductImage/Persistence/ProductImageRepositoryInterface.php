@@ -12,24 +12,24 @@ use Generated\Shared\Transfer\ProductImageFilterTransfer;
 interface ProductImageRepositoryInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetTransfersByProductIdsAndIdLocale(array $productIds, int $idLocale): array;
 
     /**
-     * @param int[] $productSetIds
+     * @param array<int> $productSetIds
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
      */
     public function getProductImagesByProductSetIds(array $productSetIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array;
 }

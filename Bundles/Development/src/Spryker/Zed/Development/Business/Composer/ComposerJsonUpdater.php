@@ -46,7 +46,7 @@ class ComposerJsonUpdater implements ComposerJsonUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleTransfer[] $moduleTransferCollection
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $moduleTransferCollection
      * @param bool $dryRun
      *
      * @return array

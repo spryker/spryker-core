@@ -10,9 +10,9 @@ namespace Spryker\Zed\SalesProductConnector\Business\Expander;
 interface ProductIdExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithProduct(array $itemTransfers): array;
 }

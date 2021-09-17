@@ -174,7 +174,7 @@ class QueueHelper extends AbstractHelper
 
     /**
      * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer $queueReceiveMessageTransfer
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueReceiveMessageTransferCollection
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueReceiveMessageTransferCollection
      *
      * @return bool
      */

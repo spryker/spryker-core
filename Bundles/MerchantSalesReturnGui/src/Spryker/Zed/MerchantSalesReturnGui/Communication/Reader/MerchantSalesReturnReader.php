@@ -28,11 +28,9 @@ class MerchantSalesReturnReader implements MerchantSalesReturnReaderInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderTransfer>
-     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantOrderTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderTransfer>
      */
     public function getMerchantOrders(OrderTransfer $orderTransfer): ArrayObject
     {

@@ -18,7 +18,7 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      *
      * @api
      *
-     * @param int[] $productCategoryIds
+     * @param array<int> $productCategoryIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
@@ -31,7 +31,7 @@ interface ProductCategoryStorageQueryContainerInterface extends QueryContainerIn
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery
      */

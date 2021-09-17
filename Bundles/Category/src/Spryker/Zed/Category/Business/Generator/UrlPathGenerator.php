@@ -38,13 +38,13 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
     protected $categoryRepository;
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface[]
+     * @var array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface>
      */
     protected $categoryUrlPathPlugins;
 
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface[] $categoryUrlPathPlugins
+     * @param array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUrlPathPluginInterface> $categoryUrlPathPlugins
      */
     public function __construct(CategoryRepositoryInterface $categoryRepository, array $categoryUrlPathPlugins)
     {
@@ -86,10 +86,10 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function bulkBuildCategoryNodeUrlForLocale(array $categoryNodeIds, LocaleTransfer $localeTransfer): array
     {
@@ -162,7 +162,7 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
      * @param array $indexedCategoryUrlPathParts
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateCategoryUrlPaths(array $indexedCategoryUrlPathParts, LocaleTransfer $localeTransfer): array
     {

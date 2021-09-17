@@ -18,7 +18,7 @@ class Fixtures implements LoaderInterface
     public const METHOD_BUILD_FIXTURES = 'buildFixtures';
 
     /**
-     * @var \SprykerTest\Shared\Testify\Fixtures\Fixture[]
+     * @var array<\SprykerTest\Shared\Testify\Fixtures\Fixture>
      */
     protected $tests = [];
 
@@ -56,7 +56,7 @@ class Fixtures implements LoaderInterface
     }
 
     /**
-     * @return \SprykerTest\Shared\Testify\Fixtures\Fixture[]
+     * @return array<\SprykerTest\Shared\Testify\Fixtures\Fixture>
      */
     public function getTests(): array
     {

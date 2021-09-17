@@ -70,7 +70,7 @@ class WishlistMerchantSwitcher implements WishlistMerchantSwitcherInterface
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOfferTransfer[] $productOfferTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null

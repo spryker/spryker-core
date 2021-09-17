@@ -183,7 +183,7 @@ class AddProductConcreteController extends AbstractController
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $defaultStoreDefaultLocaleTransfer
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -220,9 +220,9 @@ class AddProductConcreteController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $defaultStoreDefaultLocaleTransfer
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getResponseData(
         FormInterface $addProductConcreteForm,
@@ -269,10 +269,10 @@ class AddProductConcreteController extends AbstractController
     }
 
     /**
-     * @param mixed[] $responseData
+     * @param array<mixed> $responseData
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function addSuccessResponseDataToResponse(
         array $responseData,
@@ -300,9 +300,9 @@ class AddProductConcreteController extends AbstractController
     }
 
     /**
-     * @param mixed[] $responseData
+     * @param array<mixed> $responseData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function addErrorResponseDataToResponse(array $responseData): array
     {
@@ -322,7 +322,7 @@ class AddProductConcreteController extends AbstractController
      *
      * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getErrors(FormInterface $addProductConcreteForm)
     {

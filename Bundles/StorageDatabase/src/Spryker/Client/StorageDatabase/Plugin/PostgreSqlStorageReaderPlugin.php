@@ -36,7 +36,7 @@ class PostgreSqlStorageReaderPlugin extends AbstractPlugin implements StorageRea
      *
      * @api
      *
-     * @param string[] $resourceKeys
+     * @param array<string> $resourceKeys
      *
      * @return array
      */

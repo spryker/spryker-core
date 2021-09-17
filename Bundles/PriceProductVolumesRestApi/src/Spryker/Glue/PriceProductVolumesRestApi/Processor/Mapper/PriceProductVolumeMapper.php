@@ -71,11 +71,11 @@ class PriceProductVolumeMapper implements PriceProductVolumeMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer[] $restProductPriceVolumesAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer> $restProductPriceVolumesAttributesTransfers
      * @param string|null $priceTypeName
      *
-     * @return \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer>
      */
     protected function mapProductPriceTransfersToRestProductPriceVolumesAttributesTransfers(
         array $priceProductTransfers,

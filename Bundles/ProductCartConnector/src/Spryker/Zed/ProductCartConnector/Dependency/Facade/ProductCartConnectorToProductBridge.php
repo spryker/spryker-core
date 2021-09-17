@@ -93,7 +93,7 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     /**
      * @param array $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array
     {
@@ -103,7 +103,7 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     /**
      * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array
     {
@@ -113,7 +113,7 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     /**
      * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array
     {
@@ -121,9 +121,9 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
     {

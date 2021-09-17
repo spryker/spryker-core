@@ -59,7 +59,7 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Twig\TwigFilter[]
+     * @return array<\Twig\TwigFilter>
      */
     protected function getTwigFilters()
     {

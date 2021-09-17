@@ -52,7 +52,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @api
      *
      * @param string $queueName
-     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer[] $queueSendMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueSendMessageTransfer> $queueSendMessageTransfers
      *
      * @return void
      */
@@ -70,7 +70,7 @@ class QueueClient extends AbstractClient implements QueueClientInterface
      * @param int $chunkSize
      * @param array $options
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function receiveMessages($queueName, $chunkSize = 100, array $options = [])
     {

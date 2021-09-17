@@ -89,7 +89,7 @@ class PriceModeSwitcherServiceProvider extends AbstractPlugin implements Service
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getPriceModes()
     {

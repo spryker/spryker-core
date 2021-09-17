@@ -89,7 +89,7 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface[]
+     * @return array<\Spryker\Client\PersistentCartShareExtension\Dependency\Plugin\CartShareOptionPluginInterface>
      */
     protected function getCartShareOptionPlugins(): array
     {

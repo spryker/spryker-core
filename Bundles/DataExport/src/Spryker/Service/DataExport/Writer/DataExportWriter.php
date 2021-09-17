@@ -25,7 +25,7 @@ class DataExportWriter implements DataExportWriterInterface
     protected const DEFAULT_CONNECTION_TYPE = 'local';
 
     /**
-     * @var \Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportConnectionPluginInterface[]
+     * @var array<\Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportConnectionPluginInterface>
      */
     protected $dataExportConnectionPlugins;
 
@@ -40,7 +40,7 @@ class DataExportWriter implements DataExportWriterInterface
     protected $dataExportLocalWriter;
 
     /**
-     * @param \Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportConnectionPluginInterface[] $dataExportConnectionPlugins
+     * @param array<\Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportConnectionPluginInterface> $dataExportConnectionPlugins
      * @param \Spryker\Service\DataExport\Formatter\DataExportFormatterInterface $dataExportFormatter
      * @param \Spryker\Service\DataExport\Writer\DataExportWriterInterface $dataExportLocalWriter
      */

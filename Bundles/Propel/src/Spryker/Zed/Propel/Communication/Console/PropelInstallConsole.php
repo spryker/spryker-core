@@ -80,7 +80,7 @@ class PropelInstallConsole extends Console
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getDependingCommands()
     {
@@ -102,9 +102,9 @@ class PropelInstallConsole extends Console
     }
 
     /**
-     * @param string[] $commands
+     * @param array<string> $commands
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterOutNonRegisteredCommands(array $commands): array
     {

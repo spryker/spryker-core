@@ -26,7 +26,7 @@ class ModuleOverview implements ModuleOverviewInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleOverviewTransfer>
      */
     public function getOverview(): array
     {
@@ -40,9 +40,9 @@ class ModuleOverview implements ModuleOverviewInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleOverviewTransfer[] $moduleOverviewTransferCollection
+     * @param array<\Generated\Shared\Transfer\ModuleOverviewTransfer> $moduleOverviewTransferCollection
      *
-     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleOverviewTransfer>
      */
     protected function addProjectModules(array $moduleOverviewTransferCollection): array
     {
@@ -64,9 +64,9 @@ class ModuleOverview implements ModuleOverviewInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleOverviewTransfer[] $moduleOverviewTransferCollection
+     * @param array<\Generated\Shared\Transfer\ModuleOverviewTransfer> $moduleOverviewTransferCollection
      *
-     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleOverviewTransfer>
      */
     protected function addCoreModules(array $moduleOverviewTransferCollection): array
     {

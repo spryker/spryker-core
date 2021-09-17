@@ -118,7 +118,7 @@ class CustomerTable extends AbstractTable
     {
         $query = $this->prepareQuery();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer[] $customerCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer> $customerCollection */
         $customerCollection = $this->runQuery($query, $config, true);
 
         if ($customerCollection->count() < 1) {
@@ -145,7 +145,7 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer[] $customersCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer> $customersCollection
      *
      * @return array
      */

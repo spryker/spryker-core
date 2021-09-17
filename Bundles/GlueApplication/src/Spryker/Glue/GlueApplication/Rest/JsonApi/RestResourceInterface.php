@@ -57,7 +57,7 @@ interface RestResourceInterface
     /**
      * @param string $type
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getRelationshipByType(string $type): array;
 

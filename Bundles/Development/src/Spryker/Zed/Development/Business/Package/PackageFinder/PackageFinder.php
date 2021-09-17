@@ -33,7 +33,7 @@ class PackageFinder implements PackageFinderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PackageTransfer[]
+     * @return array<\Generated\Shared\Transfer\PackageTransfer>
      */
     public function getPackages(): array
     {
@@ -57,7 +57,7 @@ class PackageFinder implements PackageFinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]|\Symfony\Component\Finder\Finder
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function getPackageFinder(): Finder
     {

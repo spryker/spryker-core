@@ -11,7 +11,7 @@ interface TestifyConfigInterface
 {
     /**
      * @param string $key
-     * @param string|int|float|array|bool $value
+     * @param array|string|float|int|bool $value
      *
      * @return void
      */

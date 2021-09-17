@@ -27,9 +27,9 @@ class ProductOfferVolumePriceExtractor implements ProductOfferVolumePriceExtract
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractProductPrices(array $priceProductTransfers): array
     {
@@ -43,10 +43,10 @@ class ProductOfferVolumePriceExtractor implements ProductOfferVolumePriceExtract
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $extractedPrices
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $extractedPrices
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function extractPriceProductOfferVolumes(array $extractedPrices, PriceProductTransfer $priceProductTransfer): array
     {
@@ -60,7 +60,7 @@ class ProductOfferVolumePriceExtractor implements ProductOfferVolumePriceExtract
         /** @var string $priceData */
         $priceData = $moneyValueTransfer->getPriceData();
 
-        /** @var mixed[] $priceData */
+        /** @var array<mixed> $priceData */
         $priceData = $this->utilEncodingService->decodeJson($priceData, true);
 
         if (!isset($priceData[PriceProductOfferVolumeConfig::VOLUME_PRICE_TYPE])) {

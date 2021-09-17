@@ -26,13 +26,13 @@ class Distributor implements DistributorInterface
     protected $discountableItemTransformer;
 
     /**
-     * @var \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface>
      */
     protected $discountableItemTransformerStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\Discount\Business\Distributor\DiscountableItem\DiscountableItemTransformerInterface $discountableItemTransformer
-     * @param \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[] $discountableItemTransformerStrategyPlugins
+     * @param array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface> $discountableItemTransformerStrategyPlugins
      */
     public function __construct(DiscountableItemTransformerInterface $discountableItemTransformer, array $discountableItemTransformerStrategyPlugins)
     {

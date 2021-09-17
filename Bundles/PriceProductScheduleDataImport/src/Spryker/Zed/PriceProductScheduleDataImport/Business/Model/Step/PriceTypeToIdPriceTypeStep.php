@@ -16,7 +16,7 @@ use Spryker\Zed\PriceProductScheduleDataImport\Business\Model\DataSet\PriceProdu
 class PriceTypeToIdPriceTypeStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idPriceProductTypeCache = [];
 

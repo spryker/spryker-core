@@ -26,7 +26,7 @@ interface SortConfigBuilderInterface
     public function getSortConfigTransfer(?string $parameterName): ?SortConfigTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     public function getAllSortConfigTransfers(): array;
 

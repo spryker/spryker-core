@@ -133,7 +133,7 @@ class ConfigurableBundleTemplateSlotUpdater implements ConfigurableBundleTemplat
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotResponseTransfer
      */

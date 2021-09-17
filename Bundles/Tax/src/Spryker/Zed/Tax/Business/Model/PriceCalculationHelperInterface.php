@@ -17,7 +17,7 @@ interface PriceCalculationHelperInterface
      * @param float $taxPercentage Tax percentage as float (e. g. 19.6)
      * @param bool $round
      *
-     * @return int|float
+     * @return float|int
      */
     public function getTaxValueFromPrice($price, $taxPercentage, $round = true);
 

@@ -74,7 +74,7 @@ class CartItemProductPackagingUnitChecker implements CartItemProductPackagingUni
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(CartChangeTransfer $cartChangeTransfer): array
     {

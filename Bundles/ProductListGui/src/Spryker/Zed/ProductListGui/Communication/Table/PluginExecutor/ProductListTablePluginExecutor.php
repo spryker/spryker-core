@@ -13,36 +13,36 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class ProductListTablePluginExecutor implements ProductListTablePluginExecutorInterface
 {
     /**
-     * @var array|\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface>
      */
     protected $productListTableActionExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface>
      */
     protected $productListTableConfigExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryCriteriaExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryCriteriaExpanderPluginInterface>
      */
     protected $productListTableQueryExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface>
      */
     protected $productListTableDataExpanderPlugins;
 
     /**
-     * @var array|\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableHeaderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableHeaderExpanderPluginInterface>
      */
     protected $productListTableHeaderExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface[] $productListTableActionExpanderPlugins
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface[] $productListTableConfigExpanderPlugins
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryCriteriaExpanderPluginInterface[] $productListTableQueryExpanderPlugins
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface[] $productListTableDataExpanderPlugins
-     * @param \Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableHeaderExpanderPluginInterface[] $productListTableHeaderExpanderPlugins
+     * @param array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableActionExpanderPluginInterface> $productListTableActionExpanderPlugins
+     * @param array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableConfigExpanderPluginInterface> $productListTableConfigExpanderPlugins
+     * @param array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableQueryCriteriaExpanderPluginInterface> $productListTableQueryExpanderPlugins
+     * @param array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableDataExpanderPluginInterface> $productListTableDataExpanderPlugins
+     * @param array<\Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListTableHeaderExpanderPluginInterface> $productListTableHeaderExpanderPlugins
      */
     public function __construct(
         array $productListTableActionExpanderPlugins,
@@ -61,7 +61,7 @@ class ProductListTablePluginExecutor implements ProductListTablePluginExecutorIn
     /**
      * @param array $item
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function executeTableActionExpanderPlugins(array $item): array
     {

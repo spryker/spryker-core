@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 class QuoteProceedCheckoutChecker implements QuoteProceedCheckoutCheckerInterface
 {
     /**
-     * @var \Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface[]
+     * @var array<\Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface>
      */
     protected $quoteProceedCheckoutCheckPlugins;
 
     /**
-     * @param \Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface[] $quoteProccedCheckoutCheckPlugins
+     * @param array<\Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface> $quoteProccedCheckoutCheckPlugins
      */
     public function __construct(array $quoteProccedCheckoutCheckPlugins)
     {

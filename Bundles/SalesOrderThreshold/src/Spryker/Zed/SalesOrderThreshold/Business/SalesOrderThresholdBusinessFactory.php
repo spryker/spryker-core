@@ -229,7 +229,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdDataSourceStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdDataSourceStrategyPluginInterface>
      */
     public function getSalesOrderThresholdDataSourceStrategies(): array
     {
@@ -279,7 +279,7 @@ class SalesOrderThresholdBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface>
      */
     public function getSalesOrderThresholdStrategyPlugins(): array
     {

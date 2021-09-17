@@ -37,7 +37,7 @@ class TestifyConfig implements TestifyConfigInterface
 
     /**
      * @param string $key
-     * @param array|bool|float|int|string $value
+     * @param array|string|float|int|bool $value
      *
      * @return void
      */

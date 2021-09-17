@@ -36,7 +36,7 @@ class MySqlStorageReaderPlugin extends AbstractPlugin implements StorageReaderPl
      *
      * @api
      *
-     * @param string[] $resourceKeys
+     * @param array<string> $resourceKeys
      *
      * @return array
      */

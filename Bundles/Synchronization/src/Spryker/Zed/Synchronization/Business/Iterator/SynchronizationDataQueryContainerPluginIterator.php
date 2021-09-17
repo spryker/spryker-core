@@ -24,7 +24,7 @@ class SynchronizationDataQueryContainerPluginIterator extends AbstractSynchroniz
     protected $synchronizationDataQueryExpanderStrategyPlugin;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $filterIds;
 
@@ -32,7 +32,7 @@ class SynchronizationDataQueryContainerPluginIterator extends AbstractSynchroniz
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryContainerPluginInterface $plugin
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface $synchronizationDataQueryExpanderStrategyPlugin
      * @param int $chunkSize
-     * @param int[] $ids
+     * @param array<int> $ids
      */
     public function __construct(
         SynchronizationDataQueryContainerPluginInterface $plugin,

@@ -18,7 +18,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
@@ -30,7 +30,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorageQuery
      */
@@ -90,7 +90,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
@@ -102,7 +102,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorageQuery
      */
@@ -114,7 +114,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $priceProductStoreIds
+     * @param array<int> $priceProductStoreIds
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */
@@ -126,7 +126,7 @@ interface PriceProductStorageQueryContainerInterface extends QueryContainerInter
      *
      * @api
      *
-     * @param int[] $priceProductStoreIds
+     * @param array<int> $priceProductStoreIds
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
      */

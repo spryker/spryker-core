@@ -47,7 +47,7 @@ class CreateController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -108,7 +108,7 @@ class CreateController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return bool[]
+     * @return array<bool>
      */
     protected function getItemListUpdatedStatus(FormInterface $form): array
     {

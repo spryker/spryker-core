@@ -22,7 +22,7 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
      *
      * @param int $fkMerchant
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\WeekdayScheduleTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\WeekdayScheduleTransfer>
      */
     public function getMerchantOpeningHoursWeekdayScheduleByFkMerchant(int $fkMerchant): ArrayObject
     {
@@ -45,7 +45,7 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
      *
      * @param int $fkMerchant
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\DateScheduleTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\DateScheduleTransfer>
      */
     public function getMerchantOpeningHoursDateScheduleByFkMerchant(int $fkMerchant): ArrayObject
     {
@@ -66,7 +66,7 @@ class MerchantOpeningHoursStorageRepository extends AbstractRepository implement
     /**
      * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaTransfer $merchantOpeningHoursStorageCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyMerchantOpeningHoursStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyMerchantOpeningHoursStorageEntityTransfer>
      */
     public function getFilteredMerchantOpeningHoursStorageEntityTransfers(
         MerchantOpeningHoursStorageCriteriaTransfer $merchantOpeningHoursStorageCriteriaTransfer

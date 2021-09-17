@@ -25,7 +25,7 @@ interface QuoteShareDetailsReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShareDetailCollectionTransfer>
      */
     public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer): array;
 

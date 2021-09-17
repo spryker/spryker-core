@@ -655,7 +655,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface>
      */
     protected function getProductAbstractFormExpanderPlugins(): array
     {
@@ -677,7 +677,7 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface>
      */
     protected function getProductConcreteTableExpanderPlugins(): array
     {

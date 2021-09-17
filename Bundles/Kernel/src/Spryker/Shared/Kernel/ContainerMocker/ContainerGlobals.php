@@ -22,7 +22,7 @@ class ContainerGlobals
     /**
      * @param string $dependencyProviderClassName
      *
-     * @return array|mixed
+     * @return mixed|array
      */
     public function getContainerGlobals($dependencyProviderClassName)
     {

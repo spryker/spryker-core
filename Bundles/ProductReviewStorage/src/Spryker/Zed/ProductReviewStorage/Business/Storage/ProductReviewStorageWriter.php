@@ -38,7 +38,7 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -120,7 +120,7 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */

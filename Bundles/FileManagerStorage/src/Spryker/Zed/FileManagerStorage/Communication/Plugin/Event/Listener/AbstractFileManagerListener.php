@@ -20,7 +20,7 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      *
      * @return void
      */
@@ -30,7 +30,7 @@ abstract class AbstractFileManagerListener extends AbstractPlugin implements Eve
     }
 
     /**
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      *
      * @return void
      */

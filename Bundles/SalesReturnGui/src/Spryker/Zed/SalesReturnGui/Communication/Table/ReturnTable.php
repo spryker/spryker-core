@@ -145,7 +145,7 @@ class ReturnTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturn\Persistence\SpySalesReturn> $salesReturnEntityCollection */
         $salesReturnEntityCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
@@ -189,7 +189,7 @@ class ReturnTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturn\Persistence\SpySalesReturn[] $salesReturnEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturn\Persistence\SpySalesReturn> $salesReturnEntityCollection
      *
      * @return array
      */
@@ -228,7 +228,7 @@ class ReturnTable extends AbstractTable
      *
      * @param int $idSalesReturn
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getItemStateLabelsByIdSalesReturn(int $idSalesReturn): array
     {

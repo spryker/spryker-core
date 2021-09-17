@@ -28,11 +28,11 @@ class TransferGenerator implements TransferGeneratorInterface
      *
      * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntityList
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function convertLocaleCollection(SpyLocale $localeEntityList)
     {
-        /** @var \Orm\Zed\Locale\Persistence\SpyLocale[] $localeEntities */
+        /** @var array<\Orm\Zed\Locale\Persistence\SpyLocale> $localeEntities */
         $localeEntities = $localeEntityList;
 
         $transferList = [];

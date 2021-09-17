@@ -20,7 +20,7 @@ class ProductAbstractNotBlankConstraintValidator extends ConstraintValidator
     protected const VIOLATION_MESSAGE = 'Abstract product is not selected.';
 
     /**
-     * @param mixed|\Generated\Shared\Transfer\ProductRelationTransfer $value
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer|mixed $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

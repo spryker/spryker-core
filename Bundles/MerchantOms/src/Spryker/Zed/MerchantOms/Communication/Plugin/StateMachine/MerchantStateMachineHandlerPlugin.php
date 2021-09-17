@@ -25,7 +25,7 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      *
      * @api
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
      */
     public function getCommandPlugins(): array
     {
@@ -37,7 +37,7 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      *
      * @api
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface>
      */
     public function getConditionPlugins(): array
     {
@@ -61,7 +61,7 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getActiveProcesses(): array
     {
@@ -114,9 +114,9 @@ class MerchantStateMachineHandlerPlugin extends AbstractPlugin implements StateM
      *
      * @api
      *
-     * @param int[] $stateIds
+     * @param array<int> $stateIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateMachineItemsByStateIds(array $stateIds = []): array
     {

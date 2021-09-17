@@ -15,14 +15,14 @@ interface QuoteApprovalRepositoryInterface
     /**
      * @param int $idQuote
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
     public function getQuoteApprovalsByIdQuote(int $idQuote): array;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
     public function getQuoteApprovalsIdexedByQuoteId(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array;
 

@@ -51,7 +51,7 @@ class PriceProductOfferDataProvider implements PriceProductOfferDataProviderInte
      *
      * @param int $idProductOffer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getPriceProductTransfers(int $idProductOffer): ArrayObject
     {

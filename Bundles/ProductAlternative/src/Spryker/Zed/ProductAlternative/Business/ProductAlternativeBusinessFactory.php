@@ -79,7 +79,7 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeCreatePluginInterface[]
+     * @return array<\Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeCreatePluginInterface>
      */
     protected function getPostProductAlternativeCreatePlugins(): array
     {
@@ -87,7 +87,7 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeDeletePluginInterface[]
+     * @return array<\Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeDeletePluginInterface>
      */
     protected function getPostProductAlternativeDeletePlugins(): array
     {
@@ -95,7 +95,7 @@ class ProductAlternativeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[]
+     * @return array<\Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface>
      */
     protected function getAlternativeProductApplicablePlugins(): array
     {

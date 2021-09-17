@@ -41,7 +41,7 @@ interface MerchantMapperInterface
     ): MerchantTransfer;
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant[] $merchantEntities
+     * @param array<\Orm\Zed\Merchant\Persistence\SpyMerchant> $merchantEntities
      * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
@@ -71,7 +71,7 @@ interface MerchantMapperInterface
     public function mapUrlEntityToUrlTransfer(SpyUrl $urlEntity, UrlTransfer $urlTransfer): UrlTransfer;
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore[] $merchantStoreEntities
+     * @param array<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore> $merchantStoreEntities
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer

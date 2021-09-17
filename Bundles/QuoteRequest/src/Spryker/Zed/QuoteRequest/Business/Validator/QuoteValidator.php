@@ -23,12 +23,12 @@ class QuoteValidator implements QuoteValidatorInterface
     protected const GLOSSARY_KEY_QUOTE_REQUEST_IS_NOT_APPLICABLE = 'quote_request.validation.error.is_not_applicable';
 
     /**
-     * @var \Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestPreCreateCheckPluginInterface[]
+     * @var array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestPreCreateCheckPluginInterface>
      */
     protected $quoteRequestPreCreateCheckPlugins;
 
     /**
-     * @param \Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestPreCreateCheckPluginInterface[] $quoteRequestPreCreateCheckPlugins
+     * @param array<\Spryker\Zed\QuoteRequestExtension\Dependency\Plugin\QuoteRequestPreCreateCheckPluginInterface> $quoteRequestPreCreateCheckPlugins
      */
     public function __construct(array $quoteRequestPreCreateCheckPlugins)
     {

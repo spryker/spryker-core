@@ -54,7 +54,7 @@ class CategoryNodePageSearchDeleter implements CategoryNodePageSearchDeleterInte
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
@@ -64,7 +64,7 @@ class CategoryNodePageSearchDeleter implements CategoryNodePageSearchDeleterInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

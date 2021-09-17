@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\ResourceOwnerResponseTransfer;
 class ResourceOwnerReader implements ResourceOwnerReaderInterface
 {
     /**
-     * @var \Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStrategyPluginInterface>
      */
     protected $oauthUserClientStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStrategyPluginInterface[] $oauthUserClientStrategyPlugins
+     * @param array<\Spryker\Zed\SecurityOauthUserExtension\Dependency\Plugin\OauthUserClientStrategyPluginInterface> $oauthUserClientStrategyPlugins
      */
     public function __construct(array $oauthUserClientStrategyPlugins)
     {

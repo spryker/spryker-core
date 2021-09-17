@@ -30,7 +30,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
      * @api
      *
      * @param array $configuration
-     * @param int|string|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */
@@ -60,7 +60,7 @@ class PlaceOrderPermissionPlugin implements ExecutablePermissionPluginInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getConfigurationSignature(): array
     {

@@ -20,7 +20,7 @@ class QueueReader implements DataReaderInterface
     protected $position = 0;
 
     /**
-     * @var \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected $messages = [];
 

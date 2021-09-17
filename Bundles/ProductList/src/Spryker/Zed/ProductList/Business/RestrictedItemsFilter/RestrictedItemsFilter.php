@@ -68,8 +68,8 @@ class RestrictedItemsFilter implements RestrictedItemsFilterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int[] $blacklistIds
-     * @param int[] $whitelistIds
+     * @param array<int> $blacklistIds
+     * @param array<int> $whitelistIds
      *
      * @return void
      */

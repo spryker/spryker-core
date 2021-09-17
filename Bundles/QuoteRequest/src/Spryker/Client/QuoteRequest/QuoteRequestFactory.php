@@ -121,7 +121,7 @@ class QuoteRequestFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface[]
+     * @return array<\Spryker\Client\QuoteRequestExtension\Dependency\Plugin\QuoteRequestQuoteCheckPluginInterface>
      */
     public function getQuoteRequestQuoteCheckPlugins(): array
     {

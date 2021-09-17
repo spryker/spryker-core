@@ -68,7 +68,7 @@ class ShipmentsRestApiDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface[]
+     * @return array<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface>
      */
     protected function getAddressSourceCheckerPlugins(): array
     {

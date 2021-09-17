@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 interface ProductMerchantPortalGuiToProductAttributeFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getProductAttributeCollection();
 
@@ -34,9 +34,9 @@ interface ProductMerchantPortalGuiToProductAttributeFacadeInterface
     public function getProductAbstractAttributeValues(int $idProductAbstract);
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array;
 }

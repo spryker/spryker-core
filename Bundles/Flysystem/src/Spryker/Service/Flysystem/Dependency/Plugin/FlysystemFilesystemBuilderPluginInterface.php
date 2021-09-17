@@ -20,7 +20,7 @@ interface FlysystemFilesystemBuilderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
+     * @param array<\League\Flysystem\PluginInterface> $flysystemPluginCollection
      *
      * @return \League\Flysystem\FilesystemInterface
      */

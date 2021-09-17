@@ -40,7 +40,7 @@ class QuoteApprovalConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRequiredQuoteFieldsForApprovalProcess(): array
     {

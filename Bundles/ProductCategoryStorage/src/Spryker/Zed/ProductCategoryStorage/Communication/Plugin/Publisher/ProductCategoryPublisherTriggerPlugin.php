@@ -30,7 +30,7 @@ class ProductCategoryPublisherTriggerPlugin extends AbstractPlugin implements Pu
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

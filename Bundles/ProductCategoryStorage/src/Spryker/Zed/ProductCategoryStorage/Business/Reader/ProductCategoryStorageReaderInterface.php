@@ -10,11 +10,11 @@ namespace Spryker\Zed\ProductCategoryStorage\Business\Reader;
 interface ProductCategoryStorageReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductCategoryTransfer[] $productCategoryTransfers
+     * @param array<\Generated\Shared\Transfer\ProductCategoryTransfer> $productCategoryTransfers
      * @param string $storeName
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
      */
     public function getProductCategoryStoragesFromCategoryTree(
         array $productCategoryTransfers,

@@ -46,7 +46,7 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -64,9 +64,9 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
+     * @return array<\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage>
      */
     protected function findIndexedProductAlternativeStorageEntities(array $productIds): array
     {
@@ -111,8 +111,8 @@ class ProductAlternativePublisher implements ProductAlternativePublisherInterfac
     }
 
     /**
-     * @param int[] $alternativeAbstractIds
-     * @param int[] $alternativeConcreteIds
+     * @param array<int> $alternativeAbstractIds
+     * @param array<int> $alternativeConcreteIds
      *
      * @return array
      */

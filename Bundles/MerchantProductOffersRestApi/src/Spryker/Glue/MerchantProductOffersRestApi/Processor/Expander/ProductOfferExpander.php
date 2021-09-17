@@ -26,7 +26,7 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
      * @return void
      */
@@ -51,9 +51,9 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(array $resources): array
     {

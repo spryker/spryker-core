@@ -14,12 +14,12 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 class ProductOptionGroupQueryExpander implements ProductOptionGroupQueryExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductOptionGuiExtension\Dependency\Plugin\ProductOptionListTableQueryCriteriaExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductOptionGuiExtension\Dependency\Plugin\ProductOptionListTableQueryCriteriaExpanderPluginInterface>
      */
     protected $productOptionListTableQueryCriteriaExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductOptionGuiExtension\Dependency\Plugin\ProductOptionListTableQueryCriteriaExpanderPluginInterface[] $productOptionListTableQueryCriteriaExpanderPlugins
+     * @param array<\Spryker\Zed\ProductOptionGuiExtension\Dependency\Plugin\ProductOptionListTableQueryCriteriaExpanderPluginInterface> $productOptionListTableQueryCriteriaExpanderPlugins
      */
     public function __construct(array $productOptionListTableQueryCriteriaExpanderPlugins)
     {

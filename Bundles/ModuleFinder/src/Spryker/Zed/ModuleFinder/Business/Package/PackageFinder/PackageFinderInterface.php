@@ -10,7 +10,7 @@ namespace Spryker\Zed\ModuleFinder\Business\Package\PackageFinder;
 interface PackageFinderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\PackageTransfer[]
+     * @return array<\Generated\Shared\Transfer\PackageTransfer>
      */
     public function getPackages(): array;
 }

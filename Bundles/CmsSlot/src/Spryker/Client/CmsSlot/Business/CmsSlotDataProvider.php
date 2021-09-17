@@ -13,12 +13,12 @@ use Spryker\Client\CmsSlot\Exception\CmsSlotExternalDataProviderMissingException
 class CmsSlotDataProvider implements CmsSlotDataProviderInterface
 {
     /**
-     * @var \Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface[]
+     * @var array<\Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface>
      */
     protected $externalDataProviderStrategyPlugins;
 
     /**
-     * @param \Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface[] $externalDataProviderStrategyPlugins
+     * @param array<\Spryker\Client\CmsSlotExtension\Dependency\Plugin\ExternalDataProviderStrategyPluginInterface> $externalDataProviderStrategyPlugins
      */
     public function __construct(array $externalDataProviderStrategyPlugins)
     {
@@ -26,7 +26,7 @@ class CmsSlotDataProvider implements CmsSlotDataProviderInterface
     }
 
     /**
-     * @param string[] $dataKeys
+     * @param array<string> $dataKeys
      *
      * @return \Generated\Shared\Transfer\CmsSlotExternalDataTransfer
      */

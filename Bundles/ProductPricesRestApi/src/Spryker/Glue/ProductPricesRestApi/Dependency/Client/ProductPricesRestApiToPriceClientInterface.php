@@ -32,7 +32,7 @@ interface ProductPricesRestApiToPriceClientInterface
     public function switchPriceMode(string $priceMode): void;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getPriceModes();
 }

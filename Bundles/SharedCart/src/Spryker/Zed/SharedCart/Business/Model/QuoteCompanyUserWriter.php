@@ -179,7 +179,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int[] $storedQuoteCompanyUserIdIndexes
+     * @param array<int> $storedQuoteCompanyUserIdIndexes
      *
      * @return void
      */
@@ -207,8 +207,8 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
-     * @param int[] $commonQuoteCompanyUserIdIndexes
-     * @param int[] $storedQuotePermissionGroupIdIndexes
+     * @param array<int> $commonQuoteCompanyUserIdIndexes
+     * @param array<int> $storedQuotePermissionGroupIdIndexes
      *
      * @return void
      */
@@ -234,7 +234,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShareDetailTransfer $shareDetailTransfer
-     * @param int[] $storedQuotePermissionGroupIdIndexes
+     * @param array<int> $storedQuotePermissionGroupIdIndexes
      *
      * @return bool
      */
@@ -299,8 +299,8 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShareDetailTransfer[] $shareDetailTransferCollection
-     * @param int[] $currentQuoteCompanyUserIdCollection
+     * @param array<\Generated\Shared\Transfer\ShareDetailTransfer> $shareDetailTransferCollection
+     * @param array<int> $currentQuoteCompanyUserIdCollection
      *
      * @return void
      */
@@ -315,7 +315,7 @@ class QuoteCompanyUserWriter implements QuoteCompanyUserWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShareDetailTransfer[] $shareDetailTransferCollection
+     * @param array<\Generated\Shared\Transfer\ShareDetailTransfer> $shareDetailTransferCollection
      *
      * @return array
      */

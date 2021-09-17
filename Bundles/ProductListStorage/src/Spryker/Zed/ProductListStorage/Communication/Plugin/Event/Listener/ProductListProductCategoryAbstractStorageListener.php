@@ -27,7 +27,7 @@ class ProductListProductCategoryAbstractStorageListener extends AbstractPlugin i
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
@@ -44,10 +44,10 @@ class ProductListProductCategoryAbstractStorageListener extends AbstractPlugin i
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $eventName
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductListCategoryIds(array $eventTransfers, string $eventName): array
     {

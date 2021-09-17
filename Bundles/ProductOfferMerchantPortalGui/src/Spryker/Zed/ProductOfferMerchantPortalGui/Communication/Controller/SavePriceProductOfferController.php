@@ -119,7 +119,7 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
     /**
      * @param string $requestedTypePriceProductOfferIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function parseTypePriceProductOfferIds(string $requestedTypePriceProductOfferIds): array
     {

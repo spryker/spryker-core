@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface CategoryImageGuiToLocaleInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection(): array;
 
@@ -24,7 +24,7 @@ interface CategoryImageGuiToLocaleInterface
     public function getLocaleById(int $idLocale): LocaleTransfer;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales(): array;
 }

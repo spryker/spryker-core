@@ -22,7 +22,7 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
     protected const EXCEPTION_MESSAGE = 'Could not find product by sku "%s"';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idProductCache = [];
 

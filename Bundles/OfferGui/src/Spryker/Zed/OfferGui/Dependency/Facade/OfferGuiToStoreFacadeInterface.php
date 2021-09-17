@@ -17,7 +17,7 @@ interface OfferGuiToStoreFacadeInterface
     public function getCurrentStore(): StoreTransfer;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCountries();
 }

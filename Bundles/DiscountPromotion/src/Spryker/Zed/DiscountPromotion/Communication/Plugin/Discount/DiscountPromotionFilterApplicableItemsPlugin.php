@@ -24,11 +24,11 @@ class DiscountPromotionFilterApplicableItemsPlugin extends AbstractPlugin implem
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $discountApplicableItems
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $discountApplicableItems
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idDiscount
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function filter(array $discountApplicableItems, QuoteTransfer $quoteTransfer, $idDiscount)
     {

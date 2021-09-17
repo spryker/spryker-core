@@ -167,9 +167,9 @@ class CommentTagWriter implements CommentTagWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTagTransfer[] $commentTagTransfers
+     * @param array<\Generated\Shared\Transfer\CommentTagTransfer> $commentTagTransfers
      *
-     * @return \Generated\Shared\Transfer\CommentTagTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTagTransfer>
      */
     protected function mapCommentTagsByName(array $commentTagTransfers): array
     {

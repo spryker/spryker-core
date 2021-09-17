@@ -33,7 +33,7 @@ class MerchantOpeningHoursStorageToStorageClientBridge implements MerchantOpenin
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

@@ -27,7 +27,7 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
     protected const VALUE_CANNOT_BE_EMPTY = 'This field is missing.';
 
     /**
-     * @return \Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\TransferConstraint[]
+     * @return array<\Spryker\Zed\PriceProductOffer\Business\Validator\Constraint\TransferConstraint>
      */
     public function getConstraints(): array
     {

@@ -37,7 +37,7 @@ class AvailabilityToOmsFacadeBridge implements AvailabilityToOmsFacadeInterface
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal

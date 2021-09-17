@@ -14,31 +14,31 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface StockReaderInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getStockTypes(): array;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockTransfer>
      */
     public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array;
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getWarehouseToStoreMapping(): array;
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getStoreToWarehouseMapping(): array;
 

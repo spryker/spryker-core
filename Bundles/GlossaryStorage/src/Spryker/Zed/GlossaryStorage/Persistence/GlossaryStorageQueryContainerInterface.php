@@ -44,7 +44,7 @@ interface GlossaryStorageQueryContainerInterface
      *
      * @api
      *
-     * @param int[] $glossaryKeysIds
+     * @param array<int> $glossaryKeysIds
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
      */

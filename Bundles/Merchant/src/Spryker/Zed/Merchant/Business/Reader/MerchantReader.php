@@ -21,13 +21,13 @@ class MerchantReader implements MerchantReaderInterface
     protected $merchantRepository;
 
     /**
-     * @var \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface>
      */
     protected $merchantExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface $merchantRepository
-     * @param \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface[] $merchantExpanderPlugins
+     * @param array<\Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantExpanderPluginInterface> $merchantExpanderPlugins
      */
     public function __construct(
         MerchantRepositoryInterface $merchantRepository,
@@ -125,7 +125,7 @@ class MerchantReader implements MerchantReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getMerchantIds(MerchantCollectionTransfer $merchantCollectionTransfer): array
     {

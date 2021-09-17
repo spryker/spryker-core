@@ -48,7 +48,7 @@ class CompanyUserBusinessUnitFormDataProvider
     /**
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getOptions(?int $idCompanyBusinessUnit = null): array
     {

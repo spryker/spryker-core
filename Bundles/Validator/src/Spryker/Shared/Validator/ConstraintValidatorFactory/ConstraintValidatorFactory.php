@@ -20,18 +20,18 @@ class ConstraintValidatorFactory extends SymfonyConstraintValidatorFactory
     protected $container;
 
     /**
-     * @var \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface[]
+     * @var array<\Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface>
      */
     protected $constraintPlugins = [];
 
     /**
-     * @var \Symfony\Component\Validator\ConstraintValidatorInterface[]
+     * @var array<\Symfony\Component\Validator\ConstraintValidatorInterface>
      */
     protected $constraintInstances = [];
 
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
-     * @param \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface[] $constraintPlugins
+     * @param array<\Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface> $constraintPlugins
      */
     public function __construct(ContainerInterface $container, array $constraintPlugins = [])
     {
@@ -59,7 +59,7 @@ class ConstraintValidatorFactory extends SymfonyConstraintValidatorFactory
     }
 
     /**
-     * @param \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface[] $constraintPlugins
+     * @param array<\Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface> $constraintPlugins
      *
      * @return void
      */

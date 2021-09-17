@@ -190,7 +190,7 @@ class OmsFacadeReservationsTest extends Unit
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param string $stateName
      *
      * @return void

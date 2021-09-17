@@ -207,7 +207,7 @@ class ProductStorageFacadeTest extends Unit
     }
 
     /**
-     * @return array[]
+     * @return array<array>
      */
     public function attributeMapDataProvider(): array
     {

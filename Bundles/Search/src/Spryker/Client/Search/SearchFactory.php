@@ -93,7 +93,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface>
      */
     public function getClientAdapterPlugins(): array
     {
@@ -101,7 +101,7 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface>
      */
     public function getSearchContextExpanderPlugins(): array
     {
@@ -345,7 +345,7 @@ class SearchFactory extends AbstractFactory
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface>
      */
     public function getSearchConfigExpanderPlugins()
     {

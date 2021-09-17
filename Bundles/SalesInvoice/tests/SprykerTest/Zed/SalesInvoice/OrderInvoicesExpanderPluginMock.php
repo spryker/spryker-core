@@ -17,9 +17,9 @@ class OrderInvoicesExpanderPluginMock implements OrderInvoicesExpanderPluginInte
     public const FAKE_REFERENCE_FOR_PLUGIN_CHECK = 'FAKE_REFERENCE_FOR_PLUGIN_CHECK';
 
     /**
-     * @param \Generated\Shared\Transfer\OrderInvoiceTransfer[] $orderInvoiceTransfers
+     * @param array<\Generated\Shared\Transfer\OrderInvoiceTransfer> $orderInvoiceTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderInvoiceTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderInvoiceTransfer>
      */
     public function expand(array $orderInvoiceTransfers): array
     {

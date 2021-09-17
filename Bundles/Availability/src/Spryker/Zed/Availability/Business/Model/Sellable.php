@@ -37,12 +37,12 @@ class Sellable implements SellableInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface>
      */
     protected $availabilityStrategyPlugins;
 
     /**
-     * @var \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\BatchAvailabilityStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\BatchAvailabilityStrategyPluginInterface>
      */
     protected $batchAvailabilityStrategyPlugins;
 
@@ -50,8 +50,8 @@ class Sellable implements SellableInterface
      * @param \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface $availabilityRepository
      * @param \Spryker\Zed\Availability\Business\Model\AvailabilityHandlerInterface $availabilityHandler
      * @param \Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface[] $availabilityStrategyPlugins
-     * @param \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\BatchAvailabilityStrategyPluginInterface[] $batchAvailabilityStrategyPlugins
+     * @param array<\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface> $availabilityStrategyPlugins
+     * @param array<\Spryker\Zed\AvailabilityExtension\Dependency\Plugin\BatchAvailabilityStrategyPluginInterface> $batchAvailabilityStrategyPlugins
      */
     public function __construct(
         AvailabilityRepositoryInterface $availabilityRepository,
@@ -246,7 +246,7 @@ class Sellable implements SellableInterface
     /**
      * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $SellableItemsRequestTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSkus($SellableItemsRequestTransfer): array
     {
@@ -261,7 +261,7 @@ class Sellable implements SellableInterface
     /**
      * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $SellableItemsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemResponseTransfer[]
+     * @return array<\Generated\Shared\Transfer\SellableItemResponseTransfer>
      */
     protected function processProductConcretesBatchRequest(
         SellableItemsRequestTransfer $SellableItemsRequestTransfer
@@ -300,9 +300,9 @@ class Sellable implements SellableInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[] $productConcreteAvailabilityTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer> $productConcreteAvailabilityTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
      */
     protected function getMappedProductConcreteAvailabilityTransfers(array $productConcreteAvailabilityTransfers): array
     {
@@ -314,10 +314,10 @@ class Sellable implements SellableInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[] $productConcreteAvailabilityTransfersMap
+     * @param array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer> $productConcreteAvailabilityTransfersMap
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
      */
     protected function mapProductConcreteAvailabilityTransferBySku(
         array $productConcreteAvailabilityTransfersMap,

@@ -84,7 +84,7 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
      *
      * @param string $stateMachineName
      * @param string $processName
-     * @param string[] $states
+     * @param array<string> $states
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
@@ -102,7 +102,7 @@ interface StateMachineQueryContainerInterface extends QueryContainerInterface
      *
      * @param string $stateMachineName
      * @param string $processName
-     * @param string[] $states
+     * @param array<string> $states
      * @param string $historySortDirection
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery

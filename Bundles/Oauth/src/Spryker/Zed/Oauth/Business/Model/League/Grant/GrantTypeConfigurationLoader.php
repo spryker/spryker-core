@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\OauthRequestTransfer;
 class GrantTypeConfigurationLoader implements GrantTypeConfigurationLoaderInterface
 {
     /**
-     * @var array|\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface>
      */
     protected $oauthGrantTypeConfigurationProviderPlugins;
 
     /**
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface[] $oauthGrantTypeConfigurationProviderPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface> $oauthGrantTypeConfigurationProviderPlugins
      */
     public function __construct(
         array $oauthGrantTypeConfigurationProviderPlugins

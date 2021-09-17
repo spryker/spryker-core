@@ -120,7 +120,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link \Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider::getNavigationItemCollectionFilterPlugins()} instead.
      *
-     * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
+     * @return array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface>
      */
     protected function getNavigationItemFilterPlugins(): array
     {
@@ -128,7 +128,7 @@ class ZedNavigationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[]
+     * @return array<\Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface>
      */
     protected function getNavigationItemCollectionFilterPlugins(): array
     {

@@ -34,7 +34,7 @@ class QueueReaderTest extends Unit
     protected const EXPECTED_NUMBER_OF_DATA_SETS_IN_QUEUE = 3;
 
     /**
-     * @var \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected static $queueMessages = [];
 

@@ -61,9 +61,9 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer[] $salesOrderThresholdTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer> $salesOrderThresholdTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>
      */
     public function expandWithLocalizedMessagesCollection(array $salesOrderThresholdTransfers): array
     {
@@ -86,8 +86,8 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocaleTransfers
+     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $availableLocaleTransfers
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
      */
@@ -111,11 +111,11 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer[] $salesOrderThresholdTransfers
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocaleTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer> $salesOrderThresholdTransfers
+     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $availableLocaleTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>
      */
     protected function expandSalesOrderThresholdTransferWithLocalizedMessagesCollection(
         array $salesOrderThresholdTransfers,
@@ -130,9 +130,9 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
+     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     protected function indexTranslationTransfersByLocaleId(array $translationTransfers): array
     {
@@ -177,9 +177,9 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer[] $salesOrderThresholdTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer> $salesOrderThresholdTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getGlossaryKeys(array $salesOrderThresholdTransfers): array
     {

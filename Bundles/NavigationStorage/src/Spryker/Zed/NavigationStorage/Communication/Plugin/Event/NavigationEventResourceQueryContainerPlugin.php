@@ -39,7 +39,7 @@ class NavigationEventResourceQueryContainerPlugin extends AbstractPlugin impleme
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */

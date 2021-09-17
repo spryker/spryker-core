@@ -15,12 +15,12 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 class ProductSearchAttributeMapper implements ProductSearchAttributeMapperInterface
 {
     /**
-     * @var \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface[]
+     * @var array<\Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface>
      */
     protected $attributeMapCollectors;
 
     /**
-     * @param \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface[] $attributeMapCollectors
+     * @param array<\Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface> $attributeMapCollectors
      */
     public function __construct(array $attributeMapCollectors)
     {

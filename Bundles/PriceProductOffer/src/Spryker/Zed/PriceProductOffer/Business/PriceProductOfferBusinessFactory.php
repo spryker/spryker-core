@@ -85,7 +85,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function getPriceProductOfferValidatorConstraints(): array
     {
@@ -179,7 +179,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExtractorPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExtractorPluginInterface>
      */
     public function getPriceProductOfferExtractorPlugins(): array
     {
@@ -187,7 +187,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExpanderPluginInterface>
      */
     public function getPriceProductOfferExpanderPlugins(): array
     {
@@ -195,7 +195,7 @@ class PriceProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferValidatorPluginInterface>
      */
     public function getPriceProductOfferValidatorPlugins(): array
     {

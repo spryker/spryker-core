@@ -48,9 +48,9 @@ interface PriceCartToPriceProductInterface
     public function hasValidPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getValidPrices(array $priceProductFilterTransfers): array;
 }

@@ -19,13 +19,13 @@ class AccessTokenCreator implements AccessTokenCreatorInterface
     protected $oauthFacade;
 
     /**
-     * @var \Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface[]
+     * @var array<\Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface>
      */
     protected $postAuthPlugins;
 
     /**
      * @param \Spryker\Zed\AuthRestApi\Dependency\Facade\AuthRestApiToOauthFacadeInterface $oauthFacade
-     * @param \Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface[] $postAuthPlugins
+     * @param array<\Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface> $postAuthPlugins
      */
     public function __construct(
         AuthRestApiToOauthFacadeInterface $oauthFacade,

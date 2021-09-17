@@ -12,10 +12,10 @@ use ArrayObject;
 interface ProductConfigurationInstancePriceMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]|\ArrayObject $restProductConfigurationPriceAttributesTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[]|\ArrayObject $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer> $restProductConfigurationPriceAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapRestProductConfigurationPriceAttributesTransfersToPriceProductTransfers(
         ArrayObject $restProductConfigurationPriceAttributesTransfers,
@@ -23,10 +23,10 @@ interface ProductConfigurationInstancePriceMapperInterface
     ): ArrayObject;
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[]|\ArrayObject $priceProductTransfers
-     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]|\ArrayObject $restProductConfigurationPriceAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer> $restProductConfigurationPriceAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer>
      */
     public function mapPriceProductTransfersToRestProductConfigurationPriceAttributesTransfers(
         ArrayObject $priceProductTransfers,

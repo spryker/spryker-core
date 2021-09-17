@@ -115,7 +115,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getBlacklistSettingsForIndexUpdate(): array
     {
@@ -125,7 +125,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStaticIndexSettings(): array
     {
@@ -135,7 +135,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDynamicIndexSettings(): array
     {
@@ -175,7 +175,7 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSupportedSourceIdentifiers(): array
     {

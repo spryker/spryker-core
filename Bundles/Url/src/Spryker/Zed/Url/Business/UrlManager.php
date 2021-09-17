@@ -229,7 +229,7 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param int $idCategoryNode
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     public function getResourceUrlCollectionByCategoryNodeId($idCategoryNode)
     {

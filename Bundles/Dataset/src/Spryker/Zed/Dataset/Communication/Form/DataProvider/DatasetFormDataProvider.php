@@ -73,7 +73,7 @@ class DatasetFormDataProvider
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function getAvailableLocales(): array
     {

@@ -55,7 +55,7 @@ class DataImportDumpConsole extends Console
     }
 
     /**
-     * @param string[] $dataImporter
+     * @param array<string> $dataImporter
      *
      * @return array
      */

@@ -21,7 +21,7 @@ class CmsContentWidgetProductConnectorQueryContainer extends AbstractQueryContai
      *
      * @api
      *
-     * @param string[] $skuList
+     * @param array<string> $skuList
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */

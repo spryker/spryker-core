@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\CodeBucket\Config\AbstractCodeBucketConfig;
 class TestCodeBucketConfigWithDefaultCodeBucket extends AbstractCodeBucketConfig
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCodeBuckets(): array
     {

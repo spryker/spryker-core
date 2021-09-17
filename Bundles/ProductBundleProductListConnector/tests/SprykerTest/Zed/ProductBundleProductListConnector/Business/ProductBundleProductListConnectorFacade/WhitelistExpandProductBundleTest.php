@@ -125,7 +125,7 @@ class WhitelistExpandProductBundleTest extends Unit
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[] $bundledProducts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductForBundleTransfer> $bundledProducts
      *
      * @return \Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductBundleFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
@@ -144,7 +144,7 @@ class WhitelistExpandProductBundleTest extends Unit
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */

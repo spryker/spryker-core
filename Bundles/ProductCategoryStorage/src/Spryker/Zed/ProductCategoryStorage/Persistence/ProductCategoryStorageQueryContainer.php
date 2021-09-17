@@ -22,7 +22,7 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param int[] $productCategoryIds
+     * @param array<int> $productCategoryIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
@@ -39,7 +39,7 @@ class ProductCategoryStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery
      */

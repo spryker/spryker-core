@@ -92,7 +92,7 @@ class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer> $configurableBundleTemplateStorageTransfers
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

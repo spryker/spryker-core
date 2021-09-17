@@ -14,7 +14,7 @@ use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInt
 class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterface
 {
     /**
-     * @var \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface[]
+     * @var array<\Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface>
      */
     protected $quoteStorageStrategyPlugins;
 
@@ -25,7 +25,7 @@ class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterf
 
     /**
      * @param \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface $quoteClient
-     * @param \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface[] $quoteStorageStrategyPlugins
+     * @param array<\Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface> $quoteStorageStrategyPlugins
      */
     public function __construct(CartToQuoteInterface $quoteClient, array $quoteStorageStrategyPlugins)
     {

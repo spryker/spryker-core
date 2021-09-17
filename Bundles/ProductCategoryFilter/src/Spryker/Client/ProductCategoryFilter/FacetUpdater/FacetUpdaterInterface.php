@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 interface FacetUpdaterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facets
+     * @param array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer> $facets
      * @param array $updateCriteria
      *
-     * @return \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer>
      */
     public function update(array $facets, array $updateCriteria);
 
@@ -23,7 +23,7 @@ interface FacetUpdaterInterface
      * @param array $facets
      * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function updateFromTransfer(array $facets, ProductCategoryFilterTransfer $productCategoryFilterTransfer);
 }

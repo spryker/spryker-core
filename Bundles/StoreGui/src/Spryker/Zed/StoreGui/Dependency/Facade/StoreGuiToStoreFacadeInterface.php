@@ -15,7 +15,7 @@ interface StoreGuiToStoreFacadeInterface
     public function isMultiStorePerZedEnabled(): bool;
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresAvailableForCurrentPersistence(): array;
 }

@@ -22,7 +22,7 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
      *
      * @api
      *
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
      * @return void
      */
@@ -38,7 +38,7 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
      *
      * @api
      *
-     * @param int[] $companyIds
+     * @param array<int> $companyIds
      *
      * @return void
      */
@@ -54,7 +54,7 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
      *
      * @api
      *
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
      * @return void
      */
@@ -71,9 +71,9 @@ class CompanyUserStorageFacade extends AbstractFacade implements CompanyUserStor
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds = []): array
     {

@@ -20,7 +20,7 @@ class TestLoggerConfig2 implements LoggerConfigInterface
     }
 
     /**
-     * @return \Monolog\Handler\HandlerInterface[]
+     * @return array<\Monolog\Handler\HandlerInterface>
      */
     public function getHandlers(): array
     {
@@ -28,7 +28,7 @@ class TestLoggerConfig2 implements LoggerConfigInterface
     }
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getProcessors(): array
     {

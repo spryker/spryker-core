@@ -19,7 +19,7 @@ interface DependencyInjectorCollectionInterface extends Countable
     public function addDependencyInjector(DependencyInjectorInterface $dependencyInjector);
 
     /**
-     * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface[]
+     * @return array<\Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface>
      */
     public function getDependencyInjector();
 }

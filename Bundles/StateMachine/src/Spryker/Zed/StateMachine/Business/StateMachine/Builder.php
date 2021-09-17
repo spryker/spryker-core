@@ -72,7 +72,7 @@ class Builder implements BuilderInterface
     protected $rootElement;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     * @var array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface>
      */
     protected static $processBuffer = [];
 
@@ -189,7 +189,7 @@ class Builder implements BuilderInterface
      */
     protected function recursiveMerge($fromXmlElement, $intoXmlNode, $prefix = null)
     {
-        /** @var \SimpleXMLElement[] $xmlElements */
+        /** @var array<\SimpleXMLElement> $xmlElements */
         $xmlElements = $fromXmlElement->children();
         if (!$xmlElements) {
             return;
@@ -307,7 +307,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\EventInterface>
      */
     protected function createEvents()
     {
@@ -386,7 +386,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processMap
      *
      * @return void
      */
@@ -410,9 +410,9 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processMap
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface>
      */
     protected function createStates(array $processMap)
     {
@@ -476,9 +476,9 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $stateToProcessMap
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processMap
-     * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface[] $eventMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $stateToProcessMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\EventInterface> $eventMap
      *
      * @return void
      */
@@ -500,8 +500,8 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $stateToProcessMap
-     * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface[] $eventMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $stateToProcessMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\EventInterface> $eventMap
      * @param \SimpleXMLElement $xmlTransition
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface
@@ -534,7 +534,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $stateToProcessMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $stateToProcessMap
      * @param string $sourceName
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
      *
@@ -552,7 +552,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $stateToProcessMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $stateToProcessMap
      * @param \SimpleXMLElement $xmlTransition
      * @param string $sourceName
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition
@@ -585,7 +585,7 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface[] $eventMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\EventInterface> $eventMap
      * @param \SimpleXMLElement $xmlTransition
      * @param string $sourceState
      * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface $transition

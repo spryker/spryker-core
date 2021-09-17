@@ -27,7 +27,7 @@ interface GuestCartRestResponseBuilderInterface
     public function createGuestCartRestResponse(QuoteTransfer $quoteTransfer, string $localeName): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuoteErrorTransfer> $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

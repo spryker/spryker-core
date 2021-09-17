@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 class PriceProductsMerger implements PriceProductsMergerInterface
 {
     /**
-     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\MergeStrategy\PriceProductMergeStrategyInterface[]
+     * @var array<\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\MergeStrategy\PriceProductMergeStrategyInterface>
      */
     protected $priceProductMergeStrategies;
 
     /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\MergeStrategy\PriceProductMergeStrategyInterface[] $priceProductMergeStrategies
+     * @param array<\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\MergeStrategy\PriceProductMergeStrategyInterface> $priceProductMergeStrategies
      */
     public function __construct(array $priceProductMergeStrategies)
     {
@@ -30,10 +30,10 @@ class PriceProductsMerger implements PriceProductsMergerInterface
      *
      * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function merge(
         ArrayObject $priceProductTransfers,
@@ -61,10 +61,10 @@ class PriceProductsMerger implements PriceProductsMergerInterface
      *
      * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function mergeWithDefaultStrategy(
         ArrayObject $priceProductTransfers,

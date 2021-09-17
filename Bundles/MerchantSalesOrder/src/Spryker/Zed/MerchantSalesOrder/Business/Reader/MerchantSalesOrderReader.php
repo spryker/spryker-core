@@ -32,12 +32,12 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     protected $merchantSalesOrderRepository;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface>
      */
     protected $merchantOrderExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface[]
+     * @var array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface>
      */
     protected $merchantOrderFilterPlugins;
 
@@ -49,8 +49,8 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     /**
      * @param \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository
-     * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface[] $merchantOrderFilterPlugins
-     * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface[] $merchantOrderExpanderPlugins
+     * @param array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderFilterPluginInterface> $merchantOrderFilterPlugins
+     * @param array<\Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface> $merchantOrderExpanderPlugins
      * @param \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToMerchantFacadeInterface $merchantFacade
      */
     public function __construct(
@@ -255,7 +255,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     /**
      * @phpstan-param array<string> $merchantReferences
      *
-     * @param string[] $merchantReferences
+     * @param array<string> $merchantReferences
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */

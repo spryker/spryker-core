@@ -13,12 +13,12 @@ use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface;
 class ContentResolver implements ContentResolverInterface
 {
     /**
-     * @var array|\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[]
+     * @var array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface>
      */
     protected $contentPlugins;
 
     /**
-     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[] $contentPlugins
+     * @param array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface> $contentPlugins
      */
     public function __construct(array $contentPlugins)
     {
@@ -26,7 +26,7 @@ class ContentResolver implements ContentResolverInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getTermKeys(): array
     {

@@ -13,7 +13,7 @@ use Spryker\Zed\AclEntityDataImport\Business\DataSet\AclEntitySegmentConnectorDa
 class AclEntitySegmentConnectorRequiredFieldValidatorStep extends AbstractRequiredFieldsValidatorStep
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getRequiredFieldList(): array
     {

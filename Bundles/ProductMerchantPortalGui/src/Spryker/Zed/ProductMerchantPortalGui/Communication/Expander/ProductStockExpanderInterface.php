@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Expander;
 interface ProductStockExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expandProductConcreteTransfersWithDefaultMerchantProductStock(
         array $productConcreteTransfers

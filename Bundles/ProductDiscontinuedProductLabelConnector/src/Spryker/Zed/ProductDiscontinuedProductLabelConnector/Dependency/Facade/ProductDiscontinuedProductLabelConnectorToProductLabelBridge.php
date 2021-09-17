@@ -56,7 +56,7 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -67,7 +67,7 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
 
     /**
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -79,7 +79,7 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
     /**
      * @param int $idsProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findActiveLabelIdsByIdProductAbstract(int $idsProductAbstract)
     {
@@ -89,7 +89,7 @@ class ProductDiscontinuedProductLabelConnectorToProductLabelBridge implements Pr
     /**
      * @param int $idProductLabel
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractRelationsByIdProductLabel(int $idProductLabel)
     {

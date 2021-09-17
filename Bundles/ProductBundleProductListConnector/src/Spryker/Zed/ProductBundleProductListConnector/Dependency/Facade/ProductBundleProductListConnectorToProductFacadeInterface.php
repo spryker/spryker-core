@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade;
 interface ProductBundleProductListConnectorToProductFacadeInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */

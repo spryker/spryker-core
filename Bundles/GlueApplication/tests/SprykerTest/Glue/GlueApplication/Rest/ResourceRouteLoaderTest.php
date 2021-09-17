@@ -82,7 +82,7 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
-        /** @var \Spryker\Glue\GlueApplication\Rest\Request\Data\VersionInterface[] $route */
+        /** @var array<\Spryker\Glue\GlueApplication\Rest\Request\Data\VersionInterface> $route */
         $route = $resourceRouteLoader->load('tests', [], Request::create('/tests/1'));
 
         $this->assertSame(2, $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION]->getMajor());
@@ -114,7 +114,7 @@ class ResourceRouteLoaderTest extends Unit
 
         $resourceRouteLoader = $this->createResourceLoader([$resourceRoutePluginMock1, $resourceRoutePluginMock2], $versionResolverMock);
 
-        /** @var \Spryker\Glue\GlueApplication\Rest\Request\Data\VersionInterface[] $route */
+        /** @var array<\Spryker\Glue\GlueApplication\Rest\Request\Data\VersionInterface> $route */
         $route = $resourceRouteLoader->load('tests', [], Request::create('/tests/1'));
 
         $this->assertSame(1, $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_VERSION]->getMajor());
@@ -153,9 +153,9 @@ class ResourceRouteLoaderTest extends Unit
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[] $plugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface> $plugins
      * @param \Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface $versionResolverMock
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface[] $routerParameterExpanderPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface> $routerParameterExpanderPlugins
      *
      * @return \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface
      */

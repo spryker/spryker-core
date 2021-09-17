@@ -11,8 +11,8 @@ interface UtilSanitizeToXssSanitizeInterface
 {
     /**
      * @param string $text
-     * @param string[] $allowedAttributes
-     * @param string[] $allowedHtmlTags
+     * @param array<string> $allowedAttributes
+     * @param array<string> $allowedHtmlTags
      *
      * @return string
      */

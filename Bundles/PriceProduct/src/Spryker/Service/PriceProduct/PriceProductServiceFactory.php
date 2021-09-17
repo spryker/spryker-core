@@ -55,7 +55,7 @@ class PriceProductServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[]
+     * @return array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface>
      */
     public function getPriceProductDecisionPlugins(): array
     {

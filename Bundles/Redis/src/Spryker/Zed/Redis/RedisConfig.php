@@ -27,7 +27,7 @@ class RedisConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return int|float|null
+     * @return float|int|null
      */
     public function getProcessTimeout()
     {

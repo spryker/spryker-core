@@ -69,7 +69,7 @@ class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderIn
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
      */
     protected function getMerchantRelationshipTransfers(ProductListTransfer $productListTransfer): array
     {
@@ -88,7 +88,7 @@ class ProductListUsedByTableExpander implements ProductListUsedByTableExpanderIn
 
     /**
      * @param \Generated\Shared\Transfer\ProductListUsedByTableTransfer $productListUsedByTableTransfer
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer[] $merchantRelationshipTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantRelationshipTransfer> $merchantRelationshipTransfers
      *
      * @return \Generated\Shared\Transfer\ProductListUsedByTableTransfer
      */

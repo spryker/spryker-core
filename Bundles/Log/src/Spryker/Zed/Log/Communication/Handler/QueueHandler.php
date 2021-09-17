@@ -20,7 +20,7 @@ class QueueHandler extends AbstractQueueHandler
      *
      * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
      * @param string $queueName
-     * @param int|string $level Level or level name
+     * @param string|int $level Level or level name
      * @param bool $bubble
      */
     public function __construct(QueueClientInterface $queueClient, $queueName, $level = Logger::DEBUG, $bubble = true)

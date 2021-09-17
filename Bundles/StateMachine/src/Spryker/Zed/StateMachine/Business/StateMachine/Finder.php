@@ -60,7 +60,7 @@ class Finder implements FinderInterface
     /**
      * @param string $stateMachineName
      *
-     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineProcessTransfer>
      */
     public function getProcesses($stateMachineName)
     {
@@ -74,9 +74,9 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems)
     {
@@ -95,7 +95,7 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer)
     {
@@ -126,7 +126,7 @@ class Finder implements FinderInterface
      * @param string $flag
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC')
     {
@@ -138,7 +138,7 @@ class Finder implements FinderInterface
      * @param string $flag
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC')
     {
@@ -151,7 +151,7 @@ class Finder implements FinderInterface
      * @param bool $hasFlag
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     protected function getItemsByFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName, $hasFlag, string $sort)
     {
@@ -192,7 +192,7 @@ class Finder implements FinderInterface
      * @param string $flag
      * @param bool $hasFlag
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\StateInterface>
      */
     protected function getStatesByFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, $hasFlag)
     {
@@ -211,11 +211,11 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param string[] $sourceStates
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processes
+     * @param array<string> $sourceStates
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer[]>
      */
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,
@@ -264,9 +264,9 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface>
      */
     public function findProcessesForItems(array $stateMachineItems)
     {
@@ -289,7 +289,7 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProcessStates(StateMachineProcessTransfer $stateMachineProcessTransfer): array
     {
@@ -324,7 +324,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processes
      * @param string $processName
      *
      * @throws \Spryker\Zed\StateMachine\Business\Exception\StateMachineException
@@ -399,7 +399,7 @@ class Finder implements FinderInterface
      * @param array $statesByFlag
      * @param string $historySortDirection
      *
-     * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState>
      */
     protected function getFlaggedStateMachineItems(StateMachineProcessTransfer $stateMachineProcessTransfer, array $statesByFlag, string $historySortDirection)
     {

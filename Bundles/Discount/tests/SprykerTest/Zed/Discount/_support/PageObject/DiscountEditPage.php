@@ -37,7 +37,7 @@ class DiscountEditPage
     }
 
     /**
-     * @param int|string $identifier
+     * @param string|int $identifier
      *
      * @return void
      */
@@ -47,7 +47,7 @@ class DiscountEditPage
     }
 
     /**
-     * @param int|string $identifier
+     * @param string|int $identifier
      *
      * @return string
      */

@@ -12,7 +12,7 @@ interface MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeInterface
     /**
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      *
-     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
     public function getAllStoresWithCurrencies();
 

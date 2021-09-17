@@ -10,14 +10,14 @@ namespace Spryker\Zed\ConfigurableBundleStorage\Dependency\Facade;
 interface ConfigurableBundleStorageToEventBehaviorFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return array
      */
     public function getEventTransferIds(array $eventTransfers): array;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $foreignKeyColumnName
      *
      * @return array

@@ -52,9 +52,9 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function processMessages(array $queueMessageTransfers): array
     {
@@ -86,7 +86,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
     /**
      * @param array $writeMessagesByQueue
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected function runBulkWrite(array $writeMessagesByQueue): array
     {
@@ -113,7 +113,7 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
     /**
      * @param array $deleteMessagesByQueue
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected function runBulkDelete(array $deleteMessagesByQueue): array
     {
@@ -138,10 +138,10 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      * @param string $errorMessage
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected function markEachMessageChunkAsFailed(array $queueMessageTransfers, string $errorMessage = ''): array
     {
@@ -154,9 +154,9 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected function markEachMessageChunkAsAcknowledged(array $queueMessageTransfers): array
     {
@@ -185,11 +185,11 @@ class BulkQueueMessageProcessor implements QueueMessageProcessorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      * @param array $messageBodies
      * @param string $type
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected function restoreQueueMessageBodies(array $queueMessageTransfers, array $messageBodies, string $type): array
     {

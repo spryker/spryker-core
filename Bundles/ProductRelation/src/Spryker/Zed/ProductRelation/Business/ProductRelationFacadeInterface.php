@@ -72,7 +72,7 @@ interface ProductRelationFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTypeTransfer>
      */
     public function getProductRelationTypeList();
 
@@ -165,9 +165,9 @@ interface ProductRelationFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function getProductRelationsByProductAbstractIds(array $productAbstractIds): array;
 
@@ -177,9 +177,9 @@ interface ProductRelationFacadeInterface
      *
      * @api
      *
-     * @param int[] $productRelationIds
+     * @param array<int> $productRelationIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductRelationIds(
         array $productRelationIds
@@ -193,7 +193,7 @@ interface ProductRelationFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array;
 

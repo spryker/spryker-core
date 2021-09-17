@@ -109,7 +109,7 @@ class MoneyBuilder implements MoneyBuilderInterface
     }
 
     /**
-     * @param int|string $amount
+     * @param string|int $amount
      * @param string|null $isoCode
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer

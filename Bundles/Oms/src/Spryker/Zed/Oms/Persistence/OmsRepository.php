@@ -33,8 +33,8 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     protected const COL_PRODUCT_RESERVATION_TOTAL_QUANTITY = 'productReservationTotalQuantity';
 
     /**
-     * @param int[] $processIds
-     * @param int[] $stateBlackList
+     * @param array<int> $processIds
+     * @param array<int> $stateBlackList
      *
      * @return array
      */
@@ -50,11 +50,11 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     }
 
     /**
-     * @param string[] $stateNames
+     * @param array<string> $stateNames
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer = null): array
     {
@@ -98,7 +98,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     }
 
     /**
-     * @param string[] $concreteSkus
+     * @param array<string> $concreteSkus
      * @param int $idStore
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -117,9 +117,9 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     }
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ItemStateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemStateTransfer>
      */
     public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array
     {
@@ -142,7 +142,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
      *
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
     {
@@ -243,7 +243,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ReservationResponseTransfer[]
+     * @return array<\Generated\Shared\Transfer\ReservationResponseTransfer>
      */
     public function findProductReservationStores(string $sku): array
     {

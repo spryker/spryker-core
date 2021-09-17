@@ -61,7 +61,7 @@ class PriceProductOfferVolumeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function createPriceProductOfferConstraints(): array
     {
@@ -82,7 +82,7 @@ class PriceProductOfferVolumeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function createPriceProductConstraints(): array
     {

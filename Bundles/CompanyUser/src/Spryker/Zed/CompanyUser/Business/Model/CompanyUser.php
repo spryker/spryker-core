@@ -46,7 +46,7 @@ class CompanyUser implements CompanyUserInterface
     protected $companyUserPluginExecutor;
 
     /**
-     * @var \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface>
      */
     protected $companyUserSavePreCheckPlugins;
 
@@ -55,7 +55,7 @@ class CompanyUser implements CompanyUserInterface
      * @param \Spryker\Zed\CompanyUser\Persistence\CompanyUserEntityManagerInterface $companyUserEntityManager
      * @param \Spryker\Zed\CompanyUser\Dependency\Facade\CompanyUserToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\CompanyUser\Business\Model\CompanyUserPluginExecutorInterface $companyUserPluginExecutor
-     * @param \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface[] $companyUserSavePreCheckPlugins
+     * @param array<\Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserSavePreCheckPluginInterface> $companyUserSavePreCheckPlugins
      */
     public function __construct(
         CompanyUserRepositoryInterface $companyUserRepository,
@@ -210,9 +210,9 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyUserTransfer>
      */
     public function findActiveCompanyUsers(array $companyUserIds): array
     {
@@ -220,9 +220,9 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param int[] $companyIds
+     * @param array<int> $companyIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array
     {
@@ -389,7 +389,7 @@ class CompanyUser implements CompanyUserInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ResponseMessageTransfer[] $messages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ResponseMessageTransfer> $messages
      * @param \Generated\Shared\Transfer\CompanyResponseTransfer $companyResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyResponseTransfer
@@ -407,7 +407,7 @@ class CompanyUser implements CompanyUserInterface
 
     /**
      * @param \Generated\Shared\Transfer\CompanyUserResponseTransfer $companyUserResponseTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\CustomerErrorTransfer[] $errors
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CustomerErrorTransfer> $errors
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */

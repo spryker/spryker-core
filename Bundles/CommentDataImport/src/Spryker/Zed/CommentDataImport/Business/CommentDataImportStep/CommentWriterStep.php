@@ -101,7 +101,7 @@ class CommentWriterStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function saveCommentTags(DataSetInterface $dataSet): array
     {

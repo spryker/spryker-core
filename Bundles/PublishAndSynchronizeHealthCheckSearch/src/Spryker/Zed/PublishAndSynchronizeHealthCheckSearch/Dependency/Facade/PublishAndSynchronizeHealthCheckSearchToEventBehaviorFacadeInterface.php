@@ -10,9 +10,9 @@ namespace Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\Dependency\Facade;
 interface PublishAndSynchronizeHealthCheckSearchToEventBehaviorFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getEventTransferIds(array $eventTransfers): array;
 }

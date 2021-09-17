@@ -45,7 +45,7 @@ class DashboardDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface[]
+     * @return array<\Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface>
      */
     protected function getDashboardPlugins(): array
     {

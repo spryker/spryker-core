@@ -23,9 +23,9 @@ class PublishAndSynchronizeHealthCheckSearchToEventBehaviorFacadeBridge implemen
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getEventTransferIds(array $eventTransfers): array
     {

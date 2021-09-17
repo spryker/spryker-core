@@ -318,10 +318,10 @@ class ProductAttributesController extends AbstractController
      *
      * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $attributeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
      */
     protected function deleteLocalizedAttribute(ArrayObject $localizedAttributesTransfers, string $attributeName): ArrayObject
     {
@@ -355,8 +355,8 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @param string[] $newAttributes
-     * @param string[] $productAttributes
+     * @param array<string> $newAttributes
+     * @param array<string> $productAttributes
      * @param string $attributeName
      *
      * @return array
@@ -380,15 +380,11 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
-     *
-     * @param string[] $newAttributes
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param array<string> $newAttributes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $attributeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>
      */
     protected function updateLocalizedAttributes(array $newAttributes, ArrayObject $localizedAttributesTransfers, string $attributeName): ArrayObject
     {
@@ -480,7 +476,7 @@ class ProductAttributesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getAttributes(Request $request): array
     {
@@ -494,8 +490,8 @@ class ProductAttributesController extends AbstractController
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
-     * @param string[] $attributes
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param array<string> $attributes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $attributeName
      *
      * @return bool
@@ -512,7 +508,7 @@ class ProductAttributesController extends AbstractController
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $attributeName
      *
      * @return bool

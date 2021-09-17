@@ -48,7 +48,7 @@ class PriceProductConcreteMerchantRelationEventResourceBulkRepositoryPlugin exte
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

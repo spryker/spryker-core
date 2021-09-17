@@ -45,7 +45,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface>
      */
     public function getPostSavePlugins(): array
     {
@@ -53,7 +53,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[]
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface>
      */
     public function getUserPreSavePlugins(): array
     {
@@ -61,7 +61,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface>
      */
     public function getUserTransferExpanderPlugins(): array
     {

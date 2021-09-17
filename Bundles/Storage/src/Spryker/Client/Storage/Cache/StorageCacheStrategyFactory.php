@@ -55,7 +55,7 @@ class StorageCacheStrategyFactory
     }
 
     /**
-     * @return \Spryker\Client\Storage\Cache\StorageCacheStrategyInterface[]
+     * @return array<\Spryker\Client\Storage\Cache\StorageCacheStrategyInterface>
      */
     protected function createCacheStrategyStack()
     {

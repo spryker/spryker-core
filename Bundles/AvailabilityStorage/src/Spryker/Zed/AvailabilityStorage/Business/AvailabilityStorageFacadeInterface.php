@@ -45,7 +45,7 @@ interface AvailabilityStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -58,7 +58,7 @@ interface AvailabilityStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

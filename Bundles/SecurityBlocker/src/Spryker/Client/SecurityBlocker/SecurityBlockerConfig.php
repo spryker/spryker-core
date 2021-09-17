@@ -66,7 +66,7 @@ class SecurityBlockerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getDataSourceNames(): array
     {
@@ -103,7 +103,7 @@ class SecurityBlockerConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer[]
+     * @return array<\Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer>
      */
     public function getSecurityBlockerConfigurationSettings(): array
     {

@@ -16,7 +16,7 @@ class StockTransformer implements DataTransformerInterface
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\StockProductTransfer[] $stockProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer
      */
@@ -30,11 +30,9 @@ class StockTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer>
-     *
      * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StockProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer>
      */
     public function reverseTransform($stockProductTransfer): ArrayObject
     {

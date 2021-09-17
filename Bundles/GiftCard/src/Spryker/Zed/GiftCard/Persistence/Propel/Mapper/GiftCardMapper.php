@@ -43,9 +43,9 @@ class GiftCardMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration[] $giftCardProductAbstractConfigurationEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductAbstractConfiguration> $giftCardProductAbstractConfigurationEntities
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer>
      */
     public function mapGiftCardProductAbstractConfigurationEntitiesToGiftCardAbstractProductConfigurationForProductAbstractTransfers(
         ObjectCollection $giftCardProductAbstractConfigurationEntities
@@ -89,9 +89,9 @@ class GiftCardMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfiguration[] $giftCardProductConfigurationEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfiguration> $giftCardProductConfigurationEntities
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer>
      */
     public function mapGiftCardProductConfigurationEntitiesToGiftCardProductConfigurationForProductTransfers(
         ObjectCollection $giftCardProductConfigurationEntities

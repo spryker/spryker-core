@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class CollectorStrategyResolver implements CollectorStrategyResolverInterface
 {
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface>
      */
     protected $collectorStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface[] $collectorStrategyPlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface> $collectorStrategyPlugins
      */
     public function __construct(array $collectorStrategyPlugins)
     {

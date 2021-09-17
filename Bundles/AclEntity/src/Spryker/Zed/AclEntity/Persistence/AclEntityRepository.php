@@ -96,7 +96,7 @@ class AclEntityRepository extends AbstractRepository implements AclEntityReposit
     /**
      * @param \Generated\Shared\Transfer\RolesTransfer $rolesTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getRoleIdsFromRolesTransfer(RolesTransfer $rolesTransfer): array
     {

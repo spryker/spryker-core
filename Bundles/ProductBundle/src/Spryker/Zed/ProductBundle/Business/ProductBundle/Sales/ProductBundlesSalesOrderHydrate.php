@@ -56,7 +56,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
     /**
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     protected function findOrderItemsByIdSalesOrder($idSalesOrder)
     {
@@ -94,7 +94,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductBundleGroupTransfer>
      */
     protected function getItemGroups(OrderTransfer $orderTransfer)
     {
@@ -107,7 +107,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductBundleGroupTransfer>
      */
     protected function getBundleGroups(OrderTransfer $orderTransfer)
     {
@@ -142,7 +142,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductBundleGroupTransfer>
      */
     protected function getSingleItemGroups(OrderTransfer $orderTransfer)
     {

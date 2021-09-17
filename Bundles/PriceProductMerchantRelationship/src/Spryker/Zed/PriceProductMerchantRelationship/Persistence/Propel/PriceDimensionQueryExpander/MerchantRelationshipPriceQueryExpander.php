@@ -98,7 +98,7 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
     }
 
     /**
-     * @param int[] $merchantRelationshipIds
+     * @param array<int> $merchantRelationshipIds
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */

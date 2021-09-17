@@ -74,7 +74,7 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringValueOptions()
     {

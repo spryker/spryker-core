@@ -35,32 +35,32 @@ class ProductListWriter implements ProductListWriterInterface
     protected $productListKeyGenerator;
 
     /**
-     * @var \Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[]
+     * @var array<\Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface>
      */
     protected $productListPostSavers;
 
     /**
-     * @var \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[]
+     * @var array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface>
      */
     protected $productListPreCreatePlugins;
 
     /**
-     * @var \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface>
      */
     protected $productListPreUpdatePlugins;
 
     /**
-     * @var \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface[]
+     * @var array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface>
      */
     protected $productListDeletePreCheckPlugins;
 
     /**
      * @param \Spryker\Zed\ProductList\Persistence\ProductListEntityManagerInterface $productListEntityManager
      * @param \Spryker\Zed\ProductList\Business\KeyGenerator\ProductListKeyGeneratorInterface $productListKeyGenerator
-     * @param \Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[] $productListPostSavers
-     * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[] $productListPreCreatePlugins
-     * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[] $productListPreUpdatePlugins
-     * @param \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface[] $productListDeletePreCheckPlugins
+     * @param array<\Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface> $productListPostSavers
+     * @param array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface> $productListPreCreatePlugins
+     * @param array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface> $productListPreUpdatePlugins
+     * @param array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface> $productListDeletePreCheckPlugins
      */
     public function __construct(
         ProductListEntityManagerInterface $productListEntityManager,

@@ -59,7 +59,7 @@ class MySqlStorageReader extends AbstractStorageReader
     }
 
     /**
-     * @param string[] $resourceKeys
+     * @param array<string> $resourceKeys
      *
      * @return array
      */
@@ -103,7 +103,7 @@ class MySqlStorageReader extends AbstractStorageReader
 
     /**
      * @param \Propel\Runtime\Connection\StatementInterface $statement
-     * @param string[][][] $queryDataPerTable
+     * @param array<string[][]> $queryDataPerTable
      *
      * @return \Propel\Runtime\Connection\StatementInterface
      */

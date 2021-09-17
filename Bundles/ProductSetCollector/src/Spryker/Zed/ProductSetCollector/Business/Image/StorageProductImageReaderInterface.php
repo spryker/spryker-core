@@ -13,7 +13,7 @@ interface StorageProductImageReaderInterface
      * @param int $idProductSet
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\StorageProductImageTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductImageTransfer>
      */
     public function getProductSetImageSets($idProductSet, $idLocale);
 }

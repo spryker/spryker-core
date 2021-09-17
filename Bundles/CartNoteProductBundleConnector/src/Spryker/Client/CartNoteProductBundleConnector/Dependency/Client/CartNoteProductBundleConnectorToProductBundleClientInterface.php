@@ -16,7 +16,7 @@ interface CartNoteProductBundleConnectorToProductBundleClientInterface
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): array;
 }

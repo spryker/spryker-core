@@ -99,7 +99,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     protected function getBackofficeRouterPlugins(): array
     {
@@ -135,7 +135,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     protected function getMerchantPortalRouterPlugins(): array
     {
@@ -157,7 +157,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface>
      */
     protected function getMerchantPortalRouterEnhancerPlugins(): array
     {
@@ -165,7 +165,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface>
      */
     protected function getBackofficeRouterEnhancerPlugins(): array
     {
@@ -187,7 +187,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     protected function getBackendGatewayRouterPlugins(): array
     {
@@ -209,7 +209,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface>
      */
     protected function getBackendGatewayRouterEnhancerPlugins(): array
     {
@@ -231,7 +231,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     protected function getBackendApiRouterPlugins(): array
     {
@@ -261,7 +261,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackendGatewayRouterPlugins()} instead.
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackendApiRouterPlugins()} instead.
      *
-     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     protected function getRouterPlugins(): array
     {
@@ -291,7 +291,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackendGatewayRouterEnhancerPlugins()} instead.
      * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getBackendApiRouterEnhancerPlugins()} instead.
      *
-     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     * @return array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface>
      */
     protected function getRouterEnhancerPlugins(): array
     {

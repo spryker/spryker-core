@@ -55,9 +55,9 @@ class RelatedProductUpdater implements RelatedProductUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $relatedProductTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $relatedProductTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function collectProductAbstractIds(array $relatedProductTransfers): array
     {

@@ -121,7 +121,7 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoresColumnData(ProductConcreteTransfer $productConcreteTransfer): array
     {

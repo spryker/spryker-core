@@ -63,10 +63,10 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
      */
     public function getMappedProductConcreteAvailabilitiesByProductConcreteIds(
         array $productConcreteIds,
@@ -99,10 +99,10 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     }
 
     /**
-     * @param string[] $concreteSkus
+     * @param array<string> $concreteSkus
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
      */
     public function findProductConcreteAvailabilityBySkusAndStore(
         array $concreteSkus,
@@ -124,9 +124,9 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     }
 
     /**
-     * @param \Orm\Zed\Availability\Persistence\SpyAvailability[] $availabilityEntities
+     * @param array<\Orm\Zed\Availability\Persistence\SpyAvailability> $availabilityEntities
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
      */
     protected function mapAvailabilityEntityToProductConcreteAvailabilityTransfers(array $availabilityEntities): array
     {
@@ -280,7 +280,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array
     {
@@ -306,7 +306,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     /**
      * @param string $productAbstractSku
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductConcreteSkusByAbstractProductSku(string $productAbstractSku): array
     {

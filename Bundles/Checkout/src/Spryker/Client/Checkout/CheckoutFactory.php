@@ -31,7 +31,7 @@ class CheckoutFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface[]
+     * @return array<\Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface>
      */
     public function getCheckoutPreCheckPlugins(): array
     {

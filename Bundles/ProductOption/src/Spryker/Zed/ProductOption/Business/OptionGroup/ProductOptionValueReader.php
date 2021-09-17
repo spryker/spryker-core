@@ -131,7 +131,7 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionCollectionTransfer $productOptionCollectionTransfer
-     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
+     * @param array<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $productOptionValueEntities
      * @param \Generated\Shared\Transfer\ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer

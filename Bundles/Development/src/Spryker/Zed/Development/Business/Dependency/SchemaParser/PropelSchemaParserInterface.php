@@ -14,7 +14,7 @@ interface PropelSchemaParserInterface
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $fileInfo
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getForeignColumnNames(SplFileInfo $fileInfo): array;
 

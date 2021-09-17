@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 interface RestProductConfigurationPriceProductVolumeMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer> $restProductConfigurationPriceAttributesTransfers
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer

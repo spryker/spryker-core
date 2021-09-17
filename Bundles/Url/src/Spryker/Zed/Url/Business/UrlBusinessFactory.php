@@ -228,7 +228,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface[]
+     * @return array<\Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface>
      */
     protected function createUrlCreatorBeforeSaveObservers()
     {
@@ -239,7 +239,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface[]
+     * @return array<\Spryker\Zed\Url\Business\Url\UrlCreatorAfterSaveObserverInterface>
      */
     protected function createUrlCreatorAfterSaveObservers()
     {
@@ -275,7 +275,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface[]
+     * @return array<\Spryker\Zed\Url\Business\Url\UrlUpdaterBeforeSaveObserverInterface>
      */
     protected function createUrlUpdaterBeforeSaveObservers()
     {
@@ -286,11 +286,11 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface[]
+     * @return array<\Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface>
      */
     protected function createUrlUpdaterAfterSaveObservers()
     {
-        /** @var \Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface[] $observers */
+        /** @var array<\Spryker\Zed\Url\Business\Url\UrlUpdaterAfterSaveObserverInterface> $observers */
         $observers = [
             $this->createUrlRedirectUpdateObserver(),
             $this->createUrlRedirectInjectionObserver(),
@@ -303,7 +303,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Deletion\UrlDeleterBeforeDeleteObserverInterface[]
+     * @return array<\Spryker\Zed\Url\Business\Deletion\UrlDeleterBeforeDeleteObserverInterface>
      */
     protected function createUrlDeleterBeforeDeleteObservers()
     {
@@ -313,7 +313,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Business\Deletion\UrlDeleterAfterDeleteObserverInterface[]
+     * @return array<\Spryker\Zed\Url\Business\Deletion\UrlDeleterAfterDeleteObserverInterface>
      */
     protected function createUrlDeleterAfterDeleteObservers()
     {
@@ -387,7 +387,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface>
      */
     protected function getUrlBeforeCreatePlugins()
     {
@@ -395,7 +395,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface>
      */
     protected function getUrlAfterCreatePlugins()
     {
@@ -403,7 +403,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface>
      */
     protected function getUrlBeforeUpdatePlugins()
     {
@@ -411,7 +411,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface>
      */
     protected function getUrlAfterUpdatePlugins()
     {
@@ -419,7 +419,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface>
      */
     protected function getUrlBeforeDeletePlugins()
     {
@@ -427,7 +427,7 @@ class UrlBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface>
      */
     protected function getUrlAfterDeletePlugins()
     {

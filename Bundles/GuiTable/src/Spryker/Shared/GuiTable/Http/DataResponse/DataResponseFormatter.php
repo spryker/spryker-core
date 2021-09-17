@@ -37,7 +37,7 @@ class DataResponseFormatter implements DataResponseFormatterInterface
      * @param \Generated\Shared\Transfer\GuiTableDataResponseTransfer $guiTableDataResponseTransfer
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function formatGuiTableDataResponse(
         GuiTableDataResponseTransfer $guiTableDataResponseTransfer,
@@ -55,10 +55,10 @@ class DataResponseFormatter implements DataResponseFormatterInterface
     }
 
     /**
-     * @param mixed[] $guiTableDataResponseArray
+     * @param array<mixed> $guiTableDataResponseArray
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function formatValues(
         array $guiTableDataResponseArray,
@@ -84,7 +84,7 @@ class DataResponseFormatter implements DataResponseFormatterInterface
     /**
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getIndexedColumnTypesByColumnIds(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {

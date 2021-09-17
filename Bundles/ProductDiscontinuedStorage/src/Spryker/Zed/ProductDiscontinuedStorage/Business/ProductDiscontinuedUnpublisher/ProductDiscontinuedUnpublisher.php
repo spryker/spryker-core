@@ -35,7 +35,7 @@ class ProductDiscontinuedUnpublisher implements ProductDiscontinuedUnpublisherIn
     }
 
     /**
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
      * @return void
      */
@@ -51,9 +51,9 @@ class ProductDiscontinuedUnpublisher implements ProductDiscontinuedUnpublisherIn
     }
 
     /**
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
-     * @return \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[]
+     * @return array<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage>
      */
     protected function findProductDiscontinuedStorageEntitiesByIds(array $productDiscontinuedIds): array
     {

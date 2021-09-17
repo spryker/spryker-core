@@ -90,7 +90,7 @@ class MerchantRelationshipSalesOrderThresholdDataImportPluginTest extends Unit
     }
 
     /**
-     * @param int|string $idMerchant
+     * @param string|int $idMerchant
      * @param string $key
      *
      * @return void

@@ -13,12 +13,12 @@ use Spryker\Zed\Translator\Business\Translator\TranslatorInterface;
 class TranslatorBuilder implements TranslatorBuilderInterface
 {
     /**
-     * @var array|\Spryker\Zed\Translator\Business\TranslationResource\TranslationResourceFileLoaderInterface[]
+     * @var array<\Spryker\Zed\Translator\Business\TranslationResource\TranslationResourceFileLoaderInterface>
      */
     protected $translationResourceFileLoaders;
 
     /**
-     * @param \Spryker\Zed\Translator\Business\TranslationResource\TranslationResourceFileLoaderInterface[] $translationResourceFileLoaders
+     * @param array<\Spryker\Zed\Translator\Business\TranslationResource\TranslationResourceFileLoaderInterface> $translationResourceFileLoaders
      */
     public function __construct(array $translationResourceFileLoaders = [])
     {

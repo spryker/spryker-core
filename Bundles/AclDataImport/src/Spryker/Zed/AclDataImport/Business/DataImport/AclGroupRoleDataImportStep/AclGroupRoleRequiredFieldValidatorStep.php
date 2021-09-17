@@ -13,7 +13,7 @@ use Spryker\Zed\AclDataImport\Business\DataSet\AclGroupRoleDataImportInterface;
 class AclGroupRoleRequiredFieldValidatorStep extends AbstractRequiredFieldsValidatorStep
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getRequiredFieldList(): array
     {

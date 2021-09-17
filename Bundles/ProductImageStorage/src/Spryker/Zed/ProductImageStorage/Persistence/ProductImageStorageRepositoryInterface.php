@@ -10,37 +10,37 @@ namespace Spryker\Zed\ProductImageStorage\Persistence;
 interface ProductImageStorageRepositoryInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */
     public function getProductLocalizedAttributesWithProductByIdProductIn(array $productIds): array;
 
     /**
-     * @param int[] $productFks
+     * @param array<int> $productFks
      *
-     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>
      */
     public function getProductImageSetsByFkProductIn(array $productFks): array;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>
      */
     public function getDefaultConcreteProductImageSetsByFkProductIn(array $productIds): array;
 
     /**
-     * @param int[] $productAbstractFks
+     * @param array<int> $productAbstractFks
      *
      * @return array
      */
     public function getProductImageSetsByFkAbstractProductIn(array $productAbstractFks): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>
      */
     public function getDefaultAbstractProductImageSetsByIdAbstractProductIn(array $productAbstractIds): array;
 }

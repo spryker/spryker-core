@@ -16,7 +16,7 @@ class StockStoreRelationMapper
 {
     /**
      * @param int $idStock
-     * @param \Orm\Zed\Stock\Persistence\SpyStockStore[] $stockStoreEntities
+     * @param array<\Orm\Zed\Stock\Persistence\SpyStockStore> $stockStoreEntities
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
@@ -38,9 +38,9 @@ class StockStoreRelationMapper
     }
 
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockStore[] $stockStoreEntities
+     * @param array<\Orm\Zed\Stock\Persistence\SpyStockStore> $stockStoreEntities
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function mapStoreTransfers(array $stockStoreEntities): array
     {
@@ -64,9 +64,9 @@ class StockStoreRelationMapper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getStoreIdsFromStoreTransferCollection(array $storeTransfers): array
     {

@@ -12,7 +12,7 @@ use Spryker\Service\UtilDataReader\Model\BatchIterator\CountableIteratorInterfac
 class ArrayBatchIterator implements CountableIteratorInterface
 {
     /**
-     * @var mixed[]
+     * @var array<mixed>
      */
     protected $batch;
 
@@ -22,7 +22,7 @@ class ArrayBatchIterator implements CountableIteratorInterface
     protected $currentElementIndex = 0;
 
     /**
-     * @param mixed[] $batch
+     * @param array<mixed> $batch
      */
     public function __construct(array $batch)
     {
@@ -47,7 +47,7 @@ class ArrayBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @return int|string|null Scalar on success, or null on failure.
+     * @return string|int|null Scalar on success, or null on failure.
      */
     public function key()
     {

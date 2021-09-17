@@ -39,9 +39,9 @@ class MerchantProductAbstractMapper
      * @phpstan-param array<int, mixed> $merchantData
      *
      * @param array $merchantData
-     * @param \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[] $productAbstractMerchantTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer> $productAbstractMerchantTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
      */
     public function mapProductAbstractMerchantDataToProductAbstractMerchantTransfers(array $merchantData, array $productAbstractMerchantTransfers = []): array
     {

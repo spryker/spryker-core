@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryStorage\Business\Deleter\CategoryAttribute;
 interface CategoryNodeStorageByCategoryAttributeEventsDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

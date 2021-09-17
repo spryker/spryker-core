@@ -23,7 +23,7 @@ class ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeBridge 
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
@@ -33,7 +33,7 @@ class ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeBridge 
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array
     {

@@ -20,7 +20,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProjectFrontendDependencyDirectories()
     {
@@ -45,7 +45,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getYvesAssetsDirectories()
     {
@@ -71,7 +71,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      *
      * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getYvesInstallMultiPathDirectoryPatterns(): array
     {
@@ -108,7 +108,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getZedAssetsDirectories()
     {
@@ -134,7 +134,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      *
      * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getZedInstallMultiPathDirectoryPatterns(): array
     {

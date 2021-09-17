@@ -15,7 +15,7 @@ use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Business\Model\DataSe
 class IdPriceProductStoreStep implements DataImportStepInterface
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $idPriceProductStoreCache = [];
 

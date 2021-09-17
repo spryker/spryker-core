@@ -81,7 +81,7 @@ class ShoppingListItemReader implements ShoppingListItemReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemTransfer> $shoppingListItemTransfers
      * @param string $uuidShoppingListItem
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer|null

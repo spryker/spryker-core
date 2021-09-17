@@ -22,7 +22,7 @@ interface ModuleFinderFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleTransfer>
      */
     public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 
@@ -34,7 +34,7 @@ interface ModuleFinderFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleTransfer>
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 
@@ -47,7 +47,7 @@ interface ModuleFinderFacadeInterface
      *
      * @internal
      *
-     * @return \Generated\Shared\Transfer\PackageTransfer[]
+     * @return array<\Generated\Shared\Transfer\PackageTransfer>
      */
     public function getPackages(): array;
 }

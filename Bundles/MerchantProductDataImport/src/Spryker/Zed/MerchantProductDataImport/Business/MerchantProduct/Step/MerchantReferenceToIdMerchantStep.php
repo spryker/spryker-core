@@ -20,7 +20,7 @@ class MerchantReferenceToIdMerchantStep implements DataImportStepInterface
     protected const MERCHANT_REFERENCE = MerchantProductDataSetInterface::MERCHANT_REFERENCE;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idMerchantCache = [];
 

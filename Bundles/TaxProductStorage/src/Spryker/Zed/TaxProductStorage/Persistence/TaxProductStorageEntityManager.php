@@ -21,7 +21,7 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
     protected const COL_FK_PRODUCT_ABSTRACT = 'FkProductAbstract';
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxProductStorageTransfer[] $taxProductStorageTransfers
+     * @param array<\Generated\Shared\Transfer\TaxProductStorageTransfer> $taxProductStorageTransfers
      *
      * @return void
      */
@@ -56,9 +56,9 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage[]
+     * @return array<\Orm\Zed\TaxProductStorage\Persistence\SpyTaxProductStorage>
      */
     protected function findSpyTaxProductStoragesByProductAbstractIdsIndexedByProductAbstractIds(array $productAbstractIds): array
     {
@@ -70,9 +70,9 @@ class TaxProductStorageEntityManager extends AbstractEntityManager implements Ta
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TaxProductStorageTransfer[] $taxProductStorageTransfers
+     * @param array<\Generated\Shared\Transfer\TaxProductStorageTransfer> $taxProductStorageTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdsFromTransfers(array $taxProductStorageTransfers): array
     {

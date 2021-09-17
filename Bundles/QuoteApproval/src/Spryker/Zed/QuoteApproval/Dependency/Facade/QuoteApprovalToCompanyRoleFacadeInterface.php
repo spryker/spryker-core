@@ -15,7 +15,7 @@ interface QuoteApprovalToCompanyRoleFacadeInterface
      * @param string $permissionKey
      * @param int|null $idCompany
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCompanyUserIdsByPermissionKey(string $permissionKey, ?int $idCompany = null): array;
 

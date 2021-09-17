@@ -10,12 +10,12 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\Pric
 class PriceProductOfferCollectionConstraintProvider implements PriceProductOfferConstraintProviderInterface
 {
     /**
-     * @var \Symfony\Component\Validator\Constraint[]
+     * @var array<\Symfony\Component\Validator\Constraint>
      */
     protected $priceProductOfferCollectionTransferConstraints;
 
     /**
-     * @param \Symfony\Component\Validator\Constraint[] $priceProductOfferCollectionTransferConstraints
+     * @param array<\Symfony\Component\Validator\Constraint> $priceProductOfferCollectionTransferConstraints
      */
     public function __construct(array $priceProductOfferCollectionTransferConstraints)
     {
@@ -23,7 +23,7 @@ class PriceProductOfferCollectionConstraintProvider implements PriceProductOffer
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function getConstraints(): array
     {

@@ -29,7 +29,7 @@ class TransferMapper implements TransferMapperInterface
     /**
      * @param array $productEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ProductApiTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductApiTransfer>
      */
     public function toTransferCollection(array $productEntityCollection)
     {

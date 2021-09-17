@@ -41,9 +41,9 @@ class ProductOfferAvailabilityRestResponseBuilder implements ProductOfferAvailab
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer[] $productOfferAvailabilityStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer> $productOfferAvailabilityStorageTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createProductOfferAvailabilityRestResources(array $productOfferAvailabilityStorageTransfers): array
     {

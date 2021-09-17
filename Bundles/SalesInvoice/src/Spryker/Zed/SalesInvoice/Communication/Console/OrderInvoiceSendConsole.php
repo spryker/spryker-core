@@ -108,7 +108,7 @@ class OrderInvoiceSendConsole extends Console
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getArgumentOrderIdsValue(InputInterface $input): array
     {

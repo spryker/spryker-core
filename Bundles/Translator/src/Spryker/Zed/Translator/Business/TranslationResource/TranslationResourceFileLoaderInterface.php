@@ -29,7 +29,7 @@ interface TranslationResourceFileLoaderInterface
     public function getLoader(): TranslationLoaderInterface;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getFilePaths(): array;
 }

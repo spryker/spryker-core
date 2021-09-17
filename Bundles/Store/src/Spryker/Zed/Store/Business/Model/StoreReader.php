@@ -171,7 +171,7 @@ class StoreReader implements StoreReaderInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
     {
@@ -184,7 +184,7 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCountries()
     {
@@ -192,9 +192,9 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array
     {
@@ -212,7 +212,7 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresAvailableForCurrentPersistence(): array
     {
@@ -224,7 +224,7 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
      * @return void
      */
@@ -236,9 +236,9 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getNotCachedStoreNames(array $storeNames): array
     {
@@ -256,9 +256,9 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function getStoresByStoreNamesFromCache(array $storeNames): array
     {

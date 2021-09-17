@@ -35,9 +35,9 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     }
 
     /**
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
@@ -47,9 +47,9 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     }
 
     /**
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getRelatedCategoryIds(array $categoryIds): array
     {
@@ -72,10 +72,10 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
-     * @param int[][] $relatedCategoryIds
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
+     * @param array<int[]> $relatedCategoryIds
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function getRelatedCategoryIdsFromCategoryNodes(array $nodeTransfers, array $relatedCategoryIds): array
     {

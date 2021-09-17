@@ -214,7 +214,7 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
-     * @param string[][] $categoryStoreNamesGroupedByIdCategory
+     * @param array<string[]> $categoryStoreNamesGroupedByIdCategory
      *
      * @return array
      */
@@ -364,7 +364,7 @@ class CategoryTable extends AbstractTable
 
     /**
      * @param int $idCategory
-     * @param string[][] $categoryStoreNamesGroupedByIdCategory
+     * @param array<string[]> $categoryStoreNamesGroupedByIdCategory
      *
      * @return string
      */
@@ -386,9 +386,9 @@ class CategoryTable extends AbstractTable
     }
 
     /**
-     * @param array|\Propel\Runtime\Collection\ObjectCollection $queryResults
+     * @param \Propel\Runtime\Collection\ObjectCollection|array $queryResults
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractCategoryIds($queryResults): array
     {

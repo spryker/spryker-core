@@ -105,7 +105,7 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface>
      */
     public function getConfigurableBundleTemplatePageDataExpanderPlugins(): array
     {
@@ -124,7 +124,7 @@ class ConfigurableBundlePageSearchBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
-     * @return \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface>
      */
     public function getConfigurableBundleTemplateMapExpanderPlugins(): array
     {

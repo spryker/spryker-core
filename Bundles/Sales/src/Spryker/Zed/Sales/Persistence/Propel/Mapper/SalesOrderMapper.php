@@ -20,7 +20,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class SalesOrderMapper
 {
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderEntities
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrder> $orderEntities
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      *
      * @return \Generated\Shared\Transfer\OrderListTransfer
@@ -37,9 +37,9 @@ class SalesOrderMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $salesOrderEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrder> $salesOrderEntityCollection
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function mapSalesOrderEntityCollectionToOrderTransfers(Collection $salesOrderEntityCollection): array
     {
@@ -53,9 +53,9 @@ class SalesOrderMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderTotals[] $salesOrderTotalsEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderTotals> $salesOrderTotalsEntityCollection
      *
-     * @return \Generated\Shared\Transfer\TotalsTransfer[]
+     * @return array<\Generated\Shared\Transfer\TotalsTransfer>
      */
     public function mapSalesOrderTotalsEntityCollectionToMappedOrderTotalsByIdSalesOrder(
         ObjectCollection $salesOrderTotalsEntityCollection

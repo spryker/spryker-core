@@ -113,7 +113,7 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductOfferReferencesFromQuoteTransfer(QuoteTransfer $quoteTransfer): array
     {
@@ -131,7 +131,7 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferTransfer>
      */
     protected function indexByProductOfferReferences(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
     {

@@ -268,7 +268,7 @@ abstract class AbstractDatabaseCollector extends AbstractCollector implements Da
     }
 
     /**
-     * @param string[] $keysToDelete
+     * @param array<string> $keysToDelete
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
      *
      * @return void

@@ -29,7 +29,7 @@ class ContentProductSetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ContentProductSet\Executor\ContentProductSetTermExecutorInterface[]
+     * @return array<\Spryker\Client\ContentProductSet\Executor\ContentProductSetTermExecutorInterface>
      */
     public function getContentProductSetTermExecutorMap(): array
     {

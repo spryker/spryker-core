@@ -640,7 +640,7 @@ class FlysystemServiceTest extends Unit
     }
 
     /**
-     * @return bool|string
+     * @return string|bool
      */
     protected function getDocumentFileContent()
     {

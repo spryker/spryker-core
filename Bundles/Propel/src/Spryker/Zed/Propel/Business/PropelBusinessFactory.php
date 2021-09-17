@@ -240,7 +240,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Please add the needed Commands into your ConsoleDependencyProvider
      *
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     public function getConsoleCommands()
     {
@@ -440,7 +440,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
+     * @return array<\Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface>
      */
     public function getPropelSchemaElementFilterPlugins(): array
     {

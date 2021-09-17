@@ -64,7 +64,7 @@ class GlueControllerFinder implements GlueControllerFinderInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return \SplFileInfo[]
+     * @return array<\SplFileInfo>
      */
     public function getGlueControllerFilesFromPlugin(ResourceRoutePluginInterface $plugin): array
     {
@@ -103,7 +103,7 @@ class GlueControllerFinder implements GlueControllerFinderInterface
     /**
      * @param string $moduleName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getControllerSourceDirectories(string $moduleName): array
     {
@@ -117,7 +117,7 @@ class GlueControllerFinder implements GlueControllerFinderInterface
     /**
      * @param array $dirs
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getExistingSourceDirectories(array $dirs): array
     {

@@ -14,7 +14,7 @@ interface CmsBlockCategoryStorageReaderInterface
     /**
      * @param \Generated\Shared\Transfer\CmsBlockRequestTransfer $cmsBlockRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlocksByOptions(CmsBlockRequestTransfer $cmsBlockRequestTransfer): array;
 }

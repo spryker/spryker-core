@@ -14,22 +14,22 @@ interface FileManagerStorageRepositoryInterface
     /**
      * @param array $fileIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FileTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer>
      */
     public function findFilesByIds(array $fileIds);
 
     /**
      * @param array $fileStorageIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FileStorageTransfer>
      */
     public function findFileStoragesByIds(array $fileStorageIds);
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $fileManagerStorageIds
+     * @param array<int> $fileManagerStorageIds
      *
-     * @return \Generated\Shared\Transfer\FileStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\FileStorageTransfer>
      */
     public function getFilteredFileStorageTransfers(FilterTransfer $filterTransfer, array $fileManagerStorageIds = []): array;
 }

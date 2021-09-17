@@ -184,7 +184,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->clearSelectColumns()
             ->addSelectColumn(static::COL_CATEGORY_NAME);
 
-        /** @var string[] $pathTokens */
+        /** @var array<string> $pathTokens */
         $pathTokens = $nodePathQuery->find();
 
         return implode($glue, $pathTokens);
@@ -285,7 +285,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * @param int $idCategoryNode
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getChildCategoryNodeIdsByCategoryNodeId(int $idCategoryNode): array
     {
@@ -299,7 +299,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * @param int $idCategoryNode
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getParentCategoryNodeIdsByCategoryNodeId(int $idCategoryNode): array
     {
@@ -354,7 +354,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getDescendantCategoryIdsByIdCategory(
         CategoryTransfer $categoryTransfer,
@@ -383,7 +383,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getDescendantCategoryNodeIdsByIdCategory(
         CategoryTransfer $categoryTransfer,
@@ -412,7 +412,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[][]
+     * @return array<\Generated\Shared\Transfer\NodeTransfer[]>
      */
     public function getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
         CategoryTransfer $categoryTransfer,
@@ -456,7 +456,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array
     {
@@ -741,7 +741,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $storeRelationTransfer = new StoreRelationTransfer();
 
-        /** @var \Orm\Zed\Category\Persistence\SpyCategoryStore[]|\Propel\Runtime\Collection\ObjectCollection $categoryStoreEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryStore> $categoryStoreEntities */
         $categoryStoreEntities = $this->getFactory()
             ->createCategoryStoreQuery()
             ->joinWithSpyCategory()

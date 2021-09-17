@@ -21,9 +21,9 @@ interface ProductConfigurationStorageReaderInterface
     ): ?ProductConfigurationStorageTransfer;
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationStorageTransfer>
      */
     public function findProductConfigurationStoragesBySkus(array $skus): array;
 }

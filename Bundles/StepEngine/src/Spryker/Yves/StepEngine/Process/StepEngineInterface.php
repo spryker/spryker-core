@@ -16,7 +16,7 @@ interface StepEngineInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function process(Request $request, ?FormCollectionHandlerInterface $formCollection = null);
 }

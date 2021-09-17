@@ -67,7 +67,7 @@ class GuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTemplatePaths(): array
     {
@@ -79,7 +79,7 @@ class GuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDefaultTemplateFileNames(): array
     {

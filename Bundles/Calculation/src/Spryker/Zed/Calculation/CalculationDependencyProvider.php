@@ -75,7 +75,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @return array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface>
      */
     protected function getQuoteCalculatorPluginStack(Container $container)
     {
@@ -85,7 +85,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @return array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface|\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface>
      */
     protected function getOrderCalculatorPluginStack(Container $container)
     {
@@ -93,7 +93,7 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[]
+     * @return array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface>
      */
     protected function getQuotePostRecalculatePlugins(): array
     {

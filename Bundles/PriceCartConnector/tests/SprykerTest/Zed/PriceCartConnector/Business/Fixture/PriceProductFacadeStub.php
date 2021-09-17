@@ -21,12 +21,12 @@ class PriceProductFacadeStub extends PriceProductFacade
     protected const EUR_ISO_CODE = 'EUR';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $prices = [];
 
     /**
-     * @var bool[]
+     * @var array<bool>
      */
     protected $validities = [];
 
@@ -127,9 +127,9 @@ class PriceProductFacadeStub extends PriceProductFacade
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getValidPrices(array $priceProductFilterTransfers): array
     {

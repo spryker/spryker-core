@@ -21,7 +21,7 @@ class ProductOfferAvailabilityStorageFacade extends AbstractFacade implements Pr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class ProductOfferAvailabilityStorageFacade extends AbstractFacade implements Pr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -53,7 +53,7 @@ class ProductOfferAvailabilityStorageFacade extends AbstractFacade implements Pr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */

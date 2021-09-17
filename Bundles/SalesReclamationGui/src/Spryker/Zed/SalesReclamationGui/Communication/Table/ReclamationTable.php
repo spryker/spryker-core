@@ -156,7 +156,7 @@ class ReclamationTable extends AbstractTable
     }
 
     /**
-     * @param string[] $item
+     * @param array<string> $item
      *
      * @return string
      */

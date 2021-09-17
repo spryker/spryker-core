@@ -158,7 +158,7 @@ class ProductAbstractTableDataProvider extends AbstractGuiTableDataProvider
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSuperAttributesColumnData(
         ProductAbstractTransfer $productAbstractTransfer,

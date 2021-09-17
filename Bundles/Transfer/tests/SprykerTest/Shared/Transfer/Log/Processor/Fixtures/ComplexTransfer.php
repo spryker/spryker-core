@@ -29,7 +29,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     protected $innerTransfer;
 
     /**
-     * @var \SprykerTest\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer[]
+     * @var array<\SprykerTest\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer>
      */
     protected $transferCollection;
 
@@ -134,7 +134,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     }
 
     /**
-     * @return \SprykerTest\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer[]
+     * @return array<\SprykerTest\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer>
      */
     public function getTransferCollection(): array
     {
@@ -142,7 +142,7 @@ class ComplexTransfer extends AbstractTransfer implements TransferInterface
     }
 
     /**
-     * @param \SprykerTest\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer[] $transferCollection
+     * @param array<\SprykerTest\Shared\Transfer\Log\Processor\Fixtures\SimpleTransfer> $transferCollection
      *
      * @return $this
      */

@@ -52,7 +52,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getCarriers()
     {
@@ -80,7 +80,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getMethods()
     {
@@ -349,7 +349,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param bool[] $itemListUpdatedStatus
+     * @param array<bool> $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
@@ -387,7 +387,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      * @param int $idSalesOrder
      * @param int $idSalesShipment
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject
     {
@@ -435,7 +435,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      * @api
      *
      * @param array $events
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
      * @return array
      */
@@ -508,7 +508,7 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getActiveShipmentCarriers(): array
     {

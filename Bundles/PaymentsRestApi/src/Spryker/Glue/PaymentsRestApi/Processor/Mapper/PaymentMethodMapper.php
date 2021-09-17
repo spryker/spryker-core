@@ -34,7 +34,7 @@ class PaymentMethodMapper implements PaymentMethodMapperInterface
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      *
-     * @return \Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestPaymentMethodsAttributesTransfer>
      */
     public function mapRestCheckoutDataTransferToRestPaymentMethodsAttributesTransfers(
         RestCheckoutDataTransfer $restCheckoutDataTransfer

@@ -69,7 +69,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     protected $concreteProductAttributeTranslationExpander;
 
     /**
-     * @var \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface[]
+     * @var array<\Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface>
      */
     protected $concreteProductsResourceExpanderPlugins;
 
@@ -79,7 +79,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper
      * @param \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander
-     * @param \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface[] $concreteProductsResourceExpanderPlugins
+     * @param array<\Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\ConcreteProductsResourceExpanderPluginInterface> $concreteProductsResourceExpanderPlugins
      */
     public function __construct(
         ProductsRestApiToProductStorageClientInterface $productStorageClient,
@@ -122,10 +122,10 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductConcretesBySkus(array $productConcreteSkus, RestRequestInterface $restRequest): array
     {
@@ -183,10 +183,10 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array
     {
@@ -206,7 +206,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      * @param array $multipleProductConcreteStorageData
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     protected function createRestResourcesFromConcreteProductStorageData(
         array $multipleProductConcreteStorageData,
@@ -295,11 +295,11 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $concreteProductRestResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $concreteProductRestResources
      * @param array $multipleProductConcreteStorageData
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     protected function expandWithProductAbstractSku(array $concreteProductRestResources, array $multipleProductConcreteStorageData, string $localeName): array
     {
@@ -331,7 +331,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     /**
      * @param array $productConcreteStorageData
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $concreteProductRestResource
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
@@ -353,10 +353,10 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductAbstractSkus(array $productAbstractIds, string $localeName): array
     {

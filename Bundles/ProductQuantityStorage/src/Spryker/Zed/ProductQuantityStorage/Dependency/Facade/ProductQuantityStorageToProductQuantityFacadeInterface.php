@@ -12,21 +12,21 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductQuantityStorageToProductQuantityFacadeInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfersByProductIds(array $productIds): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfers(): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array;
 }

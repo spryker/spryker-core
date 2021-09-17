@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\StateMachineItemTransfer;
 interface MerchantOmsRepositoryInterface
 {
     /**
-     * @phpstan-param mixed[] $stateIds
+     * @phpstan-param array<mixed> $stateIds
      *
      * @param array $stateIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateMachineItemsByStateIds(array $stateIds): array;
 
@@ -28,9 +28,9 @@ interface MerchantOmsRepositoryInterface
     public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer;
 
     /**
-     * @param int[] $merchantOrderItemIds
+     * @param array<int> $merchantOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function findStateHistoryByMerchantOrderIds(array $merchantOrderItemIds): array;
 }

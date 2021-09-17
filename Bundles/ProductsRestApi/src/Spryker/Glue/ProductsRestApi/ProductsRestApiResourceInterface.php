@@ -32,10 +32,10 @@ interface ProductsRestApiResourceInterface
      *
      * @api
      *
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductAbstractsBySkus(array $skus, RestRequestInterface $restRequest): array;
 
@@ -85,10 +85,10 @@ interface ProductsRestApiResourceInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array;
 
@@ -99,11 +99,11 @@ interface ProductsRestApiResourceInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductAbstractsByIds(array $productAbstractIds, string $localeName, string $storeName): array;
 }

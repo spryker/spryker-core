@@ -18,7 +18,7 @@ class OrderShipmentMapper implements OrderShipmentMapperInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \ArrayObject $restOrderShipmentTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestOrderShipmentTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\RestOrderShipmentTransfer>
      */
     public function mapOrderTransferToRestOrderShipmentTransfers(
         OrderTransfer $orderTransfer,
@@ -39,7 +39,7 @@ class OrderShipmentMapper implements OrderShipmentMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      * @param string $currencyIsoCode
      *
      * @return \Generated\Shared\Transfer\RestOrderShipmentTransfer

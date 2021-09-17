@@ -62,7 +62,7 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteCollection
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteCollection
      *
      * @throws \Spryker\Zed\Product\Business\Exception\ProductAbstractExistsException
      * @throws \Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException
@@ -95,7 +95,7 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
     /**
      * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array;
 

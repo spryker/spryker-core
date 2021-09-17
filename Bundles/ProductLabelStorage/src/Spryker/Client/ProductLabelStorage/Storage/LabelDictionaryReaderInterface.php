@@ -10,11 +10,11 @@ namespace Spryker\Client\ProductLabelStorage\Storage;
 interface LabelDictionaryReaderInterface
 {
     /**
-     * @param int[] $idsProductLabel
+     * @param array<int> $idsProductLabel
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName, string $storeName);
 

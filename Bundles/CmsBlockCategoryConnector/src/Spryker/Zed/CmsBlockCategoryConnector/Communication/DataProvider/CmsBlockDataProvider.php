@@ -139,7 +139,7 @@ class CmsBlockDataProvider
     {
         $idLocale = $this->localeFacade->getCurrentLocale()->getIdLocale();
 
-        /** @var \Orm\Zed\Category\Persistence\SpyCategory[] $categoryCollection */
+        /** @var array<\Orm\Zed\Category\Persistence\SpyCategory> $categoryCollection */
         $categoryCollection = $this->categoryQueryContainer
             ->queryCategory($idLocale)
             ->find();

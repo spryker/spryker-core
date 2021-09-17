@@ -12,18 +12,18 @@ interface CategoryStorageRepositoryInterface
     /**
      * @param int $offset
      * @param int $limit
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array;
 
     /**
      * @param int $offset
      * @param int $limit
-     * @param int[] $categoryTreeStorageIds
+     * @param array<int> $categoryTreeStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(int $offset, int $limit, array $categoryTreeStorageIds): array;
 }

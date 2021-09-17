@@ -46,7 +46,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInfrastructuralProductPackagingUnitTypeNames(): array
     {
@@ -182,9 +182,9 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @param int[] $productPackagingUnitTypeIds
+     * @param array<int> $productPackagingUnitTypeIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {
@@ -348,7 +348,7 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function aggregateProductPackagingUnitReservation(
         string $sku,
@@ -437,9 +437,9 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithAmountSalesUnit(array $itemTransfers): array
     {
@@ -471,9 +471,9 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithAmountLeadProduct(array $itemTransfers): array
     {
@@ -569,9 +569,9 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function filterProductsWithoutPackagingUnit(array $productConcreteTransfers): array
     {

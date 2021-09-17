@@ -34,7 +34,7 @@ class CategoryUpdater implements CategoryUpdaterInterface
     protected $eventFacade;
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface[]
+     * @var array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface>
      */
     protected $categoryUpdateAfterPlugins;
 
@@ -42,7 +42,7 @@ class CategoryUpdater implements CategoryUpdaterInterface
      * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
      * @param \Spryker\Zed\Category\Business\Updater\CategoryRelationshipUpdaterInterface $categoryRelationshipUpdater
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface $eventFacade
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface[] $categoryUpdateAfterPlugins
+     * @param array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface> $categoryUpdateAfterPlugins
      */
     public function __construct(
         CategoryEntityManagerInterface $categoryEntityManager,

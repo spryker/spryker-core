@@ -26,7 +26,7 @@ interface WishlistToCartInterface
     /**
      * @phpstan-param array<mixed> $params
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer

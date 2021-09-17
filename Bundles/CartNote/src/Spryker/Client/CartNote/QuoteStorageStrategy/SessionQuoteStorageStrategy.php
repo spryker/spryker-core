@@ -90,7 +90,7 @@ class SessionQuoteStorageStrategy implements QuoteStorageStrategyInterface
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function findItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): array
     {

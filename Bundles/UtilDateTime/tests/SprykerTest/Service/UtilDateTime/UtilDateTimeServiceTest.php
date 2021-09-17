@@ -33,7 +33,7 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @dataProvider dateFormatDataProvider
      *
-     * @param string|\DateTime $date
+     * @param \DateTime|string $date
      * @param string $format
      * @param string $expectedFormattedDate
      *
@@ -65,7 +65,7 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @dataProvider dateTimeFormatDataProvider
      *
-     * @param string|\DateTime $date
+     * @param \DateTime|string $date
      * @param string $format
      * @param string $expectedFormattedDateTime
      *
@@ -97,7 +97,7 @@ class UtilDateTimeServiceTest extends Unit
     /**
      * @dataProvider timeFormatDataProvider
      *
-     * @param string|\DateTime $date
+     * @param \DateTime|string $date
      * @param string $format
      * @param string $expectedFormattedTime
      *

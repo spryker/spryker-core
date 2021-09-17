@@ -18,10 +18,10 @@ use Propel\Runtime\Collection\ObjectCollection;
 class StockAddressMapper
 {
     /**
-     * @param \Orm\Zed\StockAddress\Persistence\SpyStockAddress[]|\Propel\Runtime\Collection\ObjectCollection $stockAddressEntities
-     * @param \Generated\Shared\Transfer\StockAddressTransfer[] $stockAddressTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\StockAddress\Persistence\SpyStockAddress> $stockAddressEntities
+     * @param array<\Generated\Shared\Transfer\StockAddressTransfer> $stockAddressTransfers
      *
-     * @return \Generated\Shared\Transfer\StockAddressTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockAddressTransfer>
      */
     public function mapStockAddressEntitiesToStockAddressTransfers(ObjectCollection $stockAddressEntities, array $stockAddressTransfers): array
     {

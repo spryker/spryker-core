@@ -15,12 +15,12 @@ class Monitoring implements MonitoringInterface
     protected static $isApplicationNameSet = false;
 
     /**
-     * @var \Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface[]
+     * @var array<\Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface>
      */
     protected $monitoringExtensionPlugins;
 
     /**
-     * @param \Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface[] $monitoringExtensionPlugins
+     * @param array<\Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface> $monitoringExtensionPlugins
      */
     public function __construct(array $monitoringExtensionPlugins)
     {

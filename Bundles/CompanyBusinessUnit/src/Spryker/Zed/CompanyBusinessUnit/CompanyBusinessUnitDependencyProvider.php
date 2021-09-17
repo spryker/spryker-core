@@ -86,7 +86,7 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface>
      */
     protected function getCompanyBusinessUnitPostSavePlugins(): array
     {
@@ -94,7 +94,7 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface>
      */
     protected function getCompanyBusinessUnitExpanderPlugins(): array
     {
@@ -102,7 +102,7 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface>
      */
     protected function getCompanyBusinessUnitPreDeletePlugins(): array
     {

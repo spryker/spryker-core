@@ -31,7 +31,7 @@ class ProductConcreteRelationConfigurableBundleTemplateSlotEditTablesProviderPlu
      *
      * @api
      *
-     * @return \Spryker\Zed\Gui\Communication\Table\AbstractTable[]
+     * @return array<\Spryker\Zed\Gui\Communication\Table\AbstractTable>
      */
     public function provideTables(): array
     {

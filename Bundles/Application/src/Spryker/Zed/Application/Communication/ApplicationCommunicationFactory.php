@@ -74,7 +74,7 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use {@link \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory::getBackofficeApplicationPlugins()} instead.
      *
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getApplicationPlugins(): array
     {
@@ -82,7 +82,7 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getBackofficeApplicationPlugins(): array
     {
@@ -90,7 +90,7 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getBackendApiApplicationPlugins(): array
     {
@@ -98,7 +98,7 @@ class ApplicationCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getBackendGatewayApplicationPlugins(): array
     {

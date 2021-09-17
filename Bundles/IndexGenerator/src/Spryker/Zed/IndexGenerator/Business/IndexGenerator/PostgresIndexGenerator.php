@@ -48,7 +48,7 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function getSchemaFinder(): Finder
     {
@@ -69,7 +69,7 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ForeignKeyFileTransfer[]
+     * @return array<\Generated\Shared\Transfer\ForeignKeyFileTransfer>
      */
     protected function getForeignKeyList(): array
     {
@@ -97,7 +97,7 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
     /**
      * @param \Generated\Shared\Transfer\ForeignKeyFileTransfer $foreignKeyFileTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ForeignKeyTableTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ForeignKeyTableTransfer>
      */
     protected function getForeignKeyTableTransferCollection(ForeignKeyFileTransfer $foreignKeyFileTransfer): ArrayObject
     {
@@ -201,7 +201,7 @@ class PostgresIndexGenerator implements PostgresIndexGeneratorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ForeignKeyTableTransfer[] $foreignKeyTableTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ForeignKeyTableTransfer> $foreignKeyTableTransferCollection
      * @param \DOMDocument $domDocument
      *
      * @return void

@@ -84,7 +84,7 @@ class DataImportConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFullImportTypes(): array
     {

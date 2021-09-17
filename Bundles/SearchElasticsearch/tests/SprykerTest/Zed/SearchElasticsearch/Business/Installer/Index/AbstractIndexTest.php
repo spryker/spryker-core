@@ -33,7 +33,7 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuil
 abstract class AbstractIndexTest extends Unit
 {
     /**
-     * @param string[] $mappings
+     * @param array<string> $mappings
      *
      * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface|\PHPUnit\Framework\MockObject\MockObject
      */

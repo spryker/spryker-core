@@ -21,7 +21,7 @@ class MerchantCategoryRepository extends AbstractRepository implements MerchantC
     /**
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantCategoryTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantCategoryTransfer>
      */
     public function get(MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer): array
     {

@@ -69,8 +69,8 @@ class MetadataExpander implements MetadataExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[] $indexedGiftCardAbstractConfigurationForAbstractProductTransfers
-     * @param \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[] $indexedGiftCartConfigurationForProductTransfers
+     * @param array<\Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer> $indexedGiftCardAbstractConfigurationForAbstractProductTransfers
+     * @param array<\Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer> $indexedGiftCartConfigurationForProductTransfers
      *
      * @return \Generated\Shared\Transfer\GiftCardMetadataTransfer
      */
@@ -102,7 +102,7 @@ class MetadataExpander implements MetadataExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getAbstractAndConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -120,9 +120,9 @@ class MetadataExpander implements MetadataExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[] $giftCardAbstractConfigurationForProductAbstractTransfers
+     * @param array<\Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer> $giftCardAbstractConfigurationForProductAbstractTransfers
      *
-     * @return \Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardAbstractProductConfigurationForProductAbstractTransfer>
      */
     protected function indexGiftCardAbstractConfigurationForProductAbstractTransfersByAbstractSku(
         array $giftCardAbstractConfigurationForProductAbstractTransfers
@@ -138,9 +138,9 @@ class MetadataExpander implements MetadataExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[] $giftCartConfigurationForProductTransfers
+     * @param array<\Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer> $giftCartConfigurationForProductTransfers
      *
-     * @return \Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\GiftCardProductConfigurationForProductTransfer>
      */
     protected function indexGiftCardConfigurationForProductTransfersBySku(array $giftCartConfigurationForProductTransfers): array
     {

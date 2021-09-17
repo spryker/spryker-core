@@ -31,10 +31,10 @@ class PriceProductConfigurationVolumeFilter implements PriceProductConfiguration
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function filterProductConfigurationVolumePrices(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
@@ -58,7 +58,7 @@ class PriceProductConfigurationVolumeFilter implements PriceProductConfiguration
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param int $filterQuantity
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null

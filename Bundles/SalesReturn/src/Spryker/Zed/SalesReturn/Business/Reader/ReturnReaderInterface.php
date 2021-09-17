@@ -32,7 +32,7 @@ interface ReturnReaderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ArrayObject;
 }

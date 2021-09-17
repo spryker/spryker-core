@@ -21,9 +21,9 @@ interface RestProductConfigurationPriceMapperPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer> $restProductConfigurationPriceAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer>
      */
     public function map(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer,

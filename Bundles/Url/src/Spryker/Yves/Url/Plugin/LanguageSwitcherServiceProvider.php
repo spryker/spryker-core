@@ -85,7 +85,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
 
     /**
      * @param array $locales
-     * @param \Generated\Shared\Transfer\UrlTransfer[] $localeUrls
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $localeUrls
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array

@@ -126,7 +126,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface[]
+     * @return array<\Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface>
      */
     public function getOfferHydratorPlugins(): array
     {
@@ -142,7 +142,7 @@ class OfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface>
      */
     public function getOfferDoUpdatePlugins(): array
     {

@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 class QuoteResponseExpander implements QuoteResponseExpanderInterface
 {
     /**
-     * @var array|\Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface[]
+     * @var array<\Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface>
      */
     protected $quoteResponseExpanderList;
 
     /**
-     * @param \Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface[] $quoteResponseExpanderList
+     * @param array<\Spryker\Zed\SharedCart\Business\QuoteResponseExpander\QuoteResponseExpanderInterface> $quoteResponseExpanderList
      */
     public function __construct(array $quoteResponseExpanderList)
     {

@@ -61,7 +61,7 @@ class ProductBundleStockHandler implements ProductBundleStockHandlerInterface
     /**
      * @param string $bundledProductSku
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
      */
     protected function getBundlesUsingProductBySku($bundledProductSku)
     {

@@ -70,7 +70,7 @@ class ProductUrlGeneratorTest extends Unit
     protected $productAbstractTransfer;
 
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer[]
+     * @var array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected $locales;
 

@@ -84,7 +84,7 @@ class DevelopmentConfig extends AbstractBundleConfig
 
     /**
      * @phpstan-var array<string, string>
-     * @var string[]
+     * @var array<string>
      */
     protected const INTERNAL_NAMESPACES_TO_PATH_MAPPING = [
         self::NAMESPACE_SPRYKER => APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'vendor/spryker/',
@@ -119,7 +119,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInternalNamespaces(): array
     {
@@ -129,7 +129,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTwigPathPatterns(): array
     {
@@ -241,7 +241,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getOrganizationPathMap(): array
     {
@@ -389,7 +389,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getExternalToInternalMap()
     {
@@ -485,7 +485,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getYvesIdeAutoCompletionOptions()
     {
@@ -498,7 +498,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getZedIdeAutoCompletionOptions()
     {
@@ -571,7 +571,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @phpstan-return array<string, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIdeAutoCompletionSourceDirectoryGlobPatterns()
     {
@@ -584,7 +584,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIdeAutoCompletionGeneratorTemplatePaths()
     {
@@ -690,7 +690,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInternalNamespacesList(): array
     {
@@ -721,7 +721,7 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPathsToInternalNamespace(): array
     {
@@ -754,7 +754,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @deprecated Use `spryker/module-finder` instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInternalPackageDirectories(): array
     {
@@ -768,7 +768,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDefaultInclusiveGroups(): array
     {

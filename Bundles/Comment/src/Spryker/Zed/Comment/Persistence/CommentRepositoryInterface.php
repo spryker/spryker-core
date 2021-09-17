@@ -25,7 +25,7 @@ interface CommentRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\CommentsRequestTransfer $commentsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentThreadTransfer>
      */
     public function getCommentThreads(CommentsRequestTransfer $commentsRequestTransfer): array;
 
@@ -39,14 +39,14 @@ interface CommentRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function findCommentsByCommentThread(CommentThreadTransfer $commentThreadTransfer): array;
 
     /**
-     * @param int[] $threadIds
+     * @param array<int> $threadIds
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function getCommentsByCommentThreadIds(array $threadIds): array;
 
@@ -58,14 +58,14 @@ interface CommentRepositoryInterface
     public function findCommentByUuid(CommentTransfer $commentTransfer): ?CommentTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\CommentTagTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTagTransfer>
      */
     public function getAllCommentTags(): array;
 
     /**
      * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function getCommentsByFilter(CommentFilterTransfer $commentFilterTransfer): array;
 }

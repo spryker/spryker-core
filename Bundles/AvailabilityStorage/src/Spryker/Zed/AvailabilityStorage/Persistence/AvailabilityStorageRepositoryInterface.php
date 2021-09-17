@@ -10,9 +10,9 @@ namespace Spryker\Zed\AvailabilityStorage\Persistence;
 interface AvailabilityStorageRepositoryInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getAvailabilityAbstractIdsByProductAbstractIds(array $productAbstractIds): array;
 }

@@ -106,7 +106,7 @@ class CompanyUserStorageDependencyProvider extends AbstractBundleDependencyProvi
     }
 
     /**
-     * @return \Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface>
      */
     protected function getCompanyUserStorageExpanderPlugins(): array
     {

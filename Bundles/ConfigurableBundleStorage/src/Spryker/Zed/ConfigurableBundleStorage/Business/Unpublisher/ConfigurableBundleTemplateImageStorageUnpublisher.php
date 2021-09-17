@@ -35,7 +35,7 @@ class ConfigurableBundleTemplateImageStorageUnpublisher implements ConfigurableB
     }
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class ConfigurableBundleTemplateImageStorageUnpublisher implements ConfigurableB
     }
 
     /**
-     * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[] $configurableBundleTemplateImageStorageEntities
+     * @param array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage> $configurableBundleTemplateImageStorageEntities
      *
      * @return void
      */

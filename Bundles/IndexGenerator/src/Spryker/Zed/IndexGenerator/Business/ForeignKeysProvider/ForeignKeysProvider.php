@@ -22,7 +22,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     protected $finder;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $excludedTables;
 
@@ -37,7 +37,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ForeignKeyFileTransfer[]
+     * @return array<\Generated\Shared\Transfer\ForeignKeyFileTransfer>
      */
     public function getForeignKeyList(): array
     {
@@ -216,7 +216,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
     /**
      * @param \SimpleXMLElement $xmlElement
      *
-     * @return \SimpleXMLElement[]
+     * @return array<\SimpleXMLElement>
      */
     protected function getTableXmlElements(SimpleXMLElement $xmlElement): array
     {
@@ -242,7 +242,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
             $xmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
 
-        /** @var \SimpleXMLElement[] $xPath */
+        /** @var array<\SimpleXMLElement> $xPath */
         $xPath = $xmlElement->xpath($hasNamespace ?  '//s:database' : '//database');
 
         /** @var array $database */

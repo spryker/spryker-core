@@ -210,7 +210,7 @@ abstract class AbstractController
 
     /**
      * @param array $data
-     * @param string[] $widgetPlugins
+     * @param array<string> $widgetPlugins
      * @param string|null $template
      *
      * @return \Spryker\Yves\Kernel\View\View

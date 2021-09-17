@@ -17,7 +17,7 @@ interface PriceProductOfferStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $priceProductOfferIds
+     * @param array<int> $priceProductOfferIds
      *
      * @return void
      */
@@ -30,7 +30,7 @@ interface PriceProductOfferStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $priceProductOfferIdsWithOfferIds
+     * @param array<int> $priceProductOfferIdsWithOfferIds
      *
      * @return void
      */
@@ -44,7 +44,7 @@ interface PriceProductOfferStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -57,7 +57,7 @@ interface PriceProductOfferStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -72,7 +72,7 @@ interface PriceProductOfferStorageFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

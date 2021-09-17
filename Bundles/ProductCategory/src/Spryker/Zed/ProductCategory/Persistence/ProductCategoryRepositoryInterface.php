@@ -20,9 +20,9 @@ interface ProductCategoryRepositoryInterface
     public function getCategoryTransferCollectionByIdProductAbstract(int $idProductAbstract, int $idLocale): CategoryCollectionTransfer;
 
     /**
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByCategoryIds(array $categoryIds): array;
 }

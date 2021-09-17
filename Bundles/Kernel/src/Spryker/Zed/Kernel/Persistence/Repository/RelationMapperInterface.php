@@ -26,11 +26,11 @@ interface RelationMapperInterface
      *   $this->populateCollectionWithRelation($commentCollection, 'SpyBlogCustomer');
      *   Now each blog comment have customer associated.
      *
-     * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[] $collection
+     * @param array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface> $collection
      * @param string $relation
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
+     * @return array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface>
      */
     public function populateCollectionWithRelation(array &$collection, $relation, ?Criteria $criteria = null);
 }

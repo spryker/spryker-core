@@ -47,7 +47,7 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -86,7 +86,7 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[] $mappedProductQuantityStorageEntities
+     * @param array<\Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer> $mappedProductQuantityStorageEntities
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer
@@ -114,9 +114,9 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[] $productQuantityStorageEntities
+     * @param array<\Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer> $productQuantityStorageEntities
      *
-     * @return \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer>
      */
     protected function mapProductQuantityStorageEntities(array $productQuantityStorageEntities): array
     {
@@ -129,7 +129,7 @@ class ProductQuantityStorageWriter implements ProductQuantityStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer[] $mappedProductQuantityStorageEntities
+     * @param array<\Generated\Shared\Transfer\SpyProductQuantityStorageEntityTransfer> $mappedProductQuantityStorageEntities
      *
      * @return void
      */

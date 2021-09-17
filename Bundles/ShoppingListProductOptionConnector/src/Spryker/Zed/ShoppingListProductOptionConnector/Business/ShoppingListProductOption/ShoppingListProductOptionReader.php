@@ -70,7 +70,7 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getShoppingListItemIdsFromShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): array
     {

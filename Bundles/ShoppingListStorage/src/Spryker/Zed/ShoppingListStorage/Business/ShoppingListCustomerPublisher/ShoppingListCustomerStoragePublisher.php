@@ -45,7 +45,7 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
     }
 
     /**
-     * @param string[] $customerReferences
+     * @param array<string> $customerReferences
      *
      * @return void
      */
@@ -59,8 +59,8 @@ class ShoppingListCustomerStoragePublisher implements ShoppingListCustomerStorag
     }
 
     /**
-     * @param string[] $customerReferences
-     * @param \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[] $shoppingListCustomerStorageEntities
+     * @param array<string> $customerReferences
+     * @param array<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage> $shoppingListCustomerStorageEntities
      *
      * @return void
      */

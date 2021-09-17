@@ -37,7 +37,7 @@ class PublisherToEventBehaviorFacadeBridge implements PublisherToEventBehaviorFa
     /**
      * @param array $resourcePublisherPlugins
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableResourceNames(array $resourcePublisherPlugins = []): array
     {

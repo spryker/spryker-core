@@ -25,7 +25,7 @@ class ProductConfigurationCartItemQuantityCounterStrategyPlugin extends Abstract
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return bool
@@ -43,7 +43,7 @@ class ProductConfigurationCartItemQuantityCounterStrategyPlugin extends Abstract
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer

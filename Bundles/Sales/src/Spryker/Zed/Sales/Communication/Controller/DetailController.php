@@ -41,7 +41,7 @@ class DetailController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -101,7 +101,7 @@ class DetailController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array|string|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array|string
      */
     protected function renderSalesDetailBlocks(Request $request, OrderTransfer $orderTransfer)
     {
@@ -149,7 +149,7 @@ class DetailController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $blockUrl
      *
-     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|string
      */
     protected function handleSubRequest(Request $request, $blockUrl)
     {

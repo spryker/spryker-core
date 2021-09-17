@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class GlossaryStorageEntityManager extends AbstractEntityManager implements GlossaryStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer> $glossaryStorageEntityTransfers
      *
      * @return void
      */

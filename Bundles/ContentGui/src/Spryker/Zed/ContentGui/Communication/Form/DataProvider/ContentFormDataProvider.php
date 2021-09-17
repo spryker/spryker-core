@@ -120,9 +120,9 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     }
 
         /**
-         * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedContentTransfer[] $localizedContents
+         * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedContentTransfer> $localizedContents
          *
-         * @return \Generated\Shared\Transfer\LocalizedContentTransfer[]
+         * @return array<\Generated\Shared\Transfer\LocalizedContentTransfer>
          */
     protected function getLocalizedContentList(ArrayObject $localizedContents): array
     {
@@ -135,7 +135,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function getAvailableLocales(): array
     {

@@ -36,9 +36,9 @@ class ProductBundleItemExpander implements ProductBundleItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandItemsWithProductBundles(array $itemTransfers): array
     {
@@ -67,9 +67,9 @@ class ProductBundleItemExpander implements ProductBundleItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundleItemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundleItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function expandBundleItemsWithIds(array $bundleItemTransfers): array
     {
@@ -91,9 +91,9 @@ class ProductBundleItemExpander implements ProductBundleItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(array $itemTransfers): array
     {
@@ -107,9 +107,9 @@ class ProductBundleItemExpander implements ProductBundleItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSalesOrderItemIds(array $itemTransfers): array
     {

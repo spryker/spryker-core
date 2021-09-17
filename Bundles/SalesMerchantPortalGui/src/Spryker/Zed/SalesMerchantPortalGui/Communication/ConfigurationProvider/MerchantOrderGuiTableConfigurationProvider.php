@@ -176,7 +176,7 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreOptions(): array
     {
@@ -193,7 +193,7 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStatesOptions(): array
     {

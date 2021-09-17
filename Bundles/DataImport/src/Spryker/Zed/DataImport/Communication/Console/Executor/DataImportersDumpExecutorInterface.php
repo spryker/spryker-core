@@ -10,7 +10,7 @@ namespace Spryker\Zed\DataImport\Communication\Console\Executor;
 interface DataImportersDumpExecutorInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function executeDataImportersDump(): array;
 }

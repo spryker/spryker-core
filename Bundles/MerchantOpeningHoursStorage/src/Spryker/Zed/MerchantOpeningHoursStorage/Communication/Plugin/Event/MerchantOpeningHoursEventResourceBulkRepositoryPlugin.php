@@ -42,7 +42,7 @@ class MerchantOpeningHoursEventResourceBulkRepositoryPlugin extends AbstractPlug
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\SpyMerchantEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyMerchantEntityTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

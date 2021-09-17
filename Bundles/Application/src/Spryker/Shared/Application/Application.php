@@ -40,7 +40,7 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
     public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
-     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface[]
+     * @var array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface>
      */
     protected $bootablePlugins = [];
 
@@ -56,7 +56,7 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
 
     /**
      * @param \Spryker\Service\Container\ContainerInterface|null $container
-     * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[] $applicationPlugins
+     * @param array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface> $applicationPlugins
      */
     public function __construct(?ContainerInterface $container = null, array $applicationPlugins = [])
     {

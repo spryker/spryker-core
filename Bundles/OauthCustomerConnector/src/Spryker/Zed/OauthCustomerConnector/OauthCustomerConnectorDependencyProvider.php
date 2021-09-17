@@ -109,7 +109,7 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
     }
 
     /**
-     * @return \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface>
      */
     protected function getOauthCustomerIdentifierExpanderPlugins(): array
     {

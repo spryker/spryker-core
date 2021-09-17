@@ -10,7 +10,7 @@ namespace Spryker\Zed\RestRequestValidator\Dependency\Store;
 interface RestRequestValidatorToStoreInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAllowedStores();
 }

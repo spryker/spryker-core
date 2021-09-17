@@ -62,7 +62,7 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\Join $searchJoin
-     * @param \Propel\Runtime\ActiveQuery\Join[] $joins
+     * @param array<\Propel\Runtime\ActiveQuery\Join> $joins
      *
      * @return \Propel\Runtime\ActiveQuery\Join|null
      */

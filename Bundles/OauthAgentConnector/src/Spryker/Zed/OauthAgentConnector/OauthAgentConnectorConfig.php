@@ -27,7 +27,7 @@ class OauthAgentConnectorConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAgentScopes(): array
     {

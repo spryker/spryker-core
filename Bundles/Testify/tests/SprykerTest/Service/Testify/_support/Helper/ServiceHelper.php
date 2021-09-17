@@ -43,7 +43,7 @@ class ServiceHelper extends Module
     protected $dependencies = [];
 
     /**
-     * @var \Spryker\Service\Kernel\AbstractService[]
+     * @var array<\Spryker\Service\Kernel\AbstractService>
      */
     protected $serviceStubs = [];
 
@@ -53,7 +53,7 @@ class ServiceHelper extends Module
     protected $mockedServiceMethods = [];
 
     /**
-     * @var \Spryker\Service\Kernel\AbstractServiceFactory[]
+     * @var array<\Spryker\Service\Kernel\AbstractServiceFactory>
      */
     protected $factoryStubs = [];
 
@@ -142,7 +142,7 @@ class ServiceHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Service\Kernel\AbstractServiceFactory
+     * @return \Spryker\Service\Kernel\AbstractServiceFactory|object
      */
     public function mockFactoryMethod(string $methodName, $return, ?string $moduleName = null)
     {

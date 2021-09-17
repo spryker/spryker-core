@@ -122,9 +122,9 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     /**
      * @api
      *
-     * @phpstan-return class-string<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipThresholdFormMapperInterface>[]
+     * @phpstan-return array<class-string<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\MerchantRelationshipThresholdFormMapperInterface>>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStrategyGroupToFormTypeMap(): array
     {
@@ -146,9 +146,9 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     /**
      * @api
      *
-     * @phpstan-return class-string<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface>[]
+     * @phpstan-return array<class-string<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface>>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStrategyGroupToDataProviderMap(): array
     {

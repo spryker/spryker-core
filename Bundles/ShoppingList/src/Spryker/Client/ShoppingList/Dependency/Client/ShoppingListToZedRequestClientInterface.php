@@ -12,12 +12,12 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 interface ShoppingListToZedRequestClientInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages();
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesErrorMessages(): array;
 

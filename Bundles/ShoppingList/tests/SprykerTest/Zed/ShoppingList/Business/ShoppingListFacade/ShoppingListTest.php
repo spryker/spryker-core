@@ -539,7 +539,7 @@ class ShoppingListTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPermissionGroupNamesFromCollection(
         ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer

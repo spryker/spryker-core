@@ -16,7 +16,7 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
 {
     /**
-     * @var \Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition[]
+     * @var array<\Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition>
      */
     protected $properties = [];
 

@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface ProductCategorySearchRepositoryInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[][]
+     * @return array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]>
      */
     public function getMappedProductCategoriesByIdProductAbstractAndStore(array $productAbstractIds): array;
 
@@ -23,7 +23,7 @@ interface ProductCategorySearchRepositoryInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCategoryNodeIdsByLocaleAndStore(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array;
 
@@ -33,7 +33,7 @@ interface ProductCategorySearchRepositoryInterface
     public function getAllCategoriesWithAttributesAndOrderByDescendant(): array;
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array

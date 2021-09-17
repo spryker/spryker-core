@@ -79,9 +79,9 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function recalculateWithItemTransfers(ArrayObject $itemTransfers): ArrayObject
     {
@@ -107,9 +107,9 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCountryIso2Codes(iterable $itemTransfers): array
     {
@@ -122,9 +122,9 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdProductAbstruct(iterable $itemTransfers): array
     {
@@ -137,7 +137,7 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
     }
 
     /**
-     * @param iterable|\Propel\Runtime\Collection\ArrayCollection $taxRatesByCountryAndProduct
+     * @param \Propel\Runtime\Collection\ArrayCollection|iterable $taxRatesByCountryAndProduct
      *
      * @return array
      */

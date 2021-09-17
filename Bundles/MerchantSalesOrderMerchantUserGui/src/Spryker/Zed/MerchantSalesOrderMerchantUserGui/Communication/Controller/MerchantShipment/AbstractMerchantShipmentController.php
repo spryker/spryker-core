@@ -81,7 +81,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
         if (!$merchantOrderTransfer) {
             return null;
         }
-        /** @var int[] $merchantOrderItemIds */
+        /** @var array<int> $merchantOrderItemIds */
         $merchantOrderItemIds = $this->extractMerchantOrderItemIds($merchantOrderTransfer->getMerchantOrderItems());
 
         $merchantOrderItemsStateHistory = $this->getFactory()
@@ -144,7 +144,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
      *
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return bool[]
+     * @return array<bool>
      */
     protected function getItemListUpdatedStatus(FormInterface $form): array
     {
@@ -193,9 +193,9 @@ abstract class AbstractMerchantShipmentController extends AbstractController
      *
      * @phpstan-return array<int, int|null>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractMerchantOrderItemIds(ArrayObject $merchantOrderItems): array
     {

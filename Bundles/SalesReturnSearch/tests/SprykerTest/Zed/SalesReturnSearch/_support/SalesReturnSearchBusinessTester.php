@@ -50,9 +50,9 @@ class SalesReturnSearchBusinessTester extends Actor
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\EventEntityTransfer>
      */
     public function createEventEntityTransfersFromIds(array $ids): array
     {
@@ -66,9 +66,9 @@ class SalesReturnSearchBusinessTester extends Actor
     }
 
     /**
-     * @param int[] $returnReasonIds
+     * @param array<int> $returnReasonIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturnSearch\Persistence\SpySalesReturnReasonSearch[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturnSearch\Persistence\SpySalesReturnReasonSearch>
      */
     public function getSalesReturnSearchEntitiesByReturnReasonIds(array $returnReasonIds = []): ObjectCollection
     {
@@ -82,9 +82,9 @@ class SalesReturnSearchBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
+     * @param array<\Generated\Shared\Transfer\ReturnReasonTransfer> $returnReasonTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     public function extractReturnReasonIdsFromReturnReasonTransfers(array $returnReasonTransfers): array
     {

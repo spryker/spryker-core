@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 class QuoteValidator implements QuoteValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[]
+     * @var array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface>
      */
     protected $quoteValidatorPlugins;
 
     /**
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[] $quoteValidatorPlugins
+     * @param array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface> $quoteValidatorPlugins
      */
     public function __construct(array $quoteValidatorPlugins)
     {

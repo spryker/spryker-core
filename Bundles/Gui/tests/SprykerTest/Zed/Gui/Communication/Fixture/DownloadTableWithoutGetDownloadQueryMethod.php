@@ -10,7 +10,7 @@ namespace SprykerTest\Zed\Gui\Communication\Fixture;
 class DownloadTableWithoutGetDownloadQueryMethod extends FooTable
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCsvHeaders(): array
     {

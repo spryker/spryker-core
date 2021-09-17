@@ -59,7 +59,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -74,7 +74,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -89,7 +89,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -101,7 +101,7 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
      * @return void
      */
@@ -129,8 +129,8 @@ class MerchantOpeningHoursStoragePublisher implements MerchantOpeningHoursStorag
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\WeekdayScheduleTransfer[] $weekdayScheduleTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\DateScheduleTransfer[] $dateScheduleTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\WeekdayScheduleTransfer> $weekdayScheduleTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DateScheduleTransfer> $dateScheduleTransfers
      *
      * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer
      */

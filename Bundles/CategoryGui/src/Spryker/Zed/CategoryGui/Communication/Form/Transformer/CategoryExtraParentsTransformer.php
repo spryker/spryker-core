@@ -13,9 +13,9 @@ use Symfony\Component\Form\DataTransformerInterface;
 class CategoryExtraParentsTransformer implements DataTransformerInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\NodeTransfer[] $value
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\NodeTransfer> $value
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return array<\Generated\Shared\Transfer\NodeTransfer>
      */
     public function transform($value): array
     {
@@ -23,7 +23,7 @@ class CategoryExtraParentsTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $value
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $value
      *
      * @return \ArrayObject
      */

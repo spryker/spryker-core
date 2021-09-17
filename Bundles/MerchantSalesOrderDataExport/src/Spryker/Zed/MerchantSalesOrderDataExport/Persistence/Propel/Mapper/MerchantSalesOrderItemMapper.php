@@ -98,7 +98,7 @@ class MerchantSalesOrderItemMapper
     /**
      * @phpstan-return array<string, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFieldMapping(): array
     {
@@ -106,9 +106,9 @@ class MerchantSalesOrderItemMapper
     }
 
     /**
-     * @param mixed[][] $merchantSalesOrderItemRows
+     * @param array<mixed[]> $merchantSalesOrderItemRows
      *
-     * @return mixed[][]
+     * @return array<mixed[]>
      */
     public function mapMerchantSalesOrderItemDataByField(array $merchantSalesOrderItemRows): array
     {

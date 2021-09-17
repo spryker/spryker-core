@@ -49,7 +49,7 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
      * @param int $interval
      * @param int $quantity
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getAllowedQuantities(int $min, int $max, int $interval, int $quantity): array
     {
@@ -66,7 +66,7 @@ class ProductQuantityRounder implements ProductQuantityRounderInterface
 
     /**
      * @param int $quantity
-     * @param int[] $allowedQuantities
+     * @param array<int> $allowedQuantities
      *
      * @return int
      */

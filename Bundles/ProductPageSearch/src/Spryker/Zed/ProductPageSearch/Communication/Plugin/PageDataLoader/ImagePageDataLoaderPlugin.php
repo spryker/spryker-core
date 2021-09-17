@@ -38,8 +38,8 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
+     * @param array<int> $productAbstractIds
+     * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $payloadTransfers
      *
      * @return array
      */
@@ -67,7 +67,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection
      *
      * @return array
      */
@@ -83,7 +83,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection
      *
      * @return array
      */
@@ -103,8 +103,8 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param array[] $imageSets
-     * @param array[] $defaultProductImageSets
+     * @param array<array> $imageSets
+     * @param array<array> $defaultProductImageSets
      *
      * @return array
      */

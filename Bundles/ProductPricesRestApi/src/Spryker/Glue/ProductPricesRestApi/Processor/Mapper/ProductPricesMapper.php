@@ -46,7 +46,7 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     protected $currencyClient;
 
     /**
-     * @var \Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface[]
+     * @var array<\Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface>
      */
     protected $restProductPricesAttributesMapperPlugins;
 
@@ -58,7 +58,7 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     /**
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface $priceClient
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface $currencyClient
-     * @param \Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface[] $restProductPricesAttributesMapperPlugins
+     * @param array<\Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface> $restProductPricesAttributesMapperPlugins
      */
     public function __construct(
         ProductPricesRestApiToPriceClientInterface $priceClient,

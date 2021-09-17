@@ -103,10 +103,10 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransfers
      * @param float $taxRate
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer>
      */
     protected function setQuoteExpenseTaxRate(ShipmentTransfer $shipmentTransfer, ArrayObject $expenseTransfers, float $taxRate): ArrayObject
     {
@@ -145,12 +145,12 @@ class ShipmentTaxRateCalculator implements CalculatorInterface
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param string $countryIso2Code
      *
-     * @return string[]|null
+     * @return array<string>|null
      */
     protected function findTaxSet(ShipmentTransfer $shipmentTransfer, string $countryIso2Code)
     {
         /**
-         * @var string[]|null $taxSet
+         * @var array<string>|null $taxSet
          */
         $taxSet = $this->shipmentQueryContainer
             ->queryTaxSetByIdShipmentMethodAndCountryIso2Code(

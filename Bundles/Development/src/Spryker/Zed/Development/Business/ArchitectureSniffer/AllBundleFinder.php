@@ -75,7 +75,7 @@ class AllBundleFinder implements AllBundleFinderInterface
     protected function findBundles($path, $namespace, array $allBundles)
     {
         try {
-            /** @var \SplFileInfo[] $directories */
+            /** @var array<\SplFileInfo> $directories */
             $directories = (new Finder())
                 ->directories()
                 ->in($path)

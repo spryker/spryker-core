@@ -25,11 +25,11 @@ class TranslationMapper implements TranslationMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
-     * @param \Generated\Shared\Transfer\GlossaryKeyTransfer[] $glossaryKeyTransfers
+     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     * @param array<\Generated\Shared\Transfer\GlossaryKeyTransfer> $glossaryKeyTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function mapTranslationsByKeyNameAndLocaleName(
         array $translationTransfers,
@@ -56,9 +56,9 @@ class TranslationMapper implements TranslationMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function mapLocaleTransfersByIdLocale(array $localeTransfers): array
     {
@@ -72,9 +72,9 @@ class TranslationMapper implements TranslationMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GlossaryKeyTransfer[] $glossaryKeyTransfers
+     * @param array<\Generated\Shared\Transfer\GlossaryKeyTransfer> $glossaryKeyTransfers
      *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
     protected function mapGlossaryKeyTransfersByIdGlossaryKey(array $glossaryKeyTransfers): array
     {

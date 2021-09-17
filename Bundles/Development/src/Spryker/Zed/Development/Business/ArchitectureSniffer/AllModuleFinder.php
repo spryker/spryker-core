@@ -117,7 +117,7 @@ class AllModuleFinder implements AllModuleFinderInterface
         $finder = clone $this->finder;
 
         try {
-            /** @var \SplFileInfo[] $directories */
+            /** @var array<\SplFileInfo> $directories */
             $directories = $finder
                 ->directories()
                 ->in($path)

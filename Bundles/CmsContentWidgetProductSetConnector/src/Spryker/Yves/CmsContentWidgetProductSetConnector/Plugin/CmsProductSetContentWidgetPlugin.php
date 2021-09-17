@@ -105,7 +105,7 @@ class CmsProductSetContentWidgetPlugin extends AbstractPlugin implements CmsCont
      * @param array $context
      * @param \Generated\Shared\Transfer\ProductSetStorageTransfer $productSetStorageTransfer
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductTransfer>
      */
     protected function mapStorageProducts(array $context, ProductSetStorageTransfer $productSetStorageTransfer)
     {

@@ -16,7 +16,7 @@ class ModuleHelper extends Module
      * @param string $className
      * @param array $methods
      *
-     * @return \Codeception\RealInstanceType|object|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Codeception\RealInstanceType|\PHPUnit\Framework\MockObject\MockObject|object
      */
     public function createHelperStub(string $className, array $methods)
     {

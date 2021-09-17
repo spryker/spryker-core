@@ -38,7 +38,7 @@ interface CategoryFinderInterface
     /**
      * @param int|null $idCategory
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return array<\Generated\Shared\Transfer\NodeTransfer>
      */
     public function getCategoryNodes(?int $idCategory = null): array;
 }

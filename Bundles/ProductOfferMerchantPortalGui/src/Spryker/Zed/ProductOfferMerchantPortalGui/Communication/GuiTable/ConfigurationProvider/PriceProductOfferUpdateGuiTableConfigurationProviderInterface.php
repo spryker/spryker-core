@@ -13,7 +13,7 @@ interface PriceProductOfferUpdateGuiTableConfigurationProviderInterface
 {
     /**
      * @param int $idProductOffer
-     * @param mixed[] $initialData
+     * @param array<mixed> $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */

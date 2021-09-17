@@ -26,10 +26,10 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     protected const FK_PRODUCT_CONCRETE = 'fkProductConcrete';
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetTransfersByProductIdsAndIdLocale(array $productIds, int $idLocale): array
     {
@@ -49,9 +49,9 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetEntities
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     protected function mapProductImageSetTransfers(ObjectCollection $productImageSetEntities): array
     {
@@ -66,9 +66,9 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param int[] $productSetIds
+     * @param array<int> $productSetIds
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
      */
     public function getProductImagesByProductSetIds(array $productSetIds): array
     {
@@ -87,9 +87,9 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetToProductImageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage> $productImageSetToProductImageEntities
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
      */
     protected function indexProductImagesByProductImageSetId(ObjectCollection $productImageSetToProductImageEntities): array
     {
@@ -109,7 +109,7 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     /**
      * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array
     {

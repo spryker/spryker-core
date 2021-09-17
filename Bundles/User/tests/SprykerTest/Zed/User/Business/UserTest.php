@@ -365,7 +365,7 @@ class UserTest extends Unit
     /**
      * @dataProvider getUserPositiveScenarioDataProvider
      *
-     * @param string[] $userCriteriaKeys
+     * @param array<string> $userCriteriaKeys
      *
      * @return void
      */

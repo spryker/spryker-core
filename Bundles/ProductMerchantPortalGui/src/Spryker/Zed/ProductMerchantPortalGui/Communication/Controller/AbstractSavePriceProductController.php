@@ -38,22 +38,18 @@ abstract class AbstractSavePriceProductController extends AbstractController
     protected const REQUEST_BODY_CONTENT_KEY_DATA = 'data';
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     abstract protected function expandPriceProductTransfersWithProductId(ArrayObject $priceProductTransfers, Request $request): ArrayObject;
 
     /**
-     * @param int[] $priceProductStoreIds
+     * @param array<int> $priceProductStoreIds
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     abstract protected function findPriceProductTransfers(array $priceProductStoreIds, Request $request): array;
 

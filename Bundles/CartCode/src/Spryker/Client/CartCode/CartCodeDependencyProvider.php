@@ -91,7 +91,7 @@ class CartCodeDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
+     * @return array<\Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface>
      */
     protected function getCartCodePluginCollection(): array
     {

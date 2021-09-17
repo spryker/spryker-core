@@ -15,7 +15,7 @@ interface ShoppingListStorageFacadeInterface
      *
      * @api
      *
-     * @param string[] $customerReferences
+     * @param array<string> $customerReferences
      *
      * @return void
      */

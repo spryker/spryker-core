@@ -42,7 +42,7 @@ interface CmsBlockProductStorageQueryContainerInterface extends QueryContainerIn
      *
      * @api
      *
-     * @param int[] $cmsBlockProductIds
+     * @param array<int> $cmsBlockProductIds
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
@@ -54,7 +54,7 @@ interface CmsBlockProductStorageQueryContainerInterface extends QueryContainerIn
      *
      * @api
      *
-     * @param int[] $cmsBlockProductIds
+     * @param array<int> $cmsBlockProductIds
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */

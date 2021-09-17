@@ -15,7 +15,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\Compariso
 class PriceProductTableViewSorter implements PriceProductTableViewSorterInterface
 {
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceProductSortingComparisonStrategyInterface[]
+     * @var array<\Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceProductSortingComparisonStrategyInterface>
      */
     protected $priceProductSortingComparisonStrategies;
 
@@ -25,7 +25,7 @@ class PriceProductTableViewSorter implements PriceProductTableViewSorterInterfac
     protected $defaultSortingComparisonStrategy;
 
     /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceProductSortingComparisonStrategyInterface[] $priceProductSortingComparisonStrategies
+     * @param array<\Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceProductSortingComparisonStrategyInterface> $priceProductSortingComparisonStrategies
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\ComparisonStrategy\PriceProductSortingComparisonStrategyInterface $defaultSortingComparisonStrategy
      */
     public function __construct(

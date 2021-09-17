@@ -76,7 +76,7 @@ interface ProductConfigurationStorageClientInterface
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesByIdProductConcrete(int $idProductConcrete): array;
 
@@ -132,9 +132,9 @@ interface ProductConfigurationStorageClientInterface
 
      * @api
      *
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
      */
     public function findProductConfigurationInstancesIndexedBySku(
         array $skus

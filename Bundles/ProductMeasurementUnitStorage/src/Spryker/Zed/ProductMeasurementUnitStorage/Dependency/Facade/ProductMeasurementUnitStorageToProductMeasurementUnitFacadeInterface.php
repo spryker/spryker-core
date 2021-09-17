@@ -14,45 +14,45 @@ interface ProductMeasurementUnitStorageToProductMeasurementUnitFacadeInterface
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getSalesUnitsByIdProduct(int $idProduct): array;
 
     /**
-     * @param int[] $salesUnitsIds
+     * @param array<int> $salesUnitsIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getSalesUnitsByIds(array $salesUnitsIds): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getSalesUnits(): array;
 
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
 
     /**
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findAllProductMeasurementUnitTransfers(): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array;
 }

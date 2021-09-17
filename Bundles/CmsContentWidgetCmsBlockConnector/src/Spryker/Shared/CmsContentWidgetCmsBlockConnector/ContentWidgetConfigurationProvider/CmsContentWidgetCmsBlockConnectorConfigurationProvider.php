@@ -25,7 +25,7 @@ class CmsContentWidgetCmsBlockConnectorConfigurationProvider implements CmsConte
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableTemplates(): array
     {

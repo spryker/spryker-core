@@ -14,7 +14,7 @@ interface ConfigurableBundleTemplateImageSetExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */

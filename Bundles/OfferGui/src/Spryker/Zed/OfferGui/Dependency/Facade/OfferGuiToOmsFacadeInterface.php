@@ -12,14 +12,14 @@ interface OfferGuiToOmsFacadeInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsByIdSalesOrder(int $idSalesOrder);
 
     /**
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctManualEventsByIdSalesOrder(int $idSalesOrder);
 }

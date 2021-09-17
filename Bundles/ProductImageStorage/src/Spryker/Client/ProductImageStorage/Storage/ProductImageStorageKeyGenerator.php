@@ -19,7 +19,7 @@ class ProductImageStorageKeyGenerator implements ProductImageStorageKeyGenerator
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
+     * @var array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface>
      */
     protected static $storageKeyBuilders = [];
 

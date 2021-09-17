@@ -21,7 +21,7 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -53,9 +53,9 @@ class ProductPackagingUnitStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param int[] $productPackagingUnitTypeIds
+     * @param array<int> $productPackagingUnitTypeIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductIdsByProductPackagingUnitTypeIds(array $productPackagingUnitTypeIds): array
     {

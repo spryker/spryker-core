@@ -60,7 +60,7 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {
@@ -76,7 +76,7 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAttributeTypes()
     {

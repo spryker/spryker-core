@@ -26,7 +26,7 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
      *
      * @api
      *
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */

@@ -95,7 +95,7 @@ class BusinessHelper extends Module
      * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
      * @param iterable|array $itemTransfers
      *
-     * @return iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return iterable<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     protected function createOrderItems(
         SpyOmsOrderItemState $omsStateEntity,
@@ -121,7 +121,7 @@ class BusinessHelper extends Module
      * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
      * @param iterable $itemTransfers
      *
-     * @return iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return iterable<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     protected function createOrderItemsUsingItemTransfers(
         SpyOmsOrderItemState $omsStateEntity,
@@ -151,7 +151,7 @@ class BusinessHelper extends Module
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $salesOrderEntity
      * @param \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess $omsOrderProcessEntity
      *
-     * @return iterable|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return iterable<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     protected function createOrderItemsWithDefaultValues(
         SpyOmsOrderItemState $omsStateEntity,

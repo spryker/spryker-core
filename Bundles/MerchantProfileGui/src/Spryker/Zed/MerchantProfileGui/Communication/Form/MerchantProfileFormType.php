@@ -456,7 +456,7 @@ class MerchantProfileFormType extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getTextFieldConstraints(): array
     {
@@ -466,7 +466,7 @@ class MerchantProfileFormType extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getRequiredTextFieldConstraints(): array
     {
@@ -479,7 +479,7 @@ class MerchantProfileFormType extends AbstractType
     /**
      * @param array $choices
      *
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getUrlFieldConstraints(array $choices = []): array
     {

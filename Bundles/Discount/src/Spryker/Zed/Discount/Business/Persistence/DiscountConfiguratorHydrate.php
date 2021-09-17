@@ -24,7 +24,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
     protected $discountQueryContainer;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface>
      */
     protected $discountConfigurationExpanderPlugins;
 
@@ -42,7 +42,7 @@ class DiscountConfiguratorHydrate implements DiscountConfiguratorHydrateInterfac
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param \Spryker\Zed\Discount\Business\Persistence\DiscountEntityMapperInterface $discountEntityMapper
      * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationMapperInterface $discountStoreRelationMapper
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[] $discountConfigurationExpanderPlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface> $discountConfigurationExpanderPlugins
      */
     public function __construct(
         DiscountQueryContainerInterface $discountQueryContainer,

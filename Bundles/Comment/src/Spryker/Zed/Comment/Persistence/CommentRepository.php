@@ -51,7 +51,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     /**
      * @param \Generated\Shared\Transfer\CommentsRequestTransfer $commentsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentThreadTransfer>
      */
     public function getCommentThreads(CommentsRequestTransfer $commentsRequestTransfer): array
     {
@@ -93,7 +93,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
      *
      * @param \Generated\Shared\Transfer\CommentThreadTransfer $commentThreadTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function findCommentsByCommentThread(CommentThreadTransfer $commentThreadTransfer): array
     {
@@ -105,9 +105,9 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     /**
      * @module Customer
      *
-     * @param int[] $threadIds
+     * @param array<int> $threadIds
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function getCommentsByCommentThreadIds(array $threadIds): array
     {
@@ -153,7 +153,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CommentTagTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTagTransfer>
      */
     public function getAllCommentTags(): array
     {
@@ -171,7 +171,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
      *
      * @param \Generated\Shared\Transfer\CommentFilterTransfer $commentFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function getCommentsByFilter(CommentFilterTransfer $commentFilterTransfer): array
     {
@@ -200,9 +200,9 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Comment\Persistence\SpyCommentThread[] $commentThreadEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Comment\Persistence\SpyCommentThread> $commentThreadEntities
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentThreadTransfer>
      */
     protected function mapCommentThreadEntitiesToTransfers(ObjectCollection $commentThreadEntities): array
     {

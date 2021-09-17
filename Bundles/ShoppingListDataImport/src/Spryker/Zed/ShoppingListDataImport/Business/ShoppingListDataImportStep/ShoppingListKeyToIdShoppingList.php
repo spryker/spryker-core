@@ -17,7 +17,7 @@ use Spryker\Zed\ShoppingListDataImport\Business\DataSet\ShoppingListItemDataSetI
 class ShoppingListKeyToIdShoppingList implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idShoppingListCache;
 

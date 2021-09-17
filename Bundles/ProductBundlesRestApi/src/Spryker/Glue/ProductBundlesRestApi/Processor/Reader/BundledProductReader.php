@@ -84,10 +84,10 @@ class BundledProductReader implements BundledProductReaderInterface
     /**
      * @phpstan-return array<string, array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      *
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getBundledProductRestResourcesByProductConcreteSkus(
         array $productConcreteSkus,
@@ -114,10 +114,10 @@ class BundledProductReader implements BundledProductReaderInterface
     /**
      * @phpstan-return array<string, \Generated\Shared\Transfer\ProductBundleStorageTransfer>
      *
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductBundleStorageTransfer>
      */
     protected function getProductBundlesFromStorage(array $productConcreteSkus, string $localeName): array
     {

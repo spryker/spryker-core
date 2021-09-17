@@ -113,9 +113,9 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteStorageTransfer>
      */
     public function getProductConcreteStorageTransfers(array $productIds): array
     {
@@ -291,7 +291,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @deprecated Use getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      *
      * @return array
@@ -310,7 +310,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
@@ -331,11 +331,11 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getProductAbstractViewTransfers(array $productAbstractIds, string $localeName, array $selectedAttributes = []): array
     {
@@ -349,11 +349,11 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param string $localeName
      * @param array $selectedAttributes
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getProductConcreteViewTransfers(array $productConcreteIds, string $localeName, array $selectedAttributes = []): array
     {
@@ -368,7 +368,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      * @api
      *
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array
@@ -386,7 +386,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      * @api
      *
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array
@@ -407,10 +407,10 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      * @api
      *
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getBulkProductAbstractIdsByMapping(
         string $mappingType,
@@ -428,10 +428,10 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      * @api
      *
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByMapping(
         string $mappingType,
@@ -464,7 +464,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param string $localeName
      *
      * @return array

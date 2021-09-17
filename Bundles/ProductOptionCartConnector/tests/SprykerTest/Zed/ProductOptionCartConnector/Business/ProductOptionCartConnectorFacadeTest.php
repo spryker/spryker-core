@@ -452,7 +452,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cart
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionTransfer> $productOptionCollection
      *
      * @return void
      */

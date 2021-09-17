@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantOpeningHoursDataImport\Business\MerchantOpeningHours\Dat
 class MerchantReferenceToIdMerchantStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idMerchantCache = [];
 

@@ -47,7 +47,7 @@ class TriggerLocker implements LockerInterface
      * Attempts to save a lock entity, and if it fails due to unique identifier constraint (entity already locked) -
      * throws a LockException
      *
-     * @param string|string[] $identifiers
+     * @param array<string>|string $identifiers
      * @param string|null $details
      *
      * @throws \Spryker\Zed\Oms\Business\Exception\LockException
@@ -83,7 +83,7 @@ class TriggerLocker implements LockerInterface
     }
 
     /**
-     * @param string|string[] $identifiers
+     * @param array<string>|string $identifiers
      *
      * @return void
      */

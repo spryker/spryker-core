@@ -37,7 +37,7 @@ class PublishAndSynchronizeHealthCheckSearchWriter implements PublishAndSynchron
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -49,7 +49,7 @@ class PublishAndSynchronizeHealthCheckSearchWriter implements PublishAndSynchron
     }
 
     /**
-     * @param int[] $publishAndSynchronizeHealthCheckSearchIds
+     * @param array<int> $publishAndSynchronizeHealthCheckSearchIds
      *
      * @return void
      */

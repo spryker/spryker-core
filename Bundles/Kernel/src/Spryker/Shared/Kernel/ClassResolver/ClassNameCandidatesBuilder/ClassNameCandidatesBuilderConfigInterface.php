@@ -10,12 +10,12 @@ namespace Spryker\Shared\Kernel\ClassResolver\ClassNameCandidatesBuilder;
 interface ClassNameCandidatesBuilderConfigInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getProjectOrganizations(): array;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCoreOrganizations(): array;
 }

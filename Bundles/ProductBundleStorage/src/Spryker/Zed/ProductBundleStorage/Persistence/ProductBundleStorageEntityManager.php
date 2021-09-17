@@ -33,7 +33,7 @@ class ProductBundleStorageEntityManager extends AbstractEntityManager implements
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */

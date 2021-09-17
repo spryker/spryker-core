@@ -13,18 +13,18 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ConsoleRunnerHook implements ConsoleRunnerHookInterface
 {
     /**
-     * @var \Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
+     * @var array<\Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface>
      */
     protected $preHookPlugins;
 
     /**
-     * @var \Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
+     * @var array<\Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
      */
     protected $postHookPlugins;
 
     /**
-     * @param \Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[] $preHookPlugins
-     * @param \Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[] $postHookPlugins
+     * @param array<\Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface> $preHookPlugins
+     * @param array<\Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface> $postHookPlugins
      */
     public function __construct(array $preHookPlugins, array $postHookPlugins)
     {

@@ -22,10 +22,10 @@ class ProductBundleCartItemFilterPlugin extends AbstractPlugin implements CartIt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function filterCartItems(array $itemTransfers, QuoteTransfer $quoteTransfer): array
     {

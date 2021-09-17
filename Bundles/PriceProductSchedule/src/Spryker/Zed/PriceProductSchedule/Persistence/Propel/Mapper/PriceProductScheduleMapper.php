@@ -154,9 +154,9 @@ class PriceProductScheduleMapper implements PriceProductScheduleMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule[] $priceProductScheduleEntities
+     * @param array<\Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule> $priceProductScheduleEntities
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers(
         array $priceProductScheduleEntities

@@ -18,9 +18,9 @@ use Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage;
 class TaxStorageMapper
 {
     /**
-     * @param \Orm\Zed\Tax\Persistence\Base\SpyTaxSet[] $spyTaxSets
+     * @param array<\Orm\Zed\Tax\Persistence\Base\SpyTaxSet> $spyTaxSets
      *
-     * @return \Generated\Shared\Transfer\TaxSetStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\TaxSetStorageTransfer>
      */
     public function mapSpyTaxSetsToTaxSetStorageTransfers(array $spyTaxSets): array
     {
@@ -33,9 +33,9 @@ class TaxStorageMapper
     }
 
     /**
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[] $spyTaxSetStorages
+     * @param array<\Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage> $spyTaxSetStorages
      *
-     * @return \Generated\Shared\Transfer\TaxSetStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\TaxSetStorageTransfer>
      */
     public function mapSpyTaxSetStoragesToTaxSetStorageTransfers(array $spyTaxSetStorages): array
     {
@@ -48,9 +48,9 @@ class TaxStorageMapper
     }
 
     /**
-     * @param \Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage[] $spyTaxSetStorages
+     * @param array<\Orm\Zed\TaxStorage\Persistence\SpyTaxSetStorage> $spyTaxSetStorages
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function mapSpyTaxSetStoragesToSynchronizationDataTransfer(array $spyTaxSetStorages): array
     {
@@ -100,9 +100,9 @@ class TaxStorageMapper
     }
 
     /**
-     * @param \Orm\Zed\Tax\Persistence\SpyTaxRate[] $spyTaxRates
+     * @param array<\Orm\Zed\Tax\Persistence\SpyTaxRate> $spyTaxRates
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\TaxRateStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\TaxRateStorageTransfer>
      */
     protected function mapSpyTaxRatesToTaxRateTransfers(array $spyTaxRates): ArrayObject
     {

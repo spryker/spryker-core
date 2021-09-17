@@ -18,13 +18,13 @@ class QuoteLocker implements QuoteLockerInterface
     protected $quoteFacade;
 
     /**
-     * @var \Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface[]
+     * @var array<\Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface>
      */
     protected $quoteApprovalUnlockPreCheckPlugins;
 
     /**
      * @param \Spryker\Zed\QuoteApproval\Dependency\Facade\QuoteApprovalToQuoteFacadeInterface $quoteFacade
-     * @param \Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface[] $quoteApprovalUnlockPreCheckPlugins
+     * @param array<\Spryker\Zed\QuoteApprovalExtension\Dependency\Plugin\QuoteApprovalUnlockPreCheckPluginInterface> $quoteApprovalUnlockPreCheckPlugins
      */
     public function __construct(
         QuoteApprovalToQuoteFacadeInterface $quoteFacade,

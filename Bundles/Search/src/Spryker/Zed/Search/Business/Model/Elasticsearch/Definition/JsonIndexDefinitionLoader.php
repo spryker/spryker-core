@@ -53,7 +53,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer>
      */
     public function loadIndexDefinitions()
     {
@@ -111,7 +111,7 @@ class JsonIndexDefinitionLoader implements IndexDefinitionLoaderInterface
     /**
      * @param array $indexDefinitions
      *
-     * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer>
      */
     protected function createIndexDefinitions(array $indexDefinitions): array
     {

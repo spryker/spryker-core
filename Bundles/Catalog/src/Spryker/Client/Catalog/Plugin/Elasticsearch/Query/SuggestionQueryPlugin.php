@@ -12,7 +12,7 @@ use Elastica\Query\MultiMatch;
 class SuggestionQueryPlugin extends CatalogSearchQueryPlugin
 {
     /**
-     * @param string[] $fields
+     * @param array<string> $fields
      * @param string $searchString
      *
      * @return \Elastica\Query\MultiMatch

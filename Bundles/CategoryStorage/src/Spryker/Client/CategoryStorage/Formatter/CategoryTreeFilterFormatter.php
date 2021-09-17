@@ -49,7 +49,7 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */
     public function formatCategoryTreeFilter(array $docCountAggregation, string $localeName, string $storeName): ArrayObject
     {
@@ -68,10 +68,10 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[] $categoryNodeSearchResultTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryNodeStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer> $categoryNodeSearchResultTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */
     protected function mapCategoryNodeStoragesToCategoryNodeSearchResults(
         ArrayObject $categoryNodeStorageTransfers,
@@ -87,10 +87,10 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[] $categoryNodeSearchResultTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer> $categoryNodeSearchResultTransfers
      * @param array $categoryDocCounts
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */
     protected function mergeCategoryNodeSearchResultWithCategoryDocCount(
         ArrayObject $categoryNodeSearchResultTransfers,
@@ -125,7 +125,7 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     /**
      * @param array $docCountAggregation
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getMappedCategoryDocCountsByNodeId(array $docCountAggregation): array
     {

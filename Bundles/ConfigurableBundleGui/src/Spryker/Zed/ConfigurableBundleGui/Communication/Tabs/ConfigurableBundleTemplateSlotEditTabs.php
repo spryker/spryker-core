@@ -17,12 +17,12 @@ class ConfigurableBundleTemplateSlotEditTabs extends AbstractConfigurableBundleT
     protected const GENERAL_TAB_TEMPLATE = '@ConfigurableBundleGui/Slot/tabs/general-tab.twig';
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTabsExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTabsExpanderPluginInterface>
      */
     protected $configurableBundleTemplateSlotEditTabsExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTabsExpanderPluginInterface[] $configurableBundleTemplateSlotEditTabsExpanderPlugins
+     * @param array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditTabsExpanderPluginInterface> $configurableBundleTemplateSlotEditTabsExpanderPlugins
      */
     public function __construct(array $configurableBundleTemplateSlotEditTabsExpanderPlugins)
     {

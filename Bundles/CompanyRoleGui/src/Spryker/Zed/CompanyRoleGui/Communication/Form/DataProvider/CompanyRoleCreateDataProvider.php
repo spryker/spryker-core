@@ -83,7 +83,7 @@ class CompanyRoleCreateDataProvider
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getOptions(): array
     {
@@ -104,7 +104,7 @@ class CompanyRoleCreateDataProvider
     /**
      * @param \Generated\Shared\Transfer\CompanyCollectionTransfer $companyCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function prepareAvailableCompanies(CompanyCollectionTransfer $companyCollectionTransfer): array
     {
@@ -125,7 +125,7 @@ class CompanyRoleCreateDataProvider
     /**
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function prepareAvailablePermissions(PermissionCollectionTransfer $permissionCollectionTransfer): array
     {

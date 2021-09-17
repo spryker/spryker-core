@@ -109,7 +109,7 @@ class ProductListWriter implements ProductListWriterInterface
      * @param \Generated\Shared\Transfer\ProductListCollectionTransfer $productListCollectionTransfer
      * @param array $productListIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function cleanUpProductLists(ProductListCollectionTransfer $productListCollectionTransfer, array $productListIds): array
     {

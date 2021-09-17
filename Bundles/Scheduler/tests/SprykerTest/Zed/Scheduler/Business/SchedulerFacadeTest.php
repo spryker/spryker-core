@@ -181,7 +181,7 @@ class SchedulerFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface[]
+     * @return array<\Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface>
      */
     protected function getSchedulerReaderPlugins(): array
     {
@@ -290,7 +290,7 @@ class SchedulerFacadeTest extends Unit
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getEnabledSchedulers(): array
     {

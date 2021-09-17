@@ -82,7 +82,7 @@ class ProductSetStorageCommunicationTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageTransfer[] $productImageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductImageTransfer> $productImageTransfers
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
@@ -170,7 +170,7 @@ class ProductSetStorageCommunicationTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductSetTransfer> $productSetTransfers
      * @param \Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacade $productSetStorageFacade
      *
      * @return void

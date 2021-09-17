@@ -37,14 +37,14 @@ class ReturnCreateFormDataProvider
     protected $glossaryFacade;
 
     /**
-     * @var \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[]
+     * @var array<\Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface>
      */
     protected $returnCreateFormHandlerPlugins;
 
     /**
      * @param \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade
      * @param \Spryker\Zed\SalesReturnGui\Dependency\Facade\SalesReturnGuiToGlossaryFacadeInterface $glossaryFacade
-     * @param \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface[] $returnCreateFormHandlerPlugins
+     * @param array<\Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateFormHandlerPluginInterface> $returnCreateFormHandlerPlugins
      */
     public function __construct(
         SalesReturnGuiToSalesReturnFacadeInterface $salesReturnFacade,
@@ -99,7 +99,7 @@ class ReturnCreateFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function prepareReturnReasonChoices(): array
     {

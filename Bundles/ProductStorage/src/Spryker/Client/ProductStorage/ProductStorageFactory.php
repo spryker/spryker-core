@@ -193,7 +193,7 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface>
      */
     protected function getStorageProductExpanderPlugins()
     {
@@ -209,7 +209,7 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface>
      */
     public function getProductAbstractRestrictionPlugins(): array
     {
@@ -217,7 +217,7 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionPluginInterface>
      */
     public function getProductConcreteRestrictionPlugins(): array
     {
@@ -225,7 +225,7 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface>
      */
     public function getProductConcreteExpanderPlugins(): array
     {
@@ -233,7 +233,7 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface>
      */
     public function getProductAbstractRestrictionFilterPlugins(): array
     {
@@ -241,7 +241,7 @@ class ProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductConcreteRestrictionFilterPluginInterface>
      */
     public function getProductConcreteRestrictionFilterPlugins(): array
     {

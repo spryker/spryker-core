@@ -102,7 +102,7 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductSkusFromQuoteTransfer(QuoteTransfer $quoteTransfer): array
     {
@@ -116,9 +116,9 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function indexProductConcreteTransfersBySku(array $productConcreteTransfers): array
     {

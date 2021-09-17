@@ -14,7 +14,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 class GlossaryFactory extends AbstractFactory
 {
     /**
-     * @var \Spryker\Client\Glossary\Storage\GlossaryStorageInterface[]
+     * @var array<\Spryker\Client\Glossary\Storage\GlossaryStorageInterface>
      */
     protected static $translator = [];
 

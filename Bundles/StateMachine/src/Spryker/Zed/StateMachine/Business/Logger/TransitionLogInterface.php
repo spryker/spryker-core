@@ -22,7 +22,7 @@ interface TransitionLogInterface
     public function setEvent(EventInterface $event);
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItemTransfers
      *
      * @return void
      */

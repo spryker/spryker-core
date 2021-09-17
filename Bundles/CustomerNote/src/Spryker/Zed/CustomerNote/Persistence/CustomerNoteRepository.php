@@ -33,7 +33,7 @@ class CustomerNoteRepository extends AbstractRepository implements CustomerNoteR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer[] $customerNoteEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer> $customerNoteEntityTransfers
      *
      * @return \Generated\Shared\Transfer\CustomerNoteCollectionTransfer
      */

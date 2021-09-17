@@ -53,7 +53,7 @@ class ProductListStorageWriter implements ProductListStorageWriterInterface
     }
 
     /**
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
      * @return void
      */
@@ -66,10 +66,10 @@ class ProductListStorageWriter implements ProductListStorageWriterInterface
     }
 
     /**
-     * @param int[] $productListIds
-     * @param int[] $productAbstractIds
+     * @param array<int> $productListIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function findProductConcreteIds(array $productListIds, array $productAbstractIds): array
     {
@@ -82,7 +82,7 @@ class ProductListStorageWriter implements ProductListStorageWriterInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -95,7 +95,7 @@ class ProductListStorageWriter implements ProductListStorageWriterInterface
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */

@@ -37,9 +37,9 @@ class ProductConcreteProductRestrictionFilter extends AbstractProductRestriction
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer>
      */
     protected function getProductListStorageTransfers(array $productIds): array
     {

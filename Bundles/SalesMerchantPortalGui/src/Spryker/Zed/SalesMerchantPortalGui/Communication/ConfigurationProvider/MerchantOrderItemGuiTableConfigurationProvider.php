@@ -71,7 +71,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
     protected $guiTableFactory;
 
     /**
-     * @var array|\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface>
      */
     protected $merchantOrderItemTableExpanderPlugins;
 
@@ -85,7 +85,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
-     * @param \Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[] $merchantOrderItemTableExpanderPlugins
+     * @param array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface> $merchantOrderItemTableExpanderPlugins
      */
     public function __construct(
         SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade,
@@ -163,7 +163,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStatesOptions(): array
     {

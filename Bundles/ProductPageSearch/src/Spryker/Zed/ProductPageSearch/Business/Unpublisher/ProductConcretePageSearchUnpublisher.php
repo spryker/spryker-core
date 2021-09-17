@@ -52,7 +52,7 @@ class ProductConcretePageSearchUnpublisher implements ProductConcretePageSearchU
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer> $productConcretePageSearchTransfers
      *
      * @return void
      */

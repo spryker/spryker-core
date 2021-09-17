@@ -94,7 +94,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCompanyUnitAddressUuids(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -116,7 +116,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractShippingAddressUuids(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -136,7 +136,7 @@ class CompanyBusinessUnitAddressValidator implements CompanyBusinessUnitAddressV
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param string $message
-     * @param string[] $parameters
+     * @param array<string> $parameters
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

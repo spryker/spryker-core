@@ -60,7 +60,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
      * @param string $sku
      * @param string $localeName
      *
-     * @return int[]|null
+     * @return array<int>|null
      */
     public function findProductCategoryNodeIds(string $sku, string $localeName): ?array
     {
@@ -78,7 +78,7 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
     }
 
     /**
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      * @param string $localeName
      *
      * @return array

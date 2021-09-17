@@ -19,7 +19,7 @@ interface ProductCustomerPermissionSaverInterface
 
     /**
      * @param int $idCustomer
-     * @param int[] $idProductAbstractAbstracts
+     * @param array<int> $idProductAbstractAbstracts
      *
      * @return void
      */
@@ -42,7 +42,7 @@ interface ProductCustomerPermissionSaverInterface
 
     /**
      * @param int $idCustomer
-     * @param int[] $idProductAbstractAbstracts
+     * @param array<int> $idProductAbstractAbstracts
      *
      * @return void
      */

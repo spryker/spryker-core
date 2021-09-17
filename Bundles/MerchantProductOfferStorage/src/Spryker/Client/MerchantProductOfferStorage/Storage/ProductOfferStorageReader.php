@@ -56,7 +56,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $productOfferStorageKeyGenerator;
 
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[]
+     * @var array<\Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface>
      */
     protected $productOfferStorageExpanderPlugins;
 
@@ -72,7 +72,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageKeyGeneratorInterface $productOfferStorageKeyGenerator
      * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface $productOfferStorageCollectionSorterPlugin
-     * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[] $productOfferStorageExpanderPlugins
+     * @param array<\Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface> $productOfferStorageExpanderPlugins
      */
     public function __construct(
         MerchantProductOfferStorageToStorageClientInterface $storageClient,
@@ -147,9 +147,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     public function getProductOfferStorageByReferences(array $productOfferReferences): array
     {
@@ -178,9 +178,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductOfferReferences(array $productConcreteSkus): array
     {
@@ -209,10 +209,10 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      * @param string $merchantReference
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     protected function filterProductOfferStorageTransfersByMerchantReference(
         array $productOfferStorageTransfers,
@@ -231,9 +231,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     protected function expandProductOffersWithMerchants(array $productOfferStorageTransfers): array
     {
@@ -261,9 +261,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     protected function executeProductOfferStorageExpanderPlugins(array $productOfferStorageTransfers): array
     {
@@ -298,9 +298,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getMerchantReferences(array $productOfferStorageTransfers): array
     {
@@ -313,9 +313,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
     protected function indexMerchantStorageTransfersByMerchantReference(array $merchantStorageTransfers): array
     {

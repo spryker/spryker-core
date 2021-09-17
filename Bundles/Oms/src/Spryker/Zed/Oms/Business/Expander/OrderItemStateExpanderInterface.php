@@ -10,9 +10,9 @@ namespace Spryker\Zed\Oms\Business\Expander;
 interface OrderItemStateExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithItemState(array $itemTransfers): array;
 }

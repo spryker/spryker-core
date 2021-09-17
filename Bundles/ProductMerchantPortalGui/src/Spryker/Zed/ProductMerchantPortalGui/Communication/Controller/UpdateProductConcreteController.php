@@ -339,9 +339,9 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
      *
      * @phpstan-return array<int, array<int, \Generated\Shared\Transfer\ProductImageSetTransfer>>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>
      */
     protected function getImageSetsGroupedByIdLocale(ArrayObject $imageSets): array
     {
@@ -361,7 +361,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
      *
      * @phpstan-return \SplObjectStorage<object, mixed>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      * @param array $imageSetsErrors
      *
      * @return \SplObjectStorage
@@ -485,7 +485,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getImageSetTabNames(ProductConcreteTransfer $productConcreteTransfer): array
     {
@@ -501,9 +501,9 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
      *
      * @phpstan-return array<int, string>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getLocaleNamesIndexedByIdLocale(ArrayObject $localizedAttributesTransfers): array
     {
@@ -524,10 +524,10 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
      *
      * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @param int $idProductConcrete
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     protected function mapAbstractProductImageSets(ArrayObject $productImageSetTransfers, int $idProductConcrete): ArrayObject
     {

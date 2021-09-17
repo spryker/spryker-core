@@ -46,7 +46,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     protected $expenseSanitizer;
 
     /**
-     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface>
      */
     protected $shipmentExpenseExpanderPlugins;
 
@@ -55,7 +55,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface $salesFacade
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      * @param \Spryker\Zed\Shipment\Business\Sanitizer\ExpenseSanitizerInterface $expenseSanitizer
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface[] $shipmentExpenseExpanderPlugins
+     * @param array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface> $shipmentExpenseExpanderPlugins
      */
     public function __construct(
         ShipmentEntityManagerInterface $entityManager,
@@ -364,7 +364,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     /**
      * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver::addShipmentToQuoteItems()} instead.
      *
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return void
@@ -377,7 +377,7 @@ class MultiShipmentOrderSaver implements MultiShipmentOrderSaverInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return void
      */

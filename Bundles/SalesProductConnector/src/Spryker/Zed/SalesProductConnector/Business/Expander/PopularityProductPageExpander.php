@@ -64,10 +64,10 @@ class PopularityProductPageExpander implements PopularityProductPageExpanderInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $productPageLoadTransfers
-     * @param mixed[] $popularityByIdProductAbstractAndInterval
+     * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $productPageLoadTransfers
+     * @param array<mixed> $popularityByIdProductAbstractAndInterval
      *
-     * @return \Generated\Shared\Transfer\ProductPayloadTransfer[] updated payload transfers
+     * @return array<\Generated\Shared\Transfer\ProductPayloadTransfer> updated payload transfers
      */
     protected function updatePayloadTransfers(array $productPageLoadTransfers, array $popularityByIdProductAbstractAndInterval): array
     {

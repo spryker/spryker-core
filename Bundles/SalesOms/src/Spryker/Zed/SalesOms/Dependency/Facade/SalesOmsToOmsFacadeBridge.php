@@ -37,7 +37,7 @@ class SalesOmsToOmsFacadeBridge implements SalesOmsToOmsFacadeInterface
     /**
      * @param int $idOrderItem
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEvents($idOrderItem)
     {

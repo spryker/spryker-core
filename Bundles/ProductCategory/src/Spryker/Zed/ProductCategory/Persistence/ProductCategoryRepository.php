@@ -72,9 +72,9 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
     /**
      * @module Product
      *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByCategoryIds(array $categoryIds): array
     {

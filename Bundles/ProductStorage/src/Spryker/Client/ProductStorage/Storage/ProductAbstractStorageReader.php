@@ -65,12 +65,12 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[]
+     * @var array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface>
      */
     protected $productAbstractRestrictionPlugins;
 
     /**
-     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface[]
+     * @var array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface>
      */
     protected $productAbstractRestrictionFilterPlugins;
 
@@ -104,8 +104,8 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
      * @param \Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStoreClientInterface $storeClient
      * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
-     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface[] $productAbstractRestrictionPlugins
-     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface[] $productAbstractRestrictionFilterPlugins
+     * @param array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionPluginInterface> $productAbstractRestrictionPlugins
+     * @param array<\Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractRestrictionFilterPluginInterface> $productAbstractRestrictionFilterPlugins
      */
     public function __construct(
         ProductStorageToStorageClientInterface $storageClient,
@@ -158,10 +158,10 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getBulkProductAbstractIdsByMapping(string $mappingType, array $identifiers, string $localeName): array
     {
@@ -172,11 +172,11 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      * @param string $storeName
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIdsByMapping(
         string $mappingType,
@@ -203,9 +203,9 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param string[] $storageKeys
+     * @param array<string> $storageKeys
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getIdentifiersIndexedByStorageKey(array $storageKeys): array
     {
@@ -219,11 +219,11 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStorageKeysByMapping(
         string $mappingType,
@@ -350,7 +350,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array
@@ -449,7 +449,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
@@ -472,7 +472,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
@@ -494,7 +494,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      *
      * @return array
@@ -516,7 +516,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
@@ -541,7 +541,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
@@ -560,11 +560,11 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateStorageKeys(array $productAbstractIds, string $localeName, string $storeName): array
     {
@@ -605,7 +605,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      *
      * @return array
@@ -635,9 +635,9 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function filterRestrictedProductAbstractIds(array $productAbstractIds): array
     {

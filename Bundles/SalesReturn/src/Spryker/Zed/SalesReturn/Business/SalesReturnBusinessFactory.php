@@ -173,7 +173,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface[]
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface>
      */
     public function getReturnPreCreatePlugins(): array
     {
@@ -181,7 +181,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface>
      */
     public function getReturnCreateRequestValidatorPlugins(): array
     {
@@ -191,7 +191,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface>
      */
     public function getReturnCollectionExpanderPlugins(): array
     {
@@ -199,7 +199,7 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface>
      */
     public function getReturnExpanderPlugins(): array
     {

@@ -89,7 +89,7 @@ class AgentFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface[]
+     * @return array<\Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface>
      */
     public function getImpersonationSessionFinisherPlugins(): array
     {

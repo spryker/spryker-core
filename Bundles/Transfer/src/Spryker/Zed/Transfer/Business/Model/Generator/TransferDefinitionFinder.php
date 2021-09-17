@@ -61,7 +61,7 @@ class TransferDefinitionFinder implements FinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
     public function getXmlTransferDefinitionFiles()
     {
@@ -78,7 +78,7 @@ class TransferDefinitionFinder implements FinderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getExistingSourceDirectories()
     {

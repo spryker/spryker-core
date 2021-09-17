@@ -25,7 +25,7 @@ interface CmsPageRestResponseBuilderInterface
     public function createCmsPageNotFoundErrorRestResponse(): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\CmsPageStorageTransfer[] $cmsPageStorageTransfers
+     * @param array<\Generated\Shared\Transfer\CmsPageStorageTransfer> $cmsPageStorageTransfers
      * @param int $totalPagesFound
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

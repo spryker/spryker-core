@@ -188,7 +188,7 @@ $command</command>";
     }
 
     /**
-     * @return string[]|false
+     * @return array<string>|false
      */
     protected function getRoles()
     {

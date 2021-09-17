@@ -101,7 +101,7 @@ class RateTable extends AbstractTable
         $query = $this->taxRateQuery
             ->leftJoinCountry(SpyCountryTableMap::TABLE_NAME);
 
-        /** @var \Orm\Zed\Tax\Persistence\SpyTaxRate[] $queryResult */
+        /** @var array<\Orm\Zed\Tax\Persistence\SpyTaxRate> $queryResult */
         $queryResult = $this->runQuery($query, $config, true);
 
         foreach ($queryResult as $taxRateEntity) {

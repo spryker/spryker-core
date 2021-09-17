@@ -49,7 +49,7 @@ class SchedulerConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRoles(): array
     {
@@ -73,7 +73,7 @@ class SchedulerConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getEnabledSchedulers(): array
     {

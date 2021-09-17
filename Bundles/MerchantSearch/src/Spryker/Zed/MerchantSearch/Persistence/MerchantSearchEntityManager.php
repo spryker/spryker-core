@@ -18,7 +18,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class MerchantSearchEntityManager extends AbstractEntityManager implements MerchantSearchEntityManagerInterface
 {
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
      * @return void
      */

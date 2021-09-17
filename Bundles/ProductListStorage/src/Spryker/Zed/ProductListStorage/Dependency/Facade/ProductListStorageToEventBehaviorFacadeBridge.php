@@ -23,9 +23,9 @@ class ProductListStorageToEventBehaviorFacadeBridge implements ProductListStorag
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getEventTransferIds(array $eventTransfers): array
     {
@@ -33,10 +33,10 @@ class ProductListStorageToEventBehaviorFacadeBridge implements ProductListStorag
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $foreignKeyColumnName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName): array
     {

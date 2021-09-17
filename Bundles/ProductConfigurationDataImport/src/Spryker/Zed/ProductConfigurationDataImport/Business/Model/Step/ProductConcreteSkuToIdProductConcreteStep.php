@@ -18,7 +18,7 @@ use Spryker\Zed\ProductConfigurationDataImport\Business\Model\DataSet\ProductCon
 class ProductConcreteSkuToIdProductConcreteStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $productConcreteIdsCache = [];
 

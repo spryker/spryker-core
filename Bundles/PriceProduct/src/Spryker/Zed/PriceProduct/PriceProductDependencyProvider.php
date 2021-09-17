@@ -316,7 +316,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins in this stack will provide additional criteria to main price product query.
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface>
      */
     protected function getPriceDimensionQueryCriteriaPlugins(): array
     {
@@ -328,7 +328,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins are executed when saving abstract product price
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface>
      */
     protected function getPriceDimensionAbstractSaverPlugins(): array
     {
@@ -338,7 +338,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins are executed before deleting price product store entity
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface>
      */
     protected function getPriceProductStorePreDeletePlugins(): array
     {
@@ -348,7 +348,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * The plugins are executed when saving concrete product price
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface>
      */
     protected function getPriceDimensionConcreteSaverPlugins(): array
     {
@@ -356,7 +356,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[]
+     * @return array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface>
      */
     protected function getPriceProductDimensionExpanderStrategyPlugins(): array
     {
@@ -364,7 +364,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface>
      */
     protected function getPriceProductPricesExtractorPlugins(): array
     {
@@ -374,7 +374,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductExternalProviderPluginInterface>
      */
     protected function getPriceProductExternalProviderPlugins(): array
     {
@@ -424,7 +424,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface>
      */
     protected function getPriceProductValidatorPlugins(): array
     {

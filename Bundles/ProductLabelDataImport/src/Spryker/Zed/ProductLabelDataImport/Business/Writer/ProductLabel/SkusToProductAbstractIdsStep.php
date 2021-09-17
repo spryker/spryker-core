@@ -22,7 +22,7 @@ class SkusToProductAbstractIdsStep implements DataImportStepInterface
     protected const BULK_SIZE = 100;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected static $idProductAbstractCache = [];
 
@@ -60,9 +60,9 @@ class SkusToProductAbstractIdsStep implements DataImportStepInterface
     }
 
     /**
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getNotCachedProductAbstractSkus(array $productAbstractSkus): array
     {
@@ -77,7 +77,7 @@ class SkusToProductAbstractIdsStep implements DataImportStepInterface
     }
 
     /**
-     * @param string[] $productAbstractSkus
+     * @param array<string> $productAbstractSkus
      *
      * @return void
      */

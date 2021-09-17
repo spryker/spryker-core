@@ -51,9 +51,9 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\RestNavigationNodeTransfer> $restNavigationNodeTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\RestNavigationNodeTransfer>
      */
     protected function expandNavigationNodeTransfers(ArrayObject $restNavigationNodeTransfers): ArrayObject
     {
@@ -68,8 +68,8 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodeTransfers
-     * @param string[] $urlCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\RestNavigationNodeTransfer> $restNavigationNodeTransfers
+     * @param array<string> $urlCollection
      *
      * @return void
      */
@@ -87,10 +87,10 @@ class NavigationNodeExpander implements NavigationNodeExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlStorageTransfer[] $urlStorageTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[] $restNavigationNodeTransfers
+     * @param array<\Generated\Shared\Transfer\UrlStorageTransfer> $urlStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\RestNavigationNodeTransfer> $restNavigationNodeTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestNavigationNodeTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\RestNavigationNodeTransfer>
      */
     protected function mapUrlStorageTransfersToRestNavigationNodeTransfers(
         array $urlStorageTransfers,

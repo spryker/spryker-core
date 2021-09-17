@@ -116,7 +116,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     /**
      * @param string $productSearchString
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function searchIdProductAbstracts($productSearchString)
     {
@@ -143,7 +143,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
     }
 
     /**
-     * @param int[] $idProductAbstracts
+     * @param array<int> $idProductAbstracts
      *
      * @return array
      */

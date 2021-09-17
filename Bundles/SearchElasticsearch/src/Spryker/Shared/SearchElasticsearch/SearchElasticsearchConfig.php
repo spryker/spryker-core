@@ -70,7 +70,7 @@ class SearchElasticsearchConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSupportedSourceIdentifiers(): array
     {

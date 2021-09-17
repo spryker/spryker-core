@@ -20,7 +20,7 @@ class CmsContentWidgetConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[]
+     * @return array<\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface>
      */
     public function getCmsContentWidgetConfigurationProviders()
     {

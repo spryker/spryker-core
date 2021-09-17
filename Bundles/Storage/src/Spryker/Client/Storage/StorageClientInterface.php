@@ -94,7 +94,7 @@ interface StorageClientInterface
      *
      * @api
      *
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

@@ -21,7 +21,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
     protected const ALL_STORES_IDENTIFIER = '*';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected static $idStoreCache = [];
 
@@ -48,7 +48,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
     /**
      * @param string $storeNames
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getStoreIds(string $storeNames): array
     {
@@ -96,7 +96,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getAllStoreIds(): array
     {

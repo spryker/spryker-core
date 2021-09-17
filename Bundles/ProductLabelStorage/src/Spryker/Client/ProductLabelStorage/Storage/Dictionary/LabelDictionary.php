@@ -74,7 +74,7 @@ class LabelDictionary implements LabelDictionaryInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     public function getDictionary($localeName, string $storeName)
     {
@@ -93,7 +93,7 @@ class LabelDictionary implements LabelDictionaryInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     protected function initializeLabelDictionary($localeName, string $storeName)
     {

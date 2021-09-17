@@ -206,7 +206,7 @@ class SearchElasticsearchFacadeTest extends Unit
     }
 
     /**
-     * @param \Elastica\Index[] $indexes
+     * @param array<\Elastica\Index> $indexes
      * @param string $expectedState
      *
      * @return void
@@ -229,7 +229,7 @@ class SearchElasticsearchFacadeTest extends Unit
     }
 
     /**
-     * @param \Elastica\Index[] $indexes
+     * @param array<\Elastica\Index> $indexes
      *
      * @return void
      */
@@ -438,7 +438,7 @@ class SearchElasticsearchFacadeTest extends Unit
     }
 
     /**
-     * @param \Elastica\Index[] $indexes
+     * @param array<\Elastica\Index> $indexes
      *
      * @return void
      */

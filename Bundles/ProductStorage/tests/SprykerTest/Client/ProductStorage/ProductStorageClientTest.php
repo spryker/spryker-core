@@ -163,8 +163,8 @@ class ProductStorageClientTest extends Unit
      * @dataProvider superAttributesDataProvider
      *
      * @param \Generated\Shared\Transfer\AttributeMapStorageTransfer $attributeMapStorageTransfer
-     * @param string[] $originalSelectedAttributes
-     * @param mixed[] $expectedSelectedAttributes
+     * @param array<string> $originalSelectedAttributes
+     * @param array<mixed> $expectedSelectedAttributes
      *
      * @return void
      */
@@ -358,7 +358,7 @@ class ProductStorageClientTest extends Unit
     }
 
     /**
-     * @param mixed[] $seedData
+     * @param array<mixed> $seedData
      *
      * @return \Generated\Shared\Transfer\AttributeMapStorageTransfer
      */
@@ -368,7 +368,7 @@ class ProductStorageClientTest extends Unit
     }
 
     /**
-     * @param mixed[] $seedData
+     * @param array<mixed> $seedData
      *
      * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer
      */
@@ -378,7 +378,7 @@ class ProductStorageClientTest extends Unit
     }
 
     /**
-     * @return mixed[][]
+     * @return array<mixed[]>
      */
     public function superAttributesDataProvider(): array
     {

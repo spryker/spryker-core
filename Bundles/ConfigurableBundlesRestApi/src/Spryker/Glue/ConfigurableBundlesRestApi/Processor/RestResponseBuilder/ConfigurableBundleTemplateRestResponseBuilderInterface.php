@@ -34,7 +34,7 @@ interface ConfigurableBundleTemplateRestResponseBuilderInterface
     ): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer> $configurableBundleTemplateStorageTransfers
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

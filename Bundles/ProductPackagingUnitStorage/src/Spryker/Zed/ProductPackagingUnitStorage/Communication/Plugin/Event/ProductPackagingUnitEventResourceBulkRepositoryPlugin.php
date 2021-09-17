@@ -43,7 +43,7 @@ class ProductPackagingUnitEventResourceBulkRepositoryPlugin extends AbstractPlug
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

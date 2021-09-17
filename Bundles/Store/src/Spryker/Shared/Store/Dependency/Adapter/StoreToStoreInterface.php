@@ -15,14 +15,14 @@ interface StoreToStoreInterface
     public function getCurrentStoreName();
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAllStoreNames();
 
     /**
      * @deprecated Unused method will be removed in next major
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCurrentStoreAvailableCurrencyIsoCodes();
 
@@ -36,7 +36,7 @@ interface StoreToStoreInterface
     /**
      * @deprecated Unused method will be removed in next major
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCurrentAvailableLocaleIsoCodes();
 
@@ -72,12 +72,12 @@ interface StoreToStoreInterface
     public function getQueuePools();
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getStoresWithSharedPersistence();
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCountries();
 

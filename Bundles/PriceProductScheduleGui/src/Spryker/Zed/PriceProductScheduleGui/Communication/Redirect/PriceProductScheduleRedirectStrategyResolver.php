@@ -30,12 +30,12 @@ class PriceProductScheduleRedirectStrategyResolver implements PriceProductSchedu
     protected const EXCEPTION_MESSAGE = 'Container is not valid';
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface[]
+     * @var array<\Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface>
      */
     protected $priceProductScheduleStrategyContainer;
 
     /**
-     * @param \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface[] $priceProductScheduleStrategyContainer
+     * @param array<\Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface> $priceProductScheduleStrategyContainer
      */
     public function __construct(array $priceProductScheduleStrategyContainer)
     {

@@ -69,7 +69,7 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface[]
+     * @return array<\Spryker\Zed\AuthRestApiExtension\Dependency\Plugin\PostAuthPluginInterface>
      */
     protected function getPostAuthPlugins(): array
     {

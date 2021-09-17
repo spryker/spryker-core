@@ -51,7 +51,7 @@ class ProductImageSetsEventSubscriber implements EventSubscriberInterface
     protected const FIELD_ORIGINAL_INDEX = 'originalIndex';
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public static function getSubscribedEvents(): array
     {

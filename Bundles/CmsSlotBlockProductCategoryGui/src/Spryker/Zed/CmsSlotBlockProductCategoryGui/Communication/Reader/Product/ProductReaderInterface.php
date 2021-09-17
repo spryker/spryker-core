@@ -10,9 +10,9 @@ namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Produc
 interface ProductReaderInterface
 {
     /**
-     * @param int[]|null $productAbstractIds
+     * @param array<int>|null $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstracts(?array $productAbstractIds = []): array;
 

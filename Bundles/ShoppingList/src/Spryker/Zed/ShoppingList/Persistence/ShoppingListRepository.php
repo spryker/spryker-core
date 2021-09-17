@@ -168,7 +168,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
-     * @param int[] $shoppingListIds
+     * @param array<int> $shoppingListIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
@@ -269,7 +269,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]
+     * @return array<\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit>
      */
     public function findCompanyBusinessUnitSharedShoppingListsIds(int $idCompanyBusinessUnit): array
     {
@@ -287,7 +287,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      * @param int $idCompanyBusinessUnit
      * @param string $shoppingListPermissionGroupName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(int $idCompanyBusinessUnit, string $shoppingListPermissionGroupName): array
     {
@@ -305,7 +305,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idCompanyUser
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]
+     * @return array<\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser>
      */
     public function findCompanyUserSharedShoppingListsIds(int $idCompanyUser): array
     {
@@ -323,7 +323,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      * @param int $idCompanyUser
      * @param string $shoppingListPermissionGroupName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCompanyUserSharedShoppingListIdsByPermissionGroupName(int $idCompanyUser, string $shoppingListPermissionGroupName): array
     {
@@ -508,7 +508,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idCompanyUser
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getBlacklistedShoppingListIdsByIdCompanyUser(int $idCompanyUser): array
     {

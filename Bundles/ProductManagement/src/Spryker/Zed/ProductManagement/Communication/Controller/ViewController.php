@@ -38,7 +38,7 @@ class ViewController extends AddController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -123,7 +123,7 @@ class ViewController extends AddController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function variantAction(Request $request)
     {
@@ -228,7 +228,7 @@ class ViewController extends AddController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSetTransferCollection
+     * @param array<\Generated\Shared\Transfer\ProductImageSetTransfer> $imageSetTransferCollection
      *
      * @return array
      */
@@ -325,9 +325,9 @@ class ViewController extends AddController
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $stores
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer> $stores
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNames(ArrayObject $stores)
     {

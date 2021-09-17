@@ -30,7 +30,7 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
     /**
      * Checks if the passed productRelationTransfer is valid.
      *
-     * @param mixed|\Generated\Shared\Transfer\ProductRelationTransfer $value The productRelationTransfer that should be validated
+     * @param \Generated\Shared\Transfer\ProductRelationTransfer|mixed $value The productRelationTransfer that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
@@ -82,7 +82,7 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
     /**
      * @param array $storeData
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function groupStoresById(array $storeData): array
     {
@@ -96,7 +96,7 @@ class UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraintVa
     }
 
     /**
-     * @param string[] $storeData
+     * @param array<string> $storeData
      *
      * @return void
      */

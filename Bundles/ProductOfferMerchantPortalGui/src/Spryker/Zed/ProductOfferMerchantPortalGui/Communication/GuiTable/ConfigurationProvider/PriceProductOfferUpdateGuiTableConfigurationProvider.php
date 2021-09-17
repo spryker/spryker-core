@@ -94,7 +94,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
 
     /**
      * @param int $idProductOffer
-     * @param mixed[] $initialData
+     * @param array<mixed> $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
@@ -168,8 +168,8 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
 
     /**
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
-     * @param mixed[] $initialData
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
+     * @param array<mixed> $initialData
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */

@@ -25,14 +25,14 @@ class ImporterDumper implements ImporterDumperInterface
     protected $dataImporterAccessFactory;
 
     /**
-     * @var \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[]
+     * @var array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface>
      */
     protected $dataImporterPlugins;
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface $dataImporterCollection
      * @param \Spryker\Zed\DataImport\Business\Model\Dump\DataImporterAccessFactoryInterface $dataImporterAccessFactory
-     * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[] $dataImporterPlugins
+     * @param array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface> $dataImporterPlugins
      */
     public function __construct(
         DataImporterCollectionInterface $dataImporterCollection,
@@ -47,7 +47,7 @@ class ImporterDumper implements ImporterDumperInterface
     /**
      * @deprecated Use {@link \Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumper::getImportersDumpByConfiguration()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function dump(): array
     {
@@ -64,7 +64,7 @@ class ImporterDumper implements ImporterDumperInterface
     /**
      * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getImportersDumpByConfiguration(DataImportConfigurationTransfer $dataImportConfigurationTransfer): array
     {
@@ -119,7 +119,7 @@ class ImporterDumper implements ImporterDumperInterface
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface[]
+     * @return array<\Spryker\Zed\DataImport\Business\Model\DataImporterInterface>
      */
     protected function getDataImporterFromCollection(): array
     {

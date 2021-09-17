@@ -12,18 +12,18 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class CompanyUserTableExpanderPluginExecutor implements CompanyUserTableExpanderPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface>
      */
     protected $companyUserTableConfigExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface>
      */
     protected $companyUserTablePrepareDataExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface[] $companyUserTableConfigExpanderPlugins
-     * @param \Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface[] $companyUserTablePrepareDataExpanderPlugins
+     * @param array<\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTableConfigExpanderPluginInterface> $companyUserTableConfigExpanderPlugins
+     * @param array<\Spryker\Zed\CompanyUserGuiExtension\Dependency\Plugin\CompanyUserTablePrepareDataExpanderPluginInterface> $companyUserTablePrepareDataExpanderPlugins
      */
     public function __construct(
         array $companyUserTableConfigExpanderPlugins,

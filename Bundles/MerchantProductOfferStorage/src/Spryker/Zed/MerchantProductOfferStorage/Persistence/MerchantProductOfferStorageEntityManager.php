@@ -59,7 +59,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     }
 
     /**
-     * @param string[] $productSkus
+     * @param array<string> $productSkus
      * @param string|null $storeName
      *
      * @return void
@@ -80,7 +80,7 @@ class MerchantProductOfferStorageEntityManager extends AbstractEntityManager imp
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      * @param string|null $storeName
      *
      * @return void

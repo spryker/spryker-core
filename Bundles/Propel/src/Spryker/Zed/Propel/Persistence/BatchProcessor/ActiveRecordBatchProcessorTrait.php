@@ -32,19 +32,19 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @phpstan-var array<string, array<int, \Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][]
+     * @var array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]>
      */
     protected $entitiesToInsert = [];
 
     /**
      * @phpstan-var array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @var \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][]
+     * @var array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]>
      */
     protected $entitiesToUpdate = [];
 
     /**
-     * @var \Propel\Runtime\Map\TableMap[]
+     * @var array<\Propel\Runtime\Map\TableMap>
      */
     protected $tableMapClasses = [];
 
@@ -109,7 +109,7 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][] $entitiesToInsert
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]> $entitiesToInsert
      *
      * @return void
      */
@@ -132,7 +132,7 @@ trait ActiveRecordBatchProcessorTrait
      *
      * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][] $entitiesToInsert
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]> $entitiesToInsert
      *
      * @return void
      */
@@ -151,7 +151,7 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @phpstan-param array<string, array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>>
      *
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[][] $entitiesToUpdate
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]> $entitiesToUpdate
      *
      * @return void
      */
@@ -170,10 +170,10 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function preSave(array $entities, ConnectionInterface $connection): array
     {
@@ -185,7 +185,7 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
      * @return void
@@ -198,10 +198,10 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function preInsert(array $entities, ConnectionInterface $connection): array
     {
@@ -213,7 +213,7 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
      * @return void
@@ -226,10 +226,10 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function preUpdate(array $entities, ConnectionInterface $connection): array
     {
@@ -241,7 +241,7 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface[] $entities
+     * @param array<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $entities
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
      *
      * @return void
@@ -254,7 +254,7 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @param \Propel\Runtime\Connection\StatementInterface[] $statements
+     * @param array<\Propel\Runtime\Connection\StatementInterface> $statements
      * @param string $entityClassName
      * @param string $type
      *
@@ -304,7 +304,7 @@ trait ActiveRecordBatchProcessorTrait
      * @param string $entityClassName
      * @param array $entities
      *
-     * @return \Propel\Runtime\Connection\StatementInterface[]
+     * @return array<\Propel\Runtime\Connection\StatementInterface>
      */
     protected function buildInsertStatements(string $entityClassName, array $entities): array
     {
@@ -455,7 +455,7 @@ trait ActiveRecordBatchProcessorTrait
     }
 
     /**
-     * @param \Propel\Runtime\Map\ColumnMap[] $columnMapCollection
+     * @param array<\Propel\Runtime\Map\ColumnMap> $columnMapCollection
      * @param \Propel\Runtime\Map\TableMap $tableMapClass
      * @param string $tableMapClassName
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
@@ -577,7 +577,7 @@ trait ActiveRecordBatchProcessorTrait
      * @param string $entityClassName
      * @param array $entities
      *
-     * @return \Propel\Runtime\Connection\StatementInterface[]
+     * @return array<\Propel\Runtime\Connection\StatementInterface>
      */
     protected function buildUpdateStatements(string $entityClassName, array $entities): array
     {
@@ -754,11 +754,11 @@ trait ActiveRecordBatchProcessorTrait
     /**
      * @param \Propel\Runtime\Map\ColumnMap $columnMap
      * @param \Propel\Runtime\Map\TableMap $tableMap
-     * @param string|int|float|bool|array $value
+     * @param array|string|float|int|bool $value
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return string|int|float|bool
+     * @return string|float|int|bool
      */
     protected function getValue(ColumnMap $columnMap, TableMap $tableMap, $value)
     {

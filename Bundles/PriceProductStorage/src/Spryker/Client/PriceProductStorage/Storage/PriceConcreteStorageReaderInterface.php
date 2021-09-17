@@ -12,7 +12,7 @@ interface PriceConcreteStorageReaderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findPriceProductConcreteTransfers($idProductConcrete): array;
 }

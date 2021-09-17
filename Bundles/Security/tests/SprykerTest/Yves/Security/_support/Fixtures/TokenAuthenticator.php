@@ -24,7 +24,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return string[]|bool
+     * @return array<string>|bool
      */
     public function getCredentials(Request $request)
     {

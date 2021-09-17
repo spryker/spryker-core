@@ -12,7 +12,7 @@ interface ShoppingListToProductClientInterface
     /**
      * @param array $idProductConcreteCollection
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductTransfer>
      */
     public function getProductConcreteCollection(array $idProductConcreteCollection): array;
 }

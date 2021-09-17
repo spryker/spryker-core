@@ -107,7 +107,7 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractMerchantProductConcreteSkus(CartChangeTransfer $cartChangeTransfer): array
     {

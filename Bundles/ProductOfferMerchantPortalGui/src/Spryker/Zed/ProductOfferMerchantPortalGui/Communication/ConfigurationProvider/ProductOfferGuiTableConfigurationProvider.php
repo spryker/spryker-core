@@ -210,7 +210,7 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreOptions(): array
     {
@@ -228,7 +228,7 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getApprovalStatusOptions(): array
     {

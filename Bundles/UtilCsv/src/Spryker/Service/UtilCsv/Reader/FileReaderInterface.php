@@ -14,7 +14,7 @@ interface FileReaderInterface
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function readFile(UploadedFile $file): array;
 }

@@ -15,12 +15,12 @@ use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPl
 class MethodAvailabilityChecker implements MethodAvailabilityCheckerInterface
 {
     /**
-     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface[]
+     * @var array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface>
      */
     protected $shipmentMethodAvailabilityPlugins;
 
     /**
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface[] $shipmentMethodAvailabilityPlugins
+     * @param array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodAvailabilityPluginInterface> $shipmentMethodAvailabilityPlugins
      */
     public function __construct(array $shipmentMethodAvailabilityPlugins)
     {

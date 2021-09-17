@@ -10,7 +10,7 @@ namespace Spryker\Zed\Search\Business\Definition;
 interface IndexDefinitionFinderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\IndexDefinitionFileTransfer[]
+     * @return array<\Generated\Shared\Transfer\IndexDefinitionFileTransfer>
      */
     public function getSortedIndexDefinitionFileTransfers(): array;
 }

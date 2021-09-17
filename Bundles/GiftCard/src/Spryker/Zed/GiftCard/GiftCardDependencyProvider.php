@@ -153,7 +153,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface[]
+     * @return array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardAttributePluginInterface>
      */
     protected function getAttributeProviderPlugins()
     {
@@ -161,7 +161,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface[]
+     * @return array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardDecisionRulePluginInterface>
      */
     protected function getDecisionRulePlugins()
     {
@@ -172,7 +172,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[]
+     * @return array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface>
      */
     protected function getPaymentSaverPlugins()
     {
@@ -180,7 +180,7 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface[]
+     * @return array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardCodeCandidateValidationPluginInterface>
      */
     protected function getGiftCardCodeValidationPlugins()
     {

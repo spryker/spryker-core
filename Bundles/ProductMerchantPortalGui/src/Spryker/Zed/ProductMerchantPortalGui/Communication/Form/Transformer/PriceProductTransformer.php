@@ -95,7 +95,7 @@ class PriceProductTransformer implements DataTransformerInterface
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $value
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
      *
      * @return mixed
      */
@@ -131,7 +131,7 @@ class PriceProductTransformer implements DataTransformerInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getExistingPriceProducts(): array
     {

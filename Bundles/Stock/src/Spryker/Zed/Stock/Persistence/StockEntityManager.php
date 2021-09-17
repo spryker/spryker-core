@@ -39,7 +39,7 @@ class StockEntityManager extends AbstractEntityManager implements StockEntityMan
 
     /**
      * @param int $idStock
-     * @param int[] $storeIds
+     * @param array<int> $storeIds
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class StockEntityManager extends AbstractEntityManager implements StockEntityMan
 
     /**
      * @param int $idStock
-     * @param int[] $storeIds
+     * @param array<int> $storeIds
      *
      * @return void
      */

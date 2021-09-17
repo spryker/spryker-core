@@ -11,7 +11,7 @@ interface PermissionExecutorInterface
 {
     /**
      * @param string $permissionKey
-     * @param string|int|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */

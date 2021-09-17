@@ -40,7 +40,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface[]
+     * @var array<\Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface>
      */
     protected $urlStorageResourceMapperPlugins;
 
@@ -53,7 +53,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
      * @param \Spryker\Client\UrlStorage\Dependency\Client\UrlStorageToStorageInterface $storageClient
      * @param \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\UrlStorage\Dependency\Service\UrlStorageToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface[] $resourceMapperPlugins
+     * @param array<\Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface> $resourceMapperPlugins
      */
     public function __construct(
         UrlStorageToStorageInterface $storageClient,
@@ -118,9 +118,9 @@ class UrlStorageReader implements UrlStorageReaderInterface
     }
 
     /**
-     * @param string[] $urlCollection
+     * @param array<string> $urlCollection
      *
-     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlStorageTransfer>
      */
     public function getUrlStorageTransferByUrls(array $urlCollection): array
     {
@@ -237,7 +237,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     }
 
     /**
-     * @param string[] $urlCollection
+     * @param array<string> $urlCollection
      *
      * @return array
      */
@@ -270,7 +270,7 @@ class UrlStorageReader implements UrlStorageReaderInterface
     /**
      * @param array $urlStorageData
      *
-     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlStorageTransfer>
      */
     protected function mapUrlStorageDataToUrlStorageTransfers(array $urlStorageData): array
     {

@@ -13,12 +13,12 @@ use Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrateg
 class AuthorizationStrategyCollection implements AuthorizationStrategyCollectionInterface
 {
     /**
-     * @var \Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface[]
+     * @var array<\Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface>
      */
     protected $authorizationStrategies = [];
 
     /**
-     * @param \Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface[] $authorizationStrategyPlugins
+     * @param array<\Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface> $authorizationStrategyPlugins
      */
     public function __construct(array $authorizationStrategyPlugins)
     {

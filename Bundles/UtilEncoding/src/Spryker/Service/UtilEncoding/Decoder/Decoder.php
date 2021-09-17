@@ -12,12 +12,12 @@ use Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException;
 class Decoder implements DecoderInterface
 {
     /**
-     * @var \Spryker\Service\UtilEncoding\FormatDecoder\FormatDecoderInterface[]
+     * @var array<\Spryker\Service\UtilEncoding\FormatDecoder\FormatDecoderInterface>
      */
     protected $formatDecoders;
 
     /**
-     * @param \Spryker\Service\UtilEncoding\FormatDecoder\FormatDecoderInterface[] $formatDecoders
+     * @param array<\Spryker\Service\UtilEncoding\FormatDecoder\FormatDecoderInterface> $formatDecoders
      */
     public function __construct(array $formatDecoders)
     {

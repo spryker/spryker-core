@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 class CheckoutResponseMapper implements CheckoutResponseMapperInterface
 {
     /**
-     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[]
+     * @var array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface>
      */
     protected $checkoutResponseMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface[] $checkoutResponseMapperPlugins
+     * @param array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutResponseMapperPluginInterface> $checkoutResponseMapperPlugins
      */
     public function __construct(array $checkoutResponseMapperPlugins)
     {

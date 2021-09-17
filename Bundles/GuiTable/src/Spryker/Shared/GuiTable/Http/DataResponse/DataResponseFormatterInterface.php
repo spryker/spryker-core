@@ -16,7 +16,7 @@ interface DataResponseFormatterInterface
      * @param \Generated\Shared\Transfer\GuiTableDataResponseTransfer $guiTableDataResponseTransfer
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function formatGuiTableDataResponse(
         GuiTableDataResponseTransfer $guiTableDataResponseTransfer,

@@ -133,7 +133,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreRelationTransfer
      * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $parentCategoryStoreRelationTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getStoreIdsToAdd(
         StoreRelationTransfer $existingStoreRelationTransfer,
@@ -157,7 +157,7 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $newStoreRelationTransfer
      * @param \Generated\Shared\Transfer\StoreRelationTransfer|null $parentCategoryStoreRelationTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getStoreIdsToDelete(
         StoreRelationTransfer $existingStoreRelationTransfer,
@@ -178,10 +178,10 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     }
 
     /**
-     * @param int[] $parentCategoryRelationStoreIds
-     * @param int[] $storeIds
+     * @param array<int> $parentCategoryRelationStoreIds
+     * @param array<int> $storeIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function filterOutStoreIdsMissingInParentCategoryStoreRelation(array $parentCategoryRelationStoreIds, array $storeIds): array
     {
@@ -189,10 +189,10 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     }
 
     /**
-     * @param int[] $parentCategoryRelationStoreIds
-     * @param int[] $categoryRelationStoreIds
+     * @param array<int> $parentCategoryRelationStoreIds
+     * @param array<int> $categoryRelationStoreIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getStoreIdsMissingInParentCategoryStoreRelation(array $parentCategoryRelationStoreIds, array $categoryRelationStoreIds): array
     {
@@ -200,9 +200,9 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
     }
 
     /**
-     * @param int[] $categoryIds
-     * @param int[] $storeIdsToAdd
-     * @param int[] $storeIdsToDelete
+     * @param array<int> $categoryIds
+     * @param array<int> $storeIdsToAdd
+     * @param array<int> $storeIdsToDelete
      *
      * @return void
      */
@@ -248,8 +248,8 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param int[] $storeIdsToAdd
-     * @param int[] $storeIdsToDelete
+     * @param array<int> $storeIdsToAdd
+     * @param array<int> $storeIdsToDelete
      *
      * @return void
      */

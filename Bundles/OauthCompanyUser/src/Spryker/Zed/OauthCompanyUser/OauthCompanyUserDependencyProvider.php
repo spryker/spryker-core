@@ -155,7 +155,7 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\OauthCompanyUserIdentifierExpanderPluginInterface>
      */
     protected function getOauthCompanyUserIdentifierExpanderPlugins(): array
     {
@@ -191,7 +191,7 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerOauthRequestMapperPluginInterface[]
+     * @return array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerOauthRequestMapperPluginInterface>
      */
     protected function getCustomerOauthRequestMapperPlugins(): array
     {
@@ -199,7 +199,7 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\OauthCompanyUserExtension\Dependency\Plugin\CustomerExpanderPluginInterface>
      */
     protected function getCustomerExpanderPlugins(): array
     {

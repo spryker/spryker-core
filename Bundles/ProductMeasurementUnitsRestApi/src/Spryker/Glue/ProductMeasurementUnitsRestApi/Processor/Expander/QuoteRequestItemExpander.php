@@ -16,11 +16,11 @@ use Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer;
 class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer[] $quoteRequestTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestTransfer> $quoteRequestTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     public function expandRestQuoteRequestItemWithSalesUnit(
         array $restQuoteRequestsAttributesTransfers,
@@ -70,9 +70,9 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestItemTransfer[] $restQuoteRequestItemTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestItemTransfer> $restQuoteRequestItemTransfers
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestItemTransfer>
      */
     protected function getRestQuoteRequestItemsIndexedByGroupKey(array $restQuoteRequestItemTransfers): array
     {
@@ -85,9 +85,9 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     protected function getRestQuoteRequestsAttributesTransfersIndexedByQuoteRequestReference(array $restQuoteRequestsAttributesTransfers): array
     {

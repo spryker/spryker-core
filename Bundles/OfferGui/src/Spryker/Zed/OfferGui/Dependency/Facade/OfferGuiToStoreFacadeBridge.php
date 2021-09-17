@@ -33,7 +33,7 @@ class OfferGuiToStoreFacadeBridge implements OfferGuiToStoreFacadeInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCountries()
     {

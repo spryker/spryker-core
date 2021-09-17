@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockProductCategoryGui\Communication\Reader\Catego
 interface CategoryReaderInterface
 {
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getCategories(): array;
 }

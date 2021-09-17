@@ -19,7 +19,7 @@ class SharedCartConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer>
      */
     public function getQuotePermissionGroups(): array
     {

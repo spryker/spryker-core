@@ -27,9 +27,9 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithProductOptions(array $itemTransfers): array
     {
@@ -57,7 +57,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $orderItemWithProductOptions
-     * @param \Generated\Shared\Transfer\ProductOptionValueTransfer[] $productOptionValueTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionValueTransfer> $productOptionValueTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
@@ -86,9 +86,9 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getMappedOrderItemsWithProductOptions(array $salesOrderItemIds): array
     {
@@ -104,9 +104,9 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param string[] $productOptionSkus
+     * @param array<string> $productOptionSkus
      *
-     * @return \Generated\Shared\Transfer\ProductOptionValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionValueTransfer>
      */
     protected function getMappedProductOptionValues(array $productOptionSkus): array
     {
@@ -122,9 +122,9 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIds(array $itemTransfers): array
     {
@@ -138,9 +138,9 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractProductOptionSkus(array $itemTransfers): array
     {

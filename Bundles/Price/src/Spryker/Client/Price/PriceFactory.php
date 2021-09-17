@@ -68,7 +68,7 @@ class PriceFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface[]
+     * @return array<\Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface>
      */
     protected function getPriceModePostUpdatePlugins(): array
     {

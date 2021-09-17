@@ -80,9 +80,9 @@ interface SynchronizationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function processSearchMessages(array $queueMessageTransfers): array;
 
@@ -93,9 +93,9 @@ interface SynchronizationFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function processStorageMessages(array $queueMessageTransfers): array;
 
@@ -107,7 +107,7 @@ interface SynchronizationFacadeInterface
      *
      * @deprecated Use {@link executeResolvedPluginsBySourcesWithIds()} instead.
      *
-     * @param string[] $resources
+     * @param array<string> $resources
      *
      * @return void
      */
@@ -119,8 +119,8 @@ interface SynchronizationFacadeInterface
      *
      * @api
      *
-     * @param string[] $resources
-     * @param int[] $ids
+     * @param array<string> $resources
+     * @param array<int> $ids
      *
      * @return void
      */
@@ -132,7 +132,7 @@ interface SynchronizationFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableResourceNames(): array;
 }

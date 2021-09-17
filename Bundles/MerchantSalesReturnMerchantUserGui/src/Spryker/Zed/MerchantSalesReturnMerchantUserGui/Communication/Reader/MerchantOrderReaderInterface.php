@@ -14,7 +14,7 @@ interface MerchantOrderReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     public function getMerchantOrderItems(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array;
 }

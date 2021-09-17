@@ -101,7 +101,7 @@ class TouchWriter implements TouchWriterInterface
     /**
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $touchQuery
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getTouchEntityIdsForDeletedItemEvent(SpyTouchQuery $touchQuery): array
     {
@@ -132,7 +132,7 @@ class TouchWriter implements TouchWriterInterface
     }
 
     /**
-     * @param int[] $touchIds
+     * @param array<int> $touchIds
      *
      * @return void
      */

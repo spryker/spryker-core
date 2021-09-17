@@ -29,7 +29,7 @@ class ProductAbstractRelationCollector extends AbstractStoragePropelCollector
     /**
      * @param array $collectItemData
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductLabelIds(array $collectItemData)
     {

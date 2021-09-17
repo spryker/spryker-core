@@ -281,9 +281,9 @@ class MerchantOmsFacadeTest extends Unit
     }
 
     /**
-     * @param string[] $stateNames
+     * @param array<string> $stateNames
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer|null $stateMachineProcessTransfer
-     * @param string[] $manualEvents
+     * @param array<string> $manualEvents
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface
      */

@@ -36,7 +36,7 @@ class ProductConcreteOffersStorageDeleter implements ProductConcreteOffersStorag
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class ProductConcreteOffersStorageDeleter implements ProductConcreteOffersStorag
     }
 
     /**
-     * @param string[] $productSkus
+     * @param array<string> $productSkus
      * @param string|null $storeName
      *
      * @return void

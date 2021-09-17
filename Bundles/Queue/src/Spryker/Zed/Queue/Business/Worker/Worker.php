@@ -141,7 +141,7 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param \Symfony\Component\Process\Process[] $processes
+     * @param array<\Symfony\Component\Process\Process> $processes
      * @param string $command
      * @param int $round
      * @param int $delayIntervalSeconds
@@ -172,9 +172,9 @@ class Worker implements WorkerInterface
     }
 
     /**
-     * @param \Symfony\Component\Process\Process[] $processes
+     * @param array<\Symfony\Component\Process\Process> $processes
      *
-     * @return \Symfony\Component\Process\Process[]
+     * @return array<\Symfony\Component\Process\Process>
      */
     protected function getPendingProcesses(array $processes): array
     {
@@ -191,7 +191,7 @@ class Worker implements WorkerInterface
     /**
      * @param string $command
      *
-     * @return \Symfony\Component\Process\Process[]
+     * @return array<\Symfony\Component\Process\Process>
      */
     protected function executeOperation(string $command): array
     {

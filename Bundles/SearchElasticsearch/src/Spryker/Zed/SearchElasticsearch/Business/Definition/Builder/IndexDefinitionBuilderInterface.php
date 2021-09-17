@@ -10,7 +10,7 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Definition\Builder;
 interface IndexDefinitionBuilderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\IndexDefinitionTransfer[]
+     * @return array<\Generated\Shared\Transfer\IndexDefinitionTransfer>
      */
     public function build(): array;
 }

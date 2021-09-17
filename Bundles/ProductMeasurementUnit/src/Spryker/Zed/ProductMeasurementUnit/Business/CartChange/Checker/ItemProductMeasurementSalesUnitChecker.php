@@ -96,7 +96,7 @@ class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSa
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
-     * @param int[] $productMeasurementSalesUnitIds
+     * @param array<int> $productMeasurementSalesUnitIds
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
@@ -129,7 +129,7 @@ class ItemProductMeasurementSalesUnitChecker implements ItemProductMeasurementSa
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(CartChangeTransfer $cartChangeTransfer): array
     {

@@ -173,7 +173,7 @@ class CodeArchitectureSnifferConsole extends Console
     /**
      * @param string $moduleArgument
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleTransfer>
      */
     protected function getModulesToExecute(string $moduleArgument): array
     {

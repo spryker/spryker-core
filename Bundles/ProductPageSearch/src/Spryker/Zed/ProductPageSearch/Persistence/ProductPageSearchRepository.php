@@ -30,9 +30,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
     public function getProductConcretePageSearchTransfers(array $productIds): array
     {
@@ -47,9 +47,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus): array
     {
@@ -69,7 +69,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array
     {
@@ -81,9 +81,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getEligibleForAddToCartProductAbstractsIds(array $productAbstractIds): array
     {
@@ -103,9 +103,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductConcreteSkusByProductAbstractIds(array $productAbstractIds): array
     {
@@ -127,9 +127,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getConcreteProductsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -153,9 +153,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
-     * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[]|\Propel\Runtime\Collection\ObjectCollection $productConcretePageSearchEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch> $productConcretePageSearchEntities
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
     protected function mapProductConcretePageSearchEntities($productConcretePageSearchEntities): array
     {
@@ -176,7 +176,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
-     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch>
      */
     protected function getProductConcretePageSearchEntitiesByAbstractProductsAndStores(array $productAbstractStoreMap)
     {
@@ -250,9 +250,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @deprecated Will be removed without replacement.
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductEntityTransfer>
      */
     public function getProductEntityTransfers(array $productIds): array
     {
@@ -268,9 +268,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @module PriceProduct
      *
-     * @param int[] $priceProductStoreIds
+     * @param array<int> $priceProductStoreIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByPriceProductStoreIds(array $priceProductStoreIds): array
     {
@@ -290,9 +290,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds = []): array
     {

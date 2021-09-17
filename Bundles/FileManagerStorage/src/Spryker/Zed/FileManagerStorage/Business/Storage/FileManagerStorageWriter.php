@@ -58,7 +58,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      *
      * @return bool
      */
@@ -73,7 +73,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      *
      * @return bool
      */
@@ -87,8 +87,8 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileTransfer[] $fileTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[] $fileStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer> $fileTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileStorageTransfer> $fileStorageTransfers
      *
      * @return bool
      */
@@ -104,7 +104,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[] $fileStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileStorageTransfer> $fileStorageTransfers
      *
      * @throws \Spryker\Zed\FileManager\Exception\FileStorageNotFoundException
      *
@@ -122,8 +122,8 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileTransfer[] $fileTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileStorageTransfer[] $fileStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileTransfer> $fileTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileStorageTransfer> $fileStorageTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -212,7 +212,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileLocalizedAttributesTransfer> $localizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -232,7 +232,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\FileInfoTransfer[] $fileInfoTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FileInfoTransfer> $fileInfoTransfers
      *
      * @return \Generated\Shared\Transfer\FileInfoTransfer|null
      */

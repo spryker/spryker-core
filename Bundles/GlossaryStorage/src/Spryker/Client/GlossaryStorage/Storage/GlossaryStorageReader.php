@@ -50,7 +50,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     protected $utilEncodingService;
 
     /**
-     * @var string[][]
+     * @var array<string[]>
      */
     protected static $translationsCache = [];
 
@@ -77,7 +77,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     /**
      * @param string $keyName
      * @param string $localeName
-     * @param string[] $parameters
+     * @param array<string> $parameters
      *
      * @return string
      */
@@ -103,11 +103,11 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     }
 
     /**
-     * @param string[] $keyNames
+     * @param array<string> $keyNames
      * @param string $localeName
-     * @param string[][] $parameters
+     * @param array<string[]> $parameters
      *
-     * @return string[]
+     * @return array<string>
      */
     public function translateBulk(array $keyNames, string $localeName, array $parameters = []): array
     {
@@ -151,10 +151,10 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     }
 
     /**
-     * @param string[] $keyNames
+     * @param array<string> $keyNames
      * @param string $localeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateStorageKeys(array $keyNames, string $localeName): array
     {
@@ -190,10 +190,10 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     }
 
     /**
-     * @param string[] $keyNames
+     * @param array<string> $keyNames
      * @param string $localeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getTranslations(array $keyNames, string $localeName): array
     {
@@ -210,10 +210,10 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     }
 
     /**
-     * @param string[] $keyNames
+     * @param array<string> $keyNames
      * @param string $localeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getTranslationsFromStorage(array $keyNames, string $localeName): array
     {
@@ -231,7 +231,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
         }
 
         /**
-         * @var string[]
+         * @var array<string>
          */
         $notFoundTranslations = array_combine($keyNames, $keyNames);
 
@@ -250,10 +250,10 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     }
 
     /**
-     * @param string[] $keyNames
+     * @param array<string> $keyNames
      * @param string $localeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCachedTranslations(array $keyNames, string $localeName): array
     {
@@ -276,7 +276,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
     }
 
     /**
-     * @param string[] $translations
+     * @param array<string> $translations
      * @param string $localeName
      *
      * @return void

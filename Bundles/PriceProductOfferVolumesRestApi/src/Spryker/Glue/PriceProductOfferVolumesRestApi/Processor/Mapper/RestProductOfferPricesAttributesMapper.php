@@ -83,12 +83,10 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer>
-     *
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param string $priceTypeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer>
      */
     protected function getRestProductPriceVolumesAttributesTransfers(
         CurrentProductPriceTransfer $currentProductPriceTransfer,
@@ -132,15 +130,10 @@ class RestProductOfferPricesAttributesMapper implements RestProductOfferPricesAt
     }
 
     /**
-     * @phpstan-param array<int, array> $volumePricesData
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer> $restProductPriceVolumesAttributesTransfers
+     * @param array<int, array> $volumePricesData
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer> $restProductPriceVolumesAttributesTransfers
      *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer>
-     *
-     * @param array $volumePricesData
-     * @param \ArrayObject|\Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer[] $restProductPriceVolumesAttributesTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\RestProductPriceVolumesAttributesTransfer>
      */
     protected function mapVolumePricesDataToRestProductPriceVolumesAttributesTransfers(
         array $volumePricesData,

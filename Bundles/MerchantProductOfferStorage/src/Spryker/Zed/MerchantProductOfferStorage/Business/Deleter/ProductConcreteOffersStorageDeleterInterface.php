@@ -10,14 +10,14 @@ namespace Spryker\Zed\MerchantProductOfferStorage\Business\Deleter;
 interface ProductConcreteOffersStorageDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
     public function deleteCollectionByProductSkuEvents(array $eventTransfers): void;
 
     /**
-     * @param string[] $productSkus
+     * @param array<string> $productSkus
      * @param string|null $storeName
      *
      * @return void

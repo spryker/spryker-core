@@ -147,7 +147,7 @@ class BlacklistExpandProductBundleTest extends Unit
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */

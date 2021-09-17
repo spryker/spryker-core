@@ -13,12 +13,12 @@ use Symfony\Component\Validator\Constraints\All as AllConstraint;
 class PriceProductOfferConstraintProvider implements PriceProductOfferConstraintProviderInterface
 {
     /**
-     * @var \Symfony\Component\Validator\Constraint[]
+     * @var array<\Symfony\Component\Validator\Constraint>
      */
     protected $priceProductTransferConstraints;
 
     /**
-     * @param \Symfony\Component\Validator\Constraint[] $priceProductTransferConstraints
+     * @param array<\Symfony\Component\Validator\Constraint> $priceProductTransferConstraints
      */
     public function __construct(array $priceProductTransferConstraints)
     {
@@ -26,7 +26,7 @@ class PriceProductOfferConstraintProvider implements PriceProductOfferConstraint
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function getConstraints(): array
     {

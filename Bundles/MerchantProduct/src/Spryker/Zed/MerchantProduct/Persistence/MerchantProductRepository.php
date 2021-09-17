@@ -81,7 +81,7 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
     /**
      * @phpstan-return array<string, string>
      *
-     * @param string[] $concreteSku
+     * @param array<string> $concreteSku
      *
      * @return array
      */

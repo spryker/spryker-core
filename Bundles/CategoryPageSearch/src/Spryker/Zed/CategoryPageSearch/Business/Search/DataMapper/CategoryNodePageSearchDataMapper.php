@@ -140,7 +140,7 @@ class CategoryNodePageSearchDataMapper implements CategoryNodePageSearchDataMapp
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer[]|\ArrayObject $categoryLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null

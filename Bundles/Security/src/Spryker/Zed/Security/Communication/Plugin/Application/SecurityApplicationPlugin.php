@@ -259,7 +259,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous', 'user_session_handler'];
 
     /**
-     * @var string[][]
+     * @var array<string[]>
      */
     protected $securityRoutes = [];
 
@@ -644,7 +644,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      * @param array $listeners
      * @param string $firewallName
      *
-     * @return callable[]
+     * @return array<callable>
      */
     protected function mapListeners(ContainerInterface $container, array $listeners, string $firewallName): array
     {

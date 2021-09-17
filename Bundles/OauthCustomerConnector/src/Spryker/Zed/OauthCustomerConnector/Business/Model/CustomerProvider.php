@@ -27,14 +27,14 @@ class CustomerProvider implements CustomerProviderInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface>
      */
     protected $oauthCustomerIdentifierExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\OauthCustomerConnector\Dependency\Facade\OauthCustomerConnectorToCustomerFacadeInterface $customerFacade
      * @param \Spryker\Zed\OauthCustomerConnector\Dependency\Service\OauthCustomerConnectorToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface[] $oauthCustomerIdentifierExpanderPlugins
+     * @param array<\Spryker\Zed\OauthCustomerConnectorExtension\Dependency\Plugin\OauthCustomerIdentifierExpanderPluginInterface> $oauthCustomerIdentifierExpanderPlugins
      */
     public function __construct(
         OauthCustomerConnectorToCustomerFacadeInterface $customerFacade,

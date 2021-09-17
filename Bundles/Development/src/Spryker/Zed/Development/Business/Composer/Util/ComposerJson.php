@@ -12,7 +12,7 @@ use RuntimeException;
 class ComposerJson
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected static $objectKeys = [
         'autoload',

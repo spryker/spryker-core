@@ -10,7 +10,7 @@ namespace Spryker\Zed\CompanySalesConnector\Business\Checker;
 interface FilterFieldCheckerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param string $type
      *
      * @return bool

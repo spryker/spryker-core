@@ -81,7 +81,7 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
     /**
      * @param \Propel\Runtime\Collection\Collection $cmsBlockEntities
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function mapCmsBlockEntitiesToTransfers(Collection $cmsBlockEntities): array
     {

@@ -14,12 +14,12 @@ use Symfony\Component\HttpFoundation\Request;
 class FormattedControllerBeforeAction implements FormattedControllerBeforeActionInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionPluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionPluginInterface>
      */
     protected $formattedControllerBeforeActionPlugins;
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionPluginInterface[] $formattedControllerBeforeActionPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormattedControllerBeforeActionPluginInterface> $formattedControllerBeforeActionPlugins
      */
     public function __construct(array $formattedControllerBeforeActionPlugins)
     {

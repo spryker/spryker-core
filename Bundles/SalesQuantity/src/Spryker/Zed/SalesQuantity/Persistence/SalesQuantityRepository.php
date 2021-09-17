@@ -30,9 +30,9 @@ class SalesQuantityRepository extends AbstractRepository implements SalesQuantit
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return bool[]
+     * @return array<bool>
      */
     public function getIsProductQuantitySplittableByProductConcreteSkus(array $productConcreteSkus): array
     {
@@ -49,7 +49,7 @@ class SalesQuantityRepository extends AbstractRepository implements SalesQuantit
     /**
      * @param array $data
      *
-     * @return bool[]
+     * @return array<bool>
      */
     protected function indexIsProductQuantitySplittableByProductConcreteSkus(array $data): array
     {

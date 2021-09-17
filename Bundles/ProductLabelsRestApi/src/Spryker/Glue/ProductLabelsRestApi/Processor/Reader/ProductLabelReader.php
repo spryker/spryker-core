@@ -118,7 +118,7 @@ class ProductLabelReader implements ProductLabelReaderInterface
      * @param string $sku
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductLabelsByAbstractSku(string $sku, string $localeName): array
     {
@@ -141,10 +141,10 @@ class ProductLabelReader implements ProductLabelReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductLabelsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {
@@ -168,10 +168,10 @@ class ProductLabelReader implements ProductLabelReaderInterface
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus, string $localeName): array
     {
@@ -191,9 +191,9 @@ class ProductLabelReader implements ProductLabelReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabels
+     * @param array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer> $productLabels
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     protected function prepareRestResourceCollection(array $productLabels): array
     {

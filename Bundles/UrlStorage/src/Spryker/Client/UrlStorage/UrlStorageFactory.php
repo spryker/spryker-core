@@ -87,7 +87,7 @@ class UrlStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface[]
+     * @return array<\Spryker\Client\UrlStorage\Dependency\Plugin\UrlStorageResourceMapperPluginInterface>
      */
     public function getUrlStorageResourceMapperPlugins()
     {

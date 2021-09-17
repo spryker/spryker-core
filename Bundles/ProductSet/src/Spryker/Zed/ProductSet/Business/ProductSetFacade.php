@@ -116,7 +116,7 @@ class ProductSetFacade extends AbstractFacade implements ProductSetFacadeInterfa
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductSetTransfer> $productSetTransfers
      *
      * @return void
      */
@@ -135,7 +135,7 @@ class ProductSetFacade extends AbstractFacade implements ProductSetFacadeInterfa
      * @param int $idProductSet
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getCombinedProductSetImageSets($idProductSet, $idLocale)
     {

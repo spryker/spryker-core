@@ -54,8 +54,8 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][] $categoryNodeStorageTransferTreesIndexedByLocaleAndStore
-     * @param int[] $categoryNodeIds
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer[][]> $categoryNodeStorageTransferTreesIndexedByLocaleAndStore
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -81,7 +81,7 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
@@ -91,8 +91,8 @@ class CategoryNodeStorageDeleter implements CategoryNodeStorageDeleterInterface
     }
 
     /**
-     * @param int[] $categoryNodeIds
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
+     * @param array<int> $categoryNodeIds
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryNodeStorageTransfers
      * @param string $localeName
      * @param string $storeName
      *

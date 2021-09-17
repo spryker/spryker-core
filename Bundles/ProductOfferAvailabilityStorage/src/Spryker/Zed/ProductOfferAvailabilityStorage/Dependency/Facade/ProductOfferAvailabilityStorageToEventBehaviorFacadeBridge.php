@@ -23,7 +23,7 @@ class ProductOfferAvailabilityStorageToEventBehaviorFacadeBridge implements Prod
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return array
      */
@@ -33,7 +33,7 @@ class ProductOfferAvailabilityStorageToEventBehaviorFacadeBridge implements Prod
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $columnName
      *
      * @return array

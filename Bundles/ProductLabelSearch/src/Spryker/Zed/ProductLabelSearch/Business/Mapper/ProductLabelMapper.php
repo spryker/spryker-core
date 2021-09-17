@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 class ProductLabelMapper implements ProductLabelMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransfers
+     * @param array<\Generated\Shared\Transfer\ProductLabelTransfer> $productLabelTransfers
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     public function getProductLabelIdsMappedByIdProductAbstractAndStoreName(array $productLabelTransfers): array
     {
@@ -32,9 +32,9 @@ class ProductLabelMapper implements ProductLabelMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     * @param int[][] $productLabelIdsMap
+     * @param array<int[]> $productLabelIdsMap
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function mapProductLabelTransferToProductLabelIdsByIdProductAbstractAndStoreName(
         ProductLabelTransfer $productLabelTransfer,

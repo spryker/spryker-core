@@ -17,12 +17,12 @@ use Spryker\Zed\Discount\DiscountDependencyProvider;
 class DecisionRuleProvider implements SpecificationProviderInterface
 {
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface>
      */
     protected $decisionRulePlugins = [];
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[] $decisionRulePlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface> $decisionRulePlugins
      */
     public function __construct(array $decisionRulePlugins)
     {

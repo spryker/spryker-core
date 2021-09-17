@@ -13,7 +13,7 @@ use Symfony\Component\Routing\RouteCollection as SymfonyRouteCollection;
 class RouteCollection extends SymfonyRouteCollection
 {
     /**
-     * @var \Spryker\Yves\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface[]
+     * @var array<\Spryker\Yves\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface>
      */
     protected $routeManipulator;
 

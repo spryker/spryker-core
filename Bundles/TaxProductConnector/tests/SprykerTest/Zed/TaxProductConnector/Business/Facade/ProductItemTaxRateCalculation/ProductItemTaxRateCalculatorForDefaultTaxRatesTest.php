@@ -40,7 +40,7 @@ class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
     protected $tester;
 
     /**
-     * @var \Generated\Shared\Transfer\TaxSetTransfer[]
+     * @var array<\Generated\Shared\Transfer\TaxSetTransfer>
      */
     protected $taxSetTransferList;
 

@@ -41,7 +41,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer>
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array
     {
@@ -85,9 +85,9 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int[] $merchantRelationshipIds
+     * @param array<int> $merchantRelationshipIds
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer>
      */
     public function getMerchantRelationshipSalesOrderThresholds(
         StoreTransfer $storeTransfer,
@@ -111,7 +111,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
      */
     protected function getCustomerMerchantRelationships(QuoteTransfer $quoteTransfer): array
     {
@@ -138,7 +138,7 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getItemsMerchantRelationshipSubTotals(QuoteTransfer $quoteTransfer): array
     {
@@ -170,10 +170,10 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer[] $customerMerchantRelationships
-     * @param int[] $itemMerchantRelationshipSubTotals
+     * @param array<\Generated\Shared\Transfer\MerchantRelationshipTransfer> $customerMerchantRelationships
+     * @param array<int> $itemMerchantRelationshipSubTotals
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCartMerchantRelationshipIds(array $customerMerchantRelationships, array $itemMerchantRelationshipSubTotals): array
     {
@@ -188,10 +188,10 @@ class MerchantRelationshipThresholdReader implements MerchantRelationshipThresho
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer[] $merchantRelationshipSalesOrderThresholdTransfers
-     * @param int[] $itemMerchantRelationshipSubTotals
+     * @param array<\Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer> $merchantRelationshipSalesOrderThresholdTransfers
+     * @param array<int> $itemMerchantRelationshipSubTotals
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer>
      */
     protected function getSalesOrderThresholdTransfers(
         array $merchantRelationshipSalesOrderThresholdTransfers,

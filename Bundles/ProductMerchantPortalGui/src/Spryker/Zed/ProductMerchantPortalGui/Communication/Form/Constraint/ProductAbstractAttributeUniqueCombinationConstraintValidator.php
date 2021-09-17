@@ -49,7 +49,7 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
     }
 
     /**
-     * @param string[][] $attributes
+     * @param array<string[]> $attributes
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAbstractAttributeUniqueCombinationConstraint $constraint
      *
      * @return void
@@ -111,9 +111,9 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getAttributesGroupedByLocaleName(ArrayObject $localizedAttributesTransfers): array
     {
@@ -128,10 +128,10 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
     }
 
     /**
-     * @param string[][] $attributes
-     * @param string[] $defaultAttributes
+     * @param array<string[]> $attributes
+     * @param array<string> $defaultAttributes
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function appendAttributesWithDefaultAttributes(array $attributes, array $defaultAttributes): array
     {

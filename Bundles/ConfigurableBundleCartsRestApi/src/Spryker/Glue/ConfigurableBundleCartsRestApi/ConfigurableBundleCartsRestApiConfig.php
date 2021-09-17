@@ -120,7 +120,7 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return (int|string)[][]
+     * @return array<string, array<int|string>>
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {

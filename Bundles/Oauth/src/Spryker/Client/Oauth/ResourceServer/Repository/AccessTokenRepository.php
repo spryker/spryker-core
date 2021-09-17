@@ -18,7 +18,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      * Create a new access token
      *
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
-     * @param \League\OAuth2\Server\Entities\ScopeEntityInterface[] $scopes
+     * @param array<\League\OAuth2\Server\Entities\ScopeEntityInterface> $scopes
      * @param mixed $userIdentifier
      *
      * @throws \RuntimeException

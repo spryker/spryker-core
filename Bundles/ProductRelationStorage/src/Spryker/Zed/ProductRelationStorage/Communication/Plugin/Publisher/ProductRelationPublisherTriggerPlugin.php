@@ -31,7 +31,7 @@ class ProductRelationPublisherTriggerPlugin extends AbstractPlugin implements Pu
      * @param int $offset
      * @param int $limit
      *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

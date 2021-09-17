@@ -160,7 +160,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[]
+     * @return array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface>
      */
     protected function getProductListPreCreatePlugins(): array
     {
@@ -168,7 +168,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface>
      */
     protected function getProductListPreUpdatePlugins(): array
     {
@@ -176,7 +176,7 @@ class ProductListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface[]
+     * @return array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface>
      */
     protected function getProductListDeletePreCheckPlugins(): array
     {

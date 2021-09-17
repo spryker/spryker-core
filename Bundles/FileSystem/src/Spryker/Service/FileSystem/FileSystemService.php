@@ -397,7 +397,7 @@ class FileSystemService extends AbstractService implements FileSystemServiceInte
      *
      * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
      *
-     * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
+     * @return array<\Generated\Shared\Transfer\FileSystemResourceTransfer>
      */
     public function listContents(FileSystemListTransfer $fileSystemListTransfer)
     {

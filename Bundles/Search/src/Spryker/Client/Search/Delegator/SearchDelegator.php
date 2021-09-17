@@ -19,7 +19,7 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInte
 class SearchDelegator implements SearchDelegatorInterface
 {
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]
+     * @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface>
      */
     protected $searchAdapterPlugins;
 
@@ -29,7 +29,7 @@ class SearchDelegator implements SearchDelegatorInterface
     protected $searchContextExpander;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[] $searchAdapterPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface> $searchAdapterPlugins
      * @param \Spryker\Client\Search\SearchContext\SearchContextExpanderInterface $searchContextExpander
      */
     public function __construct(array $searchAdapterPlugins, SearchContextExpanderInterface $searchContextExpander)
@@ -114,7 +114,7 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -149,7 +149,7 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -171,9 +171,9 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
-     * @return \Generated\Shared\Transfer\SearchDocumentTransfer[][]
+     * @return array<\Generated\Shared\Transfer\SearchDocumentTransfer[]>
      */
     protected function groupSearchDocumentTransfersBySearchAdapterPluginName(array $searchDocumentTransfers): array
     {
@@ -188,9 +188,9 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[] $searchAdapterPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface> $searchAdapterPlugins
      *
-     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]
+     * @return array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface>
      */
     protected function getSearchAdapterPluginsIndexedByName(array $searchAdapterPlugins): array
     {
@@ -225,9 +225,9 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
-     * @return \Generated\Shared\Transfer\SearchDocumentTransfer[]
+     * @return array<\Generated\Shared\Transfer\SearchDocumentTransfer>
      */
     protected function expandSearchContextTransferForSearchDocumentTransfers(array $searchDocumentTransfers): array
     {

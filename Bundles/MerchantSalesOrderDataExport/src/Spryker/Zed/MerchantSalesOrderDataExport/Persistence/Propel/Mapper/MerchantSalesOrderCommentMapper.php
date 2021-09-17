@@ -30,9 +30,9 @@ class MerchantSalesOrderCommentMapper
      * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderComment> $salesOrderCommentEntities
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderCommentEntities
-     * @param \Generated\Shared\Transfer\CommentTransfer[] $commentTransfers
+     * @param array<\Generated\Shared\Transfer\CommentTransfer> $commentTransfers
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function mapMerchantSalesOrderCommentEntitiesToCommentTransfersByIdSalesOrder(
         ObjectCollection $salesOrderCommentEntities,
@@ -49,7 +49,7 @@ class MerchantSalesOrderCommentMapper
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentTransfer[] $merchantSalesOrderCommentTransfers
+     * @param array<\Generated\Shared\Transfer\CommentTransfer> $merchantSalesOrderCommentTransfers
      *
      * @return string|null
      */

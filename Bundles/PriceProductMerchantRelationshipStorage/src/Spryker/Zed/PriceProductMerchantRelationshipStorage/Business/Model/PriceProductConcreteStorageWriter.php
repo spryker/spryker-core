@@ -24,7 +24,7 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
     }
 
     /**
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
      * @return void
      */
@@ -44,7 +44,7 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
     }
 
     /**
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param array<int> $priceProductMerchantRelationshipIds
      *
      * @return void
      */
@@ -68,7 +68,7 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -84,8 +84,8 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[] $priceProductMerchantRelationshipStorageTransfers
-     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[] $existingStorageEntities
+     * @param array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer> $priceProductMerchantRelationshipStorageTransfers
+     * @param array<\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage> $existingStorageEntities
      * @param bool $mergePrices
      *
      * @return void
@@ -133,7 +133,7 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
     }
 
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[] $priceProductMerchantRelationshipStorageEntities
+     * @param array<\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage> $priceProductMerchantRelationshipStorageEntities
      *
      * @return array
      */
@@ -149,7 +149,7 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer
-     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[] $existingStorageEntities
+     * @param array<\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage> $existingStorageEntities
      * @param bool $mergePrices
      *
      * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
@@ -172,7 +172,7 @@ class PriceProductConcreteStorageWriter extends AbstractPriceProductMerchantRela
     }
 
     /**
-     * @param \Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage[] $existingStorageEntities
+     * @param array<\Orm\Zed\PriceProductMerchantRelationshipStorage\Persistence\SpyPriceProductConcreteMerchantRelationshipStorage> $existingStorageEntities
      * @param string $priceKey
      *
      * @return array

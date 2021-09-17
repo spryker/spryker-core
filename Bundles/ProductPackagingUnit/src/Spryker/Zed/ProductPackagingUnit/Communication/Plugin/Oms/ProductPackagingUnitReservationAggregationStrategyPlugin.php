@@ -31,7 +31,7 @@ class ProductPackagingUnitReservationAggregationStrategyPlugin extends AbstractP
      * @param \Generated\Shared\Transfer\OmsStateCollectionTransfer $reservedStates
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function aggregateReservations(string $sku, OmsStateCollectionTransfer $reservedStates, ?StoreTransfer $storeTransfer = null): array
     {

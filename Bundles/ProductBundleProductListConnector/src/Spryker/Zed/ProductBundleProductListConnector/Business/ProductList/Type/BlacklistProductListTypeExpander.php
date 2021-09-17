@@ -159,7 +159,7 @@ class BlacklistProductListTypeExpander implements ProductListTypeExpanderInterfa
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return string
      */

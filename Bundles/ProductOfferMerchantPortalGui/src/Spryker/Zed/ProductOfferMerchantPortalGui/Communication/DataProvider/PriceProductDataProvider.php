@@ -58,14 +58,12 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param int[] $typePriceProductOfferIds
-     * @param mixed[] $requestData
+     * @param array<int> $typePriceProductOfferIds
+     * @param array<mixed> $requestData
      * @param int $volumeQuantity
      * @param int $idProductOffer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getPriceProductOfferPrices(
         array $typePriceProductOfferIds,
@@ -91,13 +89,11 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param int[] $typePriceProductOfferIds
-     * @param mixed[] $requestData
+     * @param array<int> $typePriceProductOfferIds
+     * @param array<mixed> $requestData
      * @param int $idProductOffer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getPriceProductTransfers(array $typePriceProductOfferIds, array $requestData, int $idProductOffer): ArrayObject
     {
@@ -124,7 +120,7 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
     }
 
     /**
-     * @param int[] $typePriceProductOfferIds
+     * @param array<int> $typePriceProductOfferIds
      * @param string $priceTypeName
      * @param int $idProductOffer
      *
@@ -182,11 +178,11 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
     }
 
     /**
-     * @param int[] $typePriceProductOfferIds
+     * @param array<int> $typePriceProductOfferIds
      * @param string $key
      * @param string $priceTypeName
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getPriceProductOfferIds(
         array $typePriceProductOfferIds,

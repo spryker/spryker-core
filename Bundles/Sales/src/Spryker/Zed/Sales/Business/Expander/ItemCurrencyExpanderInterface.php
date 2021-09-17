@@ -10,9 +10,9 @@ namespace Spryker\Zed\Sales\Business\Expander;
 interface ItemCurrencyExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array;
 }

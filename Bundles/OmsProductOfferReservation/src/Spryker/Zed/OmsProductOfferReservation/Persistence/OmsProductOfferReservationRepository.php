@@ -89,7 +89,7 @@ class OmsProductOfferReservationRepository extends AbstractRepository implements
      *
      * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function getAggregatedReservations($reservationRequestTransfer): array
     {

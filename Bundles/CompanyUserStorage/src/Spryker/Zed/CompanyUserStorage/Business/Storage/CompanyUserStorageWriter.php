@@ -32,7 +32,7 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     protected $companyUserStorageEntityManager;
 
     /**
-     * @var \Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface>
      */
     protected $companyUserStorageExpanderPlugins;
 
@@ -40,7 +40,7 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
      * @param \Spryker\Zed\CompanyUserStorage\Dependency\Facade\CompanyUserStorageToCompanyUserFacadeInterface $companyUserFacade
      * @param \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface $companyUserStorageRepository
      * @param \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageEntityManagerInterface $companyUserStorageEntityManager
-     * @param \Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface[] $companyUserStorageExpanderPlugins
+     * @param array<\Spryker\Zed\CompanyUserStorageExtension\Dependency\Plugin\CompanyUserStorageExpanderPluginInterface> $companyUserStorageExpanderPlugins
      */
     public function __construct(
         CompanyUserStorageToCompanyUserFacadeInterface $companyUserFacade,
@@ -93,8 +93,8 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer[] $activeCompanyUserTransfers
-     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $indexedCompanyUserStorageEntities
+     * @param array<\Generated\Shared\Transfer\CompanyUserTransfer> $activeCompanyUserTransfers
+     * @param array<\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage> $indexedCompanyUserStorageEntities
      *
      * @return void
      */
@@ -109,7 +109,7 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $companyUserStorageEntities
+     * @param array<\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage> $companyUserStorageEntities
      *
      * @return void
      */
@@ -170,7 +170,7 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
 
     /**
      * @param int $idCompanyUser
-     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $indexedCompanyUserStorageEntities
+     * @param array<\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage> $indexedCompanyUserStorageEntities
      *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage
      */
@@ -180,8 +180,8 @@ class CompanyUserStorageWriter implements CompanyUserStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer[] $activeCompanyUserTransfers
-     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $indexedCompanyUserStorageEntities
+     * @param array<\Generated\Shared\Transfer\CompanyUserTransfer> $activeCompanyUserTransfers
+     * @param array<\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage> $indexedCompanyUserStorageEntities
      *
      * @return void
      */

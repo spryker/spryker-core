@@ -17,36 +17,36 @@ interface CategoryImageStorageRepositoryInterface
     /**
      * @param array $categoryImageSetIds
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getCategoryIdsByCategoryImageSetIds(array $categoryImageSetIds);
 
     /**
      * @param array $categoryIds
      *
-     * @return \Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyCategoryImageSetEntityTransfer>
      */
     public function getCategoryImageSetsByFkCategoryIn(array $categoryIds): array;
 
     /**
      * @param array $categoryIds
      *
-     * @return \Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyCategoryImageStorageEntityTransfer>
      */
     public function getCategoryImageStorageByFkCategoryIn(array $categoryIds): array;
 
     /**
      * @param array $categoryImageIds
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getCategoryIdsByCategoryImageIds(array $categoryImageIds);
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByFilterAndCategoryIds(FilterTransfer $filterTransfer, array $categoryIds = []): array;
 }

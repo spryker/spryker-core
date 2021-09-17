@@ -15,9 +15,9 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 class ProductReplacementForStorageMapper implements ProductReplacementForStorageMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[] $productReplacementForStorageEntities
+     * @param array<\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage> $productReplacementForStorageEntities
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function mapProductReplacementForStorageEntitiesToSynchronizationDataTransfers(array $productReplacementForStorageEntities): array
     {

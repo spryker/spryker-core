@@ -41,7 +41,7 @@ class ContentFileGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      * @param string|null $identifierSuffix
      *
      * @return \Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListSelectedTable

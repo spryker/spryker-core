@@ -10,7 +10,7 @@ namespace Spryker\Zed\Shipment\Business\Model;
 interface ShipmentCarrierReaderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getCarriers();
 }

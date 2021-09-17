@@ -135,9 +135,9 @@ interface CompanyBusinessUnitFacadeInterface
      *
      * @api
      *
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array;
 

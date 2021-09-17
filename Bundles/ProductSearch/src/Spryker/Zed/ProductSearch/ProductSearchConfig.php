@@ -17,7 +17,7 @@ class ProductSearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     public function getAvailableProductSearchFilterConfigs()
     {

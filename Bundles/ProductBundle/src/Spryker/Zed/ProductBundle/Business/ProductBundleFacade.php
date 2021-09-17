@@ -313,7 +313,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @param int $idProductConcrete
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductForBundleTransfer>
      */
     public function findBundledProductsByIdProductConcrete($idProductConcrete)
     {
@@ -462,7 +462,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function findBundleItemsInQuote(QuoteTransfer $quoteTransfer, $sku, $groupKey): array
     {
@@ -506,10 +506,10 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandUniqueOrderItemsWithProductBundles(array $itemTransfers, OrderTransfer $orderTransfer): array
     {
@@ -523,9 +523,9 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandItemsWithProductBundles(array $itemTransfers): array
     {
@@ -539,9 +539,9 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array
     {

@@ -36,7 +36,7 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
     /**
      * The method check for `method_exists` is for BC for supporting old majors of `ProductStorage` module.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      *
      * @return array
@@ -55,7 +55,7 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
      *
      * @see \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientAdapter::getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore()
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      *
      * @return array
@@ -71,7 +71,7 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *

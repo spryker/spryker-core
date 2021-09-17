@@ -24,7 +24,7 @@ class ProductOfferPricesRestApiToProductStorageClientBridge implements ProductOf
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array

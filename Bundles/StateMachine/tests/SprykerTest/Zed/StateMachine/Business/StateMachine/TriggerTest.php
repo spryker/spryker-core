@@ -225,7 +225,7 @@ class TriggerTest extends StateMachineMocks
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\Process[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\Process>
      */
     protected function createProcesses(): array
     {
@@ -258,7 +258,7 @@ class TriggerTest extends StateMachineMocks
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     protected function createStateMachineItems(): array
     {

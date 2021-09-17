@@ -31,13 +31,13 @@ class QuoteReader implements QuoteReaderInterface
     protected $quoteRepository;
 
     /**
-     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface>
      */
     protected $quoteExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface[] $quoteExpanderPlugins
+     * @param array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteExpanderPluginInterface> $quoteExpanderPlugins
      * @param \Spryker\Zed\Quote\Dependency\Facade\QuoteToStoreFacadeInterface $storeFacade
      */
     public function __construct(

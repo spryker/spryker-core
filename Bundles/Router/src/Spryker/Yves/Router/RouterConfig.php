@@ -88,7 +88,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSslExcludedRouteNames(): array
     {
@@ -106,7 +106,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\LanguagePrefixRouterEnhancerPlugin
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAllowedLanguages(): array
     {
@@ -127,7 +127,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @see \Spryker\Yves\Router\Plugin\RouterEnhancer\StorePrefixRouterEnhancerPlugin
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAllowedStores(): array
     {

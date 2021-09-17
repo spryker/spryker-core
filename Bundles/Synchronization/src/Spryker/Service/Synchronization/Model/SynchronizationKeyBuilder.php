@@ -18,19 +18,19 @@ class SynchronizationKeyBuilder implements SynchronizationKeyBuilderInterface
     protected $defaultKeyGeneratorPlugin;
 
     /**
-     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
+     * @var array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface>
      */
     protected $storageSyncKeyGeneratorPlugins;
 
     /**
-     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
+     * @var array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface>
      */
     protected $searchSyncKeyGeneratorPlugins;
 
     /**
      * @param \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface $defaultKeyGeneratorPlugin
-     * @param \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[] $storageSyncKeyGeneratorPlugins
-     * @param \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[] $searchSyncKeyGeneratorPlugins
+     * @param array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface> $storageSyncKeyGeneratorPlugins
+     * @param array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface> $searchSyncKeyGeneratorPlugins
      */
     public function __construct(
         SynchronizationKeyGeneratorPluginInterface $defaultKeyGeneratorPlugin,

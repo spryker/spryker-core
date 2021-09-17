@@ -49,7 +49,7 @@ class ChartGuiTwigPlugin extends AbstractPlugin implements TwigPluginInterface
     }
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     protected function getChartTwigFunctions(): array
     {

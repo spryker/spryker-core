@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business\DependencyTree\DependencyFilter;
 class TreeFilter implements TreeFilterCompositeInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface[]
+     * @var array<\Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface>
      */
     protected $filter;
 

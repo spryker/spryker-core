@@ -20,7 +20,7 @@ class SalesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function listAction(Request $request)
     {

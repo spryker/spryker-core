@@ -275,7 +275,7 @@ class MerchantUserFacadeTest extends Unit
     /**
      * @dataProvider getMerchantUserPositiveScenarioDataProvider
      *
-     * @param string[] $merchantUserCriteriaKeys
+     * @param array<string> $merchantUserCriteriaKeys
      * @param bool $isUserInCriteria
      *
      * @return void

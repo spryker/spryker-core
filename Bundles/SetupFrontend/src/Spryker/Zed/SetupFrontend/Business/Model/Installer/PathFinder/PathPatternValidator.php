@@ -12,7 +12,7 @@ use Spryker\Zed\SetupFrontend\Business\Model\Exception\PathPatternInvalidExcepti
 class PathPatternValidator implements PathPatternValidatorInterface
 {
     /**
-     * @param string[] $pathPatterns
+     * @param array<string> $pathPatterns
      *
      * @throws \Spryker\Zed\SetupFrontend\Business\Model\Exception\PathPatternInvalidException
      *

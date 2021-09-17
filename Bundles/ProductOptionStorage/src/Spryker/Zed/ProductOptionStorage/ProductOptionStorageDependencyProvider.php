@@ -170,7 +170,7 @@ class ProductOptionStorageDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
-     * @return \Spryker\Zed\ProductOptionStorageExtension\Dependency\Plugin\ProductOptionCollectionFilterPluginInterface[]
+     * @return array<\Spryker\Zed\ProductOptionStorageExtension\Dependency\Plugin\ProductOptionCollectionFilterPluginInterface>
      */
     protected function getProductOptionCollectionFilterPlugins(): array
     {

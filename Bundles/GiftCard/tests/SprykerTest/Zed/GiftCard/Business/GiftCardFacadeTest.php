@@ -113,8 +113,8 @@ class GiftCardFacadeTest extends Test
      * @dataProvider filterShipmentGroupMethodsShouldRemoveAllowedShipmentMethodsDataProvider
      *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param string[] $expectedAllowedShipmentMethodNames
-     * @param string[] $expectedDisallowedShipmentMethodNames
+     * @param array<string> $expectedAllowedShipmentMethodNames
+     * @param array<string> $expectedDisallowedShipmentMethodNames
      *
      * @return void
      */

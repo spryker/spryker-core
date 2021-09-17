@@ -36,7 +36,7 @@ class CategoryNodePageSearchByCategoryEventsWriter implements CategoryNodePageSe
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

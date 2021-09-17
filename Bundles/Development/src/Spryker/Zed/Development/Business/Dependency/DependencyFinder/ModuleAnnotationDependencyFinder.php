@@ -18,7 +18,7 @@ class ModuleAnnotationDependencyFinder implements DependencyFinderInterface
     public const TYPE = 'module-annotation';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $acceptedFileNames = [
         'Repository.php',

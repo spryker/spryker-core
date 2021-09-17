@@ -10,7 +10,7 @@ namespace Spryker\Client\CmsBlockStorage\Storage;
 interface CmsBlockStorageInterface
 {
     /**
-     * @param string[] $blockNames
+     * @param array<string> $blockNames
      * @param string $localeName
      * @param string $storeName
      *

@@ -29,7 +29,7 @@ class MerchantProfileMerchantPortalGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSalutationChoices(): array
     {
@@ -49,7 +49,7 @@ class MerchantProfileMerchantPortalGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getHtmlTagWhitelist(): array
     {

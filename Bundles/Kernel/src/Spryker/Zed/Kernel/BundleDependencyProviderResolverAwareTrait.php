@@ -20,7 +20,7 @@ trait BundleDependencyProviderResolverAwareTrait
     use ContainerMocker;
 
     /**
-     * @var \Spryker\Zed\Kernel\Container[]
+     * @var array<\Spryker\Zed\Kernel\Container>
      */
     protected static $containers;
 

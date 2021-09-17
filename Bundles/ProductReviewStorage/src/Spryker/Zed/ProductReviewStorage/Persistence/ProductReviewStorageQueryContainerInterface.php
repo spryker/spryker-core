@@ -17,7 +17,7 @@ interface ProductReviewStorageQueryContainerInterface extends QueryContainerInte
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductReviewStorage\Persistence\SpyProductAbstractReviewStorageQuery
      */
@@ -29,7 +29,7 @@ interface ProductReviewStorageQueryContainerInterface extends QueryContainerInte
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */
@@ -41,7 +41,7 @@ interface ProductReviewStorageQueryContainerInterface extends QueryContainerInte
      *
      * @api
      *
-     * @param int[] $productReviewsIds
+     * @param array<int> $productReviewsIds
      *
      * @return \Orm\Zed\ProductReview\Persistence\SpyProductReviewQuery
      */

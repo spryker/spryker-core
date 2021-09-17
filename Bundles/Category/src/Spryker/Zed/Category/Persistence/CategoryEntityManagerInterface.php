@@ -21,8 +21,8 @@ interface CategoryEntityManagerInterface
     public function createCategory(CategoryTransfer $categoryTransfer): CategoryTransfer;
 
     /**
-     * @param int[] $categoryIds
-     * @param int[] $storeIds
+     * @param array<int> $categoryIds
+     * @param array<int> $storeIds
      *
      * @return void
      */
@@ -129,8 +129,8 @@ interface CategoryEntityManagerInterface
     public function deleteCategoryClosureTableParentEntriesForCategoryNode(int $idCategoryNode): void;
 
     /**
-     * @param int[] $categoryIds
-     * @param int[] $storeIds
+     * @param array<int> $categoryIds
+     * @param array<int> $storeIds
      *
      * @return void
      */

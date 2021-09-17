@@ -52,7 +52,7 @@ class PackageVersionHydrator implements DependencyHydratorInterface
     /**
      * @param array $dependency
      *
-     * @return bool|string|null
+     * @return string|bool|null
      */
     private function getComposerVersion(array $dependency)
     {

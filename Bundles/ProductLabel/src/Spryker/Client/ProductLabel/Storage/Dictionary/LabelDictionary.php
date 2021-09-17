@@ -64,12 +64,12 @@ class LabelDictionary implements LabelDictionaryInterface
     /**
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductLabelTransfer>
      */
     public function getDictionary($localeName)
     {
         /**
-         * @var \Generated\Shared\Transfer\StorageProductLabelTransfer[] $labelDictionary
+         * @var array<\Generated\Shared\Transfer\StorageProductLabelTransfer> $labelDictionary
          */
         static $labelDictionary = [];
 
@@ -85,7 +85,7 @@ class LabelDictionary implements LabelDictionaryInterface
     /**
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductLabelTransfer>
      */
     protected function initializeLabelDictionary($localeName)
     {

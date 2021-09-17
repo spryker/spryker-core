@@ -71,7 +71,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface>
      */
     protected $contentWidgetDataExpanderPlugins = [];
 
@@ -90,7 +90,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     /**
      * @param \Spryker\Zed\CmsBlockStorage\Persistence\CmsBlockStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface[] $contentWidgetDataExpanderPlugins
+     * @param array<\Spryker\Zed\CmsBlockStorage\Dependency\Plugin\CmsBlockStorageDataExpanderPluginInterface> $contentWidgetDataExpanderPlugins
      * @param \Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
      */
@@ -145,7 +145,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 
     /**
      * @param array $cmsBlockEntities
-     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[] $cmsBlockStorageEntities
+     * @param array<\Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage> $cmsBlockStorageEntities
      *
      * @return void
      */
@@ -188,7 +188,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[] $cmsBlockStorageEntities
+     * @param array<\Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage> $cmsBlockStorageEntities
      *
      * @return void
      */
@@ -276,7 +276,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[] $cmsBlockStorageEntities
+     * @param array<\Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage> $cmsBlockStorageEntities
      *
      * @return array
      */
@@ -303,7 +303,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     /**
      * @param array $cmsBlockIds
      *
-     * @return \Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage[]
+     * @return array<\Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorage>
      */
     protected function findCmsBlockStorageEntities(array $cmsBlockIds): array
     {
@@ -332,7 +332,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 
     /**
      * @param int $idCmsBlock
-     * @param string[][] $localeNameMap
+     * @param array<string[]> $localeNameMap
      * @param array $cmsBlockStores
      * @param array $cmsBlockEntity
      * @param array $mappedCmsBlockStorageEntities
@@ -370,7 +370,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

@@ -17,7 +17,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CompanyKeyToIdCompanyStep implements DataImportStepInterface
 {
     /**
-     * @var int[] Keys are company keys.
+     * @var array<int> Keys are company keys.
      */
     protected $idCompanyBuffer = [];
 

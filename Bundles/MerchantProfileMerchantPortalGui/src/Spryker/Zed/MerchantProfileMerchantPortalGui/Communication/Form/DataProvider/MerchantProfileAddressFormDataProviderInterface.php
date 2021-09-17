@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\DataPr
 interface MerchantProfileAddressFormDataProviderInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCountryChoices(): array;
 }

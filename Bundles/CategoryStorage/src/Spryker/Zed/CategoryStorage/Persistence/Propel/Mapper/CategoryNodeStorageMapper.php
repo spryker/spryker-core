@@ -28,10 +28,10 @@ class CategoryNodeStorageMapper
     }
 
     /**
-     * @param \Orm\Zed\CategoryStorage\Persistence\Base\SpyCategoryNodeStorage[]|\Propel\Runtime\Collection\ObjectCollection $categoryNodeStorageEntities
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryStorage\Persistence\Base\SpyCategoryNodeStorage> $categoryNodeStorageEntities
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryNodeStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     public function mapCategoryNodeStorageEntitiesToCategoryNodeStorageTransfers(
         ObjectCollection $categoryNodeStorageEntities,

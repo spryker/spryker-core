@@ -60,7 +60,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface>
      */
     protected $productFormTransferMapperExpanderPlugins;
 
@@ -74,7 +74,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface $productManagementQueryContainer
      * @param \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductManagement\Communication\Form\DataProvider\LocaleProvider $localeProvider
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface[] $productFormTransferMapperExpanderPlugins
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductFormTransferMapperExpanderPluginInterface> $productFormTransferMapperExpanderPlugins
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductConcreteSuperAttributeFilterHelperInterface $productConcreteSuperAttributeFilterHelperInterface
      */
     public function __construct(
@@ -130,7 +130,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      * @param array $formData
      *
      * @return array
@@ -212,7 +212,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param array $formData
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function updatePricesDimension(array $formData): ArrayObject
     {
@@ -341,7 +341,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
     /**
      * @param array $data
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $attributeTransferCollection
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $attributeTransferCollection
      *
      * @return array
      */
@@ -383,7 +383,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function buildProductImageSetCollection(FormInterface $form)
     {
@@ -438,7 +438,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function buildProductStockCollectionTransfer(FormInterface $form)
     {

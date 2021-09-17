@@ -24,7 +24,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 abstract class AbstractExporter implements ExporterInterface
 {
     /**
-     * @var \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
+     * @var array<\Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface>
      */
     protected $collectorPlugins = [];
 
@@ -102,7 +102,7 @@ abstract class AbstractExporter implements ExporterInterface
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
+     * @return array<\Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface>
      */
     public function getCollectorPlugins()
     {

@@ -33,7 +33,7 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getMethods()
     {
@@ -75,7 +75,7 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param bool[] $itemListUpdatedStatus
+     * @param array<bool> $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */
@@ -91,7 +91,7 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
      * @param int $idSalesOrder
      * @param int $idSalesShipment
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function findSalesOrderItemsIdsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject
     {
@@ -177,7 +177,7 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getActiveShipmentCarriers(): array
     {

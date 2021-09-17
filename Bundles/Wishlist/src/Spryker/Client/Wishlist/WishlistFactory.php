@@ -85,7 +85,7 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface[]
+     * @return array<\Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface>
      */
     protected function getWishlistPostMoveToCartCollectionExpanderPlugins()
     {
@@ -93,7 +93,7 @@ class WishlistFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface[]
+     * @return array<\Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface>
      */
     protected function getWishlistCollectionToRemoveExpanderPlugins()
     {

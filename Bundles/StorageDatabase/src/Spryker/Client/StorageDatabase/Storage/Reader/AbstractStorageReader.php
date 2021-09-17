@@ -62,7 +62,7 @@ abstract class AbstractStorageReader implements StorageReaderInterface
     }
 
     /**
-     * @param string[] $resourceKeys
+     * @param array<string> $resourceKeys
      *
      * @return array
      */
@@ -106,7 +106,7 @@ abstract class AbstractStorageReader implements StorageReaderInterface
 
     /**
      * @param \Propel\Runtime\Connection\StatementInterface $statement
-     * @param string[] $resourceKeys
+     * @param array<string> $resourceKeys
      *
      * @return array
      */
@@ -149,7 +149,7 @@ abstract class AbstractStorageReader implements StorageReaderInterface
     abstract protected function createSingleSelectStatementForResourceKey(string $resourceKey): StatementInterface;
 
     /**
-     * @param string[] $resourceKeys
+     * @param array<string> $resourceKeys
      *
      * @return \Propel\Runtime\Connection\StatementInterface
      */

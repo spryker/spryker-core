@@ -10,10 +10,10 @@ namespace Spryker\Glue\ProductOptionsRestApi\Processor\Sorter;
 interface ProductOptionSorterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param array<\Generated\Shared\Transfer\RestProductOptionsAttributesTransfer> $restProductOptionsAttributesTransfers
+     * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestProductOptionsAttributesTransfer>
      */
     public function sortRestProductOptionsAttributesTransfers(
         array $restProductOptionsAttributesTransfers,

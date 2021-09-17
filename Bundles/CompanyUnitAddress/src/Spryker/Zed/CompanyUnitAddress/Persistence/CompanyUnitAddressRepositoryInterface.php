@@ -49,9 +49,9 @@ interface CompanyUnitAddressRepositoryInterface
     ): CompanyUnitAddressCollectionTransfer;
 
     /**
-     * @param int[] $companyUnitAddressIds
+     * @param array<int> $companyUnitAddressIds
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer>
      */
     public function getCompanyBusinessUnitAddressToBusinessUnitRelations(
         array $companyUnitAddressIds

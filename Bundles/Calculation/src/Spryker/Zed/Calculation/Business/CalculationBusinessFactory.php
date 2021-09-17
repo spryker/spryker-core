@@ -75,7 +75,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[]
+     * @return array<\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface>
      */
     protected function createNetPriceCalculators()
     {
@@ -86,7 +86,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface[]
+     * @return array<\Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface>
      */
     protected function createGrossPriceCalculators()
     {
@@ -315,7 +315,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]
+     * @return array<\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface>
      */
     protected function getProvidedQuoteCalculatorPluginStack()
     {
@@ -323,7 +323,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[]|\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface[]
+     * @return array<\Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface|\Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface>
      */
     protected function getProvidedOrderCalculatorPluginStack()
     {
@@ -331,7 +331,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface[]
+     * @return array<\Spryker\Zed\CalculationExtension\Dependency\Plugin\QuotePostRecalculatePluginStrategyInterface>
      */
     public function getQuotePostRecalculatePlugins(): array
     {

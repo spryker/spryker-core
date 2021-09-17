@@ -14,7 +14,7 @@ class OauthPermissionConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getOauthUserIdentifierFilterKeys(): array
     {

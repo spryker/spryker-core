@@ -25,9 +25,9 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
     protected const FIELD_POPULARITY = ProductPayloadTransfer::POPULARITY;
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ItemMetadataTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemMetadataTransfer>
      */
     public function getSalesOrderItemMetadataByOrderItemIds(array $salesOrderItemIds): array
     {
@@ -45,9 +45,9 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getRawProductConcreteTransfersByConcreteSkus(array $productConcreteSkus): array
     {
@@ -62,10 +62,10 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param int $interval
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getRawProductPopularityByProductAbstractIdsAndInterval(array $productAbstractIds, int $interval): array
     {

@@ -17,7 +17,7 @@ use Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientInterface;
 class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecutorInterface
 {
     /**
-     * @var \Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface[]
+     * @var array<\Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface>
      */
     protected $currencyPostChangePlugins = [];
 
@@ -37,7 +37,7 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
     protected $messengerClient;
 
     /**
-     * @param \Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface[] $currencyPostChangePlugins
+     * @param array<\Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface> $currencyPostChangePlugins
      * @param \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface $currencyPersistence
      * @param \Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface $messengerClient

@@ -133,7 +133,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
     }
 
     /**
-     * @param int|string $sessionId
+     * @param string|int $sessionId
      *
      * @return bool
      */

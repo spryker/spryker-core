@@ -10,7 +10,7 @@ namespace Spryker\Zed\OmsDiscountConnector\Dependency\Facade;
 interface OmsDiscountConnectorToDiscountInterface
 {
     /**
-     * @param string[] $codes
+     * @param array<string> $codes
      *
      * @return int
      */

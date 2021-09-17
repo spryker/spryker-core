@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 class ShoppingListAddItemExpander implements ShoppingListAddItemExpanderInterface
 {
     /**
-     * @var \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface[]
+     * @var array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface>
      */
     protected $shoppingListItemMapperPlugins;
 
     /**
-     * @param \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface[] $shoppingListItemMapperPlugins
+     * @param array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface> $shoppingListItemMapperPlugins
      */
     public function __construct(array $shoppingListItemMapperPlugins)
     {

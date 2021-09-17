@@ -13,22 +13,22 @@ interface GlossaryRepositoryInterface
      * @param string $glossaryKey
      * @param array $localeIsoCodes
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     public function getTranslationsByGlossaryKeyAndLocaleIsoCodes(string $glossaryKey, array $localeIsoCodes): array;
 
     /**
-     * @param string[] $glossaryKeys
-     * @param string[] $localeIsoCodes
+     * @param array<string> $glossaryKeys
+     * @param array<string> $localeIsoCodes
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     public function getTranslationsByGlossaryKeysAndLocaleIsoCodes(array $glossaryKeys, array $localeIsoCodes): array;
 
     /**
-     * @param string[] $glossaryKeys
+     * @param array<string> $glossaryKeys
      *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
     public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array;
 }

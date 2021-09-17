@@ -60,8 +60,8 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
 
     /**
      * @param int $idProduct
-     * @param int[] $customerWhitelistIds
-     * @param int[] $customerBlacklistIds
+     * @param array<int> $customerWhitelistIds
+     * @param array<int> $customerBlacklistIds
      *
      * @return bool
      */
@@ -93,7 +93,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer|null $productListProductConcreteStorageTransfer
-     * @param int[] $customerWhitelistIds
+     * @param array<int> $customerWhitelistIds
      *
      * @return bool
      */
@@ -116,7 +116,7 @@ class ProductConcreteRestrictionReader implements ProductConcreteRestrictionRead
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer|null $productListProductConcreteStorageTransfer
-     * @param int[] $customerBlacklistIds
+     * @param array<int> $customerBlacklistIds
      *
      * @return bool
      */

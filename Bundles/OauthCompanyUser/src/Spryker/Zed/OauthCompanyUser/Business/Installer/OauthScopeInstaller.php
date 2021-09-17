@@ -54,9 +54,9 @@ class OauthScopeInstaller implements OauthScopeInstallerInterface
     }
 
     /**
-     * @param string[] $companyUserScopes
+     * @param array<string> $companyUserScopes
      *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     * @return array<\Generated\Shared\Transfer\OauthScopeTransfer>
      */
     protected function getScopesByIdentifiers(array $companyUserScopes): array
     {
@@ -73,7 +73,7 @@ class OauthScopeInstaller implements OauthScopeInstallerInterface
 
     /**
      * @param string $oauthScopeIdentifier
-     * @param \Generated\Shared\Transfer\OauthScopeTransfer[] $oauthScopeTransfers
+     * @param array<\Generated\Shared\Transfer\OauthScopeTransfer> $oauthScopeTransfers
      *
      * @return bool
      */

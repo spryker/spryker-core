@@ -54,7 +54,7 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     }
 
     /**
-     * @param int[]|null $productAbstractIds
+     * @param array<int>|null $productAbstractIds
      *
      * @return array
      */

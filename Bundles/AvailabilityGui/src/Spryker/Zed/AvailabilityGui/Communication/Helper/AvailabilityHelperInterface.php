@@ -135,11 +135,11 @@ interface AvailabilityHelperInterface
     public function queryAvailabilityWithStockByIdProductAbstractAndIdLocale(?int $idProductAbstract, int $idLocale, int $idStore);
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param int $idLocale
      * @param int $idStore
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     * @return array<\Orm\Zed\Product\Persistence\SpyProductAbstract>
      */
     public function getProductAbstractEntitiesWithStockByProductAbstractIds(array $productAbstractIds, int $idLocale, int $idStore): array;
 

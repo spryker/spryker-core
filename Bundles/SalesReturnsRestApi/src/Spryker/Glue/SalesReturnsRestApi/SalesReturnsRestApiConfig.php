@@ -59,7 +59,7 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return (int|string)[][]
+     * @return array<string, array<int|string>>
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {
@@ -85,7 +85,7 @@ class SalesReturnsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getErrorMessageToErrorIdentifierMapping(): array
     {

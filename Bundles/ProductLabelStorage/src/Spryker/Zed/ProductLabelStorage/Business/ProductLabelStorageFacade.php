@@ -81,7 +81,7 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
      *   or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -95,7 +95,7 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -111,7 +111,7 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -130,7 +130,7 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      * @deprecated Use {@link writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
      *  or {@link writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -145,9 +145,9 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productAbstractLabelStorageIds
+     * @param array<int> $productAbstractLabelStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getProductAbstractLabelStorageDataTransfersByIds(
         FilterTransfer $filterTransfer,
@@ -163,9 +163,9 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productLabelDictionaryStorageIds
+     * @param array<int> $productLabelDictionaryStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getProductLabelDictionaryStorageDataTransfersByIds(
         FilterTransfer $filterTransfer,

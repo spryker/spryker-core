@@ -16,10 +16,10 @@ interface PriceProductValidationMapperInterface
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param mixed[] $initialData
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<mixed> $initialData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function mapValidationResponseTransferToInitialData(
         ValidationResponseTransfer $validationResponseTransfer,

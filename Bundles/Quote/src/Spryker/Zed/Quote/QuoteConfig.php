@@ -34,7 +34,7 @@ class QuoteConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQuoteFieldsAllowedForSaving()
     {
@@ -53,7 +53,7 @@ class QuoteConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQuoteItemFieldsAllowedForSaving(): array
     {

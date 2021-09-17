@@ -184,7 +184,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface>
      */
     public function getDecisionRulePlugins()
     {
@@ -192,7 +192,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface>
      */
     public function getDiscountableItemTransformerStrategyPlugins(): array
     {
@@ -211,7 +211,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]|\Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface|\Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface>
      */
     public function getCalculatorPlugins()
     {
@@ -219,7 +219,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface>
      */
     public function getCollectorPlugins()
     {
@@ -227,7 +227,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\CollectedDiscountGroupingStrategyPluginInterface>
      */
     public function getCollectedDiscountGroupingPlugins(): array
     {
@@ -550,7 +550,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface>
      */
     protected function getDiscountableItemFilterPlugins()
     {
@@ -590,7 +590,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface>
      */
     protected function getCollectorStrategyPlugins()
     {
@@ -606,7 +606,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface>
      */
     protected function getDiscountPostCreatePlugins()
     {
@@ -614,7 +614,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface>
      */
     protected function getDiscountPostUpdatePlugins()
     {
@@ -622,7 +622,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface>
      */
     protected function getConfigurationExpanderPlugins()
     {
@@ -630,7 +630,7 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface[]
+     * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface>
      */
     protected function getDiscountApplicableFilterPlugins()
     {

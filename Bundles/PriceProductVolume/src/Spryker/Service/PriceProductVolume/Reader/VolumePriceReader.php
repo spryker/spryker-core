@@ -99,7 +99,7 @@ class VolumePriceReader implements VolumePriceReaderInterface
     }
 
     /**
-     * @param mixed[] $volumePriceDataItem
+     * @param array<mixed> $volumePriceDataItem
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer

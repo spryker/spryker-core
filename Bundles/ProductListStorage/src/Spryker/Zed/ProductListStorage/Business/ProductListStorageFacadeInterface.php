@@ -15,7 +15,7 @@ interface ProductListStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -27,7 +27,7 @@ interface ProductListStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -39,9 +39,9 @@ interface ProductListStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array;
 
@@ -51,9 +51,9 @@ interface ProductListStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
 
@@ -63,9 +63,9 @@ interface ProductListStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array;
 
@@ -75,7 +75,7 @@ interface ProductListStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
      * @return void
      */

@@ -22,7 +22,7 @@ class CurrencyToIdCurrencyStep implements DataImportStepInterface
     protected const EXCEPTION_MESSAGE = 'Could not find currency by code "%s"';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCurrencyCache = [];
 

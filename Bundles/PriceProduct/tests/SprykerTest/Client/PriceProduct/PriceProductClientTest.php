@@ -215,7 +215,7 @@ class PriceProductClientTest extends Unit
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getVolumePriceDataDefault(): array
     {
@@ -229,7 +229,7 @@ class PriceProductClientTest extends Unit
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getVolumePriceDataOrigin(): array
     {

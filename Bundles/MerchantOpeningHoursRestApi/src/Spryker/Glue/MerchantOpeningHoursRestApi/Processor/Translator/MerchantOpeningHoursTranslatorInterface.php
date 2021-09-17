@@ -10,10 +10,10 @@ namespace Spryker\Glue\MerchantOpeningHoursRestApi\Processor\Translator;
 interface MerchantOpeningHoursTranslatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer> $merchantOpeningHoursStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer>
      */
     public function translateMerchantOpeningHoursTransfers(array $merchantOpeningHoursStorageTransfers, string $localeName): array;
 }

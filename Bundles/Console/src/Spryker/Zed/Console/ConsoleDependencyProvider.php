@@ -92,7 +92,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Symfony\Component\Console\Command\Command[]
+     * @return array<\Symfony\Component\Console\Command\Command>
      */
     protected function getConsoleCommands(Container $container)
     {
@@ -116,7 +116,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+     * @return array<\Symfony\Component\EventDispatcher\EventSubscriberInterface>
      */
     protected function getEventSubscriber(Container $container)
     {
@@ -144,7 +144,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface[]
+     * @return array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface>
      */
     protected function getConsolePreRunHookPlugins(Container $container)
     {
@@ -154,7 +154,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface[]
+     * @return array<\Spryker\Zed\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface>
      */
     protected function getConsolePostRunHookPlugins(Container $container)
     {
@@ -178,7 +178,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(Container $container): array
     {
@@ -206,7 +206,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getServiceProviders(Container $container)
     {

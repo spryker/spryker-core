@@ -17,7 +17,7 @@ class ShipmentConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getShipmentHashFields(): array
     {
@@ -29,7 +29,7 @@ class ShipmentConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getShipmentMethodHashFields(): array
     {

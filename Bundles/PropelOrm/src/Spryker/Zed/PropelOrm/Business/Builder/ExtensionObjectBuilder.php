@@ -46,7 +46,7 @@ class ExtensionObjectBuilder extends PropelExtensionObjectBuilder
     }
 
     /**
-     * @param string[] $classes
+     * @param array<string> $classes
      * @param string $namespace
      * @param string $script
      *

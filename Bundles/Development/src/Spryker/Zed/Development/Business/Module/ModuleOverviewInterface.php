@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business\Module;
 interface ModuleOverviewInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleOverviewTransfer>
      */
     public function getOverview(): array;
 }

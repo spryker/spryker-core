@@ -36,7 +36,7 @@ class ClientHelper extends Module
     protected const CLIENT_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Client\%3$s\%3$sFactory';
 
     /**
-     * @var \Spryker\Client\Kernel\AbstractClient[]
+     * @var array<\Spryker\Client\Kernel\AbstractClient>
      */
     protected $clientStubs = [];
 
@@ -46,7 +46,7 @@ class ClientHelper extends Module
     protected $mockedClientMethods = [];
 
     /**
-     * @var \Spryker\Client\Kernel\AbstractFactory[]
+     * @var array<\Spryker\Client\Kernel\AbstractFactory>
      */
     protected $factoryStubs = [];
 
@@ -136,7 +136,7 @@ class ClientHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Client\Kernel\AbstractFactory
+     * @return \Spryker\Client\Kernel\AbstractFactory|object
      */
     public function mockFactoryMethod(string $methodName, $return, ?string $moduleName = null)
     {

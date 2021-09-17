@@ -77,7 +77,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      * @api
      *
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      *
      * @return void
      */
@@ -94,7 +94,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      * @api
      *
      * @param int $idProduct
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeCollection
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeCollection
      *
      * @return void
      */
@@ -279,7 +279,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer>
      */
     public function getProductSearchAttributeList()
     {
@@ -294,7 +294,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductSearchAttributeTransfer[] $productSearchAttributes
+     * @param array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer> $productSearchAttributes
      *
      * @return void
      */

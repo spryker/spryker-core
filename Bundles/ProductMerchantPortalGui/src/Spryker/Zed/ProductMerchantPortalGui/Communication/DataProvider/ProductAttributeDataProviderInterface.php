@@ -15,17 +15,17 @@ interface ProductAttributeDataProviderInterface
     /**
      * @phpstan-param ArrayObject<string, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
      *
-     * @param string[] $attributes
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransfers
+     * @param array<string> $attributes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getData(array $attributes, ArrayObject $localizedAttributeTransfers): array;
 
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer|null
@@ -35,7 +35,7 @@ interface ProductAttributeDataProviderInterface
     /**
      * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer|null

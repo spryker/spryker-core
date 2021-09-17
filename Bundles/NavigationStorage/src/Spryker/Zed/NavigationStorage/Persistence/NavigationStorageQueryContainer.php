@@ -99,7 +99,7 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
      *
      * @api
      *
-     * @param int[] $navigationIds
+     * @param array<int> $navigationIds
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
      */

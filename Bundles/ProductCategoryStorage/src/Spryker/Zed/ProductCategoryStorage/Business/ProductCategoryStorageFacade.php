@@ -24,7 +24,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @deprecated Will be removed in the next major without replacement.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -40,7 +40,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @deprecated Will be removed in the next major without replacement.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -54,9 +54,9 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getRelatedCategoryIds(array $categoryIds)
     {
@@ -68,7 +68,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -84,7 +84,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -100,7 +100,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -116,7 +116,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -132,7 +132,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -148,7 +148,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -164,7 +164,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -180,7 +180,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -196,7 +196,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -212,7 +212,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -228,7 +228,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -244,7 +244,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -262,9 +262,9 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
         int $offset,
@@ -282,7 +282,7 @@ class ProductCategoryStorageFacade extends AbstractFacade implements ProductCate
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryTransfer>
      */
     public function getProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array
     {

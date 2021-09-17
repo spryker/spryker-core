@@ -117,7 +117,7 @@ class QueueWorkerSignalDispatcherTest extends Unit
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getQueueNames(): array
     {

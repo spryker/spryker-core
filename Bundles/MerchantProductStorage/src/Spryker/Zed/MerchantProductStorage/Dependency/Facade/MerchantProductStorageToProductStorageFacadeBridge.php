@@ -23,7 +23,7 @@ class MerchantProductStorageToProductStorageFacadeBridge implements MerchantProd
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

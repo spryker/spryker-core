@@ -84,10 +84,10 @@ interface ShipmentMethodMapperInterface
     ): MoneyValueTransfer;
 
     /**
-     * @param iterable|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]|\Propel\Runtime\Collection\ObjectCollection $shipmentMethodsEntities
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection|iterable<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod> $shipmentMethodsEntities
+     * @param array<\Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethodTransfers
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function mapShipmentMethodEntitiesToShipmentMethodTransfers(
         iterable $shipmentMethodsEntities,

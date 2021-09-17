@@ -216,7 +216,7 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
      * @param string $name
      * @param string $reference
      * @param string $entity
-     * @param int[] $entityIds
+     * @param array<int> $entityIds
      *
      * @return \Generated\Shared\Transfer\AclEntitySegmentResponseTransfer
      */
@@ -238,8 +238,8 @@ class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
     /**
      * @param \Generated\Shared\Transfer\RoleTransfer $roleTransfer
      * @param \Generated\Shared\Transfer\AclEntitySegmentTransfer $aclEntitySegmentTransfer
-     * @param \Generated\Shared\Transfer\RuleTransfer[] $ruleTransfers
-     * @param \Generated\Shared\Transfer\AclEntityRuleTransfer[] $aclEntityRuleTransfers
+     * @param array<\Generated\Shared\Transfer\RuleTransfer> $ruleTransfers
+     * @param array<\Generated\Shared\Transfer\AclEntityRuleTransfer> $aclEntityRuleTransfers
      *
      * @return \Generated\Shared\Transfer\RoleTransfer
      */

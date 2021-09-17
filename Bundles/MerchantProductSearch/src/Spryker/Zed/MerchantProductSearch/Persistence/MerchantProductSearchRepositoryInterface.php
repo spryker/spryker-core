@@ -10,16 +10,16 @@ namespace Spryker\Zed\MerchantProductSearch\Persistence;
 interface MerchantProductSearchRepositoryInterface
 {
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByMerchantIds(array $merchantIds): array;
 
     /**
-     * @param int[] $merchantProductAbstractIds
+     * @param array<int> $merchantProductAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByMerchantProductAbstractIds(array $merchantProductAbstractIds): array;
 
@@ -27,9 +27,9 @@ interface MerchantProductSearchRepositoryInterface
      * @module Store
      * @module Merchant
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
      */
     public function getMerchantDataByProductAbstractIds(array $productAbstractIds): array;
 }

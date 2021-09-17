@@ -36,7 +36,7 @@ class ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeBridge
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return bool
      */

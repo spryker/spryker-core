@@ -29,7 +29,7 @@ class ProductListGuiToUtilCsvServiceBridge implements ProductListGuiToUtilCsvSer
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function readUploadedFile(UploadedFile $file): array
     {

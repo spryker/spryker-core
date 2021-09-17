@@ -50,7 +50,7 @@ class UniqueProductConcretePerSuperAttributeCollectionConstraintValidator extend
     /**
      * Checks if combination of super attribute values doesn't exist in DB.
      *
-     * @param mixed[] $value
+     * @param array<mixed> $value
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueProductConcretePerSuperAttributeCollectionConstraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

@@ -10,9 +10,9 @@ namespace Spryker\Zed\Availability\Business\Reader;
 interface AvailabilityReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function filterAvailableProducts(array $productConcreteTransfers): array;
 }

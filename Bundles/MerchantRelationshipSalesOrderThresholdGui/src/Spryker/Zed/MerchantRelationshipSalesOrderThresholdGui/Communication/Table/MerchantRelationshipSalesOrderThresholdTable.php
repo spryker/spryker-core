@@ -225,7 +225,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
     }
 
     /**
-     * @param string[] $thresholdGroups
+     * @param array<string> $thresholdGroups
      *
      * @return string
      */

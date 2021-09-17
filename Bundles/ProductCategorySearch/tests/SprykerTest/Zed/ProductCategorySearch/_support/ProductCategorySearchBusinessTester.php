@@ -92,9 +92,9 @@ class ProductCategorySearchBusinessTester extends Actor
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[][]
+     * @return array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]>
      */
     public function getMappedProductCategoriesByIdProductAbstractAndStore(array $productAbstractIds): array
     {

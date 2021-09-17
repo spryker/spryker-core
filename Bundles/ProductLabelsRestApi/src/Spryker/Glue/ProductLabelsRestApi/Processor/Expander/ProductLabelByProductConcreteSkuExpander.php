@@ -27,10 +27,10 @@ class ProductLabelByProductConcreteSkuExpander implements ProductLabelByProductC
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $restResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $restResources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function addResourceRelationships(array $restResources, RestRequestInterface $restRequest): array
     {
@@ -47,10 +47,10 @@ class ProductLabelByProductConcreteSkuExpander implements ProductLabelByProductC
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $restResources
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $productLabelResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $restResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]> $productLabelResources
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     protected function addProductLabelsResourceRelationships(array $restResources, array $productLabelResources): array
     {

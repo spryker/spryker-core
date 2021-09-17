@@ -77,9 +77,9 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
     }
 
     /**
-     * @param string[] $merchantReferences
+     * @param array<string> $merchantReferences
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getMerchantAddressResources(array $merchantReferences): array
     {
@@ -93,9 +93,9 @@ class MerchantAddressReader implements MerchantAddressReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
     protected function indexMerchantStorageTransfersByMerchantReference(array $merchantStorageTransfers): array
     {

@@ -23,7 +23,7 @@ class RemoveCanceledAmountCalculator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return void
      */

@@ -14,7 +14,7 @@ use Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInt
 class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterface
 {
     /**
-     * @var array|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
+     * @var array<\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface>
      */
     protected $contentWidgetParameterMapperPlugins = [];
 
@@ -34,7 +34,7 @@ class ContentWidgetParameterMapper implements ContentWidgetParameterMapperInterf
     protected $glossaryFacade;
 
     /**
-     * @param \Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[] $contentWidgetParameterMapperPlugins
+     * @param array<\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface> $contentWidgetParameterMapperPlugins
      * @param \Spryker\Zed\CmsContentWidget\Business\ContentWidget\ContentWidgetFunctionMatcherInterface $contentWidgetFunctionMatcher
      * @param \Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInterface $glossaryFacade
      */

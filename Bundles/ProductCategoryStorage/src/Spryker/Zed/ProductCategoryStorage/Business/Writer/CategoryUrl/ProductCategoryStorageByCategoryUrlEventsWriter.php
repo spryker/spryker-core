@@ -47,7 +47,7 @@ class ProductCategoryStorageByCategoryUrlEventsWriter implements ProductCategory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -74,7 +74,7 @@ class ProductCategoryStorageByCategoryUrlEventsWriter implements ProductCategory
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -94,7 +94,7 @@ class ProductCategoryStorageByCategoryUrlEventsWriter implements ProductCategory
     /**
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractCategoryIdsFromNodeCollection(NodeCollectionTransfer $nodeCollectionTransfer): array
     {

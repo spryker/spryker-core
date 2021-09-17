@@ -28,7 +28,7 @@ class Aws3v3FilesystemBuilderPlugin extends AbstractPlugin implements FlysystemF
 
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
+     * @param array<\League\Flysystem\PluginInterface> $flysystemPluginCollection
      *
      * @return \League\Flysystem\Filesystem
      */

@@ -19,7 +19,7 @@ interface ProductDiscontinuedProductLabelConnectorToProductInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 

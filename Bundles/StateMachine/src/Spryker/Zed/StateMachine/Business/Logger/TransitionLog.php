@@ -22,7 +22,7 @@ class TransitionLog implements TransitionLogInterface
     public const QUERY_STRING = 'QUERY_STRING';
 
     /**
-     * @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog[]
+     * @var array<\Orm\Zed\StateMachine\Persistence\SpyStateMachineTransitionLog>
      */
     protected $logEntities;
 
@@ -62,7 +62,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItemTransfers
      *
      * @return void
      */
@@ -204,7 +204,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param string $queryString
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getParamsFromQueryString($queryString)
     {

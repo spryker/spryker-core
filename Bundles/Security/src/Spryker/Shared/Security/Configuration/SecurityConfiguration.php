@@ -36,22 +36,22 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     protected $roleHierarchies = [];
 
     /**
-     * @var callable[]
+     * @var array<callable>
      */
     protected $authenticationSuccessHandlers = [];
 
     /**
-     * @var callable[]
+     * @var array<callable>
      */
     protected $authenticationFailureHandlers = [];
 
     /**
-     * @var callable[]
+     * @var array<callable>
      */
     protected $logoutHandlers = [];
 
     /**
-     * @var callable[]
+     * @var array<callable>
      */
     protected $accessDeniedHandlers = [];
 
@@ -171,7 +171,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     }
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getAuthenticationSuccessHandlers(): array
     {
@@ -196,7 +196,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     }
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getAuthenticationFailureHandlers(): array
     {
@@ -232,7 +232,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     }
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getLogoutHandlers(): array
     {
@@ -257,7 +257,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     }
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getAccessDeniedHandlers(): array
     {

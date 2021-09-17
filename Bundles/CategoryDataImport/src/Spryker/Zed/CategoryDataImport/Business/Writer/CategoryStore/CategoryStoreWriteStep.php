@@ -96,7 +96,7 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
     /**
      * @param int $idCategory
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getParentCategoryStoreRelations(int $idCategory): array
     {
@@ -125,8 +125,8 @@ class CategoryStoreWriteStep extends PublishAwareStep implements DataImportStepI
     }
 
     /**
-     * @param int[] $storeIdsToAdd
-     * @param int[] $storeIdsToDelete
+     * @param array<int> $storeIdsToAdd
+     * @param array<int> $storeIdsToDelete
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $existingStoreRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer
