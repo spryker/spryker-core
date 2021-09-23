@@ -12,7 +12,7 @@ trait ClassHelperTrait
     /**
      * @return \SprykerTest\Shared\Testify\Helper\ClassHelper
      */
-    private function getClassHelper(): ClassHelper
+    protected function getClassHelper(): ClassHelper
     {
         /** @var \SprykerTest\Shared\Testify\Helper\ClassHelper $classHelper */
         $classHelper = $this->getModule('\\' . ClassHelper::class);
