@@ -221,6 +221,16 @@ class ConfigHelper extends Module
     }
 
     /**
+     * @param string $moduleName
+     *
+     * @return bool
+     */
+    public function configExists(string $moduleName): bool
+    {
+        return $this->resolveClassName(static::CONFIG_CLASS_NAME_PATTERN, $moduleName) !== null;
+    }
+
+    /**
      * @param \Spryker\Shared\Kernel\AbstractBundleConfig $moduleConfig
      * @param string $moduleName
      *

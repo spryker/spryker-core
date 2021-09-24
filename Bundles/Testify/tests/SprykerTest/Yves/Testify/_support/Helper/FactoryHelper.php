@@ -15,6 +15,7 @@ use Exception;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Kernel\Container;
+use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 
@@ -22,11 +23,13 @@ class FactoryHelper extends Module
 {
     use DependencyProviderHelperTrait;
     use ConfigHelperTrait;
+    use ClassResolverTrait;
 
     /**
      * @var string
      */
-    protected const FACTORY_CLASS_NAME_PATTERN = '\%1$s\Yves\%2$s\%2$sFactory';
+    protected const FACTORY_CLASS_NAME_PATTERN = '\%1$s\Yves\%3$s\%3$sFactory';
+
     /**
      * @var int
      */
@@ -54,7 +57,7 @@ class FactoryHelper extends Module
     public function mockFactoryMethod(string $methodName, $return, ?string $moduleName = null): AbstractFactory
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->getFactoryClassName($moduleName);
+        $className = $this->resolveClassName(static::FACTORY_CLASS_NAME_PATTERN, $moduleName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -121,27 +124,9 @@ class FactoryHelper extends Module
     protected function createFactory(?string $moduleName = null): AbstractFactory
     {
         $moduleName = $this->getModuleName($moduleName);
-        $moduleFactoryClassName = $this->getFactoryClassName($moduleName);
+        $moduleFactoryClassName = $this->resolveClassName(static::FACTORY_CLASS_NAME_PATTERN, $moduleName);
 
         return new $moduleFactoryClassName();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getFactoryClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-        $factoryClassNameCandidate = sprintf(static::FACTORY_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
-
-        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($factoryClassNameCandidate)) {
-            return $factoryClassNameCandidate;
-        }
-
-        return sprintf(static::FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }
 
     /**
@@ -152,7 +137,10 @@ class FactoryHelper extends Module
      */
     protected function injectConfig(AbstractFactory $factory, string $moduleName): AbstractFactory
     {
-        if ($this->hasModule('\\' . ConfigHelper::class)) {
+        if (
+            $this->hasModule('\\' . ConfigHelper::class)
+            && $this->getConfigHelper()->configExists($moduleName)
+        ) {
             $factory->setConfig($this->getConfig($moduleName));
         }
 
