@@ -15,17 +15,20 @@ trait DependencyHelperTrait
      *
      * @return void
      */
-    private function setDependency(string $key, $value): void
+    protected function setDependency(string $key, $value): void
     {
         $this->getDependencyHelper()->setDependency($key, $value);
     }
 
     /**
-     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\DependencyHelper
+     * @return \SprykerTest\Shared\Testify\Helper\DependencyHelper
      */
-    private function getDependencyHelper()
+    protected function getDependencyHelper(): DependencyHelper
     {
-        return $this->getModule('\\' . DependencyHelper::class);
+        /** @var \SprykerTest\Shared\Testify\Helper\DependencyHelper $dependencyHelper */
+        $dependencyHelper = $this->getModule('\\' . DependencyHelper::class);
+
+        return $dependencyHelper;
     }
 
     /**
