@@ -49,10 +49,16 @@ class BuildModelConsole extends Console
 
         $command = $this->getFactory()->createModelBuildCommand();
 
-        return $this->getFactory()->createPropelCommandRunner()->runCommand(
+        $exitCode = $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,
             $this->getDefinition(),
             $output
         );
+
+        if ($exitCode === static::CODE_SUCCESS) {
+            $this->getFacade()->loadPropelTableMap();
+        }
+
+        return $exitCode;
     }
 }

@@ -26,6 +26,8 @@ use Spryker\Zed\Propel\Business\Model\PropelSchema;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
+use Spryker\Zed\Propel\Business\Model\PropelTableMapLoader;
+use Spryker\Zed\Propel\Business\Model\PropelTableMapLoaderInterface;
 use Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidator;
 use Spryker\Zed\Propel\Business\Model\Schema\XmlValidator\PropelSchemaXmlNameValidator;
 use Spryker\Zed\Propel\Business\SchemaElementFilter\PropelSchemaElementFilter;
@@ -235,6 +237,14 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createConfigConverter()
     {
         return new PropelConfigConverterJson($this->getConfig()->getPropelConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\Model\PropelTableMapLoaderInterface
+     */
+    public function createPropelTableMapLoader(): PropelTableMapLoaderInterface
+    {
+        return new PropelTableMapLoader($this->getConfig());
     }
 
     /**

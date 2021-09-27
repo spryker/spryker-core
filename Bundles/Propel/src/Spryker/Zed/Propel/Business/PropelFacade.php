@@ -304,4 +304,16 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
             return false;
         }
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function loadPropelTableMap(): bool
+    {
+        return $this->getFactory()->createPropelTableMapLoader()->loadTableMap();
+    }
 }

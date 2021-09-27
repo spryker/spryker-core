@@ -10,6 +10,10 @@ namespace Spryker\Zed\Propel;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException;
+use Spryker\Zed\PropelOrm\Business\Builder\ExtensionObjectBuilder;
+use Spryker\Zed\PropelOrm\Business\Builder\ExtensionQueryBuilder;
+use Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilder;
+use Spryker\Zed\PropelOrm\Business\Builder\QueryBuilder;
 
 class PropelConfig extends AbstractBundleConfig
 {
@@ -49,13 +53,57 @@ class PropelConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - This is the Spryker default propel config.
+     * - Please use `config_propel.php` to set environment specific values.
+     *
      * @api
      *
-     * @return array
+     * @return array<string, mixed>
+     */
+    public function getDefaultPropelConfig(): array
+    {
+        return [
+            'database' => [
+                'connections' => [],
+            ],
+            'runtime' => [
+                'defaultConnection' => 'default',
+                'connections' => ['default', 'zed'],
+            ],
+            'generator' => [
+                'defaultConnection' => 'default',
+                'connections' => ['default', 'zed'],
+                'objectModel' => [
+                    'defaultKeyType' => 'fieldName',
+                    'builders' => [
+                        // If you need full entity logging on Create/Update/Delete, then switch to
+                        // Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilderWithLogger instead.
+                        'object' => ObjectBuilder::class,
+                        'objectstub' => ExtensionObjectBuilder::class,
+                        'query' => QueryBuilder::class,
+                        'querystub' => ExtensionQueryBuilder::class,
+                    ],
+                ],
+            ],
+            'paths' => [
+                'phpDir' => APPLICATION_ROOT_DIR,
+                'sqlDir' => APPLICATION_ROOT_DIR . '/src/Orm/Propel/Sql/',
+                'migrationDir' => APPLICATION_ROOT_DIR . '/src/Orm/Propel/Migration_' . $this->getCurrentDatabaseEngine() . '/',
+                'schemaDir' => APPLICATION_ROOT_DIR . '/src/Orm/Propel/Schema/',
+                'loaderScriptDir' => APPLICATION_ROOT_DIR . '/data/cache/propel/generated-conf/',
+            ],
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return array<mixed>
      */
     public function getPropelConfig()
     {
-        return $this->get(PropelConstants::PROPEL);
+        return array_replace_recursive($this->getDefaultPropelConfig(), $this->get(PropelConstants::PROPEL));
     }
 
     /**
@@ -109,7 +157,7 @@ class PropelConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getPropelSchemaPathPatterns()
     {
@@ -132,7 +180,7 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getProjectPropelSchemaPathPatterns()
     {
@@ -204,7 +252,7 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return array<string>
      */
     public function getWhitelistForAllowedAttributeValueChanges()
     {
