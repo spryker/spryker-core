@@ -9,3 +9,5 @@ parameters:
         - '%rootDir%/../../../phpstan-bootstrap.php'
     parallel:
         processTimeout: 300.0
+    featureToggles:
+        bleedingEdge: true
