@@ -10,6 +10,8 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 interface PriceProductConcreteStorageWriterInterface
 {
     /**
+     * @phpstan-param array<mixed> $businessUnitProducts
+     *
      * @deprecated Will be removed without replacement.
      *
      * @param array $businessUnitProducts

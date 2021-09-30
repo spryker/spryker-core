@@ -97,4 +97,20 @@ class MerchantFacade extends AbstractFacade implements MerchantFacadeInterface
     {
         return $this->getFactory()->createMerchantStatusReader()->getApplicableMerchantStatuses($currentStatus);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer> $priceProductMerchantRelationshipStorageTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer>
+     */
+    public function filterPriceProductMerchantRelations(array $priceProductMerchantRelationshipStorageTransfers): array
+    {
+        return $this->getFactory()
+            ->createPriceProductMerchantRelationshipStorageFilter()
+            ->filterByMerchant($priceProductMerchantRelationshipStorageTransfers);
+    }
 }

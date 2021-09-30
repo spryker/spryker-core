@@ -37,10 +37,6 @@ class PriceProductAbstractStorageWriter extends AbstractPriceProductMerchantRela
         $priceProductMerchantRelationshipStorageTransfers = $this->priceProductMerchantRelationshipStorageRepository
             ->findMerchantRelationshipProductAbstractPricesByIds($priceProductMerchantRelationshipIds);
 
-        if (empty($priceProductMerchantRelationshipStorageTransfers)) {
-            return;
-        }
-
         $priceKeys = array_map(function (PriceProductMerchantRelationshipStorageTransfer $priceProductMerchantRelationshipStorageTransfer) {
             return $priceProductMerchantRelationshipStorageTransfer->getPriceKey();
         }, $priceProductMerchantRelationshipStorageTransfers);
@@ -68,6 +64,8 @@ class PriceProductAbstractStorageWriter extends AbstractPriceProductMerchantRela
     }
 
     /**
+     * @phpstan-param array<mixed> $businessUnitProducts
+     *
      * @deprecated Will be removed without replacement.
      *
      * @param array $businessUnitProducts
@@ -92,6 +90,7 @@ class PriceProductAbstractStorageWriter extends AbstractPriceProductMerchantRela
         bool $mergePrices = false
     ): void {
         $existingStorageEntities = $this->mapStorageEntitiesByPriceKey($existingStorageEntities);
+        $priceProductMerchantRelationshipStorageTransfers = $this->executePriceProductMerchantRelationshipStorageFilterPlugins($priceProductMerchantRelationshipStorageTransfers);
 
         foreach ($priceProductMerchantRelationshipStorageTransfers as $priceProductMerchantRelationshipStorageTransfer) {
             $priceProductMerchantRelationshipStorageTransfer = $this->groupPrices(

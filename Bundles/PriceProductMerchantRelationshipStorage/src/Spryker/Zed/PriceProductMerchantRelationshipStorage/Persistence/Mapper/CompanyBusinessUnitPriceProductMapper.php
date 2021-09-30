@@ -34,7 +34,10 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
                 );
             }
 
-            $this->addUngroupedPrice($pricesByKey[$uniquePriceIndex], $priceProductMerchantRelationshipData);
+            $this->addUngroupedPrice(
+                $pricesByKey[$uniquePriceIndex],
+                $priceProductMerchantRelationshipData
+            );
         }
 
         return $pricesByKey;

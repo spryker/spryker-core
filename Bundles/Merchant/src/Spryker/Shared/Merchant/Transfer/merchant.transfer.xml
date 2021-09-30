@@ -121,4 +121,13 @@
     <transfer name="EventEntity">
     </transfer>
 
+    <transfer name="PriceProductMerchantRelationshipStorage">
+        <property name="ungroupedPrices" type="PriceProductMerchantRelationshipValue[]" singular="ungroupedPrice"/>
+    </transfer>
+
+    <transfer name="PriceProductMerchantRelationshipValue">
+        <property name="fkMerchant" type="int"/>
+        <property name="grossPrice" type="int"/>
+        <property name="netPrice" type="int"/>
+    </transfer>
 </transfers>

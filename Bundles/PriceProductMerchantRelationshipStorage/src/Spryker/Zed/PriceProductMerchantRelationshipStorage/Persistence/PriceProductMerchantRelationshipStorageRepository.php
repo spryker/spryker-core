@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
 use Generated\Shared\Transfer\PriceProductMerchantRelationshipValueTransfer;
 use Orm\Zed\Currency\Persistence\Map\SpyCurrencyTableMap;
+use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipTableMap;
 use Orm\Zed\MerchantRelationship\Persistence\Map\SpyMerchantRelationshipToCompanyBusinessUnitTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceTypeTableMap;
@@ -328,7 +329,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     protected function withPriceProductAbstractData(ModelCriteria $modelCriteria): ModelCriteria
     {
         return $this->withPriceProductData($modelCriteria)
-            ->withColumn(SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT_ABSTRACT, PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT);
+            ->withColumn(SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT_ABSTRACT, PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT)
+            ->withColumn(SpyMerchantRelationshipTableMap::COL_FK_MERCHANT, PriceProductMerchantRelationshipValueTransfer::FK_MERCHANT);
     }
 
     /**

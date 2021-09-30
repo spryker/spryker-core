@@ -28,17 +28,39 @@ abstract class AbstractPriceProductMerchantRelationshipStorageWriter
     protected $priceGrouper;
 
     /**
+     * @var array<\Spryker\Zed\PriceProductMerchantRelationshipStorageExtension\Dependency\Plugin\PriceProductMerchantRelationshipStorageFilterPluginInterface>
+     */
+    protected $priceProductMerchantRelationshipStorageFilterPlugins;
+
+    /**
      * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageEntityManagerInterface $priceProductMerchantRelationshipStorageEntityManager
      * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Persistence\PriceProductMerchantRelationshipStorageRepositoryInterface $priceProductMerchantRelationshipStorageRepository
      * @param \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model\PriceGrouperInterface $priceGrouper
+     * @param array<\Spryker\Zed\PriceProductMerchantRelationshipStorageExtension\Dependency\Plugin\PriceProductMerchantRelationshipStorageFilterPluginInterface> $priceProductMerchantRelationshipStorageFilterPlugins
      */
     public function __construct(
         PriceProductMerchantRelationshipStorageEntityManagerInterface $priceProductMerchantRelationshipStorageEntityManager,
         PriceProductMerchantRelationshipStorageRepositoryInterface $priceProductMerchantRelationshipStorageRepository,
-        PriceGrouperInterface $priceGrouper
+        PriceGrouperInterface $priceGrouper,
+        array $priceProductMerchantRelationshipStorageFilterPlugins
     ) {
         $this->priceProductMerchantRelationshipStorageEntityManager = $priceProductMerchantRelationshipStorageEntityManager;
         $this->priceProductMerchantRelationshipStorageRepository = $priceProductMerchantRelationshipStorageRepository;
         $this->priceGrouper = $priceGrouper;
+        $this->priceProductMerchantRelationshipStorageFilterPlugins = $priceProductMerchantRelationshipStorageFilterPlugins;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer> $priceProductMerchantRelationshipStorageTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer>
+     */
+    protected function executePriceProductMerchantRelationshipStorageFilterPlugins(array $priceProductMerchantRelationshipStorageTransfers): array
+    {
+        foreach ($this->priceProductMerchantRelationshipStorageFilterPlugins as $priceProductMerchantRelationshipStorageFilterPlugin) {
+            $priceProductMerchantRelationshipStorageTransfers = $priceProductMerchantRelationshipStorageFilterPlugin->filter($priceProductMerchantRelationshipStorageTransfers);
+        }
+
+        return $priceProductMerchantRelationshipStorageTransfers;
     }
 }

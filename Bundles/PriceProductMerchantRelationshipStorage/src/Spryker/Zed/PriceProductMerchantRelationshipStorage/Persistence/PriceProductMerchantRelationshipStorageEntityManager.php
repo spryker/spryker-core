@@ -58,9 +58,16 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     public function deletePriceProductAbstractEntities(
         array $priceProductAbstractMerchantRelationshipStorageEntities
     ): void {
+        $storageEntityIds = [];
         foreach ($priceProductAbstractMerchantRelationshipStorageEntities as $priceProductAbstractMerchantRelationshipStorageEntity) {
-            $priceProductAbstractMerchantRelationshipStorageEntity->delete();
+            $storageEntityIds[] = $priceProductAbstractMerchantRelationshipStorageEntity->getIdPriceProductAbstractMerchantRelationshipStorage();
         }
+
+        $this->getFactory()
+            ->createPriceProductAbstractMerchantRelationshipStorageQuery()
+            ->filterByIdPriceProductAbstractMerchantRelationshipStorage_In($storageEntityIds)
+            ->find()
+            ->delete();
     }
 
     /**
@@ -104,8 +111,15 @@ class PriceProductMerchantRelationshipStorageEntityManager extends AbstractEntit
     public function deletePriceProductConcreteEntities(
         array $priceProductConcreteMerchantRelationshipStorageEntities
     ): void {
+        $storageEntityIds = [];
         foreach ($priceProductConcreteMerchantRelationshipStorageEntities as $priceProductConcreteMerchantRelationshipStorageEntity) {
-            $priceProductConcreteMerchantRelationshipStorageEntity->delete();
+            $storageEntityIds[] = $priceProductConcreteMerchantRelationshipStorageEntity->getIdPriceProductConcreteMerchantRelationshipStorage();
         }
+
+        $this->getFactory()
+            ->createPriceProductConcreteMerchantRelationshipStorageQuery()
+            ->filterByIdPriceProductConcreteMerchantRelationshipStorage_In($storageEntityIds)
+            ->find()
+            ->delete();
     }
 }

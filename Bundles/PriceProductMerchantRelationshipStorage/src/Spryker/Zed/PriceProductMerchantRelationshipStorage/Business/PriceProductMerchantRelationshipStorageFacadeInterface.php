@@ -19,6 +19,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
+     * @phpstan-param array<mixed> $businessUnitProducts
+     *
      * @deprecated Will be removed without replacement.
      *
      * @param array $businessUnitProducts
@@ -33,6 +35,8 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *
      * @api
      *
+     * @phpstan-param array<mixed> $businessUnitProducts
+     *
      * @deprecated Will be removed without replacement.
      *
      * @param array $businessUnitProducts
@@ -46,6 +50,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *  - Publish merchant relationship prices for product abstracts.
      *  - Uses the given company business unit IDs.
      *  - Refreshes the prices data for business units for all product abstracts and merchant relationships.
+     *  - Executes `PriceProductMerchantRelationshipStorageFilterPluginInterface` plugin stack.
      *
      * @api
      *
@@ -60,6 +65,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *  - Publish merchant relationship prices for product concretes.
      *  - Uses the given company business unit IDs.
      *  - Refreshes the prices data for business units for all product concretes and merchant relationships.
+     *  - Executes `PriceProductMerchantRelationshipStorageFilterPluginInterface` plugin stack.
      *
      * @api
      *
@@ -74,6 +80,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *  - Publish merchant relationship prices for product abstracts.
      *  - Uses the given IDs of the `spy_price_product_merchant_relationship` table.
      *  - Merges created or updated prices to the existing ones.
+     *  - Executes `PriceProductMerchantRelationshipStorageFilterPluginInterface` plugin stack.
      *
      * @api
      *
@@ -88,6 +95,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *  - Publish merchant relationship prices for product abstracts.
      *  - Uses the given abstract product IDs.
      *  - Refreshes the prices data for product abstracts for all business units and merchant relationships.
+     *  - Executes `PriceProductMerchantRelationshipStorageFilterPluginInterface` plugin stack.
      *
      * @api
      *
@@ -102,6 +110,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *  - Publish merchant relationship prices for product concretes.
      *  - Uses the given IDs of the `spy_price_product_merchant_relationship` table.
      *  - Merges created or updated prices to the existing ones.
+     *  - Executes `PriceProductMerchantRelationshipStorageFilterPluginInterface` plugin stack.
      *
      * @api
      *
@@ -116,6 +125,7 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      *  - Publish merchant relationship prices for product concretes.
      *  - Uses the given concrete product IDs.
      *  - Refreshes the prices data for product concretes for all business units and merchant relationships.
+     *  - Executes `PriceProductMerchantRelationshipStorageFilterPluginInterface` plugin stack.
      *
      * @api
      *
@@ -124,4 +134,19 @@ interface PriceProductMerchantRelationshipStorageFacadeInterface
      * @return void
      */
     public function publishConcretePriceProductByProductIds(array $productIds): void;
+
+    /**
+     * Specification:
+     *  - Publishes merchant relationship prices for product concretes and abstracts when merchant active changing.
+     *  - Refreshes the prices data for products for business units, merchant relationships and merchants from eventEntityTransfers.
+     *  - Deletes the product prices from storage for business units, merchant relationships if merchant is deactivated.
+     *  - Executes `PriceProductMerchantRelationshipStorageFilterPluginInterface` plugin stack.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantEvents(array $eventEntityTransfers): void;
 }

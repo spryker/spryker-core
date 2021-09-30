@@ -198,6 +198,11 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
                 $merchantRelationshipFilterTransfer->getMerchantRelationshipIds()
             );
         }
+        if ($merchantRelationshipFilterTransfer->getMerchantIds()) {
+            $merchantRelationshipQuery->filterByFkMerchant_In(
+                $merchantRelationshipFilterTransfer->getMerchantIds()
+            );
+        }
 
         return $merchantRelationshipQuery;
     }

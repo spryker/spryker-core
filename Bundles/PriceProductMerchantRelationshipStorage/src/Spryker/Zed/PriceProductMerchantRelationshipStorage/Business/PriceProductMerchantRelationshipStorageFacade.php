@@ -21,6 +21,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      *
      * @api
      *
+     * @phpstan-param array<mixed> $businessUnitProducts
+     *
      * @deprecated Will be removed without replacement.
      *
      * @param array $businessUnitProducts
@@ -37,6 +39,8 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
      * {@inheritDoc}
      *
      * @api
+     *
+     * @phpstan-param array<mixed> $businessUnitProducts
      *
      * @deprecated Will be removed without replacement
      *
@@ -138,5 +142,21 @@ class PriceProductMerchantRelationshipStorageFacade extends AbstractFacade imple
     {
         $this->getFactory()->createPriceProductConcreteStorageWriter()
             ->publishConcretePriceProductByProductIds($productIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByMerchantEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createPriceProductMerchantRelationshipStorageWriter()
+            ->writeCollectionByMerchantEvents($eventEntityTransfers);
     }
 }

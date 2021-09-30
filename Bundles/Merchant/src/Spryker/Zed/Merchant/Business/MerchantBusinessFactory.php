@@ -10,6 +10,8 @@ namespace Spryker\Zed\Merchant\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Merchant\Business\Creator\MerchantCreator;
 use Spryker\Zed\Merchant\Business\Creator\MerchantCreatorInterface;
+use Spryker\Zed\Merchant\Business\Filter\PriceProductMerchantRelationshipStorageFilter;
+use Spryker\Zed\Merchant\Business\Filter\PriceProductMerchantRelationshipStorageFilterInterface;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaver;
 use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
 use Spryker\Zed\Merchant\Business\Reader\MerchantReader;
@@ -148,5 +150,13 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function getEventFacade(): MerchantToEventFacadeInterface
     {
         return $this->getProvidedDependency(MerchantDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\Filter\PriceProductMerchantRelationshipStorageFilterInterface
+     */
+    public function createPriceProductMerchantRelationshipStorageFilter(): PriceProductMerchantRelationshipStorageFilterInterface
+    {
+        return new PriceProductMerchantRelationshipStorageFilter($this->createMerchantReader());
     }
 }
