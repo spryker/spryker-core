@@ -25,12 +25,4 @@ interface CompanyBusinessUnitWriterInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
     public function delete(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
-
-    /**
-     * @param array<\Generated\Shared\Transfer\CompanyBusinessUnitTransfer> $companyBusinessUnitMap
-     * @param int $entryCompanyBusinessUnitId
-     *
-     * @return bool
-     */
-    public function isHierarchyCycleExists(array $companyBusinessUnitMap, int $entryCompanyBusinessUnitId): bool;
 }
