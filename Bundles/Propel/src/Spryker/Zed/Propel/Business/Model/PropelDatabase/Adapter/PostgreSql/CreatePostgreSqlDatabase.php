@@ -11,6 +11,7 @@ use RuntimeException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedCharactersInConfigurationValueException;
+use Spryker\Zed\Propel\Business\Exception\UnsupportedVersionException;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\Command\CreateDatabaseInterface;
 use Spryker\Zed\Propel\PropelConfig;
 use Symfony\Component\Process\Process;
@@ -71,8 +72,7 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     protected function getExistsCommand()
     {
         return sprintf(
-            'PGPASSWORD=%s psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
-            $this->getConfigValue(PropelConstants::ZED_DB_PASSWORD),
+            'psql -h %s -p %s -U %s -w -lqt %s | cut -d \| -f 1 | grep -w %s | wc -l',
             Config::get(PropelConstants::ZED_DB_HOST),
             Config::get(PropelConstants::ZED_DB_PORT),
             $this->getConfigValue(PropelConstants::ZED_DB_USERNAME),
@@ -144,15 +144,23 @@ class CreatePostgreSqlDatabase implements CreateDatabaseInterface
     /**
      * @param string $command
      *
+     * @throws \Spryker\Zed\Propel\Business\Exception\UnsupportedVersionException
+     *
      * @return \Symfony\Component\Process\Process
      */
     protected function getProcess(string $command): Process
     {
-        if (method_exists(Process::class, 'fromShellCommandline')) {
-            return Process::fromShellCommandline($command);
+        // Shim for Symfony 3.x, to be removed when Symfony dependency becomes 4.2+
+        if (!method_exists(Process::class, 'fromShellCommandline')) {
+            if (version_compare(PHP_VERSION, '8.0.0', '>=') === true) {
+                throw new UnsupportedVersionException('The minimum required version for symfony/process is 4.2.0 to work with PHP 8');
+            }
+
+            //@phpstan-ignore-next-line
+            return new Process($command);
         }
 
-        return new Process(explode(' ', $command));
+        return Process::fromShellCommandline($command);
     }
 
     /**

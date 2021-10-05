@@ -111,11 +111,12 @@ class ExportPostgreSqlDatabase implements ExportDatabaseInterface
      */
     protected function getProcess($command)
     {
-        if (method_exists(Process::class, 'fromShellCommandline')) {
-            return Process::fromShellCommandline($command, null, $this->getEnvironmentVariables());
+        // Shim for Symfony 3.x, to be removed when Symfony dependency becomes 4.2+
+        if (!method_exists(Process::class, 'fromShellCommandline')) {
+            return new Process([$command], null, $this->getEnvironmentVariables());
         }
 
-        return new Process(explode(' ', $command), null, $this->getEnvironmentVariables());
+        return Process::fromShellCommandline($command, null, $this->getEnvironmentVariables());
     }
 
     /**

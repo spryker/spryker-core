@@ -117,11 +117,12 @@ class ImportPostgreSqlDatabase implements ImportDatabaseInterface
      */
     protected function getProcess(string $command): Process
     {
-        if (method_exists(Process::class, 'fromShellCommandline')) {
-            return Process::fromShellCommandline($command);
+        // Shim for Symfony 3.x, to be removed when Symfony dependency becomes 4.2+
+        if (!method_exists(Process::class, 'fromShellCommandline')) {
+            return new Process([$command]);
         }
 
-        return new Process(explode(' ', $command));
+        return Process::fromShellCommandline($command);
     }
 
     /**
