@@ -23,6 +23,7 @@ use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTable
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListItemTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapper;
@@ -32,6 +33,11 @@ use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapper;
  */
 class ShoppingListRepository extends AbstractRepository implements ShoppingListRepositoryInterface
 {
+    /**
+     * @var string
+     */
+    protected const UUID_FIELD_NAME = 'uuid';
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
@@ -552,7 +558,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     protected function createCustomerShoppingListWithoutItemsQuery(string $customerReference)
     {
-        return $this->getFactory()
+        $shoppingListQuery = $this->getFactory()
             ->createShoppingListQuery()
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
             ->leftJoinSpyShoppingListItem()
@@ -567,9 +573,26 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->groupByIdShoppingList()
             ->groupByKey()
             ->groupByName()
-            ->groupByUpdatedAt()
-            ->groupByUuid()
-            ->filterByCustomerReference($customerReference)
+            ->groupByUpdatedAt();
+
+        if ($this->isGroupingByUuidFieldSupported($shoppingListQuery)) {
+            $shoppingListQuery = $shoppingListQuery->groupByUuid();
+        } else {
+            $shoppingListQuery = $shoppingListQuery->groupByIdShoppingList()
+                ->groupByCustomerReference();
+        }
+
+        return $shoppingListQuery->filterByCustomerReference($customerReference)
             ->orderByIdShoppingList();
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery $shoppingListQuery
+     *
+     * @return bool
+     */
+    protected function isGroupingByUuidFieldSupported(SpyShoppingListQuery $shoppingListQuery): bool
+    {
+        return $shoppingListQuery->getTableMap()->hasColumn(static::UUID_FIELD_NAME);
     }
 }

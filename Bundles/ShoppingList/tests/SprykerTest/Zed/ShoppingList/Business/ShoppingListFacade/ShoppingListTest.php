@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListDismissRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
@@ -55,6 +56,16 @@ class ShoppingListTest extends Unit
      * @var string
      */
     protected const FAKE_PERMISSION_FULL_ACCESS = 'FAKE_FULL_ACCESS';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_PRICE_MODE = 'FAKE_PRICE_MODE';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_CURRENCY = 'FAKE_CURRENCY';
 
     /**
      * @var \SprykerTest\Zed\ShoppingList\ShoppingListBusinessTester
@@ -534,6 +545,31 @@ class ShoppingListTest extends Unit
 
         // Assert
         $this->assertSame(3, $shoppingListItemResponseTransfer->getShoppingLists()[0]->getNumberOfItems(), 'Customer should get correct count of items in the shopping list.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetShoppingListOverview(): void
+    {
+        // Arrange
+        /** @var \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface $shoppingListFacade */
+        $shoppingListFacade = $this->tester->getFacade();
+        $shoppingListTransfer = $this->tester->createShoppingList($this->ownerCompanyUserTransfer);
+        $shoppingListOverviewRequestTransfer = (new ShoppingListOverviewRequestTransfer())
+            ->setShoppingList($shoppingListTransfer)
+            ->setCurrencyIsoCode(static::FAKE_CURRENCY)
+            ->setPriceMode(static::FAKE_PRICE_MODE);
+
+        // Act
+        $shoppingListOverviewResponseTransfer = $shoppingListFacade->getShoppingListOverview($shoppingListOverviewRequestTransfer);
+
+        // Assert
+        $this->assertTrue($shoppingListOverviewResponseTransfer->getIsSuccess());
+        $this->assertSame(
+            $shoppingListOverviewRequestTransfer->getShoppingList()->getIdShoppingList(),
+            $shoppingListOverviewResponseTransfer->getShoppingLists()->getShoppingLists()[0]->getIdShoppingList()
+        );
     }
 
     /**
