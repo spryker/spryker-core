@@ -341,7 +341,8 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
     protected function withPriceProductConcreteData(ModelCriteria $modelCriteria): ModelCriteria
     {
         return $this->withPriceProductData($modelCriteria)
-            ->withColumn(SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT, PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT);
+            ->withColumn(SpyPriceProductMerchantRelationshipTableMap::COL_FK_PRODUCT, PriceProductMerchantRelationshipStorageTransfer::ID_PRODUCT)
+            ->withColumn(SpyMerchantRelationshipTableMap::COL_FK_MERCHANT, PriceProductMerchantRelationshipValueTransfer::FK_MERCHANT);
     }
 
     /**
