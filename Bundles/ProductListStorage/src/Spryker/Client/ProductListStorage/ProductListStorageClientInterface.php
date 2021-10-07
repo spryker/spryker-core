@@ -66,9 +66,9 @@ interface ProductListStorageClientInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function filterRestrictedAbstractProducts(array $productAbstractIds): array;
 
@@ -78,9 +78,9 @@ interface ProductListStorageClientInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function filterRestrictedConcreteProducts(array $productConcreteIds): array;
 }

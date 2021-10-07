@@ -10,7 +10,7 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Definition;
 interface IndexDefinitionLoaderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ElasticsearchIndexDefinitionTransfer>
      */
     public function loadIndexDefinitions();
 }

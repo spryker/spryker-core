@@ -17,12 +17,12 @@ class ProductBundleCache implements ProductBundleCacheInterface
     protected const ERROR_MESSAGE_CACHE_NOT_FOUND = 'Cache value for ProductForBundleTransfer by provided sku wasn\'t found';
 
     /**
-     * @var \Generated\Shared\Transfer\ProductForBundleTransfer[][]|null
+     * @var array<\Generated\Shared\Transfer\ProductForBundleTransfer[]>|null
      */
     protected static $groupedBySkuProductForBundleTransfers = [];
 
     /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
      *
      * @return void
      */
@@ -34,8 +34,8 @@ class ProductBundleCache implements ProductBundleCacheInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
-     * @param string[] $skus
+     * @param array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
+     * @param array<string> $skus
      *
      * @return void
      */
@@ -63,7 +63,7 @@ class ProductBundleCache implements ProductBundleCacheInterface
      *
      * @throws \Spryker\Zed\ProductBundle\Business\ProductBundle\Exception\CacheValueNotFoundException
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer>
      */
     public function getProductForBundleTransfersBySku(string $sku): array
     {

@@ -31,7 +31,7 @@ class CacheDelete
     /**
      * Deletes all cache files for all stores
      *
-     * @return string[]
+     * @return array<string>
      */
     public function deleteAllFiles()
     {

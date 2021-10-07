@@ -12,7 +12,7 @@ interface ProductBundleToStockFacadeInterface
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductStockIsDefined(string $sku): array;
 }

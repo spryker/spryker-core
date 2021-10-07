@@ -112,7 +112,7 @@ interface WishlistFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
+     * @param array<\Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemCollection
      *
      * @return void
      */

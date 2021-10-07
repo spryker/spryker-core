@@ -26,9 +26,9 @@ interface MerchantProductToProductFacadeInterface
     public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getProductConcreteTransfersByProductIds(array $productIds): array;
 

@@ -48,7 +48,7 @@ class ProductBundleCartChangeObserver implements ProductBundleCartChangeObserver
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $cartItems
      *
      * @return array
      */

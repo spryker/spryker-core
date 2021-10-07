@@ -110,9 +110,9 @@ class ProductAttributeWriter implements ProductAttributeWriterInterface
 
     /**
      * @param array $attributesToSave
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributeTransferCollection
+     * @param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributeTransferCollection
      *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>
      */
     protected function updateLocalizedAttributeTransfers(array $attributesToSave, array $localizedAttributeTransferCollection)
     {

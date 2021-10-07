@@ -51,7 +51,7 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
     protected $currencyFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\MerchantRelationshipTransfer[] Keys are merchant relationship keys.
+     * @var array<\Generated\Shared\Transfer\MerchantRelationshipTransfer> Keys are merchant relationship keys.
      */
     protected $merchantRelationshipsHeap = [];
 
@@ -61,12 +61,12 @@ class MerchantRelationshipSalesOrderThresholdWriterStep implements DataImportSte
     protected $merchantRelationshipsHeapSize = 0;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[] Keys are store names.
+     * @var array<\Generated\Shared\Transfer\StoreTransfer> Keys are store names.
      */
     protected $storesHeap = [];
 
     /**
-     * @var \Generated\Shared\Transfer\CurrencyTransfer[] Keys are currency codes.
+     * @var array<\Generated\Shared\Transfer\CurrencyTransfer> Keys are currency codes.
      */
     protected $currenciesHeap = [];
 

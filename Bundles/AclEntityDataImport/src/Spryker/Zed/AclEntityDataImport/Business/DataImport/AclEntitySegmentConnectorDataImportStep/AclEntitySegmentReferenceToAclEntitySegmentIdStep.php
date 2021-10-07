@@ -21,7 +21,7 @@ class AclEntitySegmentReferenceToAclEntitySegmentIdStep implements DataImportSte
     protected const ACL_ENTITY_SEGMENT_NOT_FOUND_TEMPLATE = 'Failed to find AclEntitySegment by reference: "%s"';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idAclEntitySegmentCache = [];
 

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ConfigurableBundlePageSearch\Business\Publisher;
 interface ConfigurableBundleTemplatePublisherInterface
 {
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */

@@ -10,28 +10,28 @@ namespace Spryker\Zed\TaxStorage\Persistence;
 interface TaxStorageRepositoryInterface
 {
     /**
-     * @param int[] $taxRateIds
+     * @param array<int> $taxRateIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findTaxSetIdsByTaxRateIds(array $taxRateIds): array;
 
     /**
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
-     * @return \Generated\Shared\Transfer\TaxSetStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\TaxSetStorageTransfer>
      */
     public function findTaxSetsByIds(array $taxSetIds): array;
 
     /**
-     * @param int[] $taxSetIds
+     * @param array<int> $taxSetIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersFromTaxSetStoragesByIdTaxSets(array $taxSetIds): array;
 
     /**
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getAllSynchronizationDataTransfersFromTaxSetStorages(): array;
 }

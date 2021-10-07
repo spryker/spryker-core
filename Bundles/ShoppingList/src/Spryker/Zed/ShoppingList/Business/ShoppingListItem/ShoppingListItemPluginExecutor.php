@@ -20,43 +20,43 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     protected $messengerFacade;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[]
+     * @var array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface>
      */
     protected $beforeDeletePlugins;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[]
+     * @var array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface>
      */
     protected $postSavePlugins;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     * @var array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface>
      */
     protected $addItemPreCheckPlugins;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface>
      */
     protected $itemExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface>
      */
     protected $itemCollectionExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[] $bulkPostSavePlugins
+     * @var array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface> $bulkPostSavePlugins
      */
     protected $bulkPostSavePlugins;
 
     /**
      * @param \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInterface $messengerFacade
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[] $beforeDeletePlugins
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[] $postSavePlugins
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[] $addItemPreCheckPlugins
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface[] $itemCollectionExpanderPlugins
-     * @param \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[] $bulkPostSavePlugins
+     * @param array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface> $beforeDeletePlugins
+     * @param array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface> $postSavePlugins
+     * @param array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\AddItemPreCheckPluginInterface> $addItemPreCheckPlugins
+     * @param array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface> $itemExpanderPlugins
+     * @param array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface> $itemCollectionExpanderPlugins
+     * @param array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface> $bulkPostSavePlugins
      */
     public function __construct(
         ShoppingListToMessengerFacadeInterface $messengerFacade,

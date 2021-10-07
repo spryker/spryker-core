@@ -12,14 +12,14 @@ use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 interface CategoryNodePageSearchWriterInterface
 {
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
     public function writeCategoryNodePageSearchCollection(array $categoryNodeIds): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

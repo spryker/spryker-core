@@ -87,7 +87,7 @@ class ProductListRestrictionValidator implements ProductListRestrictionValidator
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
-     * @param string[] $restrictedProductConcreteSkus
+     * @param array<string> $restrictedProductConcreteSkus
      *
      * @return void
      */

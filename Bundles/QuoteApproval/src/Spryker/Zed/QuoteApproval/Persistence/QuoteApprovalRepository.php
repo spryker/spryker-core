@@ -21,7 +21,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
      * @module CompanyUser
      * @module Customer
      *
-     * @param int[] $quoteIds
+     * @param array<int> $quoteIds
      *
      * @return \Propel\Runtime\Collection\ObjectCollection
      */
@@ -44,7 +44,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
      *
      * @param int $idQuote
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
     public function getQuoteApprovalsByIdQuote(int $idQuote): array
     {
@@ -72,7 +72,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
      *
      * @param \Generated\Shared\Transfer\QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
     public function getQuoteApprovalsIdexedByQuoteId(QuoteApprovalRequestTransfer $quoteApprovalsRequestTransfer): array
     {

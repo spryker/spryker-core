@@ -165,7 +165,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     /**
      * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getPersistedPriceProductTransfers(): ArrayObject
     {
@@ -177,16 +177,12 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param mixed[] $newPriceProductOffer
+     * @param array<mixed> $newPriceProductOffer
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypes
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypes
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function addPriceProductTransfers(
         array $newPriceProductOffer,
@@ -276,8 +272,8 @@ class PriceProductOfferTransformer implements DataTransformerInterface
      * @phpstan-return array<mixed>
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param mixed[] $prices
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypes
+     * @param array<mixed> $prices
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypes
      *
      * @return array
      */

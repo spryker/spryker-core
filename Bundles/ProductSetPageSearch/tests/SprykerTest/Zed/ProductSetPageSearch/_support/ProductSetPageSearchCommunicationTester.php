@@ -76,7 +76,7 @@ class ProductSetPageSearchCommunicationTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductSetTransfer[] $productSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductSetTransfer> $productSetTransfers
      * @param \Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacade $productSetPageSearchFacade
      *
      * @return void

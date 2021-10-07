@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductListStorage\Business\ProductConcrete;
 interface ProductConcreteReaderInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array;
 }

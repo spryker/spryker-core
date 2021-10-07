@@ -31,12 +31,12 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     protected $priceProductMapper;
 
     /**
-     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
+     * @var array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface>
      */
     protected $priceDimensionPlugins;
 
     /**
-     * @var \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[]
+     * @var array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface>
      */
     protected $priceProductExtractorPlugins;
 
@@ -44,8 +44,8 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
      * @param \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStorageInterface $storageClient
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductStorageKeyGeneratorInterface $priceStorageKeyGenerator
      * @param \Spryker\Client\PriceProductStorage\Storage\PriceProductMapperInterface $priceProductMapper
-     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[] $priceDimensionPlugins
-     * @param \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[] $priceProductExtractorPlugins
+     * @param array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface> $priceDimensionPlugins
+     * @param array<\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface> $priceProductExtractorPlugins
      */
     public function __construct(
         PriceProductStorageToStorageInterface $storageClient,
@@ -64,7 +64,7 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findPriceProductConcreteTransfers($idProductConcrete): array
     {
@@ -82,7 +82,7 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findDefaultPriceDimensionPriceProductTransfers(int $idProductConcrete): array
     {
@@ -128,9 +128,9 @@ class PriceConcreteStorageReader implements PriceConcreteStorageReaderInterface
 
     /**
      * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function applyPriceProductExtractorPlugins(int $idProductConcrete, array $priceProductTransfers): array
     {

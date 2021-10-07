@@ -84,7 +84,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
 
     /**
      * @param string $sku
-     * @param int|float|string $quantity
+     * @param string|float|int $quantity
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return bool
@@ -155,7 +155,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int[] Keys are product group keys, values are product quantities as 'quote.quantity + change.quantity'
+     * @return array<int> Keys are product group keys, values are product quantities as 'quote.quantity + change.quantity'
      */
     protected function getItemAddCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -177,7 +177,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int[] Keys are product group keys, values are product quantities as 'quote.quantity - change.quantity'
+     * @return array<int> Keys are product group keys, values are product quantities as 'quote.quantity - change.quantity'
      */
     protected function getItemRemoveCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -214,7 +214,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[] Keys are product SKUs.
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer> Keys are product SKUs.
      */
     protected function getProductQuantityTransferMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -230,7 +230,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[] Keys are group keys, values are skus
+     * @return array<string> Keys are group keys, values are skus
      */
     protected function getChangedSkuMap(CartChangeTransfer $cartChangeTransfer)
     {
@@ -253,10 +253,10 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer[] $productQuantityTransferMap
-     * @param string[] $requiredSkus
+     * @param array<\Generated\Shared\Transfer\ProductQuantityTransfer> $productQuantityTransferMap
+     * @param array<string> $requiredSkus
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     protected function replaceMissingSkus(array $productQuantityTransferMap, array $requiredSkus): array
     {
@@ -274,9 +274,9 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer[] $productQuantityTransfers
+     * @param array<\Generated\Shared\Transfer\ProductQuantityTransfer> $productQuantityTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     protected function mapProductQuantityTransfersBySku(array $productQuantityTransfers): array
     {

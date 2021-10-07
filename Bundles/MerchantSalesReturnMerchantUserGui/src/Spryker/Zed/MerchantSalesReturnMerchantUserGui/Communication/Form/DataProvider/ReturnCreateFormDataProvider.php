@@ -108,7 +108,7 @@ class ReturnCreateFormDataProvider
     /**
      * @phpstan-return array<int|string, mixed>
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function prepareReturnReasonChoices(): array
     {

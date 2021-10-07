@@ -25,6 +25,7 @@
 
     <transfer name="PriceProductMerchantRelationshipValue">
         <property name="idMerchantRelationship" type="int"/>
+        <property name="fkMerchant" type="int"/>
         <property name="priceType" type="string"/>
         <property name="priceData" type="string"/>
         <property name="grossPrice" type="int"/>
@@ -85,4 +86,11 @@
         <property name="orderDirection" type="string"/>
     </transfer>
 
+    <transfer name="MerchantRelationshipFilter">
+        <property name="merchantRelationshipIds" type="int[]" singular="merchantRelationshipId"/>
+    </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="fkCompanyBusinessUnit" type="int" description="ID of Business Unit Owner"/>
+    </transfer>
 </transfers>

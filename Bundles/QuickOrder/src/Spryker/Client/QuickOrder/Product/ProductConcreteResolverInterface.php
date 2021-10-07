@@ -15,7 +15,7 @@ interface ProductConcreteResolverInterface
     /**
      * @param \Generated\Shared\Transfer\QuickOrderTransfer $quickOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[] Keys are product SKUs
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer> Keys are product SKUs
      */
     public function getProductsByQuickOrder(QuickOrderTransfer $quickOrderTransfer): array;
 

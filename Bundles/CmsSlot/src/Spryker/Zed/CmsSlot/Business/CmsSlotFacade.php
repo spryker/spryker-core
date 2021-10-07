@@ -115,7 +115,7 @@ class CmsSlotFacade extends AbstractFacade implements CmsSlotFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsSlotTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsSlotTransfer>
      */
     public function getCmsSlotsByCriteria(CmsSlotCriteriaTransfer $cmsSlotCriteriaTransfer): array
     {

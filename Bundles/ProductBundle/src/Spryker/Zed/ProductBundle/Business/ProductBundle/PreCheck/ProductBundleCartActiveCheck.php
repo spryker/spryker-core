@@ -64,7 +64,7 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
      *
      * @return bool
      */
@@ -96,7 +96,7 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {

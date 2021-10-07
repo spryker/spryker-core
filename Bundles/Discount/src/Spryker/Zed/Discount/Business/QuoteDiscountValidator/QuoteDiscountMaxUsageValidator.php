@@ -75,9 +75,9 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[]|\ArrayObject $voucherDiscounts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $voucherDiscounts
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function findVoucherCodesExceedingUsageLimit(ArrayObject $voucherDiscounts): array
     {
@@ -88,9 +88,9 @@ class QuoteDiscountMaxUsageValidator implements QuoteDiscountValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\DiscountTransfer[]|\ArrayObject $voucherDiscounts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $voucherDiscounts
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getVoucherCodes(ArrayObject $voucherDiscounts)
     {

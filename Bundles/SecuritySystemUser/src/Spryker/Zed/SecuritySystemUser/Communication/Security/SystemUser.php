@@ -22,13 +22,13 @@ class SystemUser implements SystemUserInterface
     protected $password;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $roles = [];
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param string[] $roles
+     * @param array<string> $roles
      */
     public function __construct(UserTransfer $userTransfer, array $roles = [])
     {
@@ -40,7 +40,7 @@ class SystemUser implements SystemUserInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getRoles()
     {

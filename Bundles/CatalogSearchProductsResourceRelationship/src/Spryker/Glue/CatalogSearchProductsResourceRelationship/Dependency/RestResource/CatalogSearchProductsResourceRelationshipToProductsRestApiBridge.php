@@ -37,10 +37,10 @@ class CatalogSearchProductsResourceRelationshipToProductsRestApiBridge implement
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductAbstractsBySkus(array $skus, RestRequestInterface $restRequest): array
     {

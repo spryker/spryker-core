@@ -43,9 +43,9 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
      *
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getTemplateData(ArrayObject $itemTransfers): array
     {

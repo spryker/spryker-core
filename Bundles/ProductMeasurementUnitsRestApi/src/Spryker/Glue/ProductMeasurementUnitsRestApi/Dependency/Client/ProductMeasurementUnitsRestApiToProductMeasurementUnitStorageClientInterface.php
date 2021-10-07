@@ -10,24 +10,24 @@ namespace Spryker\Glue\ProductMeasurementUnitsRestApi\Dependency\Client;
 interface ProductMeasurementUnitsRestApiToProductMeasurementUnitStorageClientInterface
 {
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array;
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array;
 }

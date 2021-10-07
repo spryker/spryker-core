@@ -71,7 +71,7 @@ class SecuritySystemUserConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSystemUsers(): array
     {

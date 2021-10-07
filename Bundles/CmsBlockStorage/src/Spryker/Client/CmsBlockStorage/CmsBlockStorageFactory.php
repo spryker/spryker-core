@@ -30,7 +30,7 @@ class CmsBlockStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[]
+     * @return array<\Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface>
      */
     public function getCmsBlockStorageReaderPlugins(): array
     {

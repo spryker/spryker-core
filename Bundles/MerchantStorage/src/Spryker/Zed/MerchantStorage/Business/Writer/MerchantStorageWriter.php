@@ -78,7 +78,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -94,7 +94,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -110,7 +110,7 @@ class MerchantStorageWriter implements MerchantStorageWriterInterface
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
      * @return void
      */

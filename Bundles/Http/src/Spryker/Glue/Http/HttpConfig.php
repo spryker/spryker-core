@@ -57,7 +57,7 @@ class HttpConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTrustedProxies(): array
     {
@@ -67,7 +67,7 @@ class HttpConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTrustedHosts(): array
     {

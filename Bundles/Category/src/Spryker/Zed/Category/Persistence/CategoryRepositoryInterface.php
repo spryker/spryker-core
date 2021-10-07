@@ -68,14 +68,14 @@ interface CategoryRepositoryInterface
     /**
      * @param int $idCategoryNode
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getChildCategoryNodeIdsByCategoryNodeId(int $idCategoryNode): array;
 
     /**
      * @param int $idCategoryNode
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getParentCategoryNodeIdsByCategoryNodeId(int $idCategoryNode): array;
 
@@ -90,7 +90,7 @@ interface CategoryRepositoryInterface
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[][]
+     * @return array<\Generated\Shared\Transfer\NodeTransfer[]>
      */
     public function getCategoryNodeChildNodesCollectionIndexedByParentNodeId(
         CategoryTransfer $categoryTransfer,
@@ -110,7 +110,7 @@ interface CategoryRepositoryInterface
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getDescendantCategoryIdsByIdCategory(
         CategoryTransfer $categoryTransfer,
@@ -121,7 +121,7 @@ interface CategoryRepositoryInterface
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getDescendantCategoryNodeIdsByIdCategory(
         CategoryTransfer $categoryTransfer,
@@ -131,7 +131,7 @@ interface CategoryRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     public function getCategoryNodeUrls(CategoryNodeUrlCriteriaTransfer $categoryNodeUrlCriteriaTransfer): array;
 

@@ -168,7 +168,7 @@ class AclEntityDataImportCommunicationTester extends Actor
     }
 
     /**
-     * @param string[] $merchantReferences
+     * @param array<string> $merchantReferences
      *
      * @return void
      */

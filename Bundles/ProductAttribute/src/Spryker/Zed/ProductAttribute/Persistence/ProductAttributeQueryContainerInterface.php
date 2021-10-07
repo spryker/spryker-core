@@ -47,7 +47,7 @@ interface ProductAttributeQueryContainerInterface extends QueryContainerInterfac
      *
      * @api
      *
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */

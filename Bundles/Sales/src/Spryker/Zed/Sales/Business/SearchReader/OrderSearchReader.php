@@ -20,19 +20,19 @@ class OrderSearchReader implements OrderSearchReaderInterface
     protected $salesRepository;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderQueryExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderQueryExpanderPluginInterface>
      */
     protected $orderSearchQueryExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface>
      */
     protected $searchOrderExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderQueryExpanderPluginInterface[] $orderSearchQueryExpanderPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface> $searchOrderExpanderPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderQueryExpanderPluginInterface> $orderSearchQueryExpanderPlugins
      */
     public function __construct(
         SalesRepositoryInterface $salesRepository,
@@ -117,9 +117,9 @@ class OrderSearchReader implements OrderSearchReaderInterface
     /**
      * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function deriveOrderItemsUnitPrices(array $itemTransfers): array
     {
@@ -163,9 +163,9 @@ class OrderSearchReader implements OrderSearchReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     protected function executeSearchOrderExpanderPlugins(array $orderTransfers): array
     {
@@ -177,9 +177,9 @@ class OrderSearchReader implements OrderSearchReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSalesOrderIdsFromOrderTransfers(ArrayObject $orderTransfers): array
     {
@@ -193,9 +193,9 @@ class OrderSearchReader implements OrderSearchReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     protected function mapOrderTransfersByOrderReference(ArrayObject $orderTransfers): array
     {
@@ -209,10 +209,10 @@ class OrderSearchReader implements OrderSearchReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function mapOrderItemTransfersToOrderTransfers(array $itemTransfers, array $orderTransfers): array
     {
@@ -228,10 +228,10 @@ class OrderSearchReader implements OrderSearchReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TotalsTransfer[] $totalsTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\TotalsTransfer> $totalsTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer>
      */
     public function mapSalesOrderTotalsTransfersToOrderTransfers(array $totalsTransfers, ArrayObject $orderTransfers): ArrayObject
     {

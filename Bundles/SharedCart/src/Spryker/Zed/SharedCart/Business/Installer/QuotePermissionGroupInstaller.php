@@ -77,7 +77,7 @@ class QuotePermissionGroupInstaller implements QuotePermissionGroupInstallerInte
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PermissionTransfer[]
+     * @return array<\Generated\Shared\Transfer\PermissionTransfer>
      */
     protected function preparePermissionIndex(): array
     {

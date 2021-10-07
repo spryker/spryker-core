@@ -16,9 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantProductOptionStorageRepository extends AbstractRepository implements MerchantProductOptionStorageRepositoryInterface
 {
     /**
-     * @param int[] $merchantProductOptionGroupIds
+     * @param array<int> $merchantProductOptionGroupIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getAbstractProductIdsByMerchantProductOptionGroupIds(array $merchantProductOptionGroupIds): array
     {

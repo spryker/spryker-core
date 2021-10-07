@@ -19,13 +19,13 @@ class SearchInstaller implements SearchInstallerInterface
     /**
      * @deprecated Use {@link \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface} instead.
      *
-     * @var \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
+     * @var array<\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface>
      */
     protected $installer = [];
 
     /**
      * @param \Psr\Log\LoggerInterface $logger
-     * @param \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface[] $installer Deprecated: Use {@link \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface} instead.
+     * @param array<\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface> $installer Deprecated: Use {@link \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface} instead.
      */
     public function __construct(LoggerInterface $logger, array $installer)
     {

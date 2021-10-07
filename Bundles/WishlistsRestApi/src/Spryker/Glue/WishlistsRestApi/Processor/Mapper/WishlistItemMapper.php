@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 class WishlistItemMapper implements WishlistItemMapperInterface
 {
     /**
-     * @var \Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface[]
+     * @var array<\Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface>
      */
     protected $restWishlistItemsAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface[] $restWishlistItemsAttributesMapperPlugins
+     * @param array<\Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface> $restWishlistItemsAttributesMapperPlugins
      */
     public function __construct(array $restWishlistItemsAttributesMapperPlugins = [])
     {

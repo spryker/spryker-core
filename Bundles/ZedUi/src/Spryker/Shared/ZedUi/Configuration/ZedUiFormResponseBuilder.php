@@ -56,12 +56,12 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
     protected const RESPONSE_NOTIFICATION_TYPE_WARNING = 'warning';
 
     /**
-     * @var \Generated\Shared\Transfer\ZedUiFormResponseActionTransfer[]
+     * @var array<\Generated\Shared\Transfer\ZedUiFormResponseActionTransfer>
      */
     protected $actions = [];
 
     /**
-     * @var array[]
+     * @var array<array>
      */
     protected $notifications = [];
 

@@ -38,7 +38,7 @@ interface EventFacadeInterface
      * @api
      *
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $transfers
      *
      * @return void
      */
@@ -54,7 +54,7 @@ interface EventFacadeInterface
      *
      * @param string $listenerName
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param array<\Spryker\Shared\Kernel\Transfer\TransferInterface> $transfers
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerAmbiguousException
@@ -69,9 +69,9 @@ interface EventFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function processEnqueuedMessages(array $queueMessageTransfers);
 
@@ -81,9 +81,9 @@ interface EventFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function forwardMessages(array $queueMessageTransfers): array;
 }

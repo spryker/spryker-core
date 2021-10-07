@@ -12,7 +12,7 @@ interface ProductAbstractRelationReaderInterface
     /**
      * @param int $idProductLabel
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findIdsProductAbstractByIdProductLabel($idProductLabel);
 }

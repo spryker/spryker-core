@@ -17,7 +17,7 @@ use Spryker\Zed\ShoppingListDataImport\Business\DataSet\ShoppingListDataSetInter
 class CustomerReferenceValidationStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $customerReferenceCache = [];
 

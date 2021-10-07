@@ -44,14 +44,14 @@ class ReturnValidator implements ReturnValidatorInterface
     protected $salesReturnConfig;
 
     /**
-     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[]
+     * @var array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface>
      */
     protected $returnRequestValidatorPlugins;
 
     /**
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\SalesReturn\SalesReturnConfig $salesReturnConfig
-     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[] $returnRequestValidatorPlugins
+     * @param array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface> $returnRequestValidatorPlugins
      */
     public function __construct(
         SalesReturnToStoreFacadeInterface $storeFacade,
@@ -65,7 +65,7 @@ class ReturnValidator implements ReturnValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
@@ -100,7 +100,7 @@ class ReturnValidator implements ReturnValidatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return bool
      */
@@ -116,7 +116,7 @@ class ReturnValidator implements ReturnValidatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return bool
      */

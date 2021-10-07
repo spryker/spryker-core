@@ -36,7 +36,7 @@ class MerchantPortalApplicationCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getMerchantPortalApplicationPlugins(): array
     {

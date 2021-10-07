@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\HealthCheckRequestTransfer;
 class ServiceNameValidator implements ValidatorInterface
 {
     /**
-     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
+     * @param array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface> $healthCheckPlugins
      * @param \Generated\Shared\Transfer\HealthCheckRequestTransfer $healthCheckRequestTransfer
      *
      * @return bool
@@ -37,9 +37,9 @@ class ServiceNameValidator implements ValidatorInterface
     }
 
     /**
-     * @param \Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface[] $healthCheckPlugins
+     * @param array<\Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface> $healthCheckPlugins
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getHealthCheckServiceName(array $healthCheckPlugins): array
     {

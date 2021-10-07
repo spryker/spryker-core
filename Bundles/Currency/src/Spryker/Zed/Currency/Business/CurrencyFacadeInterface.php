@@ -85,7 +85,7 @@ interface CurrencyFacadeInterface
      *
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
      *
-     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
     public function getAllStoresWithCurrencies();
 
@@ -130,9 +130,9 @@ interface CurrencyFacadeInterface
      *
      * @api
      *
-     * @param string[] $isoCodes
+     * @param array<string> $isoCodes
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     public function getCurrencyTransfersByIsoCodes(array $isoCodes): array;
 

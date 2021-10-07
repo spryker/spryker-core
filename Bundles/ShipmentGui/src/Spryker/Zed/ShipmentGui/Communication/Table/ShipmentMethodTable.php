@@ -99,7 +99,7 @@ class ShipmentMethodTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethod[] $shipmentMethodEntities */
+        /** @var array<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod> $shipmentMethodEntities */
         $shipmentMethodEntities = $this->runQuery($this->prepareQuery(), $config, true);
 
         $shipmentMethodRows = [];

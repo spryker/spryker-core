@@ -139,7 +139,7 @@ class TouchFacade extends AbstractFacade implements TouchFacadeInterface
      *
      * @param string $itemType
      *
-     * @return \Generated\Shared\Transfer\TouchTransfer[]
+     * @return array<\Generated\Shared\Transfer\TouchTransfer>
      */
     public function getItemsByType($itemType)
     {

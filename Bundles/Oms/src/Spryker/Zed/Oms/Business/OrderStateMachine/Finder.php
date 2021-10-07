@@ -51,7 +51,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idOrderItem
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEvents($idOrderItem)
     {
@@ -65,7 +65,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -82,7 +82,7 @@ class Finder implements FinderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder)
     {
@@ -99,7 +99,7 @@ class Finder implements FinderInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getManualEventsByOrderItemEntity(SpySalesOrderItem $orderItem)
     {
@@ -175,7 +175,7 @@ class Finder implements FinderInterface
     /**
      * @deprecated Not in use anymore.
      *
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     * @param array<\Spryker\Zed\Oms\Business\Process\StateInterface> $states
      * @param string $sku
      * @param bool $returnTest
      *
@@ -238,7 +238,7 @@ class Finder implements FinderInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag)
     {
@@ -249,7 +249,7 @@ class Finder implements FinderInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag)
     {
@@ -257,7 +257,7 @@ class Finder implements FinderInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
     public function getProcesses()
     {
@@ -275,7 +275,7 @@ class Finder implements FinderInterface
      * @param string $flag
      * @param bool $hasFlag
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     protected function getItemsByFlag(SpySalesOrder $order, $flag, $hasFlag)
     {
@@ -301,7 +301,7 @@ class Finder implements FinderInterface
      * @param string $flag
      * @param bool $hasFlag
      *
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\StateInterface>
      */
     protected function getStatesByFlag($processName, $flag, $hasFlag)
     {

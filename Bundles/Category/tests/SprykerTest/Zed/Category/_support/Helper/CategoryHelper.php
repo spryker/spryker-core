@@ -207,7 +207,7 @@ class CategoryHelper extends Module
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function getLocaleTransferCollection(): array
     {

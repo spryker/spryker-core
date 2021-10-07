@@ -15,7 +15,7 @@ interface SalesOrderThresholdFormFieldDependenciesPluginInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getThresholdFieldDependentFieldNames(): array;
 }

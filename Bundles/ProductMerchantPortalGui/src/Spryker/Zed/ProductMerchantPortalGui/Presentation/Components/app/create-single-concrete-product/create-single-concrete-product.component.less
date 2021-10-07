@@ -4,6 +4,8 @@
 @create-single-concrete-product-card-margin-bottom: 20px;
 @create-single-concrete-product-actions-margin: 0 -5px;
 @create-single-concrete-product-action-padding: 0 5px;
+@create-single-concrete-product-header-padding: 17px 0 0 30px;
+@create-single-concrete-product-header-height: 80px;
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -23,8 +25,9 @@
     overflow-y: auto;
 
     &__header {
+        min-height: @create-single-concrete-product-header-height;
+        padding: @create-single-concrete-product-header-padding;
         background-color: @white;
-        padding: @create-single-concrete-product-padding;
 
         .@{headline-prefix-cls} {
             padding-bottom: 0;
@@ -32,7 +35,7 @@
     }
 
     &__title {
-        font-size: @heading-3-font-size;
+        font-size: @heading-5-font-size;
         font-weight: @font-weight-semi-bold;
     }
 

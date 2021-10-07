@@ -23,7 +23,7 @@ abstract class CategoryAbstractController extends AbstractController
     protected $currentLocale;
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return void
      */
@@ -35,7 +35,7 @@ abstract class CategoryAbstractController extends AbstractController
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return void
      */

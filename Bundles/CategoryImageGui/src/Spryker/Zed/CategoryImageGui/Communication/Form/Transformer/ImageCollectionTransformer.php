@@ -15,7 +15,7 @@ class ImageCollectionTransformer implements DataTransformerInterface
     /**
      * {@inheritDoc}
      *
-     * @param \Generated\Shared\Transfer\CategoryImageTransfer[] $value The value in the original representation
+     * @param array<\Generated\Shared\Transfer\CategoryImageTransfer> $value The value in the original representation
      *
      * @return array|null The value in the transformed representation
      */

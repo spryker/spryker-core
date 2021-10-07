@@ -53,7 +53,7 @@ class CompanyUserSynchronizationDataBulkPlugin extends AbstractPlugin implements
      * @param int $limit
      * @param array $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {

@@ -15,7 +15,7 @@ interface MerchantStorageRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantStorage\Persistence\SpyMerchantStorage[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantStorage\Persistence\SpyMerchantStorage>
      */
     public function getFilteredMerchantStorageEntityTransfers(
         MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer

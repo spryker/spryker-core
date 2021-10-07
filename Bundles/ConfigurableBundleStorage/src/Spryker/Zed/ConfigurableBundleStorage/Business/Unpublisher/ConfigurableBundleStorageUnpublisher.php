@@ -35,7 +35,7 @@ class ConfigurableBundleStorageUnpublisher implements ConfigurableBundleStorageU
     }
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */

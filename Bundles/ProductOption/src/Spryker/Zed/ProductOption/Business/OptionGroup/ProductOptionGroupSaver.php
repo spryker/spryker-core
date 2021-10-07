@@ -42,7 +42,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
     protected $productOptionValueSaver;
 
     /**
-     * @var \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[]
+     * @var array<\Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface>
      */
     protected $productOptionValuesPreRemovePlugins;
 
@@ -52,7 +52,7 @@ class ProductOptionGroupSaver implements ProductOptionGroupSaverInterface
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\TranslationSaverInterface $translationSaver
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\AbstractProductOptionSaverInterface $abstractProductOptionSaver
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValueSaverInterface $productOptionValueSaver
-     * @param \Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface[] $productOptionValuesPreRemovePlugins
+     * @param array<\Spryker\Zed\ProductOptionExtension\Dependency\Plugin\ProductOptionValuesPreRemovePluginInterface> $productOptionValuesPreRemovePlugins
      */
     public function __construct(
         ProductOptionQueryContainerInterface $productOptionQueryContainer,

@@ -26,7 +26,7 @@ class ProductOfferPricesRestApiToPriceProductStorageClientBridge implements Prod
      * @param int $idProductConcrete
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getResolvedPriceProductConcreteTransfers(int $idProductConcrete, int $idProductAbstract): array
     {

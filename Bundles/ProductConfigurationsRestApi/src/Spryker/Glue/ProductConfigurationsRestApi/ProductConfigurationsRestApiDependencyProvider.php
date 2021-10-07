@@ -90,7 +90,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
     }
 
     /**
-     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationPriceMapperPluginInterface[]
+     * @return array<\Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\ProductConfigurationPriceMapperPluginInterface>
      */
     protected function getProductConfigurationPriceMapperPlugins(): array
     {
@@ -98,7 +98,7 @@ class ProductConfigurationsRestApiDependencyProvider extends AbstractBundleDepen
     }
 
     /**
-     * @return \Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestProductConfigurationPriceMapperPluginInterface[]
+     * @return array<\Spryker\Glue\ProductConfigurationsRestApiExtension\Dependency\Plugin\RestProductConfigurationPriceMapperPluginInterface>
      */
     protected function getRestProductConfigurationPriceMapperPlugins(): array
     {

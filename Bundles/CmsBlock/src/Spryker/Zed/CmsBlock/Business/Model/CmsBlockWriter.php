@@ -46,7 +46,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
     protected $templateManager;
 
     /**
-     * @var \Spryker\Zed\CmsBlockExtension\Dependency\Plugin\CmsBlockUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\CmsBlockExtension\Dependency\Plugin\CmsBlockUpdatePluginInterface>
      */
     protected $cmsBlockUpdatePlugins;
 
@@ -62,7 +62,7 @@ class CmsBlockWriter implements CmsBlockWriterInterface
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockStoreRelationWriterInterface $cmsBlockStoreRelationWriter
      * @param \Spryker\Zed\CmsBlock\Dependency\Facade\CmsBlockToTouchInterface $touchFacade
      * @param \Spryker\Zed\CmsBlock\Business\Model\CmsBlockTemplateManagerInterface $cmsBlockTemplateManager
-     * @param \Spryker\Zed\CmsBlockExtension\Dependency\Plugin\CmsBlockUpdatePluginInterface[] $updatePlugins
+     * @param array<\Spryker\Zed\CmsBlockExtension\Dependency\Plugin\CmsBlockUpdatePluginInterface> $updatePlugins
      * @param \Spryker\Zed\CmsBlock\Business\KeyProvider\CmsBlockKeyProviderInterface $cmsBlockKeyProvider
      */
     public function __construct(

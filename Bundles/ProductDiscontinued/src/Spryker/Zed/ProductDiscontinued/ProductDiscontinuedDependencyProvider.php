@@ -128,7 +128,7 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface[]
+     * @return array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostProductDiscontinuePluginInterface>
      */
     protected function getPostProductDiscontinuePlugins(): array
     {
@@ -138,7 +138,7 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     /**
      * @deprecated Use {@link \Spryker\Zed\ProductDiscontinued\ProductDiscontinuedDependencyProvider::getPostDeleteBulkProductDiscontinuedPlugins()} instead.
      *
-     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface[]
+     * @return array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteProductDiscontinuedPluginInterface>
      */
     protected function getPostDeleteProductDiscontinuedPlugins(): array
     {
@@ -146,7 +146,7 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface[]
+     * @return array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\PostDeleteBulkProductDiscontinuedPluginInterface>
      */
     protected function getPostDeleteBulkProductDiscontinuedPlugins(): array
     {
@@ -154,7 +154,7 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
     }
 
     /**
-     * @return \Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface[]
+     * @return array<\Spryker\Zed\ProductDiscontinuedExtension\Dependency\Plugin\ProductDiscontinuedPreDeleteCheckPluginInterface>
      */
     protected function getProductDiscontinuedPreDeleteCheckPlugins(): array
     {

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 interface FinderInterface
 {
     /**
-     * @return \Symfony\Component\Finder\SplFileInfo[]
+     * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
     public function getXmlTransferDefinitionFiles();
 }

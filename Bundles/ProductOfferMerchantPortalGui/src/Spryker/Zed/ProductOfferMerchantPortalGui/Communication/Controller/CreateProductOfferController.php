@@ -122,7 +122,7 @@ class CreateProductOfferController extends AbstractProductOfferController
      * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param mixed[] $initialData
+     * @param array<mixed> $initialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -170,9 +170,9 @@ class CreateProductOfferController extends AbstractProductOfferController
     }
 
     /**
-     * @param mixed[] $responseData
+     * @param array<mixed> $responseData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function addSuccessResponseDataToResponse(array $responseData): array
     {

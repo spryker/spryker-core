@@ -35,7 +35,7 @@ class ConfigurationProvider implements ConfigurationProviderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getJenkinsAuthCredentials(): array
     {

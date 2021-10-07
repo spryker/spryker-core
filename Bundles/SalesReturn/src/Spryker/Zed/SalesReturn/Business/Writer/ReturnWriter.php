@@ -56,7 +56,7 @@ class ReturnWriter implements ReturnWriterInterface
     protected $omsEventTriggerer;
 
     /**
-     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface[]
+     * @var array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface>
      */
     protected $returnPreCreatePlugins;
 
@@ -66,7 +66,7 @@ class ReturnWriter implements ReturnWriterInterface
      * @param \Spryker\Zed\SalesReturn\Business\Reader\ReturnReaderInterface $returnReader
      * @param \Spryker\Zed\SalesReturn\Business\Generator\ReturnReferenceGeneratorInterface $returnReferenceGenerator
      * @param \Spryker\Zed\SalesReturn\Business\Triggerer\OmsEventTriggererInterface $omsEventTriggerer
-     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface[] $returnPreCreatePlugins
+     * @param array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface> $returnPreCreatePlugins
      */
     public function __construct(
         SalesReturnEntityManagerInterface $salesReturnEntityManager,
@@ -113,7 +113,7 @@ class ReturnWriter implements ReturnWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnResponseTransfer
      */
@@ -153,7 +153,7 @@ class ReturnWriter implements ReturnWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer
      */
@@ -216,7 +216,7 @@ class ReturnWriter implements ReturnWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnTransfer
      */
@@ -232,9 +232,9 @@ class ReturnWriter implements ReturnWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function indexOrderItemsByUuid(ArrayObject $itemTransfers): array
     {
@@ -248,9 +248,9 @@ class ReturnWriter implements ReturnWriterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function indexOrderItemsById(ArrayObject $itemTransfers): array
     {
@@ -266,7 +266,7 @@ class ReturnWriter implements ReturnWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getOrderItems(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ArrayObject
     {
@@ -339,7 +339,7 @@ class ReturnWriter implements ReturnWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
      */

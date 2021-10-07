@@ -33,7 +33,7 @@ class ProductOptionStorageToStorageBridge implements ProductOptionStorageToStora
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

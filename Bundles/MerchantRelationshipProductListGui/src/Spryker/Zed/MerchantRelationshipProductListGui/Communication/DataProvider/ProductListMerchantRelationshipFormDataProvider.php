@@ -48,7 +48,7 @@ class ProductListMerchantRelationshipFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductListCollectionTransfer $productListCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductListChoices(ProductListCollectionTransfer $productListCollectionTransfer): array
     {
@@ -65,7 +65,7 @@ class ProductListMerchantRelationshipFormDataProvider
      * @param \Generated\Shared\Transfer\ProductListCollectionTransfer $productListCollectionTransfer
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer|null $merchantRelationshipTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getAssignedProductListIds(
         ProductListCollectionTransfer $productListCollectionTransfer,

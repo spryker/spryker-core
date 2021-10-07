@@ -36,7 +36,7 @@ class CustomerAnonymizer implements CustomerAnonymizerInterface
     protected $addressModel;
 
     /**
-     * @var \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[]
+     * @var array<\Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface>
      */
     protected $plugins;
 

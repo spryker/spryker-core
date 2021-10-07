@@ -54,7 +54,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer $priceProductOfferTableViewCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer
@@ -159,7 +159,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductOfferTableViewTransfer[] $priceProductOfferTableViewTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductOfferTableViewTransfer> $priceProductOfferTableViewTransfers
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Generated\Shared\Transfer\PaginationTransfer
@@ -178,7 +178,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
     /**
      * @param \Generated\Shared\Transfer\PriceProductOfferTableViewTransfer $priceProductOfferTableViewTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductOfferTableViewTransfer
      */
@@ -212,7 +212,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
      * @return array
      */
@@ -249,7 +249,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
     /**
      * @phpstan-return array<int, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNamesIndexedByIdStore(): array
     {

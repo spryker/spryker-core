@@ -12,9 +12,9 @@ interface CmsPageMapperInterface
     /**
      * @phpstan-return array<string, \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer>
      *
-     * @param \Generated\Shared\Transfer\CmsPageStorageTransfer[] $cmsPageStorageTransfers
+     * @param array<\Generated\Shared\Transfer\CmsPageStorageTransfer> $cmsPageStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\RestCmsPagesAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestCmsPagesAttributesTransfer>
      */
     public function mapCmsPageStorageTransfersToRestCmsPagesAttributesTransfers(array $cmsPageStorageTransfers): array;
 }

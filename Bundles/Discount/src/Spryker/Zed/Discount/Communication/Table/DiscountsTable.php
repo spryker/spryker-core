@@ -79,14 +79,14 @@ class DiscountsTable extends AbstractTable
     protected $discountQueryContainer;
 
     /**
-     * @var array|\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface>
      */
     protected $calculatorPlugins = [];
 
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscountQuery $discountQuery
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface> $calculatorPlugins
      */
     public function __construct(SpyDiscountQuery $discountQuery, DiscountQueryContainerInterface $discountQueryContainer, array $calculatorPlugins)
     {
@@ -152,7 +152,7 @@ class DiscountsTable extends AbstractTable
     {
         $result = [];
 
-        /** @var \Orm\Zed\Discount\Persistence\SpyDiscount[] $discountEntities */
+        /** @var array<\Orm\Zed\Discount\Persistence\SpyDiscount> $discountEntities */
         $discountEntities = $this->runQuery($this->discountQuery, $config, true);
 
         foreach ($discountEntities as $discountEntity) {
@@ -188,7 +188,7 @@ class DiscountsTable extends AbstractTable
     }
 
     /**
-     * @param \Traversable|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStoreEntityCollection
+     * @param \Traversable<\Orm\Zed\Discount\Persistence\SpyDiscountStore> $discountStoreEntityCollection
      *
      * @return string
      */

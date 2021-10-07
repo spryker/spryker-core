@@ -35,7 +35,7 @@ class ConfigurableBundlePageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getConfigurableBundleTemplateResultFormatterPlugins(): array
     {
@@ -43,7 +43,7 @@ class ConfigurableBundlePageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     public function getConfigurableBundleTemplatePageSearchQueryExpanderPlugins(): array
     {

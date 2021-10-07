@@ -69,7 +69,7 @@ class CustomerCompanyAttachFormDataProvider
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getOptions(): array
     {
@@ -80,7 +80,7 @@ class CustomerCompanyAttachFormDataProvider
     }
 
     /**
-     * @return int[] [company name => company id]
+     * @return array<int> [company name => company id]
      */
     protected function createCompanyList(): array
     {

@@ -199,9 +199,9 @@ class CartSharer implements CartSharerInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[] $shareDetails
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShareDetailTransfer> $shareDetails
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShareDetailTransfer>
      */
     protected function filterShareDetailsWithoutQuotePermissionGroup(ArrayObject $shareDetails): ArrayObject
     {
@@ -290,10 +290,10 @@ class CartSharer implements CartSharerInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[] $shareDetailTransferList
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShareDetailTransfer> $shareDetailTransferList
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShareDetailTransfer>
      */
     protected function filterShareCartToRemove(ArrayObject $shareDetailTransferList, ShareCartRequestTransfer $shareCartRequestTransfer)
     {

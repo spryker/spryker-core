@@ -37,7 +37,7 @@ class StateMachineReader implements StateMachineReaderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array
     {
@@ -55,7 +55,7 @@ class StateMachineReader implements StateMachineReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSingleOrderItemManualEvents(ItemTransfer $itemTransfer): array
     {

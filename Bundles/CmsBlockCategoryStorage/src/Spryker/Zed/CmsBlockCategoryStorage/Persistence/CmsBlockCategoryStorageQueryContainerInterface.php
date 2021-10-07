@@ -44,7 +44,7 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
      *
      * @deprecated Use {@link \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainerInterface::queryCmsBlockCategoriesByCmsCategoryIds()} instead.
      *
-     * @param int[] $cmsBlockCategoriesIds
+     * @param array<int> $cmsBlockCategoriesIds
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */
@@ -56,7 +56,7 @@ interface CmsBlockCategoryStorageQueryContainerInterface extends QueryContainerI
      *
      * @api
      *
-     * @param int[] $cmsBlockCategoriesIds
+     * @param array<int> $cmsBlockCategoriesIds
      *
      * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
      */

@@ -14,9 +14,9 @@ use Generated\Shared\Transfer\StoreTransfer;
 class StockMapper implements StockMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StockTransfer[] $stockTransfers
+     * @param array<\Generated\Shared\Transfer\StockTransfer> $stockTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function mapStoresToWarehouses(array $stockTransfers): array
     {
@@ -29,10 +29,10 @@ class StockMapper implements StockMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StockTransfer[] $stockTransfers
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StockTransfer> $stockTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function mapWarehousesToStores(array $stockTransfers, array $storeTransfers): array
     {
@@ -45,9 +45,9 @@ class StockMapper implements StockMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNamesFromStoreTransferCollection(array $storeTransfers): array
     {
@@ -58,10 +58,10 @@ class StockMapper implements StockMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
-     * @param string[][] $storeStockMapping
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     * @param array<string[]> $storeStockMapping
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function mapStockToStores(StockTransfer $stockTransfer, array $storeTransfers, array $storeStockMapping): array
     {
@@ -78,7 +78,7 @@ class StockMapper implements StockMapperInterface
     /**
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNamesFromStoreRelation(StoreRelationTransfer $storeRelationTransfer): array
     {

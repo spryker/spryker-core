@@ -65,7 +65,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
+     * @return array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface>
      */
     protected function getSearchKeyGeneratorPlugins(Container $container)
     {
@@ -75,7 +75,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Service\Kernel\Container $container
      *
-     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
+     * @return array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface>
      */
     protected function getStorageKeyGeneratorPlugins(Container $container)
     {

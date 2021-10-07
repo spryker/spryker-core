@@ -28,14 +28,14 @@ class QuoteItemReader implements QuoteItemReaderInterface
     protected $quoteItemMapper;
 
     /**
-     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[]
+     * @var array<\Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface>
      */
     protected $quoteItemReadValidatorPlugins;
 
     /**
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
-     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[] $quoteItemReadValidatorPlugins
+     * @param array<\Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface> $quoteItemReadValidatorPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,

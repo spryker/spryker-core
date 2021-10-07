@@ -10,9 +10,9 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 interface PriceProductExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function expandPriceProductTransfers(array $priceProductTransfers): array;
 }

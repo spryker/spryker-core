@@ -10,21 +10,21 @@ namespace Spryker\Zed\Touch\Persistence;
 interface TouchEntityManagerInterface
 {
     /**
-     * @param int[] $touchEntityIds
+     * @param array<int> $touchEntityIds
      *
      * @return int
      */
     public function deleteTouchEntitiesByIds(array $touchEntityIds): int;
 
     /**
-     * @param int[] $touchEntityIds
+     * @param array<int> $touchEntityIds
      *
      * @return int
      */
     public function deleteTouchSearchEntitiesByTouchIds(array $touchEntityIds): int;
 
     /**
-     * @param int[] $touchEntityIds
+     * @param array<int> $touchEntityIds
      *
      * @return int
      */

@@ -27,7 +27,7 @@ class MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge implements Merchan
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getMethods()
     {
@@ -36,7 +36,7 @@ class MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge implements Merchan
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
-     * @param bool[] $itemListUpdatedStatus
+     * @param array<bool> $itemListUpdatedStatus
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
      */

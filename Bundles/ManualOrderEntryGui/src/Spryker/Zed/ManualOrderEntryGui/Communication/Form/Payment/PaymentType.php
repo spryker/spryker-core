@@ -130,7 +130,7 @@ class PaymentType extends AbstractType
     }
 
     /**
-     * @param \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[] $paymentSubFormPlugins
+     * @param array<\Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface> $paymentSubFormPlugins
      *
      * @return array
      */

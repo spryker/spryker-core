@@ -43,7 +43,7 @@ class ClassInfo
     protected $cacheKey;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $callerClassParts = [];
 

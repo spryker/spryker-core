@@ -30,14 +30,14 @@ class MailHandler
     protected $mailFacade;
 
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface>
      */
     protected $orderMailExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface $saleFacade
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToMailInterface $mailFacade
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[] $orderMailExpanderPlugins
+     * @param array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface> $orderMailExpanderPlugins
      */
     public function __construct(
         OmsToSalesInterface $saleFacade,

@@ -60,7 +60,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
 
     /**
      * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute $productAttributeEntity
-     * @param string[][] $translationsByLocaleNameAndGlossaryKey
+     * @param array<string[]> $translationsByLocaleNameAndGlossaryKey
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
@@ -82,9 +82,9 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute[] $productAttributeEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute> $productAttributeEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function convertProductAttributeCollection(ObjectCollection $productAttributeEntityCollection)
     {
@@ -160,9 +160,9 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
     }
 
     /**
-     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue[]|\Propel\Runtime\Collection\ObjectCollection $productAttributeValueEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue> $productAttributeValueEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer>
      */
     public function convertProductAttributeValueCollection(ObjectCollection $productAttributeValueEntityCollection)
     {
@@ -176,7 +176,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $attributeTransfer
-     * @param string[][] $translationsByLocaleNameAndGlossaryKey
+     * @param array<string[]> $translationsByLocaleNameAndGlossaryKey
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */

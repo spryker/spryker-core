@@ -29,7 +29,7 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
@@ -55,7 +55,7 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {
@@ -71,7 +71,7 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAttributeTypes()
     {

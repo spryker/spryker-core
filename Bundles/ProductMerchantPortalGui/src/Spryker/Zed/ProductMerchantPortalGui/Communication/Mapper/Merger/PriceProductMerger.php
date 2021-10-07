@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 class PriceProductMerger implements PriceProductMergerInterface
 {
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface[]
+     * @var array<\Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface>
      */
     protected $mergeStrategies;
 
     /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface[] $mergeStrategies
+     * @param array<\Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface> $mergeStrategies
      */
     public function __construct(array $mergeStrategies)
     {
@@ -26,14 +26,10 @@ class PriceProductMerger implements PriceProductMergerInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mergePriceProducts(
         PriceProductTransfer $newPriceProductTransfer,

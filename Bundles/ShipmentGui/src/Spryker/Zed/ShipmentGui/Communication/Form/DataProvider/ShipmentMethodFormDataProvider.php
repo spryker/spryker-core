@@ -90,7 +90,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCarrierOptions(): array
     {
@@ -107,7 +107,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getAvailabilityPluginOptions(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): array
     {
@@ -119,7 +119,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPricePluginOptions(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): array
     {

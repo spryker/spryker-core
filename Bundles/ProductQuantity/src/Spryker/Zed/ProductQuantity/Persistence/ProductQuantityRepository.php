@@ -19,9 +19,9 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
     /**
      * @uses SpyProductQuery
      *
-     * @param string[] $productSkus
+     * @param array<string> $productSkus
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfersByProductSku(array $productSkus): array
     {
@@ -42,9 +42,9 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfersByProductIds(array $productIds): array
     {
@@ -62,7 +62,7 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfers(): array
     {
@@ -75,7 +75,7 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array
     {
@@ -88,9 +88,9 @@ class ProductQuantityRepository extends AbstractRepository implements ProductQua
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyProductQuantityEntityTransfer[] $productQuantityEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyProductQuantityEntityTransfer> $productQuantityEntityTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     protected function getMappedProductQuantityTransfers(array $productQuantityEntityTransfers): array
     {

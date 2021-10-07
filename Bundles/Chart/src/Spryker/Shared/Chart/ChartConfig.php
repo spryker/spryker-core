@@ -28,7 +28,7 @@ class ChartConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getChartTypes(): array
     {

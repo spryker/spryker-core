@@ -14,14 +14,14 @@ interface ImporterDumperInterface
     /**
      * @deprecated Use {@link \Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumperInterface::getImportersDumpByConfiguration()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function dump(): array;
 
     /**
      * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getImportersDumpByConfiguration(DataImportConfigurationTransfer $dataImportConfigurationTransfer): array;
 }

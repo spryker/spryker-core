@@ -78,7 +78,7 @@ class TaxProductConnectorBusinessTester extends Actor
 
     /**
      * @param string $countryIso2Code
-     * @param \Generated\Shared\Transfer\TaxSetTransfer[] $taxSetTransferList
+     * @param array<\Generated\Shared\Transfer\TaxSetTransfer> $taxSetTransferList
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */

@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\RestCategoryTreesTransfer;
 interface CategoryMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[] $categoryNodeStorageTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryNodeStorageTransfers
      *
      * @return \Generated\Shared\Transfer\RestCategoryTreesTransfer
      */

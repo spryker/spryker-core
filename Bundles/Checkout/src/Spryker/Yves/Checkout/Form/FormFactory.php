@@ -48,7 +48,7 @@ class FormFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface[]
+     * @return array<\Spryker\Yves\Checkout\Dependency\Plugin\Form\SubFormFilterPluginInterface>
      */
     public function getMethodFormFilters()
     {

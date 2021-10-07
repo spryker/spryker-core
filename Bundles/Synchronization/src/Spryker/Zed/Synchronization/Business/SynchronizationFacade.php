@@ -79,9 +79,9 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function processSearchMessages(array $queueMessageTransfers): array
     {
@@ -95,9 +95,9 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function processStorageMessages(array $queueMessageTransfers): array
     {
@@ -113,7 +113,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @deprecated Use {@link executeResolvedPluginsBySourcesWithIds()} instead.
      *
-     * @param string[] $resources
+     * @param array<string> $resources
      *
      * @return void
      */
@@ -127,8 +127,8 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @api
      *
-     * @param string[] $resources
-     * @param int[] $ids
+     * @param array<string> $resources
+     * @param array<int> $ids
      *
      * @return void
      */
@@ -142,7 +142,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableResourceNames(): array
     {

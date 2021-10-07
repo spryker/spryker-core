@@ -44,7 +44,7 @@ class DataImportersDumpExecutor implements DataImportersDumpExecutorInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function executeDataImportersDump(): array
     {

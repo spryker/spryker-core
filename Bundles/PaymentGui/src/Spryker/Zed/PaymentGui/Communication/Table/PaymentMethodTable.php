@@ -178,7 +178,7 @@ class PaymentMethodTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Orm\Zed\Payment\Persistence\SpyPaymentMethod[] $paymentMethodEntities */
+        /** @var array<\Orm\Zed\Payment\Persistence\SpyPaymentMethod> $paymentMethodEntities */
         $paymentMethodEntities = $this->runQuery($this->prepareQuery(), $config, true);
 
         $paymentMethodRows = [];

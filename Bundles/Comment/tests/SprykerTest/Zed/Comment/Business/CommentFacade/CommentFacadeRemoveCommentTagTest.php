@@ -59,7 +59,7 @@ class CommentFacadeRemoveCommentTagTest extends Unit
     protected $customerTransfer;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $availableCommentTags = [];
 

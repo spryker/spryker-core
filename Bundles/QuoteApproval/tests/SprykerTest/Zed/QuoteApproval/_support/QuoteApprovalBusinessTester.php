@@ -35,9 +35,9 @@ class QuoteApprovalBusinessTester extends Actor
     use _generated\QuoteApprovalBusinessTesterActions;
 
     /**
-     * @param string[] $statuses
+     * @param array<string> $statuses
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\QuoteApprovalTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\QuoteApprovalTransfer>
      */
     public function createQuoteApprovalTransfers(array $statuses): ArrayObject
     {

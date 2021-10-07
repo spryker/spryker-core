@@ -125,7 +125,7 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
      *
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer[]|\ArrayObject $merchantOrderItemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
      *
      * @return int
      */
@@ -177,12 +177,10 @@ class TriggerMerchantOmsController extends AbstractSalesMerchantPortalGuiControl
     }
 
     /**
-     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantOrderItemTransfer>
-     *
      * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
      * @param int $idMerchantOrder
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     protected function filterMerchantOrderItems(MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer, int $idMerchantOrder): ArrayObject
     {

@@ -33,14 +33,14 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface>
      */
     protected $searchOrderExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface> $searchOrderExpanderPlugins
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface|null $omsFacade
      */
     public function __construct(
@@ -76,9 +76,9 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder> $orderCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer>
      */
     protected function hydrateOrderListCollectionTransferFromEntityCollection(ObjectCollection $orderCollection)
     {
@@ -133,9 +133,9 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     protected function executeSearchOrderExpanderPlugins(array $orderTransfers): array
     {

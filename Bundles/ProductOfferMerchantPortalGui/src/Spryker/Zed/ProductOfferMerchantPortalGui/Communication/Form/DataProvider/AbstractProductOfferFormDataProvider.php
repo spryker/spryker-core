@@ -53,7 +53,7 @@ abstract class AbstractProductOfferFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     public function getOptions(ProductAbstractTransfer $productAbstractTransfer): array
     {
@@ -65,7 +65,7 @@ abstract class AbstractProductOfferFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getStoreChoices(ProductAbstractTransfer $productAbstractTransfer): array
     {

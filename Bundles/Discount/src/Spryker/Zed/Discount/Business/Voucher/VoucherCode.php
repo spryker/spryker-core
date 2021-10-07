@@ -26,7 +26,7 @@ class VoucherCode implements VoucherCodeInterface
     }
 
     /**
-     * @param string[] $codes
+     * @param array<string> $codes
      *
      * @return int
      */
@@ -54,7 +54,7 @@ class VoucherCode implements VoucherCodeInterface
     }
 
     /**
-     * @param string[] $codes
+     * @param array<string> $codes
      *
      * @return int
      */

@@ -17,13 +17,13 @@ class ProductAbstractPageRefresher implements ProductPageRefresherInterface
     protected $productAbstractPagePublisher;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface[]
+     * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface>
      */
     protected $productPageRefreshPlugins;
 
     /**
      * @param \Spryker\Zed\ProductPageSearch\Business\Publisher\ProductAbstractPagePublisherInterface $productAbstractPagePublisher
-     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface[] $productPageRefreshPlugins
+     * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractCollectionRefreshPluginInterface> $productPageRefreshPlugins
      */
     public function __construct(
         ProductAbstractPagePublisherInterface $productAbstractPagePublisher,

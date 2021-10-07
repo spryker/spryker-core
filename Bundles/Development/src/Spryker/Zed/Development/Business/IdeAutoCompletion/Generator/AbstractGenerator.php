@@ -42,7 +42,7 @@ abstract class AbstractGenerator implements GeneratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $moduleTransferCollection
+     * @param array<\Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer> $moduleTransferCollection
      *
      * @return void
      */

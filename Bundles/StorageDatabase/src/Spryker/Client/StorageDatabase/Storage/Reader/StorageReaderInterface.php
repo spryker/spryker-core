@@ -17,7 +17,7 @@ interface StorageReaderInterface
     public function get(string $resourceKey): string;
 
     /**
-     * @param string[] $resourceKeys
+     * @param array<string> $resourceKeys
      *
      * @return array
      */

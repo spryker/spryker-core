@@ -24,7 +24,7 @@ class AvailabilityProductAbstractStorageUnpublishListener extends AbstractPlugin
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $eventName
      *
      * @return void

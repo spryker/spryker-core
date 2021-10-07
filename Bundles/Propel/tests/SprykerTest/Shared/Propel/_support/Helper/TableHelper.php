@@ -26,7 +26,7 @@ class TableHelper extends Module
     protected const DEFAULT_DATA_SOURCE_NAME = 'zed';
 
     /**
-     * @var \Propel\Generator\Model\Table[]
+     * @var array<\Propel\Generator\Model\Table>
      */
     protected $tables = [];
 

@@ -50,7 +50,7 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
     /**
      * @param \SimpleXMLElement $tableXmlElement
      *
-     * @return \SimpleXMLElement[]
+     * @return array<\SimpleXMLElement>
      */
     protected function getUniqueIndexElements(SimpleXMLElement $tableXmlElement): array
     {
@@ -65,9 +65,9 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
     }
 
     /**
-     * @param \SimpleXMLElement[] $uniqueIndexElements
+     * @param array<\SimpleXMLElement> $uniqueIndexElements
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getFkFieldNames(array $uniqueIndexElements): array
     {
@@ -113,7 +113,7 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
 
     /**
      * @param \SimpleXMLElement $tableXmlElement
-     * @param string[] $fkFieldNames
+     * @param array<string> $fkFieldNames
      *
      * @return \SimpleXMLElement
      */
@@ -148,7 +148,7 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
 
     /**
      * @param string $nameAttribute
-     * @param string[] $fkFieldNames
+     * @param array<string> $fkFieldNames
      *
      * @return bool
      */
@@ -160,7 +160,7 @@ class ForeignKeyIndexPropelSchemaElementFilterPlugin extends AbstractPlugin impl
     }
 
     /**
-     * @param \SimpleXMLElement[] $elementsToRemove
+     * @param array<\SimpleXMLElement> $elementsToRemove
      *
      * @return void
      */

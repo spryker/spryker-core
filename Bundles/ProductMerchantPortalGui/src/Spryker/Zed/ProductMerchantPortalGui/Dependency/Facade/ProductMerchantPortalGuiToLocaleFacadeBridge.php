@@ -31,7 +31,7 @@ class ProductMerchantPortalGuiToLocaleFacadeBridge implements ProductMerchantPor
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales()
     {
@@ -49,7 +49,7 @@ class ProductMerchantPortalGuiToLocaleFacadeBridge implements ProductMerchantPor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection()
     {

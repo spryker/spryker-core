@@ -39,12 +39,12 @@ class DiscountPersist implements DiscountPersistInterface
     protected $discountStoreRelationWriter;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface>
      */
     protected $discountPostCreatePlugins;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface>
      */
     protected $discountPostUpdatePlugins;
 
@@ -52,8 +52,8 @@ class DiscountPersist implements DiscountPersistInterface
      * @param \Spryker\Zed\Discount\Business\Voucher\VoucherEngineInterface $voucherEngine
      * @param \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface $discountQueryContainer
      * @param \Spryker\Zed\Discount\Business\Persistence\DiscountStoreRelationWriterInterface $discountStoreRelationWriter
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface[] $discountPostCreatePlugins
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface[] $discountPostUpdatePlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface> $discountPostCreatePlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface> $discountPostUpdatePlugins
      */
     public function __construct(
         VoucherEngineInterface $voucherEngine,
@@ -411,7 +411,7 @@ class DiscountPersist implements DiscountPersistInterface
      */
     protected function deleteDiscountMoneyValues(SpyDiscount $discountEntity): void
     {
-        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountAmount[]|null $discountAmountEntities */
+        /** @var array<\Orm\Zed\Discount\Persistence\SpyDiscountAmount>|null $discountAmountEntities */
         $discountAmountEntities = $discountEntity->getDiscountAmounts();
         if (!$discountAmountEntities) {
             return;

@@ -80,7 +80,7 @@ class ContentFileListSelectedTable extends AbstractTable
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      * @param string|null $identifierSuffix
      */
     public function __construct(

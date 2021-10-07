@@ -171,7 +171,7 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexNames(): array
     {

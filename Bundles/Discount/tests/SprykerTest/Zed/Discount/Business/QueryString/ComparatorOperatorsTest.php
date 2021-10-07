@@ -307,7 +307,7 @@ class ComparatorOperatorsTest extends Unit
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[] $comparators
+     * @param array<\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface> $comparators
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators
      */

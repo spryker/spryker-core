@@ -12,18 +12,18 @@ use Generated\Shared\Transfer\ProductAlternativeTransfer;
 class ProductAlternativePluginExecutor implements ProductAlternativePluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeCreatePluginInterface[]
+     * @var array<\Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeCreatePluginInterface>
      */
     protected $postProductAlternativeCreatePlugins;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeDeletePluginInterface[]
+     * @var array<\Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeDeletePluginInterface>
      */
     protected $postProductAlternativeDeletePlugins;
 
     /**
-     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeCreatePluginInterface[] $postProductAlternativeCreatePlugins
-     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeDeletePluginInterface[] $postProductAlternativeDeletePlugins
+     * @param array<\Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeCreatePluginInterface> $postProductAlternativeCreatePlugins
+     * @param array<\Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\PostProductAlternativeDeletePluginInterface> $postProductAlternativeDeletePlugins
      */
     public function __construct(
         array $postProductAlternativeCreatePlugins,

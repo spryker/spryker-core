@@ -16,12 +16,12 @@ use Spryker\Glue\ProductOfferPricesRestApi\ProductOfferPricesRestApiConfig;
 class ProductOfferPriceMapper implements ProductOfferPriceMapperInterface
 {
     /**
-     * @var \Spryker\Glue\ProductOfferPricesRestApiExtension\Dependency\Plugin\RestProductOfferPricesAttributesMapperPluginInterface[]
+     * @var array<\Spryker\Glue\ProductOfferPricesRestApiExtension\Dependency\Plugin\RestProductOfferPricesAttributesMapperPluginInterface>
      */
     protected $restProductOfferPricesAttributesMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\ProductOfferPricesRestApiExtension\Dependency\Plugin\RestProductOfferPricesAttributesMapperPluginInterface[] $restProductOfferPricesAttributesMapperPlugins
+     * @param array<\Spryker\Glue\ProductOfferPricesRestApiExtension\Dependency\Plugin\RestProductOfferPricesAttributesMapperPluginInterface> $restProductOfferPricesAttributesMapperPlugins
      */
     public function __construct(array $restProductOfferPricesAttributesMapperPlugins)
     {

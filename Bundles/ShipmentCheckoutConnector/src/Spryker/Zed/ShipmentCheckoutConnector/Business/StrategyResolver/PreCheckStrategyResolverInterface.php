@@ -15,7 +15,7 @@ use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreC
 interface PreCheckStrategyResolverInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface
      */

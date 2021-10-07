@@ -34,7 +34,7 @@ class LogConfig extends AbstractBundleConfig
     protected const FLUSH_ON_OVERFLOW = true;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $logDirectoryConstants = [
         LogConstants::LOG_FILE_PATH_YVES,
@@ -60,7 +60,7 @@ class LogConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSanitizerFieldNames()
     {
@@ -111,7 +111,7 @@ class LogConfig extends AbstractBundleConfig
      *
      * @phpstan-return 100|200|250|300|400|500|550|600|non-empty-string
      *
-     * @return int|string Level or level name
+     * @return string|int Level or level name
      */
     public function getLogLevel()
     {

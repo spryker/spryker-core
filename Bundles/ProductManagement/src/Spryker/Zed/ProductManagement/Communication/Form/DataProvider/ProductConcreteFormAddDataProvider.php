@@ -102,7 +102,7 @@ class ProductConcreteFormAddDataProvider
     protected $productAttributeFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]|\Everon\Component\Collection\CollectionInterface
+     * @var \Everon\Component\Collection\CollectionInterface<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     protected $attributeTransferCollection;
 
@@ -232,7 +232,7 @@ class ProductConcreteFormAddDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     protected function getSuperAttributesOption(ProductAbstractTransfer $productAbstractTransfer)
     {

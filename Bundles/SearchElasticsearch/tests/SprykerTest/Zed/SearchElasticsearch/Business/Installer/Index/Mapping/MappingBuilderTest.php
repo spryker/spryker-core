@@ -30,7 +30,7 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingType
 class MappingBuilderTest extends Unit
 {
     /**
-     * @var string[][][]
+     * @var array<string[][]>
      */
     protected $fixtureMappingConfiguration = [
         'dummy_mapping_type' => [

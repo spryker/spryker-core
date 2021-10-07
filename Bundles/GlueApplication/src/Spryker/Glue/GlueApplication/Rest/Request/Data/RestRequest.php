@@ -20,7 +20,7 @@ class RestRequest implements RestRequestInterface
     protected $resource;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface>
      */
     protected $sort;
 
@@ -30,7 +30,7 @@ class RestRequest implements RestRequestInterface
     protected $page;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Request\Data\SparseFieldInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SparseFieldInterface>
      */
     protected $fields = [];
 
@@ -50,7 +50,7 @@ class RestRequest implements RestRequestInterface
     protected $routeContext = [];
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     protected $parentResources = [];
 
@@ -146,7 +146,7 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface>
      */
     public function getFilters(): array
     {
@@ -174,7 +174,7 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface>
      */
     public function getSort(): array
     {
@@ -190,7 +190,7 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\SparseFieldInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SparseFieldInterface>
      */
     public function getFields(): array
     {
@@ -234,7 +234,7 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getParentResources(): array
     {
@@ -361,7 +361,7 @@ class RestRequest implements RestRequestInterface
     }
 
     /**
-     * @param string[] $excludeParams
+     * @param array<string> $excludeParams
      *
      * @return string
      */
@@ -375,7 +375,7 @@ class RestRequest implements RestRequestInterface
 
     /**
      * @param array $queryParams
-     * @param string[] $excludeParams
+     * @param array<string> $excludeParams
      *
      * @return array
      */

@@ -57,7 +57,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
 
     /**
      * @param int $idProductLabel
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param bool $isTouchEnabled
      *
      * @return void
@@ -71,7 +71,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
 
     /**
      * @param int $idProductLabel
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param bool $isTouchEnabled
      *
      * @return void
@@ -88,7 +88,7 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
 
     /**
      * @param int $idProductLabel
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param bool $isTouchEnabled
      *
      * @return void
@@ -137,9 +137,9 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[] $productLabelProductAbstractTransfers
+     * @param array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer> $productLabelProductAbstractTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractProductAbstractIds(array $productLabelProductAbstractTransfers): array
     {

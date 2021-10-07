@@ -25,10 +25,10 @@ class CmsPagesContentBannersResourceRelationshipToContentBannersRestApiResourceB
     /**
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
-     * @param string[] $contentBannerKeys
+     * @param array<string> $contentBannerKeys
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getContentBannersByKeys(array $contentBannerKeys, string $localeName): array
     {

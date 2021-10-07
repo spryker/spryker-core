@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class HttpRequestValidator implements HttpRequestValidatorInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface>
      */
     protected $requestValidatorPlugins = [];
 
@@ -35,7 +35,7 @@ class HttpRequestValidator implements HttpRequestValidatorInterface
     protected $headersHttpRequestValidator;
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface[] $requestValidatorPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateHttpRequestPluginInterface> $requestValidatorPlugins
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface $resourceRouteLoader
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $config
      * @param \Spryker\Glue\GlueApplication\Rest\Request\HeadersHttpRequestValidatorInterface $headersHttpRequestValidator

@@ -82,7 +82,7 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return mixed[][]
+     * @return array<mixed[]>
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {
@@ -111,7 +111,7 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getDefaultSubscribeRestError(): array
     {
@@ -125,7 +125,7 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getDefaultUnsubscribeRestError(): array
     {
@@ -139,7 +139,7 @@ class AvailabilityNotificationsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getCustomerUnauthorizedRestError(): array
     {

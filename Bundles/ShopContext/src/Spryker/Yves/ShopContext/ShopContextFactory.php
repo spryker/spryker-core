@@ -24,7 +24,7 @@ class ShopContextFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface[]
+     * @return array<\Spryker\Shared\ShopContextExtension\Dependency\Plugin\ShopContextExpanderPluginInterface>
      */
     public function getShopContextExpanderPlugins(): array
     {

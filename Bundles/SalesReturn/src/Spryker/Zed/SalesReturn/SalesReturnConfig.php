@@ -51,7 +51,7 @@ class SalesReturnConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getReturnableStateNames(): array
     {

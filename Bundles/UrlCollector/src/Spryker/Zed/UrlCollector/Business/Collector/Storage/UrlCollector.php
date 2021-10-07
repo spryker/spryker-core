@@ -127,7 +127,7 @@ class UrlCollector extends AbstractStoragePropelCollector
      * @param array $localeUrls
      * @param array $urlResourceArguments
      *
-     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlStorageTransfer>
      */
     protected function getLocaleUrlsForUrl(array $localeUrls, array $urlResourceArguments)
     {
@@ -378,7 +378,7 @@ class UrlCollector extends AbstractStoragePropelCollector
         WriterInterface $storeWriter,
         $touchKeyPointer
     ) {
-        /** @var string[] $oldUrl */
+        /** @var array<string> $oldUrl */
         $oldUrl = $storeReader->read($touchKeyPointer);
 
         if (

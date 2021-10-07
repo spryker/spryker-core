@@ -24,7 +24,7 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function findRelatedProducts($idProductAbstract, $localeName, string $storeName)
     {
@@ -41,7 +41,7 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {
@@ -58,7 +58,7 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      * @param int $idProductAbstract
      * @param string $storeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findRelatedAbstractProductIds(int $idProductAbstract, string $storeName): array
     {
@@ -74,7 +74,7 @@ class ProductRelationStorageClient extends AbstractClient implements ProductRela
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array
     {

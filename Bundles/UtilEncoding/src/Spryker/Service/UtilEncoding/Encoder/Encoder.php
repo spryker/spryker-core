@@ -12,12 +12,12 @@ use Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException;
 class Encoder implements EncoderInterface
 {
     /**
-     * @var \Spryker\Service\UtilEncoding\FormatEncoder\FormatEncoderInterface[]
+     * @var array<\Spryker\Service\UtilEncoding\FormatEncoder\FormatEncoderInterface>
      */
     protected $formatEncoders;
 
     /**
-     * @param \Spryker\Service\UtilEncoding\FormatEncoder\FormatEncoderInterface[] $formatEncoders
+     * @param array<\Spryker\Service\UtilEncoding\FormatEncoder\FormatEncoderInterface> $formatEncoders
      */
     public function __construct(array $formatEncoders)
     {

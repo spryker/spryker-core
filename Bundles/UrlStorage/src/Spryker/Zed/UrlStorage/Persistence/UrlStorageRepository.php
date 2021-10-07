@@ -16,10 +16,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class UrlStorageRepository extends AbstractRepository implements UrlStorageRepositoryInterface
 {
     /**
-     * @param int[] $urlIds
-     * @param string[] $localeNames
+     * @param array<int> $urlIds
+     * @param array<string> $localeNames
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl[][]
+     * @return array<\Orm\Zed\Url\Persistence\SpyUrl[]>
      */
     public function findLocalizedUrlsByUrlIds(array $urlIds, array $localeNames): array
     {
@@ -37,9 +37,9 @@ class UrlStorageRepository extends AbstractRepository implements UrlStorageRepos
     }
 
     /**
-     * @param string[] $urls
+     * @param array<string> $urls
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl[]
+     * @return array<\Orm\Zed\Url\Persistence\SpyUrl>
      */
     public function findUrlEntitiesByUrls(array $urls): array
     {
@@ -55,9 +55,9 @@ class UrlStorageRepository extends AbstractRepository implements UrlStorageRepos
     }
 
     /**
-     * @param int[] $urlIds
+     * @param array<int> $urlIds
      *
-     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
+     * @return array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage>
      */
     public function findUrlStorageByUrlIds(array $urlIds): array
     {
@@ -69,7 +69,7 @@ class UrlStorageRepository extends AbstractRepository implements UrlStorageRepos
     }
 
     /**
-     * @param int[] $urlIds
+     * @param array<int> $urlIds
      *
      * @return array
      */
@@ -90,10 +90,10 @@ class UrlStorageRepository extends AbstractRepository implements UrlStorageRepos
 
     /**
      * @param string $resourceType
-     * @param int[] $resourceIds
-     * @param string[] $localeNames
+     * @param array<int> $resourceIds
+     * @param array<string> $localeNames
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl[]
+     * @return array<\Orm\Zed\Url\Persistence\SpyUrl>
      */
     protected function findUrlsByResourceTypeAndIds(string $resourceType, array $resourceIds, array $localeNames): array
     {

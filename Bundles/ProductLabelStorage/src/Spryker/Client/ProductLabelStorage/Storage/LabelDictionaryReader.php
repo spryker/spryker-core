@@ -26,11 +26,11 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param int[] $idsProductLabel
+     * @param array<int> $idsProductLabel
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName, string $storeName)
     {
@@ -84,11 +84,11 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param int[] $idsProductLabel
+     * @param array<int> $idsProductLabel
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     protected function getProductLabelsFromDictionary(array $idsProductLabel, $localeName, string $storeName)
     {
@@ -110,9 +110,9 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItemTransfers
+     * @param array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer> $productLabelDictionaryItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     protected function extractExclusive(array $productLabelDictionaryItemTransfers)
     {
@@ -130,9 +130,9 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItemTransfers
+     * @param array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer> $productLabelDictionaryItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     protected function sortCollection(array $productLabelDictionaryItemTransfers)
     {

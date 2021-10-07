@@ -42,7 +42,7 @@ class MerchantPublisherTriggerPlugin extends AbstractPlugin implements Publisher
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantProfileTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

@@ -10,10 +10,10 @@ namespace Spryker\Zed\ProductStorage\Business\Filter;
 interface SingleValueSuperAttributeFilterInterface
 {
     /**
-     * @param string[][] $productConcreteSuperAttributeMap
-     * @param string[][] $superAttributeVariations
+     * @param array<string[]> $productConcreteSuperAttributeMap
+     * @param array<string[]> $superAttributeVariations
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function filterOutSingleValueSuperAttributes(
         array $productConcreteSuperAttributeMap,

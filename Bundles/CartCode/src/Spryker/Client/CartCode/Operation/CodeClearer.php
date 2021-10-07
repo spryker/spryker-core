@@ -27,14 +27,14 @@ class CodeClearer implements CodeClearerInterface
     protected $quoteOperationChecker;
 
     /**
-     * @var \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
+     * @var array<\Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface>
      */
     protected $cartCodePlugins;
 
     /**
      * @param \Spryker\Client\CartCode\Dependency\Client\CartCodeToCalculationClientInterface $calculationClient
      * @param \Spryker\Client\CartCode\Operation\QuoteOperationCheckerInterface $quoteOperationChecker
-     * @param \Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
+     * @param array<\Spryker\Client\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface> $cartCodePlugins
      */
     public function __construct(
         CartCodeToCalculationClientInterface $calculationClient,

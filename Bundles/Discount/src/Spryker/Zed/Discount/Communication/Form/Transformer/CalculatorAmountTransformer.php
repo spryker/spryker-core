@@ -13,7 +13,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class CalculatorAmountTransformer implements DataTransformerInterface
 {
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface>
      */
     protected $calculatorPlugins = [];
 

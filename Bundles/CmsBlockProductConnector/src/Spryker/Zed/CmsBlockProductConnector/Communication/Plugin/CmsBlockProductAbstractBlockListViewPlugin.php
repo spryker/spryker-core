@@ -37,7 +37,7 @@ class CmsBlockProductAbstractBlockListViewPlugin extends AbstractPlugin implemen
      *
      * @param int $idProductAbstract
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRenderedList($idProductAbstract)
     {

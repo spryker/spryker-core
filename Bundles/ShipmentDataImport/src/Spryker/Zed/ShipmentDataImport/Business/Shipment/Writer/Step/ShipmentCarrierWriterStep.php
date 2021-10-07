@@ -16,7 +16,7 @@ use Spryker\Zed\ShipmentDataImport\Business\Shipment\Writer\DataSet\ShipmentData
 class ShipmentCarrierWriterStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected static $idShipmentCarrierCache = [];
 

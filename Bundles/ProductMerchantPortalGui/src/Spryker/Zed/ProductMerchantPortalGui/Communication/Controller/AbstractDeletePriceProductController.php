@@ -32,8 +32,8 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param int[] $priceProductDefaultIds
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<int> $priceProductDefaultIds
      * @param int $volumeQuantity
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
@@ -56,10 +56,10 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param int[] $priceProductDefaultIds
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<int> $priceProductDefaultIds
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function filterPriceProductTransfersByPriceProductDefaultIds(
         ArrayObject $priceProductTransfers,
@@ -83,7 +83,7 @@ abstract class AbstractDeletePriceProductController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getDefaultPriceProductIds(Request $request): array
     {

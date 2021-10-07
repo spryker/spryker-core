@@ -42,7 +42,7 @@ class PaymentCalculator implements PaymentCalculatorInterface
      *
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentTransfer[]
+     * @return array<\Generated\Shared\Transfer\PaymentTransfer>
      */
     protected function getPaymentCollection(CalculableObjectTransfer $calculableObjectTransfer)
     {
@@ -75,7 +75,7 @@ class PaymentCalculator implements PaymentCalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Generated\Shared\Transfer\PaymentTransfer[] $paymentTransfers
+     * @param array<\Generated\Shared\Transfer\PaymentTransfer> $paymentTransfers
      *
      * @return void
      */
@@ -105,7 +105,7 @@ class PaymentCalculator implements PaymentCalculatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
-     * @param \Generated\Shared\Transfer\PaymentTransfer[] $paymentTransfers
+     * @param array<\Generated\Shared\Transfer\PaymentTransfer> $paymentTransfers
      *
      * @return void
      */

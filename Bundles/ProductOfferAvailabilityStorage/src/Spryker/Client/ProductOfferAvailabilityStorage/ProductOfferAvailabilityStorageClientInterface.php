@@ -31,10 +31,10 @@ interface ProductOfferAvailabilityStorageClientInterface
      *
      * @api
      *
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer>
      */
     public function getByProductOfferReferences(array $productOfferReferences, string $storeName): array;
 }

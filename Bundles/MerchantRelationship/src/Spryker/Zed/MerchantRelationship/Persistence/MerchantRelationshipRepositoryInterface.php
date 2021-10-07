@@ -29,14 +29,14 @@ interface MerchantRelationshipRepositoryInterface
     /**
      * @param int $idMerchantRelationship
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getIdAssignedBusinessUnitsByMerchantRelationshipId(int $idMerchantRelationship): array;
 
     /**
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
      */
     public function getAssignedMerchantRelationshipsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array;
 
@@ -55,7 +55,7 @@ interface MerchantRelationshipRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
      */
     public function getMerchantRelationshipCollection(?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null): array;
 }

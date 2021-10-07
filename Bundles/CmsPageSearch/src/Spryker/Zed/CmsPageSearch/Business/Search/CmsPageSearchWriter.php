@@ -94,7 +94,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     }
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      *
      * @return void
      */
@@ -107,7 +107,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     }
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      *
      * @return void
      */
@@ -117,8 +117,8 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntities
-     * @param \Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch[] $cmsPageSearchEntities
+     * @param array<\Orm\Zed\Cms\Persistence\SpyCmsPage> $cmsPageEntities
+     * @param array<\Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch> $cmsPageSearchEntities
      *
      * @return void
      */
@@ -152,7 +152,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     }
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      *
      * @return void
      */
@@ -222,7 +222,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     /**
      * @param array $cmsPageIds
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPage[]
+     * @return array<\Orm\Zed\Cms\Persistence\SpyCmsPage>
      */
     protected function findCmsPageEntities(array $cmsPageIds): array
     {
@@ -246,7 +246,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\Url\Persistence\SpyUrl[] $spyUrls
+     * @param array<\Orm\Zed\Url\Persistence\SpyUrl> $spyUrls
      * @param string $localeName
      *
      * @return string
@@ -314,7 +314,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntities
+     * @param array<\Orm\Zed\Cms\Persistence\SpyCmsPage> $cmsPageEntities
      * @param array $cmsPageSearchEntities
      *
      * @return array
@@ -344,7 +344,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      * @param array $cmsPageSearchEntities
-     * @param string[] $localeNames
+     * @param array<string> $localeNames
      * @param array $pairs
      *
      * @return array

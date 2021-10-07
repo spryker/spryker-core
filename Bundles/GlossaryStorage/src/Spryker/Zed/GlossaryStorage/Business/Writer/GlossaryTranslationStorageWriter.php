@@ -63,7 +63,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     /**
      * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriter::writeGlossaryStorageCollectionByGlossaryKeyEvents()} instead
      *
-     * @param int[] $glossaryKeyIds
+     * @param array<int> $glossaryKeyIds
      *
      * @return void
      */
@@ -73,7 +73,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -97,7 +97,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param int[] $glossaryKeyIds
+     * @param array<int> $glossaryKeyIds
      *
      * @return void
      */
@@ -122,7 +122,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[] $glossaryTranslationEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer> $glossaryTranslationEntityTransfers
      * @param array $mappedGlossaryStorageEntityTransfers
      *
      * @return array
@@ -149,7 +149,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer[] $glossaryTranslationEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer> $glossaryTranslationEntityTransfers
      * @param array $mappedGlossaryStorageEntityTransfers
      *
      * @return void

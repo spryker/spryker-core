@@ -16,24 +16,24 @@ use Spryker\DecimalObject\Decimal;
 interface OmsRepositoryInterface
 {
     /**
-     * @param int[] $processIds
-     * @param int[] $stateBlackList
+     * @param array<int> $processIds
+     * @param array<int> $stateBlackList
      *
      * @return array
      */
     public function getMatrixOrderItems(array $processIds, array $stateBlackList): array;
 
     /**
-     * @param string[] $stateNames
+     * @param array<string> $stateNames
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer>
      */
     public function getSalesOrderAggregationBySkuAndStatesNames(array $stateNames, string $sku, ?StoreTransfer $storeTransfer = null): array;
 
     /**
-     * @param string[] $concreteSkus
+     * @param array<string> $concreteSkus
      * @param int $idStore
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -41,16 +41,16 @@ interface OmsRepositoryInterface
     public function getSumOmsReservedProductQuantityByConcreteProductSkusForStore(array $concreteSkus, int $idStore): Decimal;
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ItemStateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemStateTransfer>
      */
     public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array;
 
@@ -72,7 +72,7 @@ interface OmsRepositoryInterface
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ReservationResponseTransfer[]
+     * @return array<\Generated\Shared\Transfer\ReservationResponseTransfer>
      */
     public function findProductReservationStores(string $sku): array;
 }

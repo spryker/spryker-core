@@ -10,9 +10,9 @@ namespace Spryker\Zed\Event\Business\Queue\Forwarder;
 interface MessageForwarderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueMessageTransfers
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function forwardMessages(array $queueMessageTransfers): array;
 }

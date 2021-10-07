@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 class PriceProductConfigurationFilter implements PriceProductConfigurationFilterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function filterProductConfigurationPrices(
         array $priceProductTransfers,
@@ -39,9 +39,9 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function filterOutProductConfigurationPrices(array $priceProductTransfers): array
     {
@@ -51,10 +51,10 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function filterOutPricesExceptCurrentProductConfigurationInstancePrices(
         array $priceProductTransfers,

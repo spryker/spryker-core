@@ -23,7 +23,7 @@ interface ProductRelationEntityManagerInterface
     public function createProductRelation(ProductRelationTransfer $productRelationTransfer): ProductRelationTransfer;
 
     /**
-     * @param int[] $abstractProductIds
+     * @param array<int> $abstractProductIds
      * @param int $idProductRelation
      *
      * @return void
@@ -31,7 +31,7 @@ interface ProductRelationEntityManagerInterface
     public function saveRelatedProducts(array $abstractProductIds, int $idProductRelation): void;
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idProductRelation
      *
      * @return void
@@ -42,7 +42,7 @@ interface ProductRelationEntityManagerInterface
     ): void;
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idProductRelation
      *
      * @return void

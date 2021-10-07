@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductOfferStockResultTransfer;
 interface ProductOfferStockResultMapperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[] $productOfferStockTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */

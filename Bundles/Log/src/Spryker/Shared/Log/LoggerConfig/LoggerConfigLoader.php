@@ -12,12 +12,12 @@ use Spryker\Shared\Log\Exception\LoggerLoaderException;
 class LoggerConfigLoader
 {
     /**
-     * @var \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface[]
+     * @var array<\Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface>
      */
     protected $loggerLoader;
 
     /**
-     * @param \Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface[] $loggerLoader
+     * @param array<\Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderInterface> $loggerLoader
      */
     public function __construct(array $loggerLoader)
     {

@@ -57,7 +57,7 @@ interface ProductAlternativeFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
@@ -81,7 +81,7 @@ interface ProductAlternativeFacadeInterface
      *
      * @api
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array;
 }

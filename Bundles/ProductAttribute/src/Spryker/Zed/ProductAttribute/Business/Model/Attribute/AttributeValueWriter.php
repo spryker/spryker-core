@@ -75,7 +75,7 @@ class AttributeValueWriter implements AttributeValueWriterInterface
     /**
      * @param int $idProductManagementAttribute
      *
-     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue[]
+     * @return array<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue>
      */
     protected function getExistingAttributeValues($idProductManagementAttribute)
     {
@@ -108,7 +108,7 @@ class AttributeValueWriter implements AttributeValueWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue[] $attributeValues
+     * @param array<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue> $attributeValues
      *
      * @return void
      */

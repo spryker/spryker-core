@@ -51,7 +51,7 @@ class ProductAttributeUniqueCombinationValidator extends ConstraintValidator
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $concreteProducts
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $concreteProducts
      *
      * @return array
      */

@@ -54,9 +54,9 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(array $productConcreteIds = []): array
     {
@@ -112,9 +112,9 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
     protected function getProductConcretePageSearchTransfers(array $productIds): array
     {
@@ -126,7 +126,7 @@ class ProductConcretePageSynchronizationDataPlugin extends AbstractPlugin implem
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getAllProductIds(): array
     {

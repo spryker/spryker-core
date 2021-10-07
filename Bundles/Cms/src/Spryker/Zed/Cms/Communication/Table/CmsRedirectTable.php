@@ -99,7 +99,7 @@ class CmsRedirectTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl[]
+     * @return array<\Orm\Zed\Url\Persistence\SpyUrl>
      */
     protected function getUrlCollection(TableConfiguration $config)
     {

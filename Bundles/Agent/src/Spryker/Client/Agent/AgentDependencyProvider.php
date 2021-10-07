@@ -119,7 +119,7 @@ class AgentDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface[]
+     * @return array<\Spryker\Client\AgentExtension\Dependency\Plugin\ImpersonationSessionFinisherPluginInterface>
      */
     protected function getImpersonationSessionFinisherPlugins(): array
     {

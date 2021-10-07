@@ -14,7 +14,7 @@ interface TokenizerInterface
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\QueryStringException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function tokenizeQueryString($queryString);
 }

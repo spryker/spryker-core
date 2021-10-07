@@ -66,13 +66,11 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer>
-     *
      * @deprecated To be removed when the single payment property on the quote is removed
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer>
      */
     protected function getPaymentCollection(QuoteTransfer $quoteTransfer): ArrayObject
     {
@@ -111,7 +109,7 @@ class SalesPaymentSaver implements SalesPaymentSaverInterface
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentCollection
      *
-     * @param \Generated\Shared\Transfer\PaymentTransfer[]|\ArrayObject $paymentCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentCollection
      * @param int $idSalesOrder
      *
      * @return void

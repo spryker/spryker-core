@@ -90,7 +90,7 @@ class MerchantSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface>
      */
     public function getMerchantSearchDataExpanderPlugins(): array
     {

@@ -39,7 +39,7 @@ class StoresCountryReader implements StoresCountryReaderInterface
     /**
      * @param array $iso2Codes
      *
-     * @return \Generated\Shared\Transfer\StoreCountryRestAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreCountryRestAttributesTransfer>
      */
     public function getStoresCountryAttributes(array $iso2Codes): array
     {

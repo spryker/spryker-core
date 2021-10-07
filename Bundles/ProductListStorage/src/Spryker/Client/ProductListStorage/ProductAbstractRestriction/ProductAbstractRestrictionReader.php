@@ -59,8 +59,8 @@ class ProductAbstractRestrictionReader implements ProductAbstractRestrictionRead
 
     /**
      * @param int $idProductAbstract
-     * @param int[] $customerWhitelistIds
-     * @param int[] $customerBlacklistIds
+     * @param array<int> $customerWhitelistIds
+     * @param array<int> $customerBlacklistIds
      *
      * @return bool
      */

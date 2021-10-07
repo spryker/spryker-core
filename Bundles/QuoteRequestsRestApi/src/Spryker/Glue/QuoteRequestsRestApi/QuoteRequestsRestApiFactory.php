@@ -84,7 +84,7 @@ class QuoteRequestsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface[]
+     * @return array<\Spryker\Glue\QuoteRequestsRestApiExtension\Dependency\Plugin\RestQuoteRequestAttributesExpanderPluginInterface>
      */
     public function getRestQuoteRequestAttributesExpanderPlugins(): array
     {

@@ -80,9 +80,9 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
+     * @param array<\Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageTransfer>
      */
     protected function getProductImages(array $imageSets)
     {

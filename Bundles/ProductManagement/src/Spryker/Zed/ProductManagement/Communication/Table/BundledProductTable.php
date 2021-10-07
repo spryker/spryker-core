@@ -209,7 +209,7 @@ class BundledProductTable extends AbstractTable
             ->addGroupByColumn(static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME)
             ->addGroupByColumn(static::IS_NEVER_OUT_OF_STOCK);
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct[] $queryResults */
+        /** @var array<\Orm\Zed\Product\Persistence\SpyProduct> $queryResults */
         $queryResults = $this->runQuery($query, $config, true);
 
         $productAbstractCollection = [];

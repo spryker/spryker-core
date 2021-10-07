@@ -30,7 +30,7 @@ class PriceProductTypeReader implements PriceProductTypeReaderInterface
     protected $priceProductConfig;
 
     /**
-     * @var \Orm\Zed\PriceProduct\Persistence\SpyPriceType[]
+     * @var array<\Orm\Zed\PriceProduct\Persistence\SpyPriceType>
      */
     protected static $priceTypeCache = [];
 
@@ -50,7 +50,7 @@ class PriceProductTypeReader implements PriceProductTypeReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
     public function getPriceTypes()
     {

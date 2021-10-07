@@ -90,7 +90,7 @@ class SetTable extends AbstractTable
     {
         $result = [];
 
-        /** @var \Orm\Zed\Tax\Persistence\SpyTaxSet[] $queryResult */
+        /** @var array<\Orm\Zed\Tax\Persistence\SpyTaxSet> $queryResult */
         $queryResult = $this->runQuery($this->taxSetQuery, $config, true);
 
         foreach ($queryResult as $taxSetEntity) {

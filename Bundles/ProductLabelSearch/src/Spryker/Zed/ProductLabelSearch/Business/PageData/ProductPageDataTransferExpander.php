@@ -60,10 +60,10 @@ class ProductPageDataTransferExpander implements ProductPageDataTransferExpander
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
-     * @param int[][] $productLabelIdsMappedByIdProductAbstract
+     * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $payloadTransfers
+     * @param array<int[]> $productLabelIdsMappedByIdProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductPayloadTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductPayloadTransfer>
      */
     protected function expandPayloadTransfersWithProductLabelIds(
         array $payloadTransfers,

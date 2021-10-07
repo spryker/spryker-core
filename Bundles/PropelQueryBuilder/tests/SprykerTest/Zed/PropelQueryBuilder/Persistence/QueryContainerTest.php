@@ -426,7 +426,7 @@ class QueryContainerTest extends Unit
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $collection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $collection
      * @param array $expectedSkuCollection
      *
      * @return void

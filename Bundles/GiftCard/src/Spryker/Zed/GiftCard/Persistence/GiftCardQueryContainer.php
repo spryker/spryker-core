@@ -168,7 +168,7 @@ class GiftCardQueryContainer extends AbstractQueryContainer implements GiftCardQ
      *
      * @api
      *
-     * @param string[] $codes
+     * @param array<string> $codes
      *
      * @return \Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery
      */

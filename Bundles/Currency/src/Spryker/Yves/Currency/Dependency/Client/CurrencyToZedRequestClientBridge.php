@@ -23,7 +23,7 @@ class CurrencyToZedRequestClientBridge implements CurrencyToZedRequestClientInte
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages()
     {
@@ -31,7 +31,7 @@ class CurrencyToZedRequestClientBridge implements CurrencyToZedRequestClientInte
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseSuccessMessages()
     {
@@ -39,7 +39,7 @@ class CurrencyToZedRequestClientBridge implements CurrencyToZedRequestClientInte
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesErrorMessages(): array
     {
@@ -47,7 +47,7 @@ class CurrencyToZedRequestClientBridge implements CurrencyToZedRequestClientInte
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesSuccessMessages(): array
     {

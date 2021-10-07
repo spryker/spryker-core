@@ -84,7 +84,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentTransfer>
      */
     public function findShipmentTransfersByOrder(OrderTransfer $orderTransfer): array
     {
@@ -107,7 +107,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer|null $defaultShipmentTransfer
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     public function getItemIdsGroupedByShipmentIds(
         OrderTransfer $orderTransfer,
@@ -127,9 +127,9 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function findShipmentMethodTransfersByShipment(array $shipmentTransfers): array
     {
@@ -284,7 +284,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getActiveShipmentMethods(): array
     {
@@ -312,7 +312,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     /**
      * @param int $idStore
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getActiveShipmentMethodsForStore(int $idStore): array
     {
@@ -452,9 +452,9 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentTransfer[] $shipmentTransfers
+     * @param iterable<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getShipmentMethodNames(iterable $shipmentTransfers): array
     {
@@ -477,7 +477,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransfers
+     * @param iterable<\Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethodTransfers
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
@@ -497,7 +497,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      * @param iterable|array $salesOrderItemIdsWithShipmentIds
      * @param \Generated\Shared\Transfer\ShipmentTransfer|null $defaultShipmentTransfer
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function groupSalesOrderItemIdsByShipmentId(
         iterable $salesOrderItemIdsWithShipmentIds,
@@ -563,7 +563,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     /**
      * @param int $idStore
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod>
      */
     protected function getActiveMethodsWithMethodPricesAndCarrierForStore(int $idStore): ObjectCollection
     {
@@ -618,7 +618,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
      * @param int $idSalesOrder
      * @param int $idSalesShipment
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function findSalesOrderItemsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject
     {
@@ -686,7 +686,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getActiveShipmentCarriers(): array
     {
@@ -701,10 +701,10 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[] $shipmentMethodEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod> $shipmentMethodEntities
      * @param int $idStore
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethod[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod>
      */
     protected function expandShipmentMethodEntitiesWithShipmentMethodPricesForStore(
         ObjectCollection $shipmentMethodEntities,
@@ -733,7 +733,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $shipmentMethodEntities
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractShipmentMethodWithoutPricePluginIds(ObjectCollection $shipmentMethodEntities): array
     {
@@ -750,7 +750,7 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
 
     /**
      * @param \Orm\Zed\Shipment\Persistence\SpyShipmentMethod $shipmentMethodEntity
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice[] $shipmentMethodPriceEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice> $shipmentMethodPriceEntities
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethod
      */

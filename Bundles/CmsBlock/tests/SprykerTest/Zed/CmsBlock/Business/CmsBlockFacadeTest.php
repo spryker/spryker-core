@@ -207,8 +207,8 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @dataProvider relationUpdate
      *
-     * @param int[] $originalRelation
-     * @param int[] $modifiedRelation
+     * @param array<int> $originalRelation
+     * @param array<int> $modifiedRelation
      *
      * @return void
      */

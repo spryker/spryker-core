@@ -25,7 +25,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
      *
      * @param int $idCategory
      *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
     public function getCategoryImageSetsByIdCategory(int $idCategory): array
     {
@@ -41,7 +41,7 @@ class CategoryImageFacade extends AbstractFacade implements CategoryImageFacadeI
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
     public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): ArrayObject
     {

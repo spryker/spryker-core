@@ -12,12 +12,12 @@ use ArrayObject;
 class ShipmentOrderItemTemplateProvider implements ShipmentOrderItemTemplateProviderInterface
 {
     /**
-     * @var \Spryker\Zed\ShipmentGuiExtension\Dependency\Plugin\ShipmentOrderItemTemplatePluginInterface[]
+     * @var array<\Spryker\Zed\ShipmentGuiExtension\Dependency\Plugin\ShipmentOrderItemTemplatePluginInterface>
      */
     protected $shipmentOrderItemTemplatePlugins;
 
     /**
-     * @param \Spryker\Zed\ShipmentGuiExtension\Dependency\Plugin\ShipmentOrderItemTemplatePluginInterface[] $shipmentOrderItemTemplatePlugins
+     * @param array<\Spryker\Zed\ShipmentGuiExtension\Dependency\Plugin\ShipmentOrderItemTemplatePluginInterface> $shipmentOrderItemTemplatePlugins
      */
     public function __construct(array $shipmentOrderItemTemplatePlugins)
     {
@@ -27,7 +27,7 @@ class ShipmentOrderItemTemplateProvider implements ShipmentOrderItemTemplateProv
     /**
      * @phpstan-return array<string, mixed>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array
      */

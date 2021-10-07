@@ -74,7 +74,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\RuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\RuleTransfer>
      */
     public function getMerchantAclRoleRules(): array
     {
@@ -106,7 +106,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\AclEntityRuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\AclEntityRuleTransfer>
      */
     public function getMerchantAclRoleEntityRules(): array
     {
@@ -280,7 +280,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\RuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\RuleTransfer>
      */
     public function getMerchantUserAclRoleRules(): array
     {
@@ -307,7 +307,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\AclEntityRuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\AclEntityRuleTransfer>
      */
     public function getMerchantUserAclRoleEntityRules(): array
     {
@@ -364,7 +364,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\AclEntityRuleTransfer[];
+     * @return array<\Generated\Shared\Transfer\AclEntityRuleTransfer> ;
      */
     public function getProductViewerForOfferCreationAclRoleEntityRules(): array
     {
@@ -389,7 +389,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\RuleTransfer[];
+     * @return array<\Generated\Shared\Transfer\RuleTransfer> ;
      */
     public function getProductViewerForOfferCreationAclRoleRules(): array
     {

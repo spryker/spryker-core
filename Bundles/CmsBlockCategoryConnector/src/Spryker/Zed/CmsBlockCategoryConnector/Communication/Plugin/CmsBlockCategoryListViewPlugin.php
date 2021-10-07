@@ -26,7 +26,7 @@ class CmsBlockCategoryListViewPlugin extends AbstractPlugin implements CmsBlockV
      * @param int $idCmsBlock
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRenderedList($idCmsBlock, $idLocale)
     {

@@ -41,9 +41,9 @@ class DocumentationGeneratorRestApiToSymfonyFilesystemAdapter implements Documen
     }
 
     /**
-     * @phpstan-param string|iterable<array,\Traversable> $dirs
+     * @phpstan-param iterable<array, \Traversable>|string $dirs
      *
-     * @param string|iterable $dirs
+     * @param iterable|string $dirs
      * @param int $mode
      *
      * @throws \Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\IOException

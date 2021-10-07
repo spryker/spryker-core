@@ -85,9 +85,9 @@ class AbstractSchedulerConsole extends Console
     }
 
     /**
-     * @param string[] $roles
-     * @param string[] $schedulers
-     * @param string[] $jobNames
+     * @param array<string> $roles
+     * @param array<string> $schedulers
+     * @param array<string> $jobNames
      *
      * @return \Generated\Shared\Transfer\SchedulerFilterTransfer
      */

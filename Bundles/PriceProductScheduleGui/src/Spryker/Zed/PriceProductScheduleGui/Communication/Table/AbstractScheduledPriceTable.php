@@ -188,7 +188,7 @@ abstract class AbstractScheduledPriceTable extends AbstractTable
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductSchedule $item
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function createActionColumn(SpyPriceProductSchedule $item): array
     {

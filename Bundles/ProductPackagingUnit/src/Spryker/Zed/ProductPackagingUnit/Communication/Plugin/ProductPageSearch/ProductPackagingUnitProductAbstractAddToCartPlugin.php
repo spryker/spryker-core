@@ -24,9 +24,9 @@ class ProductPackagingUnitProductAbstractAddToCartPlugin extends AbstractPlugin 
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getEligibleConcreteProducts(array $productConcreteTransfers): array
     {

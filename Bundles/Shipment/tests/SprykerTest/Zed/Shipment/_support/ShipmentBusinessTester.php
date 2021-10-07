@@ -78,7 +78,7 @@ class ShipmentBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsTransfer $shipmentMethodsTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getIdShipmentMethodCollection(ShipmentMethodsTransfer $shipmentMethodsTransfer): array
     {
@@ -142,7 +142,7 @@ class ShipmentBusinessTester extends Actor
     /**
      * @param int $shipmentMethodCount
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function haveActiveShipmentMethods(int $shipmentMethodCount): array
     {
@@ -209,7 +209,7 @@ class ShipmentBusinessTester extends Actor
 
     /**
      * @param string $countryIso2Code
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodTransferList
+     * @param array<\Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethodTransferList
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */

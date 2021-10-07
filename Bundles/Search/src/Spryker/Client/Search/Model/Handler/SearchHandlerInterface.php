@@ -16,10 +16,10 @@ interface SearchHandlerInterface
 {
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $queryCriteria
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $resultFormatters
-     * @param array $requestParameters
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
+     * @param array<mixed> $requestParameters
      *
-     * @return array|\Elastica\ResultSet
+     * @return \Elastica\ResultSet|array<mixed>
      */
     public function search(QueryInterface $queryCriteria, array $resultFormatters = [], array $requestParameters = []);
 }

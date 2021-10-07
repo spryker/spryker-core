@@ -17,9 +17,9 @@ interface StoreRepositoryInterface
     public function storeExists(string $name): bool;
 
     /**
-     * @param string[] $storeNames
+     * @param array<string> $storeNames
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array;
 }

@@ -29,7 +29,7 @@ interface ProductAttributeGuiToLocaleInterface
     public function hasLocale($localeName);
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 

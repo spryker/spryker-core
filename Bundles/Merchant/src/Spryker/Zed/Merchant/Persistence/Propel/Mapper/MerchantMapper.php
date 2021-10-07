@@ -53,7 +53,7 @@ class MerchantMapper implements MerchantMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\SpyMerchant[] $merchantEntities
+     * @param array<\Orm\Zed\Merchant\Persistence\SpyMerchant> $merchantEntities
      * @param \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
@@ -99,7 +99,7 @@ class MerchantMapper implements MerchantMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore[] $merchantStoreEntities
+     * @param array<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore> $merchantStoreEntities
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer

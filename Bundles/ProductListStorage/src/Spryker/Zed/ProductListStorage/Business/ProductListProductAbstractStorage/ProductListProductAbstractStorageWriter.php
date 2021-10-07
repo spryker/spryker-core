@@ -49,7 +49,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -87,11 +87,11 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[] $productAbstractProductListStorageEntities
+     * @param array<int> $productAbstractIds
+     * @param array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage> $productAbstractProductListStorageEntities
      * @param array $productLists
      *
-     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     * @return array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage>
      */
     protected function saveProductAbstractProductListStorageEntities(
         array $productAbstractIds,
@@ -151,7 +151,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      * @param int $idProductAbstract
      * @param array $productLists
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function findProductAbstractBlacklistIds(int $idProductAbstract, array $productLists): array
     {
@@ -162,7 +162,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
      * @param int $idProductAbstract
      * @param array $productLists
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function findProductAbstractWhitelistIds(int $idProductAbstract, array $productLists): array
     {
@@ -170,9 +170,9 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     * @return array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage>
      */
     protected function findProductAbstractProductListStorageEntities(array $productAbstractIds): array
     {
@@ -180,9 +180,9 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     }
 
     /**
-     * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[] $productAbstractProductListStorageEntities
+     * @param array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage> $productAbstractProductListStorageEntities
      *
-     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     * @return array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage>
      */
     protected function indexProductAbstractProductListStorageEntities(array $productAbstractProductListStorageEntities): array
     {
@@ -197,7 +197,7 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
 
     /**
      * @param int $idProductAbstract
-     * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[] $indexedProductAbstractProductListStorageEntities
+     * @param array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage> $indexedProductAbstractProductListStorageEntities
      *
      * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage
      */
@@ -213,8 +213,8 @@ class ProductListProductAbstractStorageWriter implements ProductListProductAbstr
     }
 
     /**
-     * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[] $productAbstractProductListStorageEntities
-     * @param \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[] $productAbstractProductListStorageEntitiesWithLists
+     * @param array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage> $productAbstractProductListStorageEntities
+     * @param array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage> $productAbstractProductListStorageEntitiesWithLists
      *
      * @return void
      */

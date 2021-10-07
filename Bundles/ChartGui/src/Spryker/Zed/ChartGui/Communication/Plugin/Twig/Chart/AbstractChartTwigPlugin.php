@@ -43,7 +43,7 @@ abstract class AbstractChartTwigPlugin extends AbstractPlugin implements TwigCha
      *
      * @api
      *
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     public function getChartFunctions(): array
     {

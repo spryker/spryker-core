@@ -463,8 +463,8 @@ class CmsFacadePageTest extends Unit
     /**
      * @dataProvider relationUpdateFixtures
      *
-     * @param int[] $originalRelation
-     * @param int[] $modifiedRelation
+     * @param array<int> $originalRelation
+     * @param array<int> $modifiedRelation
      *
      * @return void
      */

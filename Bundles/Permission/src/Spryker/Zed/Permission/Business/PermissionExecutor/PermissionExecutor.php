@@ -15,7 +15,7 @@ use Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface;
 class PermissionExecutor implements PermissionExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+     * @var array<\Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface>
      */
     protected $permissionStoragePlugins;
 
@@ -25,7 +25,7 @@ class PermissionExecutor implements PermissionExecutorInterface
     protected $permissionFinder;
 
     /**
-     * @param \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[] $permissionStoragePlugins
+     * @param array<\Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface> $permissionStoragePlugins
      * @param \Spryker\Zed\Permission\Business\PermissionFinder\PermissionFinderInterface $permissionFinder
      */
     public function __construct(
@@ -38,8 +38,8 @@ class PermissionExecutor implements PermissionExecutorInterface
 
     /**
      * @param string $permissionKey
-     * @param int|string $identifier
-     * @param string|int|array|null $context
+     * @param string|int $identifier
+     * @param array|string|int|null $context
      *
      * @return bool
      */
@@ -72,7 +72,7 @@ class PermissionExecutor implements PermissionExecutorInterface
      *
      * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionCollectionTransfer $permissionCollectionTransfer
-     * @param string|int|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */
@@ -93,7 +93,7 @@ class PermissionExecutor implements PermissionExecutorInterface
     /**
      * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface $permissionPlugin
      * @param \Generated\Shared\Transfer\PermissionTransfer $permissionTransfer
-     * @param string|int|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */
@@ -107,7 +107,7 @@ class PermissionExecutor implements PermissionExecutorInterface
 
     /**
      * @param string $permissionKey
-     * @param int|string $identifier
+     * @param string|int $identifier
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */

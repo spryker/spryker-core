@@ -115,8 +115,8 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 
     /**
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
-     * @param mixed[] $initialData
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
+     * @param array<mixed> $initialData
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
@@ -137,7 +137,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 
     /**
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
@@ -192,7 +192,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
 
     /**
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
@@ -244,7 +244,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreOptions(): array
     {
@@ -259,7 +259,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCurrencyOptions(): array
     {
@@ -286,7 +286,7 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getVolumeQuantityColumnOptions(): array
     {

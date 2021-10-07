@@ -75,7 +75,7 @@ class ProductStorage implements ProductStorageInterface
      * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistResponseTransfer
      * @param array $idProductCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\WishlistItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer>
      */
     protected function getValidWishlistItems(WishlistOverviewResponseTransfer $wishlistResponseTransfer, array $idProductCollection)
     {
@@ -97,7 +97,7 @@ class ProductStorage implements ProductStorageInterface
     /**
      * @param array $idProductCollection
      *
-     * @return \Generated\Shared\Transfer\StorageProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductTransfer>
      */
     protected function getStorageProductCollection(array $idProductCollection)
     {

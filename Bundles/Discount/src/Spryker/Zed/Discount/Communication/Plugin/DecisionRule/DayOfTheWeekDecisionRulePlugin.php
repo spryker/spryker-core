@@ -61,7 +61,7 @@ class DayOfTheWeekDecisionRulePlugin extends AbstractPlugin implements DecisionR
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {

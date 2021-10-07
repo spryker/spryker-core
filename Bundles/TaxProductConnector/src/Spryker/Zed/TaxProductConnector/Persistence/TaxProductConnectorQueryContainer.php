@@ -128,7 +128,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @deprecated Use {@link queryTaxSetByIdProductAbstractAndCountryIso2Codes()} instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
@@ -161,8 +161,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
      *
      * @module Country
      *
-     * @param int[] $productAbstractIds
-     * @param string[] $countryIso2Code
+     * @param array<int> $productAbstractIds
+     * @param array<string> $countryIso2Code
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
      */

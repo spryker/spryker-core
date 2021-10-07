@@ -24,7 +24,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -36,7 +36,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -48,7 +48,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery
      */
@@ -156,7 +156,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
@@ -168,7 +168,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
@@ -202,7 +202,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
@@ -216,7 +216,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @module Product
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
@@ -235,8 +235,8 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      * @module Product
      * @module Locale
      *
-     * @param int[] $abstractProductIds
-     * @param string[] $localeIsoCodes
+     * @param array<int> $abstractProductIds
+     * @param array<string> $localeIsoCodes
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductQuery
      */
@@ -250,8 +250,8 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @module ProductSearch
      *
-     * @param int[] $productConcreteIds
-     * @param string[] $localeIsoCodes
+     * @param array<int> $productConcreteIds
+     * @param array<string> $localeIsoCodes
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery
      */

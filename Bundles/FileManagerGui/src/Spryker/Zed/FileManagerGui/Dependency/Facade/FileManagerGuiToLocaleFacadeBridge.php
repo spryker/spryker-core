@@ -31,7 +31,7 @@ class FileManagerGuiToLocaleFacadeBridge implements FileManagerGuiToLocaleFacade
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection()
     {

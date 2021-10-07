@@ -21,7 +21,7 @@ class MerchantProductOptionStorageFacade extends AbstractFacade implements Merch
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -37,9 +37,9 @@ class MerchantProductOptionStorageFacade extends AbstractFacade implements Merch
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     public function filterProductOptions(array $productOptionTransfers): array
     {

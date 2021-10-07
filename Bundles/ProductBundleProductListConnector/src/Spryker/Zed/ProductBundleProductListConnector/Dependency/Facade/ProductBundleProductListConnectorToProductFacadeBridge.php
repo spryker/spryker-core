@@ -23,7 +23,7 @@ class ProductBundleProductListConnectorToProductFacadeBridge implements ProductB
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */

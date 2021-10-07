@@ -159,7 +159,7 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCoreAnnotationSourceDirectoryPatterns(): array
     {

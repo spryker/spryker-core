@@ -97,7 +97,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitTransfersByIdProduct(int $idProduct): array
     {
@@ -118,9 +118,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     /**
      * @module Store
      *
-     * @param int[] $salesUnitsIds
+     * @param array<int> $salesUnitsIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitTransfersByIds(array $salesUnitsIds): array
     {
@@ -166,9 +166,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array
     {
@@ -188,7 +188,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     /**
      * @param int $idSalesOrder
      *
-     * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer>
      */
     public function querySalesOrderItemsByIdSalesOrder($idSalesOrder): array
     {
@@ -212,9 +212,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     /**
      * @module Sales
      *
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array
     {
@@ -233,7 +233,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findAllProductMeasurementUnitTransfers(): array
     {
@@ -253,7 +253,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function getProductMeasurementSalesUnitTransfers(): array
     {
@@ -273,7 +273,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array
     {
@@ -288,7 +288,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array
     {
@@ -313,9 +313,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductMeasurementSalesUnitCountByProductConcreteIds(array $productConcreteIds): array
     {
@@ -345,9 +345,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductMeasurementBaseUnitCountByProductAbstractIds(array $productAbstractIds): array
     {
@@ -379,7 +379,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function findProductMeasurementSalesUnitIdsFilteredByOffsetAndLimit(FilterTransfer $filterTransfer): array
     {
@@ -391,9 +391,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit[] $productMeasurementUnitEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit> $productMeasurementUnitEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     protected function getMappedProductMeasurementUnitTransfers(ObjectCollection $productMeasurementUnitEntityCollection): array
     {
@@ -411,9 +411,9 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit[] $productMeasurementSalesUnitEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit> $productMeasurementSalesUnitEntityCollection
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */
     protected function getMappedProductMeasurementSalesUnitTransfers(ObjectCollection $productMeasurementSalesUnitEntityCollection): array
     {
@@ -433,10 +433,10 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     /**
      * @module Product
      *
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param int $idStore
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findIndexedStoreAwareDefaultProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
     {
@@ -459,10 +459,10 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     /**
      * @module Product
      *
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      * @param int $idStore
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
     {

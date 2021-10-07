@@ -15,7 +15,7 @@ interface ProductDiscontinuedStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
      * @return void
      */
@@ -27,7 +27,7 @@ interface ProductDiscontinuedStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productDiscontinuedIds
+     * @param array<int> $productDiscontinuedIds
      *
      * @return void
      */

@@ -15,9 +15,9 @@ use Generated\Shared\Transfer\SynchronizationDataTransfer;
 class ProductAlternativeStorageMapper implements ProductAlternativeStorageMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[] $productAlternativeStorageEntities
+     * @param array<\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage> $productAlternativeStorageEntities
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function mapProductAlternativeStorageEntitiesToSynchronizationDataTransfers(array $productAlternativeStorageEntities): array
     {

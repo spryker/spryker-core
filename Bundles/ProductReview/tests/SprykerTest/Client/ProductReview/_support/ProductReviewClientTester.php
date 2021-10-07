@@ -34,7 +34,7 @@ class ProductReviewClientTester extends Actor
     use _generated\ProductReviewClientTesterActions;
 
     /**
-     * @return int[][][][]
+     * @return array<int[][][]>
      */
     public function createClinetSearchMockResponse(): array
     {
@@ -79,7 +79,7 @@ class ProductReviewClientTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function createProductViews(): array
     {

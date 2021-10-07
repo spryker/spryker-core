@@ -222,7 +222,7 @@ class QueueConfig extends AbstractBundleConfig
      *  static::SIGTERM,
      * ]
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getSignalsForGracefulWorkerShutdown(): array
     {

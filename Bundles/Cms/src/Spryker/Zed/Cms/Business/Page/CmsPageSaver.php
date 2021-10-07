@@ -272,7 +272,7 @@ class CmsPageSaver implements CmsPageSaverInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[]
+     * @return array<\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes>
      */
     protected function createCmsPageLocalizedAttributesList(SpyCmsPage $cmsPageEntity): array
     {
@@ -339,7 +339,7 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $cmsPageLocalizedAttributesList
+     * @param array<\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes> $cmsPageLocalizedAttributesList
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
      * @return void
@@ -367,10 +367,10 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $cmsPageLocalizedAttributesList
+     * @param array<\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes> $cmsPageLocalizedAttributesList
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[]
+     * @return array<\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes>
      */
     protected function createNewCmsPageLocalizedAttributes(
         CmsPageTransfer $cmsPageTransfer,
@@ -410,7 +410,7 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $localizedAttributeEntities
+     * @param array<\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes> $localizedAttributeEntities
      *
      * @return void
      */
@@ -432,7 +432,7 @@ class CmsPageSaver implements CmsPageSaverInterface
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes[] $cmsPageLocalizedAttributesList
+     * @param array<\Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes> $cmsPageLocalizedAttributesList
      *
      * @return void
      */

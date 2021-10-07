@@ -44,7 +44,7 @@ class RestProductConfigurationPriceProductVolumeMapper implements RestProductCon
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer> $restProductConfigurationPriceAttributesTransfers
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer
@@ -107,7 +107,7 @@ class RestProductConfigurationPriceProductVolumeMapper implements RestProductCon
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer $restProductConfigurationPriceAttributesTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function extractVolumePrices(
         PriceProductTransfer $priceProductTransfer,
@@ -155,10 +155,10 @@ class RestProductConfigurationPriceProductVolumeMapper implements RestProductCon
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[]|\ArrayObject $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param string $productConfigurationInstanceHash
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function fillUpPriceDimensionWithProductConfigurationInstanceHash(
         ArrayObject $priceProductTransfers,

@@ -24,7 +24,7 @@ class CmsContentWidgetFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface[]
+     * @return array<\Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface>
      */
     public function getCmsContentWidgetPlugins()
     {

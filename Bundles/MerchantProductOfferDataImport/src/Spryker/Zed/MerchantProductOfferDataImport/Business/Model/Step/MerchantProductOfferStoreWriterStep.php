@@ -21,7 +21,7 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantPr
 class MerchantProductOfferStoreWriterStep implements DataImportStepInterface, DataImportStepAfterExecuteInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\EventEntityTransfer[]
+     * @var array<\Generated\Shared\Transfer\EventEntityTransfer>
      */
     protected $entityEventTransfers = [];
 

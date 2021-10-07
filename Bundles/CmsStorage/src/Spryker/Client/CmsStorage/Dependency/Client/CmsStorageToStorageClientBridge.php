@@ -23,7 +23,7 @@ class CmsStorageToStorageClientBridge implements CmsStorageToStorageClientInterf
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

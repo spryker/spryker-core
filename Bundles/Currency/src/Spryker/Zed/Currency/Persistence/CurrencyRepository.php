@@ -49,9 +49,9 @@ class CurrencyRepository extends AbstractRepository implements CurrencyRepositor
     }
 
     /**
-     * @param string[] $isoCodes
+     * @param array<string> $isoCodes
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     public function getCurrencyTransfersByIsoCodes(array $isoCodes): array
     {
@@ -68,7 +68,7 @@ class CurrencyRepository extends AbstractRepository implements CurrencyRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Currency\Persistence\SpyCurrency[] $currencyEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Currency\Persistence\SpyCurrency> $currencyEntities
      *
      * @return array
      */

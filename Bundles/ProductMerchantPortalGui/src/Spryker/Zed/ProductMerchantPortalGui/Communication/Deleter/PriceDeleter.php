@@ -49,7 +49,7 @@ class PriceDeleter implements PriceDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param int $volumeQuantity
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
@@ -105,7 +105,7 @@ class PriceDeleter implements PriceDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param int $volumeQuantity
      *
      * @return void
@@ -131,7 +131,7 @@ class PriceDeleter implements PriceDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */

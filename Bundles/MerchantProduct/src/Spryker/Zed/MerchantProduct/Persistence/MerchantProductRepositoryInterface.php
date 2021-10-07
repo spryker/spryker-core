@@ -31,7 +31,7 @@ interface MerchantProductRepositoryInterface
     /**
      * @phpstan-return array<string, string>
      *
-     * @param string[] $concreteSku
+     * @param array<string> $concreteSku
      *
      * @return array
      */

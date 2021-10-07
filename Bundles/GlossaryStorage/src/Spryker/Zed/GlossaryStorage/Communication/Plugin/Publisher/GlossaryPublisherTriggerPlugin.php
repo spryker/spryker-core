@@ -45,7 +45,7 @@ class GlossaryPublisherTriggerPlugin extends AbstractPlugin implements Publisher
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

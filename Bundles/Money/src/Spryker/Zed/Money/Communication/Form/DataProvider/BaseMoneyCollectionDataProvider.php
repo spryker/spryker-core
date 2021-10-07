@@ -34,9 +34,9 @@ class BaseMoneyCollectionDataProvider
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $submittedMoneyValueCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer> $submittedMoneyValueCollection
      *
-     * @return bool[]
+     * @return array<bool>
      */
     protected function createCurrencyIndexMap(ArrayObject $submittedMoneyValueCollection)
     {

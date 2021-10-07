@@ -31,7 +31,7 @@ interface CmsBlockStorageQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @param int[] $cmsBlockIds
+     * @param array<int> $cmsBlockIds
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */

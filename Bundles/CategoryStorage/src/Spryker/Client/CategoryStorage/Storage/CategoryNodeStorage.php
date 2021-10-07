@@ -63,11 +63,11 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, string $storeName): array
     {
@@ -146,11 +146,11 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStorageDataByNodeIds(array $categoryNodeIds, string $localeName, string $storeName): array
     {
@@ -299,7 +299,7 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      * @param string $localeName
      * @param string $storeName
      *

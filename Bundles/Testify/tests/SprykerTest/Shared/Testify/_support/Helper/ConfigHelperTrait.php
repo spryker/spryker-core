@@ -11,11 +11,11 @@ trait ConfigHelperTrait
 {
     /**
      * @param string $key
-     * @param string|int|array|float|bool $value
+     * @param array|string|float|int|bool $value
      *
      * @return void
      */
-    private function setConfig(string $key, $value): void
+    protected function setConfig(string $key, $value): void
     {
         $this->getConfigHelper()->setConfig($key, $value);
     }

@@ -23,7 +23,7 @@ class CmsBlockProductCmsBlockStorageReaderPlugin extends AbstractPlugin implemen
      *
      * @param \Generated\Shared\Transfer\CmsBlockRequestTransfer $cmsBlockRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlocks(CmsBlockRequestTransfer $cmsBlockRequestTransfer): array
     {

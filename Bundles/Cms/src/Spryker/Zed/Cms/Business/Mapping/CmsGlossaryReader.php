@@ -87,7 +87,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      * @param array $placeholders
      * @param int $idCmsPage
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
+     * @return array<\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping>
      */
     protected function createKeyMappingByPlaceholder(array $placeholders, int $idCmsPage): array
     {
@@ -137,7 +137,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
     }
 
     /**
-     * @param \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[] $glossaryKeyEntityMap
+     * @param array<\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping> $glossaryKeyEntityMap
      * @param string $pagePlaceholder
      * @param \Generated\Shared\Transfer\CmsGlossaryAttributesTransfer $glossaryAttributeTransfer
      *
@@ -192,7 +192,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      * @param array $placeholders
      * @param int $idCmsPage
      *
-     * @return \Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping>
      */
     protected function getGlossaryMappingCollection(array $placeholders, int $idCmsPage)
     {

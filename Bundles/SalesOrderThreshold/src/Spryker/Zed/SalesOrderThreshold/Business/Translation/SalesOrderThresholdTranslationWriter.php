@@ -64,9 +64,9 @@ class SalesOrderThresholdTranslationWriter implements SalesOrderThresholdTransla
     }
 
     /**
-     * @param \Traversable|\Generated\Shared\Transfer\SalesOrderThresholdLocalizedMessageTransfer[] $salesOrderThresholdLocalizedMessageTransfers
+     * @param \Traversable<\Generated\Shared\Transfer\SalesOrderThresholdLocalizedMessageTransfer> $salesOrderThresholdLocalizedMessageTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function createTranslationsLocaleMap(Traversable $salesOrderThresholdLocalizedMessageTransfers): array
     {
@@ -80,7 +80,7 @@ class SalesOrderThresholdTranslationWriter implements SalesOrderThresholdTransla
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
-     * @param string[] $translationsByLocale
+     * @param array<string> $translationsByLocale
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */

@@ -158,7 +158,7 @@ class RefundTable extends AbstractTable
     /**
      * @param string $date
      *
-     * @return bool|string
+     * @return string|bool
      */
     protected function formatDate($date)
     {

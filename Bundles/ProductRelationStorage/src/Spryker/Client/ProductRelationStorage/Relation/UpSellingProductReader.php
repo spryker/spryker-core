@@ -26,14 +26,14 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     protected $productStorageClient;
 
     /**
-     * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @var array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     protected $productViewExpanderPlugins;
 
     /**
      * @param \Spryker\Client\ProductRelationStorage\Storage\ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader
      * @param \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientInterface $productStorageClient
-     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $productViewExpanderPlugins
+     * @param array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface> $productViewExpanderPlugins
      */
     public function __construct(
         ProductAbstractRelationStorageReaderInterface $productAbstractRelationStorageReader,
@@ -49,7 +49,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName)
     {
@@ -74,7 +74,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array
     {
@@ -109,7 +109,7 @@ class UpSellingProductReader implements UpSellingProductReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $storeName
      *
      * @return array

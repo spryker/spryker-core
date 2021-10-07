@@ -15,12 +15,12 @@ use Spryker\Zed\Oauth\Business\Model\League\Entities\UserEntity;
 class UserRepository implements UserRepositoryInterface
 {
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface>
      */
     protected $userProviderPlugins;
 
     /**
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface[] $userProviderPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface> $userProviderPlugins
      */
     public function __construct(array $userProviderPlugins = [])
     {

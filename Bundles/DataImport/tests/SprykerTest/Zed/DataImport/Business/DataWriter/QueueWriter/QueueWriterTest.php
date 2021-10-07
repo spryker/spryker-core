@@ -47,7 +47,7 @@ class QueueWriterTest extends Unit
      * @dataProvider getQueueWritableData
      *
      * @param int $expectedMessageCount
-     * @param \Generated\Shared\Transfer\DataSetItemTransfer[] $dataSetItemTransfers
+     * @param array<\Generated\Shared\Transfer\DataSetItemTransfer> $dataSetItemTransfers
      *
      * @return void
      */

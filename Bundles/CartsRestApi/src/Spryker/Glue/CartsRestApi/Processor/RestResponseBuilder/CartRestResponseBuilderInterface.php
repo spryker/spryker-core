@@ -35,7 +35,7 @@ interface CartRestResponseBuilderInterface
     ): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[]|\ArrayObject $errors
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuoteErrorTransfer> $errors
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

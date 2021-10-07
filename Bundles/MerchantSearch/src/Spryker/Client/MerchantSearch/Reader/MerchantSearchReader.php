@@ -24,20 +24,20 @@ class MerchantSearchReader implements MerchantSearchReaderInterface
     protected $merchantSearchQueryPlugin;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected $merchantSearchQueryExpanderPlugins;
 
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected $merchantSearchResultFormatterPlugins;
 
     /**
      * @param \Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToSearchClientInterface $searchClient
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $merchantSearchQueryPlugin
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[] $merchantSearchQueryExpanderPlugins
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[] $merchantSearchResultFormatterPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface> $merchantSearchQueryExpanderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $merchantSearchResultFormatterPlugins
      */
     public function __construct(
         MerchantSearchToSearchClientInterface $searchClient,

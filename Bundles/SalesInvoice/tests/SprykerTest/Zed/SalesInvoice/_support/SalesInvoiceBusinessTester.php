@@ -68,7 +68,7 @@ class SalesInvoiceBusinessTester extends Actor
     /**
      * @param int $number
      *
-     * @return \Generated\Shared\Transfer\OrderInvoiceTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderInvoiceTransfer>
      */
     public function createInvoiceCollection(int $number): array
     {

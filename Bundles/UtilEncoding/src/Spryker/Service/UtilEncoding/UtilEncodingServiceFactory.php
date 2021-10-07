@@ -50,7 +50,7 @@ class UtilEncodingServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\UtilEncoding\FormatEncoder\FormatEncoderInterface[]
+     * @return array<\Spryker\Service\UtilEncoding\FormatEncoder\FormatEncoderInterface>
      */
     public function getFormatEncoders(): array
     {
@@ -60,7 +60,7 @@ class UtilEncodingServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\UtilEncoding\FormatDecoder\FormatDecoderInterface[]
+     * @return array<\Spryker\Service\UtilEncoding\FormatDecoder\FormatDecoderInterface>
      */
     public function getFormatDecoders(): array
     {

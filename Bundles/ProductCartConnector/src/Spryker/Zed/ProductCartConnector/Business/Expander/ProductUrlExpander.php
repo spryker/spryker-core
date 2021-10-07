@@ -61,7 +61,7 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
@@ -81,7 +81,7 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer
      */
@@ -95,7 +95,7 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIds(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -109,9 +109,9 @@ class ProductUrlExpander implements ProductUrlExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
      *
-     * @return \Generated\Shared\Transfer\UrlTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlTransfer>
      */
     protected function getIndexedProductUrlTransfers(array $urlTransfers): array
     {

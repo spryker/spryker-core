@@ -12,22 +12,22 @@ use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 interface CategoryNodeStorageDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer[][][] $categoryNodeStorageTransferTreesIndexedByLocaleAndStore
-     * @param int[] $categoryNodeIds
+     * @param array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer[][]> $categoryNodeStorageTransferTreesIndexedByLocaleAndStore
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
     public function deleteMissingCategoryNodeStorage(array $categoryNodeStorageTransferTreesIndexedByLocaleAndStore, array $categoryNodeIds): void;
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
     public function deleteCategoryNodeStorageCollection(array $categoryNodeIds): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

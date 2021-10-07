@@ -49,7 +49,7 @@ class DetailController extends AbstractController
     protected const MESSAGE_MERCHANT_NOT_FOUND_ERROR = 'Merchant for current user not found.';
 
     /**
-     * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -105,9 +105,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     protected function getMerchantOrderItems(array $salesOrderItemIds): array
     {
@@ -125,7 +125,7 @@ class DetailController extends AbstractController
      *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractUniqueOrderReferencesFromReturn(ReturnTransfer $returnTransfer): array
     {
@@ -145,9 +145,9 @@ class DetailController extends AbstractController
     /**
      * @phpstan-return array<string, string>
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItemTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractUniqueItemStateLabelsFromReturn(array $merchantOrderItemTransfers): array
     {
@@ -168,9 +168,9 @@ class DetailController extends AbstractController
     /**
      * @phpstan-return array<int, string>
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItemTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractUniqueOrderItemManualEvents(array $merchantOrderItemTransfers): array
     {
@@ -188,7 +188,7 @@ class DetailController extends AbstractController
      *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
     {
@@ -203,7 +203,7 @@ class DetailController extends AbstractController
 
     /**
      * @param string $message
-     * @param mixed[] $data
+     * @param array<mixed> $data
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

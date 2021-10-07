@@ -126,7 +126,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @param string $stateMachineName
      * @param string $processName
-     * @param string[] $states
+     * @param array<string> $states
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery
      */
@@ -153,7 +153,7 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      *
      * @param string $stateMachineName
      * @param string $processName
-     * @param string[] $states
+     * @param array<string> $states
      * @param string $historySortDirection
      *
      * @return \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery

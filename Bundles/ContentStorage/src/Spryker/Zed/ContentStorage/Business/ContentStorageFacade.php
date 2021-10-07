@@ -22,7 +22,7 @@ class ContentStorageFacade extends AbstractFacade implements ContentStorageFacad
      *
      * @api
      *
-     * @param int[] $contentIds
+     * @param array<int> $contentIds
      *
      * @return void
      */
@@ -38,7 +38,7 @@ class ContentStorageFacade extends AbstractFacade implements ContentStorageFacad
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentTransfer>
      */
     public function getContentTransfersByFilter(FilterTransfer $filterTransfer): array
     {

@@ -21,7 +21,7 @@ class ConfigurableBundleStorageFacade extends AbstractFacade implements Configur
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class ConfigurableBundleStorageFacade extends AbstractFacade implements Configur
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -53,7 +53,7 @@ class ConfigurableBundleStorageFacade extends AbstractFacade implements Configur
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class ConfigurableBundleStorageFacade extends AbstractFacade implements Configur
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */

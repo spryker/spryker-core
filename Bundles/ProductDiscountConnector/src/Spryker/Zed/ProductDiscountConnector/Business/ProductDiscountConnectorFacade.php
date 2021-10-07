@@ -46,7 +46,7 @@ class ProductDiscountConnectorFacade extends AbstractFacade implements ProductDi
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collectByProductAttribute(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
     {
@@ -60,7 +60,7 @@ class ProductDiscountConnectorFacade extends AbstractFacade implements ProductDi
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAttributeTypes()
     {

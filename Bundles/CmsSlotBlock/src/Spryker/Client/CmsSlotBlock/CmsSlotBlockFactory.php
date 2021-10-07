@@ -28,7 +28,7 @@ class CmsSlotBlockFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface[]
+     * @return array<\Spryker\Client\CmsSlotBlockExtension\Dependency\Plugin\CmsSlotBlockVisibilityResolverPluginInterface>
      */
     public function getCmsSlotBlockVisibilityResolverPlugins(): array
     {

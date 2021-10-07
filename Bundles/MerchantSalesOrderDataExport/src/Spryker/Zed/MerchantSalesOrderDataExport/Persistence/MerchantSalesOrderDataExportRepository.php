@@ -254,7 +254,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      *
      * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder>
      *
-     * @param mixed[] $filterCriteria
+     * @param array<mixed> $filterCriteria
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
@@ -291,7 +291,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      *
      * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
      *
-     * @param mixed[] $filterCriteria
+     * @param array<mixed> $filterCriteria
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery $merchantSalesOrderItemQuery
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery
@@ -453,7 +453,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getMerchantSalesOrderSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -469,7 +469,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getMerchantSalesOrderItemSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -485,7 +485,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSalesExpenseSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -499,9 +499,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     /**
      * @phpstan-return array<int, \Generated\Shared\Transfer\CommentTransfer>
      *
-     * @param int[] $salesOrderIds
+     * @param array<int> $salesOrderIds
      *
-     * @return \Generated\Shared\Transfer\CommentTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentTransfer>
      */
     public function getCommentsByOrderIds(array $salesOrderIds): array
     {
@@ -522,7 +522,7 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
 
     /**
      * @param int $offset
-     * @param string[] $selectedFields
+     * @param array<string> $selectedFields
      *
      * @return \Generated\Shared\Transfer\DataExportBatchTransfer
      */
@@ -535,9 +535,9 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     }
 
     /**
-     * @param string[][] $rowItemsData
+     * @param array<string[]> $rowItemsData
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function formatRowItemDataKeys(array $rowItemsData): array
     {

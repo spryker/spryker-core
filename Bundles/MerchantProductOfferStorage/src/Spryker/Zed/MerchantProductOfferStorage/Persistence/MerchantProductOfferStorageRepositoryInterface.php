@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 interface MerchantProductOfferStorageRepositoryInterface
 {
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductConcreteSkusByMerchantIds(array $merchantIds): array;
 

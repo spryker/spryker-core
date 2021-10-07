@@ -39,7 +39,7 @@ class VersionPublisher implements VersionPublisherInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface[]
+     * @var array<\Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface>
      */
     protected $postSavePlugins = [];
 
@@ -48,7 +48,7 @@ class VersionPublisher implements VersionPublisherInterface
      * @param \Spryker\Zed\Cms\Business\Version\Mapper\VersionDataMapperInterface $versionDataMapper
      * @param \Spryker\Zed\Cms\Business\Version\VersionFinderInterface $versionFinder
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
-     * @param \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface[] $postSavePlugins
+     * @param array<\Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface> $postSavePlugins
      */
     public function __construct(
         VersionGeneratorInterface $versionGenerator,

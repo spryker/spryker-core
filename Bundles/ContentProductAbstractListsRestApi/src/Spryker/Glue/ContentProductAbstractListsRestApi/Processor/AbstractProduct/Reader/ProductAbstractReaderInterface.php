@@ -20,10 +20,10 @@ interface ProductAbstractReaderInterface
     public function getProductAbstractByContentProductAbstractListId(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param string[] $contentProductAbstractListKeys
+     * @param array<string> $contentProductAbstractListKeys
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductAbstractRestResources(array $contentProductAbstractListKeys, string $localeName): array;
 }

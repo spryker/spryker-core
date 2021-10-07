@@ -62,7 +62,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
@@ -164,7 +164,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     /**
      * @module Product
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array
     {

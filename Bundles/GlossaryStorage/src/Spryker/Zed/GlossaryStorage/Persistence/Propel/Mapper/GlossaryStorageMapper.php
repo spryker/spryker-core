@@ -29,9 +29,9 @@ class GlossaryStorageMapper implements GlossaryStorageMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[] $glossaryKeyEntities
+     * @param array<\Orm\Zed\Glossary\Persistence\SpyGlossaryKey> $glossaryKeyEntities
      *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
     public function hydrateGlossaryKeyTransfer(array $glossaryKeyEntities): array
     {

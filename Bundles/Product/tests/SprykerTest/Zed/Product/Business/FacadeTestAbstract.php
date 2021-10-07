@@ -81,7 +81,7 @@ class FacadeTestAbstract extends Unit
     public const CONCRETE_SKU = 'foo-concrete';
 
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer[]
+     * @var array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected $locales;
 

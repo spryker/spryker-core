@@ -40,7 +40,7 @@ class ConfigurableBundleNoteFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ConfigurableBundleNote\QuoteStorageStrategy\QuoteStorageStrategyInterface[]
+     * @return array<\Spryker\Client\ConfigurableBundleNote\QuoteStorageStrategy\QuoteStorageStrategyInterface>
      */
     public function getQuoteStorageStrategies(): array
     {

@@ -71,7 +71,7 @@ class ProductLabelDecisionRulePlugin extends AbstractPlugin implements DecisionR
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getQueryStringValueOptions()
     {

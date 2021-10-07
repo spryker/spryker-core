@@ -16,10 +16,10 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductAbstractLocalizedAttributesMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes[] $productAbstractLocalizedAttributesEntities
-     * @param \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[] $productAbstractLocalizedAttributesTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes> $productAbstractLocalizedAttributesEntities
+     * @param array<\Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer>
      */
     public function mapProductAbstractLocalizedAttributesEntitiesToProductAbstractLocalizedAttributesTransfers(
         ObjectCollection $productAbstractLocalizedAttributesEntities,

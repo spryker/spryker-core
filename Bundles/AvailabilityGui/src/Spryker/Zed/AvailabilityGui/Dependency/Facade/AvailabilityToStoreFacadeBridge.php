@@ -25,7 +25,7 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores()
     {
@@ -63,7 +63,7 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
     {

@@ -10,12 +10,12 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader;
 class PriceProductReaderPluginExecutor implements PriceProductReaderPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface[]
+     * @var array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface>
      */
     protected $extractorPlugins;
 
     /**
-     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface[] $extractorPlugins
+     * @param array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface> $extractorPlugins
      */
     public function __construct(array $extractorPlugins)
     {
@@ -23,9 +23,9 @@ class PriceProductReaderPluginExecutor implements PriceProductReaderPluginExecut
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function executePriceExtractorPluginsForProductAbstract(array $priceProductTransfers): array
     {
@@ -40,9 +40,9 @@ class PriceProductReaderPluginExecutor implements PriceProductReaderPluginExecut
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function executePriceExtractorPluginsForProductConcrete(array $priceProductTransfers): array
     {

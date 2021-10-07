@@ -81,7 +81,7 @@ class StrictTransportSecurityHeaderEventDispatcherPlugin extends AbstractPlugin 
     /**
      * @phpstan-param array<string, mixed> $strictTransportSecurityConfig
      *
-     * @param string[] $strictTransportSecurityConfig
+     * @param array<string> $strictTransportSecurityConfig
      *
      * @return string
      */

@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantProductStorage\Dependency\Facade;
 interface MerchantProductStorageToProductStorageFacadeInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

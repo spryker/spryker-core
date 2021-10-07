@@ -26,9 +26,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithProductConfiguration(array $itemTransfers): array
     {
@@ -50,9 +50,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSalesOrderItemIds(array $itemTransfers): array
     {
@@ -68,9 +68,9 @@ class OrderItemExpander implements OrderItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[] $salesOrderItemConfigurationTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer> $salesOrderItemConfigurationTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer>
      */
     protected function indexSalesOrderItemConfigurations(array $salesOrderItemConfigurationTransfers): array
     {

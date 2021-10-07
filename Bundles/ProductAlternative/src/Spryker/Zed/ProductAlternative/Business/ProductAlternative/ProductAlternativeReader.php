@@ -33,7 +33,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[]
+     * @var array<\Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface>
      */
     protected $alternativeProductApplicablePlugins;
 
@@ -41,7 +41,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
      * @param \Spryker\Zed\ProductAlternative\Persistence\ProductAlternativeRepositoryInterface $productAlternativeRepository
      * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductAlternative\Dependency\Facade\ProductAlternativeToProductFacadeInterface $productFacade
-     * @param \Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface[] $alternativeProductApplicablePlugins
+     * @param array<\Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface> $alternativeProductApplicablePlugins
      */
     public function __construct(
         ProductAlternativeRepositoryInterface $productAlternativeRepository,
@@ -72,7 +72,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
@@ -99,7 +99,7 @@ class ProductAlternativeReader implements ProductAlternativeReaderInterface
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array
     {

@@ -20,7 +20,7 @@ class ProductOptionMapper
     /**
      * @param array $productAbstractOptionGroupStatuses
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer>
      */
     public function mapProductAbstractOptionGroupStatusesToTransfers(
         array $productAbstractOptionGroupStatuses
@@ -36,9 +36,9 @@ class ProductOptionMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function mapSalesOrderItemEntityCollectionToItemTransfers(
         ObjectCollection $salesOrderItemEntities
@@ -58,9 +58,9 @@ class ProductOptionMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $productOptionValueEntities
      *
-     * @return \Generated\Shared\Transfer\ProductOptionValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionValueTransfer>
      */
     public function mapProductOptionValueEntityCollectionToProductOptionValueTransfers(
         ObjectCollection $productOptionValueEntities
@@ -78,7 +78,7 @@ class ProductOptionMapper
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     protected function mapSalesOrderItemEntityToProductOptionTransfers(SpySalesOrderItem $salesOrderItemEntity): array
     {

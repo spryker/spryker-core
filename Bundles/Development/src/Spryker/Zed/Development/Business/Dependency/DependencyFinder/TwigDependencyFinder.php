@@ -18,7 +18,7 @@ class TwigDependencyFinder implements DependencyFinderInterface
     public const TYPE_TWIG = 'twig';
 
     /**
-     * @var \Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface[]
+     * @var array<\Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface>
      */
     protected $twigDependencyFinder;
 

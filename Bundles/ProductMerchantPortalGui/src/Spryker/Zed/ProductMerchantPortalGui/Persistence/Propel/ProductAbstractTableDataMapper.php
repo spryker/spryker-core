@@ -100,7 +100,7 @@ class ProductAbstractTableDataMapper
     }
 
     /**
-     * @param mixed[] $productAbstractTableDataArray
+     * @param array<mixed> $productAbstractTableDataArray
      * @param \Generated\Shared\Transfer\ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
@@ -141,7 +141,7 @@ class ProductAbstractTableDataMapper
     }
 
     /**
-     * @param mixed[] $productAbstractTableRowDataArray
+     * @param array<mixed> $productAbstractTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer

@@ -18,7 +18,7 @@ class CmsPageKeysToIdsConditionResolver implements ConditionResolverInterface
     protected const KEY_CMS_PAGE_IDS = 'pageIds';
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $cmsPageIdsBuffer = [];
 
@@ -37,11 +37,11 @@ class CmsPageKeysToIdsConditionResolver implements ConditionResolverInterface
     }
 
     /**
-     * @param string[] $cmsPageKeys
+     * @param array<string> $cmsPageKeys
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCmsPageIdsByKeys(array $cmsPageKeys): array
     {

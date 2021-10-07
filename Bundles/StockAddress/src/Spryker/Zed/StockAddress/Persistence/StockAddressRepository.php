@@ -15,9 +15,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class StockAddressRepository extends AbstractRepository implements StockAddressRepositoryInterface
 {
     /**
-     * @param int[] $stockIds
+     * @param array<int> $stockIds
      *
-     * @return \Generated\Shared\Transfer\StockAddressTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockAddressTransfer>
      */
     public function getStockAddressesByStockIds(array $stockIds): array
     {

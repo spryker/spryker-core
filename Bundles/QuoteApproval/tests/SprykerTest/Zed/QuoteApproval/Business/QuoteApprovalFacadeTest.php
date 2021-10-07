@@ -617,7 +617,7 @@ class QuoteApprovalFacadeTest extends Unit
     }
 
     /**
-     * @param string[] $requiredQuoteFields
+     * @param array<string> $requiredQuoteFields
      *
      * @return \Spryker\Zed\QuoteApproval\Business\QuoteApprovalFacadeInterface
      */

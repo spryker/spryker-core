@@ -15,7 +15,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class BundleBuilder implements BundleBuilderInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[]
+     * @var array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface>
      */
     protected $bundleMethodBuilders;
 
@@ -25,7 +25,7 @@ class BundleBuilder implements BundleBuilderInterface
     protected $options;
 
     /**
-     * @param \Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface[] $bundleMethodBuilders
+     * @param array<\Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle\MethodBuilder\BundleMethodBuilderInterface> $bundleMethodBuilders
      * @param array $options
      */
     public function __construct(array $bundleMethodBuilders, array $options)

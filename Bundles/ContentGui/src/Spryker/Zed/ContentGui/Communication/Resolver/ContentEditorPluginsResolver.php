@@ -12,12 +12,12 @@ use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInte
 class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterface
 {
     /**
-     * @var \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[]
+     * @var array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface>
      */
     protected $contentEditorPlugins;
 
     /**
-     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface[] $contentEditorPlugins
+     * @param array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInterface> $contentEditorPlugins
      */
     public function __construct(array $contentEditorPlugins)
     {
@@ -27,7 +27,7 @@ class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterf
     /**
      * @param string $contentType
      *
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer>
      */
     public function getTemplatesByType(string $contentType): array
     {
@@ -55,7 +55,7 @@ class ContentEditorPluginsResolver implements ContentEditorPluginsResolverInterf
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getContentTypes(): array
     {

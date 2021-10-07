@@ -205,7 +205,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return mixed|\Symfony\Component\HttpFoundation\Session\SessionBagInterface
+     * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface|mixed
      */
     public function getBag($name)
     {

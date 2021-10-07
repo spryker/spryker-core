@@ -27,14 +27,14 @@ class ConfigurableBundleTemplateSlotEditFormDataProvider
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormDataProviderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormDataProviderExpanderPluginInterface>
      */
     protected $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToConfigurableBundleFacadeInterface $configurableBundleFacade
      * @param \Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface $localeFacade
-     * @param \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormDataProviderExpanderPluginInterface[] $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins
+     * @param array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormDataProviderExpanderPluginInterface> $configurableBundleTemplateSlotEditFormDataProviderExpanderPlugins
      */
     public function __construct(
         ConfigurableBundleGuiToConfigurableBundleFacadeInterface $configurableBundleFacade,

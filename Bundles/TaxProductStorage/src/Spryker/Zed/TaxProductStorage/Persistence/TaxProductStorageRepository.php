@@ -17,9 +17,9 @@ class TaxProductStorageRepository extends AbstractRepository implements TaxProdu
     /**
      * @module Product
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\TaxProductStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\TaxProductStorageTransfer>
      */
     public function getTaxProductTransfersFromProductAbstractsByIds(array $productAbstractIds): array
     {
@@ -43,10 +43,10 @@ class TaxProductStorageRepository extends AbstractRepository implements TaxProdu
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string|null $keyColumn
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds(
         array $productAbstractIds,
@@ -68,7 +68,7 @@ class TaxProductStorageRepository extends AbstractRepository implements TaxProdu
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getAllSynchronizationDataTransfersFromTaxProductStorages(): array
     {

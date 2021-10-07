@@ -104,7 +104,7 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getAllConfigurableBundleTemplateIds(): array
     {

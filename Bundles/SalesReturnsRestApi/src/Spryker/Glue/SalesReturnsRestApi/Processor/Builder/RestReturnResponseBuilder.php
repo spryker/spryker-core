@@ -149,7 +149,7 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnResponseTransfer $returnResponseTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function mapReturnResponseTransferToErrorIdentifiers(ReturnResponseTransfer $returnResponseTransfer): array
     {
@@ -173,7 +173,7 @@ class RestReturnResponseBuilder implements RestReturnResponseBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createReturnItemRestResourcesFromReturnTransfer(ReturnTransfer $returnTransfer): array
     {

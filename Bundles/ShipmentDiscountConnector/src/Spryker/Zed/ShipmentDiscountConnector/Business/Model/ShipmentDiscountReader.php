@@ -25,7 +25,7 @@ class ShipmentDiscountReader implements ShipmentDiscountReaderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getCarrierList()
     {
@@ -40,7 +40,7 @@ class ShipmentDiscountReader implements ShipmentDiscountReaderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getMethodList()
     {

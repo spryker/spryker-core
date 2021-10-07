@@ -30,10 +30,10 @@ interface CategoriesRestApiResourceInterface
      *
      * @api
      *
-     * @param int[] $nodeIds
+     * @param array<int> $nodeIds
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function findCategoryNodeByIds(array $nodeIds, string $localeName): array;
 }

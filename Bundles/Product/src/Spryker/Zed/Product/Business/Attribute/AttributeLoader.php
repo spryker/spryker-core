@@ -62,7 +62,7 @@ class AttributeLoader implements AttributeLoaderInterface
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return array
@@ -226,9 +226,9 @@ class AttributeLoader implements AttributeLoaderInterface
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return array|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection|array
      */
     protected function getProductAbstractEntitiesFromIds($productIds)
     {

@@ -152,7 +152,7 @@ class WishlistsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesMapperPluginInterface>
      */
     public function getRestWishlistItemsAttributesMapperPlugins(): array
     {

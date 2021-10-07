@@ -34,7 +34,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface>
      */
     protected $searchOrderExpanderPlugins;
 
@@ -42,7 +42,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface> $searchOrderExpanderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
@@ -96,9 +96,9 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     protected function executeSearchOrderExpanderPlugins(array $orderTransfers): array
     {
@@ -127,7 +127,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $ordersQuery
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder>
      */
     protected function getOrderCollection(OrderListTransfer $orderListTransfer, SpySalesOrderQuery $ordersQuery)
     {
@@ -142,7 +142,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $ordersQuery
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder>
      */
     protected function paginateOrderCollection(OrderListTransfer $orderListTransfer, SpySalesOrderQuery $ordersQuery)
     {
@@ -168,7 +168,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
 
         $orderListTransfer->setPagination($paginationTransfer);
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $collection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder> $collection */
         $collection = $paginationModel->getResults();
 
         return $collection;

@@ -26,7 +26,7 @@ interface CategoryStorageEntityManagerInterface
     ): void;
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      * @param string $localeName
      * @param string $storeName
      *
@@ -35,7 +35,7 @@ interface CategoryStorageEntityManagerInterface
     public function deleteCategoryNodeStoragesForStoreAndLocale(array $categoryNodeIds, string $localeName, string $storeName): void;
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */

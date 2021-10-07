@@ -50,12 +50,12 @@ class SalesOrderWriter implements SalesOrderWriterInterface
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
+     * @var array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
      */
     protected $orderExpanderPreSavePlugins;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface>
      */
     protected $orderPostSavePlugins;
 
@@ -65,7 +65,7 @@ class SalesOrderWriter implements SalesOrderWriterInterface
     protected $entityManager;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCountryCache = [];
 
@@ -75,8 +75,8 @@ class SalesOrderWriter implements SalesOrderWriterInterface
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface $localeFacade
-     * @param \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[] $orderExpanderPreSavePlugins
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface[] $orderPostSavePlugins
+     * @param array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface> $orderExpanderPreSavePlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface> $orderPostSavePlugins
      * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $entityManager
      */
     public function __construct(

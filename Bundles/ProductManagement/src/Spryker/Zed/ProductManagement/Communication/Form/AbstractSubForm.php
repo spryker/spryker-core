@@ -18,7 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 abstract class AbstractSubForm extends AbstractType
 {
     /**
-     * @var bool[]
+     * @var array<bool>
      */
     public static $errorFieldsDisplayed = [];
 

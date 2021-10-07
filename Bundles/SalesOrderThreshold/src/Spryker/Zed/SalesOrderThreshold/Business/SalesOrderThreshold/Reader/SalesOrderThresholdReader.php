@@ -26,7 +26,7 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
     protected $translationHydrator;
 
     /**
-     * @var \Generated\Shared\Transfer\SalesOrderThresholdTransfer[][]
+     * @var array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer[]>
      */
     protected static $salesOrderThresholdTransfersCache = [];
 
@@ -46,7 +46,7 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>
      */
     public function getSalesOrderThresholds(
         StoreTransfer $storeTransfer,
@@ -83,7 +83,7 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
     /**
      * @param string $currencyTransferAndStoreTransferCacheKey
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>
      */
     protected function getSalesOrderThresholdTransfersByCacheKey(string $currencyTransferAndStoreTransferCacheKey): array
     {
@@ -106,7 +106,7 @@ class SalesOrderThresholdReader implements SalesOrderThresholdReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer[] $salesOrderThresholdTransfers
+     * @param array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer> $salesOrderThresholdTransfers
      * @param string $currencyTransferAndStoreTransferCacheKey
      *
      * @return void

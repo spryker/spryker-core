@@ -85,7 +85,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -97,7 +97,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */
@@ -191,7 +191,7 @@ class CategoryNodePageSearchWriter implements CategoryNodePageSearchWriterInterf
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

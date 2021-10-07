@@ -14,9 +14,9 @@ class CategoryNodeMapper
 {
     /**
      * @param \Propel\Runtime\Collection\Collection $categoryNodeCollection
-     * @param \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[] $categoryNodeAggregationTransfers
+     * @param array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer> $categoryNodeAggregationTransfers
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer>
      */
     public function mapCategoryNodesToCategoryNodeAggregationTransfers(
         Collection $categoryNodeCollection,

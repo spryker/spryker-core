@@ -38,7 +38,7 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getAbstractProductCategoryIds(int $idProductAbstract): array
     {
@@ -59,7 +59,7 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer $productAbstractCategoryStorageTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryIds(
         ProductAbstractCategoryStorageTransfer $productAbstractCategoryStorageTransfer

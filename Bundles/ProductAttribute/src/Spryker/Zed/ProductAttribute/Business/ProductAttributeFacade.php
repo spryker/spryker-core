@@ -322,7 +322,7 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getProductAttributeCollection()
     {
@@ -336,9 +336,9 @@ class ProductAttributeFacade extends AbstractFacade implements ProductAttributeF
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array
     {

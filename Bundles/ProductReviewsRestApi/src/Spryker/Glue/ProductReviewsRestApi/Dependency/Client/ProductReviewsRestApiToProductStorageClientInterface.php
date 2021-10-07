@@ -28,7 +28,7 @@ interface ProductReviewsRestApiToProductStorageClientInterface
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array
@@ -37,7 +37,7 @@ interface ProductReviewsRestApiToProductStorageClientInterface
 
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array

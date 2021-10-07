@@ -22,12 +22,12 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuotePreExpanderPluginInterface
 class QuoteApprovalExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface, QuotePreExpanderPluginInterface, QuotePostExpanderPluginInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $quoteIds = [];
 
     /**
-     * @var \Generated\Shared\Transfer\QuoteApprovalTransfer[]|null
+     * @var array<\Generated\Shared\Transfer\QuoteApprovalTransfer>|null
      */
     protected $quoteApprovalsByIdQuote;
 

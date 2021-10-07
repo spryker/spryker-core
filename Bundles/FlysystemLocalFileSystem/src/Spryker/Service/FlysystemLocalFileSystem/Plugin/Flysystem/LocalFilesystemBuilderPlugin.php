@@ -28,7 +28,7 @@ class LocalFilesystemBuilderPlugin extends AbstractPlugin implements FlysystemFi
 
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
+     * @param array<\League\Flysystem\PluginInterface> $flysystemPluginCollection
      *
      * @return \League\Flysystem\Filesystem
      */

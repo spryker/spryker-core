@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductManagement\Communication\Reader;
 interface ProductAttributeReaderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getProductSuperAttributesIndexedByAttributeKey(): array;
 }

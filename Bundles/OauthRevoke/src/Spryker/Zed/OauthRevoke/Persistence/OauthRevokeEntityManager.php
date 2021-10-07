@@ -55,7 +55,7 @@ class OauthRevokeEntityManager extends AbstractEntityManager implements OauthRev
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer> $oauthRefreshTokenTransfers
      *
      * @return void
      */
@@ -86,9 +86,9 @@ class OauthRevokeEntityManager extends AbstractEntityManager implements OauthRev
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer> $oauthRefreshTokenTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getIdentifiersFromTransfers(ArrayObject $oauthRefreshTokenTransfers): array
     {

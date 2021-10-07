@@ -72,9 +72,9 @@ class ProductReader implements ProductReaderInterface
     }
 
     /**
-     * @param int[]|null $productAbstractIds
+     * @param array<int>|null $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstracts(?array $productAbstractIds = []): array
     {
@@ -109,9 +109,9 @@ class ProductReader implements ProductReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function mapProductAbstractTransfersToArray(array $productAbstractTransfers): array
     {
@@ -129,7 +129,7 @@ class ProductReader implements ProductReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
      *
      * @return array
      */

@@ -87,7 +87,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractDependencyP
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function getConfigurableBundleTemplatePageSearchResultFormatterPlugins(): array
     {
@@ -95,7 +95,7 @@ class ConfigurableBundlePageSearchDependencyProvider extends AbstractDependencyP
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function getConfigurableBundleTemplatePageSearchQueryExpanderPlugins(): array
     {

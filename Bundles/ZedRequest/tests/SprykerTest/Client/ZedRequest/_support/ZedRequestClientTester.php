@@ -52,8 +52,8 @@ class ZedRequestClientTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $expectedMessages
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $actualMessages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $expectedMessages
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $actualMessages
      *
      * @return void
      */

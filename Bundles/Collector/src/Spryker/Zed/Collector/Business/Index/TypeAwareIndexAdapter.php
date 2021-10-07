@@ -35,7 +35,7 @@ class TypeAwareIndexAdapter implements IndexAdapterInterface
     }
 
     /**
-     * @param int|string $id
+     * @param string|int $id
      * @param array $options
      *
      * @return \Elastica\Document
@@ -46,7 +46,7 @@ class TypeAwareIndexAdapter implements IndexAdapterInterface
     }
 
     /**
-     * @param \Elastica\Document[] $documents
+     * @param array<\Elastica\Document> $documents
      * @param array $options
      *
      * @return \Elastica\Bulk\ResponseSet

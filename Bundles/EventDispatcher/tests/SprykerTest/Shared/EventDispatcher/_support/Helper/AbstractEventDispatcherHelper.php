@@ -44,7 +44,7 @@ abstract class AbstractEventDispatcherHelper extends Module
     protected const SERVICE_DISPATCHER = 'dispatcher';
 
     /**
-     * @var \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
+     * @var array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
      */
     protected $eventDispatcherPlugins = [];
 

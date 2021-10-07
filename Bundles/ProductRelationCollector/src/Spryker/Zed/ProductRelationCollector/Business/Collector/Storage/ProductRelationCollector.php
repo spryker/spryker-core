@@ -73,6 +73,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
         foreach ($relatedProductIds as $idProductRelation) {
             $relationProducts = $this->findRelationProducts((int)$idProductRelation);
 
+            /** @var array $relationProduct */
             foreach ($relationProducts as $relationProduct) {
                 if (!isset($results[$relationProduct[SpyProductRelationTypeTableMap::COL_KEY]])) {
                     $results[$relationProduct[SpyProductRelationTypeTableMap::COL_KEY]] = [
@@ -118,7 +119,7 @@ class ProductRelationCollector extends AbstractStoragePropelCollector
     /**
      * @param int $idProductRelation
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|mixed
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function findRelationProducts($idProductRelation)
     {

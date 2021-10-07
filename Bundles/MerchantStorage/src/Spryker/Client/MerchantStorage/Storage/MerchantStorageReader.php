@@ -103,7 +103,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
     public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array
     {
@@ -123,9 +123,9 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
     protected function getByMerchantIds(array $merchantIds): array
     {
@@ -152,7 +152,7 @@ class MerchantStorageReader implements MerchantStorageReaderInterface
     /**
      * @param array $merchantReferences
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getMerchantIdsByMerchantReferences(array $merchantReferences): array
     {

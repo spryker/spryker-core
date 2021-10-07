@@ -84,7 +84,7 @@ class ImportOrderItemsStatusConsole extends Console
     protected $outputTable;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getMandatoryColumns(): array
     {

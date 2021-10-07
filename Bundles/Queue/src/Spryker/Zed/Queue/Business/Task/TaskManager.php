@@ -26,14 +26,14 @@ class TaskManager implements TaskManagerInterface
     protected $queueConfig;
 
     /**
-     * @var \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[]
+     * @var array<\Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface>
      */
     protected $messageProcessorPlugins;
 
     /**
      * @param \Spryker\Client\Queue\QueueClientInterface $client
      * @param \Spryker\Zed\Queue\QueueConfig $queueConfig
-     * @param \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[] $messageProcessorPlugins
+     * @param array<\Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface> $messageProcessorPlugins
      */
     public function __construct(QueueClientInterface $client, QueueConfig $queueConfig, array $messageProcessorPlugins)
     {
@@ -127,7 +127,7 @@ class TaskManager implements TaskManagerInterface
      * @param int $chunkSize
      * @param array $options
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function receiveMessages($queueName, $chunkSize, array $options = [])
     {
@@ -135,7 +135,7 @@ class TaskManager implements TaskManagerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueReceiveMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueReceiveMessageTransfers
      * @param array $options
      *
      * @return void

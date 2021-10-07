@@ -45,12 +45,12 @@ class ValidatorHelper extends Module
     protected const CONFIG_KEY_CONSTRAINT_PLUGINS = 'constraintPlugins';
 
     /**
-     * @var \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface[]
+     * @var array<\Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface>
      */
     protected $validatorPlugins = [];
 
     /**
-     * @var \Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface[]
+     * @var array<\Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface>
      */
     protected $constraintPlugins = [];
 

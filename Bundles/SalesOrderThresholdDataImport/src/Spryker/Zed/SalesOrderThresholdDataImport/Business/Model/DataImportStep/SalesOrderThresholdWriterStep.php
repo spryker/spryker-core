@@ -39,12 +39,12 @@ class SalesOrderThresholdWriterStep implements DataImportStepInterface
     protected $currencyFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[] Keys are store names.
+     * @var array<\Generated\Shared\Transfer\StoreTransfer> Keys are store names.
      */
     protected $storesHeap = [];
 
     /**
-     * @var \Generated\Shared\Transfer\CurrencyTransfer[] Keys are currency codes.
+     * @var array<\Generated\Shared\Transfer\CurrencyTransfer> Keys are currency codes.
      */
     protected $currenciesHeap = [];
 

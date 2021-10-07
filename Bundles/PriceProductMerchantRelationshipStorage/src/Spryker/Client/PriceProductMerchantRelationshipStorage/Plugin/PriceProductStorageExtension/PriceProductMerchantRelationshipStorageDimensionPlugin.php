@@ -23,7 +23,7 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePrices(int $idProductConcrete): array
     {
@@ -50,7 +50,7 @@ class PriceProductMerchantRelationshipStorageDimensionPlugin extends AbstractPlu
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPrices(int $idProductAbstract): array
     {

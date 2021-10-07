@@ -25,14 +25,14 @@ class CheckoutRequestAttributesExpander implements CheckoutRequestAttributesExpa
     protected $config;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestExpanderPluginInterface[]
+     * @var array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestExpanderPluginInterface>
      */
     protected $checkoutRequestExpanderPlugins;
 
     /**
      * @param \Spryker\Glue\CheckoutRestApi\Processor\Customer\CustomerMapperInterface $customerMapper
      * @param \Spryker\Glue\CheckoutRestApi\CheckoutRestApiConfig $config
-     * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestExpanderPluginInterface[] $checkoutRequestExpanderPlugins
+     * @param array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestExpanderPluginInterface> $checkoutRequestExpanderPlugins
      */
     public function __construct(
         CustomerMapperInterface $customerMapper,

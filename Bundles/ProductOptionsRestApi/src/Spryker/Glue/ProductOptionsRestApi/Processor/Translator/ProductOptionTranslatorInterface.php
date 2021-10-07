@@ -12,10 +12,10 @@ use Generated\Shared\Transfer\ItemTransfer;
 interface ProductOptionTranslatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer> $productAbstractOptionStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer>
      */
     public function translateProductAbstractOptionStorageTransfers(
         array $productAbstractOptionStorageTransfers,

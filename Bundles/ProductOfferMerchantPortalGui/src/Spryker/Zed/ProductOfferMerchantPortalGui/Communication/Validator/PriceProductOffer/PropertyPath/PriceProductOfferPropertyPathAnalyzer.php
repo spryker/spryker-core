@@ -265,7 +265,7 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
     /**
      * @param string $propertyPath
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractPropertyPathValues(string $propertyPath): array
     {

@@ -296,9 +296,9 @@ class SegmentScopeAclQueryDirectorStrategy implements AclQueryDirectorStrategyIn
      * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     * @param int[] $segmentIds
+     * @param array<int> $segmentIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getAccessibleTargetEntityIds(ModelCriteria $query, array $segmentIds): array
     {

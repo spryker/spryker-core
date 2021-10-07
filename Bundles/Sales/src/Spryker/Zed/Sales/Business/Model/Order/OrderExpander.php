@@ -28,20 +28,20 @@ class OrderExpander implements OrderExpanderInterface
     protected $orderItemTransformer;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface>
      */
     protected $itemTransformerStrategyPlugins;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterface>
      */
     protected $itemPreTransformerPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface $orderItemTransformer
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[] $itemTransformerStrategyPlugins
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterface[] $itemPreTransformerPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface> $itemTransformerStrategyPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterface> $itemPreTransformerPlugins
      */
     public function __construct(
         SalesToCalculationInterface $calculationFacade,
@@ -104,9 +104,9 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function transformItems(ArrayObject $items): ArrayObject
     {
@@ -136,7 +136,7 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemCollection
      *
      * @return void
      */
@@ -163,10 +163,10 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer[][] $calculatedDiscountsByGroupKey
+     * @param array<string, array<string, \Generated\Shared\Transfer\CalculatedDiscountTransfer>> $calculatedDiscountsByGroupKey
      * @param string $groupKey
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CalculatedDiscountTransfer>
      */
     protected function getGroupedCalculatedDiscounts(array &$calculatedDiscountsByGroupKey, $groupKey)
     {
@@ -174,6 +174,7 @@ class OrderExpander implements OrderExpanderInterface
 
         $appliedDiscounts = [];
         foreach ($discountCollection as $key => $discountTransfer) {
+            /** @var int $idDiscount */
             $idDiscount = $discountTransfer->getIdDiscount();
             if (isset($appliedDiscounts[$idDiscount])) {
                 continue;

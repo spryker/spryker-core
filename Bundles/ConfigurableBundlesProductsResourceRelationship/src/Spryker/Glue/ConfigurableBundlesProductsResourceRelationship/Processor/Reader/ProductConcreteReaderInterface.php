@@ -12,7 +12,7 @@ interface ProductConcreteReaderInterface
     /**
      * @param int $idProductList
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getMappedProductConcreteIds(int $idProductList): array;
 }

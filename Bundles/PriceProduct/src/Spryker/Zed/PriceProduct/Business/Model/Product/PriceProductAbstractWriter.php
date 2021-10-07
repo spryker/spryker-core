@@ -51,7 +51,7 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
     protected $priceProductStoreWriter;
 
     /**
-     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     * @var array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface>
      */
     protected $priceDimensionAbstractSaverPlugins;
 
@@ -62,7 +62,7 @@ class PriceProductAbstractWriter extends BaseProductPriceWriter implements Price
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface $priceProductStoreWriter
-     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[] $priceDimensionAbstractSaverPlugins
+     * @param array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface> $priceDimensionAbstractSaverPlugins
      */
     public function __construct(
         PriceProductTypeReaderInterface $priceTypeReader,

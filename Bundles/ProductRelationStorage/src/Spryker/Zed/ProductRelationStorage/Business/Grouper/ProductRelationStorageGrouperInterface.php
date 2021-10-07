@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductRelationStorage\Business\Grouper;
 interface ProductRelationStorageGrouperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer[] $productRelationTransfers
+     * @param array<\Generated\Shared\Transfer\ProductRelationTransfer> $productRelationTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[][][]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer[][]>
      */
     public function groupProductRelationsByProductAbstractAndStore(
         array $productRelationTransfers

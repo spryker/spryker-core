@@ -31,20 +31,20 @@ class QuoteDeleter implements QuoteDeleterInterface
     protected $quoteRepository;
 
     /**
-     * @var array|\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+     * @var array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface>
      */
     protected $quoteDeleteBeforePlugins;
 
     /**
-     * @var array|\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface[]
+     * @var array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface>
      */
     protected $quoteDeleteAfterPlugins;
 
     /**
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[] $quoteDeleteBeforePlugins
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface[] $quoteDeleteAfterPlugins
+     * @param array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface> $quoteDeleteBeforePlugins
+     * @param array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface> $quoteDeleteAfterPlugins
      */
     public function __construct(
         QuoteRepositoryInterface $quoteRepository,

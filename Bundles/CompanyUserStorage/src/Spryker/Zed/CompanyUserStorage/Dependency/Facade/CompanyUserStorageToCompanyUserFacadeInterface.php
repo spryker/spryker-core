@@ -13,16 +13,16 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 interface CompanyUserStorageToCompanyUserFacadeInterface
 {
     /**
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyUserTransfer>
      */
     public function findActiveCompanyUsersByIds(array $companyUserIds): array;
 
     /**
-     * @param int[] $companyIds
+     * @param array<int> $companyIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array;
 

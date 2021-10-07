@@ -13,9 +13,9 @@ use Orm\Zed\Stock\Persistence\SpyStockProduct;
 class StockProductMapper
 {
     /**
-     * @param \Orm\Zed\Stock\Persistence\SpyStockProduct[] $stockProductEntities
+     * @param array<\Orm\Zed\Stock\Persistence\SpyStockProduct> $stockProductEntities
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function mapStockProductEntitiesToStockProductTransfers(array $stockProductEntities): array
     {

@@ -144,7 +144,7 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
      * @param string $mainResourceType
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function extractParentResources(string $mainResourceType, Request $request): array
     {

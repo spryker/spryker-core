@@ -182,9 +182,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductCriteriaTransfer>
      */
     public function buildCriteriaTransfersFromFilterTransfers(array $priceProductFilterTransfers): array
     {
@@ -227,9 +227,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function getStoreTransfersForPriceProductFilters(array $priceProductFilterTransfers): array
     {
@@ -243,9 +243,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function indexStoreTransfersByStoreName(array $storeTransfers): array
     {
@@ -258,9 +258,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer[] $priceProductFilterTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected function getCurrencyTransfersForPriceProductFilters(array $priceProductFilterTransfers): array
     {
@@ -274,9 +274,9 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CurrencyTransfer[] $currencyTransfers
+     * @param array<\Generated\Shared\Transfer\CurrencyTransfer> $currencyTransfers
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected function indexCurrencyTransfersByIsoCode(array $currencyTransfers): array
     {

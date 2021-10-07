@@ -68,7 +68,7 @@ class ErrorHandlerConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getValidSubRequestExceptionStatusCodes(): array
     {

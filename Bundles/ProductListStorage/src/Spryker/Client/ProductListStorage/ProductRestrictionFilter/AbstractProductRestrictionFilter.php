@@ -45,9 +45,9 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function filterRestrictedProducts(array $productIds): array
     {
@@ -65,12 +65,12 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
     }
 
     /**
-     * @param int[] $productIds
-     * @param \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[] $productListStorageTransfers
-     * @param int[] $customerWhitelistIds
-     * @param int[] $customerBlacklistIds
+     * @param array<int> $productIds
+     * @param array<\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer> $productListStorageTransfers
+     * @param array<int> $customerWhitelistIds
+     * @param array<int> $customerBlacklistIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function filterProductIdsByCustomerProductLists(
         array $productIds,
@@ -119,9 +119,9 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
 
     /**
      * @param int $idProduct
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function removeIdProductFromList(int $idProduct, array $productIds): array
     {
@@ -174,9 +174,9 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer|\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer>
      */
     abstract protected function getProductListStorageTransfers(array $productIds): array;
 

@@ -35,7 +35,7 @@ class MappingProvider implements MappingProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return array<\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer>
      */
     public function getMappings(): array
     {
@@ -46,7 +46,7 @@ class MappingProvider implements MappingProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return array<\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer>
      */
     protected function buildProductMapping(): array
     {
@@ -81,7 +81,7 @@ class MappingProvider implements MappingProviderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer[]
+     * @return array<\Generated\Shared\Transfer\PropelQueryBuilderCriteriaMappingTransfer>
      */
     protected function buildProductAttributeMap(): array
     {

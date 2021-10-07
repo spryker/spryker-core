@@ -125,7 +125,7 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSearchTermsForProductReviewsFilter(): array
     {

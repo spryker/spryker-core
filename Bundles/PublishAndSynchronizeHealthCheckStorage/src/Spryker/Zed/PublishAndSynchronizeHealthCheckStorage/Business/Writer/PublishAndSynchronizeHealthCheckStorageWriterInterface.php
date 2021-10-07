@@ -10,7 +10,7 @@ namespace Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\Business\Writer;
 interface PublishAndSynchronizeHealthCheckStorageWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */

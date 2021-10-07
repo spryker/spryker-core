@@ -27,7 +27,7 @@ class CurrencyFilterConfigurationProvider implements CurrencyFilterConfiguration
     /**
      * @phpstan-return array<int, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCurrencyOptions(): array
     {

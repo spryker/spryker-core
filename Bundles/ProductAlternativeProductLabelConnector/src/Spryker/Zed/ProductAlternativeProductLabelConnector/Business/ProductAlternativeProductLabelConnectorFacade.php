@@ -65,7 +65,7 @@ class ProductAlternativeProductLabelConnectorFacade extends AbstractFacade imple
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer>
      */
     public function findProductLabelProductAbstractRelationChanges(): array
     {

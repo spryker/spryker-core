@@ -25,7 +25,7 @@ class AclEntityConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getScopePriority(): array
     {

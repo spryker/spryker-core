@@ -14,7 +14,7 @@ interface MerchantProductOfferRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductOfferIds(MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer): array;
 }

@@ -19,9 +19,9 @@ interface ProductOptionCollectionFilterPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     public function filter(array $productOptionTransfers): array;
 }

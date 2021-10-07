@@ -43,7 +43,7 @@ class BundleFinder implements BundleFinderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer>
      */
     public function find()
     {
@@ -66,7 +66,7 @@ class BundleFinder implements BundleFinderInterface
     /**
      * @param string $bundleDirectoryGlobPattern
      *
-     * @return \Traversable|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Traversable<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function getBundleDirectories($bundleDirectoryGlobPattern)
     {
@@ -93,7 +93,7 @@ class BundleFinder implements BundleFinderInterface
 
     /**
      * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer $bundleTransfer
-     * @param \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[] $bundles
+     * @param array<\Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer> $bundles
      *
      * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer
      */
@@ -115,10 +115,10 @@ class BundleFinder implements BundleFinderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer[] $existingMethodTransferCollection
-     * @param \ArrayObject|\Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer[] $methodTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer> $existingMethodTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer> $methodTransferCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\IdeAutoCompletionBundleMethodTransfer>
      */
     protected function mergeMethods(
         ArrayObject $existingMethodTransferCollection,

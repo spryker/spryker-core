@@ -22,21 +22,21 @@ interface FinderInterface
     /**
      * @param string $stateMachineName
      *
-     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineProcessTransfer>
      */
     public function getProcesses($stateMachineName);
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 
@@ -45,7 +45,7 @@ interface FinderInterface
      * @param string $flag
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC');
 
@@ -54,16 +54,16 @@ interface FinderInterface
      * @param string $flag
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flag, string $sort = 'ASC');
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $processes
-     * @param string[] $sourceStates
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $processes
+     * @param array<string> $sourceStates
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer[]>
      */
     public function filterItemsWithOnEnterEvent(
         array $stateMachineItems,
@@ -80,16 +80,16 @@ interface FinderInterface
     public function findProcessByStateMachineAndProcessName($stateMachineName, $processName);
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface>
      */
     public function findProcessesForItems(array $stateMachineItems);
 
     /**
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProcessStates(StateMachineProcessTransfer $stateMachineProcessTransfer): array;
 }

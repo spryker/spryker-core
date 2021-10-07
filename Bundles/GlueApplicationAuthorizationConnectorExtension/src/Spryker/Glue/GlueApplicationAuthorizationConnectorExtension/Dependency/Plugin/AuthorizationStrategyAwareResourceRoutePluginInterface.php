@@ -20,7 +20,7 @@ interface AuthorizationStrategyAwareResourceRoutePluginInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer>
      */
     public function getRouteAuthorizationConfigurations(): array;
 }

@@ -63,9 +63,9 @@ class ProductManagementAttributeReader implements ProductManagementAttributeRead
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     protected function expandProductManagementAttributesWithValues(ArrayObject $productManagementAttributeTransfers): ArrayObject
     {
@@ -85,9 +85,9 @@ class ProductManagementAttributeReader implements ProductManagementAttributeRead
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractProductManagementAttributeIds(ArrayObject $productManagementAttributeTransfers): array
     {
@@ -101,9 +101,9 @@ class ProductManagementAttributeReader implements ProductManagementAttributeRead
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[] $productManagementAttributeValueTransfers
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer> $productManagementAttributeValueTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]>
      */
     protected function indexProductManagementAttributeValues(array $productManagementAttributeValueTransfers): array
     {

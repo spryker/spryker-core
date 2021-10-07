@@ -21,7 +21,7 @@ class DiscountEntityMapper implements DiscountEntityMapperInterface
     protected $currencyFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @var array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected static $currencyCache = [];
 
@@ -50,7 +50,7 @@ class DiscountEntityMapper implements DiscountEntityMapperInterface
     /**
      * @param \Orm\Zed\Discount\Persistence\SpyDiscount $discountEntity
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     public function getMoneyValueCollectionForEntity(SpyDiscount $discountEntity)
     {

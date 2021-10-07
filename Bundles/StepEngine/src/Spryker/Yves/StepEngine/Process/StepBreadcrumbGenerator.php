@@ -41,7 +41,7 @@ class StepBreadcrumbGenerator implements StepBreadcrumbGeneratorInterface
      * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
      * @param \Generated\Shared\Transfer\QuoteTransfer|null $dataTransfer
      *
-     * @return \Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface[]
+     * @return array<\Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface>
      */
     protected function getStepsWithBreadcrumb(StepCollectionInterface $stepCollection, ?AbstractTransfer $dataTransfer = null)
     {

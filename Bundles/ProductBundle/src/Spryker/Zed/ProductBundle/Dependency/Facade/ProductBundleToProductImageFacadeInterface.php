@@ -14,7 +14,7 @@ interface ProductBundleToProductImageFacadeInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
 }

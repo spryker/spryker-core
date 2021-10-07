@@ -60,7 +60,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function findAllLabels()
     {
@@ -76,7 +76,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function findLabelsByIdProductAbstract($idProductAbstract)
     {
@@ -92,7 +92,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findLabelIdsByIdProductAbstract($idProductAbstract)
     {
@@ -108,7 +108,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findActiveLabelIdsByIdProductAbstract($idProductAbstract)
     {
@@ -124,7 +124,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
     {
@@ -188,7 +188,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @param int $idProductLabel
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractRelationsByIdProductLabel($idProductLabel)
     {
@@ -204,7 +204,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      * @api
      *
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -222,7 +222,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      * @api
      *
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -271,9 +271,9 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
      */
     public function getProductLabelProductAbstractsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -288,7 +288,7 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
      */
     public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array
     {

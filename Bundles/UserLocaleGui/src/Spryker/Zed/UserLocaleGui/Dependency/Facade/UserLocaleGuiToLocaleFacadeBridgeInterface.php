@@ -10,7 +10,7 @@ namespace Spryker\Zed\UserLocaleGui\Dependency\Facade;
 interface UserLocaleGuiToLocaleFacadeBridgeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection(): array;
 }

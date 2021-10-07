@@ -52,7 +52,7 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -82,7 +82,7 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[] $productMeasurementUnitTransfers
+     * @param array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer> $productMeasurementUnitTransfers
      *
      * @return void
      */
@@ -104,9 +104,9 @@ class ProductMeasurementUnitBySalesUnitResourceRelationshipExpander implements P
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductMeasurementUnitCodes(array $resources): array
     {

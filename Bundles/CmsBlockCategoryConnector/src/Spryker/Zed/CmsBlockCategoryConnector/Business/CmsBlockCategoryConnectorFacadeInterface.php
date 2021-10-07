@@ -72,7 +72,7 @@ interface CmsBlockCategoryConnectorFacadeInterface
      * @param int $idCmsBlock
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRenderedCategoryList($idCmsBlock, $idLocale);
 
@@ -85,7 +85,7 @@ interface CmsBlockCategoryConnectorFacadeInterface
      * @param int $idCategory
      * @param int $idCategoryTemplate
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate);
 
@@ -151,7 +151,7 @@ interface CmsBlockCategoryConnectorFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCmsBlockNamesIndexedByCmsBlockIdsForCategory(CategoryTransfer $categoryTransfer): array;
 }

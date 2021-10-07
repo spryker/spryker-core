@@ -38,7 +38,7 @@ class MerchantReturnCreateTemplatePlugin extends AbstractPlugin implements Retur
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getTemplateData(OrderTransfer $orderTransfer): array
     {

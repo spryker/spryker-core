@@ -87,7 +87,7 @@ class ShortVariable extends PHPMDShortVariable
     /**
      * Gets array of exceptions from property
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getExceptionsList()
     {

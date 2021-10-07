@@ -23,8 +23,8 @@ class ProductListSearchToProductPageSearchFacadeBridge implements ProductListSea
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param string[] $pageDataExpanderPluginNames
+     * @param array<int> $productAbstractIds
+     * @param array<string> $pageDataExpanderPluginNames
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class ProductListSearchToProductPageSearchFacadeBridge implements ProductListSea
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -44,7 +44,7 @@ class ProductListSearchToProductPageSearchFacadeBridge implements ProductListSea
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */

@@ -22,7 +22,7 @@ interface LabelDictionaryInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     public function getDictionary(string $localeName, string $storeName);
 }

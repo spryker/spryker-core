@@ -17,13 +17,15 @@ interface PriceProductMerchantRelationshipServiceInterface
      * - Filters out all `PriceProductTransfers` with merchant relationship if `PriceProductFilterTransfer.priceDimension.idMerchantRelationship` is not set.
      * - Filters out all `PriceProductTransfers` where `PriceProductTransfer.priceDimension.idMerchantRelationship` is different from `PriceProductFilterTransfer.priceDimension.idMerchantRelationship`.
      * - When `PriceProductFilterTransfer.priceDimension.idMerchantRelationship` is set and `PriceProductTransfer` doesn't have a merchant relationship, it is not filtered out.
+     * - Filters `PriceProductTransfers` by `PriceProductFilterTransfer.priceDimension.isMerchantActive` transfer property.
+     * - Filters out all `PriceProductTransfers` if `PriceProductFilterTransfer.priceDimension.idMerchantActive` transfer property is false.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function filterPriceProductsByMerchantRelationship(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array;
 }

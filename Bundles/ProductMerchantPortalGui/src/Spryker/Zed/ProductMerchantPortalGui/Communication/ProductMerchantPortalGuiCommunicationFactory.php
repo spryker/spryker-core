@@ -201,7 +201,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $data
-     * @param mixed[] $options
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -213,8 +213,8 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     /**
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
-     * @param mixed[]|null $data
-     * @param mixed[] $options
+     * @param array<mixed>|null $data
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -226,8 +226,8 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     /**
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
-     * @param mixed[]|null $data
-     * @param mixed[] $options
+     * @param array<mixed>|null $data
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -239,8 +239,8 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     /**
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
-     * @param mixed[]|null $data
-     * @param mixed[] $options
+     * @param array<mixed>|null $data
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -455,7 +455,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface[]
+     * @return array<\Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface>
      */
     public function getPriceProductMergeStrategies(): array
     {
@@ -639,7 +639,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface[]
+     * @return array<\Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface>
      */
     public function getFieldMapperStrategies(): array
     {
@@ -776,7 +776,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $data
-     * @param mixed[] $options
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -788,8 +788,8 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     /**
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
-     * @param mixed[]|null $data
-     * @param mixed[] $options
+     * @param array<mixed>|null $data
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -882,8 +882,8 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     /**
      * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
      *
-     * @param mixed[]|null $data
-     * @param mixed[] $options
+     * @param array<mixed>|null $data
+     * @param array<mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
@@ -1064,7 +1064,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductAbstractFormExpanderPluginInterface>
      */
     public function getProductAbstractFormExpanderPlugins(): array
     {
@@ -1088,7 +1088,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @return \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface>
      */
     public function getProductConcreteTableExpanderPlugins(): array
     {

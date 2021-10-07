@@ -11,10 +11,10 @@ interface ProductBundlesRestApiToProductStorageClientInterface
 {
     /**
      * @param string $mappingType
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIdsByMapping(string $mappingType, array $identifiers, string $localeName): array;
 }

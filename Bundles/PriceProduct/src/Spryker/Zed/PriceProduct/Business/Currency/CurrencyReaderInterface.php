@@ -24,9 +24,9 @@ interface CurrencyReaderInterface
     public function getCurrencyTransferFromIsoCode(string $isoCode): CurrencyTransfer;
 
     /**
-     * @param string[] $isoCodes
+     * @param array<string> $isoCodes
      *
-     * @return \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     public function getCurrencyTransfersFromIsoCodes(array $isoCodes): array;
 }

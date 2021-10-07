@@ -15,7 +15,7 @@ use Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilterInte
 interface ShipmentExpenseFilterStrategyResolverInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Spryker\Zed\Shipment\Business\ShipmentExpense\ShipmentExpenseFilterInterface
      */

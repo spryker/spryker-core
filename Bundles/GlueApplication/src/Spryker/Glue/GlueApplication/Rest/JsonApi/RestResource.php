@@ -23,7 +23,7 @@ class RestResource implements RestResourceInterface
     protected $type;
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface>
      */
     protected $links = [];
 
@@ -75,7 +75,7 @@ class RestResource implements RestResourceInterface
     /**
      * @param string $type
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getRelationshipByType(string $type): array
     {

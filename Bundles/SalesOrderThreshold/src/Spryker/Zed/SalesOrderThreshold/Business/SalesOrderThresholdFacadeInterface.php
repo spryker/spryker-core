@@ -90,7 +90,7 @@ interface SalesOrderThresholdFacadeInterface
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>
      */
     public function getSalesOrderThresholds(
         StoreTransfer $storeTransfer,

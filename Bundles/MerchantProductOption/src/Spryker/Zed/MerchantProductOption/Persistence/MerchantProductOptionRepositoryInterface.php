@@ -34,7 +34,7 @@ interface MerchantProductOptionRepositoryInterface
     /**
      * @phpstan-return array<int|null>
      *
-     * @param int[] $productOptionGroupIds
+     * @param array<int> $productOptionGroupIds
      *
      * @return array
      */

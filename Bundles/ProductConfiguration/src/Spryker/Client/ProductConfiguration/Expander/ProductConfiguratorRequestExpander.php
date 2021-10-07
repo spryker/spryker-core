@@ -17,13 +17,13 @@ class ProductConfiguratorRequestExpander implements ProductConfiguratorRequestEx
     protected $productConfiguratorRequestDataExpanderComposite;
 
     /**
-     * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderPluginInterface[]
+     * @var array<\Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderPluginInterface>
      */
     protected $productConfiguratorRequestExpanderPlugins;
 
     /**
      * @param \Spryker\Client\ProductConfiguration\Expander\ProductConfiguratorRequestDataExpanderInterface $productConfiguratorRequestDataExpanderComposite
-     * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderPluginInterface[] $productConfiguratorRequestExpanderPlugins
+     * @param array<\Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderPluginInterface> $productConfiguratorRequestExpanderPlugins
      */
     public function __construct(
         ProductConfiguratorRequestDataExpanderInterface $productConfiguratorRequestDataExpanderComposite,

@@ -16,7 +16,7 @@ use Spryker\Zed\PaymentDataImport\Business\PaymentMethod\Writer\DataSet\PaymentM
 class PaymentProviderWriterStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected static $idPaymentProviderCache = [];
 

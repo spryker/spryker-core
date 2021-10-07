@@ -25,22 +25,22 @@ interface SecurityConfigurationInterface
     public function getRoleHierarchies(): array;
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getAuthenticationSuccessHandlers(): array;
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getAuthenticationFailureHandlers(): array;
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getLogoutHandlers(): array;
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getAccessDeniedHandlers(): array;
 

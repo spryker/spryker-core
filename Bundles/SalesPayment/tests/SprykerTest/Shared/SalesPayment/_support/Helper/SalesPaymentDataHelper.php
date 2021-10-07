@@ -15,9 +15,9 @@ use Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType;
 class SalesPaymentDataHelper extends Module
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\SalesPaymentTransfer[] $salesPaymentTransfers
+     * @param iterable<\Generated\Shared\Transfer\SalesPaymentTransfer> $salesPaymentTransfers
      *
-     * @return \Orm\Zed\Payment\Persistence\SpySalesPayment[]
+     * @return array<\Orm\Zed\Payment\Persistence\SpySalesPayment>
      */
     public function haveSalesPaymentEntities(iterable $salesPaymentTransfers = []): array
     {

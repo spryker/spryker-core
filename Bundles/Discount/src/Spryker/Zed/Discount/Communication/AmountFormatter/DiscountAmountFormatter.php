@@ -13,12 +13,12 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 class DiscountAmountFormatter implements DiscountAmountFormatterInterface
 {
     /**
-     * @var array|\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
+     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface|array
      */
     protected $calculatorPlugins = [];
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface[] $calculatorPlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface> $calculatorPlugins
      */
     public function __construct(array $calculatorPlugins)
     {

@@ -27,12 +27,12 @@ class SingleFieldPriceProductMapper implements SingleFieldPriceProductMapperInte
     protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface[]
+     * @var array<\Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface>
      */
     protected $fieldMapperStrategies = [];
 
     /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface[] $fieldMapperStrategies
+     * @param array<\Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface> $fieldMapperStrategies
      */
     public function __construct(array $fieldMapperStrategies)
     {
@@ -40,15 +40,11 @@ class SingleFieldPriceProductMapper implements SingleFieldPriceProductMapperInte
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param array $data
      * @param int $volumeQuantity
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapPriceProductTransfers(
         array $data,

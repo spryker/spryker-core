@@ -71,7 +71,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     }
 
     /**
-     * @param mixed[] $concreteProducts
+     * @param array<mixed> $concreteProducts
      *
      * @return \Generated\Shared\Transfer\TableValidationResponseTransfer
      */

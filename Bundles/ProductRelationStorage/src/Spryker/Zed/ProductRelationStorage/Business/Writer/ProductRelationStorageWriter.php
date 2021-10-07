@@ -70,7 +70,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -99,7 +99,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -112,7 +112,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -132,7 +132,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      *   {@link \Spryker\Zed\ProductRelationStorage\Business\Writer\ProductRelationStorageWriter::writeProductRelationStorageCollectionByProductRelationProductAbstractEvents()}
      *   instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -153,7 +153,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
      * @see \Spryker\Zed\ProductRelationStorage\Business\Writer\ProductRelationStorageWriter::writeProductRelationStorageCollectionByProductRelationEvents()
      * @see \Spryker\Zed\ProductRelationStorage\Business\Writer\ProductRelationStorageWriter::writeProductRelationStorageCollectionByProductRelationProductAbstractEvents()
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -163,7 +163,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -185,7 +185,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer[][][] $productRelations
+     * @param array<\Generated\Shared\Transfer\ProductRelationTransfer[][]> $productRelations
      *
      * @return void
      */
@@ -223,7 +223,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     /**
      * @param int $idProductAbstract
      * @param string $store
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer[] $productRelationTransfers
+     * @param array<\Generated\Shared\Transfer\ProductRelationTransfer> $productRelationTransfers
      *
      * @return void
      */
@@ -246,10 +246,10 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductRelationTransfer[] $productRelations
+     * @param array<\Generated\Shared\Transfer\ProductRelationTransfer> $productRelations
      * @param string $store
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductRelationStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductRelationStorageTransfer>
      */
     protected function fillProductRelationStorageTransfers(array $productRelations, string $store)
     {
@@ -275,7 +275,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function fillProductAbstractIds(
         ProductRelationTransfer $productRelationTransfer
@@ -292,7 +292,7 @@ class ProductRelationStorageWriter implements ProductRelationStorageWriterInterf
     /**
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNamesFromStoreRelationTransfer(
         StoreRelationTransfer $storeRelationTransfer

@@ -25,9 +25,9 @@ class OrderItemManualEventReader implements OrderItemManualEventReaderInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsByIdSalesOrder(iterable $orderItemTransfers): array
     {
@@ -42,7 +42,7 @@ class OrderItemManualEventReader implements OrderItemManualEventReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getManualEventsByOrderItem(ItemTransfer $orderItemTransfer): array
     {

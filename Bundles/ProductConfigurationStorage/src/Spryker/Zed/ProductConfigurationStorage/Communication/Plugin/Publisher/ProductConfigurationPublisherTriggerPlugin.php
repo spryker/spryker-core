@@ -47,7 +47,7 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

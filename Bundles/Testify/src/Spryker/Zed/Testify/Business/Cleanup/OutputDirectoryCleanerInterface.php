@@ -10,7 +10,7 @@ namespace Spryker\Zed\Testify\Business\Cleanup;
 interface OutputDirectoryCleanerInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function cleanup(): array;
 }

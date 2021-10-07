@@ -20,13 +20,13 @@ class MerchantProductValidator implements MerchantProductValidatorInterface
     protected $validator;
 
     /**
-     * @var array|\Symfony\Component\Validator\Constraint[]
+     * @var array<\Symfony\Component\Validator\Constraint>
      */
     protected $merchantProductConstraints;
 
     /**
      * @param \Spryker\Zed\MerchantProduct\Dependency\External\MerchantProductToValidationAdapterInterface $validationAdapter
-     * @param \Symfony\Component\Validator\Constraint[] $merchantProductConstraints
+     * @param array<\Symfony\Component\Validator\Constraint> $merchantProductConstraints
      */
     public function __construct(
         MerchantProductToValidationAdapterInterface $validationAdapter,

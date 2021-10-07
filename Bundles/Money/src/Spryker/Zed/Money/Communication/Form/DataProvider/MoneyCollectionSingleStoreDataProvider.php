@@ -26,7 +26,7 @@ class MoneyCollectionSingleStoreDataProvider extends BaseMoneyCollectionDataProv
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     public function getInitialData()
     {
@@ -42,9 +42,9 @@ class MoneyCollectionSingleStoreDataProvider extends BaseMoneyCollectionDataProv
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $currentFormMoneyValueCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer> $currentFormMoneyValueCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection)
     {

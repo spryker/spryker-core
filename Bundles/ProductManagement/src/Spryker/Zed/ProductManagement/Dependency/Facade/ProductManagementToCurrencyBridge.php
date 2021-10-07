@@ -31,7 +31,7 @@ class ProductManagementToCurrencyBridge implements ProductManagementToCurrencyIn
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
     public function getAllStoresWithCurrencies()
     {

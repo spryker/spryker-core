@@ -86,9 +86,9 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getRestrictedProductConcreteIds(array $productConcreteIds): array
     {
@@ -98,10 +98,10 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
     }
 
     /**
-     * @param int[] $productConcreteIds
-     * @param int[] $restrictedProductConcreteIds
+     * @param array<int> $productConcreteIds
+     * @param array<int> $restrictedProductConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function filterProductConcreteIds(array $productConcreteIds, array $restrictedProductConcreteIds): array
     {
@@ -112,7 +112,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
      * @deprecated Exists for Backward Compatibility reasons only. Use {@link filterOutRestrictedAttributeVariants()} instead.
      *
      * @param array $attributeVariants
-     * @param int[] $restrictedProductConcreteIds
+     * @param array<int> $restrictedProductConcreteIds
      *
      * @return array
      */
@@ -191,7 +191,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
 
     /**
      * @param array $attributeVariantValue
-     * @param int[] $restrictedProductIds
+     * @param array<int> $restrictedProductIds
      *
      * @return bool
      */
@@ -229,7 +229,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
 
     /**
      * @param array $productStorageData
-     * @param int[] $restrictedProductConcreteIds
+     * @param array<int> $restrictedProductConcreteIds
      *
      * @return array
      */
@@ -255,7 +255,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
 
     /**
      * @param array $attributeVariantMap
-     * @param int[] $restrictedProductConcreteIds
+     * @param array<int> $restrictedProductConcreteIds
      *
      * @return array
      */

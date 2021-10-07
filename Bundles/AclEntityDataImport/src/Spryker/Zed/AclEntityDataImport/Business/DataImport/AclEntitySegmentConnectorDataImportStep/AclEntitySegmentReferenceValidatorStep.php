@@ -22,7 +22,7 @@ class AclEntitySegmentReferenceValidatorStep implements DataImportStepInterface
     protected const ACL_ENTITY_SEGMENT_NOT_FOUND_TEMPLATE = 'Failed to find %s by reference: "%s"';
 
     /**
-     * @var bool[]
+     * @var array<bool>
      */
     protected $aclEntitySegmentCache = [];
 

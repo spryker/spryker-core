@@ -15,7 +15,7 @@ interface ConfigurableBundleTranslationExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
@@ -26,7 +26,7 @@ interface ConfigurableBundleTranslationExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */

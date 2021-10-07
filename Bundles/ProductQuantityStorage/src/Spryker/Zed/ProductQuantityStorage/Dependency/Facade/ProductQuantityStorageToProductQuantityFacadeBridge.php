@@ -25,9 +25,9 @@ class ProductQuantityStorageToProductQuantityFacadeBridge implements ProductQuan
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfersByProductIds(array $productIds): array
     {
@@ -35,7 +35,7 @@ class ProductQuantityStorageToProductQuantityFacadeBridge implements ProductQuan
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findProductQuantityTransfers(): array
     {
@@ -45,7 +45,7 @@ class ProductQuantityStorageToProductQuantityFacadeBridge implements ProductQuan
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     public function findFilteredProductQuantityTransfers(FilterTransfer $filterTransfer): array
     {

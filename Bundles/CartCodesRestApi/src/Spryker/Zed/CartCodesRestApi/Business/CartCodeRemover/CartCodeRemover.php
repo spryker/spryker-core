@@ -97,7 +97,7 @@ class CartCodeRemover implements CartCodeRemoverInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $discountTransfers
      * @param string $voucherCode
      *
      * @return bool

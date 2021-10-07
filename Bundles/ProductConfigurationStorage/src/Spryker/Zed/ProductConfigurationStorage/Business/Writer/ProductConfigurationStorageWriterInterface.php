@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductConfigurationStorage\Business\Writer;
 interface ProductConfigurationStorageWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */

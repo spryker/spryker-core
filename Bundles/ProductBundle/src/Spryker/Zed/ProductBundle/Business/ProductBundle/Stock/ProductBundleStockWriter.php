@@ -142,7 +142,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $bundleItems
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $bundleItems
      *
      * @return array
      */
@@ -191,7 +191,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
     /**
      * @param array $bundledItemStock
-     * @param int[] $bundledItemQuantity
+     * @param array<int> $bundledItemQuantity
      *
      * @return array
      */
@@ -256,7 +256,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundle[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle>
      */
     protected function findBundledItemsByIdBundleProduct($idProductConcrete)
     {
@@ -300,7 +300,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     /**
      * @param int $idProduct
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Stock\Persistence\SpyStockProduct[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Stock\Persistence\SpyStockProduct>
      */
     protected function findProductStocks($idProduct)
     {

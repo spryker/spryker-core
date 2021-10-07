@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class EventDispatcherCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
+     * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
      */
     public function getEventDispatcherPlugins(): array
     {
@@ -26,7 +26,7 @@ class EventDispatcherCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
+     * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
      */
     public function getBackendGatewayEventDispatcherPlugins(): array
     {
@@ -34,7 +34,7 @@ class EventDispatcherCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface[]
+     * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
      */
     public function getBackendApiEventDispatcherPlugins(): array
     {

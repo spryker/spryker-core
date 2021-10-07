@@ -86,9 +86,9 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer>
      */
     public function getMerchantOpeningHoursByMerchantIds(array $merchantIds): array
     {
@@ -134,9 +134,9 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateKeys(array $merchantIds): array
     {

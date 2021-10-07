@@ -24,7 +24,7 @@ class CmsPageSearchFactory extends AbstractFactory
     /**
      * @param string $searchString
      * @param array $requestParameters
-     * @param \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[] $queryExpanderPlugins
+     * @param array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface> $queryExpanderPlugins
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
@@ -61,7 +61,7 @@ class CmsPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     public function getCmsPageSearchQueryExpanderPlugins(): array
     {
@@ -69,7 +69,7 @@ class CmsPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getCmsPageSearchResultFormatters(): array
     {
@@ -100,7 +100,7 @@ class CmsPageSearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     public function getCmsPageSearchCountQueryExpanderPlugins(): array
     {

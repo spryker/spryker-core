@@ -16,12 +16,12 @@ use Spryker\Zed\Calculation\Business\Model\Calculator\CalculatorInterface;
 class DiscountAmountAggregator implements CalculatorInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $voucherDiscountTotals = [];
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $cartRuleDiscountTotals = [];
 
@@ -39,7 +39,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
      * @return void
      */
@@ -65,7 +65,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenses
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenses
      *
      * @return void
      */
@@ -128,7 +128,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CalculatedDiscountTransfer> $calculateDiscounts
      * @param int $maxAmount
      *
      * @return int
@@ -153,7 +153,7 @@ class DiscountAmountAggregator implements CalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[] $calculateDiscounts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CalculatedDiscountTransfer> $calculateDiscounts
      * @param int $maxAmount
      *
      * @return int

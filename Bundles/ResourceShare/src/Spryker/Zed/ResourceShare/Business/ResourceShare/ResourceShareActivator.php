@@ -18,13 +18,13 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     protected $resourceShareReader;
 
     /**
-     * @var \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface>
      */
     protected $resourceShareActivatorStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReaderInterface $resourceShareReader
-     * @param \Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface[] $resourceShareActivatorStrategyPlugins
+     * @param array<\Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivatorStrategyPluginInterface> $resourceShareActivatorStrategyPlugins
      */
     public function __construct(
         ResourceShareReaderInterface $resourceShareReader,

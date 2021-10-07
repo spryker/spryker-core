@@ -61,7 +61,7 @@ class ProductRelationStorage implements ProductRelationStorageInterface
     /**
      * @param int $idAbstractProduct
      *
-     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductRelationsTransfer>
      */
     public function getAll($idAbstractProduct)
     {

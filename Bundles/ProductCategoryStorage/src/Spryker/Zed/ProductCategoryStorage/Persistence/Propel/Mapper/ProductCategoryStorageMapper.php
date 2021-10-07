@@ -13,10 +13,10 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductCategoryStorageMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage[] $productAbstractCategoryStorageEntities
-     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][] $productAbstractCategoryStorageTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage> $productAbstractCategoryStorageEntities
+     * @param array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]> $productAbstractCategoryStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]>
      */
     public function mapProductAbstractCategoryStorageEntitiesToProductAbstractCategoryStorageTransfers(
         ObjectCollection $productAbstractCategoryStorageEntities,

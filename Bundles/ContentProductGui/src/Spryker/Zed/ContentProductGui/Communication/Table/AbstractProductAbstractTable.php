@@ -109,7 +109,7 @@ abstract class AbstractProductAbstractTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $productAbstractStoreEntities
+     * @param array<\Orm\Zed\Product\Persistence\SpyProductAbstractStore> $productAbstractStoreEntities
      *
      * @return string
      */

@@ -19,13 +19,13 @@ class ContentFileListTypeMapper implements ContentFileListTypeMapperInterface
     protected $contentStorageClient;
 
     /**
-     * @var \Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface[]
+     * @var array<\Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface>
      */
     protected $contentFileListTermExecutors;
 
     /**
      * @param \Spryker\Client\ContentFile\Dependency\Client\ContentFileToContentStorageClientInterface $contentStorageClient
-     * @param \Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface[] $contentFileListTermExecutors
+     * @param array<\Spryker\Client\ContentFile\Executor\ContentFileListTermExecutorInterface> $contentFileListTermExecutors
      */
     public function __construct(ContentFileToContentStorageClientInterface $contentStorageClient, array $contentFileListTermExecutors)
     {

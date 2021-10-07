@@ -10,6 +10,8 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\Model;
 interface PriceProductConcreteStorageWriterInterface
 {
     /**
+     * @phpstan-param array<mixed> $businessUnitProducts
+     *
      * @deprecated Will be removed without replacement.
      *
      * @param array $businessUnitProducts
@@ -19,21 +21,21 @@ interface PriceProductConcreteStorageWriterInterface
     public function publishByBusinessUnitProducts(array $businessUnitProducts): void;
 
     /**
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
      * @return void
      */
     public function publishByCompanyBusinessUnitIds(array $companyBusinessUnitIds): void;
 
     /**
-     * @param int[] $priceProductMerchantRelationshipIds
+     * @param array<int> $priceProductMerchantRelationshipIds
      *
      * @return void
      */
     public function publishConcretePriceProductMerchantRelationship(array $priceProductMerchantRelationshipIds): void;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */

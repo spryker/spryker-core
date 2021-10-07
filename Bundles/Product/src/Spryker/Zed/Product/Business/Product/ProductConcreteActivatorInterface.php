@@ -24,7 +24,7 @@ interface ProductConcreteActivatorInterface
     public function deactivateProductConcrete($idProductConcrete);
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
      * @return void
      */

@@ -20,7 +20,7 @@ class ConcreteProductsByProductConcreteIdsResourceRelationshipExpander extends A
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function findProductConcreteSkusInAttributes(RestResourceInterface $restResource): array
     {

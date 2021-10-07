@@ -18,13 +18,13 @@ class QuoteStorageStrategyProvider implements QuoteStorageStrategyProviderInterf
     protected $quoteClient;
 
     /**
-     * @var \Spryker\Client\ConfigurableBundleNote\QuoteStorageStrategy\QuoteStorageStrategyInterface[]
+     * @var array<\Spryker\Client\ConfigurableBundleNote\QuoteStorageStrategy\QuoteStorageStrategyInterface>
      */
     protected $quoteStorageStrategies;
 
     /**
      * @param \Spryker\Client\ConfigurableBundleNote\Dependency\Client\ConfigurableBundleNoteToQuoteClientInterface $quoteClient
-     * @param \Spryker\Client\ConfigurableBundleNote\QuoteStorageStrategy\QuoteStorageStrategyInterface[] $quoteStorageStrategies
+     * @param array<\Spryker\Client\ConfigurableBundleNote\QuoteStorageStrategy\QuoteStorageStrategyInterface> $quoteStorageStrategies
      */
     public function __construct(ConfigurableBundleNoteToQuoteClientInterface $quoteClient, array $quoteStorageStrategies)
     {

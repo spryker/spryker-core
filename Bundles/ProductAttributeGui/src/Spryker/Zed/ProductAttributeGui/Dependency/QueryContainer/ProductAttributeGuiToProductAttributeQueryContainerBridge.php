@@ -32,7 +32,7 @@ class ProductAttributeGuiToProductAttributeQueryContainerBridge implements Produ
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */

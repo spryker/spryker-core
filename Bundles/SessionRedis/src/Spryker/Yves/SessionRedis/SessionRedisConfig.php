@@ -112,7 +112,7 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getDataSourceNames(): array
     {

@@ -23,7 +23,7 @@ class ProductLabelDiscountConnectorToProductLabelBridge implements ProductLabelD
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function findAllLabels()
     {

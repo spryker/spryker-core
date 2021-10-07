@@ -10,9 +10,9 @@ namespace Spryker\Client\ProductConfigurationPersistentCart\Dependency\Client;
 interface ProductConfigurationPersistentCartToProductConfigurationStorageClientInterface
 {
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
      */
     public function findProductConfigurationInstancesIndexedBySku(array $skus): array;
 }

@@ -30,7 +30,7 @@ class DataExportExecutor
     protected const HOOK_KEY_DATA_ENTITY = 'data_entity';
 
     /**
-     * @var \Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface[]
+     * @var array<\Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface>
      */
     protected $dataEntityExporterPlugins = [];
 
@@ -50,7 +50,7 @@ class DataExportExecutor
     protected $gracefulRunnerFacade;
 
     /**
-     * @param \Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface[] $dataEntityExporterPlugins
+     * @param array<\Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginInterface> $dataEntityExporterPlugins
      * @param \Spryker\Service\DataExport\DataExportServiceInterface $dataExportService
      * @param \Spryker\Zed\DataExport\DataExportConfig $dataExportConfig
      * @param \Spryker\Zed\DataExport\Dependency\Facade\DataExportToGracefulRunnerFacadeInterface $gracefulRunnerFacade
@@ -73,7 +73,7 @@ class DataExportExecutor
     /**
      * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
      *
-     * @return \Generated\Shared\Transfer\DataExportReportTransfer[]
+     * @return array<\Generated\Shared\Transfer\DataExportReportTransfer>
      */
     public function exportDataEntities(DataExportConfigurationsTransfer $dataExportConfigurationsTransfer): array
     {

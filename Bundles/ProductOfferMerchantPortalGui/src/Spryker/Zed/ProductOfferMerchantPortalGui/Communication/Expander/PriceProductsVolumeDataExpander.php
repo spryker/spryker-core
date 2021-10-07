@@ -71,16 +71,12 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param mixed[] $requestData
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<mixed> $requestData
      * @param int $volumeQuantity
      * @param int $idProductOffer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function expandPriceProductsWithVolumeData(
         ArrayObject $priceProductTransfers,
@@ -103,16 +99,12 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $storedPriceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $storedPriceProductTransfers
-     * @param mixed[] $requestData
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $storedPriceProductTransfers
+     * @param array<mixed> $requestData
      * @param int $volumeQuantity
      *
-     * @return \ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function expandStoredPriceProductsWithVolumeData(
         PriceProductTransfer $priceProductTransfer,
@@ -158,17 +150,13 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $storedPriceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $storedPriceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $storedPriceProductTransfers
      * @param int $volumeQuantity
      * @param string $requestKey
      * @param string $requestValue
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function addPriceProductWithVolumePrice(
         PriceProductTransfer $priceProductTransfer,
@@ -200,18 +188,14 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $storedPriceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $storedPriceProductTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $storedPriceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $storedPriceProductTransfers
      * @param int $volumeQuantity
      * @param string $requestKey
      * @param string $requestValue
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function expandStoredPriceProductTransfers(
         PriceProductTransfer $priceProductTransfer,
@@ -259,18 +243,14 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $storedPriceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $storedPriceProductTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $storedPriceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $storedPriceProductTransfers
      * @param int $volumeQuantity
      * @param string $requestKey
      * @param string $requestValue
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function expandStoredPriceProductTransfersWithStoreAndCurrency(
         PriceProductTransfer $priceProductTransfer,

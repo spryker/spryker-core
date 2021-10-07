@@ -23,10 +23,10 @@ interface MerchantTranslatorInterface
     ): MerchantStorageTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
     public function translateMerchantStorageTransfers(
         array $merchantStorageTransfers,

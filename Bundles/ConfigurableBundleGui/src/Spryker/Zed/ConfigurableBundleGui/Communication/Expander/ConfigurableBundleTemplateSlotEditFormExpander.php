@@ -12,12 +12,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 class ConfigurableBundleTemplateSlotEditFormExpander implements ConfigurableBundleTemplateSlotEditFormExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormExpanderPluginInterface>
      */
     protected $configurableBundleTemplateSlotEditFormExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormExpanderPluginInterface[] $configurableBundleTemplateSlotEditFormExpanderPlugins
+     * @param array<\Spryker\Zed\ConfigurableBundleGuiExtension\Dependency\Plugin\ConfigurableBundleTemplateSlotEditFormExpanderPluginInterface> $configurableBundleTemplateSlotEditFormExpanderPlugins
      */
     public function __construct(array $configurableBundleTemplateSlotEditFormExpanderPlugins)
     {

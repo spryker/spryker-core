@@ -17,7 +17,7 @@ interface ResourceRelationshipPluginInterface
      * Specification:
      *  - Adds relationship to other resource, this method must connect relationships to given resources, current request object is given for more context.
      *
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void

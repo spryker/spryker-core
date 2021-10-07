@@ -59,7 +59,7 @@ class PriceProductOfferBusinessTester extends Actor
     }
 
     /**
-     * @param mixed[]|null $priceProductOverride
+     * @param array<mixed>|null $priceProductOverride
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */

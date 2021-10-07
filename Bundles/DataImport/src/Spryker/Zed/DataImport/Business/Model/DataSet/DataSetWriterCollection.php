@@ -14,12 +14,12 @@ use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterfa
 class DataSetWriterCollection implements DataSetWriterInterface
 {
     /**
-     * @var \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface[]
+     * @var array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface>
      */
     protected $dataSetWriters = [];
 
     /**
-     * @param \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface[] $dataSetWriter
+     * @param array<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface|\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface> $dataSetWriter
      */
     public function __construct(array $dataSetWriter)
     {

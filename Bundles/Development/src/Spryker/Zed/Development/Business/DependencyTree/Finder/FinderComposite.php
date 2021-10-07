@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business\DependencyTree\Finder;
 class FinderComposite implements FinderCompositeInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface[]
+     * @var array<\Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface>
      */
     protected $finder = [];
 

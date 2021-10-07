@@ -43,7 +43,7 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
@@ -67,7 +67,7 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer $configurableBundleTemplateSlotTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
@@ -91,9 +91,9 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
 
     /**
      * @param string $translationKey
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     protected function getTranslations(string $translationKey, ArrayObject $localeTransfers): array
     {
@@ -140,10 +140,10 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer>
      */
     protected function getConfigurableBundleTemplateTranslations(array $translationTransfers, ArrayObject $localeTransfers): ArrayObject
     {
@@ -165,10 +165,10 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer>
      */
     protected function getConfigurableBundleTemplateSlotTranslations(array $translationTransfers, ArrayObject $localeTransfers): ArrayObject
     {
@@ -190,9 +190,9 @@ class ConfigurableBundleTranslationExpander implements ConfigurableBundleTransla
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
+     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
      *
-     * @return \Generated\Shared\Transfer\TranslationTransfer[]
+     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
     protected function getTranslationTransfersIndexedByIdLocale(array $translationTransfers): array
     {

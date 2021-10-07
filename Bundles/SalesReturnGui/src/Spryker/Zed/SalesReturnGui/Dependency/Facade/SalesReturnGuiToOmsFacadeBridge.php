@@ -27,7 +27,7 @@ class SalesReturnGuiToOmsFacadeBridge implements SalesReturnGuiToOmsFacadeInterf
     /**
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array
     {

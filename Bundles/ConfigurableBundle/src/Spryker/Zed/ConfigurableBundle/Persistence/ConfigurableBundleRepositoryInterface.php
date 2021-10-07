@@ -53,17 +53,17 @@ interface ConfigurableBundleRepositoryInterface
     ): ConfigurableBundleTemplateSlotCollectionTransfer;
 
     /**
-     * @param string[] $templateUuid
+     * @param array<string> $templateUuid
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getActiveConfigurableBundleTemplateUuids(array $templateUuid): array;
 
     /**
      * @param int $idConfigurableBundleTemplate
-     * @param int[] $localeIds
+     * @param array<int> $localeIds
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getConfigurableBundleTemplateImageSets(int $idConfigurableBundleTemplate, array $localeIds): array;
 }

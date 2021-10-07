@@ -33,7 +33,7 @@ class ProductDiscontinuedToProductFacadeAdapter implements ProductDiscontinuedTo
     }
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class ProductDiscontinuedToProductFacadeAdapter implements ProductDiscontinuedTo
     /**
      * @deprecated Added for BC reasons.
      *
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
      * @return void
      */

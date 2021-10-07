@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShoppingListStorage\Business\ShoppingListCustomerPublisher
 interface ShoppingListCustomerStoragePublisherInterface
 {
     /**
-     * @param string[] $customerReferences
+     * @param array<string> $customerReferences
      *
      * @return void
      */

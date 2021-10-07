@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class MerchantRelationshipProductListEntityManager extends AbstractEntityManager implements MerchantRelationshipProductListEntityManagerInterface
 {
     /**
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      * @param int $idMerchantRelationship
      *
      * @return void

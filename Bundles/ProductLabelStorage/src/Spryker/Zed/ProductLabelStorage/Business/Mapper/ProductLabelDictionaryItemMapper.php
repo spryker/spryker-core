@@ -27,9 +27,9 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransfers
+     * @param array<\Generated\Shared\Transfer\ProductLabelTransfer> $productLabelTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
      */
     public function mapProductLabelTransfersToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
         array $productLabelTransfers
@@ -52,7 +52,7 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getLocaleNameMapByStoreName(): array
     {
@@ -69,10 +69,10 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      * @param string $storeName
-     * @param string[] $storeLocales
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][] $productLabelDictionaryItemTransfers
+     * @param array<string> $storeLocales
+     * @param array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]> $productLabelDictionaryItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
      */
     protected function mapProductLabelTransferToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
         ProductLabelTransfer $productLabelTransfer,
@@ -125,7 +125,7 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer>
      */
     protected function mapProductLabelLocalizedAttributeByLocale(
         ProductLabelTransfer $productLabelTransfer
@@ -142,7 +142,7 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
-     * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $mappedProductLabelLocalizedAttributesTransfer
+     * @param array<\Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer> $mappedProductLabelLocalizedAttributesTransfer
      * @param string $localeName
      *
      * @return string

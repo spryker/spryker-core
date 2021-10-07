@@ -81,7 +81,7 @@ class ProductOfferEntityManager extends AbstractEntityManager implements Product
 
     /**
      * @param int $idProductOffer
-     * @param int[] $storeIds
+     * @param array<int> $storeIds
      *
      * @return void
      */

@@ -127,7 +127,7 @@ SCRIPT;
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getAllowedArrayFilters()
     {

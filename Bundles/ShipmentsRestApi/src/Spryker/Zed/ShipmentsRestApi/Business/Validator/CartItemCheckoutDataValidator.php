@@ -48,7 +48,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $itemGroupKeys
+     * @param array<string> $itemGroupKeys
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
@@ -75,7 +75,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param string[] $itemGroupKeys
+     * @param array<string> $itemGroupKeys
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
@@ -102,7 +102,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
     /**
      * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractItemGroupKeys(CheckoutDataTransfer $checkoutDataTransfer): array
     {
@@ -118,7 +118,7 @@ class CartItemCheckoutDataValidator implements CartItemCheckoutDataValidatorInte
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param string $message
-     * @param string[] $parameters
+     * @param array<string> $parameters
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

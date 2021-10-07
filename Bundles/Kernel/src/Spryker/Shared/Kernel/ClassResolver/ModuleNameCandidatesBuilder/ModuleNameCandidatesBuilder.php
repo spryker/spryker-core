@@ -25,7 +25,7 @@ class ModuleNameCandidatesBuilder implements ModuleNameCandidatesBuilderInterfac
     /**
      * @param string $moduleName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function buildModuleNameCandidates(string $moduleName): array
     {

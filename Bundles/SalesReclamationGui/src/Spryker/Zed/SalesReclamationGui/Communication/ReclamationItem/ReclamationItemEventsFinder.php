@@ -12,10 +12,10 @@ use ArrayObject;
 class ReclamationItemEventsFinder implements ReclamationItemEventsFinderInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[] $reclamationItems
-     * @param string[][] $eventsGroupedByItem
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ReclamationItemTransfer> $reclamationItems
+     * @param array<string[]> $eventsGroupedByItem
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctManualEventsByReclamationItems(
         ArrayObject $reclamationItems,
@@ -33,9 +33,9 @@ class ReclamationItemEventsFinder implements ReclamationItemEventsFinderInterfac
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[] $reclamationItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ReclamationItemTransfer> $reclamationItems
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getOrderItemsIdsByReclamationItems(ArrayObject $reclamationItems): array
     {

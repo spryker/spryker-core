@@ -29,7 +29,7 @@ class AbstractCoreModuleAwareConsole extends Console
     protected const ARGUMENT_MODULE = 'module';
 
     /**
-     * @var \Generated\Shared\Transfer\ModuleTransfer[]
+     * @var array<\Generated\Shared\Transfer\ModuleTransfer>
      */
     protected $moduleTransferCollection = [];
 
@@ -57,7 +57,7 @@ You can use the following search patterns:
 - Organization.Application*.Module
 - Organization.*Application.Module
 
-Asterisk can also be used more than once in all parts. Currently, it\'s not possible to use it in the middle of one of the parts e.g. Spryker.Foo*Bar is invalid. 
+Asterisk can also be used more than once in all parts. Currently, it\'s not possible to use it in the middle of one of the parts e.g. Spryker.Foo*Bar is invalid.
             ');
     }
 
@@ -88,7 +88,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
      * @param \Generated\Shared\Transfer\ModuleTransfer $moduleTransfer
      * @param string|null $dependencyType
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ModuleDependencyTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ModuleDependencyTransfer>
      */
     protected function getModuleDependencies(ModuleTransfer $moduleTransfer, ?string $dependencyType = null): ArrayObject
     {
@@ -102,7 +102,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleDependencyTransfer[]|\ArrayObject $moduleDependencyTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ModuleDependencyTransfer> $moduleDependencyTransferCollection
      * @param string|null $dependencyType
      *
      * @return int
@@ -124,7 +124,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleTransfer>
      */
     protected function getModulesToExecute(InputInterface $input): array
     {
@@ -270,7 +270,7 @@ Asterisk can also be used more than once in all parts. Currently, it\'s not poss
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleTransfer>
      */
     protected function getModuleTransferCollection(): array
     {

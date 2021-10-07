@@ -12,7 +12,7 @@ interface StoreFilterOptionsProviderInterface
     /**
      * @phpstan-return array<int, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStoreOptions(): array;
 }

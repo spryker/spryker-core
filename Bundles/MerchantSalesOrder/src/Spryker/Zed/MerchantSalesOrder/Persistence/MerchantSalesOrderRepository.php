@@ -63,7 +63,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             return new MerchantOrderCollectionTransfer();
         }
 
-        /** @var \Generated\Shared\Transfer\MerchantOrderTransfer[] $merchantOrderTransfers */
+        /** @var array<\Generated\Shared\Transfer\MerchantOrderTransfer> $merchantOrderTransfers */
         $merchantOrderTransfers = [];
         $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
 
@@ -85,9 +85,9 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderTransfer[] $merchantOrderTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantOrderTransfer> $merchantOrderTransfers
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOrderTransfer>
      */
     protected function addMerchantOrderItemsToMerchantOrders(array $merchantOrderTransfers): array
     {
@@ -111,9 +111,9 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     }
 
     /**
-     * @param int[] $merchantOrderIds
+     * @param array<int> $merchantOrderIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
      */
     protected function getMerchantSalesOrderItemEntityCollectionByMerchantOrderIds(
         array $merchantOrderIds
@@ -376,7 +376,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantSalesOrderItemQuery
         );
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $merchantSalesOrderEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderEntities */
         $merchantSalesOrderEntities = $merchantSalesOrderItemQuery->find();
 
         return $this->getFactory()

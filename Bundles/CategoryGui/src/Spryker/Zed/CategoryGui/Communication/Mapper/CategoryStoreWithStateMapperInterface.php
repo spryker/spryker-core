@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\StoreWithStateCollectionTransfer;
 interface CategoryStoreWithStateMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $categoryStoreRelatedTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $categoryStoreRelatedTransfers
      *
      * @return \Generated\Shared\Transfer\StoreWithStateCollectionTransfer
      */

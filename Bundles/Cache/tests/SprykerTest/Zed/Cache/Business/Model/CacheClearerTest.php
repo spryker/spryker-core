@@ -171,7 +171,7 @@ class CacheClearerTest extends Unit
     }
 
     /**
-     * @param string[] $stores
+     * @param array<string> $stores
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cache\CacheConfig
      */

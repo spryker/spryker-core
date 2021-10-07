@@ -54,7 +54,7 @@ class StoreRelationDropdownDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNamesIndexedByIdStore(): array
     {

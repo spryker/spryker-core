@@ -121,7 +121,7 @@ class ZedBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     protected function getApplicationPlugins(): array
     {
@@ -151,7 +151,7 @@ class ZedBootstrap
     }
 
     /**
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getMergedServiceProviders(): array
     {
@@ -164,7 +164,7 @@ class ZedBootstrap
     }
 
     /**
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getServiceProvider()
     {
@@ -172,7 +172,7 @@ class ZedBootstrap
     }
 
     /**
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getInternalCallServiceProvider()
     {
@@ -180,7 +180,7 @@ class ZedBootstrap
     }
 
     /**
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getInternalCallServiceProviderWithAuthentication()
     {
@@ -198,7 +198,7 @@ class ZedBootstrap
     }
 
     /**
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     protected function getApiServiceProvider()
     {

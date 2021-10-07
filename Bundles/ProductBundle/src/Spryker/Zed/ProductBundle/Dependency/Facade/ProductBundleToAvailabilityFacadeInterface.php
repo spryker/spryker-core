@@ -16,7 +16,7 @@ interface ProductBundleToAvailabilityFacadeInterface
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array;
 

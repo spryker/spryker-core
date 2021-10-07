@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ResponseHeaders implements ResponseHeadersInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[]
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface>
      */
     protected $formatResponseHeadersPlugins = [];
 
@@ -32,7 +32,7 @@ class ResponseHeaders implements ResponseHeadersInterface
     protected $config;
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[] $formatResponseHeadersPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface> $formatResponseHeadersPlugins
      * @param \Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface $contentTypeResolver
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $config
      */

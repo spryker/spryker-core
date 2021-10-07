@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\ItemValidationTransfer;
 class QuickOrderItemValidator implements QuickOrderItemValidatorInterface
 {
     /**
-     * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface[]
+     * @var array<\Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface>
      */
     protected $itemValidatorPlugins;
 
     /**
-     * @param \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface[] $itemValidatorPlugins
+     * @param array<\Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface> $itemValidatorPlugins
      */
     public function __construct(array $itemValidatorPlugins)
     {

@@ -32,7 +32,7 @@ interface OmsFacadeInterface
      *
      * @param int $idOrderItem
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEvents($idOrderItem);
 
@@ -155,7 +155,7 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\Oms\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\ProcessInterface>
      */
     public function getProcesses();
 
@@ -230,7 +230,7 @@ interface OmsFacadeInterface
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return \Spryker\Zed\Oms\Business\Process\Event[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\Event>
      */
     public function getGroupedManuallyExecutableEvents(SpySalesOrder $order);
 
@@ -243,7 +243,7 @@ interface OmsFacadeInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     public function getItemsWithFlag(SpySalesOrder $order, $flag);
 
@@ -256,7 +256,7 @@ interface OmsFacadeInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param string $flag
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
+     * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
     public function getItemsWithoutFlag(SpySalesOrder $order, $flag);
 
@@ -272,7 +272,7 @@ interface OmsFacadeInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog>
      */
     public function getLogForOrder(SpySalesOrder $order, array $logContext = []);
 
@@ -310,7 +310,7 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -449,7 +449,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsByIdSalesOrder($idSalesOrder);
 
@@ -462,7 +462,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
 
@@ -475,7 +475,7 @@ interface OmsFacadeInterface
      *
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
 
@@ -586,7 +586,7 @@ interface OmsFacadeInterface
      * @param string $processName
      * @param string $stateName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStateFlags(string $processName, string $stateName): array;
 
@@ -659,9 +659,9 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithStateHistory(array $itemTransfers): array;
 
@@ -686,7 +686,7 @@ interface OmsFacadeInterface
      *
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array;
 
@@ -713,9 +713,9 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithItemState(array $itemTransfers): array;
 
@@ -728,9 +728,9 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array;
 
@@ -741,9 +741,9 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function setOrderIsCancellableByItemState(array $orderTransfers): array;
 }

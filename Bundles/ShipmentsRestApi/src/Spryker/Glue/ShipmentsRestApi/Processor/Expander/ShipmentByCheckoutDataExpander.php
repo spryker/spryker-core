@@ -53,7 +53,7 @@ class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderIn
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -84,7 +84,7 @@ class ShipmentByCheckoutDataExpander implements ShipmentByCheckoutDataExpanderIn
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentMethodsTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodsTransfer>
      */
     protected function mapShipmentMethodsByHash(ShipmentMethodsCollectionTransfer $shipmentMethodsCollectionTransfer): array
     {

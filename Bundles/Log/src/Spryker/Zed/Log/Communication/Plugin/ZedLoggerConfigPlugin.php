@@ -34,7 +34,7 @@ class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterf
      *
      * @api
      *
-     * @return \Monolog\Handler\HandlerInterface[]
+     * @return array<\Monolog\Handler\HandlerInterface>
      */
     public function getHandlers()
     {
@@ -46,7 +46,7 @@ class ZedLoggerConfigPlugin extends AbstractPlugin implements LoggerConfigInterf
      *
      * @api
      *
-     * @return callable[]
+     * @return array<callable>
      */
     public function getProcessors()
     {

@@ -45,7 +45,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     ];
 
     /**
-     * @var \Spryker\Shared\Kernel\Transfer\TransferInterface[]|\Closure[]
+     * @var array<\Spryker\Shared\Kernel\Transfer\TransferInterface|\Closure>
      */
     protected $metaTransfers = [];
 
@@ -117,7 +117,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getInfoStatusMessages(): array
     {
@@ -125,7 +125,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getErrorStatusMessages(): array
     {
@@ -133,7 +133,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getSuccessStatusMessages(): array
     {
@@ -141,7 +141,7 @@ abstract class AbstractZedClient implements AbstractZedClientInterface
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface[]
+     * @return array<\Spryker\Shared\Kernel\Transfer\TransferInterface>
      */
     protected function prepareAndGetMetaTransfers()
     {

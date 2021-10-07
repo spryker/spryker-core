@@ -35,12 +35,12 @@ class CodeceptionArgumentsBuilder implements CodeceptionArgumentsBuilderInterfac
     protected const OPTION_MODULE = 'module';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $defaultInclusiveTestGroups;
 
     /**
-     * @param string[] $defaultInclusiveTestGroups
+     * @param array<string> $defaultInclusiveTestGroups
      */
     public function __construct(array $defaultInclusiveTestGroups)
     {

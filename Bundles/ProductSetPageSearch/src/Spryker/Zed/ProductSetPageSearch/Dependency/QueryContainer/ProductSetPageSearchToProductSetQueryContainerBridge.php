@@ -31,7 +31,7 @@ class ProductSetPageSearchToProductSetQueryContainerBridge implements ProductSet
     }
 
     /**
-     * @param int[] $productSetIds
+     * @param array<int> $productSetIds
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */

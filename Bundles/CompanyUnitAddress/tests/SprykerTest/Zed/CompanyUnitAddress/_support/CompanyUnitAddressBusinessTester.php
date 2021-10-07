@@ -43,7 +43,7 @@ class CompanyUnitAddressBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function extractAddressIdsFromCollection(CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer): array
     {

@@ -21,7 +21,7 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @var \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[]
+     * @var array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface>
      */
     protected $giftCardPaymentSaverPlugins;
 
@@ -31,7 +31,7 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
     protected $giftCardConfig;
 
     /**
-     * @param \Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface[] $giftCardPaymentSaverPlugins
+     * @param array<\Spryker\Zed\GiftCard\Dependency\Plugin\GiftCardPaymentSaverPluginInterface> $giftCardPaymentSaverPlugins
      * @param \Spryker\Zed\GiftCard\GiftCardConfig $giftCardConfig
      */
     public function __construct(
@@ -86,11 +86,9 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer>
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PaymentTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer>
      */
     protected function getGiftCardPayments(QuoteTransfer $quoteTransfer): ArrayObject
     {
@@ -108,7 +106,7 @@ class SalesOrderPaymentSaver implements SalesOrderPaymentSaverInterface
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentTransferCollection
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PaymentTransfer[] $paymentTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $paymentTransferCollection
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
      *
      * @return void

@@ -25,12 +25,12 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
     protected const VOLUME_QUANTITY_IS_INVALID = 'Invalid volume quantity.';
 
     /**
-     * @var \Symfony\Component\Validator\Constraint[]
+     * @var array<\Symfony\Component\Validator\Constraint>
      */
     protected $priceProductTransferConstraints;
 
     /**
-     * @param \Symfony\Component\Validator\Constraint[] $priceProductTransferConstraints
+     * @param array<\Symfony\Component\Validator\Constraint> $priceProductTransferConstraints
      */
     public function __construct(array $priceProductTransferConstraints)
     {
@@ -38,7 +38,7 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function getConstraints(): array
     {

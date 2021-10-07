@@ -30,13 +30,13 @@ class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
     protected $productSearchFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface>
      */
     protected $productConcreteMapExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
-     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface[] $productConcreteMapExpanderPlugins
+     * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageMapExpanderPluginInterface> $productConcreteMapExpanderPlugins
      */
     public function __construct(
         PageMapBuilderInterface $pageMapBuilder,

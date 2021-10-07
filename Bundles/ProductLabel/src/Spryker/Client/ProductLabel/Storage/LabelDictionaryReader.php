@@ -26,10 +26,10 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param int[] $idsProductLabel
+     * @param array<int> $idsProductLabel
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductLabelTransfer>
      */
     public function findSortedLabelsByIdsProductLabel(array $idsProductLabel, $localeName)
     {
@@ -80,10 +80,10 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param int[] $idsProductLabel
+     * @param array<int> $idsProductLabel
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductLabelTransfer>
      */
     protected function getProductLabelsFromDictionary(array $idsProductLabel, $localeName)
     {
@@ -105,9 +105,9 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StorageProductLabelTransfer[] $productLabelCollection
+     * @param array<\Generated\Shared\Transfer\StorageProductLabelTransfer> $productLabelCollection
      *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductLabelTransfer>
      */
     protected function extractExclusive(array $productLabelCollection)
     {
@@ -125,9 +125,9 @@ class LabelDictionaryReader implements LabelDictionaryReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StorageProductLabelTransfer[] $productLabelCollection
+     * @param array<\Generated\Shared\Transfer\StorageProductLabelTransfer> $productLabelCollection
      *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductLabelTransfer>
      */
     protected function sortCollection(array $productLabelCollection)
     {

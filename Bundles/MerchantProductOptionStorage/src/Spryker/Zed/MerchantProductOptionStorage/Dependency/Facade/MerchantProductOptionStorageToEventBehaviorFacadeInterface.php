@@ -12,7 +12,7 @@ interface MerchantProductOptionStorageToEventBehaviorFacadeInterface
     /**
      * @phpstan-return array<mixed>
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return array
      */

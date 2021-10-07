@@ -50,7 +50,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer $priceProductTableViewCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer
@@ -126,9 +126,9 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
      * @phpstan-param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
+     * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function preparePrices(PriceProductTransfer $priceProductTransfer, array $priceTypeTransfers): array
     {
@@ -184,7 +184,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTableViewTransfer[] $priceProductTableViewTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTableViewTransfer> $priceProductTableViewTransfers
      *
      * @return \Generated\Shared\Transfer\PaginationTransfer
      */
@@ -228,7 +228,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function getStoreTransfers(): array
     {
@@ -298,9 +298,9 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTableViewTransfer[] $priceProductTableViewTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTableViewTransfer> $priceProductTableViewTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTableViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTableViewTransfer>
      */
     protected function updateStoreAndDefaultIdsForVolumePrices(array $priceProductTableViewTransfers): array
     {

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitWriter;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
@@ -202,77 +201,35 @@ class CompanyBusinessUnitWriter implements CompanyBusinessUnitWriterInterface
      */
     protected function isCompanyBusinessUnitHierarchyCycleExists(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): bool
     {
+        $visitedNodes = [];
         $businessUnitId = (int)$companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
         $parentBusinessUnitId = (int)$companyBusinessUnitTransfer->getFkParentCompanyBusinessUnit();
 
-        $companyBusinessUnitMap = $this->getCompanyBusinessUnits();
-
         // A new element in the tree can not cause cycle, since it has no descendants
-        if (!$businessUnitId) {
+        if (!$businessUnitId || !$parentBusinessUnitId) {
             return false;
         }
 
-        $companyBusinessUnitMap[$businessUnitId]->setFkParentCompanyBusinessUnit($parentBusinessUnitId);
-
-        return $this->isHierarchyCycleExists($companyBusinessUnitMap, $businessUnitId);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]
-     */
-    protected function getCompanyBusinessUnits(): array
-    {
-        $companyBusinessUnitsCollection = $this->repository->getCompanyBusinessUnitCollection(new CompanyBusinessUnitCriteriaFilterTransfer());
-
-        $companyBusinessUnits = [];
-        foreach ($companyBusinessUnitsCollection->getCompanyBusinessUnits() as $companyBusinessUnit) {
-            $companyBusinessUnits[$companyBusinessUnit->getIdCompanyBusinessUnit()] = $companyBusinessUnit;
-        }
-
-        return $companyBusinessUnits;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[] $companyBusinessUnitMap
-     * @param int $entryCompanyBusinessUnitId
-     *
-     * @return bool
-     */
-    public function isHierarchyCycleExists(array $companyBusinessUnitMap, int $entryCompanyBusinessUnitId): bool
-    {
-        $allNodes = $companyBusinessUnitMap;
+        $visitedNodes[$businessUnitId] = false;
+        $nodeToCheck = $parentBusinessUnitId;
         $attemptCount = 0;
 
-        $visitedNodes = [$entryCompanyBusinessUnitId];
-        $nodeToCheck = $entryCompanyBusinessUnitId;
-
         do {
-            if (in_array($allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit(), $visitedNodes)) {
+            if (isset($visitedNodes[$nodeToCheck])) {
                 return true;
             }
 
-            $visitedNodes[] = $allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit();
-            $nodeToCheck = $allNodes[$nodeToCheck]->getFkParentCompanyBusinessUnit();
-        } while ($nodeToCheck && $attemptCount++ < static::HIERARCHY_CYCLE_CHECK_DEPTH);
+            $visitedNodes[$nodeToCheck] = false;
+
+            $parentCompanyBusinessUnitTransfer = $this->repository->findCompanyBusinessUnitById($nodeToCheck);
+
+            $nodeToCheck = $parentCompanyBusinessUnitTransfer === null
+                ? null
+                : $parentCompanyBusinessUnitTransfer->getFkParentCompanyBusinessUnit();
+
+            $attemptCount++;
+        } while ($nodeToCheck !== null && $attemptCount <= static::HIERARCHY_CYCLE_CHECK_DEPTH);
 
         return false;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
-     *
-     * @return \Generated\Shared\Transfer\ResponseMessageTransfer
-     */
-    protected function getHierarchyCycleErrorMessageResponseTransfer(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ResponseMessageTransfer
-    {
-        $responseMessage = new ResponseMessageTransfer();
-        $responseMessage->setText(
-            sprintf(
-                static::ERROR_MESSAGE_HIERARCHY_CYCLE_IN_BUSINESS_UNIT_UPDATE,
-                $companyBusinessUnitTransfer->getName()
-            )
-        );
-
-        return $responseMessage;
     }
 }

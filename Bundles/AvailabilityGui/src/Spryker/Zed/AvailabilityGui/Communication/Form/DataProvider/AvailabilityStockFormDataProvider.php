@@ -74,7 +74,7 @@ class AvailabilityStockFormDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\AvailabilityStockTransfer $availabilityGuiStockTransfer
-     * @param \Generated\Shared\Transfer\StockProductTransfer[] $stockProducts
+     * @param array<\Generated\Shared\Transfer\StockProductTransfer> $stockProducts
      *
      * @return \Generated\Shared\Transfer\AvailabilityStockTransfer
      */

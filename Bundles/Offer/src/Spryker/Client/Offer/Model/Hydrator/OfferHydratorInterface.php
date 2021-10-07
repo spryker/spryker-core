@@ -12,9 +12,9 @@ use ArrayObject;
 interface OfferHydratorInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OfferTransfer[] $offerTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OfferTransfer> $offerTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\OfferTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\OfferTransfer>
      */
     public function hydrateQuoteWithCustomer(ArrayObject $offerTransfers): ArrayObject;
 }

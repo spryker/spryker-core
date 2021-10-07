@@ -14,17 +14,17 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface CmsSlotBlockStorageRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockTransfers
      *
-     * @return \Generated\Shared\Transfer\CmsSlotBlockStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsSlotBlockStorageTransfer>
      */
     public function getCmsSlotBlockStorageTransfersByCmsSlotBlocks(array $cmsSlotBlockTransfers): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $cmsSlotBlockStorageIds
+     * @param array<int> $cmsSlotBlockStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByCmsSlotBlockStorageIds(
         FilterTransfer $filterTransfer,

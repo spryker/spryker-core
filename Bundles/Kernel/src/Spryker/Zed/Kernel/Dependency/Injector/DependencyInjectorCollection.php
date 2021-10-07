@@ -10,7 +10,7 @@ namespace Spryker\Zed\Kernel\Dependency\Injector;
 class DependencyInjectorCollection implements DependencyInjectorCollectionInterface
 {
     /**
-     * @var \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface[]
+     * @var array<\Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface>
      */
     protected $dependencyInjector = [];
 
@@ -27,7 +27,7 @@ class DependencyInjectorCollection implements DependencyInjectorCollectionInterf
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface[]
+     * @return array<\Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorInterface>
      */
     public function getDependencyInjector()
     {

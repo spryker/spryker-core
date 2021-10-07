@@ -41,7 +41,7 @@ class OrderInvoiceWriter implements OrderInvoiceWriterInterface
     protected $config;
 
     /**
-     * @var \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoiceBeforeSavePluginInterface[]
+     * @var array<\Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoiceBeforeSavePluginInterface>
      */
     protected $orderInvoiceBeforeSavePlugins;
 
@@ -50,7 +50,7 @@ class OrderInvoiceWriter implements OrderInvoiceWriterInterface
      * @param \Spryker\Zed\SalesInvoice\Persistence\SalesInvoiceRepositoryInterface $repository
      * @param \Spryker\Zed\SalesInvoice\Persistence\SalesInvoiceEntityManagerInterface $entityManager
      * @param \Spryker\Zed\SalesInvoice\Business\ReferenceGenerator\OrderInvoiceReferenceGeneratorInterface $orderInvoiceReferenceGenerator
-     * @param \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoiceBeforeSavePluginInterface[] $orderInvoiceBeforeSavePlugins
+     * @param array<\Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoiceBeforeSavePluginInterface> $orderInvoiceBeforeSavePlugins
      */
     public function __construct(
         SalesInvoiceConfig $config,

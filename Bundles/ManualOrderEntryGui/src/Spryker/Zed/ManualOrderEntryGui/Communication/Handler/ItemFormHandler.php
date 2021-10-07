@@ -85,7 +85,7 @@ class ItemFormHandler implements FormHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function appendItemsFromManualOrderEntryItems(QuoteTransfer $quoteTransfer): ArrayObject
     {
@@ -112,9 +112,9 @@ class ItemFormHandler implements FormHandlerInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function appendItemsFromQuoteItems(QuoteTransfer $quoteTransfer, ArrayObject $items): ArrayObject
     {

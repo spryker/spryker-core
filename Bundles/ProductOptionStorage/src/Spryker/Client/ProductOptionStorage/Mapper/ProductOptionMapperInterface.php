@@ -24,9 +24,9 @@ interface ProductOptionMapperInterface
 
     /**
      * @param array $productOptionStorageDataItems
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer> $productAbstractOptionStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer>
      */
     public function mapProductAbstractOptionStorageDataItemsToProductAbstractOptionStorageTransfers(
         array $productOptionStorageDataItems,

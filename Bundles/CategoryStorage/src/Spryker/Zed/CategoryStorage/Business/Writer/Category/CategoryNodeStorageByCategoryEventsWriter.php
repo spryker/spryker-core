@@ -36,7 +36,7 @@ class CategoryNodeStorageByCategoryEventsWriter implements CategoryNodeStorageBy
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

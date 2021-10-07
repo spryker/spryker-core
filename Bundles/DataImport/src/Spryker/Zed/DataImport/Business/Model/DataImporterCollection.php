@@ -29,17 +29,17 @@ class DataImporterCollection implements
     public const IMPORT_TYPE = 'full';
 
     /**
-     * @var \Spryker\Zed\DataImport\Business\Model\DataImporterInterface[]
+     * @var array<\Spryker\Zed\DataImport\Business\Model\DataImporterInterface>
      */
     protected $dataImporter = [];
 
     /**
-     * @var \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[]
+     * @var array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface>
      */
     protected $beforeImportHooks = [];
 
     /**
-     * @var \Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface[]
+     * @var array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface>
      */
     protected $afterImportHooks = [];
 
@@ -49,8 +49,8 @@ class DataImporterCollection implements
     protected $config;
 
     /**
-     * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface[] $beforeImportHooks
-     * @param \Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface[] $afterImportHooks
+     * @param array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportBeforeImportHookInterface> $beforeImportHooks
+     * @param array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportAfterImportHookInterface> $afterImportHooks
      * @param \Spryker\Zed\DataImport\DataImportConfig|null $config
      */
     public function __construct(array $beforeImportHooks = [], array $afterImportHooks = [], ?DataImportConfig $config = null)
@@ -73,7 +73,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * @param (\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface|array)[] $dataImporterPluginCollection
+     * @param array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface|array> $dataImporterPluginCollection
      *
      * @return $this
      */
@@ -213,7 +213,7 @@ class DataImporterCollection implements
     }
 
     /**
-     * @param \Spryker\Zed\DataImport\Business\Model\DataImporterInterface[] $dataImporters
+     * @param array<\Spryker\Zed\DataImport\Business\Model\DataImporterInterface> $dataImporters
      * @param \Generated\Shared\Transfer\DataImporterReportTransfer $dataImporterReportTransfer
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
      *
@@ -287,7 +287,7 @@ class DataImporterCollection implements
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidImportGroupException
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface[]
+     * @return array<\Spryker\Zed\DataImport\Business\Model\DataImporterInterface>
      */
     protected function getDataImportersByImportGroup(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): array
     {

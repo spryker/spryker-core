@@ -64,7 +64,7 @@ class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface[]
+     * @return array<\Spryker\Client\BusinessOnBehalfExtension\Dependency\Plugin\CompanyUserChangeAllowedCheckPluginInterface>
      */
     protected function getCompanyUserChangeAllowedCheckPlugins(): array
     {

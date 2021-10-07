@@ -10,14 +10,14 @@ namespace Spryker\Zed\ProductCategoryStorage\Business\Deleter;
 interface ProductCategoryStorageDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
     public function deleteCollectionByCategoryStoreEvents(array $eventEntityTransfers): void;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

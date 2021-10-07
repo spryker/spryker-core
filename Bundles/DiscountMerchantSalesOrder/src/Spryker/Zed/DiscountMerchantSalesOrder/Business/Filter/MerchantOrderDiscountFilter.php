@@ -48,7 +48,7 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param int $merchantOrderItemsCount
      *
-     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer[]
+     * @return array<\Generated\Shared\Transfer\CalculatedDiscountTransfer>
      */
     protected function getGeneralDiscounts(OrderTransfer $orderTransfer, int $merchantOrderItemsCount): array
     {
@@ -74,7 +74,7 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer[]
+     * @return array<\Generated\Shared\Transfer\CalculatedDiscountTransfer>
      */
     protected function getMerchantOrderItemDiscounts(MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -98,9 +98,9 @@ class MerchantOrderDiscountFilter implements MerchantOrderDiscountFilterInterfac
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer[] $groupedCalculatedDiscounts
+     * @param array<\Generated\Shared\Transfer\CalculatedDiscountTransfer> $groupedCalculatedDiscounts
      *
-     * @return \Generated\Shared\Transfer\CalculatedDiscountTransfer[]
+     * @return array<\Generated\Shared\Transfer\CalculatedDiscountTransfer>
      */
     protected function getGroupedCalculatedDiscounts(ItemTransfer $itemTransfer, array $groupedCalculatedDiscounts): array
     {

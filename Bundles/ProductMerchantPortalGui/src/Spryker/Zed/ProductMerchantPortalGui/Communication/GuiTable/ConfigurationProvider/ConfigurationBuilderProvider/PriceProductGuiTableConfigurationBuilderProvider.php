@@ -270,7 +270,7 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getVolumeQuantityColumnOptions(): array
     {

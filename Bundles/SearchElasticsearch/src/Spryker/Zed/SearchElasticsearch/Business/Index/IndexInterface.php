@@ -71,7 +71,7 @@ interface IndexInterface
     public function getIndexMetaData(ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer): array;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexNames(): array;
 }

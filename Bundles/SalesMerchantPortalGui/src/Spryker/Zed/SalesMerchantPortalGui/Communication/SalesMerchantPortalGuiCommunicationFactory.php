@@ -79,7 +79,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @param int[] $merchantOrderItemIds
+     * @param array<int> $merchantOrderItemIds
      *
      * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
      */
@@ -190,7 +190,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface>
      */
     public function getMerchantOrderItemTableExpanderPlugins(): array
     {

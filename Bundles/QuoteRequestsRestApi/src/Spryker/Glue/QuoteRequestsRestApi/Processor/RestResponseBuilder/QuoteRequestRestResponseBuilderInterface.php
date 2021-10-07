@@ -14,7 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 interface QuoteRequestRestResponseBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

@@ -77,7 +77,7 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
     /**
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductVolumeItemTransfer>
      */
     protected function getPriceProductVolumeItemArray(array $data): array
     {

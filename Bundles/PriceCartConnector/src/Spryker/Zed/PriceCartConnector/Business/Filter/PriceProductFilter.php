@@ -50,7 +50,7 @@ class PriceProductFilter implements PriceProductFilterInterface
     protected $currentCurrencyCode;
 
     /**
-     * @var \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface>
      */
     protected $cartItemQuantityCounterStrategyPlugins;
 
@@ -63,7 +63,7 @@ class PriceProductFilter implements PriceProductFilterInterface
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacade
-     * @param \Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[] $cartItemQuantityCounterStrategyPlugins
+     * @param array<\Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface> $cartItemQuantityCounterStrategyPlugins
      * @param \Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface $itemComparator
      */
     public function __construct(

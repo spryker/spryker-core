@@ -22,7 +22,7 @@ interface DataImporterAccessFactoryInterface
     ): ?DataImporterInterface;
 
     /**
-     * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface[]
+     * @return array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface>
      */
     public function getDataImporterPlugins(): array;
 }

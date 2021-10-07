@@ -32,7 +32,7 @@ class CategoryPagePublisherTriggerPlugin extends AbstractPlugin implements Publi
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return array<\Generated\Shared\Transfer\NodeTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

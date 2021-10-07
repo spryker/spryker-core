@@ -49,7 +49,7 @@ class QueueWorkerSignalDispatcher implements SignalDispatcherInterface
     }
 
     /**
-     * @param int[] $signals
+     * @param array<int> $signals
      *
      * @return void
      */

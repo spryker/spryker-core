@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\CustomerTransfer;
 class CustomerExpander implements CustomerExpanderInterface
 {
     /**
-     * @var array|\Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface>
      */
     protected $customerTransferExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[] $customerTransferExpanderPlugins
+     * @param array<\Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface> $customerTransferExpanderPlugins
      */
     public function __construct(array $customerTransferExpanderPlugins)
     {

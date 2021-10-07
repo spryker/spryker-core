@@ -51,7 +51,7 @@ interface ProductImageFacadeInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
 
@@ -63,7 +63,7 @@ interface ProductImageFacadeInterface
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductId($idProduct);
 
@@ -75,7 +75,7 @@ interface ProductImageFacadeInterface
      *
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array;
 
@@ -177,7 +177,7 @@ interface ProductImageFacadeInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getCombinedAbstractImageSets($idProductAbstract, $idLocale);
 
@@ -192,7 +192,7 @@ interface ProductImageFacadeInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
 
@@ -217,10 +217,10 @@ interface ProductImageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $productImageSetName
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
      */
     public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array;
 
@@ -232,7 +232,7 @@ interface ProductImageFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array;
 
@@ -246,10 +246,10 @@ interface ProductImageFacadeInterface
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @param string $localeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject;
 }

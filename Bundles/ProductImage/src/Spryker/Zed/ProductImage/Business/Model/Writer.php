@@ -106,7 +106,7 @@ class Writer implements WriterInterface
             $excludeIdProductImageSet[] = $productImageSetTransfer->getIdProductImageSet();
         }
 
-        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $missingProductImageSets */
+        /** @var array<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $missingProductImageSets */
         $missingProductImageSets = $this->productImageQueryContainer
             ->queryImageSetByProductId($productConcreteTransfer->getIdProductConcrete(), $excludeIdProductImageSet)
             ->find()
@@ -162,7 +162,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSets
+     * @param array<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSets
      *
      * @return void
      */

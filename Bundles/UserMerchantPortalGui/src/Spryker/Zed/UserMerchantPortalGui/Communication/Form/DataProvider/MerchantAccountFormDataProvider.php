@@ -36,7 +36,7 @@ class MerchantAccountFormDataProvider implements MerchantAccountFormDataProvider
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getOptions(): array
     {
@@ -48,7 +48,7 @@ class MerchantAccountFormDataProvider implements MerchantAccountFormDataProvider
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getData(): array
     {

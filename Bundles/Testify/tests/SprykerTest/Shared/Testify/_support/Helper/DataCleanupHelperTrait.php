@@ -12,7 +12,7 @@ trait DataCleanupHelperTrait
     /**
      * @return \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
      */
-    private function getDataCleanupHelper()
+    protected function getDataCleanupHelper(): DataCleanupHelper
     {
         /** @var \SprykerTest\Shared\Testify\Helper\DataCleanupHelper $dataCleanerHelper */
         $dataCleanerHelper = $this->getModule('\\' . DataCleanupHelper::class);

@@ -45,7 +45,7 @@ class OfferToZedRequestClientBridge implements OfferToZedRequestClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseInfoMessages(): array
     {
@@ -57,7 +57,7 @@ class OfferToZedRequestClientBridge implements OfferToZedRequestClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages(): array
     {
@@ -69,7 +69,7 @@ class OfferToZedRequestClientBridge implements OfferToZedRequestClientInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseSuccessMessages(): array
     {

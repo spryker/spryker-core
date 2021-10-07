@@ -26,7 +26,7 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     public function getInitialData()
     {
@@ -44,9 +44,9 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $currentFormMoneyValueCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer> $currentFormMoneyValueCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection)
     {
@@ -62,11 +62,11 @@ class MoneyCollectionMultiStoreCollectionDataProvider extends BaseMoneyCollectio
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $currentFormMoneyValueCollection
-     * @param \Generated\Shared\Transfer\StoreWithCurrencyTransfer[] $storeCurrencyCollection
-     * @param bool[] $existingCurrencyMap
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer> $currentFormMoneyValueCollection
+     * @param array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer> $storeCurrencyCollection
+     * @param array<bool> $existingCurrencyMap
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     protected function mergeMultiStoreMoneyCollection(
         ArrayObject $currentFormMoneyValueCollection,

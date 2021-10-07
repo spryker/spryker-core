@@ -40,7 +40,7 @@ class UrlStorageToUrlQueryContainerBridge implements UrlStorageToUrlQueryContain
 
     /**
      * @param string $resourceType
-     * @param int[] $resourceIds
+     * @param array<int> $resourceIds
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
      */

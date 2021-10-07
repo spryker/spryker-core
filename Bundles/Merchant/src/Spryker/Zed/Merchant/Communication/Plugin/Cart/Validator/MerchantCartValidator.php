@@ -105,7 +105,7 @@ class MerchantCartValidator implements MerchantCartValidatorInterface
         if (!$merchantReferences) {
             return $merchantTransfers;
         }
-        /** @var string[] $merchantReferences */
+        /** @var array<string> $merchantReferences */
         $merchantReferences = array_unique($merchantReferences);
 
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */

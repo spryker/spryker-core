@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\UpdateOrderPaymentResponseTransfer;
 class OrderPaymentUpdater implements OrderPaymentUpdaterInterface
 {
     /**
-     * @var \Spryker\Zed\OrderPaymentsRestApiExtension\Dependency\Plugin\OrderPaymentUpdaterPluginInterface[]
+     * @var array<\Spryker\Zed\OrderPaymentsRestApiExtension\Dependency\Plugin\OrderPaymentUpdaterPluginInterface>
      */
     protected $orderPaymentUpdaterPlugins;
 
     /**
-     * @param \Spryker\Zed\OrderPaymentsRestApiExtension\Dependency\Plugin\OrderPaymentUpdaterPluginInterface[] $orderPaymentUpdaterPlugins
+     * @param array<\Spryker\Zed\OrderPaymentsRestApiExtension\Dependency\Plugin\OrderPaymentUpdaterPluginInterface> $orderPaymentUpdaterPlugins
      */
     public function __construct(array $orderPaymentUpdaterPlugins)
     {

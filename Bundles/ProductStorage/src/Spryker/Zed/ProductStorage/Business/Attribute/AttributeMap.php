@@ -82,7 +82,7 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param array $localeIds
      *
      * @throws \Spryker\Zed\ProductStorage\Exception\InvalidArgumentException
@@ -235,7 +235,7 @@ class AttributeMap implements AttributeMapInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]
+     * @return array<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function getConcreteProducts($idProductAbstract, $idLocale)
     {
@@ -246,8 +246,8 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param int[] $localeIds
+     * @param array<int> $productAbstractIds
+     * @param array<int> $localeIds
      *
      * @return array
      */

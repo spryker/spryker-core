@@ -13,7 +13,7 @@ interface ClassNameCandidatesBuilderInterface
      * @param string $module
      * @param string $classNamePattern
      *
-     * @return string[]
+     * @return array<string>
      */
     public function buildClassNames(string $module, string $classNamePattern): array;
 }

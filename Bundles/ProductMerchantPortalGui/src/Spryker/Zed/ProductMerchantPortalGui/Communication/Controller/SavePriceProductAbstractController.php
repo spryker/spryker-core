@@ -20,14 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
 class SavePriceProductAbstractController extends AbstractSavePriceProductController
 {
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function expandPriceProductTransfersWithProductId(ArrayObject $priceProductTransfers, Request $request): ArrayObject
     {
@@ -41,10 +37,10 @@ class SavePriceProductAbstractController extends AbstractSavePriceProductControl
     }
 
     /**
-     * @param int[] $priceProductStoreIds
+     * @param array<int> $priceProductStoreIds
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function findPriceProductTransfers(array $priceProductStoreIds, Request $request): array
     {

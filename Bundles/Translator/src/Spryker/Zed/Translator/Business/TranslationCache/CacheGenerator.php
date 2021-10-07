@@ -10,12 +10,12 @@ namespace Spryker\Zed\Translator\Business\TranslationCache;
 class CacheGenerator implements CacheGeneratorInterface
 {
     /**
-     * @var \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[]
+     * @var array<\Spryker\Zed\Translator\Business\Translator\TranslatorInterface>
      */
     protected $translatorCollection;
 
     /**
-     * @param \Spryker\Zed\Translator\Business\Translator\TranslatorInterface[] $translatorCollection
+     * @param array<\Spryker\Zed\Translator\Business\Translator\TranslatorInterface> $translatorCollection
      */
     public function __construct(array $translatorCollection)
     {

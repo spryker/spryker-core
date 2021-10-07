@@ -184,7 +184,7 @@ class ProductPricesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface[]
+     * @return array<\Spryker\Glue\ProductPricesRestApiExtension\Dependency\Plugin\RestProductPricesAttributesMapperPluginInterface>
      */
     public function getRestProductPricesAttributesMapperPlugins(): array
     {

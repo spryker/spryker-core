@@ -44,7 +44,7 @@ interface ProductOfferStockFacadeInterface
      *
      * @throws \Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      */
     public function getProductOfferStocks(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject;
 

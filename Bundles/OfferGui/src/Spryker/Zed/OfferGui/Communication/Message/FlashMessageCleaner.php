@@ -80,7 +80,7 @@ class FlashMessageCleaner implements FlashMessageCleanerInterface
     /**
      * @param array $messages
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function uniqueMessages(array $messages): array
     {

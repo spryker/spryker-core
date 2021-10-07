@@ -72,9 +72,9 @@ class ProductOfferAvailabilityReader implements ProductOfferAvailabilityReaderIn
     /**
      * @phpstan-param array<int, string|null> $productOfferReferences
      *
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductOfferAvailabilityRestResources(array $productOfferReferences): array
     {

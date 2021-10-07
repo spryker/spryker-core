@@ -43,10 +43,10 @@ class ProductPageCategoryExpander implements ProductPageCategoryExpanderInterfac
     }
 
     /**
-     * @param int[] $productAbstractIds
-     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
+     * @param array<int> $productAbstractIds
+     * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $payloadTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductPayloadTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductPayloadTransfer>
      */
     protected function setProductCategories(array $productAbstractIds, array $payloadTransfers): array
     {

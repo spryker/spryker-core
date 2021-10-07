@@ -19,7 +19,7 @@ class DenyListCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
     protected const GLOSSARY_KEY_PASSWORD_POLICY_ERROR_DENY_LIST = 'customer.password.error.deny_list';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $customerPasswordDenyList = [];
 

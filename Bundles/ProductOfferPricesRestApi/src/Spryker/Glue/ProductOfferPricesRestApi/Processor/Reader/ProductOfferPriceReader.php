@@ -109,10 +109,10 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     }
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductOfferPriceRestResources(array $productOfferReferences, string $localeName): array
     {
@@ -159,9 +159,9 @@ class ProductOfferPriceReader implements ProductOfferPriceReaderInterface
     /**
      * @phpstan-return array<string, string>
      *
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkus(array $productOfferStorageTransfers): array
     {

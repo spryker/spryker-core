@@ -24,13 +24,13 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface>
      */
     protected $oauthUserIdentifierFilterPlugins;
 
     /**
      * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[] $oauthUserIdentifierFilterPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface> $oauthUserIdentifierFilterPlugins
      */
     public function __construct(
         OauthToUtilEncodingServiceInterface $utilEncodingService,

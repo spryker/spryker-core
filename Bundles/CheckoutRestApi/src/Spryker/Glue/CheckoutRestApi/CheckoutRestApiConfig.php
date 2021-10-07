@@ -193,7 +193,7 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
      *  ],
      * ]
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getPaymentProviderMethodToStateMachineMapping(): array
     {

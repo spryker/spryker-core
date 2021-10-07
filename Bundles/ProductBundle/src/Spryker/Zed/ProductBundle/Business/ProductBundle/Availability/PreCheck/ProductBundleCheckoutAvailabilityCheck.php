@@ -45,7 +45,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CheckoutErrorTransfer>
      */
     protected function getCheckoutAvailabilityFailedItems(QuoteTransfer $quoteTransfer)
     {
@@ -86,7 +86,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $currentCartItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $currentCartItems
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -133,10 +133,10 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $availabilityErrorMessages
-     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $productBundleErrorMessages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CheckoutErrorTransfer> $availabilityErrorMessages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CheckoutErrorTransfer> $productBundleErrorMessages
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CheckoutErrorTransfer>
      */
     protected function getAvailabilityErrorMessages(ArrayObject $availabilityErrorMessages, ArrayObject $productBundleErrorMessages): ArrayObject
     {
@@ -171,7 +171,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutErrorTransfer $availabilityErrorMessage
-     * @param \ArrayObject|\Generated\Shared\Transfer\CheckoutErrorTransfer[] $productBundleErrorMessages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CheckoutErrorTransfer> $productBundleErrorMessages
      *
      * @return bool
      */
@@ -221,7 +221,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $currentCartItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $currentCartItems
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundle $productBundleEntity
      *

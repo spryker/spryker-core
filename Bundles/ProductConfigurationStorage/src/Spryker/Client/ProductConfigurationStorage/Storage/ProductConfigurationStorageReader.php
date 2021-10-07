@@ -69,9 +69,9 @@ class ProductConfigurationStorageReader implements ProductConfigurationStorageRe
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationStorageTransfer>
      */
     public function findProductConfigurationStoragesBySkus(array $skus): array
     {
@@ -83,9 +83,9 @@ class ProductConfigurationStorageReader implements ProductConfigurationStorageRe
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateStorageKeys(array $skus): array
     {

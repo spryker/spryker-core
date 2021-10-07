@@ -24,9 +24,9 @@ class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE = 'productConcrete';
 
     /**
-     * @param mixed[] $productConcreteEditFormData
+     * @param array<mixed> $productConcreteEditFormData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function transform($productConcreteEditFormData)
     {
@@ -46,9 +46,9 @@ class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param mixed[] $productConcreteEditFormData
+     * @param array<mixed> $productConcreteEditFormData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function reverseTransform($productConcreteEditFormData)
     {

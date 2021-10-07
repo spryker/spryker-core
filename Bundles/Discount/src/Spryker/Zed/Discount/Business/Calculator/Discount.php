@@ -52,7 +52,7 @@ class Discount implements DiscountInterface
     protected $voucherValidator;
 
     /**
-     * @var \Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface[]
+     * @var array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface>
      */
     protected $discountApplicableFilterPlugins = [];
 
@@ -114,7 +114,7 @@ class Discount implements DiscountInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\DiscountTransfer[] $discounts
+     * @param array<\Generated\Shared\Transfer\DiscountTransfer> $discounts
      *
      * @return void
      */
@@ -131,7 +131,7 @@ class Discount implements DiscountInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\CollectedDiscountTransfer[] $collectedDiscounts
+     * @param array<\Generated\Shared\Transfer\CollectedDiscountTransfer> $collectedDiscounts
      *
      * @return void
      */
@@ -153,10 +153,10 @@ class Discount implements DiscountInterface
     }
 
     /**
-     * @param string[] $voucherCodes
+     * @param array<string> $voucherCodes
      * @param int $idStore
      *
-     * @return \Orm\Zed\Discount\Persistence\SpyDiscount[]
+     * @return array<\Orm\Zed\Discount\Persistence\SpyDiscount>
      */
     protected function retrieveActiveCartAndVoucherDiscounts(array $voucherCodes, $idStore): array
     {
@@ -181,7 +181,7 @@ class Discount implements DiscountInterface
      * - Returns array of discounts splitted in two arrays by applicability. Applicable discounts first.
      * - Adds only one of the duplicate discounts to the applicable discounts, the rest to the non applicable.
      *
-     * @param \Orm\Zed\Discount\Persistence\SpyDiscount[] $discounts
+     * @param array<\Orm\Zed\Discount\Persistence\SpyDiscount> $discounts
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array [\Orm\Zed\Discount\Persistence\SpyDiscount[], \Orm\Zed\Discount\Persistence\SpyDiscount[]]
@@ -225,7 +225,7 @@ class Discount implements DiscountInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getVoucherCodes(QuoteTransfer $quoteTransfer): array
     {
@@ -330,7 +330,7 @@ class Discount implements DiscountInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idDiscount
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function filterDiscountApplicableItems(QuoteTransfer $quoteTransfer, $idDiscount): array
     {
@@ -347,7 +347,7 @@ class Discount implements DiscountInterface
     }
 
     /**
-     * @param \Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface[] $discountApplicableFilterPlugins
+     * @param array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface> $discountApplicableFilterPlugins
      *
      * @return void
      */

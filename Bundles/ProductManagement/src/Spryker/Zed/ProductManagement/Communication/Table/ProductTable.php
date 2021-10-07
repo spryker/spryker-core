@@ -89,7 +89,7 @@ class ProductTable extends AbstractProductTable
     protected $productManagementRepository;
 
     /**
-     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataExpanderPluginInterface>
      */
     protected $productTableDataExpanderPlugins;
 
@@ -245,7 +245,7 @@ class ProductTable extends AbstractProductTable
      */
     protected function getStoreNames($idProductAbstract)
     {
-        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractStore[] $productAbstractStoreCollection */
+        /** @var array<\Orm\Zed\Product\Persistence\SpyProductAbstractStore> $productAbstractStoreCollection */
         $productAbstractStoreCollection = $this->getProductAbstractStoreWithStore($idProductAbstract);
 
         $storeNames = [];

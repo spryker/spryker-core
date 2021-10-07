@@ -19,7 +19,7 @@ interface DocumentWriterInterface
     public function writeDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */
@@ -33,7 +33,7 @@ interface DocumentWriterInterface
     public function deleteDocument(SearchDocumentTransfer $searchDocumentTransfer): bool;
 
     /**
-     * @param \Generated\Shared\Transfer\SearchDocumentTransfer[] $searchDocumentTransfers
+     * @param array<\Generated\Shared\Transfer\SearchDocumentTransfer> $searchDocumentTransfers
      *
      * @return bool
      */

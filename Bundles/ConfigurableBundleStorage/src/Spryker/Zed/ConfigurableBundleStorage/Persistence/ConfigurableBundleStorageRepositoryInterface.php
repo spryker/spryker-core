@@ -12,24 +12,24 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ConfigurableBundleStorageRepositoryInterface
 {
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
-     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage[]
+     * @return array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage>
      */
     public function getConfigurableBundleTemplateStorageEntityMap(array $configurableBundleTemplateIds): array;
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
-     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][]
+     * @return array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[]>
      */
     public function getConfigurableBundleTemplateImageStorageEntityMap(array $configurableBundleTemplateIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getFilteredConfigurableBundleTemplateStorageDataTransfers(
         FilterTransfer $filterTransfer,
@@ -38,9 +38,9 @@ interface ConfigurableBundleStorageRepositoryInterface
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
-     * @return \Generated\Shared\Transfer\SpyConfigurableBundleTemplateImageStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyConfigurableBundleTemplateImageStorageEntityTransfer>
      */
     public function getFilteredConfigurableBundleTemplateImageStorageEntities(FilterTransfer $filterTransfer, array $configurableBundleTemplateIds): array;
 }

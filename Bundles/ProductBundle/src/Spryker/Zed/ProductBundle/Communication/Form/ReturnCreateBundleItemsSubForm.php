@@ -114,7 +114,7 @@ class ReturnCreateBundleItemsSubForm extends AbstractType
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return bool
      */

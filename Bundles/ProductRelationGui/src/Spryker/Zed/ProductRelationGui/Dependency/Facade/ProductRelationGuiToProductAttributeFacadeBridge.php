@@ -23,7 +23,7 @@ class ProductRelationGuiToProductAttributeFacadeBridge implements ProductRelatio
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getProductAttributeCollection()
     {

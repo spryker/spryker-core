@@ -133,7 +133,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @param mixed[] $productOfferTableDataArray
+     * @param array<mixed> $productOfferTableDataArray
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
@@ -165,9 +165,9 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @param mixed[] $productOfferTableRowDataArray
+     * @param array<mixed> $productOfferTableRowDataArray
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function prepareProductOfferStoresTableData(array $productOfferTableRowDataArray): array
     {
@@ -185,9 +185,9 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @param mixed[] $productOfferTableRowDataArray
+     * @param array<mixed> $productOfferTableRowDataArray
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function prepareProductOfferAttributesTableData(array $productOfferTableRowDataArray): array
     {
@@ -214,7 +214,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @param mixed[] $productOfferTableRowDataArray
+     * @param array<mixed> $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
@@ -232,7 +232,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @param mixed[] $productOfferTableRowDataArray
+     * @param array<mixed> $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
@@ -250,7 +250,7 @@ class ProductOfferTableDataMapper
     }
 
     /**
-     * @param mixed[] $productOfferTableRowDataArray
+     * @param array<mixed> $productOfferTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer

@@ -19,12 +19,12 @@ use Propel\Runtime\Collection\ObjectCollection;
 class WishlistTransferMapper implements WishlistTransferMapperInterface
 {
     /**
-     * @var \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface>
      */
     protected $itemExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface[] $itemExpanderPlugins
+     * @param array<\Spryker\Zed\Wishlist\Dependency\Plugin\ItemExpanderPluginInterface> $itemExpanderPlugins
      */
     public function __construct(array $itemExpanderPlugins)
     {
@@ -46,9 +46,9 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist[]|\Propel\Runtime\Collection\ObjectCollection $wishlistEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlist> $wishlistEntityCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistTransfer[]
+     * @return array<\Generated\Shared\Transfer\WishlistTransfer>
      */
     public function convertWishlistCollection(ObjectCollection $wishlistEntityCollection)
     {
@@ -78,9 +78,9 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem[]|\Propel\Runtime\Collection\ObjectCollection $wishlistItemEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem> $wishlistItemEntityCollection
      *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\WishlistItemTransfer>
      */
     public function convertWishlistItemCollection(ObjectCollection $wishlistItemEntityCollection)
     {
@@ -106,15 +106,10 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer> $wishlistItemMetaTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer> $wishlistItemMetaTransfers
      *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer>
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\WishlistItemMetaTransfer[] $wishlistItemMetaTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\WishlistItemMetaTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\WishlistItemMetaTransfer>
      */
     public function mapWishlistItemTransfersToWishlistItemMetaTransfers(
         ArrayObject $wishlistItemTransfers,

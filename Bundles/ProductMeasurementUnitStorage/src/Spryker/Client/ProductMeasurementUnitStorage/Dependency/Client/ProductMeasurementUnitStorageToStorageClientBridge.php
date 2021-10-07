@@ -33,7 +33,7 @@ class ProductMeasurementUnitStorageToStorageClientBridge implements ProductMeasu
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

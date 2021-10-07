@@ -29,7 +29,7 @@ interface ExecutablePermissionPluginInterface extends PermissionPluginInterface
      * @api
      *
      * @param array $configuration
-     * @param int|string|array|null $context
+     * @param array|string|int|null $context
      *
      * @return bool
      */

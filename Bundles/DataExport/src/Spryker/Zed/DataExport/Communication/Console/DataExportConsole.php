@@ -89,7 +89,7 @@ class DataExportConsole extends Console
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param \Generated\Shared\Transfer\DataExportReportTransfer[] $dataExportReportTransfers
+     * @param array<\Generated\Shared\Transfer\DataExportReportTransfer> $dataExportReportTransfers
      *
      * @return int
      */

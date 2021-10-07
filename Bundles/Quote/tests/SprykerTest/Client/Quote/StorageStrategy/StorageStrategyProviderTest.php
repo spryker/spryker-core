@@ -141,7 +141,7 @@ class StorageStrategyProviderTest extends Unit
 
     /**
      * @param \Spryker\Client\Quote\QuoteConfig $quoteConfig
-     * @param \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface[] $storageStrategyList
+     * @param array<\Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface> $storageStrategyList
      *
      * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyProviderInterface
      */

@@ -51,7 +51,7 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
      * @param int $idCmsBlock
      * @param int $idLocale
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRenderedCategoryList($idCmsBlock, $idLocale)
     {
@@ -74,7 +74,7 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
      * @param int $idCategory
      * @param int $idCategoryTemplate
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlockCollection($idCategory, $idCategoryTemplate)
     {
@@ -97,7 +97,7 @@ class CmsBlockCategoryReader implements CmsBlockCategoryReaderInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCmsBlockNamesIndexedByCmsBlockIdsForCategory(CategoryTransfer $categoryTransfer): array
     {

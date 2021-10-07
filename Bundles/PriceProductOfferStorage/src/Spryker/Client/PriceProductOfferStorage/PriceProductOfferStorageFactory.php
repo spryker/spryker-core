@@ -86,7 +86,7 @@ class PriceProductOfferStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[]
+     * @return array<\Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface>
      */
     protected function getPriceProductOfferStoragePriceExtractorPlugins(): array
     {

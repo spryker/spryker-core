@@ -22,10 +22,10 @@ interface ContentStorageReaderInterface
     /**
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentTypeContextTransfer>
      *
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentTypeContextTransfer>
      */
     public function getContentTypeContextByKeys(array $contentKeys, string $localeName): array;
 }

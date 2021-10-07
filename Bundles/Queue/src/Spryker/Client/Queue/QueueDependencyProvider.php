@@ -47,7 +47,7 @@ class QueueDependencyProvider extends AbstractDependencyProvider
      *
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\Queue\Model\Adapter\AdapterInterface[]
+     * @return array<\Spryker\Client\Queue\Model\Adapter\AdapterInterface>
      */
     protected function createQueueAdapters(Container $container)
     {

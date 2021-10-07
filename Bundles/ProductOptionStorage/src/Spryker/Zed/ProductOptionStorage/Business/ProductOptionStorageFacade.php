@@ -19,7 +19,7 @@ class ProductOptionStorageFacade extends AbstractFacade implements ProductOption
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class ProductOptionStorageFacade extends AbstractFacade implements ProductOption
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

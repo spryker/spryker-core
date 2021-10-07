@@ -143,7 +143,7 @@ class OrderItemMatrix
     }
 
     /**
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsOrderProcess>
      */
     protected function getActiveProcesses()
     {

@@ -26,19 +26,19 @@ interface FacetConfigInterface
     public function get(string $facetName): ?FacetConfigTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     public function getAll(): array;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getParamNames(): array;
 
     /**
      * @param array $requestParameters
      *
-     * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     public function getActive(array $requestParameters): array;
 

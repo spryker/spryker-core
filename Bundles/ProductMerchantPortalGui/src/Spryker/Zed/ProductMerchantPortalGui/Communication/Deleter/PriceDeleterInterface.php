@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ValidationResponseTransfer;
 interface PriceDeleterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param int $volumeQuantity
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer

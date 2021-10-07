@@ -12,7 +12,7 @@ interface ContentEditorPluginsResolverInterface
     /**
      * @param string $contentType
      *
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer>
      */
     public function getTemplatesByType(string $contentType): array;
 
@@ -24,7 +24,7 @@ interface ContentEditorPluginsResolverInterface
     public function getTwigFunctionTemplateByType(string $contentType): string;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getContentTypes(): array;
 }

@@ -86,9 +86,9 @@ class ProductReplacementForSynchronizationDataPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(array $ids = []): array
     {
@@ -100,9 +100,9 @@ class ProductReplacementForSynchronizationDataPlugin extends AbstractPlugin impl
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
+     * @return array<\Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage>
      */
     protected function findProductReplacementForStorageEntities(array $ids): array
     {

@@ -181,7 +181,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
     }
 
     /**
-     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface>
      */
     public function getSalesOrderThresholdFormExpanderPlugins(): array
     {

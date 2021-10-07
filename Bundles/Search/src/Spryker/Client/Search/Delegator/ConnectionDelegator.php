@@ -13,12 +13,12 @@ use Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPlu
 class ConnectionDelegator implements ConnectionDelegatorInterface
 {
     /**
-     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface[]
+     * @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface>
      */
     protected $connectionAdapterPlugins;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface[] $connectionAdapterPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface> $connectionAdapterPlugins
      */
     public function __construct(array $connectionAdapterPlugins)
     {

@@ -12,24 +12,24 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 class CompanyBusinessUnitPluginExecutor implements CompanyBusinessUnitPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface>
      */
     protected $companyBusinessUnitTransferExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[]
+     * @var array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface>
      */
     protected $companyBusinessUnitPostSavePlugins;
 
     /**
-     * @var \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[]
+     * @var array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface>
      */
     protected $companyBusinessUnitPreDeletePlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface[] $companyBusinessUnitTransferExpanderPlugins
-     * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface[] $companyBusinessUnitPostSavePlugins
-     * @param \Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface[] $companyBusinessUnitPreDeletePlugins
+     * @param array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitExpanderPluginInterface> $companyBusinessUnitTransferExpanderPlugins
+     * @param array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPostSavePluginInterface> $companyBusinessUnitPostSavePlugins
+     * @param array<\Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitPreDeletePluginInterface> $companyBusinessUnitPreDeletePlugins
      */
     public function __construct(
         array $companyBusinessUnitTransferExpanderPlugins,

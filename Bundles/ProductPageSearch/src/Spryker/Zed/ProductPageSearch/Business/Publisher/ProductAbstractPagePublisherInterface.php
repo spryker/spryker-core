@@ -10,22 +10,22 @@ namespace Spryker\Zed\ProductPageSearch\Business\Publisher;
 interface ProductAbstractPagePublisherInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
     public function publish(array $productAbstractIds);
 
     /**
-     * @param int[] $productAbstractIds
-     * @param string[] $pageDataExpanderPluginNames
+     * @param array<int> $productAbstractIds
+     * @param array<string> $pageDataExpanderPluginNames
      *
      * @return void
      */
     public function refresh(array $productAbstractIds, array $pageDataExpanderPluginNames = []);
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

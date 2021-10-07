@@ -157,7 +157,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface[]
+     * @return array<\Spryker\Zed\ProductList\Business\ProductList\ProductListPostSaverInterface>
      */
     public function getProductListPostSaverCollection(): array
     {
@@ -176,7 +176,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface[]
+     * @return array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreCreatePluginInterface>
      */
     public function getProductListPreCreatePlugins(): array
     {
@@ -184,7 +184,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListPreUpdatePluginInterface>
      */
     public function getProductListPreUpdatePlugins(): array
     {
@@ -192,7 +192,7 @@ class ProductListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface[]
+     * @return array<\Spryker\Zed\ProductListExtension\Dependency\Plugin\ProductListDeletePreCheckPluginInterface>
      */
     public function getProductListDeletePreCheckPlugins(): array
     {

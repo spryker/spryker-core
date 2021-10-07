@@ -17,7 +17,7 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link getAddressKeyGenerationWhiteListedFields()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAddressKeyGenerationExcludedFields(): array
     {
@@ -42,7 +42,7 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAddressKeyGenerationWhiteListedFields(): array
     {

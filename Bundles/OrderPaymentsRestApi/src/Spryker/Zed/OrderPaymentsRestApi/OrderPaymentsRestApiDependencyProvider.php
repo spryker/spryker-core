@@ -48,7 +48,7 @@ class OrderPaymentsRestApiDependencyProvider extends AbstractBundleDependencyPro
     }
 
     /**
-     * @return \Spryker\Zed\OrderPaymentsRestApiExtension\Dependency\Plugin\OrderPaymentUpdaterPluginInterface[]
+     * @return array<\Spryker\Zed\OrderPaymentsRestApiExtension\Dependency\Plugin\OrderPaymentUpdaterPluginInterface>
      */
     protected function getOrderPaymentUpdaterPlugins(): array
     {

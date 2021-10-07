@@ -22,7 +22,7 @@ interface StateMachineHandlerInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\CommandPluginInterface>
      */
     public function getCommandPlugins();
 
@@ -37,7 +37,7 @@ interface StateMachineHandlerInterface
      *
      * @api
      *
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\ConditionPluginInterface>
      */
     public function getConditionPlugins();
 
@@ -62,7 +62,7 @@ interface StateMachineHandlerInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getActiveProcesses();
 
@@ -97,9 +97,9 @@ interface StateMachineHandlerInterface
      *
      * @api
      *
-     * @param int[] $stateIds
+     * @param array<int> $stateIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateMachineItemsByStateIds(array $stateIds = []);
 }

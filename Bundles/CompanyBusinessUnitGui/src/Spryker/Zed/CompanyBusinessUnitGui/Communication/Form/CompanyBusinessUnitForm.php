@@ -117,8 +117,8 @@ class CompanyBusinessUnitForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $choicesValues [unitKey => idUnit]
-     * @param array[] $choicesAttributes [unitKey => ['data-id_company' => idCompany]
+     * @param array<string> $choicesValues [unitKey => idUnit]
+     * @param array<array> $choicesAttributes [unitKey => ['data-id_company' => idCompany]
      *
      * @return $this
      */

@@ -48,12 +48,12 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     protected $productOfferConfig;
 
     /**
-     * @var array|\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface[]
+     * @var array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface>
      */
     protected $productOfferPostCreatePlugins;
 
     /**
-     * @var array|\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface>
      */
     protected $productOfferPostUpdatePlugins;
 
@@ -62,8 +62,8 @@ class ProductOfferWriter implements ProductOfferWriterInterface
      * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface $productOfferEntityManager
      * @param \Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGeneratorInterface $productOfferReferenceGenerator
      * @param \Spryker\Zed\ProductOffer\ProductOfferConfig $productOfferConfig
-     * @param \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface[] $productOfferPostCreatePlugins
-     * @param \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface[] $productOfferPostUpdatePlugins
+     * @param array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface> $productOfferPostCreatePlugins
+     * @param array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface> $productOfferPostUpdatePlugins
      */
     public function __construct(
         ProductOfferRepositoryInterface $productOfferRepository,
@@ -238,9 +238,9 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected function indexStoreTransfersByIdStore(array $storeTransfers): array
     {

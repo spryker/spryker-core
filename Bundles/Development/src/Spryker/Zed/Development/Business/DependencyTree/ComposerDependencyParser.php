@@ -130,7 +130,7 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
      * @param string $composerName
      * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $moduleDependencyCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getDependencyTypes($composerName, DependencyCollectionTransfer $moduleDependencyCollectionTransfer): array
     {

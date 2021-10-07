@@ -284,7 +284,7 @@ class MerchantCreateForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getTextFieldConstraints(): array
     {
@@ -295,7 +295,7 @@ class MerchantCreateForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getPhoneFieldConstraints(): array
     {
@@ -308,7 +308,7 @@ class MerchantCreateForm extends AbstractType
     /**
      * @param int|null $currentId
      *
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getEmailFieldConstraints(?int $currentId = null): array
     {
@@ -326,7 +326,7 @@ class MerchantCreateForm extends AbstractType
     /**
      * @param array $choices
      *
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getSalutationFieldConstraints(array $choices = []): array
     {

@@ -15,7 +15,7 @@ use Spryker\Glue\Testify\OpenApi3\SchemaObject\AbstractObject;
 class ReferenceResolver implements ReferenceResolverInterface
 {
     /**
-     * @var \Spryker\Glue\Testify\OpenApi3\SchemaObject\AbstractObject[]
+     * @var array<\Spryker\Glue\Testify\OpenApi3\SchemaObject\AbstractObject>
      */
     protected $containers = [];
 

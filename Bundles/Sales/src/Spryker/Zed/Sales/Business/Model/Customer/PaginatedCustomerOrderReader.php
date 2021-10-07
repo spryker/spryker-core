@@ -42,7 +42,7 @@ class PaginatedCustomerOrderReader extends CustomerOrderReader
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $ordersQuery
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder>
      */
     protected function getOrderCollection(OrderListTransfer $orderListTransfer, SpySalesOrderQuery $ordersQuery)
     {
@@ -57,7 +57,7 @@ class PaginatedCustomerOrderReader extends CustomerOrderReader
      * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $ordersQuery
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder>
      */
     protected function paginateOrderCollection(OrderListTransfer $orderListTransfer, SpySalesOrderQuery $ordersQuery)
     {
@@ -83,7 +83,7 @@ class PaginatedCustomerOrderReader extends CustomerOrderReader
 
         $orderListTransfer->setPagination($paginationTransfer);
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $collection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder> $collection */
         $collection = $paginationModel->getResults();
 
         return $collection;

@@ -15,7 +15,7 @@ interface PublisherFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPublisherEventCollection(): array;
 }

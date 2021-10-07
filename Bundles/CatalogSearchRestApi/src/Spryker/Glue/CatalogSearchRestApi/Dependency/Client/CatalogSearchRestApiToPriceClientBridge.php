@@ -57,7 +57,7 @@ class CatalogSearchRestApiToPriceClientBridge implements CatalogSearchRestApiToP
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getPriceModes(): array
     {

@@ -115,9 +115,9 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
 
     /**
      * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     * @param string[][] $data
+     * @param array<string[]> $data
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function addLocalizedAttributes(
         LocalizedAttributesTransfer $localizedAttributesTransfer,
@@ -137,7 +137,7 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
     }
 
     /**
-     * @param string[][] $attributes
+     * @param array<string[]> $attributes
      * @param string $orderBy
      * @param string $orderDirection
      *

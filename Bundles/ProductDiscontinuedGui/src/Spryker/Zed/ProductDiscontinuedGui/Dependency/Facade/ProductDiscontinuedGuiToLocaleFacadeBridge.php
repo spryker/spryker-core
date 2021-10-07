@@ -33,7 +33,7 @@ class ProductDiscontinuedGuiToLocaleFacadeBridge implements ProductDiscontinuedG
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales()
     {

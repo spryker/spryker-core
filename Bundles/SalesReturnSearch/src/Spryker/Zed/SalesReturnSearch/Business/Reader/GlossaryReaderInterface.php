@@ -10,14 +10,14 @@ namespace Spryker\Zed\SalesReturnSearch\Business\Reader;
 interface GlossaryReaderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
+     * @param array<\Generated\Shared\Transfer\ReturnReasonTransfer> $returnReasonTransfers
      *
      * @return array
      */
     public function getReturnReasonTranslations(array $returnReasonTransfers): array;
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection(): array;
 }

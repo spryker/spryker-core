@@ -30,9 +30,9 @@ interface ProductOfferStorageReaderInterface
     public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer;
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     public function getProductOfferStorageByReferences(array $productOfferReferences): array;
 }

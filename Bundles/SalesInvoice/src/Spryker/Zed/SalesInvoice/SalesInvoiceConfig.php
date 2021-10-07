@@ -66,7 +66,7 @@ class SalesInvoiceConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MailRecipientTransfer[]
+     * @return array<\Generated\Shared\Transfer\MailRecipientTransfer>
      */
     public function getOrderInvoiceBcc(): array
     {

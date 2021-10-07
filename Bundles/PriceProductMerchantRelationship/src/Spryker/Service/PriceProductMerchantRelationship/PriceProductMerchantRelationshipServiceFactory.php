@@ -11,6 +11,9 @@ use Spryker\Service\Kernel\AbstractServiceFactory;
 use Spryker\Service\PriceProductMerchantRelationship\Filter\MerchantRelationshipPriceProductFilter;
 use Spryker\Service\PriceProductMerchantRelationship\Filter\MerchantRelationshipPriceProductFilterInterface;
 
+/**
+ * @method \Spryker\Service\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig getConfig()
+ */
 class PriceProductMerchantRelationshipServiceFactory extends AbstractServiceFactory
 {
     /**

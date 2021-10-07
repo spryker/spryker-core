@@ -53,7 +53,7 @@ class TokenAuthenticator extends AbstractPlugin implements AuthenticatorInterfac
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return string[]|null
+     * @return array<string>|null
      */
     public function getCredentials(Request $request)
     {

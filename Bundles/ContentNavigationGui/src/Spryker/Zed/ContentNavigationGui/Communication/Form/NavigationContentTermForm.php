@@ -99,7 +99,7 @@ class NavigationContentTermForm extends AbstractType
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getNavigationChoices(): array
     {

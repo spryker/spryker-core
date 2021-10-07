@@ -10,12 +10,12 @@ namespace Spryker\Zed\ProductManagement\Communication\PluginExecutor;
 class ProductConcreteEditEditViewExpanderPluginExecutor implements ProductConcreteEditViewExpanderPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface>
      */
     protected $productConcreteEditViewExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface[] $productConcreteEditViewExpanderPlugins
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteEditViewExpanderPluginInterface> $productConcreteEditViewExpanderPlugins
      */
     public function __construct(array $productConcreteEditViewExpanderPlugins)
     {

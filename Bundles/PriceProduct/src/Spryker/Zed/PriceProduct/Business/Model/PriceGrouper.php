@@ -70,7 +70,7 @@ class PriceGrouper implements PriceGrouperInterface
     /**
      * @phpstan-return array<mixed>
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return array
      */

@@ -29,7 +29,7 @@ class ProductsController extends AbstractController
     protected const ID_TABLE_PRODUCT_LIST = 'product-list';
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function indexAction(): array
     {

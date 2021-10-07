@@ -137,7 +137,7 @@ class AuthRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface[]
+     * @return array<\Spryker\Glue\AuthRestApiExtension\Dependency\Plugin\RestUserMapperPluginInterface>
      */
     public function getRestUserExpanderPlugins(): array
     {

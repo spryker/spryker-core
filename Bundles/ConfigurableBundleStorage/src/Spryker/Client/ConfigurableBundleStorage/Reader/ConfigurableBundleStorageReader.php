@@ -104,7 +104,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer>
      */
     public function getConfigurableBundleTemplateStorageCollection(
         ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
@@ -178,7 +178,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function prepareStorageKeys(
         ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
@@ -202,7 +202,7 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     /**
      * @param array $configurableBundleTemplateStorageData
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer>
      */
     protected function mapToConfigurableBundleStorageTransfers(array $configurableBundleTemplateStorageData): array
     {

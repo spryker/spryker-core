@@ -6,7 +6,7 @@
         "@angular/common": "^9.1.12",
         "@angular/core": "^9.1.12",
         "@spryker/button": "^0.2.3",
-        "@spryker/card": "^0.2.3",
+        "@spryker/card": "^0.3.3",
         "@spryker/headline": "^0.2.3",
         "@spryker/web-components": "^0.2.4",
         "rxjs": "^6.5.4"

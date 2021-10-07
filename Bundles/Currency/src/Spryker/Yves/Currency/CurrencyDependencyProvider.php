@@ -146,7 +146,7 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface[]
+     * @return array<\Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface>
      */
     protected function getCurrencyPostChangePlugins()
     {

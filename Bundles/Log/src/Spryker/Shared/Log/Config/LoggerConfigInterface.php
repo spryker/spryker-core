@@ -15,12 +15,12 @@ interface LoggerConfigInterface
     public function getChannelName();
 
     /**
-     * @return \Monolog\Handler\HandlerInterface[]
+     * @return array<\Monolog\Handler\HandlerInterface>
      */
     public function getHandlers();
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getProcessors();
 }

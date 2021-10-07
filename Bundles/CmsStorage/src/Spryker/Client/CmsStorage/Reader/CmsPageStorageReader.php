@@ -47,11 +47,11 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     }
 
     /**
-     * @param string[] $cmsPageUuids
+     * @param array<string> $cmsPageUuids
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CmsPageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsPageStorageTransfer>
      */
     public function getCmsPagesByUuids(array $cmsPageUuids, string $localeName, string $storeName): array
     {
@@ -84,11 +84,11 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     }
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CmsPageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsPageStorageTransfer>
      */
     public function getCmsPagesByIds(array $cmsPageIds, string $localeName, string $storeName): array
     {
@@ -119,11 +119,11 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     }
 
     /**
-     * @param string[] $cmsPageUuids
+     * @param array<string> $cmsPageUuids
      * @param string $localeName
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateUuidKeys(array $cmsPageUuids, string $localeName, string $storeName): array
     {
@@ -137,11 +137,11 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     }
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateIdKeys(array $cmsPageIds, string $localeName, string $storeName): array
     {

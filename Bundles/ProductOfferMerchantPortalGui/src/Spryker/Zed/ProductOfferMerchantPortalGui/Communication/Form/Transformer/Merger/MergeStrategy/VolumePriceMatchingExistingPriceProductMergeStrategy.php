@@ -13,14 +13,10 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 class VolumePriceMatchingExistingPriceProductMergeStrategy extends AbstractPriceProductComparisonMergeStrategy implements PriceProductMergeStrategyInterface
 {
     /**
-     * @phpstan-param ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTransfer $newPriceProductTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]|null
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>|null
      */
     public function merge(
         ArrayObject $priceProductTransfers,

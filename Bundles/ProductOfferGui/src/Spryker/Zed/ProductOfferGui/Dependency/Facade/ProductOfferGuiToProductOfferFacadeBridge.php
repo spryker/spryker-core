@@ -49,7 +49,7 @@ class ProductOfferGuiToProductOfferFacadeBridge implements ProductOfferGuiToProd
     /**
      * @param string $currentStatus
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getApplicableApprovalStatuses(string $currentStatus): array
     {

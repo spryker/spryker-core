@@ -56,7 +56,7 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface[]
+     * @return array<\Spryker\Shared\WebProfilerExtension\Dependency\Plugin\WebProfilerDataCollectorPluginInterface>
      */
     public function getDataCollectorPlugins()
     {
@@ -66,7 +66,7 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Use {@link \Spryker\Zed\WebProfiler\WebProfilerDependencyProvider::getDataCollectorPlugins()} instead.
      *
-     * @return \Silex\ServiceProviderInterface[]
+     * @return array<\Silex\ServiceProviderInterface>
      */
     public function getWebProfilerPlugins()
     {

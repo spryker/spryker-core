@@ -144,7 +144,7 @@ class ConfigurableBundleMapper
     /**
      * @param \Propel\Runtime\Collection\Collection $productImageSetEntities
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function mapProductImageSetEntityCollectionToProductImageSetTransfers(Collection $productImageSetEntities): array
     {
@@ -186,7 +186,7 @@ class ConfigurableBundleMapper
     /**
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageTransfer>
      */
     protected function mapProductImageSetEntityToProductImageTransfers(SpyProductImageSet $productImageSetEntity): array
     {

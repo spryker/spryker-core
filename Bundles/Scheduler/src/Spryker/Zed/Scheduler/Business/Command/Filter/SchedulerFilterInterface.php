@@ -14,7 +14,7 @@ interface SchedulerFilterInterface
     /**
      * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
-     * @return \Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface[]
+     * @return array<\Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface>
      */
     public function getFilteredSchedulerAdapters(SchedulerFilterTransfer $filterTransfer): array;
 }

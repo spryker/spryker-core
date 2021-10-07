@@ -803,7 +803,7 @@ class CategoryFacadeTest extends Unit
     /**
      * @param int $idCategory
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryRelationStoreIds(int $idCategory): array
     {

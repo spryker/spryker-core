@@ -41,7 +41,7 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
     protected $config;
 
     /**
-     * @var \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+     * @var array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface>
      */
     protected $quoteDeleteBeforePlugins;
 
@@ -49,7 +49,7 @@ class GuestQuoteDeleter implements GuestQuoteDeleterInterface
      * @param \Spryker\Zed\Quote\Persistence\QuoteEntityManagerInterface $quoteEntityManager
      * @param \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface $quoteRepository
      * @param \Spryker\Zed\Quote\QuoteConfig $config
-     * @param \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[] $quoteDeleteBeforePlugins
+     * @param array<\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface> $quoteDeleteBeforePlugins
      */
     public function __construct(
         QuoteEntityManagerInterface $quoteEntityManager,

@@ -19,7 +19,7 @@ interface RedisLoggerInterface
     public function log(string $command, array $payload, $result = null);
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getLogs(): array;
 }

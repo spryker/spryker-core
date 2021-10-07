@@ -22,7 +22,7 @@ interface ProductBundleStorageClientInterface
      *
      * @param \Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductBundleStorageTransfer>
      */
     public function getProductBundles(ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer): array;
 }

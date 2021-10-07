@@ -75,7 +75,7 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesDiscount[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesDiscount>
      */
     protected function getSalesOrderDiscounts($idSalesOrder)
     {

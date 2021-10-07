@@ -10,11 +10,14 @@ namespace SprykerTest\Shared\Testify\Helper;
 trait FactoryHelperTrait
 {
     /**
-     * @return \Codeception\Module|\SprykerTest\Shared\Testify\Helper\FactoryHelper
+     * @return \SprykerTest\Shared\Testify\Helper\FactoryHelper
      */
-    private function getFactoryHelper()
+    protected function getFactoryHelper(): FactoryHelper
     {
-        return $this->getModule('\\' . FactoryHelper::class);
+        /** @var \SprykerTest\Shared\Testify\Helper\FactoryHelper $factoryHelper */
+        $factoryHelper = $this->getModule('\\' . FactoryHelper::class);
+
+        return $factoryHelper;
     }
 
     /**

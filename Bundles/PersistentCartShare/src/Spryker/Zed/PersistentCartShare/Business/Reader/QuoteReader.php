@@ -90,9 +90,9 @@ class QuoteReader implements QuoteReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $resourceShareResponseMessages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $resourceShareResponseMessages
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\QuoteErrorTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\QuoteErrorTransfer>
      */
     protected function mapResourceShareResponseMessagesToQuoteResponseTransferErrors(ArrayObject $resourceShareResponseMessages): ArrayObject
     {

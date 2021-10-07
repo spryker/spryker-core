@@ -94,7 +94,7 @@ class ProductCategoryFilterController extends AbstractController
                 );
         }
 
-        /** @var \Generated\Shared\Transfer\ProductCategoryFilterItemTransfer[]|null $productCategoryFilters */
+        /** @var array<\Generated\Shared\Transfer\ProductCategoryFilterItemTransfer>|null $productCategoryFilters */
         $productCategoryFilters = $productCategoryFilterTransfer->getFilters();
         $nonSearchFilters = $this->getNonSearchFilters(
             ($productCategoryFilters !== null) ? (array)$productCategoryFilters : [],
@@ -112,8 +112,8 @@ class ProductCategoryFilterController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductCategoryFilterItemTransfer[] $filters
-     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[] $searchFilters
+     * @param array<\Generated\Shared\Transfer\ProductCategoryFilterItemTransfer> $filters
+     * @param array<\Generated\Shared\Transfer\FacetSearchResultTransfer> $searchFilters
      *
      * @return array
      */

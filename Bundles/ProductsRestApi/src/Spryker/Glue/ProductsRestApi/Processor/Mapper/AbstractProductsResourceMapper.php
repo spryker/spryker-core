@@ -67,7 +67,7 @@ class AbstractProductsResourceMapper implements AbstractProductsResourceMapperIn
 
     /**
      * @param array $variants
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return array
      */

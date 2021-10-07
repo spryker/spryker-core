@@ -20,9 +20,9 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductBundleMapper
 {
     /**
-     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $productBundleEntities
+     * @param array<\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle> $productBundleEntities
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer>
      */
     public function mapProductBundleEntitiesToProductForBundleTransfers(
         array $productBundleEntities
@@ -45,7 +45,7 @@ class ProductBundleMapper
     /**
      * @deprecated Will be removed with next major release
      *
-     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $productBundleEntities
+     * @param array<\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle> $productBundleEntities
      * @param \Generated\Shared\Transfer\ProductBundleCollectionTransfer $productBundleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
@@ -61,7 +61,7 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $productBundleEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
      * @param \Generated\Shared\Transfer\ProductBundleCollectionTransfer $productBundleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
@@ -86,7 +86,7 @@ class ProductBundleMapper
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItemBundleEntities
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function mapSalesOrderItemBundleEntitiesToItemTransfers(ObjectCollection $salesOrderItemBundleEntities): array
     {
@@ -107,9 +107,9 @@ class ProductBundleMapper
     /**
      * @deprecated Will be removed with next major release
      *
-     * @param \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $productBundleEntities
+     * @param array<\Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle> $productBundleEntities
      *
-     * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductBundleTransfer>
      */
     protected function mapProductBundleEntitiesToProductBundleTransfers(
         array $productBundleEntities
@@ -141,9 +141,9 @@ class ProductBundleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $productBundleEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductBundle\Persistence\SpyProductBundle> $productBundleEntities
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer[]>
      */
     protected function mapProductBundleEntitiesToGroupedProductForBundleTransfers(Collection $productBundleEntities): array
     {

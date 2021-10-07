@@ -25,10 +25,10 @@ class ConfigurableBundlesProductsResourceRelationshipToProductsRestApiResourceBr
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array
     {

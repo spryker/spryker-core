@@ -63,7 +63,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
     /**
      * @param string $url
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractUrlParts(string $url): array
     {
@@ -72,7 +72,7 @@ class SubRequestHandler implements SubRequestHandlerInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $subRequest
-     * @param string[] $urlParts
+     * @param array<string> $urlParts
      *
      * @return void
      */

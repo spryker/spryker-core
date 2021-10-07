@@ -43,7 +43,7 @@ class ContentStorageEventResourceBulkRepositoryPlugin extends AbstractPlugin imp
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

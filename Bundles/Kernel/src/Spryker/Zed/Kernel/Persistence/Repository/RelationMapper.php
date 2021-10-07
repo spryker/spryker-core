@@ -17,13 +17,13 @@ use Spryker\Shared\Kernel\Transfer\EntityTransferInterface;
 class RelationMapper implements RelationMapperInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[] $collection
+     * @param array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface> $collection
      * @param string $relation
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
      * @throws \Propel\Runtime\Collection\Exception\UnsupportedRelationException
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
+     * @return array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface>
      */
     public function populateCollectionWithRelation(array &$collection, $relation, ?Criteria $criteria = null)
     {
@@ -100,7 +100,7 @@ class RelationMapper implements RelationMapperInterface
      * @param array $primaryIds
      * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
      *
-     * @return \Spryker\Shared\Kernel\Transfer\EntityTransferInterface[]
+     * @return array<\Spryker\Shared\Kernel\Transfer\EntityTransferInterface>
      */
     protected function findRelations(
         ModelCriteria $query,

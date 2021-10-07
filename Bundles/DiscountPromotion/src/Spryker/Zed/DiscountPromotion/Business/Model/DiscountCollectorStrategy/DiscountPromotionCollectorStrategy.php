@@ -54,7 +54,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     public function collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)
     {
@@ -226,7 +226,7 @@ class DiscountPromotionCollectorStrategy implements DiscountPromotionCollectorSt
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param int $idDiscountPromotion
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PromotionItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PromotionItemTransfer>
      */
     protected function removePromotionFromSuggestions(QuoteTransfer $quoteTransfer, $idDiscountPromotion)
     {

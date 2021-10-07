@@ -56,7 +56,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
 
     /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
-     * @param \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserTransferCollection
+     * @param array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer> $companyUserTransferCollection
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
@@ -90,7 +90,7 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer>
      */
     protected function getQuotePermissionGroupList(): array
     {
@@ -101,9 +101,9 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserTransferCollection
+     * @param array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer> $companyUserTransferCollection
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[][]
+     * @return array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[]>
      */
     protected function groupCompanyUsersByQuoteId(array $companyUserTransferCollection): array
     {
@@ -119,9 +119,9 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroupTransferList
+     * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransferList
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer>
      */
     protected function indexQuotePermissionGroups(array $quotePermissionGroupTransferList): array
     {
@@ -135,10 +135,10 @@ class QuoteShareDetailsQuoteResponseExpander implements QuoteResponseExpanderInt
 
     /**
      * @param int $idQuote
-     * @param \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserTransferCollection
-     * @param \Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroupTransferList
+     * @param array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer> $companyUserTransferCollection
+     * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransferList
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShareDetailTransfer>
      */
     protected function createShareDetails(int $idQuote, array $companyUserTransferCollection, array $quotePermissionGroupTransferList): ArrayObject
     {

@@ -43,7 +43,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     protected const ID_LOCALE = 'id_locale';
 
     /**
-     * @var int[][][][]
+     * @var array<int[][][]>
      */
     protected static $categoryTreeIds;
 
@@ -98,9 +98,9 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[] $productCategoryEntities
+     * @param array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory> $productCategoryEntities
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractCategoryNodeIdsFromProductCategoryEntities(array $productCategoryEntities): array
     {
@@ -124,7 +124,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getAllParentCategoryNodeIds(
         ProductPageSearchTransfer $productAbstractPageSearchTransfer,
@@ -144,8 +144,8 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     }
 
     /**
-     * @param int[] $allParentCategoryNodeIds
-     * @param int[] $directParentCategoryNodeIds
+     * @param array<int> $allParentCategoryNodeIds
+     * @param array<int> $directParentCategoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
@@ -177,11 +177,11 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     }
 
     /**
-     * @param int[] $allParentCategoryNodeIds
-     * @param int[] $directParentCategoryNodeIds
+     * @param array<int> $allParentCategoryNodeIds
+     * @param array<int> $directParentCategoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param string[][] $categoryTreeNames
+     * @param array<string[]> $categoryTreeNames
      *
      * @return void
      */
@@ -210,10 +210,10 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     }
 
     /**
-     * @param int[] $directParentCategoryNodeIds
+     * @param array<int> $directParentCategoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param string[][] $categoryTreeNames
+     * @param array<string[]> $categoryTreeNames
      *
      * @return void
      */
@@ -237,11 +237,11 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     }
 
     /**
-     * @param int[] $directParentCategories
+     * @param array<int> $directParentCategories
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[][] $productCategoryEntities
+     * @param array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]> $productCategoryEntities
      *
      * @return void
      */
@@ -272,7 +272,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[] $productCategoryEntities
+     * @param array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory> $productCategoryEntities
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -300,7 +300,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryNodeParentIds(int $idCategoryNode, LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array
     {

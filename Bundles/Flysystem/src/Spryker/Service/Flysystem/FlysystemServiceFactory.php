@@ -67,7 +67,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FlysystemConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FlysystemConfigTransfer>
      */
     protected function createConfigCollection()
     {
@@ -118,7 +118,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \League\Flysystem\FilesystemInterface[]
+     * @return array<\League\Flysystem\FilesystemInterface>
      */
     protected function buildFilesystemCollection()
     {
@@ -159,7 +159,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \League\Flysystem\PluginInterface[]
+     * @return array<\League\Flysystem\PluginInterface>
      */
     protected function getFlysystemPluginCollection()
     {
@@ -167,7 +167,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Flysystem\Dependency\Plugin\FlysystemFilesystemBuilderPluginInterface[]
+     * @return array<\Spryker\Service\Flysystem\Dependency\Plugin\FlysystemFilesystemBuilderPluginInterface>
      */
     protected function getFilesystemBuilderPluginCollection()
     {
@@ -176,7 +176,7 @@ class FlysystemServiceFactory extends AbstractServiceFactory
 
     /**
      * @param \League\Flysystem\FilesystemInterface $filesystem
-     * @param \League\Flysystem\PluginInterface[] $flysystemPluginCollection
+     * @param array<\League\Flysystem\PluginInterface> $flysystemPluginCollection
      *
      * @return \League\Flysystem\FilesystemInterface
      */

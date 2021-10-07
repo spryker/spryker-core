@@ -42,7 +42,7 @@ interface ProductCategoryFilterStorageQueryContainerInterface extends QueryConta
      *
      * @api
      *
-     * @param int[] $productCategoryFilterIds
+     * @param array<int> $productCategoryFilterIds
      *
      * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */

@@ -244,7 +244,7 @@ class CodeStyleSnifferConfiguration implements CodeStyleSnifferConfigurationInte
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getAllowedLevels(): array
     {

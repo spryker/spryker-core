@@ -37,7 +37,7 @@ class CategoryPageSearchEntityManager extends AbstractEntityManager implements C
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return void
      */

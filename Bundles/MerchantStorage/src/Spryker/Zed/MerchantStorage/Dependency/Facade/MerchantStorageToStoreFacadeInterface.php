@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantStorage\Dependency\Facade;
 interface MerchantStorageToStoreFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores();
 }

@@ -27,7 +27,7 @@ class MerchantOmsReader implements MerchantOmsReaderInterface
     /**
      * @phpstan-return array<int|string, array<int, \Generated\Shared\Transfer\StateMachineItemTransfer>>
      *
-     * @param int[] $merchantOrderItemIds
+     * @param array<int> $merchantOrderItemIds
      *
      * @return array
      */

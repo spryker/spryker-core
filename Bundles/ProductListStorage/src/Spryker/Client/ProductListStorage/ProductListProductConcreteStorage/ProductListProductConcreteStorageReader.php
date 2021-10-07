@@ -80,9 +80,9 @@ class ProductListProductConcreteStorageReader implements ProductListProductConcr
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer>
      */
     public function getProductConcreteProductListStorageTransfersByProductConcreteIds(array $productConcreteIds): array
     {
@@ -96,9 +96,9 @@ class ProductListProductConcreteStorageReader implements ProductListProductConcr
     }
 
     /**
-     * @param string[] $productConcreteProductListStorageData
+     * @param array<string> $productConcreteProductListStorageData
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer>
      */
     protected function mapProductConcreteStorageDataToProductConcreteProductListStorageTransfers(array $productConcreteProductListStorageData): array
     {

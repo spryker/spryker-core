@@ -27,7 +27,7 @@ class SynchronizationServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
+     * @return array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface>
      */
     protected function getSynchronizationStorageKeyGeneratorPlugins()
     {
@@ -35,7 +35,7 @@ class SynchronizationServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
+     * @return array<\Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface>
      */
     protected function getSynchronizationSearchKeyGeneratorPlugins()
     {

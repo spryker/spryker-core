@@ -63,7 +63,7 @@ class UpdateMerchantTest extends Unit
     /**
      * @dataProvider getCorrectStatusTransitions
      *
-     * @param string[] $presetStatuses
+     * @param array<string> $presetStatuses
      *
      * @return void
      */
@@ -84,7 +84,7 @@ class UpdateMerchantTest extends Unit
     /**
      * @dataProvider getWrongStatusTransitions
      *
-     * @param string[] $presetStatuses
+     * @param array<string> $presetStatuses
      *
      * @return void
      */

@@ -23,7 +23,7 @@ class TaxProductStorageToEventBehaviorFacadeBridge implements TaxProductStorageT
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return array
      */

@@ -10,12 +10,12 @@ namespace Spryker\Client\QuickOrder\Expander;
 class ProductConcreteExpander implements ProductConcreteExpanderInterface
 {
     /**
-     * @var \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[]
+     * @var array<\Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface>
      */
     protected $productConcreteExpanderPlugins;
 
     /**
-     * @param \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface[] $productConcreteExpanderPlugins
+     * @param array<\Spryker\Client\QuickOrderExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface> $productConcreteExpanderPlugins
      */
     public function __construct(array $productConcreteExpanderPlugins)
     {
@@ -23,9 +23,9 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expand(array $productConcreteTransfers): array
     {

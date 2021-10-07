@@ -23,14 +23,14 @@ class TemplatePathMapBuilder implements TemplatePathMapBuilderInterface
     protected $templateNameBuilder;
 
     /**
-     * @var string|array
+     * @var array|string
      */
     protected $directory;
 
     /**
      * @param \Symfony\Component\Finder\Finder $finder
      * @param \Spryker\Zed\Twig\Business\Model\TemplatePathMapBuilder\TemplateNameBuilderInterface $templateNameBuilder
-     * @param string|array $directory
+     * @param array|string $directory
      */
     public function __construct(Finder $finder, TemplateNameBuilderInterface $templateNameBuilder, $directory)
     {
@@ -40,7 +40,7 @@ class TemplatePathMapBuilder implements TemplatePathMapBuilderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function build()
     {

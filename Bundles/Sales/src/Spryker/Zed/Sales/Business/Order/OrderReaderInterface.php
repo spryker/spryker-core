@@ -14,7 +14,7 @@ interface OrderReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctOrderStates($idSalesOrder);
 

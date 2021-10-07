@@ -165,7 +165,7 @@ class ArchitectureSnifferConfigurationBuilder implements SnifferConfigurationBui
     /**
      * @param array $moduleConfig
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getIgnoreErrors(array $moduleConfig): array
     {

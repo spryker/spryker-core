@@ -55,12 +55,12 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
     protected static $storageKeyBuilder;
 
     /**
-     * @var \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @var array<\Generated\Shared\Transfer\PriceProductTransfer[]>
      */
     protected static $productOfferPricesByIdProductConcrete = [];
 
     /**
-     * @var \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[]
+     * @var array<\Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface>
      */
     protected $priceProductOfferStoragePriceExtractorPlugins;
 
@@ -70,7 +70,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
      * @param \Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStoreClientInterface $storeClient
      * @param \Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToPriceProductServiceInterface $priceProductService
-     * @param \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[] $priceProductOfferStoragePriceExtractorPlugins
+     * @param array<\Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface> $priceProductOfferStoragePriceExtractorPlugins
      */
     public function __construct(
         PriceProductOfferStorageMapperInterface $priceProductMapper,
@@ -91,7 +91,7 @@ class PriceProductOfferStorageReader implements PriceProductOfferStorageReaderIn
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getProductOfferPrices(int $idProductConcrete): array
     {

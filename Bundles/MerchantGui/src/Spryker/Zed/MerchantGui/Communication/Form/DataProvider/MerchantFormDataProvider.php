@@ -97,7 +97,7 @@ class MerchantFormDataProvider
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[] $merchantUrlCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer> $merchantUrlCollection
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer

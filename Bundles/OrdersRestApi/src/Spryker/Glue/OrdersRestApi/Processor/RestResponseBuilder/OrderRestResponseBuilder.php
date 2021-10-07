@@ -83,7 +83,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      * @param int $totalItems
      * @param int $limit
      *
@@ -122,9 +122,9 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createMappedOrderItemRestResourcesFromOrderItemTransfers(ArrayObject $itemTransfers): array
     {
@@ -202,7 +202,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getOrderNotFoundError(): array
     {
@@ -214,7 +214,7 @@ class OrderRestResponseBuilder implements OrderRestResponseBuilderInterface
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getCustomerUnauthorizedRestError(): array
     {

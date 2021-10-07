@@ -1631,7 +1631,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      * @param \Spryker\Service\Container\ContainerInterface $container
      * @param string $name
      *
-     * @return mixed|\Symfony\Component\HttpFoundation\RequestMatcher
+     * @return \Symfony\Component\HttpFoundation\RequestMatcher|mixed
      */
     protected function createRequestMatcher(ContainerInterface $container, string $name)
     {

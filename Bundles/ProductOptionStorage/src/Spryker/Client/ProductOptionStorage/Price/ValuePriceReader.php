@@ -76,9 +76,9 @@ class ValuePriceReader implements ValuePriceReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer> $productAbstractOptionStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer>
      */
     public function resolveProductAbstractOptionStorageTransfersProductOptionValuePrices(
         array $productAbstractOptionStorageTransfers

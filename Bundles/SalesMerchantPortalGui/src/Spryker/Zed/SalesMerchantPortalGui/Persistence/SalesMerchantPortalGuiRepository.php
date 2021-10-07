@@ -692,7 +692,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
     /**
      * @param int $idMerchant
      *
-     * @return mixed[][]
+     * @return array<mixed[]>
      */
     protected function getOrderTotalsPerStore(int $idMerchant): array
     {

@@ -19,13 +19,13 @@ class StorageStrategyProvider implements StorageStrategyProviderInterface
     protected $quoteConfig;
 
     /**
-     * @var \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface[]
+     * @var array<\Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface>
      */
     protected $storageStrategyList;
 
     /**
      * @param \Spryker\Client\Quote\QuoteConfig $quoteConfig
-     * @param \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface[] $storageStrategyList
+     * @param array<\Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface> $storageStrategyList
      */
     public function __construct(QuoteConfig $quoteConfig, array $storageStrategyList)
     {

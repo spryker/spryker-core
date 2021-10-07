@@ -14,7 +14,7 @@ abstract class AbstractCheckDataStep
     /**
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getErrorMessages(ValidationResponseTransfer $validationResponseTransfer): array
     {

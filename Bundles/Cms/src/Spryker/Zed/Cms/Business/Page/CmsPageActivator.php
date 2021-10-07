@@ -36,7 +36,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[]
+     * @var array<\Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface>
      */
     protected $postCmsPageActivatorPlugins;
 
@@ -48,7 +48,7 @@ class CmsPageActivator implements CmsPageActivatorInterface
     /**
      * @param \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeInterface $touchFacade
-     * @param \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[] $postCmsPageActivatorPlugins
+     * @param array<\Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface> $postCmsPageActivatorPlugins
      * @param \Spryker\Zed\Cms\Business\Template\TemplateReaderInterface $templateReader
      */
     public function __construct(

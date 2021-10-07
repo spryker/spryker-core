@@ -29,20 +29,20 @@ class CartHandler implements CartHandlerInterface
     protected $wishlistClient;
 
     /**
-     * @var \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface[]
+     * @var array<\Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface>
      */
     protected $wishlistPostMoveToCartCollectionExpanderPlugins;
 
     /**
-     * @var \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface[]
+     * @var array<\Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface>
      */
     protected $wishlistCollectionToRemoveExpanderPlugins;
 
     /**
      * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToCartInterface $cartClient
      * @param \Spryker\Client\Wishlist\WishlistClientInterface $wishlistClient
-     * @param \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface[] $wishlistPostMoveToCartCollectionExpanderPlugins
-     * @param \Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface[] $wishlistCollectionToRemoveExpanderPlugins
+     * @param array<\Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistPostMoveToCartCollectionExpanderPluginInterface> $wishlistPostMoveToCartCollectionExpanderPlugins
+     * @param array<\Spryker\Client\WishlistExtension\Dependency\Plugin\WishlistCollectionToRemoveExpanderPluginInterface> $wishlistCollectionToRemoveExpanderPlugins
      */
     public function __construct(
         WishlistToCartInterface $cartClient,

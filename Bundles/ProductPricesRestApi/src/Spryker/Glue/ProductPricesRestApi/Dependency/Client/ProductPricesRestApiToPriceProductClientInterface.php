@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 interface ProductPricesRestApiToPriceProductClientInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
      */

@@ -17,7 +17,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CustomerReferenceToIdCustomerStep implements DataImportStepInterface
 {
     /**
-     * @var int[] Keys are customer references
+     * @var array<int> Keys are customer references
      */
     protected $idCustomerBuffer = [];
 

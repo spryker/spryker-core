@@ -443,7 +443,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @deprecated Use {@link queryTaxSetByIdProductOptionValueAndCountryIso2Codes()} instead.
      *
-     * @param int[] $allIdOptionValueUsages
+     * @param array<int> $allIdOptionValueUsages
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
@@ -474,7 +474,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
-     * @param string[] $countryIso2Codes
+     * @param array<string> $countryIso2Codes
      *
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
@@ -491,8 +491,8 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      *
      * @api
      *
-     * @param int[] $idProductOptionValues
-     * @param string[] $countryIso2Codes
+     * @param array<int> $idProductOptionValues
+     * @param array<string> $countryIso2Codes
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */

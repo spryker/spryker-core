@@ -30,7 +30,7 @@ class DataSet implements DataSetInterface
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException
      *
-     * @return string|int|array|float|bool
+     * @return array|string|float|int|bool
      */
     public function offsetGet($index)
     {

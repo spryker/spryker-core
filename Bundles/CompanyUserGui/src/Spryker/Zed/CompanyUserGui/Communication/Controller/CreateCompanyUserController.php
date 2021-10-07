@@ -44,7 +44,7 @@ class CreateCompanyUserController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -72,7 +72,7 @@ class CreateCompanyUserController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function attachCustomerAction(Request $request)
     {
@@ -121,7 +121,7 @@ class CreateCompanyUserController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $companyUserForm
      * @param string $redirectUrl
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function createCompanyUser(FormInterface $companyUserForm, string $redirectUrl)
     {

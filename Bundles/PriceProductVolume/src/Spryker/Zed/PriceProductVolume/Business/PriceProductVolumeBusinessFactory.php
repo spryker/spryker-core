@@ -78,7 +78,7 @@ class PriceProductVolumeBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function getPriceVolumeCollectionConstraints(): array
     {

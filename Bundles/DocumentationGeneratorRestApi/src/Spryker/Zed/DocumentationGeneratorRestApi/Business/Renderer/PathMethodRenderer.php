@@ -145,7 +145,7 @@ class PathMethodRenderer implements PathMethodRendererInterface
 
     /**
      * @param \Generated\Shared\Transfer\PathMethodComponentTransfer $methodComponent
-     * @param \ArrayObject|\Generated\Shared\Transfer\PathSchemaDataTransfer[] $responseSchemas
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PathSchemaDataTransfer> $responseSchemas
      *
      * @return void
      */

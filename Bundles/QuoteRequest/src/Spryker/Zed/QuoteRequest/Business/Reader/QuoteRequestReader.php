@@ -213,9 +213,9 @@ class QuoteRequestReader implements QuoteRequestReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyUserTransfer[] $companyUserTransfers
+     * @param array<\Generated\Shared\Transfer\CompanyUserTransfer> $companyUserTransfers
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyUserTransfer>
      */
     protected function mapCompanyUsers(array $companyUserTransfers): array
     {

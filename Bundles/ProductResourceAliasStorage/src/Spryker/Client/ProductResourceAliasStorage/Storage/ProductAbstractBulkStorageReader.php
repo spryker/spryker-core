@@ -30,7 +30,7 @@ class ProductAbstractBulkStorageReader implements ProductAbstractBulkStorageRead
     }
 
     /**
-     * @param string[] $identifiers
+     * @param array<string> $identifiers
      * @param string $localeName
      *
      * @return array

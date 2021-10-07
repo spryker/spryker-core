@@ -245,7 +245,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableStockTypes()
     {
@@ -259,7 +259,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductsByIdProduct($idProductConcrete)
     {
@@ -276,7 +276,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer)
     {
@@ -292,7 +292,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer)
     {
@@ -304,7 +304,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getWarehouseToStoreMapping()
     {
@@ -318,7 +318,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getStoreToWarehouseMapping()
     {
@@ -394,7 +394,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductStockIsDefined(string $sku): array
     {
@@ -408,7 +408,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockTransfer>
      */
     public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
     {

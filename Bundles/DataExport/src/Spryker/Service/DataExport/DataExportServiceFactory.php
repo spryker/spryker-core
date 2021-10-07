@@ -127,7 +127,7 @@ class DataExportServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportFormatterPluginInterface[]
+     * @return array<\Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportFormatterPluginInterface>
      */
     public function getDataExportFormatterPlugins(): array
     {
@@ -135,7 +135,7 @@ class DataExportServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportConnectionPluginInterface[]
+     * @return array<\Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportConnectionPluginInterface>
      */
     public function getDataExportConnectionPlugins(): array
     {

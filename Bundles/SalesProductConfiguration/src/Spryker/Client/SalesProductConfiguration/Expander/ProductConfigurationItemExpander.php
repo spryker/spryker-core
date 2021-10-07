@@ -14,10 +14,10 @@ use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 class ProductConfigurationItemExpander implements ProductConfigurationItemExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandItemsWithProductConfiguration(array $itemTransfers, OrderTransfer $orderTransfer): array
     {
@@ -52,7 +52,7 @@ class ProductConfigurationItemExpander implements ProductConfigurationItemExpand
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getProductConfigurationSalesOrderItemsGroupedByGroupKey(OrderTransfer $orderTransfer): array
     {

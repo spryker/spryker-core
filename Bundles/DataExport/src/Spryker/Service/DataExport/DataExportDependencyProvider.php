@@ -113,7 +113,7 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportFormatterPluginInterface[]
+     * @return array<\Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportFormatterPluginInterface>
      */
     protected function getDataExportFormatterPlugins(): array
     {
@@ -121,7 +121,7 @@ class DataExportDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportConnectionPluginInterface[]
+     * @return array<\Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportConnectionPluginInterface>
      */
     protected function getDataExportConnectionPlugins(): array
     {

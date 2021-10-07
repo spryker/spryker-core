@@ -51,7 +51,7 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
      * @module Store
      * @module Merchant
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -93,9 +93,9 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByMerchantIds(array $merchantIds): array
     {
@@ -114,9 +114,9 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
     }
 
     /**
-     * @param int[] $productOfferIds
+     * @param array<int> $productOfferIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductOfferIds(array $productOfferIds): array
     {

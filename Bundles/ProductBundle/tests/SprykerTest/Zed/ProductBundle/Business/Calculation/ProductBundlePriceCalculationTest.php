@@ -89,7 +89,7 @@ class ProductBundlePriceCalculationTest extends Unit
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function createBundledItems(): ArrayObject
     {

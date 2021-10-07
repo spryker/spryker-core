@@ -13,18 +13,18 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverI
 class ProductAbstractAfterCreateObserverPluginManager implements ProductAbstractCreateObserverInterface
 {
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[]
+     * @var array<\Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface>
      */
     protected $afterCreateCollection;
 
     /**
-     * @var \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[]
+     * @var array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface>
      */
     protected $productAbstractPostCreatePlugins;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface[] $afterCreateCollection
-     * @param \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface[] $productAbstractPostCreatePlugins
+     * @param array<\Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginCreateInterface> $afterCreateCollection
+     * @param array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPostCreatePluginInterface> $productAbstractPostCreatePlugins
      */
     public function __construct(
         array $afterCreateCollection,

@@ -48,7 +48,7 @@ class MerchantCategoryPublisher implements MerchantCategoryPublisherInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */

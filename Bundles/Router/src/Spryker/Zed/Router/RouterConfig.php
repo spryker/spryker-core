@@ -213,7 +213,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getControllerDirectories(): array
     {
@@ -286,7 +286,7 @@ class RouterConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSslExcludedRouteNames(): array
     {

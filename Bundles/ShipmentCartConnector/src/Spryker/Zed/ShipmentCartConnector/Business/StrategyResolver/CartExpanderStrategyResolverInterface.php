@@ -15,7 +15,7 @@ use Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterfac
 interface CartExpanderStrategyResolverInterface
 {
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpanderInterface
      */

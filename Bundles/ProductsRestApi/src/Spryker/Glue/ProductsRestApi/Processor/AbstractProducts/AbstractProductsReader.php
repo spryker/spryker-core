@@ -70,7 +70,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     protected $abstractProductAttributeTranslationExpander;
 
     /**
-     * @var \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\AbstractProductsResourceExpanderPluginInterface[]
+     * @var array<\Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\AbstractProductsResourceExpanderPluginInterface>
      */
     protected $abstractProductsResourceExpanderPlugins;
 
@@ -81,7 +81,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      * @param \Spryker\Glue\ProductsRestApi\Processor\ConcreteProducts\ConcreteProductsReaderInterface $concreteProductsReader
      * @param \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig $productsRestApiConfig
      * @param \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\AbstractProductAttributeTranslationExpanderInterface $abstractProductAttributeTranslationExpander
-     * @param \Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\AbstractProductsResourceExpanderPluginInterface[] $abstractProductsResourceExpanderPlugins
+     * @param array<\Spryker\Glue\ProductsRestApiExtension\Dependency\Plugin\AbstractProductsResourceExpanderPluginInterface> $abstractProductsResourceExpanderPlugins
      */
     public function __construct(
         ProductsRestApiToProductStorageClientInterface $productStorageClient,
@@ -128,10 +128,10 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductAbstractsBySkus(array $skus, RestRequestInterface $restRequest): array
     {
@@ -193,11 +193,11 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductAbstractsByIds(array $productAbstractIds, string $localeName, string $storeName): array
     {
@@ -267,7 +267,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      * @param array $abstractProductData
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     protected function createRestResourcesFromAbstractProductStorageData(array $abstractProductData, string $localeName): array
     {

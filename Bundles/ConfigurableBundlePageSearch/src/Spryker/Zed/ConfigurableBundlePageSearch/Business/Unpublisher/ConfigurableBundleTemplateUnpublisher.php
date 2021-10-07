@@ -40,7 +40,7 @@ class ConfigurableBundleTemplateUnpublisher implements ConfigurableBundleTemplat
     }
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */

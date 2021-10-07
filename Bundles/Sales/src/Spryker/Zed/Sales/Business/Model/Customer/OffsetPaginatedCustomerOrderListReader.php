@@ -32,7 +32,7 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface>
      */
     protected $searchOrderExpanderPlugins;
 
@@ -40,7 +40,7 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface> $searchOrderExpanderPlugins
      */
     public function __construct(
         SalesRepositoryInterface $salesRepository,
@@ -96,9 +96,9 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     protected function executeSearchOrderExpanderPlugins(array $orderTransfers): array
     {

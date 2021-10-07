@@ -76,7 +76,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -88,7 +88,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -109,7 +109,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockProductTransfer[] $cmsBlockProductsTransfer
+     * @param array<\Generated\Shared\Transfer\CmsBlockProductTransfer> $cmsBlockProductsTransfer
      * @param array $spyCmsBlockProductStorageEntities
      *
      * @return void
@@ -147,7 +147,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -172,7 +172,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -196,7 +196,7 @@ class CmsBlockProductStorageWriter implements CmsBlockProductStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */

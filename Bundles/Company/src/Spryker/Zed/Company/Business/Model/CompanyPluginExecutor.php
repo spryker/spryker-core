@@ -12,24 +12,24 @@ use Generated\Shared\Transfer\CompanyResponseTransfer;
 class CompanyPluginExecutor implements CompanyPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface[]
+     * @var array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface>
      */
     protected $companyPreSavePlugins;
 
     /**
-     * @var \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface[]
+     * @var array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface>
      */
     protected $companyPostSavePlugins;
 
     /**
-     * @var \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface[]
+     * @var array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface>
      */
     protected $companyPostCreatePlugins;
 
     /**
-     * @param \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface[] $companyPreSavePlugins
-     * @param \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface[] $companyPostSavePlugins
-     * @param \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface[] $companyPostCreatePlugins
+     * @param array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface> $companyPreSavePlugins
+     * @param array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface> $companyPostSavePlugins
+     * @param array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface> $companyPostCreatePlugins
      */
     public function __construct(
         array $companyPreSavePlugins = [],

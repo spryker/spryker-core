@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentStorage\Dependency\Facade;
 interface ContentStorageToLocaleFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 }

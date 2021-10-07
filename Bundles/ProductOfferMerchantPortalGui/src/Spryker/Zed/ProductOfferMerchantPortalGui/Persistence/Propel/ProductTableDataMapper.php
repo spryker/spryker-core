@@ -97,7 +97,7 @@ class ProductTableDataMapper
     }
 
     /**
-     * @param mixed[] $productTableDataArray
+     * @param array<mixed> $productTableDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
@@ -127,9 +127,9 @@ class ProductTableDataMapper
     }
 
     /**
-     * @param mixed[] $productTableRowDataArray
+     * @param array<mixed> $productTableRowDataArray
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function prepareProductStoresTableData(array $productTableRowDataArray): array
     {
@@ -147,9 +147,9 @@ class ProductTableDataMapper
     }
 
     /**
-     * @param mixed[] $productTableRowDataArray
+     * @param array<mixed> $productTableRowDataArray
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function prepareProductAttributesTableData(array $productTableRowDataArray): array
     {
@@ -176,7 +176,7 @@ class ProductTableDataMapper
     }
 
     /**
-     * @param mixed[] $productTableRowDataArray
+     * @param array<mixed> $productTableRowDataArray
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

@@ -28,14 +28,14 @@ class SalesDataHelper extends Module
     public const NAMESPACE_ROOT = '\\';
 
     /**
-     * @var \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[]
+     * @var array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface>
      */
     protected $saveOrderStack = [];
 
     /**
      * @param array $override
      * @param string|null $stateMachineProcessName
-     * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
+     * @param array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface> $saveOrderStack
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
@@ -53,7 +53,7 @@ class SalesDataHelper extends Module
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string|null $stateMachineProcessName
-     * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $checkoutDoSaveOrderPlugins
+     * @param array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface> $checkoutDoSaveOrderPlugins
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
@@ -84,7 +84,7 @@ class SalesDataHelper extends Module
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string|null $stateMachineProcessName
-     * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $saveOrderStack
+     * @param array<\Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface> $saveOrderStack
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */

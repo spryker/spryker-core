@@ -11,7 +11,7 @@ interface ProductAbstractRelationDeleterInterface
 {
     /**
      * @param int $idProductLabel
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param bool $isTouchEnabled
      *
      * @return void

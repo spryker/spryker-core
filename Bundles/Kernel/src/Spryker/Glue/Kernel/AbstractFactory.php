@@ -26,7 +26,7 @@ abstract class AbstractFactory
     protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
 
     /**
-     * @var \Spryker\Glue\Kernel\Container[]
+     * @var array<\Spryker\Glue\Kernel\Container>
      */
     protected static $containers = [];
 

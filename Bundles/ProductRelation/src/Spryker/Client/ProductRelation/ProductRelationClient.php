@@ -21,7 +21,7 @@ class ProductRelationClient extends AbstractClient implements ProductRelationCli
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\StorageProductRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductRelationsTransfer>
      */
     public function getProductRelationsByIdProductAbstract($idProductAbstract)
     {

@@ -186,7 +186,7 @@ class FileManagerBusinessTester extends Actor
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function insertFilesCollection(): array
     {

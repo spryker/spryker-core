@@ -141,10 +141,10 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $cartErrorMessages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $cartErrorMessages
      * @param \Generated\Shared\Transfer\MessageTransfer|null $messageTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer>
      */
     protected function collectCartErrorMessages(
         ArrayObject $cartErrorMessages,
@@ -206,7 +206,7 @@ class ProductPackagingUnitCartPreCheck extends ProductPackagingUnitAvailabilityP
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $cartErrorMessages
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $cartErrorMessages
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */

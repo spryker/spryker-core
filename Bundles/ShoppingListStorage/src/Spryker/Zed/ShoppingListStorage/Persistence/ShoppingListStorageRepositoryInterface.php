@@ -13,38 +13,38 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface ShoppingListStorageRepositoryInterface
 {
     /**
-     * @param int[] $shoppingListIds
+     * @param array<int> $shoppingListIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerReferencesByShoppingListIds(array $shoppingListIds): array;
 
     /**
-     * @param string[] $customerReference
+     * @param array<string> $customerReference
      *
-     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
      */
     public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReference): ObjectCollection;
 
     /**
-     * @param string[] $customerReferences
+     * @param array<string> $customerReferences
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingList[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingList>
      */
     public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): ObjectCollection;
 
     /**
      * @param array $shoppingListCustomerStorageIds
      *
-     * @return \Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
      */
     public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): ObjectCollection;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $shoppingListCustomerStorageEntityIds
+     * @param array<int> $shoppingListCustomerStorageEntityIds
      *
-     * @return \Generated\Shared\Transfer\SpyShoppingListCustomerStorageEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyShoppingListCustomerStorageEntityTransfer>
      */
     public function findFilteredShoppingListCustomerStorageEntities(FilterTransfer $filterTransfer, array $shoppingListCustomerStorageEntityIds = []): array;
 }

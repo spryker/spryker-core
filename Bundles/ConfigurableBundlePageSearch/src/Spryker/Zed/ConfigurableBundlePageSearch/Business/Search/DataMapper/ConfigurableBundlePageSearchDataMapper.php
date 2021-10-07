@@ -20,7 +20,7 @@ use Spryker\Shared\ConfigurableBundlePageSearch\ConfigurableBundlePageSearchConf
 class ConfigurableBundlePageSearchDataMapper implements ConfigurableBundlePageSearchDataMapperInterface
 {
     /**
-     * @var \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface>
      */
     protected $configurableBundleTemplatePageMapExpanderPlugins;
 
@@ -30,7 +30,7 @@ class ConfigurableBundlePageSearchDataMapper implements ConfigurableBundlePageSe
     protected $underscoreToDashFilter;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface[] $configurableBundleTemplatePageMapExpanderPlugins
+     * @param array<\Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplateMapExpanderPluginInterface> $configurableBundleTemplatePageMapExpanderPlugins
      * @param \Laminas\Filter\FilterInterface $underscoreToDashFilter
      */
     public function __construct(
@@ -138,9 +138,9 @@ class ConfigurableBundlePageSearchDataMapper implements ConfigurableBundlePageSe
 
     /**
      * @param array $result
-     * @param \Generated\Shared\Transfer\SearchResultDataMapTransfer[]|\ArrayObject $searchResultData
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SearchResultDataMapTransfer> $searchResultData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function transformSearchResultData(array $result, $searchResultData): array
     {
@@ -156,7 +156,7 @@ class ConfigurableBundlePageSearchDataMapper implements ConfigurableBundlePageSe
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getPageIndexMapProperties(): array
     {

@@ -44,7 +44,7 @@ interface ProductRelationRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array;
 
@@ -66,7 +66,7 @@ interface ProductRelationRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function getActiveProductRelations(
         ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
@@ -78,21 +78,21 @@ interface ProductRelationRepositoryInterface
     public function getActiveProductRelationCount(): int;
 
     /**
-     * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTypeTransfer>
      */
     public function getProductRelationTypes(): array;
 
     /**
-     * @param int[] $idProductAbstracts
+     * @param array<int> $idProductAbstracts
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function getProductRelationsByProductAbstractIds(array $idProductAbstracts): array;
 
     /**
-     * @param int[] $productRelationIds
+     * @param array<int> $productRelationIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductRelationIds(
         array $productRelationIds
@@ -101,14 +101,14 @@ interface ProductRelationRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductRelationCriteriaTransfer $productRelationCriteriaTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStoresByProductRelationCriteria(ProductRelationCriteriaTransfer $productRelationCriteriaTransfer): array;
 }

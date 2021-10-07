@@ -52,7 +52,7 @@ class RouterHelper extends Module
     protected const CONFIG_KEY_ROUTER_PLUGINS = 'routerPlugins';
 
     /**
-     * @var \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[]
+     * @var array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     protected $routerPlugins = [];
 

@@ -34,7 +34,7 @@ class SalesInvoiceEntityManager extends AbstractEntityManager implements SalesIn
     }
 
     /**
-     * @param int[] $orderInvoiceIds
+     * @param array<int> $orderInvoiceIds
      *
      * @return void
      */

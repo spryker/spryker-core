@@ -22,9 +22,9 @@ class PriceProductOfferVolumeFacade extends AbstractFacade implements PriceProdu
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductOfferTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductOfferTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractVolumePrices(array $priceProductOfferTransfers): array
     {

@@ -91,7 +91,7 @@ class ConcreteProductPriceProductScheduleApplier implements ConcreteProductPrice
     /**
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     protected function findPriceProductSchedulesToEnableForCurrentStoreAndIdProductConcrete(PriceProductScheduleTransfer $priceProductScheduleTransfer): array
     {

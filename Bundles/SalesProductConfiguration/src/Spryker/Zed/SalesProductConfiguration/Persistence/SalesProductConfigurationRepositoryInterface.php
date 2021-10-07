@@ -14,7 +14,7 @@ interface SalesProductConfigurationRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationFilterTransfer $salesOrderItemConfigurationFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer>
      */
     public function getSalesOrderItemConfigurationsByFilter(
         SalesOrderItemConfigurationFilterTransfer $salesOrderItemConfigurationFilterTransfer

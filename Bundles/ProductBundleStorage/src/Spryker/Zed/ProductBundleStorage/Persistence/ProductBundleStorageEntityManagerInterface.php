@@ -19,7 +19,7 @@ interface ProductBundleStorageEntityManagerInterface
     public function saveProductBundleStorage(ProductBundleStorageTransfer $productBundleStorageTransfer): void;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */

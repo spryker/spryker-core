@@ -34,7 +34,7 @@ class BarcodeServiceFactory extends AbstractServiceFactory
     }
 
     /**
-     * @return \Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface[]
+     * @return array<\Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface>
      */
     public function getBarcodeGeneratorPlugins(): array
     {

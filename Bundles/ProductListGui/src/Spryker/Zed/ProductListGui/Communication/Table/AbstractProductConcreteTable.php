@@ -130,9 +130,9 @@ abstract class AbstractProductConcreteTable extends AbstractTable
     }
 
     /**
-     * @param string[] $product
+     * @param array<string> $product
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function buildDataRow(array $product): array
     {

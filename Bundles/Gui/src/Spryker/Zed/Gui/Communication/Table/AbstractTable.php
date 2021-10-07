@@ -643,7 +643,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getTwigPaths()
     {
@@ -948,7 +948,7 @@ abstract class AbstractTable
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      * @param bool $returnRawResults
      *
-     * @return array|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection|array
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config, $returnRawResults = false)
     {
@@ -1024,7 +1024,7 @@ abstract class AbstractTable
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     * @param string[] $conditions
+     * @param array<string> $conditions
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -1256,7 +1256,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
+     * @param \Spryker\Service\UtilText\Model\Url\Url|string $url
      * @param string $title
      * @param array $defaultOptions
      * @param array $customOptions
@@ -1285,7 +1285,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
+     * @param \Spryker\Service\UtilText\Model\Url\Url|string $url
      * @param string $title
      * @param string $formClassName
      * @param array $buttonOptions

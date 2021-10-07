@@ -14,7 +14,7 @@ use Spryker\Shared\PriceProduct\PriceProductConfig;
 class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStrategyInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null

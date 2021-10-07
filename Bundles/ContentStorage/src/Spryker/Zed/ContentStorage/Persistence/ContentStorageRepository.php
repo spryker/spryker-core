@@ -20,9 +20,9 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class ContentStorageRepository extends AbstractRepository implements ContentStorageRepositoryInterface
 {
     /**
-     * @param int[] $contentIds
+     * @param array<int> $contentIds
      *
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentStorageTransfer>
      */
     public function findContentStorageByContentIds(array $contentIds): array
     {
@@ -44,7 +44,7 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     /**
      * @param array $contentIds
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentTransfer>
      */
     public function findContentByIds(array $contentIds): array
     {
@@ -65,7 +65,7 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentStorageTransfer>
      */
     public function findAllContentStorage(): array
     {
@@ -90,7 +90,7 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      *
      * @param array $contentIds
      *
-     * @return \Generated\Shared\Transfer\SpyContentEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyContentEntityTransfer>
      */
     public function findContentByContentIds(array $contentIds): array
     {
@@ -108,7 +108,7 @@ class ContentStorageRepository extends AbstractRepository implements ContentStor
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentTransfer>
      */
     public function getContentTransfersByFilter(FilterTransfer $filterTransfer): array
     {

@@ -108,7 +108,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
      *
      * @param \Psr\Log\LoggerInterface $messenger
      *
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
+     * @return array<\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface>
      */
     public function getSearchInstallerStack(LoggerInterface $messenger)
     {
@@ -126,7 +126,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     * @return array<\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface>
      */
     public function getInstallerPlugins(): array
     {
@@ -137,7 +137,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     * @return array<\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface>
      */
     public function getSourceInstallerPlugins(): array
     {
@@ -145,7 +145,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]
+     * @return array<\Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface>
      */
     public function getMapInstallerPlugins(): array
     {
@@ -326,7 +326,7 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @return \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface[]
+     * @return array<\Spryker\Zed\Search\Dependency\Plugin\PageMapInterface>
      */
     public function getSearchPageMapPlugins()
     {

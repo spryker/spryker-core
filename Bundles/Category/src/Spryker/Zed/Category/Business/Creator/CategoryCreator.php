@@ -34,7 +34,7 @@ class CategoryCreator implements CategoryCreatorInterface
     protected $eventFacade;
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[]
+     * @var array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface>
      */
     protected $categoryPostCreatePlugins;
 
@@ -42,7 +42,7 @@ class CategoryCreator implements CategoryCreatorInterface
      * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
      * @param \Spryker\Zed\Category\Business\Creator\CategoryRelationshipCreatorInterface $categoryRelationshipCreator
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface $eventFacade
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[] $categoryPostCreatePlugins
+     * @param array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface> $categoryPostCreatePlugins
      */
     public function __construct(
         CategoryEntityManagerInterface $categoryEntityManager,

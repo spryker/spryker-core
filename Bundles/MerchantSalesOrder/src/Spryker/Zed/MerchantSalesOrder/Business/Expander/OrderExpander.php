@@ -54,7 +54,7 @@ class OrderExpander implements OrderExpanderInterface
      */
     public function expandOrderWithMerchantReferences(OrderTransfer $orderTransfer): OrderTransfer
     {
-        /** @var string[] $merchantReferences */
+        /** @var array<string> $merchantReferences */
         $merchantReferences = $this->getMerchantReferences($orderTransfer);
 
         return $orderTransfer->setMerchantReferences($merchantReferences);
@@ -91,7 +91,7 @@ class OrderExpander implements OrderExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOrderTransfer>
      */
     protected function groupMerchantOrderCollectionByItemId(MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer): array
     {
@@ -111,7 +111,7 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getMerchantReferences(OrderTransfer $orderTransfer): array
     {

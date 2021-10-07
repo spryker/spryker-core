@@ -76,7 +76,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName)
     {
@@ -90,11 +90,11 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
      */
     public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName, string $storeName): array
     {
@@ -112,11 +112,11 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
-     * @param int[][] $productLabelIdsByProductAbstractIds
+     * @param array<int[]> $productLabelIdsByProductAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
      */
     protected function getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
         array $productLabelIdsByProductAbstractIds,
@@ -140,9 +140,9 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[] $productLabelDictionaryItemTransfers
+     * @param array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer> $productLabelDictionaryItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     protected function getProductLabelDictionaryItemTransfersGroupedById(array $productLabelDictionaryItemTransfers): array
     {
@@ -188,9 +188,9 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function getProductLabelIdsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -201,9 +201,9 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateProductLabelStorageKeys(array $productAbstractIds): array
     {
@@ -217,7 +217,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
-     * @param string[] $storageKeys
+     * @param array<string> $storageKeys
      *
      * @return array
      */
@@ -242,7 +242,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param array $storageDataItems
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function getProductLabelIdsGroupedByIdProductAbstract(array $storageDataItems): array
     {
@@ -283,11 +283,11 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
-     * @param int[] $productLabelIds
+     * @param array<int> $productLabelIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     protected function findSortedProductLabelsInDictionary($productLabelIds, $localeName, string $storeName)
     {

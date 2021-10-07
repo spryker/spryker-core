@@ -198,7 +198,7 @@ class ProductListTable extends AbstractTable
         }
 
         /**
-         * @var \ArrayObject|\Generated\Shared\Transfer\QueryJoinTransfer[]|null
+         * @var \ArrayObject<int, \Generated\Shared\Transfer\QueryJoinTransfer>|null
          */
         $queryCriteriaTransferJoins = $queryCriteriaTransfer->getJoins();
 

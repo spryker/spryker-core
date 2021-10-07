@@ -48,7 +48,7 @@ class CollectDiscountByShipmentTest extends Test
      * @dataProvider collectDiscountByShipmentCarrierShouldUseQuoteShipmentExpensesDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int[] $expectedValues
+     * @param array<int> $expectedValues
      *
      * @return void
      */
@@ -73,7 +73,7 @@ class CollectDiscountByShipmentTest extends Test
      * @dataProvider collectDiscountByShipmentMethodShouldUseQuoteShipmentExpensesDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int[] $expectedValues
+     * @param array<int> $expectedValues
      *
      * @return void
      */
@@ -98,7 +98,7 @@ class CollectDiscountByShipmentTest extends Test
      * @dataProvider collectDiscountByShipmentPriceShouldUseQuoteShipmentExpensesDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param int[] $expectedValues
+     * @param array<int> $expectedValues
      *
      * @return void
      */

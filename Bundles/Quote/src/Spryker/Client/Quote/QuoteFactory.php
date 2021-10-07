@@ -67,7 +67,7 @@ class QuoteFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface[]
+     * @return array<\Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface>
      */
     protected function getStorageStrategyList()
     {
@@ -151,7 +151,7 @@ class QuoteFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
+     * @return array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
      */
     protected function getQuoteTransferExpanderPlugins()
     {
@@ -159,7 +159,7 @@ class QuoteFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface[]
+     * @return array<\Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface>
      */
     public function getDatabaseStrategyPreCheckPlugins(): array
     {

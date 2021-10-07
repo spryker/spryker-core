@@ -40,7 +40,7 @@ class OpenApiTagGenerator implements OpenApiTagGeneratorInterface
     }
 
     /**
-     * @param string[] $tags
+     * @param array<string> $tags
      *
      * @return array
      */

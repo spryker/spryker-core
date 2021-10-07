@@ -64,7 +64,7 @@ class AvailabilityCartConnectorDependencyProvider extends AbstractBundleDependen
     }
 
     /**
-     * @return \Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface[]
+     * @return array<\Spryker\Zed\AvailabilityCartConnectorExtension\Dependency\Plugin\CartItemQuantityCounterStrategyPluginInterface>
      */
     public function getCartItemQuantityCounterStrategyPlugins(): array
     {

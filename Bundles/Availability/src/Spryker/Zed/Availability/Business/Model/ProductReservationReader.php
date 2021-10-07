@@ -160,7 +160,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @param string[] $reservationItems
+     * @param array<string> $reservationItems
      *
      * @return \Spryker\DecimalObject\Decimal
      */

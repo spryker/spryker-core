@@ -13,18 +13,18 @@ use Generated\Shared\Transfer\ApiResponseTransfer;
 class Processor implements ProcessorInterface
 {
     /**
-     * @var \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[]
+     * @var array<\Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface>
      */
     protected $preProcessStack;
 
     /**
-     * @var \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[]
+     * @var array<\Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface>
      */
     protected $postProcessStack;
 
     /**
-     * @param \Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface[] $preProcessStack
-     * @param \Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface[] $postProcessStack
+     * @param array<\Spryker\Zed\Api\Business\Model\Processor\Pre\PreProcessorInterface> $preProcessStack
+     * @param array<\Spryker\Zed\Api\Business\Model\Processor\Post\PostProcessorInterface> $postProcessStack
      */
     public function __construct(array $preProcessStack, array $postProcessStack)
     {

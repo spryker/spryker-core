@@ -13,12 +13,12 @@ use Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface;
 class ChartPluginCollection implements ChartPluginCollectionInterface
 {
     /**
-     * @var \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[]
+     * @var array<\Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface>
      */
     protected $chartPlugins;
 
     /**
-     * @param \Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface[] $chartPlugins
+     * @param array<\Spryker\Shared\Chart\Dependency\Plugin\ChartPluginInterface> $chartPlugins
      */
     public function __construct(array $chartPlugins)
     {

@@ -79,7 +79,7 @@ class CustomersListDataProvider implements FormDataProviderInterface
      */
     protected function getCustomerList(): array
     {
-        /** @var \Orm\Zed\Customer\Persistence\SpyCustomer[] $customerCollection */
+        /** @var array<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerCollection */
         $customerCollection = $this->customerQueryContainer
             ->queryCustomers()
             ->find();

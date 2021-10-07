@@ -10,7 +10,7 @@ namespace Spryker\Zed\GlossaryStorage\Business\Mapper;
 class GlossaryTranslationStorageMapper implements GlossaryTranslationStorageMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer[] $glossaryStorageEntityTransfers
+     * @param array<\Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer> $glossaryStorageEntityTransfers
      *
      * @return array
      */

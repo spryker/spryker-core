@@ -10,16 +10,16 @@ namespace Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductReader;
 interface PriceProductReaderPluginExecutorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function executePriceExtractorPluginsForProductAbstract(array $priceProductTransfers): array;
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function executePriceExtractorPluginsForProductConcrete(array $priceProductTransfers): array;
 }

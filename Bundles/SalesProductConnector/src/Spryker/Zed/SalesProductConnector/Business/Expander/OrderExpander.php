@@ -23,9 +23,9 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function expandOrdersWithMetadata(array $orderTransfers): array
     {
@@ -42,9 +42,9 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function extractItemTransfersFromOrderTransfers(array $orderTransfers): array
     {
@@ -61,9 +61,9 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer[]>
      */
     protected function groupItemTransfersByIdSalesOrder(array $itemTransfers): array
     {
@@ -79,10 +79,10 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
-     * @param \Generated\Shared\Transfer\ItemTransfer[][] $groupedItemTransfers
+     * @param array<\Generated\Shared\Transfer\OrderTransfer> $orderTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer[]> $groupedItemTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     protected function updateItemsForOrders(array $orderTransfers, array $groupedItemTransfers): array
     {

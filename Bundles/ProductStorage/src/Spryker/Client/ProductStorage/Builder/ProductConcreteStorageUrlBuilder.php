@@ -53,10 +53,10 @@ class ProductConcreteStorageUrlBuilder implements ProductConcreteStorageUrlBuild
     }
 
     /**
-     * @param string[] $attributes
-     * @param string[] $superAttributesDefinition
+     * @param array<string> $attributes
+     * @param array<string> $superAttributesDefinition
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterOutSuperAttributes(array $attributes, array $superAttributesDefinition): array
     {

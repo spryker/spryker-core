@@ -90,7 +90,7 @@ class OrdersTable extends AbstractTable
     protected $customerFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface>
      */
     protected $salesTablePlugins;
 
@@ -100,7 +100,7 @@ class OrdersTable extends AbstractTable
      * @param \Spryker\Zed\Sales\Dependency\Service\SalesToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface $utilDateTimeService
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface[] $salesTablePlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SalesTablePluginInterface> $salesTablePlugins
      */
     public function __construct(
         OrdersTableQueryBuilderInterface $queryBuilder,
@@ -143,7 +143,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCsvHeaders(): array
     {
@@ -477,7 +477,7 @@ class OrdersTable extends AbstractTable
     }
 
     /**
-     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
+     * @param \Spryker\Service\UtilText\Model\Url\Url|string $url
      * @param string $title
      * @param array $options
      *

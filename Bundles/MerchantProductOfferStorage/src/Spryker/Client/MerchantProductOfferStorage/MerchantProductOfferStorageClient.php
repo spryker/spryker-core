@@ -71,9 +71,9 @@ class MerchantProductOfferStorageClient extends AbstractClient implements Mercha
      *
      * @api
      *
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferStorageTransfer>
      */
     public function getProductOfferStorageByReferences(array $productOfferReferences): array
     {

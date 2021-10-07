@@ -181,7 +181,7 @@ class LocaleManager
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection()
     {
@@ -201,7 +201,7 @@ class LocaleManager
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales()
     {
@@ -216,7 +216,7 @@ class LocaleManager
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getSupportedLocaleCodes(): array
     {
@@ -234,7 +234,7 @@ class LocaleManager
     /**
      * @param \Spryker\Shared\Kernel\Store $store
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function getAvailableLocaleCollection(Store $store): array
     {
@@ -248,9 +248,9 @@ class LocaleManager
     }
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function indexLocaleTransfersByLocaleName(array $localeTransfers): array
     {

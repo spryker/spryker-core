@@ -62,7 +62,7 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
     /**
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function findStoreRelationIdStores(StoreRelationTransfer $storeRelationTransfer): array
     {
@@ -72,7 +72,7 @@ class CompanyStoreRelationWriter implements CompanyStoreRelationWriterInterface
     /**
      * @param int $idCompany
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStoresByIdCompany($idCompany)
     {

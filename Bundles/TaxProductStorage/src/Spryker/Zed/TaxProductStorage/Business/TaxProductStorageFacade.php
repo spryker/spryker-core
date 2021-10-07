@@ -21,7 +21,7 @@ class TaxProductStorageFacade extends AbstractFacade implements TaxProductStorag
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -37,7 +37,7 @@ class TaxProductStorageFacade extends AbstractFacade implements TaxProductStorag
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

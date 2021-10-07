@@ -27,10 +27,10 @@ abstract class AbstractConcreteProductsResourceRelationshipExpander implements C
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): array
     {
@@ -59,7 +59,7 @@ abstract class AbstractConcreteProductsResourceRelationshipExpander implements C
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
      *
-     * @return string[]
+     * @return array<string>
      */
     abstract protected function findProductConcreteSkusInAttributes(RestResourceInterface $restResource): array;
 }

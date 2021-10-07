@@ -27,14 +27,10 @@ interface MerchantProfileAddressWriterInterface
     public function update(MerchantProfileAddressTransfer $merchantProfileAddressTransfer): MerchantProfileAddressTransfer;
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer> $merchantProfileAddressTransfers
-     *
-     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer>
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[] $merchantProfileAddressTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer> $merchantProfileAddressTransfers
      * @param int $idMerchantProfile
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>
      */
     public function saveMerchantProfileAddresses(
         ArrayObject $merchantProfileAddressTransfers,

@@ -13,10 +13,10 @@ use Generated\Shared\Transfer\OrderTransfer;
 interface ProductBundleGrouperInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductBundleGroupTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductBundleGroupTransfer[]>
      */
     public function groupBundleItemsByShipmentGroupHash(ArrayObject $shipmentGroupTransfers, OrderTransfer $orderTransfer): array;
 }

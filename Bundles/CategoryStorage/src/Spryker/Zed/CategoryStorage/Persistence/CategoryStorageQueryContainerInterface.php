@@ -20,7 +20,7 @@ interface CategoryStorageQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */

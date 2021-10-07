@@ -138,7 +138,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     /**
      * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function getRelatedProductsByCriteriaFilter(ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer): array
     {
@@ -179,7 +179,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     /**
      * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function getActiveProductRelations(
         ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
@@ -212,7 +212,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTypeTransfer>
      */
     public function getProductRelationTypes(): array
     {
@@ -233,9 +233,9 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     }
 
     /**
-     * @param int[] $idProductAbstracts
+     * @param array<int> $idProductAbstracts
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function getProductRelationsByProductAbstractIds(array $idProductAbstracts): array
     {
@@ -259,9 +259,9 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     }
 
     /**
-     * @param int[] $productRelationIds
+     * @param array<int> $productRelationIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductRelationIds(
         array $productRelationIds
@@ -279,7 +279,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>
      */
     public function findProductRelationsForFilter(FilterTransfer $filterTransfer): array
     {

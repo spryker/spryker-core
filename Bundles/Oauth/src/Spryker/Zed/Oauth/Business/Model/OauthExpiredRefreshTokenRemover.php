@@ -25,14 +25,14 @@ class OauthExpiredRefreshTokenRemover implements OauthExpiredRefreshTokenRemover
     protected $presentDateTime;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthExpiredRefreshTokenRemoverPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthExpiredRefreshTokenRemoverPluginInterface>
      */
     protected $oauthExpiredRefreshTokenRemoverPlugins;
 
     /**
      * @param \Spryker\Zed\Oauth\OauthConfig $oauthConfig
      * @param \DateTime $presentDateTime
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthExpiredRefreshTokenRemoverPluginInterface[] $oauthExpiredRefreshTokenRemoverPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthExpiredRefreshTokenRemoverPluginInterface> $oauthExpiredRefreshTokenRemoverPlugins
      */
     public function __construct(
         OauthConfig $oauthConfig,

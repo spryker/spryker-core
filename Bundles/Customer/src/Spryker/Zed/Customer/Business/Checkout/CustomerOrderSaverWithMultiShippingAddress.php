@@ -23,7 +23,7 @@ class CustomerOrderSaverWithMultiShippingAddress extends CustomerOrderSaver
     /**
      * Keys are unique strings generated using address data. Values don't matter.
      *
-     * @var bool[]
+     * @var array<bool>
      */
     protected $existingAddresses = [];
 

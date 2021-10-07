@@ -13,7 +13,7 @@ interface CompanyUserTableButtonCreatorInterface
 {
     /**
      * @param array $companyUserTableRowItem
-     * @param string[] $buttons
+     * @param array<string> $buttons
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer
      */

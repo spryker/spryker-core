@@ -44,12 +44,12 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected $isSendingToQueue;
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     * @var array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected $stores = [];
 
     /**
-     * @var \Spryker\Zed\ProductOptionStorageExtension\Dependency\Plugin\ProductOptionCollectionFilterPluginInterface[]
+     * @var array<\Spryker\Zed\ProductOptionStorageExtension\Dependency\Plugin\ProductOptionCollectionFilterPluginInterface>
      */
     protected $productOptionCollectionFilterPlugins = [];
 
@@ -58,7 +58,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      * @param \Spryker\Zed\ProductOptionStorage\Dependency\Facade\ProductOptionStorageToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductOptionStorage\Persistence\ProductOptionStorageQueryContainerInterface $queryContainer
      * @param bool $isSendingToQueue
-     * @param \Spryker\Zed\ProductOptionStorageExtension\Dependency\Plugin\ProductOptionCollectionFilterPluginInterface[] $productOptionCollectionFilterPlugins
+     * @param array<\Spryker\Zed\ProductOptionStorageExtension\Dependency\Plugin\ProductOptionCollectionFilterPluginInterface> $productOptionCollectionFilterPlugins
      */
     public function __construct(
         ProductOptionStorageToProductOptionFacadeInterface $productOptionFacade,
@@ -75,7 +75,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -106,7 +106,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -121,7 +121,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[] $deletableProductAbstractOptionStorageEntities
+     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage> $deletableProductAbstractOptionStorageEntities
      *
      * @return void
      */
@@ -133,10 +133,10 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][] $productAbstractOptionStorageEntities
-     * @param int[] $productAbstractIds
+     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]> $productAbstractOptionStorageEntities
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]
+     * @return array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage>
      */
     protected function filterProductAbstractOptionStorageEntitiesByProductAbstractIds(
         array $productAbstractOptionStorageEntities,
@@ -156,7 +156,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][] $productAbstractOptionStorageEntities
+     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]> $productAbstractOptionStorageEntities
      *
      * @return void
      */
@@ -191,7 +191,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param int $idProductAbstract
      * @param array $productOptions
-     * @param \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][] $productAbstractOptionStorageEntities
+     * @param array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]> $productAbstractOptionStorageEntities
      *
      * @return void
      */
@@ -228,7 +228,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -238,7 +238,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -248,9 +248,9 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[][]
+     * @return array<\Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]>
      */
     protected function findProductStorageOptionEntitiesByProductAbstractIds(array $productAbstractIds): array
     {
@@ -267,7 +267,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      * @param array $productOptions
      * @param int $idStore
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOptionGroupStorageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer>
      */
     protected function getProductOptionGroupStorageTransfers(array $productOptions, $idStore): ArrayObject
     {
@@ -321,7 +321,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     /**
      * @param array $prices
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     protected function transformPriceEntityCollectionToMoneyValueTransferCollection(array $prices): ArrayObject
     {
@@ -339,10 +339,10 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param int[] $storedProductAbstractIds
-     * @param int[] $productAbstractIdsFromStorage
+     * @param array<int> $storedProductAbstractIds
+     * @param array<int> $productAbstractIdsFromStorage
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductAbstractIdsToRemove(
         array $storedProductAbstractIds,
@@ -353,9 +353,9 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
 
     /**
      * @param array $productOptionEntities
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $producOptionTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $producOptionTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     protected function mapProductOptionEntitiesToProductOptionTransfers(
         array $productOptionEntities,
@@ -370,9 +370,9 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $producOptionTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $producOptionTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductOptionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionTransfer>
      */
     protected function executeProductOptionCollectionFilterPlugins(array $producOptionTransfers): array
     {
@@ -385,7 +385,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
 
     /**
      * @param array $productOptionEntities
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $filteredProducOptionTransfers
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $filteredProducOptionTransfers
      *
      * @return array
      */

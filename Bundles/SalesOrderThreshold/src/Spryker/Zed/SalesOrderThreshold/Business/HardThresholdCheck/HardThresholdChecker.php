@@ -173,10 +173,10 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[] $salesOrderThresholdValueTransfers
-     * @param string[] $thresholdGroups
+     * @param array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer> $salesOrderThresholdValueTransfers
+     * @param array<string> $thresholdGroups
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer>
      */
     protected function filterSalesOrderThresholdsByThresholdGroup(array $salesOrderThresholdValueTransfers, array $thresholdGroups): array
     {

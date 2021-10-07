@@ -59,9 +59,9 @@ interface UrlStorageClientInterface
      *
      * @api
      *
-     * @param string[] $urlCollection
+     * @param array<string> $urlCollection
      *
-     * @return \Generated\Shared\Transfer\UrlStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\UrlStorageTransfer>
      */
     public function getUrlStorageTransferByUrls(array $urlCollection): array;
 }

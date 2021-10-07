@@ -43,9 +43,9 @@ class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseB
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantStorageTransfer[] $merchantStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantStorageTransfer> $merchantStorageTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createMerchantAddressesRestResources(array $merchantStorageTransfers): array
     {
@@ -69,7 +69,7 @@ class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseB
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer> $merchantStorageProfileAddressTransfers
      * @param string $merchantReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
@@ -118,7 +118,7 @@ class MerchantAddressRestResponseBuilder implements MerchantAddressRestResponseB
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer[] $merchantStorageProfileAddressTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantStorageProfileAddressTransfer> $merchantStorageProfileAddressTransfers
      * @param string $merchantReference
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface

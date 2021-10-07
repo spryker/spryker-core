@@ -21,7 +21,7 @@ class FileManagerStorageFacade extends AbstractFacade implements FileManagerStor
      *
      * @api
      *
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      *
      * @return void
      */
@@ -35,7 +35,7 @@ class FileManagerStorageFacade extends AbstractFacade implements FileManagerStor
      *
      * @api
      *
-     * @param int[] $fileIds
+     * @param array<int> $fileIds
      *
      * @return void
      */

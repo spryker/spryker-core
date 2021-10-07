@@ -17,7 +17,7 @@ use Spryker\Zed\ProductLabelDataImport\Business\Writer\ProductLabelStore\DataSet
 class ProductLabelNameToIdProductLabelStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected static $idProductLabelCache = [];
 

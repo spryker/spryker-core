@@ -15,14 +15,14 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface StockRepositoryInterface
 {
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getStockNames(): array;
 
     /**
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStockNamesForStore(string $storeName): array;
 
@@ -36,7 +36,7 @@ interface StockRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockTransfer>
      */
     public function getStocksWithRelatedStoresByCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): array;
 
@@ -50,7 +50,7 @@ interface StockRepositoryInterface
     /**
      * @param int $idStock
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductsByIdStock(int $idStock): array;
 
@@ -64,7 +64,7 @@ interface StockRepositoryInterface
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresWhereProductStockIsDefined(string $sku): array;
 
@@ -72,7 +72,7 @@ interface StockRepositoryInterface
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductByProductAbstractSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): array;
 
@@ -90,14 +90,14 @@ interface StockRepositoryInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function findProductStocksForStore(string $concreteSku, StoreTransfer $storeTransfer): array;
 
     /**
      * @param string $concreteSku
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductsByProductConcreteSku(string $concreteSku): array;
 }

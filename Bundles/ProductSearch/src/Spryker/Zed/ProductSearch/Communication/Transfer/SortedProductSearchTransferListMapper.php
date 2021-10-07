@@ -14,7 +14,7 @@ class SortedProductSearchTransferListMapper implements SortedProductSearchTransf
     /**
      * @param array $filterList
      *
-     * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductSearchAttributeTransfer>
      */
     public function createList(array $filterList)
     {

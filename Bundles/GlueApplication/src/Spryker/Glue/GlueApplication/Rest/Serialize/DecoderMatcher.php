@@ -18,7 +18,7 @@ class DecoderMatcher implements DecoderMatcherInterface
     public const DEFAULT_FORMAT = 'json';
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface>
      */
     protected $decoders;
 

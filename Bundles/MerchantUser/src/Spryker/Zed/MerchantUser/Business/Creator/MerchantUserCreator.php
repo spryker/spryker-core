@@ -57,7 +57,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
     protected $merchantUserConfig;
 
     /**
-     * @var \Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePluginInterface[]
+     * @var array<\Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePluginInterface>
      */
     protected $merchantUserPostCreatePlugins;
 
@@ -67,7 +67,7 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserEntityManagerInterface $merchantUserEntityManager
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
      * @param \Spryker\Zed\MerchantUser\MerchantUserConfig $merchantUserConfig
-     * @param \Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePluginInterface[] $merchantUserPostCreatePlugins
+     * @param array<\Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePluginInterface> $merchantUserPostCreatePlugins
      */
     public function __construct(
         MerchantUserToUtilTextServiceInterface $utilTextService,

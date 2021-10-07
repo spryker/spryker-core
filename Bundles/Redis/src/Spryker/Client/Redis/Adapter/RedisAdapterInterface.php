@@ -91,7 +91,7 @@ interface RedisAdapterInterface
     /**
      * @param string $pattern
      *
-     * @return string[]
+     * @return array<string>
      */
     public function keys(string $pattern): array;
 

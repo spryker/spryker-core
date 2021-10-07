@@ -44,9 +44,9 @@ interface ContentFacadeInterface
      *
      * @api
      *
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      *
-     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentTransfer>
      */
     public function getContentByKeys(array $contentKeys): array;
 

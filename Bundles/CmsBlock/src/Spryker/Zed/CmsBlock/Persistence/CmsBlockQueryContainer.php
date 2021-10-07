@@ -223,7 +223,7 @@ class CmsBlockQueryContainer extends AbstractQueryContainer implements CmsBlockQ
      * @api
      *
      * @param int $idCmsBlock
-     * @param int[] $idStores
+     * @param array<int> $idStores
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */

@@ -41,10 +41,10 @@ class ProductReviewPageDataLoaderPlugin extends AbstractPlugin implements Produc
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
+     * @param array<\Generated\Shared\Transfer\ProductPayloadTransfer> $payloadTransfers
      * @param array $productReviewsList
      *
-     * @return \Generated\Shared\Transfer\ProductPayloadTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductPayloadTransfer>
      */
     protected function updatePayloadTransfers(array $payloadTransfers, array $productReviewsList): array
     {

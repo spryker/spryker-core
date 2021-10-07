@@ -10,16 +10,16 @@ namespace Spryker\Zed\ProductCategoryStorage\Business\Reader;
 interface ProductAbstractReaderInterface
 {
     /**
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
 
     /**
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getRelatedCategoryIds(array $categoryIds): array;
 }

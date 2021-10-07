@@ -26,7 +26,7 @@ class DataImportToQueueClientBridge implements DataImportToQueueClientInterface
 
     /**
      * @param string $queueName
-     * @param \Generated\Shared\Transfer\QueueSendMessageTransfer[] $queueSendMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueSendMessageTransfer> $queueSendMessageTransfers
      *
      * @return void
      */
@@ -40,7 +40,7 @@ class DataImportToQueueClientBridge implements DataImportToQueueClientInterface
      * @param int $chunkSize
      * @param array $options
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function receiveMessages($queueName, $chunkSize = 100, array $options = [])
     {

@@ -75,7 +75,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $permissionEntities
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function mapPermissionIds(ObjectCollection $permissionEntities): array
     {
@@ -88,9 +88,9 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
-     * @param int[][] $quoteIdsByPermissions
+     * @param array<int[]> $quoteIdsByPermissions
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function groupQuoteIdsByIdPermission(array $quoteIdsByPermissions): array
     {
@@ -148,7 +148,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      *
      * @param \Generated\Shared\Transfer\SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getIsDefaultFlagForSharedCartsBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): array
     {
@@ -171,7 +171,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param string $customerReference
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer>
      */
     public function findShareInformationCustomer($customerReference): array
     {
@@ -191,7 +191,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param \Generated\Shared\Transfer\QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer>
      */
     public function findQuotePermissionGroupList(QuotePermissionGroupCriteriaFilterTransfer $criteriaFilterTransfer): array
     {
@@ -219,7 +219,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param int $idQuote
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findQuoteCompanyUserIdCollection(int $idQuote): array
     {
@@ -234,7 +234,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param int $idQuote
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findAllCompanyUserQuotePermissionGroupIdIndexes(int $idQuote): array
     {
@@ -258,7 +258,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param array $storedQuotePermissionGroupIdIndexes
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function mapStoredQuotePermissionGroupIdIndexesToAssociativeArray(array $storedQuotePermissionGroupIdIndexes): array
     {
@@ -274,7 +274,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param int $idCompanyUser
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function findOwnQuotes(int $idCompanyUser): array
     {
@@ -298,9 +298,9 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
 
     /**
      * @param int $idCompanyUser
-     * @param int[] $idPermissions
+     * @param array<int> $idPermissions
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function getCompanyUserQuotesWithPermissions(int $idCompanyUser, array $idPermissions): array
     {
@@ -323,7 +323,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      * @param int $idCompanyUser
      * @param int $idPermission
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSharedQuoteIds(int $idCompanyUser, int $idPermission): array
     {
@@ -344,9 +344,9 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer[] $quotePermissionGroupEntityTransferList
+     * @param array<\Generated\Shared\Transfer\SpyQuotePermissionGroupEntityTransfer> $quotePermissionGroupEntityTransferList
      *
-     * @return \Generated\Shared\Transfer\QuotePermissionGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer>
      */
     protected function mapQuotePermissionGroupList(array $quotePermissionGroupEntityTransferList): array
     {
@@ -391,7 +391,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     }
 
     /**
-     * @param int[] $quoteIds
+     * @param array<int> $quoteIds
      *
      * @return \Propel\Runtime\Collection\ObjectCollection
      */
@@ -426,7 +426,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
     /**
      * @param \Generated\Shared\Transfer\ShareCartRequestTransfer $shareCartRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShareDetailCollectionTransfer>
      */
     public function getSharedCartDetails(ShareCartRequestTransfer $shareCartRequestTransfer): array
     {

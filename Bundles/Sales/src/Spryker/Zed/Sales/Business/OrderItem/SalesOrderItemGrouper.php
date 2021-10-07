@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\OrderTransfer;
 class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
 {
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\UniqueOrderItemsExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\UniqueOrderItemsExpanderPluginInterface>
      */
     protected $uniqueOrderItemsExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\UniqueOrderItemsExpanderPluginInterface[] $uniqueOrderItemsExpanderPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\UniqueOrderItemsExpanderPluginInterface> $uniqueOrderItemsExpanderPlugins
      */
     public function __construct(array $uniqueOrderItemsExpanderPlugins)
     {
@@ -26,9 +26,9 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getUniqueOrderItems(iterable $itemTransfers): array
     {
@@ -51,7 +51,7 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getUniqueItemsFromOrder(OrderTransfer $orderTransfer): array
     {
@@ -63,10 +63,10 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function executeUniqueOrderItemsExpanderPlugins(array $itemTransfers, OrderTransfer $orderTransfer): array
     {
@@ -80,7 +80,7 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getUniqueItems(OrderTransfer $orderTransfer): array
     {

@@ -39,7 +39,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     protected $comparatorOperators;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $compoundComparatorExpressions = [];
 
@@ -54,7 +54,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     protected $metaDataProvider;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $availableFields;
 
@@ -92,7 +92,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     }
 
     /**
-     * @param string[] $tokens
+     * @param array<string> $tokens
      * @param int $currentTokenIndex
      * @param int $parenthesisDepth
      *
@@ -188,7 +188,7 @@ class SpecificationBuilder implements SpecificationBuilderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCompoundComparatorExpressions()
     {

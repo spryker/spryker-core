@@ -45,17 +45,17 @@ class OrderItemsSaver implements OrderItemsSaverInterface
     protected $entityManager;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface>
      */
     protected $orderItemsPostSavePlugins;
 
     /**
-     * @var \Generated\Shared\Transfer\SpyOmsOrderProcessEntityTransfer[]
+     * @var array<\Generated\Shared\Transfer\SpyOmsOrderProcessEntityTransfer>
      */
     protected $processEntityTransferCache = [];
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface>
      */
     protected $orderItemExpanderPlugins;
 
@@ -64,7 +64,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $entityManager
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface[] $orderItemsPostSavePlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface> $orderItemsPostSavePlugins
      */
     public function __construct(
         SalesToOmsInterface $omsFacade,

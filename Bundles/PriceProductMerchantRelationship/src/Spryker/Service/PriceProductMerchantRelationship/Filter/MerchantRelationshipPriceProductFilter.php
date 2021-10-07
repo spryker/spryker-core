@@ -9,19 +9,22 @@ namespace Spryker\Service\PriceProductMerchantRelationship\Filter;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 
 class MerchantRelationshipPriceProductFilter implements MerchantRelationshipPriceProductFilterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function filterPriceProductsByMerchantRelationship(
         array $priceProductTransfers,
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): array {
+        $priceProductTransfers = $this->filterPriceProductsByActiveMerchants($priceProductTransfers, $priceProductFilterTransfer);
+
         if (!$this->isPriceProductFilterHasMerchantRelationship($priceProductFilterTransfer)) {
             return $priceProductTransfers;
         }
@@ -43,10 +46,10 @@ class MerchantRelationshipPriceProductFilter implements MerchantRelationshipPric
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function filterOutPriceProductTransfersWithIncorrectMerchantRelationship(
         array $priceProductTransfers,
@@ -81,5 +84,28 @@ class MerchantRelationshipPriceProductFilter implements MerchantRelationshipPric
         return $priceProductTransfer->getPriceDimension()
             && $priceProductFilterTransfer->getPriceDimension()
             && $priceProductTransfer->getPriceDimension()->getIdMerchantRelationship() === $priceProductFilterTransfer->getPriceDimension()->getIdMerchantRelationship();
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function filterPriceProductsByActiveMerchants(
+        array $priceProductTransfers,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): array {
+        return array_filter($priceProductTransfers, function ($priceProductTransfer) {
+            $priceProductDimensionTransfer = $priceProductTransfer->getPriceDimension();
+            if (!$priceProductDimensionTransfer) {
+                return true;
+            }
+            if ($priceProductDimensionTransfer->getType() !== PriceProductMerchantRelationshipConfig::PRICE_DIMENSION_MERCHANT_RELATIONSHIP) {
+                return true;
+            }
+
+            return $priceProductDimensionTransfer->getIsMerchantActive() !== false;
+        });
     }
 }

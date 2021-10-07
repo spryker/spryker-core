@@ -25,9 +25,9 @@ class KeyReader implements KeyReaderInterface
     }
 
     /**
-     * @param string[] $glossaryKeys
+     * @param array<string> $glossaryKeys
      *
-     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer[]
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */
     public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array
     {

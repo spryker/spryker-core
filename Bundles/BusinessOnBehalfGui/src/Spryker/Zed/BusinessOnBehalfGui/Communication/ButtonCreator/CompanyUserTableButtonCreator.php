@@ -42,7 +42,7 @@ class CompanyUserTableButtonCreator extends AbstractButtonCreator implements Com
 
     /**
      * @param array $companyUserTableRowItem
-     * @param string[] $buttons
+     * @param array<string> $buttons
      *
      * @return \Generated\Shared\Transfer\ButtonTransfer
      */

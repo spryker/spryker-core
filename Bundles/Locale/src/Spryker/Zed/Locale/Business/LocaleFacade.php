@@ -102,7 +102,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales()
     {
@@ -173,7 +173,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection()
     {
@@ -203,7 +203,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSupportedLocaleCodes(): array
     {

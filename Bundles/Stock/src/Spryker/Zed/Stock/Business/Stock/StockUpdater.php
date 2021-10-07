@@ -48,7 +48,7 @@ class StockUpdater implements StockUpdaterInterface
     protected $connection;
 
     /**
-     * @var \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface>
      */
     protected $stockPostUpdatePlugins;
 
@@ -58,7 +58,7 @@ class StockUpdater implements StockUpdaterInterface
      * @param \Spryker\Zed\Stock\Business\Stock\StockStoreRelationshipUpdaterInterface $stockStoreRelationshipUpdater
      * @param \Spryker\Zed\Stock\Business\StockProduct\StockProductUpdaterInterface $stockProductUpdater
      * @param \Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface $connection
-     * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface[] $stockPostUpdatePlugins
+     * @param array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostUpdatePluginInterface> $stockPostUpdatePlugins
      */
     public function __construct(
         StockEntityManagerInterface $stockEntityManager,

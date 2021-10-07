@@ -13,12 +13,12 @@ use Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresho
 class SalesOrderThresholdStrategyResolver implements SalesOrderThresholdStrategyResolverInterface
 {
     /**
-     * @var \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface>
      */
     protected $salesOrderThresholdStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface[] $salesOrderThresholdStrategyPlugins
+     * @param array<\Spryker\Zed\SalesOrderThresholdExtension\Dependency\Plugin\SalesOrderThresholdStrategyPluginInterface> $salesOrderThresholdStrategyPlugins
      */
     public function __construct(array $salesOrderThresholdStrategyPlugins)
     {

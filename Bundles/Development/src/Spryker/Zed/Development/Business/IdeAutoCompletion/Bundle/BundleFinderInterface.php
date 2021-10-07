@@ -10,7 +10,7 @@ namespace Spryker\Zed\Development\Business\IdeAutoCompletion\Bundle;
 interface BundleFinderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\IdeAutoCompletionBundleTransfer>
      */
     public function find();
 }

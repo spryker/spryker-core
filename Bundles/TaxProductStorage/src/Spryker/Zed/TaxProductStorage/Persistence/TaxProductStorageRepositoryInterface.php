@@ -10,22 +10,22 @@ namespace Spryker\Zed\TaxProductStorage\Persistence;
 interface TaxProductStorageRepositoryInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\TaxProductStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\TaxProductStorageTransfer>
      */
     public function getTaxProductTransfersFromProductAbstractsByIds(array $productAbstractIds): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string|null $keyColumn
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersFromTaxProductStoragesByProductAbstractIds(array $productAbstractIds, ?string $keyColumn = null): array;
 
     /**
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getAllSynchronizationDataTransfersFromTaxProductStorages(): array;
 }

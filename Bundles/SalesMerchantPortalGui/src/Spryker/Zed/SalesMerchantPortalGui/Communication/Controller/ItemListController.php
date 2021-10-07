@@ -62,7 +62,7 @@ class ItemListController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getMerchantOrderItemIds(Request $request): array
     {

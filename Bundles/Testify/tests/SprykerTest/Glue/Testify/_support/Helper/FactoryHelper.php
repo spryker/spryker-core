@@ -33,7 +33,7 @@ class FactoryHelper extends Module
     protected const MODULE_NAME_POSITION = 2;
 
     /**
-     * @var \Spryker\Glue\Kernel\AbstractFactory[]
+     * @var array<\Spryker\Glue\Kernel\AbstractFactory>
      */
     protected $factoryStubs = [];
 

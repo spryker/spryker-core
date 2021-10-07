@@ -19,9 +19,7 @@ class ProductOfferCartItemQuantityCounter implements ProductOfferCartItemQuantit
     protected const DEFAULT_ITEM_QUANTITY = 0;
 
     /**
-     * @phpstan-param \ArrayObject<string, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemsInCart
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemsInCart
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return \Generated\Shared\Transfer\CartItemQuantityTransfer

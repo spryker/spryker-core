@@ -23,12 +23,12 @@ class CategoryFormTabs extends AbstractTabs
     protected const TITLE_SETTING = 'Settings';
 
     /**
-     * @var \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface>
      */
     protected $categoryFormTabExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[] $categoryFormTabExpanderPlugins
+     * @param array<\Spryker\Zed\CategoryGuiExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface> $categoryFormTabExpanderPlugins
      */
     public function __construct(array $categoryFormTabExpanderPlugins)
     {

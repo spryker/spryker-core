@@ -54,7 +54,7 @@ class ItemBySkuCollectorPlugin extends AbstractPlugin implements CollectorPlugin
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {

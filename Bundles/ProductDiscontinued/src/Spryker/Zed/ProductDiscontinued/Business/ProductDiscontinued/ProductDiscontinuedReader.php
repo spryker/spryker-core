@@ -58,7 +58,7 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
@@ -68,7 +68,7 @@ class ProductDiscontinuedReader implements ProductDiscontinuedReaderInterface
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array
     {

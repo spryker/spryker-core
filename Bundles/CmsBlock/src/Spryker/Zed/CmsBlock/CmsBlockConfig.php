@@ -113,7 +113,7 @@ class CmsBlockConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCmsBlockTemplatePaths(): array
     {

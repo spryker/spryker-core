@@ -34,12 +34,12 @@ class Container implements ContainerInterface, ArrayAccess
     protected $services = [];
 
     /**
-     * @var mixed[]
+     * @var array<mixed>
      */
     protected $raw = [];
 
     /**
-     * @var bool[]
+     * @var array<bool>
      */
     protected $serviceIdentifier = [];
 
@@ -54,7 +54,7 @@ class Container implements ContainerInterface, ArrayAccess
     protected static $globalServiceIdentifier = [];
 
     /**
-     * @var bool[]
+     * @var array<bool>
      */
     protected static $globalFrozenServices = [];
 
@@ -69,14 +69,14 @@ class Container implements ContainerInterface, ArrayAccess
     protected $protectedServices;
 
     /**
-     * @var bool[]
+     * @var array<bool>
      */
     protected $frozenServices = [];
 
     /**
      * This is a storage for services which should be extended, but at the point where extend was called the service was not found.
      *
-     * @var \Closure[][]
+     * @var array<\Closure[]>
      */
     protected $toBeExtended = [];
 
@@ -91,7 +91,7 @@ class Container implements ContainerInterface, ArrayAccess
     protected $currentExtendingHash;
 
     /**
-     * @var bool[]
+     * @var array<bool>
      */
     protected $sharedServiceHashes = [];
 
@@ -101,7 +101,7 @@ class Container implements ContainerInterface, ArrayAccess
     protected $configurationResolver;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected static $aliases = [];
 
@@ -541,9 +541,9 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * @deprecated Do not use this method anymore. All services are shared by default now.
      *
-     * @param \Closure|object|mixed $service
+     * @param \Closure|mixed|object $service
      *
-     * @return \Closure|object|mixed
+     * @return \Closure|mixed|object
      */
     public function share($service)
     {

@@ -299,7 +299,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getTextFieldConstraints(): array
     {
@@ -309,7 +309,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getRequiredTextFieldConstraints(): array
     {
@@ -322,7 +322,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     /**
      * @param int|null $currentId
      *
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getEmailFieldConstraints(?int $currentId = null): array
     {

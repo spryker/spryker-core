@@ -211,7 +211,7 @@ class ProductQuantityFacadeTest extends Unit
      *
      * @param bool $expectedIsSuccess
      * @param int $quoteQuantity
-     * @param int|float|string $changeQuantity
+     * @param string|float|int $changeQuantity
      *
      * @return void
      */

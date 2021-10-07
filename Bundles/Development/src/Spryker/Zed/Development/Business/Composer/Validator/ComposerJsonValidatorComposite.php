@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer;
 class ComposerJsonValidatorComposite implements ComposerJsonValidatorInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface[]
+     * @var array<\Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface>
      */
     protected $composerJsonValidator;
 
     /**
-     * @param \Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface[] $composerJsonValidator
+     * @param array<\Spryker\Zed\Development\Business\Composer\Validator\ComposerJsonValidatorInterface> $composerJsonValidator
      */
     public function __construct(array $composerJsonValidator)
     {

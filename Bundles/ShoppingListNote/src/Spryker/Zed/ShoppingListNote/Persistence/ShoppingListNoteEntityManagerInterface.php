@@ -27,7 +27,7 @@ interface ShoppingListNoteEntityManagerInterface
     public function deleteShoppingListItemNoteById(int $idShoppingListItemNote): void;
 
     /**
-     * @param int[] $shoppingListItemNoteIds
+     * @param array<int> $shoppingListItemNoteIds
      *
      * @return void
      */

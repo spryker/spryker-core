@@ -93,9 +93,9 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
      */
     public function findProductConfigurationInstancesIndexedBySku(array $skus): array
     {
@@ -117,9 +117,9 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
      */
     protected function getProductConfigurationInstancesFromSession(array $skus): array
     {
@@ -141,10 +141,10 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     }
 
     /**
-     * @param string[] $skus
-     * @param string[] $configuredProductSkus
+     * @param array<string> $skus
+     * @param array<string> $configuredProductSkus
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getNotConfiguredProductSkus(array $skus, array $configuredProductSkus): array
     {
@@ -152,9 +152,9 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
      */
     protected function findProductConfigurationInstancesInStorageIndexedBySku(array $skus): array
     {

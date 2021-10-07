@@ -99,7 +99,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      * @api
      *
      * @param int $idStore
-     * @param string[] $voucherCodes
+     * @param array<string> $voucherCodes
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
@@ -311,7 +311,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      * @api
      *
      * @param int $idDiscount
-     * @param int[] $idStores
+     * @param array<int> $idStores
      *
      * @return \Orm\Zed\Discount\Persistence\SpyDiscountStoreQuery
      */

@@ -14,10 +14,10 @@ use Generated\Shared\Transfer\RestQuoteRequestsDiscountsTransfer;
 class DiscountMapper implements DiscountMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer[] $quoteRequestTransfers
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestTransfer> $quoteRequestTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     public function mapDiscountTransfersToRestQuoteRequestsAttributesTransfers(
         array $quoteRequestTransfers,
@@ -78,9 +78,9 @@ class DiscountMapper implements DiscountMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     protected function getRestQuoteRequestsAttributesTransfersIndexedByQuoteRequestReference(array $restQuoteRequestsAttributesTransfers): array
     {

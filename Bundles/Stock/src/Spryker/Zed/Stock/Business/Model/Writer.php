@@ -58,7 +58,7 @@ class Writer implements WriterInterface
     protected $touchFacade;
 
     /**
-     * @var \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[]
+     * @var array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface>
      */
     protected $stockUpdateHandlerPlugins;
 
@@ -67,7 +67,7 @@ class Writer implements WriterInterface
      * @param \Spryker\Zed\Stock\Business\Stock\StockReaderInterface $stockReader
      * @param \Spryker\Zed\Stock\Business\StockProduct\StockProductReaderInterface $stockProductReader
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
-     * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface[] $stockUpdateHandlerPlugins
+     * @param array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockUpdateHandlerPluginInterface> $stockUpdateHandlerPlugins
      */
     public function __construct(
         StockQueryContainerInterface $queryContainer,

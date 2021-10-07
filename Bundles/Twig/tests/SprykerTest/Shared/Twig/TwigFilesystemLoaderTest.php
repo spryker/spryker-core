@@ -88,7 +88,7 @@ class TwigFilesystemLoaderTest extends Unit
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function templateNameContentProvider(): array
     {
@@ -222,7 +222,7 @@ class TwigFilesystemLoaderTest extends Unit
     }
 
     /**
-     * @param string|array $path
+     * @param array|string $path
      * @param \Spryker\Shared\Twig\Cache\CacheInterface|null $cache
      *
      * @return \Spryker\Shared\Twig\TwigFilesystemLoader

@@ -17,7 +17,7 @@ use Spryker\Zed\QuoteRequestDataImport\Business\DataSet\QuoteRequestVersionDataS
 class QuoteRequestReferenceToIdQuoteRequest implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idQuoteRequestCache = [];
 

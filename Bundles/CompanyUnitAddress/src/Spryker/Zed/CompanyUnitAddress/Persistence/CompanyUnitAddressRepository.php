@@ -78,7 +78,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         }
 
         $collection = $this->buildQueryFromCriteria($query, $criteriaFilterTransfer->getFilter());
-        /** @var \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer[] $companyUnitAddressEntityTransfers */
+        /** @var array<\Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer> $companyUnitAddressEntityTransfers */
         $companyUnitAddressEntityTransfers = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
 
         $collectionTransfer = new CompanyUnitAddressCollectionTransfer();
@@ -123,7 +123,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
         }
 
         $companyUnitAddressCollection = $this->buildQueryFromCriteria($companyUnitAddressQuery, $criteriaFilterTransfer->getFilter());
-        /** @var \Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer[] $companyUnitAddressEntityTransfers */
+        /** @var array<\Generated\Shared\Transfer\SpyCompanyUnitAddressEntityTransfer> $companyUnitAddressEntityTransfers */
         $companyUnitAddressEntityTransfers = $this->getPaginatedCollection($companyUnitAddressCollection, $criteriaFilterTransfer->getPagination());
 
         $companyUnitAddressCollectionTransfer = new CompanyUnitAddressCollectionTransfer();
@@ -146,9 +146,9 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     /**
      * @module CompanyBusinessUnit
      *
-     * @param int[] $companyUnitAddressIds
+     * @param array<int> $companyUnitAddressIds
      *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer>
      */
     public function getCompanyBusinessUnitAddressToBusinessUnitRelations(
         array $companyUnitAddressIds
@@ -241,7 +241,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

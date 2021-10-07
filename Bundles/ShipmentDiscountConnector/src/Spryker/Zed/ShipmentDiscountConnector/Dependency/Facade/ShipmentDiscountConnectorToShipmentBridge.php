@@ -23,7 +23,7 @@ class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConne
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getCarriers()
     {
@@ -31,7 +31,7 @@ class ShipmentDiscountConnectorToShipmentBridge implements ShipmentDiscountConne
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getMethods()
     {

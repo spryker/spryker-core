@@ -20,7 +20,7 @@ class JobsFilterByRole extends AbstractJobsFilter implements ChainableJobsFilter
     protected const KEY_ROLE = 'role';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $roles;
 

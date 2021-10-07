@@ -25,9 +25,9 @@ class ItemCurrencyExpander implements ItemCurrencyExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array
     {
@@ -45,9 +45,9 @@ class ItemCurrencyExpander implements ItemCurrencyExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSalesOrderIds(array $itemTransfers): array
     {

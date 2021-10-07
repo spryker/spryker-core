@@ -30,7 +30,7 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getKeyConstraints(): array
     {
@@ -44,7 +44,7 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getContentProviderTypeConstraints(): array
     {
@@ -55,7 +55,7 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getNameConstraints(): array
     {
@@ -66,7 +66,7 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getDescriptionConstraints(): array
     {
@@ -77,7 +77,7 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getIsActiveConstraints(): array
     {

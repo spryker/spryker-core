@@ -24,9 +24,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantProductOfferStorageRepository extends AbstractRepository implements MerchantProductOfferStorageRepositoryInterface
 {
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProductConcreteSkusByMerchantIds(array $merchantIds): array
     {

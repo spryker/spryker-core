@@ -608,7 +608,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @param int $bundlePrice
      * @param bool $isAlwaysAvailable
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productsToAssign
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productsToAssign
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */

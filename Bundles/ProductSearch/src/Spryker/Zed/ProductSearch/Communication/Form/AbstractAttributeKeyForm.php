@@ -88,7 +88,7 @@ abstract class AbstractAttributeKeyForm extends AbstractType
     abstract protected function isUniqueKey($key);
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function createAttributeKeyFieldConstraints()
     {

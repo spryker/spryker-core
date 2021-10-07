@@ -45,7 +45,7 @@ class CmsSlotBlockStorageWriter implements CmsSlotBlockStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockTransfer[] $cmsSlotBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsSlotBlockTransfer> $cmsSlotBlockTransfers
      *
      * @return void
      */

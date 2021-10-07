@@ -17,12 +17,12 @@ class Process implements ProcessInterface
     protected $name;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\Process\StateInterface[]
+     * @var array<\Spryker\Zed\StateMachine\Business\Process\StateInterface>
      */
     protected $states = [];
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @var array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     protected $transitions = [];
 
@@ -37,12 +37,12 @@ class Process implements ProcessInterface
     protected $file;
 
     /**
-     * @var \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     * @var array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface>
      */
     protected $subProcesses = [];
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[] $subProcesses
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface> $subProcesses
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface>
      */
     public function getSubProcesses()
     {
@@ -114,7 +114,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface[] $states
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\StateInterface> $states
      *
      * @return void
      */
@@ -178,7 +178,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\StateInterface>
      */
     public function getStates()
     {
@@ -204,7 +204,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $transitions
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $transitions
      *
      * @return void
      */
@@ -214,7 +214,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getTransitions()
     {
@@ -230,7 +230,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\StateInterface>
      */
     public function getAllStates()
     {
@@ -254,7 +254,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getAllTransitions()
     {
@@ -272,7 +272,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface>
      */
     public function getAllTransitionsWithoutEvent()
     {
@@ -291,7 +291,7 @@ class Process implements ProcessInterface
     /**
      * Gets all "manual" and "on enter" events as manually executable ones.
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\EventInterface>
      */
     public function getManuallyExecutableEvents()
     {
@@ -310,7 +310,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManuallyExecutableEventsBySource()
     {
@@ -334,7 +334,7 @@ class Process implements ProcessInterface
      * @param array $eventsBySource
      * @param \Spryker\Zed\StateMachine\Business\Process\EventInterface $event
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function groupTransitionsBySourceName(array $transitions, array $eventsBySource, EventInterface $event)
     {
@@ -352,7 +352,7 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\ProcessInterface>
      */
     public function getAllProcesses()
     {

@@ -41,7 +41,7 @@ class StepEngine implements StepEngineInterface
     protected $stepBreadcrumbGenerator;
 
     /**
-     * @var \Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface[]
+     * @var array<\Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface>
      */
     protected $stepEnginePreRenderPlugins;
 
@@ -49,7 +49,7 @@ class StepEngine implements StepEngineInterface
      * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
      * @param \Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface $dataContainer
      * @param \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface|null $stepBreadcrumbGenerator
-     * @param \Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface[] $stepEnginePreRenderPlugins
+     * @param array<\Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface> $stepEnginePreRenderPlugins
      */
     public function __construct(
         StepCollectionInterface $stepCollection,
@@ -67,7 +67,7 @@ class StepEngine implements StepEngineInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function process(Request $request, ?FormCollectionHandlerInterface $formCollection = null)
     {
@@ -82,7 +82,7 @@ class StepEngine implements StepEngineInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface|null $formCollection
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function runProcess(Request $request, AbstractTransfer $quoteTransfer, ?FormCollectionHandlerInterface $formCollection = null)
     {

@@ -31,7 +31,7 @@ class MerchantDataImportCommunicationTester extends Actor
     use _generated\MerchantDataImportCommunicationTesterActions;
 
     /**
-     * @param string[] $references
+     * @param array<string> $references
      *
      * @return void
      */

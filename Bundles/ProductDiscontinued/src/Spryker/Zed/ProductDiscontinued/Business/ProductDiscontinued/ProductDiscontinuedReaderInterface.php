@@ -32,14 +32,14 @@ interface ProductDiscontinuedReaderInterface
     ): ProductDiscontinuedCollectionTransfer;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
     public function areAllConcreteProductsDiscontinued(array $productIds): bool;
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array;
 }

@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 class ProductConcreteDefaultProductOfferReader implements ProductConcreteDefaultProductOfferReaderInterface
 {
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface[]
+     * @var array<\Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface>
      */
     protected $defaultProductOfferPlugins;
 
     /**
-     * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface[] $defaultProductOfferPlugins
+     * @param array<\Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface> $defaultProductOfferPlugins
      */
     public function __construct(array $defaultProductOfferPlugins)
     {

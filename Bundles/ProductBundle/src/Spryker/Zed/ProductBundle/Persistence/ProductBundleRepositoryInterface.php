@@ -15,7 +15,7 @@ interface ProductBundleRepositoryInterface
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer>
      */
     public function findBundledProductsBySku(string $sku): array;
 
@@ -29,21 +29,21 @@ interface ProductBundleRepositoryInterface
     ): ProductBundleCollectionTransfer;
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductForBundleTransfer>
      */
     public function getProductForBundleTransfersByProductConcreteSkus(array $skus): array;
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getBundleItemsBySalesOrderItemIds(array $salesOrderItemIds): array;
 
     /**
-     * @param string[] $productConcreteSkus
+     * @param array<string> $productConcreteSkus
      *
      * @return array
      */

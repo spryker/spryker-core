@@ -48,7 +48,7 @@ class HtmlTagWhitelistConstraintValidator extends AbstractConstraintValidator
     }
 
     /**
-     * @param string[] $htmlTagWhiteList
+     * @param array<string> $htmlTagWhiteList
      *
      * @return string
      */

@@ -10,11 +10,11 @@ namespace Spryker\Zed\CategoryStorage\Business\Mapper;
 interface CategoryNodeStorageMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     public function mapNodeTransfersToCategoryNodeStorageTransfersByLocaleAndStore(array $nodeTransfers, string $localeName, string $storeName): array;
 }

@@ -135,7 +135,7 @@ class CompanyBusinessUnitAddressReader implements CompanyBusinessUnitAddressRead
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCompanyUnitAddressIds(
         CompanyUnitAddressCollectionTransfer $companyUnitAddressCollectionTransfer

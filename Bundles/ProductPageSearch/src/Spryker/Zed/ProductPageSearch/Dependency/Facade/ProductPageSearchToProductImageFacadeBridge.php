@@ -28,7 +28,7 @@ class ProductPageSearchToProductImageFacadeBridge implements ProductPageSearchTo
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductId($idProduct)
     {
@@ -38,7 +38,7 @@ class ProductPageSearchToProductImageFacadeBridge implements ProductPageSearchTo
     /**
      * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array
     {
@@ -46,10 +46,10 @@ class ProductPageSearchToProductImageFacadeBridge implements ProductPageSearchTo
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @param string $localeName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject
     {

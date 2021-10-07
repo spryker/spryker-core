@@ -45,9 +45,9 @@ class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
     }
 
     /**
-     * @param string[] $data
+     * @param array<string> $data
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getFullTextBoostedData(array $data): array
     {
@@ -57,9 +57,9 @@ class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
     }
 
     /**
-     * @param string[] $data
+     * @param array<string> $data
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSuggestionTermsData(array $data): array
     {
@@ -69,9 +69,9 @@ class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
     }
 
     /**
-     * @param string[] $data
+     * @param array<string> $data
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCompletionTermsData(array $data): array
     {
@@ -81,9 +81,9 @@ class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
     }
 
     /**
-     * @param string[] $data
+     * @param array<string> $data
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStringSortData(array $data): array
     {

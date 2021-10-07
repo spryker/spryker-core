@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\RestMerchantsAttributesTransfer;
 class MerchantCategoryMapper implements MerchantCategoryMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantCategoryStorageTransfer[] $merchantCategoryStorageTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantCategoryStorageTransfer> $merchantCategoryStorageTransfers
      * @param \Generated\Shared\Transfer\RestMerchantsAttributesTransfer $restMerchantsAttributesTransfer
      * @param string $localeName
      *

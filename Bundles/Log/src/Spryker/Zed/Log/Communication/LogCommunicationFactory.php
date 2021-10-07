@@ -30,7 +30,7 @@ use Spryker\Zed\Log\LogDependencyProvider;
 class LogCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Monolog\Handler\HandlerInterface[]
+     * @return array<\Monolog\Handler\HandlerInterface>
      */
     public function getHandlers()
     {
@@ -38,7 +38,7 @@ class LogCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return callable[]
+     * @return array<callable>
      */
     public function getProcessors()
     {

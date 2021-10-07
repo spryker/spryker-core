@@ -53,9 +53,9 @@ class ProductAbstractStatusChecker implements ProductAbstractStatusCheckerInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function filterActiveIds(array $productAbstractIds): array
     {

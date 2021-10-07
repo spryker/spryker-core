@@ -17,9 +17,9 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer> $restProductConfigurationPriceAttributesTransfers
      *
-     * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer>
      */
     public function mapProductConfigurationInstanceToRestProductConfigurationPriceAttributes(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer,
@@ -39,7 +39,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $volumePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $volumePriceProductTransfers
      * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer $restProductConfigurationPriceAttributesTransfer
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
@@ -83,9 +83,9 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[]|\ArrayObject $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function extractVolumePriceProductTransfers(ArrayObject $priceProductTransfers): array
     {
@@ -96,10 +96,10 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $volumePriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer> $restProductConfigurationPriceAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $volumePriceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer>
      */
     protected function getRestProductConfigurationPriceAttributesTransfers(
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer,
@@ -134,7 +134,7 @@ class ProductConfigurationPriceProductVolumeMapper implements ProductConfigurati
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer[] $restProductConfigurationPriceAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer> $restProductConfigurationPriceAttributesTransfers
      *
      * @return \Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer|null
      */

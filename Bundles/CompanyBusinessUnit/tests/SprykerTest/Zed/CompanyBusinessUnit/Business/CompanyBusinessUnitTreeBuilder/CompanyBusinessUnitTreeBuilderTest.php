@@ -34,7 +34,7 @@ class CompanyBusinessUnitTreeBuilderTest extends Test
     /**
      * @dataProvider \SprykerTest\Zed\CompanyBusinessUnit\CompanyBusinessUnitTester::createCompanyBusinessUnitsProvider
      *
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]|\ArrayObject $companyBusinessUnits
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CompanyBusinessUnitTransfer> $companyBusinessUnits
      * @param array $companyBusinessUnitTreeArray
      *
      * @return void

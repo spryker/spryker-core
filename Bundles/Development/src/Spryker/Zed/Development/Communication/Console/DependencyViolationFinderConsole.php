@@ -126,7 +126,7 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ModuleDependencyTransfer[]|\ArrayObject $moduleDependencyTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ModuleDependencyTransfer> $moduleDependencyTransferCollection
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string|null $dependencyType
      *
@@ -151,7 +151,7 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
 
     /**
      * @param string $moduleToValidate
-     * @param \Generated\Shared\Transfer\ModuleDependencyTransfer[]|\ArrayObject $moduleDependencyTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ModuleDependencyTransfer> $moduleDependencyTransferCollection
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param string|null $dependencyType
      *

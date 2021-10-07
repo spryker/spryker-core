@@ -38,7 +38,7 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -66,7 +66,7 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
      * @return array
      */
@@ -106,9 +106,9 @@ class CatalogSearchProductsResourceRelationshipExpander implements CatalogSearch
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer[] $products
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer> $products
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductAbstractSkusForRestResource(ArrayObject $products): array
     {

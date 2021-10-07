@@ -10,14 +10,14 @@ namespace Spryker\Zed\UrlStorage\Business\Storage;
 interface UrlStorageWriterInterface
 {
     /**
-     * @param int[] $urlIds
+     * @param array<int> $urlIds
      *
      * @return void
      */
     public function publish(array $urlIds);
 
     /**
-     * @param int[] $urlIds
+     * @param array<int> $urlIds
      *
      * @return void
      */

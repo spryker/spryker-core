@@ -44,7 +44,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     protected $merchantSearchEntityManager;
 
     /**
-     * @var \Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface>
      */
     protected $merchantSearchDataExpanderPlugins;
 
@@ -53,7 +53,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
      * @param \Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\MerchantSearch\Business\Mapper\MerchantSearchMapperInterface $merchantSearchMapper
      * @param \Spryker\Zed\MerchantSearch\Persistence\MerchantSearchEntityManagerInterface $merchantSearchEntityManager
-     * @param \Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface[] $merchantSearchDataExpanderPlugins
+     * @param array<\Spryker\Zed\MerchantSearchExtension\Dependency\Plugin\MerchantSearchDataExpanderPluginInterface> $merchantSearchDataExpanderPlugins
      */
     public function __construct(
         MerchantSearchToMerchantFacadeInterface $merchantFacade,
@@ -70,7 +70,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -81,7 +81,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -92,7 +92,7 @@ class MerchantSearchWriter implements MerchantSearchWriterInterface
     }
 
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
      * @return void
      */

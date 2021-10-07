@@ -38,7 +38,7 @@ class SuperAttributesDataProvider implements SuperAttributesDataProviderInterfac
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getSuperAttributes(): array
     {

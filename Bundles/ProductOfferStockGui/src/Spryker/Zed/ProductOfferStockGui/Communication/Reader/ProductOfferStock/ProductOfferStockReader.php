@@ -21,13 +21,13 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     protected $productOfferStockFacade;
 
     /**
-     * @var \Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface>
      */
     protected $productOfferStockTableExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\ProductOfferStockGui\Dependency\Facade\ProductOfferStockGuiToProductOfferStockFacadeInterface $productOfferStockFacade
-     * @param \Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface[] $productOfferStockTableExpanderPlugins
+     * @param array<\Spryker\Zed\ProductOfferStockGuiExtension\Dependeency\Plugin\ProductOfferStockTableExpanderPluginInterface> $productOfferStockTableExpanderPlugins
      */
     public function __construct(
         ProductOfferStockGuiToProductOfferStockFacadeInterface $productOfferStockFacade,

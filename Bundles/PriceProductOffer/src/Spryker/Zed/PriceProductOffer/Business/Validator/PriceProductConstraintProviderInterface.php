@@ -10,7 +10,7 @@ namespace Spryker\Zed\PriceProductOffer\Business\Validator;
 interface PriceProductConstraintProviderInterface
 {
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function getConstraints(): array;
 }

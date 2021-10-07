@@ -91,7 +91,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
      *
      * @api
      *
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */

@@ -57,7 +57,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */
@@ -103,7 +103,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
             return;
         }
 
-        /** @var \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $data */
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $data */
         $data = $event->getData();
         $event->setData(
             $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data)
@@ -244,7 +244,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
      * @param string $url
      * @param string $title
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function buildVolumePriceData(string $url, string $title): array
     {

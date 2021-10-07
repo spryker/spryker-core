@@ -10,7 +10,7 @@ namespace Spryker\Zed\ConfigurableBundleGui\Communication\Provider;
 interface ProductConcreteRelationSubTabsProviderInterface
 {
     /**
-     * @return \Spryker\Zed\Gui\Communication\Tabs\TabsInterface[]
+     * @return array<\Spryker\Zed\Gui\Communication\Tabs\TabsInterface>
      */
     public function getSubTabs(): array;
 }

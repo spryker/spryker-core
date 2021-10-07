@@ -148,7 +148,7 @@ class ProductSupplierTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $productSupplierCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productSupplierCollection */
         $productSupplierCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
@@ -177,7 +177,7 @@ class ProductSupplierTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection $spyProductCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $spyProductCollection
      *
      * @return array
      */
@@ -248,7 +248,7 @@ class ProductSupplierTable extends AbstractTable
     }
 
     /**
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore[]|\Propel\Runtime\Collection\ObjectCollection $priceProductCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore> $priceProductCollection
      *
      * @return string
      */

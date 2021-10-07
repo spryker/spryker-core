@@ -28,7 +28,7 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @deprecated Will be removed with next major release.
      *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -47,7 +47,7 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
      * @return \Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery
      */
@@ -63,7 +63,7 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @param int[] $categoryTemplateIds
+     * @param array<int> $categoryTemplateIds
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
@@ -84,7 +84,7 @@ class CategoryPageSearchQueryContainer extends AbstractQueryContainer implements
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
      */

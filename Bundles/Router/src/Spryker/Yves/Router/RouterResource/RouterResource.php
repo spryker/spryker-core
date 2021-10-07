@@ -17,13 +17,13 @@ class RouterResource implements ResourceInterface
     protected $routeCollection;
 
     /**
-     * @var \Spryker\Yves\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface[]
+     * @var array<\Spryker\Yves\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface>
      */
     protected $routeProvider = [];
 
     /**
      * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
-     * @param \Spryker\Yves\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface[] $routeProvider
+     * @param array<\Spryker\Yves\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface> $routeProvider
      */
     public function __construct(RouteCollection $routeCollection, array $routeProvider)
     {

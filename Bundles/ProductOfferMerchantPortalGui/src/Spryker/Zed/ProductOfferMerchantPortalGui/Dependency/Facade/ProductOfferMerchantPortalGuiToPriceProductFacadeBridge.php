@@ -23,7 +23,7 @@ class ProductOfferMerchantPortalGuiToPriceProductFacadeBridge implements Product
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
     public function getPriceTypeValues()
     {

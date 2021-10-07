@@ -20,7 +20,7 @@ interface CartPermissionGroupResponseBuilderInterface
     public function createEmptyCartPermissionGroupsResponse(): RestResponseInterface;
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\QuotePermissionGroupTransfer[] $quotePermissionGroups
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroups
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

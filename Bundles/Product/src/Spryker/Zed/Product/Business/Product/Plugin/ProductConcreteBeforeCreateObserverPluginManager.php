@@ -13,12 +13,12 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductConcreteCreateObserverI
 class ProductConcreteBeforeCreateObserverPluginManager implements ProductConcreteCreateObserverInterface
 {
     /**
-     * @var \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCreatePluginInterface[]
+     * @var array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCreatePluginInterface>
      */
     protected $beforeCreateCollection;
 
     /**
-     * @param \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCreatePluginInterface[] $beforeCreateCollection
+     * @param array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteCreatePluginInterface> $beforeCreateCollection
      */
     public function __construct(array $beforeCreateCollection)
     {

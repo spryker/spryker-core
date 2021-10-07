@@ -20,9 +20,9 @@ interface ProductListSearchRepositoryInterface
     public function getValueForBlacklistType(): int;
 
     /**
-     * @param int[] $concreteIds
+     * @param array<int> $concreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByConcreteIds(array $concreteIds): array;
 

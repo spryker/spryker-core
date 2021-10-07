@@ -32,7 +32,7 @@ class OperatorBuilder implements OperatorBuilderInterface
     protected $operatorStorage;
 
     /**
-     * @return \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface[]
+     * @return array<\Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface>
      */
     public function buildOperators()
     {
@@ -88,11 +88,11 @@ class OperatorBuilder implements OperatorBuilderInterface
     }
 
     /**
-     * @param \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface[] $operatorCollection
+     * @param array<\Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface> $operatorCollection
      *
      * @throws \Spryker\Zed\PropelQueryBuilder\Persistence\Exception\OperatorBuilderException
      *
-     * @return \Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface[]
+     * @return array<\Spryker\Zed\PropelQueryBuilder\Persistence\QueryBuilder\Operator\OperatorInterface>
      */
     protected function remapOperators(array $operatorCollection)
     {

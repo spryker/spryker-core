@@ -34,8 +34,8 @@ interface PermissionFacadeInterface
      * @api
      *
      * @param string $permissionKey
-     * @param int|string $identifier
-     * @param int|string|array|null $context
+     * @param string|int $identifier
+     * @param array|string|int|null $context
      *
      * @return bool
      */

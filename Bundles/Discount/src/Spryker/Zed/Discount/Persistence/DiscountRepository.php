@@ -17,9 +17,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class DiscountRepository extends AbstractRepository implements DiscountRepositoryInterface
 {
     /**
-     * @param string[] $codes
+     * @param array<string> $codes
      *
-     * @return string[]
+     * @return array<string>
      */
     public function findVoucherCodesExceedingUsageLimit(array $codes): array
     {

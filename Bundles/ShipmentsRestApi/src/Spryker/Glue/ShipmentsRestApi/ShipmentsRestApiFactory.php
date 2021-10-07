@@ -163,7 +163,7 @@ class ShipmentsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface[]
+     * @return array<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface>
      */
     public function getAddressSourceCheckerPlugins(): array
     {

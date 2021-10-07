@@ -15,7 +15,7 @@ interface ShipmentSalesOrderItemReaderInterface
      * @param int $idSalesOrder
      * @param int $idSalesShipment
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function findSalesOrderItemsBySalesShipmentId(int $idSalesOrder, int $idSalesShipment): ArrayObject;
 }

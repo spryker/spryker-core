@@ -20,12 +20,12 @@ interface ProductAbstractFormDataProviderInterface
     public function findProductAbstract(int $idProductAbstract, int $idMerchant): ?ProductAbstractTransfer;
 
     /**
-     * @return int[][]
+     * @return array<int[]>
      */
     public function getOptions(): array;
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getProductCategoryTree(): array;
 }

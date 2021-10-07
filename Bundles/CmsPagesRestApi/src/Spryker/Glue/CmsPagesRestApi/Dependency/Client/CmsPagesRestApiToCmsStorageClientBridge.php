@@ -23,11 +23,11 @@ class CmsPagesRestApiToCmsStorageClientBridge implements CmsPagesRestApiToCmsSto
     }
 
     /**
-     * @param string[] $cmsPageUuids
+     * @param array<string> $cmsPageUuids
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CmsPageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsPageStorageTransfer>
      */
     public function getCmsPageStorageByUuids(array $cmsPageUuids, string $localeName, string $storeName): array
     {
@@ -35,11 +35,11 @@ class CmsPagesRestApiToCmsStorageClientBridge implements CmsPagesRestApiToCmsSto
     }
 
     /**
-     * @param int[] $cmsPageIds
+     * @param array<int> $cmsPageIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CmsPageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsPageStorageTransfer>
      */
     public function getCmsPageStorageByIds(array $cmsPageIds, string $localeName, string $storeName): array
     {

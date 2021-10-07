@@ -58,7 +58,7 @@ class CompanyUnitAddressLabelRelationSaver implements CompanyUnitAddressLabelRel
     /**
      * @param \Generated\Shared\Transfer\CompanyUnitAddressTransfer $companyUnitAddress
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getRedundantLabelToAddressRelationIds(CompanyUnitAddressTransfer $companyUnitAddress): array
     {

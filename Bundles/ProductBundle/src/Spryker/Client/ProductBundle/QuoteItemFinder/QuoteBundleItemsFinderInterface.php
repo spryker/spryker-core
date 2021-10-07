@@ -16,7 +16,7 @@ interface QuoteBundleItemsFinderInterface
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function findBundledItems(QuoteTransfer $quoteTransfer, $sku, $groupKey = null): array;
 }

@@ -25,7 +25,7 @@ class CategoryImageGuiToLocaleBridge implements CategoryImageGuiToLocaleInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection(): array
     {
@@ -43,7 +43,7 @@ class CategoryImageGuiToLocaleBridge implements CategoryImageGuiToLocaleInterfac
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales(): array
     {

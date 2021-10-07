@@ -34,7 +34,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[]
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface>
      */
     protected $oauthUserIdentifierFilterPlugins;
 
@@ -42,7 +42,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
      * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface[] $oauthUserIdentifierFilterPlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserIdentifierFilterPluginInterface> $oauthUserIdentifierFilterPlugins
      */
     public function __construct(
         OauthRepositoryInterface $oauthRepository,
@@ -60,7 +60,7 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
      * Create a new access token
      *
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
-     * @param \League\OAuth2\Server\Entities\ScopeEntityInterface[] $scopes
+     * @param array<\League\OAuth2\Server\Entities\ScopeEntityInterface> $scopes
      * @param mixed $userIdentifier
      *
      * @return \League\OAuth2\Server\Entities\AccessTokenEntityInterface

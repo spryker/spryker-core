@@ -30,7 +30,7 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Twig\TwigFilter[]
+     * @return array<\Twig\TwigFilter>
      */
     public function getTwigFilters(): array
     {

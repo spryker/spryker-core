@@ -154,7 +154,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSalesOrderItemIds(MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -171,7 +171,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\MerchantOrderItemTransfer[]>
      */
     protected function getMerchantOrderItemTransfersIndexedByIdShipment(MerchantOrderTransfer $merchantOrderTransfer): array
     {

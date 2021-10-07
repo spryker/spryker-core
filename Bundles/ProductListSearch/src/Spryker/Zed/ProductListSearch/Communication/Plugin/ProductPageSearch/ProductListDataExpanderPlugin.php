@@ -60,8 +60,8 @@ class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPag
 
     /**
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
-     * @param int[] $blacklistIds
-     * @param int[] $whitelistIds
+     * @param array<int> $blacklistIds
+     * @param array<int> $whitelistIds
      *
      * @return void
      */

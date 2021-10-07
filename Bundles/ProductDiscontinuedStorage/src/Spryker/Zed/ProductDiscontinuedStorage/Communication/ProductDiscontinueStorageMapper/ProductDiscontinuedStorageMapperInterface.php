@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinu
 interface ProductDiscontinuedStorageMapperInterface
 {
     /**
-     * @param \Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[] $productDiscontinuedStorageEntities
+     * @param array<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage> $productDiscontinuedStorageEntities
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function mapProductDiscontinuedStorageEntitiesToSynchronizationDataTransfers(array $productDiscontinuedStorageEntities): array;
 }

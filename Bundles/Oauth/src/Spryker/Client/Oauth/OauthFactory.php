@@ -100,7 +100,7 @@ class OauthFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface[]
+     * @return array<\Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface>
      */
     public function getKeyLoaderPlugins(): array
     {
@@ -108,7 +108,7 @@ class OauthFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
+     * @return array<\Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface>
      */
     public function getAuthorizationValidatorPlugins(): array
     {

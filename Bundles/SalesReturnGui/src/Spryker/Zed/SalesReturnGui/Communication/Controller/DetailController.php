@@ -95,9 +95,9 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @param string[][] $orderItemManualEventsGroupedByItem
+     * @param array<string[]> $orderItemManualEventsGroupedByItem
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractUniqueOrderItemManualEvents(array $orderItemManualEventsGroupedByItem): array
     {

@@ -10,14 +10,14 @@ namespace Spryker\Zed\Oms\Business\Process;
 interface StateInterface
 {
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $incomingTransitions
+     * @param array<\Spryker\Zed\Oms\Business\Process\TransitionInterface> $incomingTransitions
      *
      * @return void
      */
     public function setIncomingTransitions(array $incomingTransitions);
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\TransitionInterface>
      */
     public function getIncomingTransitions();
 
@@ -27,14 +27,14 @@ interface StateInterface
     public function hasIncomingTransitions();
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\TransitionInterface[] $outgoingTransitions
+     * @param array<\Spryker\Zed\Oms\Business\Process\TransitionInterface> $outgoingTransitions
      *
      * @return void
      */
     public function setOutgoingTransitions(array $outgoingTransitions);
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\TransitionInterface>
      */
     public function getOutgoingTransitions();
 
@@ -46,12 +46,12 @@ interface StateInterface
     /**
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      *
-     * @return \Spryker\Zed\Oms\Business\Process\TransitionInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\TransitionInterface>
      */
     public function getOutgoingTransitionsByEvent(EventInterface $event);
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\EventInterface>
      */
     public function getEvents();
 
@@ -146,7 +146,7 @@ interface StateInterface
     /**
      * @throws \Exception
      *
-     * @return \Spryker\Zed\Oms\Business\Process\EventInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\EventInterface>
      */
     public function getTimeoutEvents();
 

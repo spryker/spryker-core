@@ -22,7 +22,7 @@ class PermissionStoragePlugin extends AbstractPlugin implements PermissionStorag
      *
      * @api
      *
-     * @param int|string $identifier
+     * @param string|int $identifier
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */

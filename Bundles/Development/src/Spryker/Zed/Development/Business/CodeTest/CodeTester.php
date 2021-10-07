@@ -301,7 +301,7 @@ class CodeTester
     }
 
     /**
-     * @param string[] $command
+     * @param array<string> $command
      *
      * @return int
      */

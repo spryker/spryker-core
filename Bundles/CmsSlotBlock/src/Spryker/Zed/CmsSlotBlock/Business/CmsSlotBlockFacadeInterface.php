@@ -64,7 +64,7 @@ interface CmsSlotBlockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array;
 
@@ -78,7 +78,7 @@ interface CmsSlotBlockFacadeInterface
      *
      * @param string $twigPath
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTemplateConditionsByPath(string $twigPath): array;
 

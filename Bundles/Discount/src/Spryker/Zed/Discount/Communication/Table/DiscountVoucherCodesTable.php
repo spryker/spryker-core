@@ -136,7 +136,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             $generatedVoucherCodesQuery->filterByVoucherBatch($this->batchValue);
         }
 
-        /** @var \Orm\Zed\Discount\Persistence\SpyDiscountVoucher[] $discountVoucherEntities */
+        /** @var array<\Orm\Zed\Discount\Persistence\SpyDiscountVoucher> $discountVoucherEntities */
         $discountVoucherEntities = $this->runQuery($generatedVoucherCodesQuery, $config, true);
 
         $result = [];

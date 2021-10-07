@@ -107,7 +107,7 @@ class ProductRelationStorageDependencyProvider extends AbstractDependencyProvide
     }
 
     /**
-     * @return \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @return array<\Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface>
      */
     protected function getRelatedProductExpanderPlugins()
     {

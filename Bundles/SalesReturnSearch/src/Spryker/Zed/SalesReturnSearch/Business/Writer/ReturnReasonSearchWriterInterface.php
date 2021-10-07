@@ -10,7 +10,7 @@ namespace Spryker\Zed\SalesReturnSearch\Business\Writer;
 interface ReturnReasonSearchWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */

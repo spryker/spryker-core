@@ -98,10 +98,10 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     /**
      * @phpstan-return array<string, array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      *
-     * @param string[] $contentProductAbstractListKeys
+     * @param array<string> $contentProductAbstractListKeys
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function getProductAbstractRestResources(array $contentProductAbstractListKeys, string $localeName): array
     {
@@ -132,10 +132,10 @@ class ProductAbstractReader implements ProductAbstractReaderInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productAbstractRestResources
-     * @param int[][] $contentProductAbstractListIds
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $productAbstractRestResources
+     * @param array<int[]> $contentProductAbstractListIds
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     protected function groupProductAbstractsByContentProductAbstractListKey(
         array $productAbstractRestResources,

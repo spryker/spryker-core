@@ -19,7 +19,7 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
     use DatabaseTransactionHandlerTrait;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -29,7 +29,7 @@ abstract class AbstractProductConcretePageSearchListener extends AbstractPlugin 
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */

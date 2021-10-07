@@ -17,7 +17,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
      * @return void
      */
@@ -29,7 +29,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -41,7 +41,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function findAllProductMeasurementUnitTransfers(): array;
 
@@ -51,9 +51,9 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $productMeasurementUnitIds
+     * @param array<int> $productMeasurementUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function findProductMeasurementUnitTransfers(array $productMeasurementUnitIds): array;
 
@@ -63,7 +63,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function getSalesUnits(): array;
 
@@ -73,9 +73,9 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @api
      *
-     * @param int[] $salesUnitIds
+     * @param array<int> $salesUnitIds
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractEntityTransfer>
      */
     public function getSalesUnitsByIds(array $salesUnitIds): array;
 
@@ -87,7 +87,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function findFilteredProductMeasurementUnitTransfers(FilterTransfer $filterTransfer): array;
 
@@ -99,7 +99,7 @@ interface ProductMeasurementUnitStorageFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array;
 }

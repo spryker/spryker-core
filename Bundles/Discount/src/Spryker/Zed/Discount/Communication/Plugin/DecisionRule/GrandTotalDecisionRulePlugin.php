@@ -61,7 +61,7 @@ class GrandTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRul
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {

@@ -145,7 +145,7 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -155,7 +155,7 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

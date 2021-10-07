@@ -107,7 +107,7 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
      *
      * @return void
      */
@@ -154,7 +154,7 @@ class CategoryNodeDeleter implements CategoryNodeDeleterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[] $nodeTransfers
+     * @param array<\Generated\Shared\Transfer\NodeTransfer> $nodeTransfers
      *
      * @return void
      */

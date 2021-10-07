@@ -34,7 +34,7 @@ class ReturnReasonPublisherTriggerPlugin extends AbstractPlugin implements Publi
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ReturnReasonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ReturnReasonTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

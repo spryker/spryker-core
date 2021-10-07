@@ -12,17 +12,17 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 class RestResponse implements RestResponseInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface>
      */
     protected $links = [];
 
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @var array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     protected $resources = [];
 
     /**
-     * @var \Generated\Shared\Transfer\RestErrorMessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\RestErrorMessageTransfer>
      */
     protected $errors = [];
 
@@ -69,7 +69,7 @@ class RestResponse implements RestResponseInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestErrorMessageTransfer>
      */
     public function getErrors(): array
     {
@@ -110,7 +110,7 @@ class RestResponse implements RestResponseInterface
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getResources(): array
     {

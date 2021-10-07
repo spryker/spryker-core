@@ -12,11 +12,11 @@ use ArrayObject;
 interface GiftCardRestResponseBuilderInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\GiftCardTransfer[] $giftCardTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\GiftCardTransfer> $giftCardTransfers
      * @param string $parentResourceType
      * @param string $parentResourceId
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createGiftCardRestResource(ArrayObject $giftCardTransfers, string $parentResourceType, string $parentResourceId): array;
 }

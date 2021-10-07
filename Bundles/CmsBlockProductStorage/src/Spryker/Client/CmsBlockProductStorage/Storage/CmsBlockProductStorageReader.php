@@ -49,7 +49,7 @@ class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterf
     /**
      * @param \Generated\Shared\Transfer\CmsBlockRequestTransfer $cmsBlockRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlocksByOptions(CmsBlockRequestTransfer $cmsBlockRequestTransfer): array
     {
@@ -94,9 +94,9 @@ class CmsBlockProductStorageReader implements CmsBlockProductStorageReaderInterf
     }
 
     /**
-     * @param string[] $blockKeys
+     * @param array<string> $blockKeys
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     protected function mapBlockKeysArrayToCmsBlockTransfers(array $blockKeys): array
     {

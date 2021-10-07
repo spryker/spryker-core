@@ -21,7 +21,7 @@ interface PublisherToEventBehaviorFacadeInterface
     /**
      * @param array $resourcePublisherPlugins
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableResourceNames(array $resourcePublisherPlugins = []): array;
 }

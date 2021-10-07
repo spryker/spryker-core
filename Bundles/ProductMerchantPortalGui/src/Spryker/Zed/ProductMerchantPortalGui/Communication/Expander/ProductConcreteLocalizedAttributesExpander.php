@@ -45,9 +45,9 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expandLocalizedAttributes(array $productConcreteTransfers): array
     {
@@ -84,9 +84,9 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
     /**
      * @phpstan-return ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      *
-     * @param mixed[] $attributes
+     * @param array<mixed> $attributes
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     protected function getProductManagementAttributes(array $attributes): ArrayObject
     {
@@ -99,11 +99,11 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
-     * @param string[] $attributes
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
+     * @param array<string> $attributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractLocalizedAttributes(
         array $productManagementAttributeTransfers,
@@ -136,7 +136,7 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
     /**
      * @param string $attributeKey
      * @param string $attributeValue
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer|null
      */

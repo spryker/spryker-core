@@ -177,7 +177,7 @@ class ProductLabelTable extends AbstractTable
     {
         $query = $this->queryContainer->queryProductLabels();
         $this->addAbstractProductRelationCountToQuery($query);
-        /** @var \Orm\Zed\ProductLabel\Persistence\SpyProductLabel[] $productLabelEntities */
+        /** @var array<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities */
         $productLabelEntities = $this->runQuery($query, $config, true);
 
         $tableRows = [];

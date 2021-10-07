@@ -13,18 +13,18 @@ use Generated\Shared\Transfer\OfferTransfer;
 class OfferPluginExecutor implements OfferPluginExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface[]
+     * @var array<\Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface>
      */
     protected $hydratorPlugins;
 
     /**
-     * @var \Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface>
      */
     protected $doUpdatePlugins;
 
     /**
-     * @param \Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface[] $hydratorPlugins
-     * @param \Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface[] $doUpdatePlugins
+     * @param array<\Spryker\Zed\OfferExtension\Dependency\Plugin\OfferHydratorPluginInterface> $hydratorPlugins
+     * @param array<\Spryker\Zed\Offer\Dependency\Plugin\OfferDoUpdatePluginInterface> $doUpdatePlugins
      */
     public function __construct(
         array $hydratorPlugins,

@@ -56,7 +56,7 @@ class ItemQuantityDecisionRulePlugin extends AbstractPlugin implements DecisionR
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {

@@ -42,7 +42,7 @@ class CacheKeyGeneratorTest extends Unit
     protected $cacheKeyGenerator;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $allowedQueryStringParameters = [
         'allowedParameter1',
@@ -108,7 +108,7 @@ class CacheKeyGeneratorTest extends Unit
      *
      * @param string $expectedCacheKey
      * @param string $requestUri
-     * @param string[] $queryStringParameters
+     * @param array<string> $queryStringParameters
      * @param bool $isCacheEnabled
      *
      * @return void

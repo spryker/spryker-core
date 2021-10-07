@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Configurat
 interface CategoryFilterOptionsProviderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer[]
+     * @return array<\Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer>
      */
     public function getCategoryFilterOptionsTree(): array;
 }

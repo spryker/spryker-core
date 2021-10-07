@@ -26,7 +26,7 @@ class PackageNameHydrator implements DependencyHydratorInterface
     /**
      * @param array $dependency
      *
-     * @return bool|string
+     * @return string|bool
      */
     private function getComposerNameByClassName(array $dependency)
     {

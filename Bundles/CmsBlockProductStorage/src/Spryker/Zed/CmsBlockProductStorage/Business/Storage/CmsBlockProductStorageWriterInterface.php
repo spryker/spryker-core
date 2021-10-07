@@ -10,14 +10,14 @@ namespace Spryker\Zed\CmsBlockProductStorage\Business\Storage;
 interface CmsBlockProductStorageWriterInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
     public function publish(array $productAbstractIds): void;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

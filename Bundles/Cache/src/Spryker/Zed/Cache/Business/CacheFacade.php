@@ -22,7 +22,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @deprecated Use {@link emptyCache()} instead
      *
-     * @return string[]
+     * @return array<string>
      */
     public function deleteAllFiles()
     {
@@ -36,7 +36,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @deprecated Use {@link clearCodeBucketCache()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function emptyCache()
     {
@@ -78,7 +78,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @deprecated Use {@link emptyAutoLoaderCache()} instead
      *
-     * @return string[]
+     * @return array<string>
      */
     public function deleteAllAutoloaderFiles()
     {
@@ -92,7 +92,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @deprecated Use emptyCodeBucketAutoloaderCache instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function emptyAutoLoaderCache()
     {
@@ -104,7 +104,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function emptyProjectSpecificCache(): array
     {

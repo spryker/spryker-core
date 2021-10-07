@@ -17,12 +17,12 @@ class MessageTranslator implements MessageTranslatorInterface
     protected $fallbackTranslator;
 
     /**
-     * @var \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[]
+     * @var array<\Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface>
      */
     protected $translationPlugins;
 
     /**
-     * @param \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface[] $translationPlugins
+     * @param array<\Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface> $translationPlugins
      * @param \Symfony\Contracts\Translation\TranslatorInterface $fallbackTranslator
      */
     public function __construct(array $translationPlugins, TranslatorInterface $fallbackTranslator)

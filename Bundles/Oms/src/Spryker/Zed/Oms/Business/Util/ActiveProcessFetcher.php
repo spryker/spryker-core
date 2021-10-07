@@ -22,12 +22,12 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     protected $builder;
 
     /**
-     * @var \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @var array<\Spryker\Zed\Oms\Business\Process\StateInterface>
      */
     protected static $reservedStatesCache = [];
 
     /**
-     * @var string[][]
+     * @var array<string[]>
      */
     protected static $reservedStateProcessNamesCache = [];
 
@@ -44,7 +44,7 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\StateInterface>
      */
     public function getReservedStatesFromAllActiveProcesses(): array
     {
@@ -56,7 +56,7 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\StateInterface>
      */
     protected function retrieveReservedStates(): array
     {
@@ -73,7 +73,7 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     /**
      * @param string $processName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getReservedStateNamesForActiveProcessByProcessName(string $processName): array
     {
@@ -89,7 +89,7 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     /**
      * @param string $processName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function retrieveReservedStateNamesForActiveProcessByProcessName(string $processName): array
     {
@@ -104,9 +104,9 @@ class ActiveProcessFetcher implements ActiveProcessFetcherInterface
     }
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $processReservedStates
+     * @param array<\Spryker\Zed\Oms\Business\Process\StateInterface> $processReservedStates
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getReservedStateNames(array $processReservedStates): array
     {

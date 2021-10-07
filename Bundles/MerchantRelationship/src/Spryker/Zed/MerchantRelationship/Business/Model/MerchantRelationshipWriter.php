@@ -33,17 +33,17 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     protected $merchantRelationshipKeyGenerator;
 
     /**
-     * @var \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[]
+     * @var array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface>
      */
     protected $merchantRelationshipPreDeletePlugins;
 
     /**
-     * @var \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostCreatePluginInterface[]
+     * @var array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostCreatePluginInterface>
      */
     protected $merchantRelationshipPostCreatePlugins;
 
     /**
-     * @var \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostUpdatePluginInterface>
      */
     protected $merchantRelationshipPostUpdatePlugins;
 
@@ -51,9 +51,9 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
      * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipEntityManagerInterface $entityManager
      * @param \Spryker\Zed\MerchantRelationship\Persistence\MerchantRelationshipRepositoryInterface $repository
      * @param \Spryker\Zed\MerchantRelationship\Business\KeyGenerator\MerchantRelationshipKeyGeneratorInterface $merchantRelationshipKeyGenerator
-     * @param \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface[] $merchantRelationshipPreDeletePlugins
-     * @param \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostCreatePluginInterface[] $merchantRelationshipPostCreatePlugins
-     * @param \Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostUpdatePluginInterface[] $merchantRelationshipPostUpdatePlugins
+     * @param array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPreDeletePluginInterface> $merchantRelationshipPreDeletePlugins
+     * @param array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostCreatePluginInterface> $merchantRelationshipPostCreatePlugins
+     * @param array<\Spryker\Zed\MerchantRelationshipExtension\Dependency\Plugin\MerchantRelationshipPostUpdatePluginInterface> $merchantRelationshipPostUpdatePlugins
      */
     public function __construct(
         MerchantRelationshipEntityManagerInterface $entityManager,
@@ -186,7 +186,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdAssignedCompanyBusinessUnits($merchantRelationTransfer): array
     {
@@ -194,7 +194,7 @@ class MerchantRelationshipWriter implements MerchantRelationshipWriterInterface
             return [];
         }
 
-        /** @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]|null $companyBusinessUnits */
+        /** @var array<\Generated\Shared\Transfer\CompanyBusinessUnitTransfer>|null $companyBusinessUnits */
         $companyBusinessUnits = $merchantRelationTransfer->getAssigneeCompanyBusinessUnits()->getCompanyBusinessUnits();
         if (!$companyBusinessUnits) {
             return [];

@@ -91,9 +91,9 @@ class ShipmentRepositoryTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethods
+     * @param array<\Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethods
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getShipmentMethodIds(array $shipmentMethods): array
     {

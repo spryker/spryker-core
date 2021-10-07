@@ -13,7 +13,7 @@ interface OrderStateMachineInterface
 {
     /**
      * @param string $eventId
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param array $data
      *
      * @return array|null
@@ -21,7 +21,7 @@ interface OrderStateMachineInterface
     public function triggerEvent($eventId, array $orderItems, $data);
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
      * @param array $data
      *
      * @return array|null

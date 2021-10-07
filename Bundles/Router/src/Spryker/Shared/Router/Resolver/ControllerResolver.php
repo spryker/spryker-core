@@ -30,7 +30,7 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|bool|callable|object|false
+     * @return callable|object|array|bool|false
      */
     public function getController(Request $request)
     {

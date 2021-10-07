@@ -17,12 +17,12 @@ use Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionUnconditio
 class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
+     * @var array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface>
      */
     protected $priceDimensionQueryCriteriaPlugins;
 
     /**
-     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[] $priceProductDimensionQueryCriteriaPlugins
+     * @param array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface> $priceProductDimensionQueryCriteriaPlugins
      */
     public function __construct(array $priceProductDimensionQueryCriteriaPlugins)
     {
@@ -306,7 +306,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      * @param string $dimensionName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addConditionToFilterOrphans(
         SpyPriceProductStoreQuery $priceProductStoreQuery,

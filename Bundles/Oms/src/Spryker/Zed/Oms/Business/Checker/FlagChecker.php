@@ -25,7 +25,7 @@ class FlagChecker implements FlagCheckerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param string $flag
      *
      * @return bool
@@ -47,10 +47,10 @@ class FlagChecker implements FlagCheckerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     * @param \Spryker\Zed\Oms\Business\Process\StateInterface[] $states
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param array<\Spryker\Zed\Oms\Business\Process\StateInterface> $states
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function filterOrderItemsByStateWithFlag(array $itemTransfers, array $states): array
     {
@@ -75,7 +75,7 @@ class FlagChecker implements FlagCheckerInterface
      * @param string $processName
      * @param string $flag
      *
-     * @return \Spryker\Zed\Oms\Business\Process\StateInterface[]
+     * @return array<\Spryker\Zed\Oms\Business\Process\StateInterface>
      */
     protected function getStatesByFlag(string $processName, string $flag): array
     {

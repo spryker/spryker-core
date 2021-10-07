@@ -55,7 +55,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseInfoMessages()
     {
@@ -69,7 +69,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages()
     {
@@ -83,7 +83,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseSuccessMessages()
     {
@@ -111,7 +111,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesInfoMessages(): array
     {
@@ -125,7 +125,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesErrorMessages(): array
     {
@@ -139,7 +139,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesSuccessMessages(): array
     {

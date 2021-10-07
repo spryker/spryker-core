@@ -20,7 +20,7 @@ interface ConfigurableBundlePageSearchFacadeInterface
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -32,7 +32,7 @@ interface ConfigurableBundlePageSearchFacadeInterface
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */

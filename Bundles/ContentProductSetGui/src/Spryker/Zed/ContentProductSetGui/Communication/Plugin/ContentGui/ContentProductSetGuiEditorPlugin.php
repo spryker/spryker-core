@@ -34,7 +34,7 @@ class ContentProductSetGuiEditorPlugin extends AbstractPlugin implements Content
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentWidgetTemplateTransfer>
      */
     public function getTemplates(): array
     {

@@ -20,13 +20,13 @@ class OrderItemReader implements OrderItemReaderInterface
     protected $salesRepository;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface>
      */
     protected $orderItemExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[] $orderItemExpanderPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface> $orderItemExpanderPlugins
      */
     public function __construct(
         SalesRepositoryInterface $salesRepository,
@@ -55,9 +55,9 @@ class OrderItemReader implements OrderItemReaderInterface
     /**
      * Unit prices are populated for presentation purposes only. For further calculations use sum prices or properly populated unit prices.
      *
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function deriveOrderItemsUnitPrices(array $itemTransfers): array
     {
@@ -79,9 +79,9 @@ class OrderItemReader implements OrderItemReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function executeOrderItemExpanderPlugins(array $itemTransfers): array
     {

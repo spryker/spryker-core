@@ -20,19 +20,19 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     protected $zedResourceShareStub;
 
     /**
-     * @var \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[]
+     * @var array<\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface>
      */
     protected $beforeZedResourceShareActivatorStrategyPlugins;
 
     /**
-     * @var array|\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[]
+     * @var array<\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface>
      */
     protected $afterZedResourceShareActivatorStrategyPlugins;
 
     /**
      * @param \Spryker\Client\ResourceShare\Zed\ResourceShareStubInterface $zedResourceShareStub
-     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[] $beforeZedResourceShareActivatorStrategyPlugins
-     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[] $afterZedResourceShareActivatorStrategyPlugins
+     * @param array<\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface> $beforeZedResourceShareActivatorStrategyPlugins
+     * @param array<\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface> $afterZedResourceShareActivatorStrategyPlugins
      */
     public function __construct(
         ResourceShareStubInterface $zedResourceShareStub,
@@ -87,7 +87,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
@@ -108,7 +108,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
      */
@@ -132,7 +132,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     }
 
     /**
-     * @param \Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface[] $resourceShareActivatorStrategyPlugins
+     * @param array<\Spryker\Client\ResourceShareExtension\Dependency\Plugin\ResourceShareClientActivatorStrategyPluginInterface> $resourceShareActivatorStrategyPlugins
      * @param \Generated\Shared\Transfer\ResourceShareRequestTransfer $resourceShareRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ResourceShareResponseTransfer
@@ -159,10 +159,10 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $targetMessageTransfers
-     * @param \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $targetMessageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MessageTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer>
      */
     protected function mergeResponseMessages(
         ArrayObject $targetMessageTransfers,

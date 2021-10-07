@@ -118,9 +118,9 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
      * @param \Symfony\Component\Form\FormInterface $productAbstractForm
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param int $idMerchant
-     * @param mixed[] $priceInitialData
+     * @param array<mixed> $priceInitialData
      * @param array $attributesInitialData
-     * @param int[] $initialCategoryIds
+     * @param array<int> $initialCategoryIds
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -217,7 +217,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
      * @phpstan-param array<int> $initialCategoryIds
      *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     * @param int[] $initialCategoryIds
+     * @param array<int> $initialCategoryIds
      *
      * @return void
      */
@@ -328,9 +328,9 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
      *
      * @phpstan-return array<int, array<int, \Generated\Shared\Transfer\ProductImageSetTransfer>>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>
      */
     protected function getImageSetsGroupedByIdLocale(ArrayObject $imageSets): array
     {
@@ -350,7 +350,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
      *
      * @phpstan-return \SplObjectStorage<object, mixed>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $imageSets
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      * @param array $imageSetsErrors
      *
      * @return \SplObjectStorage
@@ -395,7 +395,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getImageSetTabNames(ProductAbstractTransfer $productAbstractTransfer)
     {

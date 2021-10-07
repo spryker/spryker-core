@@ -48,11 +48,11 @@ class DetailController extends AbstractController
     protected const MESSAGE_MERCHANT_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
-     * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @phpstan-return \Symfony\Component\HttpFoundation\RedirectResponse|array<mixed>
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -135,7 +135,7 @@ class DetailController extends AbstractController
         if (!$merchantOrderTransfer) {
             return null;
         }
-        /** @var int[] $merchantOrderItemIds */
+        /** @var array<int> $merchantOrderItemIds */
         $merchantOrderItemIds = $this->extractMerchantOrderItemIds($merchantOrderTransfer->getMerchantOrderItems());
         $merchantOrderItemsStateHistory = $this->getFactory()
             ->getMerchantOmsFacade()
@@ -177,9 +177,9 @@ class DetailController extends AbstractController
      *
      * @phpstan-return array<array-key, int|null>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantOrderItemTransfer[] $merchantOrderItems
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItems
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractMerchantOrderItemIds(ArrayObject $merchantOrderItems): array
     {
@@ -197,7 +197,7 @@ class DetailController extends AbstractController
      *
      * @phpstan-return array<int|string, array<int|string, string>>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $groupedMerchantOrderItemsByShipment
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $groupedMerchantOrderItemsByShipment
      * @param array $merchantOrderItemsWithOrderItemIdKey
      *
      * @return array
@@ -273,7 +273,7 @@ class DetailController extends AbstractController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $blockUrl
      *
-     * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|string
      */
     protected function handleSubRequest(Request $request, string $blockUrl)
     {

@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class CompanyBusinessUnitDataImportRepository extends AbstractRepository implements CompanyBusinessUnitDataImportRepositoryInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCompanyBusinessUnitListCache = [];
 

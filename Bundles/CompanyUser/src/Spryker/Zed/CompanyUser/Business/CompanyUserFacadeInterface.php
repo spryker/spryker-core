@@ -169,9 +169,9 @@ interface CompanyUserFacadeInterface
      *
      * @api
      *
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array;
 
@@ -255,9 +255,9 @@ interface CompanyUserFacadeInterface
      *
      * @api
      *
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyUserTransfer>
      */
     public function findActiveCompanyUsersByIds(array $companyUserIds): array;
 
@@ -269,9 +269,9 @@ interface CompanyUserFacadeInterface
      *
      * @api
      *
-     * @param int[] $companyIds
+     * @param array<int> $companyIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array;
 

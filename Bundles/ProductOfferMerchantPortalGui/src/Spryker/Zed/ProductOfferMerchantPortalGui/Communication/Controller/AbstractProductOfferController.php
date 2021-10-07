@@ -45,7 +45,7 @@ class AbstractProductOfferController extends AbstractController
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductAttributes(
         LocaleTransfer $localeTransfer,
@@ -72,10 +72,10 @@ class AbstractProductOfferController extends AbstractController
     /**
      * @phpstan-param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      *
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     * @param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getLocalizedAttributesByLocale(array $localizedAttributes, LocaleTransfer $localeTransfer): array
     {
@@ -126,9 +126,9 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
-     * @param mixed[] $responseData
+     * @param array<mixed> $responseData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function addSuccessResponseDataToResponse(array $responseData): array
     {
@@ -146,10 +146,10 @@ class AbstractProductOfferController extends AbstractController
      *
      * @phpstan-return array<string, mixed>
      *
-     * @param mixed[] $responseData
+     * @param array<mixed> $responseData
      * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer|null $productOfferResponseTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function addErrorResponseDataToResponse(array $responseData, ?ProductOfferResponseTransfer $productOfferResponseTransfer = null): array
     {

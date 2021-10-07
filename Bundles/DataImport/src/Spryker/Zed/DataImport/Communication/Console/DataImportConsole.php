@@ -326,7 +326,7 @@ class DataImportConsole extends Console
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\DataImporterReportTransfer[] $dataImporterReports
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DataImporterReportTransfer> $dataImporterReports
      *
      * @return void
      */

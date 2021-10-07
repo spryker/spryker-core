@@ -23,7 +23,7 @@ class CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientBridge implements 
     }
 
     /**
-     * @param string[] $blockNames
+     * @param array<string> $blockNames
      * @param string $localeName
      * @param string $storeName
      *

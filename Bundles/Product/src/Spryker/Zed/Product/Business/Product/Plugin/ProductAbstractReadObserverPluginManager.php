@@ -13,18 +13,18 @@ use Spryker\Zed\Product\Business\Product\Observer\ProductAbstractReadObserverInt
 class ProductAbstractReadObserverPluginManager implements ProductAbstractReadObserverInterface
 {
     /**
-     * @var \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[]
+     * @var array<\Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface>
      */
     protected $readCollection;
 
     /**
-     * @var \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface>
      */
     protected $productAbstractExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface[] $readCollection
-     * @param \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface[] $productAbstractExpanderPlugins
+     * @param array<\Spryker\Zed\Product\Dependency\Plugin\ProductAbstractPluginReadInterface> $readCollection
+     * @param array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractExpanderPluginInterface> $productAbstractExpanderPlugins
      */
     public function __construct(array $readCollection, array $productAbstractExpanderPlugins)
     {

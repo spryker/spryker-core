@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface LocaleRepositoryInterface
 {
     /**
-     * @param string[] $localeNames
+     * @param array<string> $localeNames
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleTransfersByLocaleNames(array $localeNames): array;
 

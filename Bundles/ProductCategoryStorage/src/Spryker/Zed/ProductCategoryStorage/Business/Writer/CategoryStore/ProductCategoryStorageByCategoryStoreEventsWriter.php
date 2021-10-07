@@ -45,7 +45,7 @@ class ProductCategoryStorageByCategoryStoreEventsWriter implements ProductCatego
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class ProductCategoryStorageByCategoryStoreEventsWriter implements ProductCatego
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

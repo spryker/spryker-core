@@ -286,7 +286,7 @@ class SellableTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\SellableItemResponseTransfer[]
+     * @return array<\Generated\Shared\Transfer\SellableItemResponseTransfer>
      */
     protected function getSellableItemResponseTransfersMapBySku(SellableItemsResponseTransfer $sellableItemsResponseTransfer): array
     {
@@ -322,7 +322,7 @@ class SellableTest extends Unit
 
     /**
      * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
-     * @param mixed[] $batchRequestData
+     * @param array<mixed> $batchRequestData
      *
      * @return \Generated\Shared\Transfer\SellableItemsRequestTransfer
      */

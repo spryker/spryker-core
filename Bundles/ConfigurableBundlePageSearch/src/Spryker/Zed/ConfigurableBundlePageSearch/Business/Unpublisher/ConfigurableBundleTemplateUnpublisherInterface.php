@@ -10,7 +10,7 @@ namespace Spryker\Zed\ConfigurableBundlePageSearch\Business\Unpublisher;
 interface ConfigurableBundleTemplateUnpublisherInterface
 {
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */

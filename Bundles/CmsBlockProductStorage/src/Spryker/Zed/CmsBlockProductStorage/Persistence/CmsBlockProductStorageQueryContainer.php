@@ -70,7 +70,7 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param int[] $cmsBlockProductIds
+     * @param array<int> $cmsBlockProductIds
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */
@@ -89,7 +89,7 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param int[] $cmsBlockProductIds
+     * @param array<int> $cmsBlockProductIds
      *
      * @return \Orm\Zed\CmsBlockProductConnector\Persistence\SpyCmsBlockProductConnectorQuery
      */

@@ -87,7 +87,7 @@ class CacheConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProjectSpecificCache(): array
     {

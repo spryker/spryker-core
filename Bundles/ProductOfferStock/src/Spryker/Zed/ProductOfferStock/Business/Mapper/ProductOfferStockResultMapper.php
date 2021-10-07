@@ -16,7 +16,7 @@ class ProductOfferStockResultMapper implements ProductOfferStockResultMapperInte
     /**
      * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[] $productOfferStockTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockResultTransfer
      */

@@ -127,7 +127,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @internal
      *
-     * @param \Generated\Shared\Transfer\ModuleTransfer[] $modules
+     * @param array<\Generated\Shared\Transfer\ModuleTransfer> $modules
      * @param bool $dryRun
      *
      * @return array
@@ -314,7 +314,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getEngineModuleList()
     {
@@ -601,7 +601,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleTransfer>
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
@@ -615,7 +615,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ModuleTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleTransfer>
      */
     public function getModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {
@@ -629,7 +629,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @internal
      *
-     * @return \Generated\Shared\Transfer\PackageTransfer[]
+     * @return array<\Generated\Shared\Transfer\PackageTransfer>
      */
     public function getPackages(): array
     {
@@ -641,7 +641,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ModuleOverviewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ModuleOverviewTransfer>
      */
     public function getModuleOverview(): array
     {

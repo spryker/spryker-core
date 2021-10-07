@@ -81,7 +81,7 @@ class StorageDatabase implements StorageDatabaseInterface
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */
@@ -99,7 +99,7 @@ class StorageDatabase implements StorageDatabaseInterface
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      * @param array $data
      *
      * @return array
@@ -232,9 +232,9 @@ class StorageDatabase implements StorageDatabaseInterface
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getPrefixedKeys(array $keys): array
     {
@@ -271,7 +271,7 @@ class StorageDatabase implements StorageDatabaseInterface
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return void
      */

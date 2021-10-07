@@ -38,7 +38,7 @@ class StockReader implements StockReaderInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface>
      */
     protected $stockCollectionExpanderPlugins;
 
@@ -46,7 +46,7 @@ class StockReader implements StockReaderInterface
      * @param \Spryker\Zed\Stock\Persistence\StockRepositoryInterface $stockRepository
      * @param \Spryker\Zed\Stock\Business\Stock\StockMapperInterface $stockMapper
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface[] $stockCollectionExpanderPlugins
+     * @param array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface> $stockCollectionExpanderPlugins
      */
     public function __construct(
         StockRepositoryInterface $stockRepository,
@@ -61,7 +61,7 @@ class StockReader implements StockReaderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getStockTypes(): array
     {
@@ -73,7 +73,7 @@ class StockReader implements StockReaderInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer): array
     {
@@ -86,7 +86,7 @@ class StockReader implements StockReaderInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockTransfer>
      */
     public function getAvailableWarehousesForStore(StoreTransfer $storeTransfer): array
     {
@@ -105,7 +105,7 @@ class StockReader implements StockReaderInterface
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getWarehouseToStoreMapping(): array
     {
@@ -115,7 +115,7 @@ class StockReader implements StockReaderInterface
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getStoreToWarehouseMapping(): array
     {

@@ -23,7 +23,7 @@ class ShoppingListPermissionStoragePlugin extends AbstractPlugin implements Perm
      *
      * @api
      *
-     * @param int|string $idCompanyUser
+     * @param string|int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\PermissionCollectionTransfer
      */

@@ -48,7 +48,7 @@ interface ClassDefinitionInterface extends DefinitionInterface
     public function getDeprecationDescription(): ?string;
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getUseStatements(): array;
 

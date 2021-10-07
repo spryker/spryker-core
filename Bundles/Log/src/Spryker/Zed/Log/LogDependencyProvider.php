@@ -108,7 +108,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface[]
+     * @return array<\Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface>
      */
     protected function getLogListeners()
     {
@@ -130,7 +130,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface[]
+     * @return array<\Spryker\Shared\Log\Dependency\Plugin\LogHandlerPluginInterface>
      */
     protected function getLogHandlers()
     {
@@ -152,7 +152,7 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface[]
+     * @return array<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
      */
     protected function getLogProcessors()
     {

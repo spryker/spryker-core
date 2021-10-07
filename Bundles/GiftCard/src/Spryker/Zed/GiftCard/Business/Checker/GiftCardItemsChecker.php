@@ -12,7 +12,7 @@ use ArrayObject;
 class GiftCardItemsChecker implements GiftCardItemsCheckerInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return bool
      */

@@ -105,7 +105,20 @@ interface MerchantFacadeInterface
      *
      * @param string $currentStatus
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getApplicableMerchantStatuses(string $currentStatus): array;
+
+    /**
+     * Specification:
+     * - Filters `PriceProductMerchantRelationshipStorage` transfer objects by `Merchant.isActive` transfer property.
+     * - Returns array of `PriceProductMerchantRelationshipStorage` transfers without ones that refer to deactivated merchants.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer> $priceProductMerchantRelationshipStorageTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer>
+     */
+    public function filterPriceProductMerchantRelations(array $priceProductMerchantRelationshipStorageTransfers): array;
 }

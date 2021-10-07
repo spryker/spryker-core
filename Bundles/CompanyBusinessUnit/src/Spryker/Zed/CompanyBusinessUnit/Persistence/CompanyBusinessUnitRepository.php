@@ -150,9 +150,9 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      * @module CompanyUser
      * @module Customer
      *
-     * @param int[] $companyBusinessUnitIds
+     * @param array<int> $companyBusinessUnitIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerReferencesByCompanyBusinessUnitIds(array $companyBusinessUnitIds): array
     {
@@ -215,7 +215,7 @@ class CompanyBusinessUnitRepository extends AbstractRepository implements Compan
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection<\Generated\Shared\Transfer\SpyCompanyBusinessUnitEntityTransfer>
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {

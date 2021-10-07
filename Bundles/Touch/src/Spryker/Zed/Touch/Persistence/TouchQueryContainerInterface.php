@@ -125,7 +125,7 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @param int[]|int $touchIds
+     * @param array<int>|int $touchIds
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchSearchQuery
      */
@@ -137,7 +137,7 @@ interface TouchQueryContainerInterface extends QueryContainerInterface
      *
      * @api
      *
-     * @param int[]|int $touchIds
+     * @param array<int>|int $touchIds
      *
      * @return \Orm\Zed\Touch\Persistence\SpyTouchStorageQuery
      */

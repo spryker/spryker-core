@@ -100,9 +100,9 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer>
      */
     public function getBulkProductOptions(array $productAbstractIds): array
     {
@@ -196,7 +196,7 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     }
 
     /**
-     * @param string[] $productOptionStorageKeys
+     * @param array<string> $productOptionStorageKeys
      *
      * @return array
      */
@@ -233,9 +233,9 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateStorageKeys(array $productAbstractIds): array
     {
@@ -248,9 +248,9 @@ class ProductOptionStorageReader implements ProductOptionStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer> $productAbstractOptionStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer>
      */
     protected function indexProductAbstractOptionStorageTransfersByIdProductAbstract(
         array $productAbstractOptionStorageTransfers

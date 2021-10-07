@@ -37,7 +37,7 @@ class VirtualFilesystemHelper extends Module
     /**
      * @param string $path
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getVirtualDirectoryContents(string $path): array
     {

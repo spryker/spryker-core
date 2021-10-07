@@ -174,7 +174,7 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
     }
 
     /**
-     * @return \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface[]
+     * @return array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRoutePluginsProviderPluginInterface>
      */
     protected function getResourceRoutePluginProviderPlugins(): array
     {
@@ -196,7 +196,7 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
     }
 
     /**
-     * @return \Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface[]
+     * @return array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface>
      */
     protected function getResourceRelationshipCollectionProviderPlugins(): array
     {

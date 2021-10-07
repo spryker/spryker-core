@@ -86,9 +86,9 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @param string[] $paths
+     * @param array<string> $paths
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addCoreTemplatePaths(array $paths)
     {
@@ -168,7 +168,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFormTemplateDirectories(): array
     {

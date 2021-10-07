@@ -61,7 +61,7 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -101,7 +101,7 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][] $productReviewsRestResourcesCollection
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]> $productReviewsRestResourcesCollection
      * @param array $productAbstractDataCollection
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
@@ -130,9 +130,9 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getAllSkus(array $resources): array
     {
@@ -156,7 +156,7 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productReviewsRestResources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $productReviewsRestResources
      *
      * @return void
      */

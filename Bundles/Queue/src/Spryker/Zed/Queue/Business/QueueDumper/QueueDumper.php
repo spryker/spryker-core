@@ -32,7 +32,7 @@ class QueueDumper implements QueueDumperInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[]
+     * @var array<\Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface>
      */
     protected $messageProcessorPlugins;
 
@@ -40,7 +40,7 @@ class QueueDumper implements QueueDumperInterface
      * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
      * @param \Spryker\Zed\Queue\QueueConfig $queueConfig
      * @param \Spryker\Zed\Queue\Dependency\Service\QueueToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[] $messageProcessorPlugins
+     * @param array<\Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface> $messageProcessorPlugins
      */
     public function __construct(
         QueueClientInterface $queueClient,
@@ -90,7 +90,7 @@ class QueueDumper implements QueueDumperInterface
      * @param string $queueName
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected function receiveQueueMessages(string $queueName, int $limit): array
     {
@@ -108,7 +108,7 @@ class QueueDumper implements QueueDumperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $messages
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $messages
      *
      * @return array
      */
@@ -124,7 +124,7 @@ class QueueDumper implements QueueDumperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QueueReceiveMessageTransfer[] $queueReceiveMessageTransfers
+     * @param array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer> $queueReceiveMessageTransfers
      * @param bool $acknowledge
      *
      * @return void

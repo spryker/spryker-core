@@ -32,7 +32,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
 
     /**
      * @param string $resourceName
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param string|null $parentResourceId
      *
@@ -63,7 +63,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return array
@@ -90,7 +90,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
         RestRequestInterface $restRequest,
         array &$included
     ): void {
-        /** @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources */
+        /** @var array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources */
         foreach ($resourceRelationships as $resourceType => $resources) {
             if (!$this->hasRelationship($resourceType, $restRequest)) {
                 continue;
@@ -109,7 +109,7 @@ class ResponseRelationship implements ResponseRelationshipInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $included
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $included
      * @param string $resourceId
      *
      * @return bool

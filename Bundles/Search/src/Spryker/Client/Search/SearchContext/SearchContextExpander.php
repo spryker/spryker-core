@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\SearchContextTransfer;
 class SearchContextExpander implements SearchContextExpanderInterface
 {
     /**
-     * @var array|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[]
+     * @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface>
      */
     protected $searchContextExpanderPlugins;
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[] $searchContextExpanderPlugins
+     * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface> $searchContextExpanderPlugins
      */
     public function __construct(array $searchContextExpanderPlugins)
     {

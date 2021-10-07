@@ -41,7 +41,7 @@ class ProductImageToLocaleBridge implements ProductImageToLocaleInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales()
     {
@@ -49,7 +49,7 @@ class ProductImageToLocaleBridge implements ProductImageToLocaleInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection()
     {

@@ -24,7 +24,7 @@ class DataExportFormatter implements DataExportFormatterInterface
     protected const DEFAULT_FORMAT_TYPE = 'csv';
 
     /**
-     * @var \Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportFormatterPluginInterface[]
+     * @var array<\Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportFormatterPluginInterface>
      */
     protected $dataExportFormatterPlugins;
 
@@ -34,7 +34,7 @@ class DataExportFormatter implements DataExportFormatterInterface
     protected $dataExportCsvFormatter;
 
     /**
-     * @param \Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportFormatterPluginInterface[] $dataExportFormatterPlugins
+     * @param array<\Spryker\Service\DataExportExtension\Dependency\Plugin\DataExportFormatterPluginInterface> $dataExportFormatterPlugins
      * @param \Spryker\Service\DataExport\Formatter\DataExportFormatterInterface $dataExportCsvFormatter
      */
     public function __construct(array $dataExportFormatterPlugins, DataExportFormatterInterface $dataExportCsvFormatter)

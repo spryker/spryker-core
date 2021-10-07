@@ -25,7 +25,7 @@ class ProductCategoryFilterGuiToProductFacadeBridge implements ProductCategoryFi
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return array

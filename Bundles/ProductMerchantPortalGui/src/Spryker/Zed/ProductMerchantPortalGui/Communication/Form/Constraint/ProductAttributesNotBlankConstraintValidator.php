@@ -47,7 +47,7 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param string[][] $attributes
+     * @param array<string[]> $attributes
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAttributesNotBlankConstraint $constraint
      *
      * @return void
@@ -94,8 +94,8 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param string[] $formAttribute
-     * @param string[] $existingLocaleNames
+     * @param array<string> $formAttribute
+     * @param array<string> $existingLocaleNames
      *
      * @return bool
      */
@@ -111,9 +111,9 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param string[][] $existingAttributes
+     * @param array<string[]> $existingAttributes
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getLocaleNames(array $existingAttributes): array
     {
@@ -157,7 +157,7 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
      * @return array
      */

@@ -104,7 +104,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface>
      */
     protected function getUrlBeforeCreatePlugins()
     {
@@ -112,7 +112,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface>
      */
     protected function getUrlAfterCreatePlugins()
     {
@@ -120,7 +120,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface>
      */
     protected function getUrlBeforeUpdatePlugins()
     {
@@ -128,7 +128,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface>
      */
     protected function getUrlAfterUpdatePlugins()
     {
@@ -136,7 +136,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface>
      */
     protected function getUrlBeforeDeletePlugins()
     {
@@ -144,7 +144,7 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface[]
+     * @return array<\Spryker\Zed\Url\Dependency\Plugin\UrlDeletePluginInterface>
      */
     protected function getUrlAfterDeletePlugins()
     {

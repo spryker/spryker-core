@@ -26,7 +26,7 @@ class SortConfig implements SortConfigInterface
     public const DEFAULT_SORT_PARAM_KEY = 'sort';
 
     /**
-     * @var \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @var array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     protected $sortConfigTransfers = [];
 
@@ -72,7 +72,7 @@ class SortConfig implements SortConfigInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     public function getAll(): array
     {

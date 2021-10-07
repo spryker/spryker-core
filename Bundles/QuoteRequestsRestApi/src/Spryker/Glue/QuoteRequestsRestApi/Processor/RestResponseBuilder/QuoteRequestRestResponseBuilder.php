@@ -53,7 +53,7 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MessageTransfer[] $messageTransfers
+     * @param array<\Generated\Shared\Transfer\MessageTransfer> $messageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
@@ -183,8 +183,8 @@ class QuoteRequestRestResponseBuilder implements QuoteRequestRestResponseBuilder
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer[] $quoteRequestTransfers
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestTransfer> $quoteRequestTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

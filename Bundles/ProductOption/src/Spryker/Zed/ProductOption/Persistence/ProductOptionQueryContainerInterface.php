@@ -114,7 +114,7 @@ interface ProductOptionQueryContainerInterface
      *
      * @deprecated Use {@link queryTaxSetByIdProductOptionValueAndCountryIso2Code()} instead.
      *
-     * @param int[] $allIdOptionValueUsages
+     * @param array<int> $allIdOptionValueUsages
      * @param string $countryIso2Code
      *
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
@@ -127,8 +127,8 @@ interface ProductOptionQueryContainerInterface
      *
      * @api
      *
-     * @param int[] $idProductOptionValues
-     * @param string[] $countryIso2Codes
+     * @param array<int> $idProductOptionValues
+     * @param array<string> $countryIso2Codes
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery
      */

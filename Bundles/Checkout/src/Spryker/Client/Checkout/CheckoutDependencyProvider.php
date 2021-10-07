@@ -52,7 +52,7 @@ class CheckoutDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface[]
+     * @return array<\Spryker\Client\CheckoutExtension\Dependency\Plugin\CheckoutPreCheckPluginInterface>
      */
     protected function getCheckoutPreCheckPlugins(): array
     {

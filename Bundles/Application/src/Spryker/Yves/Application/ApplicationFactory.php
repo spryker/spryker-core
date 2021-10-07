@@ -30,7 +30,7 @@ class ApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface[]
+     * @return array<\Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerInterface>
      */
     public function createExceptionHandlers()
     {

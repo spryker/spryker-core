@@ -77,7 +77,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param mixed[] $addProductConcreteFormData
+     * @param array<mixed> $addProductConcreteFormData
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $defaultStoreDefaultLocaleTransfer
      *
@@ -113,8 +113,8 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $defaultStoreDefaultLocaleTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
-     * @param mixed[] $productConcreteFormData
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     * @param array<mixed> $productConcreteFormData
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
@@ -140,7 +140,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param mixed[] $productConcreteFormData
+     * @param array<mixed> $productConcreteFormData
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */

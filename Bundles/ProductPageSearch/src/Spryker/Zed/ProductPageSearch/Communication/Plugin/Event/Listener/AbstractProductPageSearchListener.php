@@ -23,7 +23,7 @@ class AbstractProductPageSearchListener extends AbstractPlugin
     public const COL_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class AbstractProductPageSearchListener extends AbstractPlugin
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

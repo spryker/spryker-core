@@ -49,7 +49,7 @@ class CmsBlockProductSynchronizationDataPlugin extends AbstractPlugin implements
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */

@@ -26,7 +26,7 @@ class ModuleNamesFinder implements ModuleNamesFinderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function findModuleNames(): array
     {
@@ -41,9 +41,9 @@ class ModuleNamesFinder implements ModuleNamesFinderInterface
     }
 
     /**
-     * @param string[] $moduleNames
+     * @param array<string> $moduleNames
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addProjectModuleNames(array $moduleNames): array
     {
@@ -58,9 +58,9 @@ class ModuleNamesFinder implements ModuleNamesFinderInterface
     }
 
     /**
-     * @param string[] $moduleNames
+     * @param array<string> $moduleNames
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function addCoreModuleNames(array $moduleNames): array
     {

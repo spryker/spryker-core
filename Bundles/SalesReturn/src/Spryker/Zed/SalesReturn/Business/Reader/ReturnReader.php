@@ -60,14 +60,14 @@ class ReturnReader implements ReturnReaderInterface
     protected $returnTotalCalculator;
 
     /**
-     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface>
      */
     protected $returnExpanderPlugins;
 
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @var \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface>
      */
     protected $returnCollectionExpanderPlugins;
 
@@ -75,8 +75,8 @@ class ReturnReader implements ReturnReaderInterface
      * @param \Spryker\Zed\SalesReturn\Persistence\SalesReturnRepositoryInterface $salesReturnRepository
      * @param \Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\SalesReturn\Business\Calculator\ReturnTotalCalculatorInterface $returnTotalCalculator
-     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[] $returnExpanderPlugins
-     * @param \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[] $returnCollectionExpanderPlugins
+     * @param array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface> $returnExpanderPlugins
+     * @param array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface> $returnCollectionExpanderPlugins
      */
     public function __construct(
         SalesReturnRepositoryInterface $salesReturnRepository,
@@ -141,7 +141,7 @@ class ReturnReader implements ReturnReaderInterface
     /**
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ArrayObject
     {
@@ -177,7 +177,7 @@ class ReturnReader implements ReturnReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnCollectionTransfer $returnCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractReturnIds(ReturnCollectionTransfer $returnCollectionTransfer): array
     {
@@ -215,7 +215,7 @@ class ReturnReader implements ReturnReaderInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIds(ReturnTransfer $returnTransfer): array
     {
@@ -229,9 +229,9 @@ class ReturnReader implements ReturnReaderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function mapOrderItemsByIdSalesOrderItem(ArrayObject $itemTransfers): array
     {
@@ -245,9 +245,9 @@ class ReturnReader implements ReturnReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ReturnItemTransfer[] $returnItemTransfers
+     * @param array<\Generated\Shared\Transfer\ReturnItemTransfer> $returnItemTransfers
      *
-     * @return \Generated\Shared\Transfer\ReturnItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ReturnItemTransfer[]>
      */
     protected function mapReturnItemsByIdReturn(array $returnItemTransfers): array
     {

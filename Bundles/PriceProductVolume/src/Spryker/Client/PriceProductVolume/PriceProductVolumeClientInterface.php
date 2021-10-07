@@ -15,9 +15,9 @@ interface PriceProductVolumeClientInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractProductPricesForProductAbstract(array $priceProductTransfers): array;
 
@@ -29,9 +29,9 @@ interface PriceProductVolumeClientInterface
      * @api
      *
      * @param int $idProductConcrete
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function extractProductPricesForProductConcrete(int $idProductConcrete, array $priceProductTransfers): array;
 }

@@ -30,7 +30,7 @@ class OrderStateMachineFlagReader implements OrderStateMachineFlagReaderInterfac
      *
      * @throws \Spryker\Zed\Oms\Business\Exception\StateNotFoundException
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStateFlags(string $processName, string $stateName): array
     {

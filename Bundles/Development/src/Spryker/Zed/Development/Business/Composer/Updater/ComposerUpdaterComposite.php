@@ -12,7 +12,7 @@ use Symfony\Component\Finder\SplFileInfo;
 class ComposerUpdaterComposite implements ComposerUpdaterCompositeInterface
 {
     /**
-     * @var \Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface[]
+     * @var array<\Spryker\Zed\Development\Business\Composer\Updater\UpdaterInterface>
      */
     protected $updater;
 

@@ -21,13 +21,13 @@ class VersionMigration implements VersionMigrationInterface
     protected $utilEncoding;
 
     /**
-     * @var \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface[]
+     * @var array<\Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface>
      */
     protected $migrationHandlers = [];
 
     /**
      * @param \Spryker\Zed\Cms\Dependency\Service\CmsToUtilEncodingInterface $utilEncoding
-     * @param \Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface[] $migrationHandlers
+     * @param array<\Spryker\Zed\Cms\Business\Version\Migration\MigrationInterface> $migrationHandlers
      */
     public function __construct(CmsToUtilEncodingInterface $utilEncoding, array $migrationHandlers)
     {

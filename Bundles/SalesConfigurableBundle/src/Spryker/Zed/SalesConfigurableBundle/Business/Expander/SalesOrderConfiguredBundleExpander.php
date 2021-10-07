@@ -67,9 +67,9 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer> $salesOrderConfiguredBundleTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer>
      */
     protected function translateConfigurableBundleTemplateNames(ArrayObject $salesOrderConfiguredBundleTransfers): ArrayObject
     {
@@ -89,7 +89,7 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer> $salesOrderConfiguredBundleTransfers
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -111,9 +111,9 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer[] $salesOrderConfiguredBundleTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer> $salesOrderConfiguredBundleTransfers
      *
-     * @return \Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderConfiguredBundleItemTransfer>
      */
     protected function extractSalesOrderConfiguredBundleItems(ArrayObject $salesOrderConfiguredBundleTransfers): array
     {
@@ -132,7 +132,7 @@ class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleEx
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getSalesOrderItemIdsFromOrder(OrderTransfer $orderTransfer): array
     {

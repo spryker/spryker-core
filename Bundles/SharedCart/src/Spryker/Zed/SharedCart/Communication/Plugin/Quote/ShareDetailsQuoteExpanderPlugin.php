@@ -22,12 +22,12 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuotePreExpanderPluginInterface
 class ShareDetailsQuoteExpanderPlugin extends AbstractPlugin implements QuoteExpanderPluginInterface, QuotePreExpanderPluginInterface, QuotePostExpanderPluginInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $quoteIds = [];
 
     /**
-     * @var \ArrayObject[]
+     * @var array<\ArrayObject>
      */
     protected $quoteShareDetailsByIdQuote = [];
 
@@ -99,7 +99,7 @@ class ShareDetailsQuoteExpanderPlugin extends AbstractPlugin implements QuoteExp
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShareDetailTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShareDetailTransfer>
      */
     protected function getShareDetailsByIdQuote(QuoteTransfer $quoteTransfer)
     {

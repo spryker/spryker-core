@@ -37,7 +37,7 @@ use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterfa
 class SecurityCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface[]
+     * @return array<\Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface>
      */
     public function getSecurityPlugins(): array
     {

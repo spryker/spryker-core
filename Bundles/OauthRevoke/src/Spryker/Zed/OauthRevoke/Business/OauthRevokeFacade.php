@@ -82,7 +82,7 @@ class OauthRevokeFacade extends AbstractFacade implements OauthRevokeFacadeInter
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer> $oauthRefreshTokenTransfers
      *
      * @return void
      */

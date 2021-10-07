@@ -23,7 +23,7 @@ interface CategoryImageFacadeInterface
      *
      * @param int $idCategory
      *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
     public function getCategoryImageSetsByIdCategory(int $idCategory): array;
 
@@ -36,7 +36,7 @@ interface CategoryImageFacadeInterface
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
     public function createCategoryImageSetsForCategory(CategoryTransfer $categoryTransfer): ArrayObject;
 

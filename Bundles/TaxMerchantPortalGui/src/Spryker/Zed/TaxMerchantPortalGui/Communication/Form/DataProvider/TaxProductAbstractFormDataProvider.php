@@ -25,7 +25,7 @@ class TaxProductAbstractFormDataProvider implements TaxProductAbstractFormDataPr
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getTaxChoices(): array
     {

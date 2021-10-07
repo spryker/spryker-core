@@ -45,17 +45,17 @@ class User implements UserInterface
     protected $settings;
 
     /**
-     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[]
+     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface>
      */
     protected $userPostSavePlugins;
 
     /**
-     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[]
+     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface>
      */
     protected $userPreSavePlugins;
 
     /**
-     * @var \Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface>
      */
     protected $userTransferExpanderPlugins;
 
@@ -63,9 +63,9 @@ class User implements UserInterface
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Spryker\Zed\User\UserConfig $settings
-     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface[] $userPostSavePlugins
-     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface[] $userPreSavePlugins
-     * @param \Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface[] $userTransferExpanderPlugins
+     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface> $userPostSavePlugins
+     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface> $userPreSavePlugins
+     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface> $userTransferExpanderPlugins
      */
     public function __construct(
         UserQueryContainerInterface $queryContainer,

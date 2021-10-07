@@ -98,10 +98,10 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
     }
 
     /**
-     * @param string[] $merchantReferences
+     * @param array<string> $merchantReferences
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getMerchantOpeningHoursResources(array $merchantReferences, RestRequestInterface $restRequest): array
     {
@@ -117,9 +117,9 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
     }
 
     /**
-     * @param string[] $merchantReferences
+     * @param array<string> $merchantReferences
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getMerchantIdsIndexedByReference(array $merchantReferences): array
     {
@@ -136,10 +136,10 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
     }
 
     /**
-     * @param int[] $merchantIdsIndexedByReference
+     * @param array<int> $merchantIdsIndexedByReference
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer>
      */
     protected function getTranslatedMerchantOpeningHoursStorageTransfers(
         array $merchantIdsIndexedByReference,
@@ -162,10 +162,10 @@ class MerchantOpeningHoursReader implements MerchantOpeningHoursReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[] $merchantOpeningHoursStorageTransfers
-     * @param int[] $merchantIds
+     * @param array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer> $merchantOpeningHoursStorageTransfers
+     * @param array<int> $merchantIds
      *
-     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer>
      */
     protected function indexCollectionByMerchantReferences(array $merchantOpeningHoursStorageTransfers, array $merchantIds): array
     {

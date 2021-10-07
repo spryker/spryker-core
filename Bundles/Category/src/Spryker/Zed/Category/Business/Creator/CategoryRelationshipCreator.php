@@ -41,7 +41,7 @@ class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterfac
     protected $categoryTemplateSync;
 
     /**
-     * @var \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
+     * @var array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface>
      */
     protected $categoryRelationUpdatePlugins;
 
@@ -51,7 +51,7 @@ class CategoryRelationshipCreator implements CategoryRelationshipCreatorInterfac
      * @param \Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface $categoryUrlCreator
      * @param \Spryker\Zed\Category\Business\Creator\CategoryStoreCreatorInterface $categoryStoreCreator
      * @param \Spryker\Zed\Category\Business\Model\CategoryTemplate\CategoryTemplateSyncInterface $categoryTemplateSync
-     * @param \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface[] $categoryRelationUpdatePlugins
+     * @param array<\Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryRelationUpdatePluginInterface> $categoryRelationUpdatePlugins
      */
     public function __construct(
         CategoryNodeCreatorInterface $categoryNodeCreator,

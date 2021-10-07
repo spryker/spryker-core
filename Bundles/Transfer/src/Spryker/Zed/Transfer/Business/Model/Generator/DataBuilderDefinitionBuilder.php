@@ -37,7 +37,7 @@ class DataBuilderDefinitionBuilder extends AbstractDefinitionBuilder
     }
 
     /**
-     * @return \Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface[]
+     * @return array<\Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface>
      */
     public function getDefinitions()
     {

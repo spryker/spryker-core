@@ -59,8 +59,8 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param int[] $categoryIds
-     * @param int[] $storeIds
+     * @param array<int> $categoryIds
+     * @param array<int> $storeIds
      *
      * @return void
      */
@@ -372,8 +372,8 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param int[] $categoryIds
-     * @param int[] $storeIds
+     * @param array<int> $categoryIds
+     * @param array<int> $storeIds
      *
      * @return void
      */
@@ -392,7 +392,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]|\Propel\Runtime\Collection\ObjectCollection $parentCategoryClosureTableEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $parentCategoryClosureTableEntities
      * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $categoryClosureTableEntity
      *
      * @return void
@@ -433,7 +433,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]|\Propel\Runtime\Collection\ObjectCollection $categoryClosureTableEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $categoryClosureTableEntities
      *
      * @return void
      */
@@ -460,7 +460,7 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable[]|\Propel\Runtime\Collection\ObjectCollection $parentCategoryClosureTableEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $parentCategoryClosureTableEntities
      * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $categoryClosureTableEntity
      *
      * @return void
@@ -482,8 +482,8 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
-     * @param int[] $categoryIds
-     * @param int[] $storeIds
+     * @param array<int> $categoryIds
+     * @param array<int> $storeIds
      *
      * @return void
      */

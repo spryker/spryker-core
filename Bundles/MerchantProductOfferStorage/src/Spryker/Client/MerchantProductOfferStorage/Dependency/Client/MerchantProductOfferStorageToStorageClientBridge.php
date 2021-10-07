@@ -33,7 +33,7 @@ class MerchantProductOfferStorageToStorageClientBridge implements MerchantProduc
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

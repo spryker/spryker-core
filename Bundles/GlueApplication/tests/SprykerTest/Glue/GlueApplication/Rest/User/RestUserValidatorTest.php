@@ -79,7 +79,7 @@ class RestUserValidatorTest extends Unit
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserValidatorPluginInterface[] $restUserValidatorPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserValidatorPluginInterface> $restUserValidatorPlugins
      *
      * @return \Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface
      */

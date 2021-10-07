@@ -12,7 +12,7 @@ interface PriceProductReaderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getPriceProductAbstractFromPriceProduct(int $idProductConcrete): array;
 }

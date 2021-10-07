@@ -13,10 +13,10 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface MerchantReaderInterface
 {
     /**
-     * @param string[] $merchantReferences
+     * @param array<string> $merchantReferences
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getMerchantsResources(array $merchantReferences, string $localeName): array;
 

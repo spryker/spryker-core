@@ -50,7 +50,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[]
+     * @var array<\Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface>
      */
     protected $cmsBlockStorageReaderPlugins;
 
@@ -58,7 +58,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Client\CmsBlockStorageToStorageInterface $storageClient
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface[] $cmsBlockStorageReaderPlugins
+     * @param array<\Spryker\Client\CmsBlockStorageExtension\Dependency\Plugin\CmsBlockStorageReaderPluginInterface> $cmsBlockStorageReaderPlugins
      */
     public function __construct(
         CmsBlockStorageToStorageInterface $storageClient,
@@ -104,7 +104,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param string[] $blockNames
+     * @param array<string> $blockNames
      * @param string $localeName
      * @param string $storeName
      *
@@ -118,7 +118,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param string[] $blockKeys
+     * @param array<string> $blockKeys
      * @param string $localeName
      * @param string $storeName
      *
@@ -148,11 +148,11 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param string[] $blockNames
+     * @param array<string> $blockNames
      * @param string $localeName
      * @param string $storeName
      *
-     * @return string[]|null
+     * @return array<string>|null
      */
     protected function getBlockKeysByNames(array $blockNames, $localeName, $storeName): ?array
     {
@@ -182,7 +182,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     /**
      * @param array $options
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getBlockKeysByOptions(array $options): array
     {
@@ -204,9 +204,9 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsBlockTransfer[] $cmsBlockTransfers
+     * @param array<\Generated\Shared\Transfer\CmsBlockTransfer> $cmsBlockTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getBlockKeysFromTransfers(array $cmsBlockTransfers): array
     {

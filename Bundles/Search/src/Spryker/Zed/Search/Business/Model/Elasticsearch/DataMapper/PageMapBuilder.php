@@ -99,7 +99,7 @@ class PageMapBuilder implements PageMapBuilderInterface, ProductPageSearchPageMa
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string|array $value
+     * @param array|string $value
      *
      * @return $this
      */
@@ -116,7 +116,7 @@ class PageMapBuilder implements PageMapBuilderInterface, ProductPageSearchPageMa
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string|array $value
+     * @param array|string $value
      *
      * @return $this
      */
@@ -133,7 +133,7 @@ class PageMapBuilder implements PageMapBuilderInterface, ProductPageSearchPageMa
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string|array $value
+     * @param array|string $value
      *
      * @return $this
      */
@@ -150,7 +150,7 @@ class PageMapBuilder implements PageMapBuilderInterface, ProductPageSearchPageMa
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param string|array $value
+     * @param array|string $value
      *
      * @return $this
      */
@@ -168,7 +168,7 @@ class PageMapBuilder implements PageMapBuilderInterface, ProductPageSearchPageMa
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param string $name
-     * @param string|array $value
+     * @param array|string $value
      *
      * @return $this
      */
@@ -188,7 +188,7 @@ class PageMapBuilder implements PageMapBuilderInterface, ProductPageSearchPageMa
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param string $name
-     * @param int|array $value
+     * @param array|int $value
      *
      * @return $this
      */

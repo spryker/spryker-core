@@ -25,7 +25,7 @@ class ShipmentMethodReader implements ShipmentMethodReaderInterface
     protected $currencyFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\CurrencyTransfer[]
+     * @var array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     protected static $currencyCache = [];
 

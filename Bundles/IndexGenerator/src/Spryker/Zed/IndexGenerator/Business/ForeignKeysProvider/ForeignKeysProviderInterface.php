@@ -10,7 +10,7 @@ namespace Spryker\Zed\IndexGenerator\Business\ForeignKeysProvider;
 interface ForeignKeysProviderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ForeignKeyFileTransfer[]
+     * @return array<\Generated\Shared\Transfer\ForeignKeyFileTransfer>
      */
     public function getForeignKeyList(): array;
 }

@@ -50,7 +50,7 @@ class StoreRelationToggleType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */
@@ -180,7 +180,7 @@ class StoreRelationToggleType extends AbstractType
     }
 
     /**
-     * @return string[] Keys are store ids, values are store names.
+     * @return array<string> Keys are store ids, values are store names.
      */
     protected function getStoreNameMap()
     {

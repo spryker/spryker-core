@@ -18,7 +18,7 @@ use Spryker\Glue\Testify\OpenApi3\SchemaFieldInterface;
 abstract class AbstractCollection implements CollectionInterface, IteratorAggregate, ArrayAccess, Countable
 {
     /**
-     * @var \Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface[]
+     * @var array<\Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface>
      */
     protected $elements = [];
 

@@ -26,14 +26,14 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected $validator;
 
     /**
-     * @var \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface[]
+     * @var array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface>
      */
     protected $priceProductValidatorPlugins;
 
     /**
      * @param \Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProviderInterface $priceProductConstraintProvider
      * @param \Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface $validationAdapter
-     * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface[] $priceProductValidatorPlugins
+     * @param array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface> $priceProductValidatorPlugins
      */
     public function __construct(
         PriceProductConstraintProviderInterface $priceProductConstraintProvider,
@@ -48,7 +48,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
@@ -64,7 +64,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
@@ -102,7 +102,7 @@ class PriceProductValidator implements PriceProductValidatorInterface
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer

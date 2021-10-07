@@ -10,9 +10,9 @@ namespace Spryker\Glue\ProductOptionsRestApi\Dependency\Client;
 interface ProductOptionsRestApiToProductOptionStorageClientInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer>
      */
     public function getBulkProductOptions(array $productAbstractIds): array;
 

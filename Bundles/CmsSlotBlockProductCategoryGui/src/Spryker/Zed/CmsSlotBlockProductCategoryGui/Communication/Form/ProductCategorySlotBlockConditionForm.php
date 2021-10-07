@@ -214,7 +214,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormInterface $productForm
-     * @param int[] $assignedProductAbstractIds
+     * @param array<int> $assignedProductAbstractIds
      * @param array $options
      *
      * @return void
@@ -229,7 +229,7 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
     }
 
     /**
-     * @param int[] $assignedProductAbstractIds
+     * @param array<int> $assignedProductAbstractIds
      *
      * @return array
      */

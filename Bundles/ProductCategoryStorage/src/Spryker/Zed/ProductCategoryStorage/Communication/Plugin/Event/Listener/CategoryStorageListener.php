@@ -30,7 +30,7 @@ class CategoryStorageListener extends AbstractPlugin implements EventBulkHandler
     /**
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @return void
@@ -56,10 +56,10 @@ class CategoryStorageListener extends AbstractPlugin implements EventBulkHandler
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $eventName
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryIds(array $eventTransfers, $eventName): array
     {
@@ -75,7 +75,7 @@ class CategoryStorageListener extends AbstractPlugin implements EventBulkHandler
     /**
      * @param array $eventTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getValidCategoryIds(array $eventTransfers)
     {

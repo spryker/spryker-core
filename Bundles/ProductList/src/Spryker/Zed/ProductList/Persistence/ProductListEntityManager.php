@@ -143,7 +143,7 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
 
     /**
      * @param int $idProductList
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
      * @return void
      */
@@ -159,7 +159,7 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
 
     /**
      * @param int $idProductList
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
      * @return void
      */
@@ -182,7 +182,7 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
 
     /**
      * @param int $idProductList
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -198,7 +198,7 @@ class ProductListEntityManager extends AbstractEntityManager implements ProductL
 
     /**
      * @param int $idProductList
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */

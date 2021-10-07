@@ -172,7 +172,7 @@ class ApiRequestMapper implements ApiRequestMapperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer[] $columnCollection
+     * @param array<\Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer> $columnCollection
      * @param string $columnAlias
      *
      * @return \Generated\Shared\Transfer\PropelQueryBuilderColumnTransfer|null

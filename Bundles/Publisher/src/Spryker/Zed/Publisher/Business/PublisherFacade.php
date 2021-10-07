@@ -19,7 +19,7 @@ class PublisherFacade extends AbstractFacade implements PublisherFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPublisherEventCollection(): array
     {

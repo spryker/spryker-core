@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 interface ProductCategoryStorageEntityManagerInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

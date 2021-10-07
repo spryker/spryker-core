@@ -10,7 +10,7 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage;
 class ResourceSchemaNameStorage implements ResourceSchemaNameStorageInterface
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected static $resourceTypes = [];
 

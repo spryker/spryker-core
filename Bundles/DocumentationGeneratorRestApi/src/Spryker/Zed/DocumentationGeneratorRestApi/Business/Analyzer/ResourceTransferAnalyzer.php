@@ -244,7 +244,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
     /**
      * @param string $transferClassName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getTransferClassNameExploded(string $transferClassName): array
     {

@@ -23,7 +23,7 @@ class PriceConfig extends AbstractSharedConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPriceModes()
     {

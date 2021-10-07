@@ -40,9 +40,9 @@ interface FileManagerStorageMapperInterface
     public function mapFileStorageTransferToEntity(FileStorageTransfer $fileStorageTransfer, SpyFileStorage $fileStorage);
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\FileManagerStorage\Persistence\SpyFileStorage[] $fileStorageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\FileManagerStorage\Persistence\SpyFileStorage> $fileStorageEntities
      *
-     * @return \Generated\Shared\Transfer\FileStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\FileStorageTransfer>
      */
     public function mapFileStorageEntityCollectionToTransferCollection(ObjectCollection $fileStorageEntities): array;
 }

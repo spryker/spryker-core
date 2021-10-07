@@ -16,9 +16,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductLabelSearchRepository extends AbstractRepository implements ProductLabelSearchRepositoryInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductLabelEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductLabelEntityTransfer>
      */
     public function getProductLabelsByIdProductAbstractIn(array $productAbstractIds): array
     {
@@ -34,9 +34,9 @@ class ProductLabelSearchRepository extends AbstractRepository implements Product
     }
 
     /**
-     * @param int[] $productLabelIds
+     * @param array<int> $productLabelIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductLabelIds(array $productLabelIds): array
     {

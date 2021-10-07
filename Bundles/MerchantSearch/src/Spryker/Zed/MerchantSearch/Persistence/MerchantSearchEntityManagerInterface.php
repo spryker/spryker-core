@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MerchantSearchCollectionTransfer;
 interface MerchantSearchEntityManagerInterface
 {
     /**
-     * @param int[] $merchantIds
+     * @param array<int> $merchantIds
      *
      * @return void
      */

@@ -83,7 +83,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getPages(): array
     {
@@ -95,9 +95,9 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Cms\Persistence\SpyCmsPage> $cmsPageEntityCollection
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCmsPageIdsFromCollection(ObjectCollection $cmsPageEntityCollection): array
     {

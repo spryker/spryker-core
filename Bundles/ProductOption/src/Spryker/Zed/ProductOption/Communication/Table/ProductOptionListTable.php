@@ -183,7 +183,7 @@ class ProductOptionListTable extends AbstractTable
         $productOptionGroupQuery = $this->productOptionRepository
             ->expandProductOptionGroupQuery($productOptionGroupQuery);
 
-        /** @var \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup[] $queryResult */
+        /** @var array<\Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup> $queryResult */
         $queryResult = $this->runQuery($productOptionGroupQuery, $config, true);
 
         foreach ($queryResult as $productOptionGroupEntity) {
@@ -219,7 +219,7 @@ class ProductOptionListTable extends AbstractTable
      *   third level keys are simple numerical indexes for each price,
      *   values are formatted prices with symbol.
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $productOptionValueCollection
      *
      * @return array
      */
@@ -279,7 +279,7 @@ class ProductOptionListTable extends AbstractTable
     /**
      * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup $entity
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getFormattedPrices(SpyProductOptionGroup $entity)
     {

@@ -87,9 +87,9 @@ class ProductAbstractProductListSynchronizationDataPlugin extends AbstractPlugin
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(array $ids = [])
     {
@@ -111,7 +111,7 @@ class ProductAbstractProductListSynchronizationDataPlugin extends AbstractPlugin
     /**
      * @param array $ids
      *
-     * @return \Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage[]
+     * @return array<\Orm\Zed\ProductListStorage\Persistence\SpyProductAbstractProductListStorage>
      */
     protected function findSpyProductAbstractProductListStorageEntities(array $ids = []): array
     {

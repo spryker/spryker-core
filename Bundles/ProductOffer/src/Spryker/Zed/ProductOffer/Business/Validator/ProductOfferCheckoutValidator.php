@@ -74,7 +74,7 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferTransfer>
      */
     protected function groupProductOfferTransfersByProductOfferReference(
         QuoteTransfer $quoteTransfer
@@ -110,7 +110,7 @@ class ProductOfferCheckoutValidator implements ProductOfferCheckoutValidatorInte
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractProductOfferReferences(QuoteTransfer $quoteTransfer): array
     {

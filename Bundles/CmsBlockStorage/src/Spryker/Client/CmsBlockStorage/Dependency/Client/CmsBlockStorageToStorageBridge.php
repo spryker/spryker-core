@@ -33,7 +33,7 @@ class CmsBlockStorageToStorageBridge implements CmsBlockStorageToStorageInterfac
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

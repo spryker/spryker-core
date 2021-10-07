@@ -18,7 +18,7 @@ class MerchantDataImportHelper extends Module
     use LocatorHelperTrait;
 
     /**
-     * @param string[] $references
+     * @param array<string> $references
      *
      * @return void
      */

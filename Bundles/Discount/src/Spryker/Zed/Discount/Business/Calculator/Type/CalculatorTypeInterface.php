@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\DiscountTransfer;
 interface CalculatorTypeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\DiscountableItemTransfer[] $discountableItems
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $discountableItems
      * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
      *
      * @return int

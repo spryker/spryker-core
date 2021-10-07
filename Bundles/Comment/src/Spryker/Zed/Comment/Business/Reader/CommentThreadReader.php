@@ -50,7 +50,7 @@ class CommentThreadReader implements CommentThreadReaderInterface
     /**
      * @param \Generated\Shared\Transfer\CommentsRequestTransfer $commentsRequestTransfer
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentThreadTransfer>
      */
     public function getCommentThreads(CommentsRequestTransfer $commentsRequestTransfer): array
     {
@@ -86,9 +86,9 @@ class CommentThreadReader implements CommentThreadReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentThreadTransfer[] $commentThreadTransfers
+     * @param array<\Generated\Shared\Transfer\CommentThreadTransfer> $commentThreadTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function collectThreadIds(array $commentThreadTransfers): array
     {
@@ -101,10 +101,10 @@ class CommentThreadReader implements CommentThreadReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CommentThreadTransfer[] $commentThreadTransfers
-     * @param \Generated\Shared\Transfer\CommentTransfer[] $commentTransfers
+     * @param array<\Generated\Shared\Transfer\CommentThreadTransfer> $commentThreadTransfers
+     * @param array<\Generated\Shared\Transfer\CommentTransfer> $commentTransfers
      *
-     * @return \Generated\Shared\Transfer\CommentThreadTransfer[]
+     * @return array<\Generated\Shared\Transfer\CommentThreadTransfer>
      */
     protected function mapCommentsToThreads(array $commentThreadTransfers, array $commentTransfers): array
     {

@@ -70,7 +70,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     }
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -93,8 +93,8 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[] $configurableBundleTemplateTransfers
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[][] $groupedConfigurableBundleTemplatePageSearchTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer> $configurableBundleTemplateTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]> $groupedConfigurableBundleTemplatePageSearchTransfers
      *
      * @return void
      */
@@ -119,9 +119,9 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     }
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]>
      */
     protected function getConfigurableBundleTemplatePageSearchTransfers(array $configurableBundleTemplateIds): array
     {
@@ -135,7 +135,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]>
      */
     protected function groupConfigurableBundleTemplatePageSearchTransfers(
         ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer
@@ -154,7 +154,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[] $configurableBundleTemplatePageSearchTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer> $configurableBundleTemplatePageSearchTransfers
      *
      * @return void
      */
@@ -190,9 +190,9 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[] $configurableBundleTemplatePageSearchTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer> $configurableBundleTemplatePageSearchTransfers
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer>
      */
     protected function getMappedConfigurableBundleTemplatePageSearchTransfers(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
@@ -219,7 +219,7 @@ class ConfigurableBundleTemplatePublisher implements ConfigurableBundleTemplateP
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[] $configurableBundleTemplatePageSearchTransfers
+     * @param array<\Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer> $configurableBundleTemplatePageSearchTransfers
      *
      * @return void
      */

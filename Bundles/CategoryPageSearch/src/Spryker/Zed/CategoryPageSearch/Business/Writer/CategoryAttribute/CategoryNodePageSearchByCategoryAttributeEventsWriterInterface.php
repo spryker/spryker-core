@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryPageSearch\Business\Writer\CategoryAttribute;
 interface CategoryNodePageSearchByCategoryAttributeEventsWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

@@ -12,56 +12,56 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductCategoryStorageRepositoryInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer>
      */
     public function getAllCategoryNodeAggregationsOrderedByDescendant(): array;
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getAllCategoryNodeIds(): array;
 
     /**
      * @param int $idCategoryNode
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getAllCategoryIdsByCategoryNodeId(int $idCategoryNode): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer>
      */
     public function getProductAbstractLocalizedAttributes(array $productAbstractIds): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryTransfer>
      */
     public function getProductCategoryWithCategoryNodes(array $productAbstractIds): array;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]>
      */
     public function getMappedProductAbstractCategoryStorages(array $productAbstractIds): array;
 
     /**
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array;
 
     /**
      * @param int $offset
      * @param int $limit
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getProductAbstractCategoryStorageSynchronizationDataTransfersByProductAbstractIds(
         int $offset,
@@ -72,7 +72,7 @@ interface ProductCategoryStorageRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryTransfer>
      */
     public function getProductCategoryTransfersByFilter(FilterTransfer $filterTransfer): array;
 }

@@ -20,7 +20,7 @@ interface CmsContentWidgetConfigurationProviderInterface
     public function getFunctionName();
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableTemplates();
 

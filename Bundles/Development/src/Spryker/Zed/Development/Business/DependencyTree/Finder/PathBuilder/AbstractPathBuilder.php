@@ -59,7 +59,7 @@ class AbstractPathBuilder
     }
 
     /**
-     * @param string[] $pathComponents
+     * @param array<string> $pathComponents
      *
      * @return string
      */

@@ -61,7 +61,7 @@ class ShipmentPriceDecisionRulePlugin extends AbstractPlugin implements Decision
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {

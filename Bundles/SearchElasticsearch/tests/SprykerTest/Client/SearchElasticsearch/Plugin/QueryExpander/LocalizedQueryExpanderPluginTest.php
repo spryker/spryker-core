@@ -57,7 +57,7 @@ class LocalizedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     }
 
     /**
-     * @return \Elastica\Query[]
+     * @return array<\Elastica\Query>
      */
     protected function getDataForSimpleLocaleFilteredQuery(): array
     {

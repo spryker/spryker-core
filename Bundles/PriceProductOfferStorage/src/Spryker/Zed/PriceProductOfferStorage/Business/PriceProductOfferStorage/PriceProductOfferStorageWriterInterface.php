@@ -10,35 +10,35 @@ namespace Spryker\Zed\PriceProductOfferStorage\Business\PriceProductOfferStorage
 interface PriceProductOfferStorageWriterInterface
 {
     /**
-     * @param int[] $priceProductOfferIds
+     * @param array<int> $priceProductOfferIds
      *
      * @return void
      */
     public function publish(array $priceProductOfferIds): void;
 
     /**
-     * @param int[] $priceProductOfferIdsWithOfferIds
+     * @param array<int> $priceProductOfferIdsWithOfferIds
      *
      * @return void
      */
     public function unpublish(array $priceProductOfferIdsWithOfferIds): void;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
     public function publishByProductIds(array $productIds): void;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
     public function unpublishByProductIds(array $productIds): void;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

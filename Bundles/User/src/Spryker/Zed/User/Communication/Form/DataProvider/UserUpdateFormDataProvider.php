@@ -25,7 +25,7 @@ class UserUpdateFormDataProvider extends UserFormDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStatusSelectChoices(): array
     {

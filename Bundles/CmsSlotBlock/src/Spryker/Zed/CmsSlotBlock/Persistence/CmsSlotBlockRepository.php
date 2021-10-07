@@ -68,7 +68,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
+     * @return array<\Generated\Shared\Transfer\CmsBlockTransfer>
      */
     public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array
     {
@@ -120,7 +120,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
     }
 
     /**
-     * @param int[] $cmsBlockIds
+     * @param array<int> $cmsBlockIds
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
@@ -141,7 +141,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
      * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getPaginatedCmsBlockIds(
         CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer,
@@ -185,7 +185,7 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCmsBlockIds(FilterTransfer $filterTransfer): array
     {

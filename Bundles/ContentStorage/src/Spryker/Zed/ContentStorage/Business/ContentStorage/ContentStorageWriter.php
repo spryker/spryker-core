@@ -65,7 +65,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
-     * @param int[] $contentIds
+     * @param array<int> $contentIds
      *
      * @return void
      */
@@ -80,8 +80,8 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentTransfer[] $contentTransfers
-     * @param \Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ContentTransfer> $contentTransfers
+     * @param array<\Generated\Shared\Transfer\ContentStorageTransfer> $contentStorageTransfers
      *
      * @return bool
      */
@@ -100,7 +100,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getSharedPersistenceLocaleNames(StoreTransfer $storeTransfer): array
     {
@@ -115,8 +115,8 @@ class ContentStorageWriter implements ContentStorageWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     * @param \Generated\Shared\Transfer\ContentStorageTransfer[][] $contentStorageTransfers
-     * @param string[] $availableLocales
+     * @param array<\Generated\Shared\Transfer\ContentStorageTransfer[]> $contentStorageTransfers
+     * @param array<string> $availableLocales
      *
      * @return void
      */
@@ -151,7 +151,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
-     * @return \Generated\Shared\Transfer\LocalizedContentTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocalizedContentTransfer>
      */
     protected function indexContentTransfersByLocale(ContentTransfer $contentTransfer): array
     {
@@ -166,9 +166,9 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ContentStorageTransfer> $contentStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ContentStorageTransfer[]>
      */
     protected function groupByIdContentAndLocale(iterable $contentStorageTransfers): array
     {

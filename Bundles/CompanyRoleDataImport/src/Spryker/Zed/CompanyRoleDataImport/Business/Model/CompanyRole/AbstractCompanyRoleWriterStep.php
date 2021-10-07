@@ -14,7 +14,7 @@ use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 abstract class AbstractCompanyRoleWriterStep
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCompanyRoleListCache = [];
 

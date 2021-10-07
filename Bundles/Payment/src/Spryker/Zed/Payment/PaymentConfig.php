@@ -26,7 +26,7 @@ class PaymentConfig extends AbstractBundleConfig
      *
      * @phpstan-return array<string, string>
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPaymentStatemachineMappings()
     {

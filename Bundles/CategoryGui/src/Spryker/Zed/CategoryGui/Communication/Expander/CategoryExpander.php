@@ -51,7 +51,7 @@ class CategoryExpander implements CategoryExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractCategoryLocaleIds(CategoryTransfer $categoryTransfer): array
     {

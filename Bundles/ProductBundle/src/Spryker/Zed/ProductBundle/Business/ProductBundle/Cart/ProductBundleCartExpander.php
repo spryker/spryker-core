@@ -144,7 +144,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
      *
      * @return array
      */
@@ -210,7 +210,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOptionTransfer[] $sortedProductOptions
+     * @param array<\Generated\Shared\Transfer\ProductOptionTransfer> $sortedProductOptions
      *
      * @return string
      */
@@ -228,7 +228,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
      * @param string $bundleItemIdentifier
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -264,7 +264,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundledProducts
      * @param int $bundleUnitPrice
      * @param string $priceMode
      *
@@ -391,7 +391,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $bundledProducts
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $bundledProducts
      * @param string $priceMode
      *
      * @return int
@@ -519,7 +519,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getProductConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {

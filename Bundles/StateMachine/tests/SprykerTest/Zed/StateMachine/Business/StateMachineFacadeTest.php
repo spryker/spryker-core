@@ -278,7 +278,7 @@ class StateMachineFacadeTest extends Unit
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
-        /** @var \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems */
+        /** @var array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems */
         $stateMachineItems = [];
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $firstItemIdentifier);
         $stateMachineItems[] = $stateMachineHandler->getItemStateUpdated();
@@ -291,7 +291,7 @@ class StateMachineFacadeTest extends Unit
         $stateMachineHandler = new TestStateMachineHandler();
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
-        /** @var \Generated\Shared\Transfer\StateMachineItemTransfer[] $updatedStateMachineItems */
+        /** @var array<\Generated\Shared\Transfer\StateMachineItemTransfer> $updatedStateMachineItems */
         $updatedStateMachineItems = $stateMachineFacade->getProcessedStateMachineItems($stateMachineItems);
 
         $this->assertCount(2, $updatedStateMachineItems);

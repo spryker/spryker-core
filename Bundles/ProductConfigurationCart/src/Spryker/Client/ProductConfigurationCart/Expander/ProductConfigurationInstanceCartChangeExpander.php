@@ -59,10 +59,10 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer[] $productConfigurationInstancesIndexedBySku
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer> $productConfigurationInstancesIndexedBySku
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function expandItemsWithProductConfigurationInstance(
         array $productConfigurationInstancesIndexedBySku,
@@ -86,9 +86,9 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function extractItemSkus(ArrayObject $itemTransfers): array
     {

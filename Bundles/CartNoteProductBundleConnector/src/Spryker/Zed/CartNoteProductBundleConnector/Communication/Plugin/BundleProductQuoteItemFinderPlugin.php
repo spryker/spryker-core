@@ -27,7 +27,7 @@ class BundleProductQuoteItemFinderPlugin extends AbstractPlugin implements Quote
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function findItem(QuoteTransfer $quoteTransfer, $sku, $groupKey): array
     {

@@ -18,7 +18,7 @@ interface ProductLabelClientInterface
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductLabelTransfer>
      */
     public function findLabelsByIdProductAbstract($idProductAbstract, $localeName);
 
@@ -32,7 +32,7 @@ interface ProductLabelClientInterface
      * @param array $idProductLabels
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\StorageProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\StorageProductLabelTransfer>
      */
     public function findLabels(array $idProductLabels, $localeName);
 

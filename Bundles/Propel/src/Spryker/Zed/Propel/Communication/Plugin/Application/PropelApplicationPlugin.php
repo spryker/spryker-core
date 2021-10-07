@@ -28,11 +28,6 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     protected const DATA_SOURCE_NAME = 'zed';
 
     /**
-     * @var string
-     */
-    protected const LOAD_DATABASE_MAPS_NAME = 'loadDatabase.php';
-
-    /**
      * {@inheritDoc}
      * - Initializes PropelOrm to be used within Zed.
      *
@@ -49,7 +44,7 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
         $manager->setWriteConfiguration($this->getPropelWriteConfiguration());
         $manager->setReadConfiguration($this->getPropelReadConfiguration());
 
-        $this->registerTableMaps();
+        $this->getFacade()->loadPropelTableMap();
 
         $serviceContainer = $this->getServiceContainer();
         $serviceContainer->setAdapterClass(static::DATA_SOURCE_NAME, $this->getConfig()->getCurrentDatabaseEngine());
@@ -79,18 +74,6 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     }
 
     /**
-     * @return void
-     */
-    protected function registerTableMaps(): void
-    {
-        $loadDatabaseMapsPath = $this->getConfig()->getPropelConfig()['paths']['loaderScriptDir'] . DIRECTORY_SEPARATOR . static::LOAD_DATABASE_MAPS_NAME;
-
-        if (file_exists($loadDatabaseMapsPath)) {
-            require_once $loadDatabaseMapsPath;
-        }
-    }
-
-    /**
      * @return bool
      */
     private function hasConnection(): bool
@@ -105,7 +88,7 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     private function getPropelWriteConfiguration(): array
     {
@@ -118,7 +101,7 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     }
 
     /**
-     * @return array|null
+     * @return array<string, mixed>|null
      */
     private function getPropelReadConfiguration(): ?array
     {

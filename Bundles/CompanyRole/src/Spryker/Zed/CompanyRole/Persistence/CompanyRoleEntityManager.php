@@ -89,7 +89,7 @@ class CompanyRoleEntityManager extends AbstractEntityManager implements CompanyR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PermissionTransfer[] $permissions
+     * @param array<\Generated\Shared\Transfer\PermissionTransfer> $permissions
      * @param int $idCompanyRole
      *
      * @return void

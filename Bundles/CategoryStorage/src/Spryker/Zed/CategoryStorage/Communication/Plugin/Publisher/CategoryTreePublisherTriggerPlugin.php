@@ -29,7 +29,7 @@ class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements Publi
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

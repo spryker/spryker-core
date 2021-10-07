@@ -152,7 +152,7 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoresColumnData(ProductOfferTransfer $productOfferTransfer): array
     {
@@ -169,7 +169,7 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return int|string|null
+     * @return string|int|null
      */
     protected function getStockColumnData(ProductOfferTransfer $productOfferTransfer)
     {

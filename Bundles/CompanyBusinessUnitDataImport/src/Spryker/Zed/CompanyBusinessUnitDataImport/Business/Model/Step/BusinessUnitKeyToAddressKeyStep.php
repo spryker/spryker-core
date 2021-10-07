@@ -19,7 +19,7 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class BusinessUnitKeyToAddressKeyStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCompanyUnitAddressListCache = [];
 

@@ -14,18 +14,18 @@ use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 class CheckoutDataMapper implements CheckoutDataMapperInterface
 {
     /**
-     * @var \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface[]
+     * @var array<\Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface>
      */
     protected $checkoutDataResponseMappers;
 
     /**
-     * @var \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface[]
+     * @var array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface>
      */
     protected $checkoutDataResponseMapperPlugins;
 
     /**
-     * @param \Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface[] $checkoutDataResponseMappers
-     * @param \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface[] $checkoutDataResponseMapperPlugins
+     * @param array<\Spryker\Glue\CheckoutRestApi\Processor\CheckoutData\CheckoutDataResponseMapper\CheckoutDataResponseMapperInterface> $checkoutDataResponseMappers
+     * @param array<\Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface> $checkoutDataResponseMapperPlugins
      */
     public function __construct(
         array $checkoutDataResponseMappers,

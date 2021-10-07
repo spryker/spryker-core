@@ -16,7 +16,7 @@ class ProductOfferStockTransformer implements DataTransformerInterface
     /**
      * @phpstan-param array<\Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
-     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer[]|\ArrayObject $productOfferStockTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
@@ -26,11 +26,9 @@ class ProductOfferStockTransformer implements DataTransformerInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
      */
     public function reverseTransform($productOfferStockTransfer): ArrayObject
     {

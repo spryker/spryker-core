@@ -13,12 +13,12 @@ use Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface;
 class SessionLockReleaserPool implements SessionLockReleaserPoolInterface
 {
     /**
-     * @var \Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface[]|\Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[]
+     * @var array<\Spryker\Zed\Session\Business\Lock\SessionLockReleaserInterface|\Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface>
      */
     protected $lockReleaser;
 
     /**
-     * @param \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[] $sessionLockReleaserPlugins
+     * @param array<\Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface> $sessionLockReleaserPlugins
      */
     public function __construct(array $sessionLockReleaserPlugins = [])
     {
@@ -62,7 +62,7 @@ class SessionLockReleaserPool implements SessionLockReleaserPoolInterface
     }
 
     /**
-     * @param \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface[] $sessionLockReleaserPlugins
+     * @param array<\Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface> $sessionLockReleaserPlugins
      *
      * @return void
      */

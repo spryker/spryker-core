@@ -17,7 +17,7 @@ use Spryker\Zed\Api\Dependency\Plugin\OptionsForItemInterface;
 class ResourceHandler implements ResourceHandlerInterface
 {
     /**
-     * @var \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface[]
+     * @var array<\Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface>
      */
     protected $pluginCollection;
 
@@ -27,7 +27,7 @@ class ResourceHandler implements ResourceHandlerInterface
     protected $config;
 
     /**
-     * @param \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface[] $pluginCollection
+     * @param array<\Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface> $pluginCollection
      * @param \Spryker\Zed\Api\ApiConfig $config
      */
     public function __construct(array $pluginCollection, ApiConfig $config)

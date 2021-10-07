@@ -101,7 +101,7 @@ class ProductQuantityBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param string $sku
-     * @param int|float|string $quantity
+     * @param string|float|int $quantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */

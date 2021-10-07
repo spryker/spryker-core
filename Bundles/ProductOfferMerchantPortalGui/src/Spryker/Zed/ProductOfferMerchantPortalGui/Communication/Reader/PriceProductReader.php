@@ -38,7 +38,7 @@ class PriceProductReader implements PriceProductReaderInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getPriceProductTransfers(
         PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer

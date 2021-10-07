@@ -25,7 +25,7 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return array
      */
@@ -35,7 +35,7 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return array
      */
@@ -47,7 +47,7 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[] $productConcretePageSearchTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer> $productConcretePageSearchTransfers
      *
      * @return array
      */
@@ -69,7 +69,7 @@ class ProductConcretePageSearchReader implements ProductConcretePageSearchReader
     /**
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array
     {

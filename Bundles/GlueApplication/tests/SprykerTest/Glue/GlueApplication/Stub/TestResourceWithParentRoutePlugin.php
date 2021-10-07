@@ -15,6 +15,26 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class TestResourceWithParentRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
+     * @var string
+     */
+    protected $resourceType;
+
+    /**
+     * @var string
+     */
+    private $parentResourceType;
+
+    /**
+     * @param string $resourceType
+     * @param string $parentResourceType
+     */
+    public function __construct(string $resourceType = 'tests', string $parentResourceType = 'test-parent')
+    {
+        $this->resourceType = $resourceType;
+        $this->parentResourceType = $parentResourceType;
+    }
+
+    /**
      * @api
      *
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
@@ -38,7 +58,7 @@ class TestResourceWithParentRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getResourceType(): string
     {
-        return 'tests';
+        return $this->resourceType;
     }
 
     /**
@@ -68,6 +88,6 @@ class TestResourceWithParentRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getParentResourceType(): string
     {
-        return 'test-parent';
+        return $this->parentResourceType;
     }
 }

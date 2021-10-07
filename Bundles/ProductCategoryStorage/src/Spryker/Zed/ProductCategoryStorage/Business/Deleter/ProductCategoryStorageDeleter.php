@@ -44,7 +44,7 @@ class ProductCategoryStorageDeleter implements ProductCategoryStorageDeleterInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -57,7 +57,7 @@ class ProductCategoryStorageDeleter implements ProductCategoryStorageDeleterInte
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

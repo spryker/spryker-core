@@ -14,7 +14,7 @@ interface GlueControllerFinderInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return \SplFileInfo[]
+     * @return array<\SplFileInfo>
      */
     public function getGlueControllerFilesFromPlugin(ResourceRoutePluginInterface $plugin): array;
 }

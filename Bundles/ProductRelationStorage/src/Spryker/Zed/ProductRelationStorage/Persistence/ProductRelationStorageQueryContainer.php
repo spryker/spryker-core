@@ -21,7 +21,7 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductRelationStorage\Persistence\SpyProductAbstractRelationStorageQuery
      */
@@ -38,7 +38,7 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -74,7 +74,7 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */
@@ -91,7 +91,7 @@ class ProductRelationStorageQueryContainer extends AbstractQueryContainer implem
      *
      * @api
      *
-     * @param int[] $productRelationIds
+     * @param array<int> $productRelationIds
      *
      * @return \Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery
      */

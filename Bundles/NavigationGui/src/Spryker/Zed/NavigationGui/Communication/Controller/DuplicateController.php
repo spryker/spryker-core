@@ -31,7 +31,7 @@ class DuplicateController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -46,7 +46,7 @@ class DuplicateController extends AbstractController
      * @param \Symfony\Component\Form\FormInterface $duplicateNavigationForm
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function handleDuplicateNavigationForm(FormInterface $duplicateNavigationForm, Request $request)
     {

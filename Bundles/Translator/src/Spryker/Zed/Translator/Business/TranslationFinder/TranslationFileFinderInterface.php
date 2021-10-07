@@ -10,9 +10,9 @@ namespace Spryker\Zed\Translator\Business\TranslationFinder;
 interface TranslationFileFinderInterface
 {
     /**
-     * @param string[] $translationFilePathPatterns
+     * @param array<string> $translationFilePathPatterns
      *
-     * @return string[]
+     * @return array<string>
      */
     public function findFilesByGlobPatterns(array $translationFilePathPatterns): array;
 }

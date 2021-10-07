@@ -21,7 +21,7 @@ use Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual;
 class OperatorProvider
 {
     /**
-     * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface[]
+     * @return array<\Spryker\Zed\Discount\Business\QueryString\Comparator\ComparatorInterface>
      */
     public function createComparators()
     {

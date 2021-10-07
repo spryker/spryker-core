@@ -54,7 +54,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[][] $categoryNodes
+     * @param array<\Generated\Shared\Transfer\NodeTransfer[]> $categoryNodes
      * @param \Generated\Shared\Transfer\NodeTransfer $parentNodeTransfer
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
@@ -72,10 +72,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\NodeTransfer[][] $categoryNodesCollection
+     * @param array<\Generated\Shared\Transfer\NodeTransfer[]> $categoryNodesCollection
      * @param \Generated\Shared\Transfer\NodeTransfer $categoryNode
      *
-     * @return \Generated\Shared\Transfer\NodeTransfer[]
+     * @return array<\Generated\Shared\Transfer\NodeTransfer>
      */
     protected function findChildrenNodes(array $categoryNodesCollection, NodeTransfer $categoryNode): array
     {

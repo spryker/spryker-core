@@ -22,12 +22,12 @@ use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCustomerListCache = [];
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $idCompanyListCache = [];
 

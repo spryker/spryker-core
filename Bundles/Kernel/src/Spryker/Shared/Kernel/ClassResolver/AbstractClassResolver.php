@@ -78,7 +78,7 @@ abstract class AbstractClassResolver
     protected static $sharedFactory;
 
     /**
-     * @var string[]|null
+     * @var array<string>|null
      */
     protected static $resolvableTypeClassNamePatternMap;
 
@@ -98,7 +98,7 @@ abstract class AbstractClassResolver
     protected $classInfo;
 
     /**
-     * @var object[]
+     * @var array<object>
      */
     protected static $cachedInstances = [];
 
@@ -261,7 +261,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getResolvableTypeClassNamePatternMap(): array
     {
@@ -513,7 +513,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     private function buildClassNames()
     {
@@ -526,9 +526,9 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @param string[] $classNames
+     * @param array<string> $classNames
      *
-     * @return string[]
+     * @return array<string>
      */
     private function addProjectClassNames(array $classNames)
     {
@@ -557,9 +557,9 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @param string[] $classNames
+     * @param array<string> $classNames
      *
-     * @return string[]
+     * @return array<string>
      */
     private function addCoreClassNames(array $classNames)
     {
@@ -571,7 +571,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getProjectNamespaces()
     {
@@ -583,7 +583,7 @@ abstract class AbstractClassResolver
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getCoreNamespaces()
     {

@@ -38,7 +38,7 @@ class TouchUpdaterStub extends AbstractTouchUpdater
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      * @param int $idLocale
      *
      * @return void

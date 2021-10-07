@@ -10,7 +10,7 @@ namespace Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander;
 interface ProductOfferExpanderInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
      * @return void
      */

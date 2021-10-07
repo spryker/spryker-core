@@ -35,7 +35,7 @@ class DryRunImportController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -65,7 +65,7 @@ class DryRunImportController extends AbstractController
      * @param int|null $idPriceProductScheduleList
      * @param \Symfony\Component\Form\FormInterface $priceProductScheduleImportForm
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function processResponseByPriceProductScheduleList(?int $idPriceProductScheduleList, FormInterface $priceProductScheduleImportForm)
     {

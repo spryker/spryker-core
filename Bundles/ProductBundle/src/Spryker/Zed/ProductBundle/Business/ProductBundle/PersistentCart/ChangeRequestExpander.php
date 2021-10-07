@@ -45,7 +45,7 @@ class ChangeRequestExpander implements ChangeRequestExpanderInterface
      * @param string $groupKey
      * @param int $numberOfBundlesToRemove
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getBundledItems(QuoteTransfer $quoteTransfer, string $groupKey, int $numberOfBundlesToRemove)
     {

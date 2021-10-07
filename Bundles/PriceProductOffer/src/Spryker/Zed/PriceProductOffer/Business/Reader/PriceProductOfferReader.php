@@ -19,19 +19,19 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     protected $priceProductOfferRepository;
 
     /**
-     * @var \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExtractorPluginInterface[]
+     * @var array<\Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExtractorPluginInterface>
      */
     protected $priceProductOfferExtractorPlugins;
 
     /**
-     * @var \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExpanderPluginInterface>
      */
     protected $priceProductOfferExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface $priceProductOfferRepository
-     * @param \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExtractorPluginInterface[] $priceProductOfferExtractorPlugins
-     * @param \Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExpanderPluginInterface[] $priceProductOfferExpanderPlugins
+     * @param array<\Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExtractorPluginInterface> $priceProductOfferExtractorPlugins
+     * @param array<\Spryker\Zed\PriceProductOfferExtension\Dependency\Plugin\PriceProductOfferExpanderPluginInterface> $priceProductOfferExpanderPlugins
      */
     public function __construct(
         PriceProductOfferRepositoryInterface $priceProductOfferRepository,
@@ -44,11 +44,9 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     }
 
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getProductOfferPrices(
         PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer

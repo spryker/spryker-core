@@ -201,7 +201,7 @@ class PriceVolumeCollectionDataProvider
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductVolumeItemTransfer>
      */
     protected function getVolumes(PriceProductTransfer $priceProductTransfer): array
     {
@@ -214,7 +214,7 @@ class PriceVolumeCollectionDataProvider
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductVolumeItemTransfer>
      */
     protected function getPreSavedVolumes(PriceProductTransfer $priceProductTransfer): array
     {
@@ -235,7 +235,7 @@ class PriceVolumeCollectionDataProvider
     /**
      * @param int $quantity
      *
-     * @return \Generated\Shared\Transfer\PriceProductVolumeItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductVolumeItemTransfer>
      */
     protected function generateEmptyPriceProductVolumeItemTransfers(int $quantity): array
     {

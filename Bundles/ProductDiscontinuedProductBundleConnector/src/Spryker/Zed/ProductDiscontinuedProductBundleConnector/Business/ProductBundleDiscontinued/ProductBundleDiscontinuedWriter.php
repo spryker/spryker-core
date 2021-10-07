@@ -91,7 +91,7 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getBundledProductConcreteIds(ProductConcreteTransfer $productConcreteTransfer): array
     {

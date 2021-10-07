@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductRelationGui\Dependency\Facade;
 interface ProductRelationGuiToProductAttributeFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function getProductAttributeCollection();
 }

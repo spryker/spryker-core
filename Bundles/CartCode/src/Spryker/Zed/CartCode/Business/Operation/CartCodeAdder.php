@@ -30,7 +30,7 @@ class CartCodeAdder implements CartCodeAdderInterface
     protected $recalculationResultProcessor;
 
     /**
-     * @var \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[]
+     * @var array<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface>
      */
     protected $cartCodePlugins;
 
@@ -38,7 +38,7 @@ class CartCodeAdder implements CartCodeAdderInterface
      * @param \Spryker\Zed\CartCode\Dependency\Facade\CartCodeToCalculationFacadeInterface $calculationClient
      * @param \Spryker\Zed\CartCode\Business\Operation\QuoteOperationCheckerInterface $quoteOperationChecker
      * @param \Spryker\Zed\CartCode\Business\Operation\RecalculationResultProcessorInterface $recalculationResultProcessor
-     * @param \Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface[] $cartCodePlugins
+     * @param array<\Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface> $cartCodePlugins
      */
     public function __construct(
         CartCodeToCalculationFacadeInterface $calculationClient,

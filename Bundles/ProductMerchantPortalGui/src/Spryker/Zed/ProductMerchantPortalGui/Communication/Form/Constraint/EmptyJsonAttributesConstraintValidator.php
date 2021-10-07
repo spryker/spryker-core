@@ -66,9 +66,9 @@ class EmptyJsonAttributesConstraintValidator extends AbstractConstraintValidator
     }
 
     /**
-     * @param mixed[] $attributes
+     * @param array<mixed> $attributes
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getAttributesIndexedByValue(array $attributes): array
     {
@@ -81,7 +81,7 @@ class EmptyJsonAttributesConstraintValidator extends AbstractConstraintValidator
     }
 
     /**
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function getExistingAttributes(): array
     {

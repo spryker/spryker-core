@@ -40,7 +40,7 @@ class MerchantSalesReturnMerchantUserGuiToMerchantOmsFacadeBridge implements Mer
     /**
      * @phpstan-return array<int, array<\Generated\Shared\Transfer\StateMachineItemTransfer>>
      *
-     * @param int[] $merchantOrderItemIds
+     * @param array<int> $merchantOrderItemIds
      *
      * @return array
      */

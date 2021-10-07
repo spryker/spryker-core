@@ -19,7 +19,7 @@ interface FilesystemProviderInterface
     public function getFilesystemByName($name);
 
     /**
-     * @return \League\Flysystem\Filesystem[]
+     * @return array<\League\Flysystem\Filesystem>
      */
     public function getFilesystemCollection();
 }

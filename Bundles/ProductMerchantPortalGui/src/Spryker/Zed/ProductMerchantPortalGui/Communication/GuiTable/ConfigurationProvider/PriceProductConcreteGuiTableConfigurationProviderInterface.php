@@ -13,7 +13,7 @@ interface PriceProductConcreteGuiTableConfigurationProviderInterface
 {
     /**
      * @param int $idProductConcrete
-     * @param mixed[] $initialData
+     * @param array<mixed> $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */

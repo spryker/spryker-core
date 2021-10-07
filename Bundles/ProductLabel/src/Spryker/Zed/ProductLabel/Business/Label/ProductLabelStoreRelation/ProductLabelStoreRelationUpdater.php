@@ -72,7 +72,7 @@ class ProductLabelStoreRelationUpdater implements ProductLabelStoreRelationUpdat
     /**
      * @param int $idProductLabel
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStoreByIdProductLabel(int $idProductLabel): array
     {

@@ -21,7 +21,7 @@ interface DataExportFacadeInterface
      *
      * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
      *
-     * @return \Generated\Shared\Transfer\DataExportReportTransfer[]
+     * @return array<\Generated\Shared\Transfer\DataExportReportTransfer>
      */
     public function exportDataEntities(DataExportConfigurationsTransfer $dataExportConfigurationsTransfer): array;
 }

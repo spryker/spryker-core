@@ -15,7 +15,7 @@ use IteratorAggregate;
 interface DocumentationGeneratorRestApiToFinderInterface extends IteratorAggregate
 {
     /**
-     * @param string|array $dirs
+     * @param array|string $dirs
      *
      * @throws \InvalidArgumentException
      *

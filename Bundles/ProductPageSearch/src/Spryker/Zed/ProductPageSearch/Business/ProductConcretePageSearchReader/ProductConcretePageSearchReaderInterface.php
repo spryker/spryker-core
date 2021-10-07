@@ -10,9 +10,9 @@ namespace Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader
 interface ProductConcretePageSearchReaderInterface
 {
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
     public function getProductConcretePageSearchTransfersByProductIds(array $productIds): array;
 
@@ -26,7 +26,7 @@ interface ProductConcretePageSearchReaderInterface
      *     ]
      *   ]
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return array
      */
@@ -35,7 +35,7 @@ interface ProductConcretePageSearchReaderInterface
     /**
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
-     * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
     public function getProductConcretePageSearchTransfersByProductAbstractStoreMap(array $productAbstractStoreMap): array;
 }

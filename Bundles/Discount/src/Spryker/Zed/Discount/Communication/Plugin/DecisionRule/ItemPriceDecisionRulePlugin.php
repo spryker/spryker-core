@@ -56,7 +56,7 @@ class ItemPriceDecisionRulePlugin extends AbstractPlugin implements DecisionRule
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function acceptedDataTypes()
     {

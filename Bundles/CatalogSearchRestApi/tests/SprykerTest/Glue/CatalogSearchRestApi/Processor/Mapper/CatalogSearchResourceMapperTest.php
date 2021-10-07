@@ -180,7 +180,7 @@ class CatalogSearchResourceMapperTest extends Unit
     }
 
     /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\RestCatalogSearchAbstractProductsTransfer>
      */
     protected function getProductsFromRestCatalogSearchAttributesTransfer(): ArrayObject
     {

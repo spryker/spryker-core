@@ -21,7 +21,7 @@ class InstallMultiPathFinder implements PathFinderInterface
     public const SEARCH_FOLDER_DEPTH_LEVEL = '< 2';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $pathPatterns = [];
 
@@ -43,7 +43,7 @@ class InstallMultiPathFinder implements PathFinderInterface
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     public function find(): Finder
     {

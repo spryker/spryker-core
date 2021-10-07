@@ -36,7 +36,7 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer>
      */
     public function findProductLabelProductAbstractRelationChanges()
     {
@@ -60,10 +60,10 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
     }
 
     /**
-     * @param int[][] $relationsToDeAssign
-     * @param int[][] $relationsToAssign
+     * @param array<int[]> $relationsToDeAssign
+     * @param array<int[]> $relationsToAssign
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getUniqueProductLabelIds(array $relationsToDeAssign, array $relationsToAssign): array
     {

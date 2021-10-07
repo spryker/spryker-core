@@ -20,7 +20,7 @@ class ConfigurableBundleTemplatePageSearchExpander implements ConfigurableBundle
     protected $productImageFacade;
 
     /**
-     * @var \Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ConfigurableBundlePageSearchExtension\Dependency\Plugin\ConfigurableBundleTemplatePageDataExpanderPluginInterface>
      */
     protected $configurableBundleTemplatePageDataExpanderPlugins;
 

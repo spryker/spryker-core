@@ -54,9 +54,9 @@ class ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin extend
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
@@ -130,7 +130,7 @@ class ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin extend
      * @param int $limit
      * @param array $ids
      *
-     * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage>
      */
     protected function getProductConcreteProductOffersStorageEntities(int $offset, int $limit, array $ids): ObjectCollection
     {

@@ -25,7 +25,7 @@ class ShoppingListToZedRequestClientBridge implements ShoppingListToZedRequestCl
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getLastResponseErrorMessages()
     {
@@ -33,7 +33,7 @@ class ShoppingListToZedRequestClientBridge implements ShoppingListToZedRequestCl
     }
 
     /**
-     * @return \Generated\Shared\Transfer\MessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MessageTransfer>
      */
     public function getResponsesErrorMessages(): array
     {

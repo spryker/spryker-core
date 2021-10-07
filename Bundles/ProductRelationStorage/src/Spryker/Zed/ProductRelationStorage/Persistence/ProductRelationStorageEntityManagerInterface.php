@@ -27,7 +27,7 @@ interface ProductRelationStorageEntityManagerInterface
 
     /**
      * @param int $productAbstractId
-     * @param string[] $stores
+     * @param array<string> $stores
      *
      * @return void
      */
@@ -37,7 +37,7 @@ interface ProductRelationStorageEntityManagerInterface
     ): void;
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */

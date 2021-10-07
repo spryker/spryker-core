@@ -12,7 +12,7 @@ interface ProductCategoryReaderInterface
     /**
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getAbstractProductCategoryIds(int $idProductAbstract): array;
 }

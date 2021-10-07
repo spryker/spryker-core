@@ -13,9 +13,9 @@ interface ProductConfigurationStorageRepositoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productConfigurationStorageIds
+     * @param array<int> $productConfigurationStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getFilteredProductConfigurationStorageDataTransfers(
         FilterTransfer $filterTransfer,

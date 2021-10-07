@@ -25,7 +25,7 @@ class SearchElasticsearchGuiToSearchElasticsearchFacadeBridge implements SearchE
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexNames(): array
     {
@@ -35,7 +35,7 @@ class SearchElasticsearchGuiToSearchElasticsearchFacadeBridge implements SearchE
     /**
      * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getIndexMetaData(ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer): array
     {

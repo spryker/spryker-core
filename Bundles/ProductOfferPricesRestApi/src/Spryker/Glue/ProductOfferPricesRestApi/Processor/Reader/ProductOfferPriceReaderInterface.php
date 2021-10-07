@@ -20,10 +20,10 @@ interface ProductOfferPriceReaderInterface
     public function getProductOfferPrices(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      * @param string $localeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getProductOfferPriceRestResources(array $productOfferReferences, string $localeName): array;
 }

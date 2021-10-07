@@ -74,9 +74,9 @@ class BusinessHelperTest extends Unit
     }
 
     /**
-     * @param \Codeception\RealInstanceType|object|\PHPUnit\Framework\MockObject\MockObject $configHelperStub
+     * @param \Codeception\RealInstanceType|\PHPUnit\Framework\MockObject\MockObject|object $configHelperStub
      *
-     * @return \Codeception\RealInstanceType|object|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Codeception\RealInstanceType|\PHPUnit\Framework\MockObject\MockObject|object
      */
     protected function getBusinessHelper($configHelperStub)
     {

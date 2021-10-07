@@ -224,7 +224,7 @@ class IndexInstaller implements SearchInstallerInterface
     }
 
     /**
-     * @param string[] $settings
+     * @param array<string> $settings
      *
      * @return bool
      */
@@ -239,9 +239,9 @@ class IndexInstaller implements SearchInstallerInterface
 
     /**
      * @param string $indexState
-     * @param string[] $settings
+     * @param array<string> $settings
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterSettingsByIndexState(string $indexState, array $settings): array
     {

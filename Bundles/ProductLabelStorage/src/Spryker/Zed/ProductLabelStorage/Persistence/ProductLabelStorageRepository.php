@@ -20,9 +20,9 @@ use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationData
 class ProductLabelStorageRepository extends AbstractRepository implements ProductLabelStorageRepositoryInterface
 {
     /**
-     * @param int[] $productLabelIds
+     * @param array<int> $productLabelIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByProductLabelIds(array $productLabelIds): array
     {
@@ -37,7 +37,7 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -61,7 +61,7 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer>
      */
     public function getProductLabelDictionaryStorageTransfers(): array
     {
@@ -83,9 +83,9 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productAbstractLabelStorageIds
+     * @param array<int> $productAbstractLabelStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getProductAbstractLabelStorageDataTransfersByIds(
         FilterTransfer $filterTransfer,
@@ -107,9 +107,9 @@ class ProductLabelStorageRepository extends AbstractRepository implements Produc
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $productLabelDictionaryStorageIds
+     * @param array<int> $productLabelDictionaryStorageIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getProductLabelDictionaryStorageDataTransfersByIds(
         FilterTransfer $filterTransfer,

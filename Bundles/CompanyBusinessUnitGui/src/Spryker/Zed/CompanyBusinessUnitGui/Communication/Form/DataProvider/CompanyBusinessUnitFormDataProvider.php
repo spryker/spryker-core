@@ -55,7 +55,7 @@ class CompanyBusinessUnitFormDataProvider
     /**
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getOptions(?int $idCompanyBusinessUnit = null): array
     {
@@ -86,7 +86,7 @@ class CompanyBusinessUnitFormDataProvider
     }
 
     /**
-     * @return int[] [company name => company id]
+     * @return array<int> [company name => company id]
      */
     protected function prepareCompanyChoices(): array
     {
@@ -110,7 +110,7 @@ class CompanyBusinessUnitFormDataProvider
      *
      * @param int|null $idCompanyBusinessUnit
      *
-     * @return mixed[] [[unitKey => idUnit], [unitKey => ['data-id_company' => idCompany]]]
+     * @return array<mixed> [[unitKey => idUnit], [unitKey => ['data-id_company' => idCompany]]]
      *                Where unitKey: "<idUnit> - <unitName>"
      */
     protected function prepareUnitParentAttributeMap(?int $idCompanyBusinessUnit = null): array

@@ -49,7 +49,7 @@ class CmsSynchronizationDataPlugin extends AbstractPlugin implements Synchroniza
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */

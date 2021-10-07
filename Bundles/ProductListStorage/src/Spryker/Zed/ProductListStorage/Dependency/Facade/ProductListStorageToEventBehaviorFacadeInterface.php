@@ -10,17 +10,17 @@ namespace Spryker\Zed\ProductListStorage\Dependency\Facade;
 interface ProductListStorageToEventBehaviorFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getEventTransferIds(array $eventTransfers): array;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $foreignKeyColumnName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName): array;
 }

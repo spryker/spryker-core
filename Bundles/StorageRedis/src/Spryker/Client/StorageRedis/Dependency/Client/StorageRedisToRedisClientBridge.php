@@ -65,7 +65,7 @@ class StorageRedisToRedisClientBridge implements StorageRedisToRedisClientInterf
 
     /**
      * @param string $connectionKey
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return int
      */
@@ -119,7 +119,7 @@ class StorageRedisToRedisClientBridge implements StorageRedisToRedisClientInterf
 
     /**
      * @param string $connectionKey
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */
@@ -154,7 +154,7 @@ class StorageRedisToRedisClientBridge implements StorageRedisToRedisClientInterf
      * @param string $connectionKey
      * @param string $pattern
      *
-     * @return string[]
+     * @return array<string>
      */
     public function keys(string $connectionKey, string $pattern): array
     {

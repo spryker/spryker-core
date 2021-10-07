@@ -18,7 +18,7 @@ class TestEventBulkListenerPluginStub implements EventBulkHandlerInterface
     protected static $exceptionThrownCount = 0;
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
      *
      * @throws \Exception

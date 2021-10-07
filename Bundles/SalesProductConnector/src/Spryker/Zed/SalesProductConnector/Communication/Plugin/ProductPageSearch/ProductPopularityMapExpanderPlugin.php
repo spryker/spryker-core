@@ -33,7 +33,7 @@ class ProductPopularityMapExpanderPlugin extends AbstractPlugin implements Produ
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
-     * @param mixed[] $productData
+     * @param array<mixed> $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer

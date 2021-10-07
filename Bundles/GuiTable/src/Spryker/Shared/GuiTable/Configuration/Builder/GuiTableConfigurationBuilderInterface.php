@@ -157,7 +157,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param bool $isSortable
      * @param bool $isHideable
      * @param string|null $color
-     * @param mixed[]|null $colorMapping
+     * @param array<mixed>|null $colorMapping
      *
      * @return $this
      */
@@ -199,7 +199,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param string[] $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
+     * @param array<string> $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
      *
      * @return $this
      */
@@ -211,7 +211,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param \Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer[] $options
+     * @param array<\Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer> $options
      *
      * @return $this
      */
@@ -432,7 +432,7 @@ interface GuiTableConfigurationBuilderInterface
      *
      * @api
      *
-     * @param string[][] $data
+     * @param array<string[]> $data
      *
      * @return $this
      */

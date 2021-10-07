@@ -20,12 +20,12 @@ class UrlGenerator extends CompiledUrlGenerator implements RouterEnhancerAwareIn
     protected $request;
 
     /**
-     * @var \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[]
+     * @var array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface>
      */
     protected $routerEnhancerPlugins;
 
     /**
-     * @param \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface[] $routerEnhancerPlugins
+     * @param array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface> $routerEnhancerPlugins
      *
      * @return void
      */

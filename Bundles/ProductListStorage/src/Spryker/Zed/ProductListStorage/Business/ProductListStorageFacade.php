@@ -20,7 +20,7 @@ class ProductListStorageFacade extends AbstractFacade implements ProductListStor
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class ProductListStorageFacade extends AbstractFacade implements ProductListStor
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */
@@ -52,9 +52,9 @@ class ProductListStorageFacade extends AbstractFacade implements ProductListStor
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsByProductConcreteIds(array $productConcreteIds): array
     {
@@ -68,9 +68,9 @@ class ProductListStorageFacade extends AbstractFacade implements ProductListStor
      *
      * @api
      *
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIdsByCategoryIds(array $categoryIds): array
     {
@@ -84,9 +84,9 @@ class ProductListStorageFacade extends AbstractFacade implements ProductListStor
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -100,7 +100,7 @@ class ProductListStorageFacade extends AbstractFacade implements ProductListStor
      *
      * @api
      *
-     * @param int[] $productListIds
+     * @param array<int> $productListIds
      *
      * @return void
      */

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 interface PriceProductTableRowMatcherInterface
 {
     /**
-     * @param mixed[] $initialDataRow
+     * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array $propertyPath
      *

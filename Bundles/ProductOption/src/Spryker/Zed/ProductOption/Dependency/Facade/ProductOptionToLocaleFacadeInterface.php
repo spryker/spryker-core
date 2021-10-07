@@ -33,7 +33,7 @@ interface ProductOptionToLocaleFacadeInterface
     public function getLocaleByCode($localeCode);
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 

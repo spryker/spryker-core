@@ -17,7 +17,7 @@ use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
 class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @var array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     protected $facetConfigTransfers = [];
 
@@ -46,7 +46,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     }
 
     /**
-     * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     public function getAll()
     {
@@ -64,7 +64,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     /**
      * @param array $requestParameters
      *
-     * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     public function getActive(array $requestParameters)
     {

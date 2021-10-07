@@ -21,14 +21,14 @@ interface ProductDiscontinuedRepositoryInterface
     public function findProductDiscontinuedByProductId(ProductDiscontinuedTransfer $productDiscontinuedTransfer): ?ProductDiscontinuedTransfer;
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */
     public function areAllConcreteProductsDiscontinued(array $productIds): bool;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return bool
      */
@@ -58,7 +58,7 @@ interface ProductDiscontinuedRepositoryInterface
     public function checkIfProductDiscontinuedBySku(string $sku): bool;
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array;
 }

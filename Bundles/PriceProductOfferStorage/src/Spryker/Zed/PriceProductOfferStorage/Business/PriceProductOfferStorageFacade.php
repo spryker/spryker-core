@@ -19,7 +19,7 @@ class PriceProductOfferStorageFacade extends AbstractFacade implements PriceProd
      *
      * @api
      *
-     * @param int[] $priceProductOfferIds
+     * @param array<int> $priceProductOfferIds
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class PriceProductOfferStorageFacade extends AbstractFacade implements PriceProd
      *
      * @api
      *
-     * @param int[] $priceProductOfferIdsWithOfferIds
+     * @param array<int> $priceProductOfferIdsWithOfferIds
      *
      * @return void
      */
@@ -47,7 +47,7 @@ class PriceProductOfferStorageFacade extends AbstractFacade implements PriceProd
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -61,7 +61,7 @@ class PriceProductOfferStorageFacade extends AbstractFacade implements PriceProd
      *
      * @api
      *
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -75,7 +75,7 @@ class PriceProductOfferStorageFacade extends AbstractFacade implements PriceProd
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

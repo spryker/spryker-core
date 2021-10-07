@@ -66,7 +66,7 @@ class MerchantCategorySearchExpander implements MerchantCategorySearchExpanderIn
     /**
      * @param \Generated\Shared\Transfer\MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractMerchantIds(MerchantSearchCollectionTransfer $merchantSearchCollectionTransfer): array
     {

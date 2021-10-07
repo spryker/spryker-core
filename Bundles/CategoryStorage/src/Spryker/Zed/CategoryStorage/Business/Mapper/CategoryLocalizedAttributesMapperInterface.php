@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 interface CategoryLocalizedAttributesMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer[]|\ArrayObject $categoryLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer
      * @param string $localeName
      *

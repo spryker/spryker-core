@@ -10,12 +10,12 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade;
 interface ShipmentDiscountConnectorToShipmentInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\ShipmentCarrierTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getCarriers();
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function getMethods();
 

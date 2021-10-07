@@ -138,7 +138,7 @@ class ConcreteProductImageSetsReader implements ConcreteProductImageSetsReaderIn
 
     /**
      * @param string $sku
-     * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer[] $productImageConcreteStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductImageSetStorageTransfer> $productImageConcreteStorageTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */

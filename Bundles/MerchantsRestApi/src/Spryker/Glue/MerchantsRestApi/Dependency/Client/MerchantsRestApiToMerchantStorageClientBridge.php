@@ -28,7 +28,7 @@ class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiT
     /**
      * @param \Generated\Shared\Transfer\MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantStorageTransfer>
      */
     public function get(MerchantStorageCriteriaTransfer $merchantStorageCriteriaTransfer): array
     {

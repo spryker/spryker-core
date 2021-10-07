@@ -36,7 +36,7 @@ class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFor
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param mixed[] $requestParameters
+     * @param array<mixed> $requestParameters
      *
      * @return \Generated\Shared\Transfer\MerchantSearchCollectionTransfer
      */
@@ -59,7 +59,7 @@ class MerchantSearchResultFormatterPlugin extends AbstractElasticsearchResultFor
     }
 
     /**
-     * @param string[] $data
+     * @param array<string> $data
      *
      * @return \Generated\Shared\Transfer\MerchantSearchTransfer
      */

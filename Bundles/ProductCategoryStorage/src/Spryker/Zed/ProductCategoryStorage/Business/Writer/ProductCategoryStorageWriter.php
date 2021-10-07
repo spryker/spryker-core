@@ -65,7 +65,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -82,7 +82,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param int[] $categoryIds
+     * @param array<int> $categoryIds
      * @param bool $allowEmptyCategories
      *
      * @return void
@@ -101,9 +101,9 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[] $productAbstractLocalizedAttributesTransfers
-     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][] $productAbstractCategoryStorageTransfers
-     * @param \Generated\Shared\Transfer\ProductCategoryTransfer[][] $productCategoryTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]> $productAbstractCategoryStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductCategoryTransfer[]> $productCategoryTransfers
      *
      * @return void
      */
@@ -130,13 +130,13 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductCategoryTransfer[][] $productCategoryTransfers
-     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][] $productAbstractCategoryStorageTransfers
-     * @param \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer[] $productAbstractLocalizedAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\ProductCategoryTransfer[]> $productCategoryTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]> $productAbstractCategoryStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer> $productAbstractLocalizedAttributesTransfers
      * @param string $storeName
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]>
      */
     protected function saveProductAbstractCategoryStorages(
         array $productCategoryTransfers,
@@ -159,13 +159,13 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductCategoryTransfer[][] $productCategoryTransfers
-     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][] $productAbstractCategoryStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductCategoryTransfer[]> $productCategoryTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]> $productAbstractCategoryStorageTransfers
      * @param \Generated\Shared\Transfer\ProductAbstractLocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer
      * @param string $storeName
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]>
      */
     protected function saveProductAbstractCategoryStorage(
         array $productCategoryTransfers,
@@ -216,7 +216,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][][]|array[][][] $productAbstractCategoryStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[][]|array[][]> $productAbstractCategoryStorageTransfers
      *
      * @return void
      */
@@ -230,7 +230,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer[]|array[] $relatedToStoreProductAbstractCategoryStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|array> $relatedToStoreProductAbstractCategoryStorageTransfers
      * @param int $idProductAbstract
      * @param string $storeName
      *
@@ -255,9 +255,9 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductCategoryTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductCategoryTransfer[]>
      */
     protected function findProductCategories(array $productAbstractIds): array
     {
@@ -273,7 +273,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getLocaleNameMapByStoreName(): array
     {

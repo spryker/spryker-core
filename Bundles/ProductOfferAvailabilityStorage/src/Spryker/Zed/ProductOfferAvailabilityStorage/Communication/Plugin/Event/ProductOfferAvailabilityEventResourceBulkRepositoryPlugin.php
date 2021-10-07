@@ -43,7 +43,7 @@ class ProductOfferAvailabilityEventResourceBulkRepositoryPlugin extends Abstract
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ProductOfferTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOfferTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

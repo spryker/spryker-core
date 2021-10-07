@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductCategoryStorage\Business\Builder;
 interface CategoryTreeBuilderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\CategoryNodeAggregationTransfer[][]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeAggregationTransfer[]>
      */
     public function buildCategoryTree(): array;
 }

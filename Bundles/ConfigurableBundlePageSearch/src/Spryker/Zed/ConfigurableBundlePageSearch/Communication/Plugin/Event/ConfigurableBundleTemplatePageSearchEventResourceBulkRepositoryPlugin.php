@@ -42,7 +42,7 @@ class ConfigurableBundleTemplatePageSearchEventResourceBulkRepositoryPlugin exte
      * @param int $offset
      * @param int $limit
      *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     public function getData(int $offset, int $limit): array
     {

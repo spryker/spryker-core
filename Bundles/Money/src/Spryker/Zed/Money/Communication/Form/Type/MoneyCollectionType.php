@@ -32,7 +32,7 @@ class MoneyCollectionType extends AbstractCollectionType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */
@@ -76,7 +76,7 @@ class MoneyCollectionType extends AbstractCollectionType
 
     /**
      * @param \Symfony\Component\Form\FormEvent $event
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */
@@ -92,7 +92,7 @@ class MoneyCollectionType extends AbstractCollectionType
             return;
         }
 
-        /** @var \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $data */
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer> $data */
         $data = $event->getData();
         $event->setData(
             $moneyCollectionInitialDataProvider->mergeMissingMoneyValues($data)

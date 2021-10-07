@@ -95,7 +95,7 @@ class CompanyRolePermissionWriter implements CompanyRolePermissionWriterInterfac
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PermissionTransfer[] $permissions
+     * @param array<\Generated\Shared\Transfer\PermissionTransfer> $permissions
      * @param int $idCompanyRole
      *
      * @return void

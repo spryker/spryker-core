@@ -88,7 +88,7 @@ class ProductAbstractAttributeUniqueCombinationConstraint extends Constraint
     }
 
     /**
-     * @return string|string[]
+     * @return array<string>|string
      */
     public function getTargets()
     {

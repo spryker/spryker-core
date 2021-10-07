@@ -14,7 +14,7 @@ use Spryker\Client\Redis\Exception\RedisAdapterNotInitializedException;
 class RedisAdapterProvider implements RedisAdapterProviderInterface
 {
     /**
-     * @var \Spryker\Client\Redis\Adapter\RedisAdapterInterface[]
+     * @var array<\Spryker\Client\Redis\Adapter\RedisAdapterInterface>
      */
     protected static $clientPool = [];
 

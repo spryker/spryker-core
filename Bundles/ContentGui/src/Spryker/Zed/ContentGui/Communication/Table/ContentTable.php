@@ -21,13 +21,13 @@ class ContentTable extends AbstractTable
     protected $contentQuery;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $contentTypeKeyCache = [];
 
     /**
      * @param \Orm\Zed\Content\Persistence\SpyContentQuery $contentQuery
-     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[] $contentPlugins
+     * @param array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface> $contentPlugins
      */
     public function __construct(
         SpyContentQuery $contentQuery,
@@ -143,7 +143,7 @@ class ContentTable extends AbstractTable
     }
 
     /**
-     * @param \Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface[] $contentPlugins
+     * @param array<\Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentPluginInterface> $contentPlugins
      *
      * @return array
      */

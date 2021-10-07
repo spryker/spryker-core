@@ -45,7 +45,7 @@ class MerchantRelationshipThresholdDataProvider
     protected $globalThresholdDataProviderResolver;
 
     /**
-     * @var \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface>
      */
     protected $formExpanderPlugins;
 
@@ -53,7 +53,7 @@ class MerchantRelationshipThresholdDataProvider
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrderThresholdFacadeInterface $merchantRelationshipSalesOrderThresholdFacade
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\MerchantRelationshipThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver
-     * @param \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface[] $formExpanderPlugins
+     * @param array<\Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface> $formExpanderPlugins
      */
     public function __construct(
         MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrderThresholdFacadeInterface $merchantRelationshipSalesOrderThresholdFacade,
@@ -130,7 +130,7 @@ class MerchantRelationshipThresholdDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreCurrencyList(): array
     {
@@ -168,7 +168,7 @@ class MerchantRelationshipThresholdDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getHardTypesList(): array
     {
@@ -183,7 +183,7 @@ class MerchantRelationshipThresholdDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getHardMaximumTypesList(): array
     {
@@ -198,7 +198,7 @@ class MerchantRelationshipThresholdDataProvider
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     protected function getSoftTypesList(): array
     {
@@ -235,7 +235,7 @@ class MerchantRelationshipThresholdDataProvider
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer>
      */
     protected function getSalesOrderThresholdTransfers(
         int $idMerchantRelationship,

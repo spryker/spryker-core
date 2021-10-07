@@ -195,7 +195,7 @@ class OmsTriggerController extends AbstractController
      *
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractSalesOrderItemIdsFromReturn(ReturnTransfer $returnTransfer): array
     {
@@ -209,9 +209,9 @@ class OmsTriggerController extends AbstractController
     }
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     protected function getMerchantOrderItems(array $salesOrderItemIds): array
     {

@@ -37,28 +37,28 @@ interface InMemoryAdapterInterface extends AdapterInterface
     /**
      * Returns all received messages.
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function getReceivedMessages(): array;
 
     /**
      * Returns all acknowledged messages.
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function getAcknowledgedMessages(): array;
 
     /**
      * Returns all rejected messages.
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function getRejectedMessages(): array;
 
     /**
      * Returns all errored messages.
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function getErroredMessages(): array;
 }

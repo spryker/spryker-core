@@ -47,7 +47,7 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
     }
 
     /**
-     * @param int[] $abstractProductIds
+     * @param array<int> $abstractProductIds
      * @param int $idProductRelation
      *
      * @return void
@@ -67,7 +67,7 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idProductRelation
      *
      * @return void
@@ -85,7 +85,7 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idProductRelation
      *
      * @return void

@@ -17,7 +17,7 @@ use Spryker\Zed\ProductRelationDataImport\Business\Writer\ProductRelation\DataSe
 class SkuToIdProductAbstractStep implements DataImportStepInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected static $idProductAbstractCache = [];
 

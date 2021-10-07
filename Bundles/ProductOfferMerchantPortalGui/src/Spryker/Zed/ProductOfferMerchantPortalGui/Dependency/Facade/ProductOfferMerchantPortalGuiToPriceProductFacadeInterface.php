@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 interface ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\PriceTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
     public function getPriceTypeValues();
 }

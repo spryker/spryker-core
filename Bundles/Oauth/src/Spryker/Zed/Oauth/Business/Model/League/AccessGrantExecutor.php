@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\OauthResponseTransfer;
 class AccessGrantExecutor implements AccessGrantExecutorInterface
 {
     /**
-     * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface[]
+     * @var array<\Spryker\Zed\Oauth\Business\Model\League\Grant\GrantInterface>
      */
     protected $grants;
 

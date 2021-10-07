@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\AclEntityRuleTransfer;
 class AclEntityRuleCollectionTransferTransferSorter implements AclEntityRuleCollectionTransferSorterInterface
 {
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $scopePriority;
 
     /**
-     * @param int[] $scopePriority
+     * @param array<int> $scopePriority
      */
     public function __construct(array $scopePriority)
     {

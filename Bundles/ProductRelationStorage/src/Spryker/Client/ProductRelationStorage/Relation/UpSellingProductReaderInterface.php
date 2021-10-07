@@ -15,14 +15,14 @@ interface UpSellingProductReaderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function findUpSellingProducts(QuoteTransfer $quoteTransfer, $localeName);
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findUpSellingAbstractProductIds(QuoteTransfer $quoteTransfer): array;
 }

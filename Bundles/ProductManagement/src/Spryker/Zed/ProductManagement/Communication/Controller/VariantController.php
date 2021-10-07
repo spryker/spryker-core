@@ -66,7 +66,7 @@ class VariantController extends AbstractController
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\JsonResponse|array
      */
     public function indexAction(Request $request)
     {

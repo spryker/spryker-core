@@ -65,12 +65,12 @@ class Writer implements WriterInterface
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[]
+     * @var array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface>
      */
     protected $addItemPreCheckPlugins;
 
     /**
-     * @var \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreAddItemPluginInterface[]
+     * @var array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreAddItemPluginInterface>
      */
     protected $wishlistPreAddItemPlugins;
 
@@ -79,8 +79,8 @@ class Writer implements WriterInterface
      * @param \Spryker\Zed\Wishlist\Business\Model\ReaderInterface $reader
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface $wishlistEntityManager
      * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface|null $productFacade
-     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface[] $addItemPreCheckPlugins
-     * @param \Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreAddItemPluginInterface[] $wishlistPreAddItemPlugins
+     * @param array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface> $addItemPreCheckPlugins
+     * @param array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreAddItemPluginInterface> $wishlistPreAddItemPlugins
      */
     public function __construct(
         WishlistQueryContainerInterface $queryContainer,
@@ -276,7 +276,7 @@ class Writer implements WriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer[] $wishlistItemCollection
+     * @param array<\Generated\Shared\Transfer\WishlistItemTransfer> $wishlistItemCollection
      *
      * @return void
      */

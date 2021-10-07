@@ -49,7 +49,7 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
     /**
      * @param int $idProductAbstract
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>
      */
     protected function getRelatedStores($idProductAbstract)
     {
@@ -72,9 +72,9 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer> $storeTransferCollection
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdStores(ArrayObject $storeTransferCollection)
     {

@@ -22,22 +22,22 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
     protected static $queues = [];
 
     /**
-     * @var \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected static $receivedMessages = [];
 
     /**
-     * @var \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected static $acknowledgedMessages = [];
 
     /**
-     * @var \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected static $rejectedMessages = [];
 
     /**
-     * @var \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @var array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     protected static $erroredMessages = [];
 
@@ -83,7 +83,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
      * @param int $chunkSize
      * @param array $options
      *
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function receiveMessages($queueName, $chunkSize = 100, array $options = []): array
     {
@@ -91,7 +91,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
             return [];
         }
 
-        /** @var \Generated\Shared\Transfer\QueueSendMessageTransfer[] $queueSendMessageTransfers */
+        /** @var array<\Generated\Shared\Transfer\QueueSendMessageTransfer> $queueSendMessageTransfers */
         $queueSendMessageTransfers = array_slice(static::$queues[$queueName], 0, $chunkSize);
         $queueReceiveMessageTransferCollection = [];
 
@@ -235,7 +235,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function getReceivedMessages(): array
     {
@@ -243,7 +243,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function getAcknowledgedMessages(): array
     {
@@ -251,7 +251,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function getRejectedMessages(): array
     {
@@ -259,7 +259,7 @@ class InMemoryQueueAdapter implements InMemoryAdapterInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\QueueReceiveMessageTransfer>
      */
     public function getErroredMessages(): array
     {

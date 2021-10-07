@@ -14,16 +14,16 @@ interface ProductAbstractLabelReaderInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName);
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
      */
     public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName, string $storeName): array;
 }

@@ -19,7 +19,7 @@ interface SalesInvoiceEntityManagerInterface
     public function createOrderInvoice(OrderInvoiceTransfer $orderInvoiceTransfer): OrderInvoiceTransfer;
 
     /**
-     * @param int[] $orderInvoiceIds
+     * @param array<int> $orderInvoiceIds
      *
      * @return void
      */

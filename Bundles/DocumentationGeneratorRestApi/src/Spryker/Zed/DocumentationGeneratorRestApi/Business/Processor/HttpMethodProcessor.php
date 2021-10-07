@@ -435,7 +435,7 @@ class HttpMethodProcessor implements HttpMethodProcessorInterface
      * @param string $pattern
      * @param string $resourceType
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getDefaultMethodSummary(string $pattern, string $resourceType): array
     {

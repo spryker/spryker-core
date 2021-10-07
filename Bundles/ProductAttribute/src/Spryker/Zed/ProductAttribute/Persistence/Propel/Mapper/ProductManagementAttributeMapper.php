@@ -40,9 +40,9 @@ class ProductManagementAttributeMapper
 
     /**
      * @param \Propel\Runtime\Collection\Collection $productManagementAttributeValueEntities
-     * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[] $productManagementAttributeValueTransfers
+     * @param array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer> $productManagementAttributeValueTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer>
      */
     public function mapProductManagementAttributeValueEntityCollectionToTransferCollection(
         Collection $productManagementAttributeValueEntities,

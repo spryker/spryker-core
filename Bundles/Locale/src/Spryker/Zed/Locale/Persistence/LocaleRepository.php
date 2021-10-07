@@ -17,9 +17,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class LocaleRepository extends AbstractRepository implements LocaleRepositoryInterface
 {
     /**
-     * @param string[] $localeNames
+     * @param array<string> $localeNames
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleTransfersByLocaleNames(array $localeNames): array
     {
@@ -71,9 +71,9 @@ class LocaleRepository extends AbstractRepository implements LocaleRepositoryInt
     }
 
     /**
-     * @param \Orm\Zed\Locale\Persistence\SpyLocale[]|\Propel\Runtime\Collection\ObjectCollection $localeEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Locale\Persistence\SpyLocale> $localeEntities
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     protected function mapLocaleEntitiesToLocaleTransfers(ObjectCollection $localeEntities): array
     {

@@ -25,7 +25,7 @@ class ViewPageController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -82,7 +82,7 @@ class ViewPageController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreNames(CmsPageTransfer $cmsPageTransfer): array
     {

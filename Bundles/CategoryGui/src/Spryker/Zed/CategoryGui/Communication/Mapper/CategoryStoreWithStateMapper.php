@@ -15,8 +15,8 @@ use Generated\Shared\Transfer\StoreWithStateTransfer;
 class CategoryStoreWithStateMapper implements CategoryStoreWithStateMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $categoryStoreRelatedTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $categoryStoreRelatedTransfers
      *
      * @return \Generated\Shared\Transfer\StoreWithStateCollectionTransfer
      */
@@ -37,7 +37,7 @@ class CategoryStoreWithStateMapper implements CategoryStoreWithStateMapperInterf
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int[] $categoryStoreIds
+     * @param array<int> $categoryStoreIds
      *
      * @return bool
      */
@@ -47,9 +47,9 @@ class CategoryStoreWithStateMapper implements CategoryStoreWithStateMapperInterf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractStoreIdsFromStoreCollection(array $storeTransfers): array
     {
@@ -60,7 +60,7 @@ class CategoryStoreWithStateMapper implements CategoryStoreWithStateMapperInterf
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param int[] $categoryStoreRelatedIds
+     * @param array<int> $categoryStoreRelatedIds
      *
      * @return \Generated\Shared\Transfer\StoreWithStateTransfer
      */

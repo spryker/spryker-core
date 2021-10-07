@@ -33,9 +33,9 @@ class ProductConfigurationInstanceMapper implements ProductConfigurationInstance
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConfigurationStorageTransfer[] $productConfigurationStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConfigurationStorageTransfer> $productConfigurationStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
      */
     public function mapProductConfigurationStorageTransfersToProductConfigurationInstanceTransfersIndexedBySku(array $productConfigurationStorageTransfers)
     {

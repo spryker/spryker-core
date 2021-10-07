@@ -144,8 +144,8 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
     }
 
     /**
-     * @param int[] $categoryNodeIds
-     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
+     * @param array<int> $categoryNodeIds
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
@@ -169,7 +169,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 
     /**
      * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
-     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -198,7 +198,7 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UrlTransfer[] $urlTransfers
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param array $indexedCategoryUrlPaths
      *

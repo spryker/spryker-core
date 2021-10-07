@@ -36,7 +36,7 @@ class ProductCategoryFilterStorageQueryContainer extends AbstractQueryContainer 
      *
      * @api
      *
-     * @param int[] $productCategoryFilterIds
+     * @param array<int> $productCategoryFilterIds
      *
      * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery
      */

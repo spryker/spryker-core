@@ -20,9 +20,9 @@ interface MerchantAddressReaderInterface
     public function getMerchantAddresses(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
-     * @param string[] $merchantReferences
+     * @param array<string> $merchantReferences
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getMerchantAddressResources(array $merchantReferences): array;
 }

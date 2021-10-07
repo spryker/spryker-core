@@ -40,7 +40,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     public function getMerchantOrderItems(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): array
     {
@@ -93,7 +93,7 @@ class MerchantOrderReader implements MerchantOrderReaderInterface
      *
      * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers
      *
-     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantOrderItemTransfer>
      */
     protected function getMerchantOrderItemsIndexedByIdOrderItem(
         MerchantOrderItemCollectionTransfer $merchantOrderItemTransfers

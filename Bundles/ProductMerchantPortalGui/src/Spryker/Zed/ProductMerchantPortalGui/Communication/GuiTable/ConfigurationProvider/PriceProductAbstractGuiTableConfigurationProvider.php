@@ -72,7 +72,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
 
     /**
      * @param int $idProductAbstract
-     * @param mixed[] $initialData
+     * @param array<mixed> $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */

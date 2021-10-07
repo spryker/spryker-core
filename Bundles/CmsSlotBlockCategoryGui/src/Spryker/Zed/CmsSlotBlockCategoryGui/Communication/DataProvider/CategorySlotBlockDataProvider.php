@@ -46,7 +46,7 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     protected $translatorFacade;
 
     /**
-     * @var int[]|null
+     * @var array<int>|null
      */
     protected static $categoryCache = null;
 
@@ -88,7 +88,7 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategories(): array
     {
@@ -109,7 +109,7 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     /**
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getCategoryIdsFromCollection(CategoryCollectionTransfer $categoryCollectionTransfer): array
     {

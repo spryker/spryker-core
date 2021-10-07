@@ -80,7 +80,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $superAttributeKeyBuffer = [];
 
     /**
-     * @var \Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface>
      */
     protected $productAbstractStorageExpanderPlugins = [];
 
@@ -90,7 +90,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
-     * @param \Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[] $productAbstractStorageExpanderPlugins
+     * @param array<\Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface> $productAbstractStorageExpanderPlugins
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
@@ -109,7 +109,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -128,7 +128,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -140,7 +140,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[] $productAbstractStorageEntities
+     * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage> $productAbstractStorageEntities
      *
      * @return void
      */
@@ -165,7 +165,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
 
     /**
      * @param array $productAbstractLocalizedEntities
-     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[] $productAbstractStorageEntities
+     * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage> $productAbstractStorageEntities
      *
      * @return void
      */
@@ -208,7 +208,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * - ProductAbstractLocalizedEntities are paired multiple times per store.
      *
      * @param array $productAbstractLocalizedEntities
-     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[] $productAbstractStorageEntities
+     * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage> $productAbstractStorageEntities
      *
      * @return array
      */
@@ -453,7 +453,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     /**
      * @param array $attributes Array keys are attribute keys.
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterSuperAttributeKeys(array $attributes)
     {
@@ -463,7 +463,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return array
      */
@@ -473,9 +473,9 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[]
+     * @return array<\Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage>
      */
     protected function findProductAbstractStorageEntities(array $productAbstractIds)
     {
@@ -483,7 +483,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage[] $productAbstractStorageEntities
+     * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage> $productAbstractStorageEntities
      *
      * @return array
      */

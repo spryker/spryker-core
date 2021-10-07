@@ -28,7 +28,7 @@ interface MerchantProductOfferStorageEntityManagerInterface
     public function saveProductOfferStorage(ProductOfferTransfer $productOfferTransfer): void;
 
     /**
-     * @param string[] $productSkus
+     * @param array<string> $productSkus
      * @param string|null $storeName
      *
      * @return void
@@ -36,7 +36,7 @@ interface MerchantProductOfferStorageEntityManagerInterface
     public function deleteProductConcreteProductOffersStorageEntitiesByProductSkus(array $productSkus, ?string $storeName = null): void;
 
     /**
-     * @param string[] $productOfferReferences
+     * @param array<string> $productOfferReferences
      * @param string|null $storeName
      *
      * @return void

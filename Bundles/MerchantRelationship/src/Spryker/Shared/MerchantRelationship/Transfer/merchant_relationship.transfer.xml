@@ -36,6 +36,7 @@
 
     <transfer name="MerchantRelationshipFilter">
         <property name="merchantRelationshipIds" type="int[]" singular="merchantRelationshipId"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
     </transfer>
 
 </transfers>

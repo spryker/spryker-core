@@ -77,7 +77,7 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
     }
 
     /**
-     * @param int[] $configurableBundleTemplateIds
+     * @param array<int> $configurableBundleTemplateIds
      *
      * @return void
      */
@@ -111,10 +111,10 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
-     * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][] $localizedConfigurableBundleTemplateImageStorageEntityMap
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
+     * @param array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[]> $localizedConfigurableBundleTemplateImageStorageEntityMap
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      *
-     * @return \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][]
+     * @return array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[]>
      */
     protected function saveConfigurableBundleTemplateImages(
         ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer,
@@ -149,7 +149,7 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
 
     /**
      * @param string $localeName
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer $configurableBundleTemplateTransfer
      * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity
      *
@@ -177,9 +177,9 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param array<\Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetStorageTransfer>
      */
     protected function mapProductImageSetTransfersToProductImageSetStorageTransfers(array $productImageSetTransfers): array
     {
@@ -197,9 +197,9 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageTransfer[] $productImageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageTransfer> $productImageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductImageStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageStorageTransfer>
      */
     protected function mapProductImageTransfersToProductImageStorageTransfers(ArrayObject $productImageTransfers): array
     {
@@ -216,7 +216,7 @@ class ConfigurableBundleTemplateImageStoragePublisher implements ConfigurableBun
     }
 
     /**
-     * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[][] $localizedConfigurableBundleTemplateImageStorageEntityMap
+     * @param array<\Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage[]> $localizedConfigurableBundleTemplateImageStorageEntityMap
      *
      * @return void
      */

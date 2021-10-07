@@ -10,7 +10,7 @@ namespace Spryker\Zed\ContentStorage\Business\ContentStorage;
 interface ContentStorageWriterInterface
 {
     /**
-     * @param int[] $contentIds
+     * @param array<int> $contentIds
      *
      * @return void
      */

@@ -25,7 +25,7 @@ class CacheWriterPhp implements CacheWriterInterface
     }
 
     /**
-     * @param string[] $cacheEntries
+     * @param array<string> $cacheEntries
      *
      * @return void
      */

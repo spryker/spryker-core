@@ -40,7 +40,7 @@ class CategoryStoreRelationFieldEventSubscriber implements EventSubscriberInterf
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public static function getSubscribedEvents(): array
     {

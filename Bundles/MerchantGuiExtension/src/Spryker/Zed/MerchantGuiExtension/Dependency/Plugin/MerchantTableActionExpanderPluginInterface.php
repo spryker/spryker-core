@@ -20,7 +20,7 @@ interface MerchantTableActionExpanderPluginInterface
      *
      * @param array $item
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function expand(array $item): array;
 }

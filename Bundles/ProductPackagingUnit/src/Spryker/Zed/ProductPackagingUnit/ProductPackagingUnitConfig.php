@@ -33,7 +33,7 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer>
      */
     public function getInfrastructuralPackagingUnitTypes(): array
     {
@@ -48,7 +48,7 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getInfrastructuralProductPackagingUnitTypeNames(): array
     {

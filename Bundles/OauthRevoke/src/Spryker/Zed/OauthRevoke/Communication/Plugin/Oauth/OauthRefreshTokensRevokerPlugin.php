@@ -24,7 +24,7 @@ class OauthRefreshTokensRevokerPlugin extends AbstractPlugin implements OauthRef
      *
      * @api
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer> $oauthRefreshTokenTransfers
      *
      * @return void
      */

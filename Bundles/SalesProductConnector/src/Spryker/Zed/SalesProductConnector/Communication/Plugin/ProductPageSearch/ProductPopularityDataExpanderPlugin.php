@@ -26,7 +26,7 @@ class ProductPopularityDataExpanderPlugin extends AbstractPlugin implements Prod
      *
      * @api
      *
-     * @param mixed[] $productData
+     * @param array<mixed> $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
      * @return void
@@ -39,7 +39,7 @@ class ProductPopularityDataExpanderPlugin extends AbstractPlugin implements Prod
     }
 
     /**
-     * @param mixed[] $productData
+     * @param array<mixed> $productData
      *
      * @return \Generated\Shared\Transfer\ProductPayloadTransfer
      */

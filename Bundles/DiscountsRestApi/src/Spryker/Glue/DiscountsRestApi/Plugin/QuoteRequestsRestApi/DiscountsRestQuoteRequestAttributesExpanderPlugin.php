@@ -21,11 +21,11 @@ class DiscountsRestQuoteRequestAttributesExpanderPlugin extends AbstractPlugin i
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[] $restQuoteRequestsAttributesTransfers
-     * @param \Generated\Shared\Transfer\QuoteRequestTransfer[] $quoteRequestTransfers
+     * @param array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer> $restQuoteRequestsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\QuoteRequestTransfer> $quoteRequestTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestQuoteRequestsAttributesTransfer>
      */
     public function expand(
         array $restQuoteRequestsAttributesTransfers,

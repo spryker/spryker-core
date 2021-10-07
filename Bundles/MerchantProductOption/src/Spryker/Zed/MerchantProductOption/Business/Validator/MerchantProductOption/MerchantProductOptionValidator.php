@@ -54,14 +54,14 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
             ->setIsSuccess(true);
-        /** @var int[] $productOptionGroupIds */
+        /** @var array<int> $productOptionGroupIds */
         $productOptionGroupIds = $this->extractProductOptionGroupIdsFromItemTransfers($cartChangeTransfer->getItems());
 
         if (!$productOptionGroupIds) {
             return $cartPreCheckResponseTransfer;
         }
 
-        /** @var int[] $notApprovedProductOptionGroupIds */
+        /** @var array<int> $notApprovedProductOptionGroupIds */
         $notApprovedProductOptionGroupIds = $this->merchantProductOptionRepository
             ->getProductOptionGroupIdsWithNotApprovedMerchantGroups($productOptionGroupIds);
 
@@ -95,14 +95,14 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): CheckoutResponseTransfer {
         $checkoutResponseTransfer = $this->updateCheckoutResponseTransferStatus($checkoutResponseTransfer);
-        /** @var int[] $productOptionGroupIds */
+        /** @var array<int> $productOptionGroupIds */
         $productOptionGroupIds = $this->extractProductOptionGroupIdsFromItemTransfers($quoteTransfer->getItems());
 
         if (!$productOptionGroupIds) {
             return $checkoutResponseTransfer;
         }
 
-        /** @var int[] $notApprovedProductOptionGroupIds */
+        /** @var array<int> $notApprovedProductOptionGroupIds */
         $notApprovedProductOptionGroupIds = $this->merchantProductOptionRepository
             ->getProductOptionGroupIdsWithNotApprovedMerchantGroups($productOptionGroupIds);
 
@@ -130,7 +130,7 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
      *
      * @phpstan-return array<int|null>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return array
      */
@@ -143,7 +143,7 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
                 continue;
             }
 
-            /** @var int[] $productOptionGroupIds */
+            /** @var array<int> $productOptionGroupIds */
             $productOptionGroupIds = $this->extractProductOptionGroupIds($itemTransfer->getProductOptions(), $productOptionGroupIds);
         }
 
@@ -155,8 +155,8 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
      *
      * @phpstan-return array<int|null>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOptionTransfer[] $productOptionTransfers
-     * @param int[] $productOptionGroupIds
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionTransfer> $productOptionTransfers
+     * @param array<int> $productOptionGroupIds
      *
      * @return array
      */
@@ -173,7 +173,7 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
     /**
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int[] $notApprovedProductOptionGroupIds
+     * @param array<int> $notApprovedProductOptionGroupIds
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
@@ -208,7 +208,7 @@ class MerchantProductOptionValidator implements MerchantProductOptionValidatorIn
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param int[] $notApprovedProductOptionGroupIds
+     * @param array<int> $notApprovedProductOptionGroupIds
      *
      * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
      */

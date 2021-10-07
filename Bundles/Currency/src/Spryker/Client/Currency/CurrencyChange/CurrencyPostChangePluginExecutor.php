@@ -13,7 +13,7 @@ use Spryker\Client\Currency\Dependency\Client\CurrencyToZedRequestClientInterfac
 class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecutorInterface
 {
     /**
-     * @var \Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface[]
+     * @var array<\Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface>
      */
     protected $currencyPostChangePlugins = [];
 
@@ -24,7 +24,7 @@ class CurrencyPostChangePluginExecutor implements CurrencyPostChangePluginExecut
 
     /**
      * @param \Spryker\Client\Currency\Dependency\Client\CurrencyToZedRequestClientInterface $zedRequestClient
-     * @param \Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface[] $currencyPostChangePlugins
+     * @param array<\Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface> $currencyPostChangePlugins
      */
     public function __construct(
         CurrencyToZedRequestClientInterface $zedRequestClient,

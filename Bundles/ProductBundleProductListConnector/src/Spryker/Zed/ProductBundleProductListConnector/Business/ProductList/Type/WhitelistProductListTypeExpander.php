@@ -106,7 +106,7 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
 
     /**
      * @param int $idProductConcreteBundle
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
@@ -145,7 +145,7 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
 
     /**
      * @param int $idProductConcreteBundle
-     * @param int[] $productForBundleIdsToAssign
+     * @param array<int> $productForBundleIdsToAssign
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
@@ -160,7 +160,7 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return string
      */

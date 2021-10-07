@@ -13,7 +13,7 @@ interface ShipmentMethodGiftCardAllowanceCheckerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
-     * @param string[] $giftCardOnlyShipmentMethods
+     * @param array<string> $giftCardOnlyShipmentMethods
      *
      * @return bool
      */

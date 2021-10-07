@@ -65,7 +65,7 @@ interface StateMachineFacadeInterface
      * @api
      *
      * @param string $eventName
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
      * @return int
      */
@@ -80,7 +80,7 @@ interface StateMachineFacadeInterface
      *
      * @param string $stateMachineName
      *
-     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineProcessTransfer>
      */
     public function getProcesses($stateMachineName);
 
@@ -159,7 +159,7 @@ interface StateMachineFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 
@@ -171,9 +171,9 @@ interface StateMachineFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getManualEventsForStateMachineItems(array $stateMachineItems);
 
@@ -195,9 +195,9 @@ interface StateMachineFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getProcessedStateMachineItems(array $stateMachineItems);
 
@@ -210,7 +210,7 @@ interface StateMachineFacadeInterface
      * @param int $idStateMachineProcess
      * @param int $identifier
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateHistoryByStateItemIdentifier($idStateMachineProcess, $identifier);
 
@@ -226,7 +226,7 @@ interface StateMachineFacadeInterface
      * @param string $flagName
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getItemsWithFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName, string $sort = 'ASC');
 
@@ -242,7 +242,7 @@ interface StateMachineFacadeInterface
      * @param string $flagName
      * @param string $sort
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getItemsWithoutFlag(StateMachineProcessTransfer $stateMachineProcessTransfer, $flagName, string $sort = 'ASC');
 
@@ -279,7 +279,7 @@ interface StateMachineFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getProcessStateNames(StateMachineProcessTransfer $stateMachineProcessTransfer): array;
 }

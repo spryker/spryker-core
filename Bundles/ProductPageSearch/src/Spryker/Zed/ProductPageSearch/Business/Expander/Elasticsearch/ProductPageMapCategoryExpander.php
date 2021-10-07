@@ -82,8 +82,8 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     /**
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param int[] $allParentCategories
-     * @param int[] $directParentCategories
+     * @param array<int> $allParentCategories
+     * @param array<int> $directParentCategories
      * @param array $productData
      *
      * @return void
@@ -102,7 +102,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     /**
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param int[] $directParentCategories
+     * @param array<int> $directParentCategories
      * @param array $productData
      *
      * @return void
@@ -126,8 +126,8 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     /**
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param int[] $allParentCategories
-     * @param int[] $directParentCategories
+     * @param array<int> $allParentCategories
+     * @param array<int> $directParentCategories
      * @param array $productData
      *
      * @return void
@@ -181,9 +181,9 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     }
 
     /**
-     * @param array[] $sortedCategories
+     * @param array<array> $sortedCategories
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function getParentCategoryMap(array $sortedCategories): array
     {
@@ -197,10 +197,10 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     }
 
     /**
-     * @param array[] $sortedCategories
+     * @param array<array> $sortedCategories
      * @param int $idCategoryNode
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function filterParentCategoryMap(array $sortedCategories, int $idCategoryNode): array
     {
@@ -228,7 +228,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
     }
 
     /**
-     * @param array[] $sortedCategories
+     * @param array<array> $sortedCategories
      * @param int $idCategoryNode
      *
      * @return bool
@@ -242,7 +242,7 @@ class ProductPageMapCategoryExpander implements ProductPageMapCategoryExpanderIn
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param int $productOrder
-     * @param int[] $parentCategoryNodeIds
+     * @param array<int> $parentCategoryNodeIds
      *
      * @return void
      */

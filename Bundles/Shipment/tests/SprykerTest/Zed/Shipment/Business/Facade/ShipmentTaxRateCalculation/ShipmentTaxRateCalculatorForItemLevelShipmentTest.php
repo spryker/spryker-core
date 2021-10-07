@@ -49,7 +49,7 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Test
     protected $tester;
 
     /**
-     * @var \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @var array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     protected $shipmentMethodTransferList;
 

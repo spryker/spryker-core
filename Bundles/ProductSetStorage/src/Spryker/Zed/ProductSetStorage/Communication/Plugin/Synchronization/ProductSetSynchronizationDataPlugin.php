@@ -49,7 +49,7 @@ class ProductSetSynchronizationDataPlugin extends AbstractPlugin implements Sync
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria|null
      */

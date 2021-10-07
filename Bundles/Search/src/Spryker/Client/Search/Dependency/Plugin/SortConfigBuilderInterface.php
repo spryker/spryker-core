@@ -35,7 +35,7 @@ interface SortConfigBuilderInterface
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\SortConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\SortConfigTransfer>
      */
     public function getAll();
 

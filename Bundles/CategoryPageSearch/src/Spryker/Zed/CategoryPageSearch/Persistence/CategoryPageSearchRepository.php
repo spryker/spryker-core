@@ -20,9 +20,9 @@ class CategoryPageSearchRepository extends AbstractRepository implements Categor
     /**
      * @param int $offset
      * @param int $limit
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array
     {

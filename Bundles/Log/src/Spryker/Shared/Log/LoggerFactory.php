@@ -18,7 +18,7 @@ use Spryker\Shared\Log\LoggerConfig\LoggerConfigLoaderZed;
 class LoggerFactory
 {
     /**
-     * @var \Psr\Log\LoggerInterface[]
+     * @var array<\Psr\Log\LoggerInterface>
      */
     protected static $loggers = [];
 

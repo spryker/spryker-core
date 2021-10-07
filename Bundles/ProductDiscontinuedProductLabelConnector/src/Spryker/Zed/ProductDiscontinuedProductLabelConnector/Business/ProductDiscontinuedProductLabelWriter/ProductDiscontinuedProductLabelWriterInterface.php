@@ -24,7 +24,7 @@ interface ProductDiscontinuedProductLabelWriterInterface
     public function removeProductAbstractRelationsForLabel(int $idProduct): void;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */

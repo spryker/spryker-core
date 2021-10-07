@@ -83,7 +83,7 @@ class GiftCardConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getGiftCardPaymentMethodBlacklist(): array
     {
@@ -95,7 +95,7 @@ class GiftCardConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getGiftCardOnlyShipmentMethods(): array
     {

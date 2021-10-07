@@ -24,7 +24,7 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesOrderThresholdValueTransfer>
      */
     public function findApplicableThresholds(QuoteTransfer $quoteTransfer): array;
 
@@ -74,9 +74,9 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
-     * @param int[] $merchantRelationshipIds
+     * @param array<int> $merchantRelationshipIds
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer>
      */
     public function getMerchantRelationshipSalesOrderThresholds(
         StoreTransfer $storeTransfer,

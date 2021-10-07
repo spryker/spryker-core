@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
 class CategoryLocalizedAttributesMapper implements CategoryLocalizedAttributesMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer[]|\ArrayObject $categoryLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
      * @param \Generated\Shared\Transfer\CategoryNodeStorageTransfer $categoryNodeStorageTransfer
      * @param string $localeName
      *
@@ -47,7 +47,7 @@ class CategoryLocalizedAttributesMapper implements CategoryLocalizedAttributesMa
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer[]|\ArrayObject $categoryLocalizedAttributesTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer> $categoryLocalizedAttributesTransfers
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer|null

@@ -12,10 +12,10 @@ use ArrayObject;
 interface ReclamationItemEventsFinderInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReclamationItemTransfer[] $reclamationItems
-     * @param string[][] $eventsGroupedByItem
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ReclamationItemTransfer> $reclamationItems
+     * @param array<string[]> $eventsGroupedByItem
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDistinctManualEventsByReclamationItems(
         ArrayObject $reclamationItems,

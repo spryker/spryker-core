@@ -126,7 +126,7 @@ class SessionHandlerFile implements SessionHandlerInterface
     }
 
     /**
-     * @param int|string $sessionId
+     * @param string|int $sessionId
      *
      * @return bool
      */

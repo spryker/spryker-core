@@ -26,7 +26,7 @@ class CompanyRepository extends AbstractRepository implements CompanyRepositoryI
      *
      * @param int $idCompany
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>
      */
     public function getRelatedStoresByCompanyId(int $idCompany)
     {

@@ -50,7 +50,7 @@ interface ProductDiscontinuedProductLabelConnectorFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer>
      */
     public function findProductLabelProductAbstractRelationChanges(): array;
 
@@ -60,7 +60,7 @@ interface ProductDiscontinuedProductLabelConnectorFacadeInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */

@@ -23,7 +23,7 @@ class Reservation implements ReservationInterface
     protected $reservationReader;
 
     /**
-     * @var \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[]
+     * @var array<\Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface>
      */
     protected $reservationHandlerPlugins;
 
@@ -43,23 +43,23 @@ class Reservation implements ReservationInterface
     protected $omsEntityManager;
 
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface>
      */
     protected $omsReservationWriterStrategyPlugins;
 
     /**
-     * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface>
      */
     protected $reservationHandlerTerminationAwareStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\Oms\Business\Reader\ReservationReaderInterface $reservationReader
-     * @param \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[] $reservationHandlerPlugins
+     * @param array<\Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface> $reservationHandlerPlugins
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      * @param \Spryker\Zed\Oms\Persistence\OmsEntityManagerInterface $omsEntityManager
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[] $omsReservationWriterStrategyPlugins
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface[] $reservationHandlerTerminationAwareStrategyPlugins
+     * @param array<\Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface> $omsReservationWriterStrategyPlugins
+     * @param array<\Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface> $reservationHandlerTerminationAwareStrategyPlugins
      */
     public function __construct(
         ReservationReaderInterface $reservationReader,

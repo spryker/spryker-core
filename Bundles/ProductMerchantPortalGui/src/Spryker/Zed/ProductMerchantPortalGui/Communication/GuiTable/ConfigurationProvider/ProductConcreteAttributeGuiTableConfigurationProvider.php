@@ -285,10 +285,10 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
     }
 
     /**
-     * @param string[] $attributes
-     * @param string[] $superAttributes
+     * @param array<string> $attributes
+     * @param array<string> $superAttributes
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function filterSuperAttributes(array $attributes, array $superAttributes): array
     {
@@ -323,7 +323,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
      *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer $productManagementAttributeCollectionTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getNonSuperAttributeKeysIndexedByKeys(ProductManagementAttributeCollectionTransfer $productManagementAttributeCollectionTransfer): array
     {

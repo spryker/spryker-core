@@ -147,7 +147,7 @@ class PercentageTest extends Unit
     /**
      * @param array $grossPrices
      *
-     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
     protected function getDiscountableItems(array $grossPrices): array
     {

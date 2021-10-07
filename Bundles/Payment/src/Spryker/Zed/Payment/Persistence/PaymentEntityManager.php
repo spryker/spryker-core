@@ -53,7 +53,7 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idPaymentMethod
      *
      * @return void
@@ -71,7 +71,7 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     }
 
     /**
-     * @param int[] $idStores
+     * @param array<int> $idStores
      * @param int $idPaymentMethod
      *
      * @return void

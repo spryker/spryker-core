@@ -35,7 +35,7 @@ class ProductMeasurementUnitConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
     public function getInfrastructuralMeasurementUnits(): array
     {

@@ -46,14 +46,14 @@ class PriceProductVolumeValidator implements PriceProductVolumeValidatorInterfac
     protected $volumePriceExtractor;
 
     /**
-     * @var \Symfony\Component\Validator\Constraint[]
+     * @var array<\Symfony\Component\Validator\Constraint>
      */
     protected $priceProductCollectionConstraints;
 
     /**
      * @param \Spryker\Zed\PriceProductVolume\Dependency\External\PriceProductVolumeToValidationAdapterInterface $validationAdapter
      * @param \Spryker\Zed\PriceProductVolume\Business\VolumePriceExtractor\VolumePriceExtractorInterface $volumePriceExtractor
-     * @param \Symfony\Component\Validator\Constraint[] $volumePriceCollectionConstraints
+     * @param array<\Symfony\Component\Validator\Constraint> $volumePriceCollectionConstraints
      */
     public function __construct(
         PriceProductVolumeToValidationAdapterInterface $validationAdapter,
@@ -68,7 +68,7 @@ class PriceProductVolumeValidator implements PriceProductVolumeValidatorInterfac
     /**
      * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer
      */
@@ -104,7 +104,7 @@ class PriceProductVolumeValidator implements PriceProductVolumeValidatorInterfac
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     public function getCollectionConstraints(): array
     {
@@ -112,7 +112,7 @@ class PriceProductVolumeValidator implements PriceProductVolumeValidatorInterfac
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function createPriceProductVolumeConstraints(): array
     {

@@ -48,13 +48,13 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
     }
 
     /**
-     * @param int[] $productConfigurationIds
+     * @param array<int> $productConfigurationIds
      *
      * @return void
      */
     public function deleteProductConfigurationStorageByProductConfigurationIds(array $productConfigurationIds): void
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage[] $productConfigurationStorageEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage> $productConfigurationStorageEntities */
         $productConfigurationStorageEntities = $this->getFactory()
             ->createProductConfigurationStorageQuery()
             ->filterByFkProductConfiguration_In($productConfigurationIds)
@@ -66,7 +66,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage[] $productConfigurationStorageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage> $productConfigurationStorageEntities
      *
      * @return void
      */

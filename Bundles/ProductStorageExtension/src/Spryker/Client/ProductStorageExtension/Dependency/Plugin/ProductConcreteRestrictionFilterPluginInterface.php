@@ -15,9 +15,9 @@ interface ProductConcreteRestrictionFilterPluginInterface
      *
      * @api
      *
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function filter(array $productConcreteIds): array;
 }

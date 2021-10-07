@@ -10,11 +10,11 @@ namespace Spryker\Zed\ProductAttribute\Business\Mapper;
 interface TranslationMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\TranslationTransfer[] $translationTransfers
-     * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
-     * @param \Generated\Shared\Transfer\GlossaryKeyTransfer[] $glossaryKeyTransfers
+     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     * @param array<\Generated\Shared\Transfer\GlossaryKeyTransfer> $glossaryKeyTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function mapTranslationsByKeyNameAndLocaleName(
         array $translationTransfers,

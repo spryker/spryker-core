@@ -40,9 +40,9 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @param int[] $productFks
+     * @param array<int> $productFks
      *
-     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>
      */
     public function getProductImageSetsByFkProductIn(array $productFks): array
     {
@@ -61,9 +61,9 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>
      */
     public function getDefaultConcreteProductImageSetsByFkProductIn(array $productIds): array
     {
@@ -82,7 +82,7 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
     /**
      * @param array $productAbstractFks
      *
-     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>
      */
     public function getProductImageSetsByFkAbstractProductIn(array $productAbstractFks): array
     {
@@ -101,9 +101,9 @@ class ProductImageStorageRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\SpyProductImageSetEntityTransfer[]
+     * @return array<\Generated\Shared\Transfer\SpyProductImageSetEntityTransfer>
      */
     public function getDefaultAbstractProductImageSetsByIdAbstractProductIn(array $productAbstractIds): array
     {

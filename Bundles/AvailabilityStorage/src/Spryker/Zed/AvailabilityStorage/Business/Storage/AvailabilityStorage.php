@@ -102,7 +102,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -113,7 +113,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -183,7 +183,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     /**
      * @param array $availabilityAbstractIds
      *
-     * @return \Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage[]
+     * @return array<\Orm\Zed\AvailabilityStorage\Persistence\SpyAvailabilityStorage>
      */
     protected function findAvailabilityStorageEntitiesByAvailabilityAbstractIds(array $availabilityAbstractIds)
     {

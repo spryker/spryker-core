@@ -68,7 +68,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     /**
      * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageWriter::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()} instead.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -80,7 +80,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -93,7 +93,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -105,7 +105,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
      */
@@ -121,7 +121,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
@@ -143,9 +143,9 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     }
 
     /**
-     * @param int[] $uniqueProductAbstractIds
-     * @param \Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer[] $productAbstractLabelStorageTransfers
-     * @param int[][] $productLabelIds
+     * @param array<int> $uniqueProductAbstractIds
+     * @param array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer> $productAbstractLabelStorageTransfers
+     * @param array<int[]> $productLabelIds
      *
      * @return void
      */
@@ -164,7 +164,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
 
     /**
      * @param int $productAbstractId
-     * @param int[][] $productLabelIds
+     * @param array<int[]> $productLabelIds
      * @param \Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer|null $productAbstractLabelStorageTransfer
      *
      * @return void
@@ -195,7 +195,7 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     /**
      * @param array $productAbstractIds
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function getGroupedProductLabelIdsByProductAbstractIds(array $productAbstractIds): array
     {
@@ -208,9 +208,9 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[] $productLabelProductAbstractTransfers
+     * @param array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer> $productLabelProductAbstractTransfers
      *
-     * @return int[][]
+     * @return array<int[]>
      */
     protected function getProductLabelIdsGroupedByProductAbstractIdsFromProductLabelProductAbstractTransfers(
         array $productLabelProductAbstractTransfers
@@ -224,9 +224,9 @@ class ProductAbstractLabelStorageWriter implements ProductAbstractLabelStorageWr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer[] $productAbstractLabelStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer> $productAbstractLabelStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer>
      */
     protected function indexProductAbstractLabelTransfersByProductAbstractIds(
         array $productAbstractLabelStorageTransfers

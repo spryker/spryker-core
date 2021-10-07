@@ -27,7 +27,7 @@ class PaymentFormFilterPlugin extends AbstractPlugin implements SubFormFilterPlu
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getValidFormNames(QuoteTransfer $quoteTransfer)
     {
@@ -39,7 +39,7 @@ class PaymentFormFilterPlugin extends AbstractPlugin implements SubFormFilterPlu
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function collectPaymentMethodNames(PaymentMethodsTransfer $paymentMethodsTransfer)
     {

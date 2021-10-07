@@ -56,7 +56,7 @@ class ShipmentGroupMethodFilter implements ShipmentGroupMethodFilterInterface
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
     public function filterShipmentMethods(ShipmentGroupTransfer $shipmentGroupTransfer): ArrayObject
     {

@@ -16,7 +16,7 @@ interface MultiShipmentCollectorStrategyResolverInterface
 {
     /**
      * @param string $type
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountCollectorInterface
      */

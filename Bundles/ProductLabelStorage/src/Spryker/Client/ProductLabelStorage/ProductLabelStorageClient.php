@@ -24,7 +24,7 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName)
     {
@@ -39,11 +39,11 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]>
      */
     public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName, string $storeName): array
     {
@@ -61,7 +61,7 @@ class ProductLabelStorageClient extends AbstractClient implements ProductLabelSt
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     public function findLabels(array $idProductLabels, $localeName, string $storeName)
     {

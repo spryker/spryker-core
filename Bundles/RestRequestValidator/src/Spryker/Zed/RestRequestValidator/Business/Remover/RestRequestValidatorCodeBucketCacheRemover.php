@@ -50,7 +50,7 @@ class RestRequestValidatorCodeBucketCacheRemover implements RestRequestValidator
     /**
      * @param string $codeBucket
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getOutdatedConfig(string $codeBucket): array
     {

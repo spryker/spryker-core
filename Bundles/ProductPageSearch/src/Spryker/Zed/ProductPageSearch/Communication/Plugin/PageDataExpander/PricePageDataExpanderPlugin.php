@@ -23,7 +23,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInter
 class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageDataExpanderInterface
 {
     /**
-     * @var int[]|null Keys are store names, values are store ids.
+     * @var array<int>|null Keys are store names, values are store ids.
      */
     protected $idStoreMapBuffer;
 
@@ -65,10 +65,10 @@ class PricePageDataExpanderPlugin extends AbstractPlugin implements ProductPageD
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductCollection
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductCollection
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function filterPriceProductCollectionByStore(array $priceProductCollection, $storeName)
     {

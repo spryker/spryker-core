@@ -33,7 +33,7 @@ class DependencyModuleMapper implements DependencyModuleMapperInterface
     /**
      * @param \Generated\Shared\Transfer\DependencyModuleTransfer $dependencyModuleTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function collectDependencyCount(
         DependencyModuleTransfer $dependencyModuleTransfer

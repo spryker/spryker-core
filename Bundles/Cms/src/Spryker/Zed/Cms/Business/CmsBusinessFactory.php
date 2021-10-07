@@ -324,7 +324,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionPostSavePluginInterface>
      */
     protected function getCmsVersionPostSavePlugins(): array
     {
@@ -332,7 +332,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CmsExtension\Dependency\Plugin\CmsVersionTransferExpanderPluginInterface>
      */
     protected function getCmsVersionTransferExpanderPlugins(): array
     {
@@ -340,7 +340,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageDataExpanderPluginInterface>
      */
     protected function getCmsPageDataExpanderPlugins(): array
     {
@@ -369,7 +369,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface[]
+     * @return array<\Spryker\Zed\Cms\Communication\Plugin\PostCmsPageActivatorPluginInterface>
      */
     protected function getCmsPagePostActivatorPlugins(): array
     {
@@ -466,7 +466,7 @@ class CmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface[]
+     * @return array<\Spryker\Zed\CmsExtension\Dependency\Plugin\CmsPageBeforeDeletePluginInterface>
      */
     public function getCmsPageBeforeDeletePlugins(): array
     {

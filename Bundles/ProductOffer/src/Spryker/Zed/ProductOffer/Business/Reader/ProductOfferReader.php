@@ -19,13 +19,13 @@ class ProductOfferReader implements ProductOfferReaderInterface
     protected $productOfferRepository;
 
     /**
-     * @var array|\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferExpanderPluginInterface>
      */
     protected $productOfferExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface $productOfferRepository
-     * @param \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferExpanderPluginInterface[] $productOfferExpanderPlugins
+     * @param array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferExpanderPluginInterface> $productOfferExpanderPlugins
      */
     public function __construct(
         ProductOfferRepositoryInterface $productOfferRepository,

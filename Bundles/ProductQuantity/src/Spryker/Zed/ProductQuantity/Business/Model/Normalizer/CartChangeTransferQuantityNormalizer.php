@@ -175,7 +175,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getItemAddCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -196,7 +196,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function getItemTransferMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -217,7 +217,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     protected function getProductQuantityTransferMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -234,7 +234,7 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getChangedSkuMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -253,9 +253,9 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
     /**
      * Returns array where keys are product SKUs.
      *
-     * @param \Generated\Shared\Transfer\ProductQuantityTransfer[] $productQuantityTransfers
+     * @param array<\Generated\Shared\Transfer\ProductQuantityTransfer> $productQuantityTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductQuantityTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductQuantityTransfer>
      */
     protected function mapProductQuantityTransfersBySku(array $productQuantityTransfers): array
     {

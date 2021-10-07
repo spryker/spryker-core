@@ -41,7 +41,7 @@ class CartRuleByQuoteResourceRelationshipExpander implements CartRuleByQuoteReso
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return void
@@ -67,7 +67,7 @@ class CartRuleByQuoteResourceRelationshipExpander implements CartRuleByQuoteReso
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\DiscountTransfer[] $discountTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\DiscountTransfer> $discountTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
      *
      * @return void

@@ -45,7 +45,7 @@ class LessEqual implements ComparatorInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAcceptedTypes()
     {

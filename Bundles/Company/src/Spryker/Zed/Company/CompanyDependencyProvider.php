@@ -107,7 +107,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPreSavePluginInterface>
      */
     protected function getCompanyPreSavePlugins(): array
     {
@@ -115,7 +115,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostSavePluginInterface>
      */
     protected function getCompanyPostSavePlugins(): array
     {
@@ -123,7 +123,7 @@ class CompanyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface[]
+     * @return array<\Spryker\Zed\CompanyExtension\Dependency\Plugin\CompanyPostCreatePluginInterface>
      */
     protected function getCompanyPostCreatePlugins(): array
     {

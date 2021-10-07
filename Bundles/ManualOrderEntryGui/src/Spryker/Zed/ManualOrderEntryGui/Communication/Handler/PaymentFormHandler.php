@@ -20,13 +20,13 @@ class PaymentFormHandler implements FormHandlerInterface
     protected $paymentFacade;
 
     /**
-     * @var \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[]
+     * @var array<\Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface>
      */
     protected $subFormPlugins;
 
     /**
      * @param \Spryker\Zed\ManualOrderEntryGui\Dependency\Facade\ManualOrderEntryGuiToPaymentFacadeInterface $paymentFacade
-     * @param \Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface[] $subFormPlugins
+     * @param array<\Spryker\Zed\ManualOrderEntryGuiExtension\Dependency\Plugin\PaymentSubFormPluginInterface> $subFormPlugins
      */
     public function __construct(
         ManualOrderEntryGuiToPaymentFacadeInterface $paymentFacade,

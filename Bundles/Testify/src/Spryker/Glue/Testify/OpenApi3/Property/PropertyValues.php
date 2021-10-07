@@ -16,7 +16,7 @@ use Traversable;
 class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
 {
     /**
-     * @var \Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface[]
+     * @var array<\Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface>
      */
     protected $properties = [];
 

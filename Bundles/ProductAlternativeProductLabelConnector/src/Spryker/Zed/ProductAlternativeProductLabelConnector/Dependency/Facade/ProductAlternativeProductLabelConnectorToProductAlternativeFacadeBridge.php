@@ -23,7 +23,7 @@ class ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge im
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array
     {
@@ -31,7 +31,7 @@ class ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge im
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return bool
      */

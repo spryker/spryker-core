@@ -87,7 +87,7 @@ class ProductValidator implements ProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $indexedProductConcreteTransfers
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $indexedProductConcreteTransfers
      *
      * @return bool
      */
@@ -140,7 +140,7 @@ class ProductValidator implements ProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $indexedProductAbstractTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $indexedProductAbstractTransfers
      *
      * @return void
      */
@@ -204,7 +204,7 @@ class ProductValidator implements ProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     protected function getProductSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -226,9 +226,9 @@ class ProductValidator implements ProductValidatorInterface
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function getIndexedProductConcretesByProductConcreteSkus(array $skus): array
     {
@@ -247,9 +247,9 @@ class ProductValidator implements ProductValidatorInterface
     }
 
     /**
-     * @param string[] $skus
+     * @param array<string> $skus
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     protected function getIndexedProductAbstractsByProductAbstractSkus(array $skus): array
     {

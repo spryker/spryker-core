@@ -23,6 +23,7 @@ use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyBusinessUnitTable
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListItemTableMap;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListTableMap;
+use Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapper;
@@ -32,6 +33,11 @@ use Spryker\Zed\ShoppingList\Persistence\Propel\Mapper\ShoppingListMapper;
  */
 class ShoppingListRepository extends AbstractRepository implements ShoppingListRepositoryInterface
 {
+    /**
+     * @var string
+     */
+    protected const UUID_FIELD_NAME = 'uuid';
+
     /**
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
@@ -168,7 +174,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
-     * @param int[] $shoppingListIds
+     * @param array<int> $shoppingListIds
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
@@ -269,7 +275,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idCompanyBusinessUnit
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit[]
+     * @return array<\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnit>
      */
     public function findCompanyBusinessUnitSharedShoppingListsIds(int $idCompanyBusinessUnit): array
     {
@@ -287,7 +293,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      * @param int $idCompanyBusinessUnit
      * @param string $shoppingListPermissionGroupName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCompanyBusinessUnitSharedShoppingListIdsByPermissionGroupName(int $idCompanyBusinessUnit, string $shoppingListPermissionGroupName): array
     {
@@ -305,7 +311,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idCompanyUser
      *
-     * @return \Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser[]
+     * @return array<\Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser>
      */
     public function findCompanyUserSharedShoppingListsIds(int $idCompanyUser): array
     {
@@ -323,7 +329,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      * @param int $idCompanyUser
      * @param string $shoppingListPermissionGroupName
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCompanyUserSharedShoppingListIdsByPermissionGroupName(int $idCompanyUser, string $shoppingListPermissionGroupName): array
     {
@@ -508,7 +514,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     /**
      * @param int $idCompanyUser
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getBlacklistedShoppingListIdsByIdCompanyUser(int $idCompanyUser): array
     {
@@ -552,7 +558,7 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
      */
     protected function createCustomerShoppingListWithoutItemsQuery(string $customerReference)
     {
-        return $this->getFactory()
+        $shoppingListQuery = $this->getFactory()
             ->createShoppingListQuery()
             ->addJoin(SpyShoppingListTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
             ->leftJoinSpyShoppingListItem()
@@ -567,9 +573,26 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
             ->groupByIdShoppingList()
             ->groupByKey()
             ->groupByName()
-            ->groupByUpdatedAt()
-            ->groupByUuid()
-            ->filterByCustomerReference($customerReference)
+            ->groupByUpdatedAt();
+
+        if ($this->isGroupingByUuidFieldSupported($shoppingListQuery)) {
+            $shoppingListQuery = $shoppingListQuery->groupByUuid();
+        } else {
+            $shoppingListQuery = $shoppingListQuery->groupByIdShoppingList()
+                ->groupByCustomerReference();
+        }
+
+        return $shoppingListQuery->filterByCustomerReference($customerReference)
             ->orderByIdShoppingList();
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingList\Persistence\SpyShoppingListQuery $shoppingListQuery
+     *
+     * @return bool
+     */
+    protected function isGroupingByUuidFieldSupported(SpyShoppingListQuery $shoppingListQuery): bool
+    {
+        return $shoppingListQuery->getTableMap()->hasColumn(static::UUID_FIELD_NAME);
     }
 }

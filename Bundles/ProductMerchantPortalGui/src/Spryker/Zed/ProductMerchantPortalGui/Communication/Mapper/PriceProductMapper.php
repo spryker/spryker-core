@@ -79,14 +79,10 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<mixed> $newPriceProducts
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param mixed[] $newPriceProducts
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapTableRowsToPriceProductTransfers(
         array $newPriceProducts,
@@ -106,16 +102,11 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @phpstan-param array<int, \Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<mixed> $newPriceProduct
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<int, \Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param mixed[] $newPriceProduct
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     * @param \Generated\Shared\Transfer\PriceTypeTransfer[] $priceTypeTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function addNewPriceProductData(
         array $newPriceProduct,
@@ -176,7 +167,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param mixed[] $newPriceProduct
+     * @param array<mixed> $newPriceProduct
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
@@ -188,7 +179,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param mixed[] $newPriceProduct
+     * @param array<mixed> $newPriceProduct
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      * @param string $amountType
      *

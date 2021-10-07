@@ -96,7 +96,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
@@ -117,7 +117,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStoreAndIdProductAbstract(
         StoreTransfer $storeTransfer,
@@ -141,7 +141,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToEnableByStoreAndIdProductConcrete(
         StoreTransfer $storeTransfer,
@@ -254,7 +254,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param string $dbEngineName
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     protected function findPriceProductSchedulesToEnableByStoreResult(
         SpyPriceProductScheduleQuery $subQuery,
@@ -331,7 +331,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @param string $dbEngineName
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     protected function findPriceProductSchedulesToEnableByStoreAndIdProductAbstractResult(
         SpyPriceProductScheduleQuery $subQuery,
@@ -369,7 +369,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      * @param string $dbEngineName
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     protected function findPriceProductSchedulesToEnableByStoreAndIdProductConcreteResult(
         SpyPriceProductScheduleQuery $subQuery,

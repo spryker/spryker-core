@@ -12,7 +12,7 @@ use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToF
 interface RestRequestValidatorSchemaFinderInterface
 {
     /**
-     * @param string[] $paths
+     * @param array<string> $paths
      *
      * @return \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface
      */
@@ -21,7 +21,7 @@ interface RestRequestValidatorSchemaFinderInterface
     /**
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPaths(string $storeName): array;
 }

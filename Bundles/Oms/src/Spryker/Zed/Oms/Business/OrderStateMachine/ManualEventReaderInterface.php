@@ -12,7 +12,7 @@ interface ManualEventReaderInterface
     /**
      * @param int $idSalesOrder
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getGroupedDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
 }

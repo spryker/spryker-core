@@ -171,9 +171,9 @@ class StorageRedisClientTest extends Unit
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function prefixKeys(array $keys): array
     {

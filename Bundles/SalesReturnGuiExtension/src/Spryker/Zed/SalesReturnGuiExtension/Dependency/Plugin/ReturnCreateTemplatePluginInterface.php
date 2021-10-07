@@ -32,7 +32,7 @@ interface ReturnCreateTemplatePluginInterface
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getTemplateData(OrderTransfer $orderTransfer): array;
 }

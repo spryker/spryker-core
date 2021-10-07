@@ -87,7 +87,7 @@ interface LocaleFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableLocales();
 
@@ -147,7 +147,7 @@ interface LocaleFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 
@@ -170,7 +170,7 @@ interface LocaleFacadeInterface
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getSupportedLocaleCodes(): array;
 }

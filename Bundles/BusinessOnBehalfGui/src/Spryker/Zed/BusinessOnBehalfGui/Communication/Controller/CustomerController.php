@@ -56,7 +56,7 @@ class CustomerController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function attachCustomerAction(Request $request)
     {
@@ -91,7 +91,7 @@ class CustomerController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $form
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function handleAttachCustomerActionIfFormIsSubmitted(FormInterface $form)
     {
@@ -119,7 +119,7 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ResponseMessageTransfer[] $errorMessageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ResponseMessageTransfer> $errorMessageTransfers
      *
      * @return void
      */

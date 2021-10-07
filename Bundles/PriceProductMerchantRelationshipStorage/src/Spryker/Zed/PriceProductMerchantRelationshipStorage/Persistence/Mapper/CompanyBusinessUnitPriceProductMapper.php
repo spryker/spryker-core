@@ -20,7 +20,7 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
     /**
      * @param array $priceProductMerchantRelationshipsData
      *
-     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer>
      */
     public function mapPriceProductMerchantRelationshipArrayToTransfers(array $priceProductMerchantRelationshipsData): array
     {
@@ -34,7 +34,10 @@ class CompanyBusinessUnitPriceProductMapper implements CompanyBusinessUnitPriceP
                 );
             }
 
-            $this->addUngroupedPrice($pricesByKey[$uniquePriceIndex], $priceProductMerchantRelationshipData);
+            $this->addUngroupedPrice(
+                $pricesByKey[$uniquePriceIndex],
+                $priceProductMerchantRelationshipData
+            );
         }
 
         return $pricesByKey;

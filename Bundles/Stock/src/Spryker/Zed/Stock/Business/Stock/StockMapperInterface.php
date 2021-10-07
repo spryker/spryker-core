@@ -10,17 +10,17 @@ namespace Spryker\Zed\Stock\Business\Stock;
 interface StockMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\StockTransfer[] $stockTransfers
+     * @param array<\Generated\Shared\Transfer\StockTransfer> $stockTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function mapStoresToWarehouses(array $stockTransfers): array;
 
     /**
-     * @param \Generated\Shared\Transfer\StockTransfer[] $stockTransfers
-     * @param \Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
+     * @param array<\Generated\Shared\Transfer\StockTransfer> $stockTransfers
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return string[][]
+     * @return array<string[]>
      */
     public function mapWarehousesToStores(array $stockTransfers, array $storeTransfers): array;
 }

@@ -21,7 +21,7 @@ use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInt
 class MethodPriceReader implements MethodPriceReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface[]
+     * @var array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface>
      */
     protected $shipmentMethodPricePlugins;
 
@@ -41,12 +41,12 @@ class MethodPriceReader implements MethodPriceReaderInterface
     protected $currencyFacade;
 
     /**
-     * @var int[] Keys are currency ISO codes, values are currency ids.
+     * @var array<int> Keys are currency ISO codes, values are currency ids.
      */
     protected static $idCurrencyCache = [];
 
     /**
-     * @param \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface[] $shipmentMethodPricePlugins
+     * @param array<\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface> $shipmentMethodPricePlugins
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToStoreInterface $storeFacade
      * @param \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface $shipmentRepository
      * @param \Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface $currencyFacade

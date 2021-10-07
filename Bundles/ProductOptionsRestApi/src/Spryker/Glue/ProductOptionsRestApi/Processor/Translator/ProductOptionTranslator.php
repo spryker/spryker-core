@@ -27,10 +27,10 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer> $productAbstractOptionStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer>
      */
     public function translateProductAbstractOptionStorageTransfers(
         array $productAbstractOptionStorageTransfers,
@@ -67,7 +67,7 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string[] $translations
+     * @param array<string> $translations
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
@@ -83,7 +83,7 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer $productAbstractOptionStorageTransfer
-     * @param string[] $translations
+     * @param array<string> $translations
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer
      */
@@ -103,9 +103,9 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer> $productAbstractOptionStorageTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getGlossaryStorageKeysFromProductAbstractOptionStorageTransfers(array $productAbstractOptionStorageTransfers): array
     {
@@ -135,7 +135,7 @@ class ProductOptionTranslator implements ProductOptionTranslatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getGlossaryStorageKeysFromItemTransfer(ItemTransfer $itemTransfer): array
     {

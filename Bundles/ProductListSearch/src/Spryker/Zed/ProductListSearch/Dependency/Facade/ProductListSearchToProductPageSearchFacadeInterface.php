@@ -10,22 +10,22 @@ namespace Spryker\Zed\ProductListSearch\Dependency\Facade;
 interface ProductListSearchToProductPageSearchFacadeInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
      * @return void
      */
     public function publish(array $productAbstractIds): void;
 
     /**
-     * @param int[] $productAbstractIds
-     * @param string[] $pageDataExpanderPluginNames
+     * @param array<int> $productAbstractIds
+     * @param array<string> $pageDataExpanderPluginNames
      *
      * @return void
      */
     public function refresh(array $productAbstractIds, array $pageDataExpanderPluginNames = []): void;
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
      * @return void
      */

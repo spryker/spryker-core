@@ -23,7 +23,7 @@ class MerchantProductOfferStorageToEventBehaviorFacadeBridge implements Merchant
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      * @param string $columnName
      *
      * @return array
@@ -34,7 +34,7 @@ class MerchantProductOfferStorageToEventBehaviorFacadeBridge implements Merchant
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return array
      */

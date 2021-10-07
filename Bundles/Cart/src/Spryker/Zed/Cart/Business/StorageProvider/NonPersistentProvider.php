@@ -16,18 +16,18 @@ use Traversable;
 class NonPersistentProvider implements StorageProviderInterface
 {
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface>
      */
     protected $cartAddItemStrategyPlugins;
 
     /**
-     * @var \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface>
      */
     protected $cartRemoveItemStrategyPlugins;
 
     /**
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategyPlugins
-     * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartRemoveItemStrategyPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface> $cartAddItemStrategyPlugins
+     * @param array<\Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface> $cartRemoveItemStrategyPlugins
      */
     public function __construct(
         array $cartAddItemStrategyPlugins,
@@ -125,7 +125,7 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $cartItems
+     * @param \Traversable<\Generated\Shared\Transfer\ItemTransfer> $cartItems
      *
      * @return array
      */
@@ -151,7 +151,7 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $existingItems
+     * @param \Traversable<\Generated\Shared\Transfer\ItemTransfer> $existingItems
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $itemIndex
      *

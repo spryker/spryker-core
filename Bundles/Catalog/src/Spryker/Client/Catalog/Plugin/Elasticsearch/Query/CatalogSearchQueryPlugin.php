@@ -160,7 +160,7 @@ class CatalogSearchQueryPlugin extends AbstractPlugin implements QueryInterface,
     }
 
     /**
-     * @param string[] $fields
+     * @param array<string> $fields
      * @param string $searchString
      *
      * @return \Elastica\Query\MultiMatch

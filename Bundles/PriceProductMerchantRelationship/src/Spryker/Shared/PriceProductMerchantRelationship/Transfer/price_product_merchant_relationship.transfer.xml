@@ -5,6 +5,7 @@
         <property name="idMerchantRelationship" type="int"/>
         <property name="name" type="string"/>
         <property name="type" type="string"/>
+        <property name="isMerchantActive" type="bool"/>
     </transfer>
 
     <transfer name="QueryCriteria">
@@ -44,6 +45,11 @@
     <transfer name="MerchantRelationship">
         <property name="idMerchantRelationship" type="int"/>
         <property name="name" type="string"/>
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="PriceProductCriteria">

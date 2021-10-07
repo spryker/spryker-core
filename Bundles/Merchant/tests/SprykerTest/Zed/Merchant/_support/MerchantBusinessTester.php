@@ -7,10 +7,13 @@
 
 namespace SprykerTest\Zed\Merchant;
 
+use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\MerchantBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer;
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipValueTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 
 /**
@@ -51,6 +54,25 @@ class MerchantBusinessTester extends Actor
             ->build()
             ->setIdMerchant($merchantId)
             ->setStoreRelation((new StoreRelationBuilder())->build());
+    }
+
+    /**
+     * @param int $merchantId
+     * @param int $price
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipStorageTransfer
+     */
+    public function createPriceProductMerchantRelationshipStorageTransfer(int $merchantId, int $price): PriceProductMerchantRelationshipStorageTransfer
+    {
+        $ungroupedPrices = new ArrayObject();
+        $priceProductMerchantRelationshipValueTransfer = (new PriceProductMerchantRelationshipValueTransfer())
+            ->setGrossPrice($price)
+            ->setNetPrice($price)
+            ->setFkMerchant($merchantId);
+        $ungroupedPrices->append($priceProductMerchantRelationshipValueTransfer);
+
+        return (new PriceProductMerchantRelationshipStorageTransfer())
+            ->setUngroupedPrices($ungroupedPrices);
     }
 
     /**

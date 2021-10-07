@@ -68,7 +68,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
     }
 
     /**
-     * @return \Twig\TwigFunction[]
+     * @return array<\Twig\TwigFunction>
      */
     protected function getTwigFunctions()
     {
@@ -77,7 +77,7 @@ class GuiTwigExtensionServiceProvider extends AbstractPlugin implements ServiceP
     }
 
     /**
-     * @return \Twig\TwigFilter[]
+     * @return array<\Twig\TwigFilter>
      */
     protected function getTwigFilters()
     {

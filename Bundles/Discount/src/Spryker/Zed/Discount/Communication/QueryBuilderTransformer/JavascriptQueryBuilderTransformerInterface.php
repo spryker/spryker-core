@@ -12,7 +12,7 @@ interface JavascriptQueryBuilderTransformerInterface
     /**
      * @param string $type
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getFilters($type);
 }

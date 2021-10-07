@@ -20,13 +20,13 @@ class CmsBlockCollector extends AbstractStoragePropelCollector
     public const COL_IS_IN_STORE = 'is_in_store';
 
     /**
-     * @var \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface>
      */
     protected $collectorDataExpanderPlugins = [];
 
     /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
-     * @param \Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface[] $collectorDataExpanderPlugins
+     * @param array<\Spryker\Zed\CmsBlockCollector\Dependency\Plugin\CmsBlockCollectorDataExpanderPluginInterface> $collectorDataExpanderPlugins
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,

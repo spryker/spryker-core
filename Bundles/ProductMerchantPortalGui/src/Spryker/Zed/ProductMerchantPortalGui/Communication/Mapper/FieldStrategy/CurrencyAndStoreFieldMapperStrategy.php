@@ -48,15 +48,11 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
      * @param array $data
      * @param int $volumeQuantity
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapDataToPriceProductTransfers(
         array $data,
@@ -122,7 +118,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array $data
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function getPriceProducts(PriceProductTransfer $priceProductTransfer, array $data): array
     {
@@ -162,7 +158,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
     }
 
     /**
-     * @param mixed[] $data
+     * @param array<mixed> $data
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer

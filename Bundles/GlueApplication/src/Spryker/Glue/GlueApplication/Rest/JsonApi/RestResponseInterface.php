@@ -36,7 +36,7 @@ interface RestResponseInterface
     public function addError(RestErrorMessageTransfer $error);
 
     /**
-     * @return \Generated\Shared\Transfer\RestErrorMessageTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestErrorMessageTransfer>
      */
     public function getErrors(): array;
 
@@ -61,7 +61,7 @@ interface RestResponseInterface
     public function addResource(RestResourceInterface $restResource);
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function getResources(): array;
 

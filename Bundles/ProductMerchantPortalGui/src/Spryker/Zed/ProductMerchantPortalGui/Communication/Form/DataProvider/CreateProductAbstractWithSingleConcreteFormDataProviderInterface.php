@@ -14,7 +14,7 @@ interface CreateProductAbstractWithSingleConcreteFormDataProviderInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function getDefaultData(Request $request): array;
 }

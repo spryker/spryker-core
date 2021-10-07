@@ -42,7 +42,7 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
      */
     public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
-        /** @var int[] $stateMachineItemStateIds */
+        /** @var array<int> $stateMachineItemStateIds */
         $stateMachineItemStateIds = $this->getStateMachineItemStateIds($merchantOrderTransfer);
 
         $stateMachineItemTransfers = $this->merchantOmsRepository->getStateMachineItemsByStateIds(
@@ -58,7 +58,7 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItemTransfers
      *
      * @return string|null
      */
@@ -76,7 +76,7 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
      *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getStateMachineItemStateIds(MerchantOrderTransfer $merchantOrderTransfer): array
     {
@@ -89,13 +89,13 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getUniqueItemStates(array $stateMachineItemTransfers): array
     {
-        /** @var mixed[] $stateItems */
+        /** @var array<mixed> $stateItems */
         $stateItems = [];
 
         foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {

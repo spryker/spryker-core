@@ -71,7 +71,7 @@ class ResetPassword implements ResetPasswordInterface
     protected $resetConfig;
 
     /**
-     * @var array|\Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface[]
+     * @var array<\Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface>
      */
     protected $userPasswordResetRequestStrategyPlugins;
 
@@ -81,7 +81,7 @@ class ResetPassword implements ResetPasswordInterface
      * @param \Spryker\Zed\UserPasswordReset\Persistence\UserPasswordResetEntityManagerInterface $userPasswordResetEntityManager
      * @param \Spryker\Zed\UserPasswordReset\Persistence\UserPasswordResetRepositoryInterface $passwordResetRepository
      * @param \Spryker\Zed\UserPasswordReset\UserPasswordResetConfig $resetConfig
-     * @param \Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface[] $userPasswordResetRequestStrategyPlugins
+     * @param array<\Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface> $userPasswordResetRequestStrategyPlugins
      */
     public function __construct(
         UserPasswordResetToUserFacadeInterface $userFacade,

@@ -17,7 +17,7 @@ use Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface;
 interface ProductItemTaxRateCalculatorStrategyResolverInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddressTransfer
      *
      * @return \Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface

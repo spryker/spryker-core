@@ -34,12 +34,12 @@ class ProductConcreteFormEditTabs extends ProductFormEditTabs
     protected const TEMPLATE_TAB_VARIANTS = '@ProductManagement/Product/_partials/variant-tab-adding.twig';
 
     /**
-     * @var array|\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface>
      */
     protected $productConcreteFormEditTabsExpanderPlugins;
 
     /**
-     * @param \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface[] $productConcreteFormEditTabsExpanderPlugins
+     * @param array<\Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteFormEditTabsExpanderPluginInterface> $productConcreteFormEditTabsExpanderPlugins
      */
     public function __construct(array $productConcreteFormEditTabsExpanderPlugins = [])
     {

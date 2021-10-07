@@ -143,7 +143,7 @@ class ItemMetadataSaver implements ItemMetadataSaverInterface
 
     /**
      * @param array $concreteAttributes
-     * @param \Orm\Zed\Product\Persistence\SpyProductAttributeKey[] $matchingAttributes
+     * @param array<\Orm\Zed\Product\Persistence\SpyProductAttributeKey> $matchingAttributes
      *
      * @return array
      */

@@ -39,7 +39,7 @@ interface StockProductReaderInterface
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStocksProduct(string $sku): array;
 
@@ -47,7 +47,7 @@ interface StockProductReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function findProductStocksForStore(string $sku, StoreTransfer $storeTransfer): array;
 
@@ -55,7 +55,7 @@ interface StockProductReaderInterface
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductByProductAbstractSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): array;
 
@@ -115,7 +115,7 @@ interface StockProductReaderInterface
      *
      * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductsByIdProduct($idProductConcrete): array;
 
@@ -123,7 +123,7 @@ interface StockProductReaderInterface
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer): array;
 

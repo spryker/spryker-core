@@ -52,7 +52,7 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getPaymentMethodPriority(): array
     {

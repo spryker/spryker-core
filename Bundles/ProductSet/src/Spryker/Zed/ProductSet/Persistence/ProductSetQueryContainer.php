@@ -74,7 +74,7 @@ class ProductSetQueryContainer extends AbstractQueryContainer implements Product
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */

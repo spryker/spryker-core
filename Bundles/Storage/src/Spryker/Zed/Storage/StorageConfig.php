@@ -74,7 +74,7 @@ class StorageConfig extends AbstractBundleConfig
      * - Returns the value for the process timeout in seconds, after which an exception will be thrown.
      * - Can return int, float or null to disable timeout.
      *
-     * @return int|float|null
+     * @return float|int|null
      */
     public function getProcessTimeout()
     {

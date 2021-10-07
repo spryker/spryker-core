@@ -24,7 +24,7 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     public function getCategories(string $localeName, string $storeName): ArrayObject
     {
@@ -56,11 +56,11 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      *
      * @api
      *
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>
      */
     public function getCategoryNodeByIds(array $categoryNodeIds, string $localeName, string $storeName): array
     {
@@ -78,7 +78,7 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
      * @param string $localeName
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */
     public function formatCategoryTreeFilter(array $docCountAggregation, string $localeName, string $storeName): ArrayObject
     {

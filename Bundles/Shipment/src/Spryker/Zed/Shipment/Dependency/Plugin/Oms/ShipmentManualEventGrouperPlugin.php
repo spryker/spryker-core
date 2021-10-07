@@ -22,7 +22,7 @@ class ShipmentManualEventGrouperPlugin extends AbstractPlugin implements OmsManu
      * @api
      *
      * @param array $events
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $orderItemTransfers
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *
      * @return array
      */

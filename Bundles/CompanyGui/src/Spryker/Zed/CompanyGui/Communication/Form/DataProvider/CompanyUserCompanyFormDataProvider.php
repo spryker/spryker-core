@@ -29,7 +29,7 @@ class CompanyUserCompanyFormDataProvider
      *
      * @param int|null $idCompany
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getOptions(?int $idCompany): array
     {

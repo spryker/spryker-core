@@ -95,7 +95,7 @@ class TimeoutTest extends Unit
     }
 
     /**
-     * @return array[]
+     * @return array<array>
      */
     public function timeoutDataProvider(): array
     {

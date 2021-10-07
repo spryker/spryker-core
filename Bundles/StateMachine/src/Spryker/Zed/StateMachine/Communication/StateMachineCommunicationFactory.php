@@ -24,7 +24,7 @@ use Symfony\Component\Form\FormInterface;
 class StateMachineCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface[]
+     * @return array<\Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface>
      */
     public function getStateMachineHandlerPlugins()
     {

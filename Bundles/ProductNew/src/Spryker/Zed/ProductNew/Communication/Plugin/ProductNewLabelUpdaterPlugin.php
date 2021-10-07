@@ -22,7 +22,7 @@ class ProductNewLabelUpdaterPlugin extends AbstractPlugin implements ProductLabe
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer>
      */
     public function findProductLabelProductAbstractRelationChanges()
     {

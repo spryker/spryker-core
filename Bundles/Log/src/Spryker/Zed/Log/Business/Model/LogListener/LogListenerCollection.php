@@ -10,7 +10,7 @@ namespace Spryker\Zed\Log\Business\Model\LogListener;
 class LogListenerCollection implements LogListenerInterface
 {
     /**
-     * @var \Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface[]
+     * @var array<\Spryker\Zed\Log\Business\Model\LogListener\LogListenerInterface>
      */
     protected $logListener;
 

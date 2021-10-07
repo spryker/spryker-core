@@ -30,7 +30,7 @@ interface OrderRestResponseBuilderInterface
     public function createOrderRestResponse(OrderTransfer $orderTransfer): RestResponseInterface;
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer> $orderTransfers
      * @param int $totalItems
      * @param int $limit
      *
@@ -44,9 +44,9 @@ interface OrderRestResponseBuilderInterface
     public function createOrderNotFoundErrorResponse(): RestResponseInterface;
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     public function createMappedOrderItemRestResourcesFromOrderItemTransfers(ArrayObject $itemTransfers): array;
 

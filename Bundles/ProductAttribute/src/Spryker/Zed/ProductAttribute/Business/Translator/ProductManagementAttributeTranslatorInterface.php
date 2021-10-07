@@ -12,9 +12,9 @@ use ArrayObject;
 interface ProductManagementAttributeTranslatorInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[] $productManagementAttributeTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     public function translateProductManagementAttributes(ArrayObject $productManagementAttributeTransfers): ArrayObject;
 }

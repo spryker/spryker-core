@@ -54,7 +54,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
     }
 
     /**
-     * @return \Symfony\Component\Form\FormTypeExtensionInterface[]
+     * @return array<\Symfony\Component\Form\FormTypeExtensionInterface>
      */
     protected function loadTypeExtensions(): array
     {

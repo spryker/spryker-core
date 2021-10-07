@@ -25,7 +25,7 @@ class ProductImageCartConnectorToProductImageBridge implements ProductImageCartC
     /**
      * @param int $productId
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductId($productId)
     {
@@ -35,7 +35,7 @@ class ProductImageCartConnectorToProductImageBridge implements ProductImageCartC
     /**
      * @param int $idProduct
      *
-     * @return \Generated\Shared\Transfer\ProductImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function getProductImagesSetCollectionByProductIdForCurrentLocale(int $idProduct): array
     {
@@ -43,10 +43,10 @@ class ProductImageCartConnectorToProductImageBridge implements ProductImageCartC
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      * @param string $productImageSetName
      *
-     * @return \Generated\Shared\Transfer\ProductImageTransfer[][]
+     * @return array<\Generated\Shared\Transfer\ProductImageTransfer[]>
      */
     public function getProductImagesByProductIdsAndProductImageSetName(array $productIds, string $productImageSetName): array
     {

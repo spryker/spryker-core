@@ -63,7 +63,7 @@ class ProductListDeleteChecker implements ProductListDeleteCheckerInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductListResponseTransfer $productListResponseTransfer
-     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer[] $merchantRelationshipTransfers
+     * @param array<\Generated\Shared\Transfer\MerchantRelationshipTransfer> $merchantRelationshipTransfers
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */

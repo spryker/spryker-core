@@ -14,12 +14,12 @@ use Spryker\Zed\Url\Business\Url\UrlCreatorBeforeSaveObserverInterface;
 class UrlCreatePluginObserver implements UrlCreatorBeforeSaveObserverInterface, UrlCreatorAfterSaveObserverInterface
 {
     /**
-     * @var \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[]
+     * @var array<\Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface>
      */
     protected $urlCreatePlugins;
 
     /**
-     * @param \Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface[] $urlCreatePlugins
+     * @param array<\Spryker\Zed\Url\Dependency\Plugin\UrlCreatePluginInterface> $urlCreatePlugins
      */
     public function __construct(array $urlCreatePlugins)
     {

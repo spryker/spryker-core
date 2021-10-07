@@ -97,7 +97,7 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface[]
+     * @return array<\Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface>
      */
     public function getProductOfferReferenceStrategyPlugins(): array
     {
@@ -105,7 +105,7 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[]
+     * @return array<\Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface>
      */
     public function getProductOfferStorageExpanderPlugins(): array
     {

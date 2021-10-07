@@ -13,12 +13,12 @@ use Spryker\Zed\Store\Business\Exception\StoreCacheNotFoundException;
 class StoreCache implements StoreCacheInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     * @var array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected static $storeTransfersCacheByStoreId = [];
 
     /**
-     * @var \Generated\Shared\Transfer\StoreTransfer[]
+     * @var array<\Generated\Shared\Transfer\StoreTransfer>
      */
     protected static $storeTransferCacheByStoreName = [];
 

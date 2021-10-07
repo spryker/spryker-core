@@ -497,7 +497,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
      */
     protected function getCoreModules($path)
     {
-        /** @var \Symfony\Component\Finder\SplFileInfo[] $directories */
+        /** @var array<\Symfony\Component\Finder\SplFileInfo> $directories */
         $directories = (new Finder())
             ->directories()
             ->in($path)

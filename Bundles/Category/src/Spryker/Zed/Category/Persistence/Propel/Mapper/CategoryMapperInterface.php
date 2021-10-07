@@ -34,7 +34,7 @@ interface CategoryMapperInterface
     public function mapCategoryWithRelations(SpyCategory $spyCategory, CategoryTransfer $categoryTransfer): CategoryTransfer;
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategory[]|\Propel\Runtime\Collection\ObjectCollection $categoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategory> $categoryEntities
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
@@ -45,7 +45,7 @@ interface CategoryMapperInterface
     ): CategoryCollectionTransfer;
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[] $categoryNodeEntities
+     * @param array<\Orm\Zed\Category\Persistence\SpyCategoryNode> $categoryNodeEntities
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
@@ -56,7 +56,7 @@ interface CategoryMapperInterface
     ): NodeCollectionTransfer;
 
     /**
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode[]|\Propel\Runtime\Collection\ObjectCollection $nodeEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryNode> $nodeEntities
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer

@@ -101,7 +101,7 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getBlacklistIds(): array
     {
@@ -115,7 +115,7 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     protected function getWhitelistIds(): array
     {

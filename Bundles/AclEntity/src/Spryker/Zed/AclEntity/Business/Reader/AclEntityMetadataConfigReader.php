@@ -14,7 +14,7 @@ use Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInt
 class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInterface
 {
     /**
-     * @var \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface>
      */
     protected $aclEntityMetadataCollectionExpandPlugins;
 
@@ -24,7 +24,7 @@ class AclEntityMetadataConfigReader implements AclEntityMetadataConfigReaderInte
     protected $aclEntityMetadataConfigValidator;
 
     /**
-     * @param \Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface[] $aclEntityMetadataCollectionExpandPlugins
+     * @param array<\Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpanderPluginInterface> $aclEntityMetadataCollectionExpandPlugins
      * @param \Spryker\Zed\AclEntity\Business\Validator\AclEntityMetadataConfigValidatorInterface $aclEntityMetadataConfigValidator
      */
     public function __construct(

@@ -66,7 +66,7 @@ class SilexRouter implements RouterInterface
     }
 
     /**
-     * @return mixed|\Symfony\Component\Routing\RouteCollection
+     * @return \Symfony\Component\Routing\RouteCollection|mixed
      */
     public function getRouteCollection()
     {

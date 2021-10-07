@@ -20,9 +20,9 @@ interface ShoppingListNoteRepositoryInterface
     public function findShoppingListItemNoteByFkShoppingListItem(int $idShoppingListItem): ?ShoppingListItemNoteTransfer;
 
     /**
-     * @param int[] $shoppingListItemIds
+     * @param array<int> $shoppingListItemIds
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemNoteTransfer>
      */
     public function getShoppingListItemNoteTransfersByShoppingListItemIds(array $shoppingListItemIds): ArrayObject;
 }

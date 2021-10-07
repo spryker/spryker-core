@@ -35,7 +35,7 @@ interface FacetConfigBuilderInterface
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     public function getAll();
 
@@ -51,7 +51,7 @@ interface FacetConfigBuilderInterface
      *
      * @param array $requestParameters
      *
-     * @return \Generated\Shared\Transfer\FacetConfigTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     public function getActive(array $requestParameters);
 

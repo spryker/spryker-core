@@ -27,7 +27,7 @@ class TemplatePlaceholderParser implements TemplatePlaceholderParserInterface
     /**
      * @param string $templateContent
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getTemplatePlaceholders(string $templateContent): array
     {

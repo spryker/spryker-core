@@ -65,7 +65,7 @@ class Calculator implements CalculatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer[] $stockProductTransfers
+     * @param array<\Generated\Shared\Transfer\StockProductTransfer> $stockProductTransfers
      *
      * @return \Spryker\DecimalObject\Decimal
      */

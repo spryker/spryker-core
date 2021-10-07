@@ -92,7 +92,7 @@ class ProductBundleBusinessTester extends Actor
      * @param int $bundlePrice
      * @param bool $isAlwaysAvailable
      * @param bool $isNeverOutOfStock
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productsToAssign
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productsToAssign
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
@@ -224,7 +224,7 @@ class ProductBundleBusinessTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function createBundleItemsWithOptions(): array
     {

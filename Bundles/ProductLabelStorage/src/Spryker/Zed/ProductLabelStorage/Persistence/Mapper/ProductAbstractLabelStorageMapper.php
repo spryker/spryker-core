@@ -14,10 +14,10 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductAbstractLabelStorageMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage[] $productAbstractLabelStorageEntities
-     * @param \Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer[] $productAbstractLabelStorageTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorage> $productAbstractLabelStorageEntities
+     * @param array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer> $productAbstractLabelStorageTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractLabelStorageTransfer>
      */
     public function mapProductAbstractLabelStorageEntitiesToProductAbstractLabelStorageTransfers(
         ObjectCollection $productAbstractLabelStorageEntities,

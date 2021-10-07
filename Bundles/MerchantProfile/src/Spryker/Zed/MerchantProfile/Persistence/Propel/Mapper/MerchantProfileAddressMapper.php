@@ -32,14 +32,10 @@ class MerchantProfileAddressMapper implements MerchantProfileAddressMapperInterf
     }
 
     /**
-     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer> $merchantProfileAddressTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress> $merchantProfileAddressEntities
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer> $merchantProfileAddressTransfers
      *
-     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\MerchantProfileAddressTransfer>
-     *
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddress[] $merchantProfileAddressEntities
-     * @param \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[] $merchantProfileAddressTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MerchantProfileAddressTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>
      */
     public function mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressTransfers(
         ObjectCollection $merchantProfileAddressEntities,

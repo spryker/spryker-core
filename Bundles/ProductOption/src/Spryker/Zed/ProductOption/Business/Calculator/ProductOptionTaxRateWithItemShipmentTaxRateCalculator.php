@@ -68,9 +68,9 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function recalculateForItemTransfers(ArrayObject $itemTransfers): ArrayObject
     {
@@ -91,9 +91,9 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getCountryIso2Codes(ArrayObject $itemTransfers): array
     {
@@ -107,9 +107,9 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getIdProductOptionValues(ArrayObject $itemTransfers): array
     {
@@ -151,7 +151,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductOptionValueIds(ItemTransfer $itemTransfer): array
     {
@@ -202,8 +202,8 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     }
 
     /**
-     * @param int[] $idProductOptionValues
-     * @param string[] $countryIso2Codes
+     * @param array<int> $idProductOptionValues
+     * @param array<string> $countryIso2Codes
      *
      * @return array
      */
@@ -220,7 +220,7 @@ class ProductOptionTaxRateWithItemShipmentTaxRateCalculator implements Calculato
     }
 
     /**
-     * @param iterable|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $taxSetCollection
+     * @param iterable<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $taxSetCollection
      *
      * @return array
      */

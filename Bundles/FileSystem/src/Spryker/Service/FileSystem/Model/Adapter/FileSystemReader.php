@@ -90,7 +90,7 @@ class FileSystemReader implements FileSystemReaderInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemListTransfer $fileSystemListTransfer
      *
-     * @return \Generated\Shared\Transfer\FileSystemResourceTransfer[]
+     * @return array<\Generated\Shared\Transfer\FileSystemResourceTransfer>
      */
     public function listContents(FileSystemListTransfer $fileSystemListTransfer)
     {

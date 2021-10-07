@@ -25,7 +25,7 @@ class QuoteApprovalShipmentQuoteFieldsAllowedForSavingProviderPlugin extends Abs
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function execute(QuoteTransfer $quoteTransfer): array
     {

@@ -23,7 +23,7 @@ class CategoryPageSearchToStoreFacadeBridge implements CategoryPageSearchToStore
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores()
     {

@@ -50,7 +50,7 @@ class SalesPaymentMapper
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $spySalesPaymentCollection
      *
-     * @return \Generated\Shared\Transfer\SalesPaymentTransfer[]
+     * @return array<\Generated\Shared\Transfer\SalesPaymentTransfer>
      */
     public function mapSalesPaymentEntityCollectionToSalesPaymentTransferArray(
         ObjectCollection $spySalesPaymentCollection

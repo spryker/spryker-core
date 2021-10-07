@@ -121,7 +121,7 @@ class ProductAttributeDataHelper extends Module
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>
      */
     public function generateLocalizedAttributes(): array
     {

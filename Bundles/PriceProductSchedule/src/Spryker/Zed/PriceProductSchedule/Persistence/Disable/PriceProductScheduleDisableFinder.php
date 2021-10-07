@@ -43,7 +43,7 @@ class PriceProductScheduleDisableFinder implements PriceProductScheduleDisableFi
      * @module PriceProduct
      * @module Currency
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisable(): array
     {
@@ -110,7 +110,7 @@ class PriceProductScheduleDisableFinder implements PriceProductScheduleDisableFi
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisableByIdProductAbstract(int $idProductAbstract): array
     {
@@ -136,7 +136,7 @@ class PriceProductScheduleDisableFinder implements PriceProductScheduleDisableFi
      *
      * @param int $idProductConcrete
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findPriceProductSchedulesToDisableByIdProductConcrete(int $idProductConcrete): array
     {
@@ -162,7 +162,7 @@ class PriceProductScheduleDisableFinder implements PriceProductScheduleDisableFi
      *
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     public function findSimilarPriceProductSchedulesToDisable(
         PriceProductScheduleTransfer $priceProductScheduleTransfer

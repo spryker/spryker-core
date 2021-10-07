@@ -73,9 +73,9 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer>
      */
     public function getProductConcreteMeasurementUnitStorageCollection(array $productConcreteIds): array
     {
@@ -92,9 +92,9 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param array<int> $productConcreteIds
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateKeys(array $productConcreteIds): array
     {
@@ -107,9 +107,9 @@ class ProductConcreteMeasurementUnitStorageReader implements ProductConcreteMeas
     }
 
     /**
-     * @param string[] $productConcreteMeasurementUnitsStorageData
+     * @param array<string> $productConcreteMeasurementUnitsStorageData
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer>
      */
     protected function mapProductMeasurementUnitStorageDataToProductConcreteMeasurementUnitStorageTransfers(
         array $productConcreteMeasurementUnitsStorageData

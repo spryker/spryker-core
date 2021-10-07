@@ -34,7 +34,7 @@ interface CustomerRestResponseBuilderInterface
     public function createNoContentResponse(): RestResponseInterface;
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CustomerErrorTransfer[] $customerErrorTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CustomerErrorTransfer> $customerErrorTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */

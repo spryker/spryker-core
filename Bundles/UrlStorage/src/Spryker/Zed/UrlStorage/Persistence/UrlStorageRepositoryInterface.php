@@ -10,24 +10,24 @@ namespace Spryker\Zed\UrlStorage\Persistence;
 interface UrlStorageRepositoryInterface
 {
     /**
-     * @param int[] $urlIds
-     * @param string[] $localeNames
+     * @param array<int> $urlIds
+     * @param array<string> $localeNames
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl[][]
+     * @return array<\Orm\Zed\Url\Persistence\SpyUrl[]>
      */
     public function findLocalizedUrlsByUrlIds(array $urlIds, array $localeNames): array;
 
     /**
-     * @param int[] $urlIds
+     * @param array<int> $urlIds
      *
-     * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage[]
+     * @return array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage>
      */
     public function findUrlStorageByUrlIds(array $urlIds): array;
 
     /**
-     * @param string[] $urls
+     * @param array<string> $urls
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl[]
+     * @return array<\Orm\Zed\Url\Persistence\SpyUrl>
      */
     public function findUrlEntitiesByUrls(array $urls): array;
 }

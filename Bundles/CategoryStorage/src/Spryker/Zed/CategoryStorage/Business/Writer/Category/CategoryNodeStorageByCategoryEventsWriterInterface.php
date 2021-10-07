@@ -10,7 +10,7 @@ namespace Spryker\Zed\CategoryStorage\Business\Writer\Category;
 interface CategoryNodeStorageByCategoryEventsWriterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

@@ -41,7 +41,7 @@ class NavigationNodeReader implements NavigationNodeReaderInterface
     /**
      * @param int $idCategoryNode
      *
-     * @return \Generated\Shared\Transfer\NavigationNodeTransfer []
+     * @return array<\Generated\Shared\Transfer\NavigationNodeTransfer>
      */
     public function getNavigationNodesFromCategoryNodeId($idCategoryNode)
     {

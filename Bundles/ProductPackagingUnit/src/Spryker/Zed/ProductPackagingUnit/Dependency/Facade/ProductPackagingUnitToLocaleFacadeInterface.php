@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 interface ProductPackagingUnitToLocaleFacadeInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer[]
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
     public function getLocaleCollection();
 

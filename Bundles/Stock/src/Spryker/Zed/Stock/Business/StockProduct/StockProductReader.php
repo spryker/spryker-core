@@ -124,7 +124,7 @@ class StockProductReader implements StockProductReaderInterface
     /**
      * @param string $sku
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStocksProduct(string $sku): array
     {
@@ -135,7 +135,7 @@ class StockProductReader implements StockProductReaderInterface
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function findProductStocksForStore(string $sku, StoreTransfer $storeTransfer): array
     {
@@ -148,7 +148,7 @@ class StockProductReader implements StockProductReaderInterface
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductByProductAbstractSkuForStore(string $abstractSku, StoreTransfer $storeTransfer): array
     {
@@ -271,7 +271,7 @@ class StockProductReader implements StockProductReaderInterface
      *
      * @throws \Spryker\Zed\Stock\Business\Exception\StockProductNotFoundException
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function getStockProductsByIdProduct($idProductConcrete): array
     {
@@ -300,14 +300,14 @@ class StockProductReader implements StockProductReaderInterface
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Generated\Shared\Transfer\StockProductTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
     public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer): array
     {
         $storeTransfer->requireName();
         $stockNames = $this->stockRepository->getStockNamesForStore($storeTransfer->getName());
 
-        /** @var \Orm\Zed\Stock\Persistence\SpyStockProduct[] $stockProducts */
+        /** @var array<\Orm\Zed\Stock\Persistence\SpyStockProduct> $stockProducts */
         $stockProducts = $this->queryContainer
             ->queryStockByIdProductAndTypes($idProductConcrete, $stockNames)
             ->find();
@@ -334,7 +334,7 @@ class StockProductReader implements StockProductReaderInterface
      */
     public function expandProductConcreteWithStocks(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
-        /** @var \Orm\Zed\Stock\Persistence\SpyStockProduct[] $stockProductCollection */
+        /** @var array<\Orm\Zed\Stock\Persistence\SpyStockProduct> $stockProductCollection */
         $stockProductCollection = $this->queryContainer
             ->queryStockByProducts($productConcreteTransfer->requireIdProductConcrete()->getIdProductConcrete())
             ->innerJoinStock()
@@ -380,7 +380,7 @@ class StockProductReader implements StockProductReaderInterface
     /**
      * @param string $storeName
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStoreWarehouses(string $storeName): array
     {

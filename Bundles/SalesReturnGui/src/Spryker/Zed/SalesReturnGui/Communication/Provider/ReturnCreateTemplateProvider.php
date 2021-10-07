@@ -22,12 +22,12 @@ class ReturnCreateTemplateProvider implements ReturnCreateTemplateProviderInterf
     protected const FIELD_ORDER = 'order';
 
     /**
-     * @var \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface[]
+     * @var array<\Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface>
      */
     protected $returnCreateTemplatePlugins;
 
     /**
-     * @param \Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface[] $returnCreateTemplatePlugins
+     * @param array<\Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface> $returnCreateTemplatePlugins
      */
     public function __construct(array $returnCreateTemplatePlugins)
     {

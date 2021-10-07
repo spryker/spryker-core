@@ -98,7 +98,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
      * @param int $idCategoryNode
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getAllParents(int $idCategoryNode, LocaleTransfer $localeTransfer): array
     {
@@ -139,8 +139,8 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * @param int[] $allParentCategoryNodeIds
-     * @param int[] $allCategoryNodeIds
+     * @param array<int> $allParentCategoryNodeIds
+     * @param array<int> $allCategoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
@@ -212,7 +212,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
     }
 
     /**
-     * @param int[] $directParentCategories
+     * @param array<int> $directParentCategories
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      * @param array $productCategoryEntities
@@ -269,7 +269,7 @@ class ProductCategoryPageDataLoaderExpanderPlugin extends AbstractPlugin impleme
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $categoryNodeEntityCollection
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function mapCategoryNamesIndexedByCategoryNodeIds(ObjectCollection $categoryNodeEntityCollection): array
     {

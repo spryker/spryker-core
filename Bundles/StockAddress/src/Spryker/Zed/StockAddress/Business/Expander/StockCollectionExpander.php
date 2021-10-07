@@ -54,7 +54,7 @@ class StockCollectionExpander implements StockCollectionExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\StockCollectionTransfer $stockCollectionTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function extractStockIdsFromStockCollectionTransfer(StockCollectionTransfer $stockCollectionTransfer): array
     {
@@ -64,9 +64,9 @@ class StockCollectionExpander implements StockCollectionExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StockAddressTransfer[] $stockAddressTransfers
+     * @param array<\Generated\Shared\Transfer\StockAddressTransfer> $stockAddressTransfers
      *
-     * @return \Generated\Shared\Transfer\StockAddressTransfer[]
+     * @return array<\Generated\Shared\Transfer\StockAddressTransfer>
      */
     protected function getStockAddressTransfersIndexedByIdStock(array $stockAddressTransfers): array
     {

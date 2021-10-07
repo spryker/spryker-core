@@ -20,7 +20,7 @@ interface ShoppingListProductOptionConnectorEntityManagerInterface
     public function saveShoppingListItemProductOption(int $idShoppingListItem, int $idProductOption): void;
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemTransfer> $shoppingListItemTransfers
      *
      * @return void
      */
@@ -34,14 +34,14 @@ interface ShoppingListProductOptionConnectorEntityManagerInterface
     public function removeShoppingListItemProductOptions(int $idShoppingListItem): void;
 
     /**
-     * @param int[] $shoppingListItemIds
+     * @param array<int> $shoppingListItemIds
      *
      * @return void
      */
     public function removeShoppingListItemProductOptionsByShoppingListItemIds(array $shoppingListItemIds): void;
 
     /**
-     * @param int[] $productOptionValueIds
+     * @param array<int> $productOptionValueIds
      *
      * @return void
      */

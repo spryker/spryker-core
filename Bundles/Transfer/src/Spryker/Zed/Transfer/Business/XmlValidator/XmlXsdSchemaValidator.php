@@ -24,7 +24,7 @@ class XmlXsdSchemaValidator implements XmlValidatorInterface
     protected const XML_SCHEMA_INSTANCE_NAMESPACE_ATTRIBUTE_SHIM = 'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"';
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $errors = [];
 
@@ -57,7 +57,7 @@ class XmlXsdSchemaValidator implements XmlValidatorInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getErrors(): array
     {
@@ -120,7 +120,7 @@ class XmlXsdSchemaValidator implements XmlValidatorInterface
      */
     protected function logXmlErrors(): void
     {
-        /** @var \LibXMLError[] $errors */
+        /** @var array<\LibXMLError> $errors */
         $errors = libxml_get_errors();
 
         foreach ($errors as $error) {

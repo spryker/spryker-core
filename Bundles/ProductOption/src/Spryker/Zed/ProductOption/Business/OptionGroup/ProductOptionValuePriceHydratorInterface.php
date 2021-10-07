@@ -12,9 +12,9 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface ProductOptionValuePriceHydratorInterface
 {
     /**
-     * @param \Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice[]|\Propel\Runtime\Collection\ObjectCollection $priceCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice> $priceCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\MoneyValueTransfer>
      */
     public function getMoneyValueCollection(ObjectCollection $priceCollection);
 }

@@ -33,7 +33,7 @@ class ProductCategoryStorageToStorageClientBridge implements ProductCategoryStor
     }
 
     /**
-     * @param string[] $keys
+     * @param array<string> $keys
      *
      * @return array
      */

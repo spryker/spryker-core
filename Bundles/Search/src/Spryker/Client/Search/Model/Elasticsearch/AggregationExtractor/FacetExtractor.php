@@ -81,7 +81,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      * @param string $name
      * @param string $fieldName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FacetSearchResultValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FacetSearchResultValueTransfer>
      */
     protected function extractFacetData(array $aggregation, $name, $fieldName)
     {
@@ -97,7 +97,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      * @param string $name
      * @param string $fieldName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FacetSearchResultValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FacetSearchResultValueTransfer>
      */
     protected function extractFacetDataBuckets(array $aggregation, $name, $fieldName)
     {
@@ -123,7 +123,7 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
      * @param array $aggregation
      * @param string $fieldName
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FacetSearchResultValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FacetSearchResultValueTransfer>
      */
     protected function extractStandaloneFacetDataBuckets(array $aggregation, $fieldName)
     {
@@ -142,9 +142,9 @@ class FacetExtractor extends AbstractAggregationExtractor implements Aggregation
 
     /**
      * @param array $valueBucket
-     * @param \ArrayObject|\Generated\Shared\Transfer\FacetSearchResultValueTransfer[] $facetResultValues
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\FacetSearchResultValueTransfer> $facetResultValues
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\FacetSearchResultValueTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\FacetSearchResultValueTransfer>
      */
     protected function addBucketValueToFacetResult(array $valueBucket, ArrayObject $facetResultValues)
     {

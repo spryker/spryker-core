@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer;
 class ShoppingListPermissionGroupMapper implements ShoppingListPermissionGroupMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer[] $shoppingListPermissionGroupEntityTransferCollection
+     * @param array<\Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer> $shoppingListPermissionGroupEntityTransferCollection
      * @param \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer $shoppingListPermissionGroupCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer

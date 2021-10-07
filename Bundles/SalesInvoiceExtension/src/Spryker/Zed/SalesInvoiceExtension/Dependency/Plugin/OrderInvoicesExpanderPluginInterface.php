@@ -18,9 +18,9 @@ interface OrderInvoicesExpanderPluginInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\OrderInvoiceTransfer[] $orderInvoiceTransfers
+     * @param array<\Generated\Shared\Transfer\OrderInvoiceTransfer> $orderInvoiceTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderInvoiceTransfer[]
+     * @return array<\Generated\Shared\Transfer\OrderInvoiceTransfer>
      */
     public function expand(array $orderInvoiceTransfers): array;
 }

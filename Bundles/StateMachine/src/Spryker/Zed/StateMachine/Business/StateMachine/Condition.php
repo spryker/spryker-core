@@ -74,7 +74,7 @@ class Condition implements ConditionInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $transitions
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $transitions
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $sourceState
      * @param \Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface $transactionLogger
@@ -147,7 +147,7 @@ class Condition implements ConditionInterface
 
     /**
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $sourceState
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $possibleTransitions
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $possibleTransitions
      *
      * @return \Spryker\Zed\StateMachine\Business\Process\StateInterface
      */
@@ -166,7 +166,7 @@ class Condition implements ConditionInterface
      * @param string $stateMachineName
      * @param string $processName
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer[]>
      */
     public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName)
     {
@@ -201,10 +201,10 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $stateMachineName
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[][] $stateToTransitionsMap
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]> $stateToTransitionsMap
      * @param \Spryker\Zed\StateMachine\Business\Process\ProcessInterface $process
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     protected function getItemsByStatesAndProcessName(
         $stateMachineName,
@@ -229,8 +229,8 @@ class Condition implements ConditionInterface
 
     /**
      * @param string $stateMachineName
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[][] $stateToTransitionsMap Keys are state names
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]> $stateToTransitionsMap Keys are state names
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
      * @return void
      */
@@ -275,9 +275,9 @@ class Condition implements ConditionInterface
     }
 
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $transitions
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $transitions
      *
-     * @return \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[][]
+     * @return array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface[]>
      */
     protected function createStateToTransitionMap(array $transitions)
     {
@@ -330,9 +330,9 @@ class Condition implements ConditionInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItemTransfers
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function createStateMap(array $stateMachineItemTransfers)
     {

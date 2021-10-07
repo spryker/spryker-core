@@ -67,7 +67,7 @@ class MerchantUserMapper
      *
      * @param \Propel\Runtime\Collection\Collection $merchantUserEntities
      *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\MerchantUserTransfer>
      */
     public function mapMerchantUserEntitiesToMerchantUserTransfers(Collection $merchantUserEntities): array
     {

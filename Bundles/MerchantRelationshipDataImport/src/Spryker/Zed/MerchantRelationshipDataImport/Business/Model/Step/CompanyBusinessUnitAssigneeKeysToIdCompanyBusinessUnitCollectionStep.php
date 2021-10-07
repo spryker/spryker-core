@@ -41,7 +41,7 @@ class CompanyBusinessUnitAssigneeKeysToIdCompanyBusinessUnitCollectionStep imple
             return;
         }
 
-        /** @var string[] $companyBusinessUnitKeys */
+        /** @var array<string> $companyBusinessUnitKeys */
         $companyBusinessUnitKeys = explode(
             $this->getAssigneeDelimiter(),
             $dataSet[MerchantRelationshipDataSetInterface::COMPANY_BUSINESS_UNIT_ASSIGNEE_KEYS]

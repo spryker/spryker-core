@@ -19,13 +19,13 @@ class OrderReader implements OrderReaderInterface
     protected $salesRepository;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface>
      */
     protected $hydrateOrderPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[] $hydrateOrderPlugins
+     * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface> $hydrateOrderPlugins
      */
     public function __construct(SalesRepositoryInterface $salesRepository, array $hydrateOrderPlugins = [])
     {

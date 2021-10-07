@@ -18,7 +18,7 @@ class RedisInMemoryLogger implements RedisLoggerInterface
     protected const DSN_STRING_TEMPLATE_UNKNOWN = 'unknown';
 
     /**
-     * @var string[][]
+     * @var array<string[]>
      */
     protected static $logs = [];
 
@@ -66,7 +66,7 @@ class RedisInMemoryLogger implements RedisLoggerInterface
     }
 
     /**
-     * @return string[][]
+     * @return array<string[]>
      */
     public function getLogs(): array
     {

@@ -15,12 +15,12 @@ use Spryker\Shared\PermissionExtension\Dependency\Plugin\InfrastructuralPermissi
 class PermissionFinder implements PermissionFinderInterface
 {
     /**
-     * @var \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[]
+     * @var array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface>
      */
     protected $permissionPlugins = [];
 
     /**
-     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins
+     * @param array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface> $permissionPlugins
      */
     public function __construct(array $permissionPlugins)
     {
@@ -67,9 +67,9 @@ class PermissionFinder implements PermissionFinderInterface
     }
 
     /**
-     * @param \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[] $permissionPlugins
+     * @param array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface> $permissionPlugins
      *
-     * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface[]
+     * @return array<\Spryker\Shared\PermissionExtension\Dependency\Plugin\ExecutablePermissionPluginInterface>
      */
     protected function indexPermissions(array $permissionPlugins)
     {

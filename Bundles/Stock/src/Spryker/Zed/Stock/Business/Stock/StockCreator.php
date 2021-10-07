@@ -37,7 +37,7 @@ class StockCreator implements StockCreatorInterface
     protected $connection;
 
     /**
-     * @var \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface[]
+     * @var array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface>
      */
     protected $stockPostCreatePlugins;
 
@@ -45,7 +45,7 @@ class StockCreator implements StockCreatorInterface
      * @param \Spryker\Zed\Stock\Persistence\StockEntityManagerInterface $stockEntityManager
      * @param \Spryker\Zed\Stock\Dependency\Facade\StockToTouchInterface $touchFacade
      * @param \Spryker\Zed\Stock\Dependency\External\StockToConnectionInterface $connection
-     * @param \Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface[] $stockPostCreatePlugins
+     * @param array<\Spryker\Zed\StockExtension\Dependency\Plugin\StockPostCreatePluginInterface> $stockPostCreatePlugins
      */
     public function __construct(
         StockEntityManagerInterface $stockEntityManager,

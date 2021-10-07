@@ -60,9 +60,9 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
      * @module Category
      * @module Store
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategory[][]
+     * @return array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]>
      */
     public function getMappedProductCategoriesByIdProductAbstractAndStore(array $productAbstractIds): array
     {
@@ -92,7 +92,7 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getCategoryNodeIdsByLocaleAndStore(LocaleTransfer $localeTransfer, StoreTransfer $storeTransfer): array
     {
@@ -154,7 +154,7 @@ class ProductCategorySearchRepository extends AbstractRepository implements Prod
     }
 
     /**
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array

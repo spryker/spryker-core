@@ -24,14 +24,14 @@ class ProductReviewSearchReader implements ProductReviewSearchReaderInterface
     protected $searchClient;
 
     /**
-     * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @var array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected $searchResultFormatterPlugins;
 
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $productReviewsQueryPlugin
      * @param \Spryker\Client\ProductReview\Dependency\Client\ProductReviewToSearchInterface $searchClient
-     * @param \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] $searchResultFormatterPlugins
+     * @param array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface> $searchResultFormatterPlugins
      */
     public function __construct(
         QueryInterface $productReviewsQueryPlugin,
@@ -58,7 +58,7 @@ class ProductReviewSearchReader implements ProductReviewSearchReaderInterface
     }
 
     /**
-     * @return array|\Elastica\ResultSet|mixed
+     * @return \Elastica\ResultSet|mixed|array
      */
     public function searchProductReviews()
     {

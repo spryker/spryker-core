@@ -78,7 +78,7 @@ class SearchElasticsearchZedTester extends Actor
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getFixturesSchemaDirectory(): array
     {

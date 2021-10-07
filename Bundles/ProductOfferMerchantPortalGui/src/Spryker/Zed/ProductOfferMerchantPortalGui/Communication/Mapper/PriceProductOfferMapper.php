@@ -91,9 +91,9 @@ class PriceProductOfferMapper
     /**
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
-     * @param mixed[] $initialData
+     * @param array<mixed> $initialData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     public function mapValidationResponseTransferToInitialDataErrors(
         ValidationResponseTransfer $validationResponseTransfer,
@@ -122,14 +122,10 @@ class PriceProductOfferMapper
     }
 
     /**
-     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<mixed> $requestData
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param mixed[] $requestData
-     * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mapRequestDataToPriceProductTransfers(
         array $requestData,
@@ -143,7 +139,7 @@ class PriceProductOfferMapper
     }
 
     /**
-     * @param mixed[] $requestData
+     * @param array<mixed> $requestData
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -194,9 +190,9 @@ class PriceProductOfferMapper
     }
 
     /**
-     * @param mixed[] $initialData
+     * @param array<mixed> $initialData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function initializeErrorData(array $initialData): array
     {
@@ -210,9 +206,9 @@ class PriceProductOfferMapper
     /**
      * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
-     * @param mixed[] $initialData
+     * @param array<mixed> $initialData
      *
-     * @return mixed[]
+     * @return array<mixed>
      */
     protected function addInitialDataErrors(
         ValidationErrorTransfer $validationErrorTransfer,
@@ -369,7 +365,7 @@ class PriceProductOfferMapper
     }
 
     /**
-     * @param mixed[] $initialDataRow
+     * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return bool

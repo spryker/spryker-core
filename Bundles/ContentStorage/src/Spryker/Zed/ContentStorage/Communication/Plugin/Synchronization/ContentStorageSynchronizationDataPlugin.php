@@ -49,9 +49,9 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
      *
      * @api
      *
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getData(array $ids = []): array
     {
@@ -68,9 +68,9 @@ class ContentStorageSynchronizationDataPlugin extends AbstractPlugin implements 
     }
 
     /**
-     * @param int[] $ids
+     * @param array<int> $ids
      *
-     * @return \Generated\Shared\Transfer\ContentStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentStorageTransfer>
      */
     protected function findContentStorage(array $ids = []): array
     {

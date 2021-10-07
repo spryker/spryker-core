@@ -14,7 +14,7 @@ use Spryker\Zed\StateMachine\Business\Process\StateInterface;
 interface ConditionInterface
 {
     /**
-     * @param \Spryker\Zed\StateMachine\Business\Process\TransitionInterface[] $transitions
+     * @param array<\Spryker\Zed\StateMachine\Business\Process\TransitionInterface> $transitions
      * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
      * @param \Spryker\Zed\StateMachine\Business\Process\StateInterface $sourceState
      * @param \Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface $transactionLogger
@@ -34,7 +34,7 @@ interface ConditionInterface
      * @param string $stateMachineName
      * @param string $processName
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[][]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer[]>
      */
     public function getOnEnterEventsForStatesWithoutTransition($stateMachineName, $processName);
 }

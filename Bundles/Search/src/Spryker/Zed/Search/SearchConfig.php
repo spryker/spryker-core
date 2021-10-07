@@ -149,7 +149,7 @@ class SearchConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getBlacklistSettingsForIndexUpdate()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getBlacklistSettingsForIndexUpdate(): array
     {
@@ -161,7 +161,7 @@ class SearchConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getStaticIndexSettings()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getStaticIndexSettings()
     {
@@ -173,7 +173,7 @@ class SearchConfig extends AbstractBundleConfig
      *
      * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getDynamicIndexSettings()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getDynamicIndexSettings()
     {

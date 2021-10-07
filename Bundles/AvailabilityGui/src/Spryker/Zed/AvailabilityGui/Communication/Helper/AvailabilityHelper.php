@@ -240,11 +240,11 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      * @param int $idLocale
      * @param int $idStore
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     * @return array<\Orm\Zed\Product\Persistence\SpyProductAbstract>
      */
     public function getProductAbstractEntitiesWithStockByProductAbstractIds(
         array $productAbstractIds,
@@ -276,10 +276,10 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     }
 
     /**
-     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $availabilityAbstractEntities
-     * @param int[] $productAbstractIds
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $availabilityAbstractEntities
+     * @param array<int> $productAbstractIds
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract[]
+     * @return array<\Orm\Zed\Product\Persistence\SpyProductAbstract>
      */
     protected function orderAvailabilityAbstractEntitiesByProductAbstractIdsSequence(
         ObjectCollection $availabilityAbstractEntities,
@@ -303,7 +303,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     /**
      * @param int $idStore
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStockNamesForStoreByStoreId(int $idStore): array
     {
@@ -315,7 +315,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getStockNamesForStore(StoreTransfer $storeTransfer): array
     {
@@ -329,7 +329,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     /**
      * @param int $idStore
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getStockIdsByIdStore(int $idStore): array
     {
@@ -340,9 +340,9 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StockTransfer[] $stockTransfers
+     * @param array<\Generated\Shared\Transfer\StockTransfer> $stockTransfers
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getStockIdsByStockTransfers(array $stockTransfers): array
     {

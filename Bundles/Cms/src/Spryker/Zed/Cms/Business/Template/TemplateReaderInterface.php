@@ -12,7 +12,7 @@ interface TemplateReaderInterface
     /**
      * @param string $templatePath
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getPlaceholdersByTemplatePath(string $templatePath): array;
 }

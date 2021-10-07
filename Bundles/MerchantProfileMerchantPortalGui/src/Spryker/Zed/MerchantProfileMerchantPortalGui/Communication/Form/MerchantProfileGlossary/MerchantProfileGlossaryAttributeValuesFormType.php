@@ -266,7 +266,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
     }
 
     /**
-     * @return \Symfony\Component\Validator\Constraint[]
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getTextareaConstrains(): array
     {

@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 class HtmlTagWhitelistConstraint extends SymfonyConstraint
 {
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $allowedHtmlTags = [];
 
@@ -25,7 +25,7 @@ class HtmlTagWhitelistConstraint extends SymfonyConstraint
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAllowedHtmlTags(): array
     {

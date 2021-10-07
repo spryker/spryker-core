@@ -50,7 +50,7 @@ class TransitionLog implements TransitionLogInterface
     protected $logContext;
 
     /**
-     * @var \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
+     * @var array<\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog>
      */
     protected $logEntities;
 
@@ -93,7 +93,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItems
+     * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItems
      *
      * @return void
      */
@@ -262,7 +262,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog>
      */
     public function getLogForOrder(SpySalesOrder $order)
     {
@@ -272,7 +272,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param string $queryString
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function getParamsFromQueryString($queryString)
     {

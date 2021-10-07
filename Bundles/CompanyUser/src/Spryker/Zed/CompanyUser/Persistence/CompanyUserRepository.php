@@ -132,7 +132,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
         $this->applyFilters($queryCompanyUser, $criteriaFilterTransfer);
 
         $collection = $this->buildQueryFromCriteria($queryCompanyUser, $criteriaFilterTransfer->getFilter());
-        /** @var \Generated\Shared\Transfer\SpyCompanyUserEntityTransfer[] $companyUserCollection */
+        /** @var array<\Generated\Shared\Transfer\SpyCompanyUserEntityTransfer> $companyUserCollection */
         $companyUserCollection = $this->getPaginatedCollection($collection, $criteriaFilterTransfer->getPagination());
 
         $collectionTransfer = $this->getFactory()
@@ -171,9 +171,9 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
     /**
      * @module Customer
      *
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerReferencesByCompanyUserIds(array $companyUserIds): array
     {
@@ -243,7 +243,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
-     * @return \Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|\Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function getPaginatedCollection(ModelCriteria $query, ?PaginationTransfer $paginationTransfer = null)
     {
@@ -369,9 +369,9 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      * @module Customer
      * @module Company
      *
-     * @param int[] $companyUserIds
+     * @param array<int> $companyUserIds
      *
-     * @return \Generated\Shared\Transfer\CompanyUserTransfer[]
+     * @return array<\Generated\Shared\Transfer\CompanyUserTransfer>
      */
     public function findActiveCompanyUsersByIds(array $companyUserIds): array
     {
@@ -405,7 +405,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      *
      * @param array $companyIds
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findActiveCompanyUserIdsByCompanyIds(array $companyIds): array
     {

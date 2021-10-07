@@ -53,7 +53,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -69,7 +69,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -101,7 +101,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -117,7 +117,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -133,7 +133,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -149,7 +149,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -165,7 +165,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -181,7 +181,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -197,7 +197,7 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */
@@ -215,9 +215,9 @@ class CategoryPageSearchFacade extends AbstractFacade implements CategoryPageSea
      *
      * @param int $offset
      * @param int $limit
-     * @param int[] $categoryNodeIds
+     * @param array<int> $categoryNodeIds
      *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getSynchronizationDataTransfersByCategoryNodeIds(int $offset, int $limit, array $categoryNodeIds): array
     {

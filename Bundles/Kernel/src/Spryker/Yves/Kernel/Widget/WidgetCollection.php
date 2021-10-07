@@ -14,7 +14,7 @@ class WidgetCollection implements WidgetContainerInterface
     use WidgetContainerAwareTrait;
 
     /**
-     * @param string[] $widgetClassNames
+     * @param array<string> $widgetClassNames
      */
     public function __construct(array $widgetClassNames = [])
     {

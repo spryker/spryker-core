@@ -24,7 +24,7 @@ class CompanyBusinessUnitCustomerFilterOrderSearchQueryExpanderPlugin extends Ab
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ class CompanyBusinessUnitCustomerFilterOrderSearchQueryExpanderPlugin extends Ab
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\FilterFieldTransfer[] $filterFieldTransfers
+     * @param array<\Generated\Shared\Transfer\FilterFieldTransfer> $filterFieldTransfers
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\QueryJoinCollectionTransfer

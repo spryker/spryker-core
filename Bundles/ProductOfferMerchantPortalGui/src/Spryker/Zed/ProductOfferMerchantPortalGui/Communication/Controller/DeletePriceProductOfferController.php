@@ -97,7 +97,7 @@ class DeletePriceProductOfferController extends AbstractPriceProductOfferControl
 
     /**
      * @param int $idProductOffer
-     * @param int[] $priceProductOfferIds
+     * @param array<int> $priceProductOfferIds
      *
      * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\ProductOfferNotFoundException
      *

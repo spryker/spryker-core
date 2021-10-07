@@ -33,13 +33,13 @@ class ItemsGrouper implements ItemsGrouperInterface
     }
 
     /**
-     * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
+     * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $itemTransferCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer>
      */
     public function groupByShipment(iterable $itemTransferCollection): ArrayObject
     {
-        /** @var \Generated\Shared\Transfer\ShipmentGroupTransfer[] $shipmentGroupTransfers */
+        /** @var array<\Generated\Shared\Transfer\ShipmentGroupTransfer> $shipmentGroupTransfers */
         $shipmentGroupTransfers = [];
 
         foreach ($itemTransferCollection as $itemTransfer) {

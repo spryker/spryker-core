@@ -131,7 +131,7 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerDetailExternalBlocksUrls()
     {
@@ -164,7 +164,7 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerPasswordAllowList(): array
     {
@@ -177,7 +177,7 @@ class CustomerConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCustomerPasswordDenyList(): array
     {

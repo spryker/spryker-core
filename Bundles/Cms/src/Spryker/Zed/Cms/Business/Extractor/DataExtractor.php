@@ -120,7 +120,7 @@ class DataExtractor implements DataExtractorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer[]|\ArrayObject $translations
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer> $translations
      * @param string $localeName
      *
      * @return string|null

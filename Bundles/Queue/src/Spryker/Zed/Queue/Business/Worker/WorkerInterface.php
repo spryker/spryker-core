@@ -11,7 +11,7 @@ interface WorkerInterface
 {
     /**
      * @param string $command
-     * @param string[] $options
+     * @param array<string> $options
      *
      * @return void
      */

@@ -19,13 +19,13 @@ class ContentNavigationTypeMapper implements ContentNavigationTypeMapperInterfac
     protected $contentStorageClient;
 
     /**
-     * @var \Spryker\Client\ContentNavigation\Executor\ContentNavigationTermExecutorInterface[]
+     * @var array<\Spryker\Client\ContentNavigation\Executor\ContentNavigationTermExecutorInterface>
      */
     protected $contentNavigationTermExecutors;
 
     /**
      * @param \Spryker\Client\ContentNavigation\Dependency\Client\ContentNavigationToContentStorageClientInterface $contentStorageClient
-     * @param \Spryker\Client\ContentNavigation\Executor\ContentNavigationTermExecutorInterface[] $contentNavigationTermExecutors
+     * @param array<\Spryker\Client\ContentNavigation\Executor\ContentNavigationTermExecutorInterface> $contentNavigationTermExecutors
      */
     public function __construct(ContentNavigationToContentStorageClientInterface $contentStorageClient, array $contentNavigationTermExecutors)
     {

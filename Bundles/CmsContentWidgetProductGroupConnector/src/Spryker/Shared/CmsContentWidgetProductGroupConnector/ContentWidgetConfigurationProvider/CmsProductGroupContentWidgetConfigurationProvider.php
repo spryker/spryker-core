@@ -28,7 +28,7 @@ class CmsProductGroupContentWidgetConfigurationProvider implements CmsContentWid
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getAvailableTemplates()
     {

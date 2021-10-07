@@ -12,7 +12,7 @@ interface ImageSetReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryImageSetTransfer>
      */
     public function getCategoryImageSetsByIdCategory(int $idCategory): array;
 }

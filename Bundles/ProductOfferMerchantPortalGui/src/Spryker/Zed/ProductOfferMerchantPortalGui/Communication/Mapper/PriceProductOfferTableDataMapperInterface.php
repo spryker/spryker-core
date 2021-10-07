@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer;
 interface PriceProductOfferTableDataMapperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer $priceProductOfferTableViewCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductOfferTableViewCollectionTransfer

@@ -26,7 +26,7 @@ interface MerchantRelationshipProductListMapperInterface
     ): ProductListTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductList\Persistence\SpyProductList[] $productListEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductList\Persistence\SpyProductList> $productListEntities
      * @param \Generated\Shared\Transfer\ProductListCollectionTransfer $productListCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListCollectionTransfer

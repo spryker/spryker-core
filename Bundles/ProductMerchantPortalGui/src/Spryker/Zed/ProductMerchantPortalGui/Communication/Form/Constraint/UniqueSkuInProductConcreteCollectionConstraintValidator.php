@@ -37,7 +37,7 @@ class UniqueSkuInProductConcreteCollectionConstraintValidator extends AbstractCo
     /**
      * Checks if SKUs are unique in collection and do not exist in DB.
      *
-     * @param mixed[] $value
+     * @param array<mixed> $value
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueSkuInProductConcreteCollectionConstraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

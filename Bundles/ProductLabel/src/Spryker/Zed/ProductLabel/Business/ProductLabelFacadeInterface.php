@@ -48,7 +48,7 @@ interface ProductLabelFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function findAllLabels();
 
@@ -62,7 +62,7 @@ interface ProductLabelFacadeInterface
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function findLabelsByIdProductAbstract($idProductAbstract);
 
@@ -76,7 +76,7 @@ interface ProductLabelFacadeInterface
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findLabelIdsByIdProductAbstract($idProductAbstract);
 
@@ -90,7 +90,7 @@ interface ProductLabelFacadeInterface
      *
      * @param int $idProductAbstract
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findActiveLabelIdsByIdProductAbstract($idProductAbstract);
 
@@ -103,7 +103,7 @@ interface ProductLabelFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
     public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array;
 
@@ -167,7 +167,7 @@ interface ProductLabelFacadeInterface
      *
      * @param int $idProductLabel
      *
-     * @return int[]
+     * @return array<int>
      */
     public function findProductAbstractRelationsByIdProductLabel($idProductLabel);
 
@@ -178,7 +178,7 @@ interface ProductLabelFacadeInterface
      * @api
      *
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -191,7 +191,7 @@ interface ProductLabelFacadeInterface
      * @api
      *
      * @param int $idProductLabel
-     * @param int[] $idsProductAbstract
+     * @param array<int> $idsProductAbstract
      *
      * @return void
      */
@@ -232,9 +232,9 @@ interface ProductLabelFacadeInterface
      *
      * @api
      *
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
      */
     public function getProductLabelProductAbstractsByProductAbstractIds(array $productAbstractIds): array;
 
@@ -247,7 +247,7 @@ interface ProductLabelFacadeInterface
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductLabelProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
      */
     public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array;
 }

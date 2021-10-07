@@ -17,12 +17,12 @@ use Symfony\Component\HttpFoundation\Response;
 class AddressSourceCheckoutDataValidator implements AddressSourceCheckoutDataValidatorInterface
 {
     /**
-     * @var \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface[]
+     * @var array<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface>
      */
     protected $addressSourceCheckerPlugins;
 
     /**
-     * @param \Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface[] $addressSourceCheckerPlugins
+     * @param array<\Spryker\Glue\ShipmentsRestApiExtension\Dependency\Plugin\AddressSourceCheckerPluginInterface> $addressSourceCheckerPlugins
      */
     public function __construct(array $addressSourceCheckerPlugins)
     {

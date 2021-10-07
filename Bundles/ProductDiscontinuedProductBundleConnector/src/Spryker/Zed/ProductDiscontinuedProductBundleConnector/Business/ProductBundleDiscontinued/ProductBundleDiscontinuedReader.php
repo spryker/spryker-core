@@ -70,7 +70,7 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getBundledProductConcreteIds(ProductDiscontinuedTransfer $productDiscontinuedTransfer): array
     {

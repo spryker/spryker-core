@@ -54,7 +54,7 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
     protected $productSearchFacade;
 
     /**
-     * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface[]
+     * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface>
      */
     protected $productAbstractMapExpanderPlugins;
 
@@ -62,7 +62,7 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
      * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchInterface $searchFacade
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface $productSearchFacade
-     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface[] $productAbstractMapExpanderPlugins
+     * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapExpanderPluginInterface> $productAbstractMapExpanderPlugins
      */
     public function __construct(
         PageMapBuilderInterface $pageMapBuilder,

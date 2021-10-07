@@ -20,8 +20,8 @@ interface AttributeMapInterface
     public function generateAttributeMap($idProductAbstract, $idLocale);
 
     /**
-     * @param int[] $productAbstractIds
-     * @param int[] $localeIds
+     * @param array<int> $productAbstractIds
+     * @param array<int> $localeIds
      *
      * @return array
      */

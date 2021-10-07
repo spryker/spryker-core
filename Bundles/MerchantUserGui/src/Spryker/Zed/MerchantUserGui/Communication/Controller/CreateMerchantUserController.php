@@ -25,7 +25,7 @@ class CreateMerchantUserController extends AbstractCrudMerchantUserController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     public function indexAction(Request $request)
     {
@@ -50,7 +50,7 @@ class CreateMerchantUserController extends AbstractCrudMerchantUserController
      * @param int $idMerchant
      * @param \Symfony\Component\Form\FormInterface $merchantUserForm
      *
-     * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
      */
     protected function createMerchantUser(int $idMerchant, FormInterface $merchantUserForm)
     {

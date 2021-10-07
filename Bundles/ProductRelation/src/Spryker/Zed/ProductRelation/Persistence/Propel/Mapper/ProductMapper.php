@@ -17,7 +17,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract[] $productRelationRelatedProductEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract> $productRelationRelatedProductEntities
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer
@@ -52,10 +52,10 @@ class ProductMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $productAbstractTransfers
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
     public function mapProductAbstractEntitiesToProductAbstractTransfers(
         ObjectCollection $productAbstractEntities,

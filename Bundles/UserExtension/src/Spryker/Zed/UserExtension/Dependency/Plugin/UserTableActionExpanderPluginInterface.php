@@ -17,7 +17,7 @@ interface UserTableActionExpanderPluginInterface
      *
      * @param array $user
      *
-     * @return \Generated\Shared\Transfer\ButtonTransfer[]
+     * @return array<\Generated\Shared\Transfer\ButtonTransfer>
      */
     public function getActionButtonDefinitions(array $user);
 }

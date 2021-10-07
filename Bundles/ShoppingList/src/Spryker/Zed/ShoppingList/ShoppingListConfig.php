@@ -34,7 +34,7 @@ class ShoppingListConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer>
      */
     public function getShoppingListPermissionGroups(): array
     {

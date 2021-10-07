@@ -12,18 +12,18 @@ use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
 class CmsBlockGlossaryUpdater implements CmsBlockGlossaryUpdaterInterface
 {
     /**
-     * @var \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryAfterFindPluginInterface[]
+     * @var array<\Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryAfterFindPluginInterface>
      */
     protected $cmsBlockGlossaryAfterFindPlugins;
 
     /**
-     * @var \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryBeforeSavePluginInterface[]
+     * @var array<\Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryBeforeSavePluginInterface>
      */
     protected $cmsBlockGlossaryBeforeSavePlugins;
 
     /**
-     * @param \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryAfterFindPluginInterface[] $cmsBlockGlossaryAfterFindPlugins
-     * @param \Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryBeforeSavePluginInterface[] $cmsBlockGlossaryBeforeSavePlugins
+     * @param array<\Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryAfterFindPluginInterface> $cmsBlockGlossaryAfterFindPlugins
+     * @param array<\Spryker\Zed\CmsBlockGuiExtension\Dependency\Plugin\CmsBlockGlossaryBeforeSavePluginInterface> $cmsBlockGlossaryBeforeSavePlugins
      */
     public function __construct(array $cmsBlockGlossaryAfterFindPlugins, array $cmsBlockGlossaryBeforeSavePlugins)
     {

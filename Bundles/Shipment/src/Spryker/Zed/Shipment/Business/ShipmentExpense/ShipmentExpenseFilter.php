@@ -35,9 +35,9 @@ class ShipmentExpenseFilter implements ShipmentExpenseFilterInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[] $expenseTransferCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer> $expenseTransferCollection
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ExpenseTransfer>
      */
     protected function filterShipmentExpenses(ArrayObject $expenseTransferCollection): ArrayObject
     {

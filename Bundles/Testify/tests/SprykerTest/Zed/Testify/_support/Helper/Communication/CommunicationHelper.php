@@ -33,7 +33,7 @@ class CommunicationHelper extends Module
     protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Zed\%3$s\Communication\%3$sCommunicationFactory';
 
     /**
-     * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory[]
+     * @var array<\Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory>
      */
     protected $factoryStubs = [];
 

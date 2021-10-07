@@ -75,7 +75,7 @@ class CommunicationHelper extends Module
      *
      * @throws \Exception
      *
-     * @return object|\Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
+     * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory|object
      */
     public function mockFactoryMethod(string $methodName, $return)
     {

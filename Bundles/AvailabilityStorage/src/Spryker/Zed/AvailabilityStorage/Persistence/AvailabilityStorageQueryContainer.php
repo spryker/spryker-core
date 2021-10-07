@@ -141,7 +141,7 @@ class AvailabilityStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param int[] $abstractProductIds
+     * @param array<int> $abstractProductIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */

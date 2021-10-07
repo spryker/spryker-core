@@ -12,14 +12,12 @@ use ArrayObject;
 interface PriceProductDataProviderInterface
 {
     /**
-     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
-     *
-     * @param int[] $typePriceProductOfferIds
-     * @param mixed[] $requestData
+     * @param array<int> $typePriceProductOfferIds
+     * @param array<mixed> $requestData
      * @param int $volumeQuantity
      * @param int $idProductOffer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getPriceProductOfferPrices(
         array $typePriceProductOfferIds,

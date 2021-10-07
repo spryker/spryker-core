@@ -84,7 +84,7 @@ class QuoteCartNoteSetter implements QuoteCartNoteSetterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransferCollection
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransferCollection
      * @param string $note
      *
      * @return void
@@ -101,7 +101,7 @@ class QuoteCartNoteSetter implements QuoteCartNoteSetterInterface
      * @param string $sku
      * @param string|null $groupKey
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     protected function findQuoteItems(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): array
     {

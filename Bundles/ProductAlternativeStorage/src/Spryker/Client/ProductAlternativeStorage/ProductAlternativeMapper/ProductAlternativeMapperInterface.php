@@ -15,7 +15,7 @@ interface ProductAlternativeMapperInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getConcreteAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array;
 
@@ -23,7 +23,7 @@ interface ProductAlternativeMapperInterface
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductViewTransfer>
      */
     public function getAlternativeProducts(ProductViewTransfer $productViewTransfer, string $localeName): array;
 }

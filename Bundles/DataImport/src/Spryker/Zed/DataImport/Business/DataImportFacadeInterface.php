@@ -59,7 +59,7 @@ interface DataImportFacadeInterface
      *
      * @deprecated Use {@link \Spryker\Zed\DataImport\Business\DataImportFacadeInterface::getImportersDumpByConfiguration()} instead.
      *
-     * @return string[]
+     * @return array<string>
      */
     public function listImporters(): array;
 
@@ -72,7 +72,7 @@ interface DataImportFacadeInterface
      *
      * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getImportersDumpByConfiguration(DataImportConfigurationTransfer $dataImportConfigurationTransfer): array;
 
@@ -93,7 +93,7 @@ interface DataImportFacadeInterface
      * @api
      *
      * @param string $queueName
-     * @param \Generated\Shared\Transfer\DataSetItemTransfer[] $dataSetItems
+     * @param array<\Generated\Shared\Transfer\DataSetItemTransfer> $dataSetItems
      *
      * @return void
      */

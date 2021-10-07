@@ -249,7 +249,7 @@ class CategoryImageFacadeTest extends Test
     /**
      * @param int $size
      *
-     * @return \Generated\Shared\Transfer\CategoryImageSetTransfer[]|\Spryker\Shared\Kernel\Transfer\AbstractTransfer[]
+     * @return array<\Generated\Shared\Transfer\CategoryImageSetTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer>
      */
     protected function buildCategoryImageSetTransferCollection(int $size): array
     {
@@ -280,7 +280,7 @@ class CategoryImageFacadeTest extends Test
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CategoryImageSetTransfer[] $categoryImageSetCollection
+     * @param array<\Generated\Shared\Transfer\CategoryImageSetTransfer> $categoryImageSetCollection
      *
      * @return array
      */

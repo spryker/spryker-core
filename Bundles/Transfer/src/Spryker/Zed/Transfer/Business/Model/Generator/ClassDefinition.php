@@ -84,7 +84,7 @@ class ClassDefinition implements ClassDefinitionInterface
     protected $deprecationDescription;
 
     /**
-     * @var string[]
+     * @var array<string>
      */
     protected $useStatements = [];
 
@@ -189,7 +189,7 @@ class ClassDefinition implements ClassDefinitionInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getUseStatements(): array
     {
@@ -747,7 +747,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
-     * @return bool|string
+     * @return string|bool
      */
     protected function getSetTypeHint(array $property)
     {
@@ -785,7 +785,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
-     * @return bool|string
+     * @return string|bool
      */
     protected function getAddTypeHint(array $property)
     {
@@ -803,7 +803,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      *
-     * @return bool|string
+     * @return string|bool
      */
     protected function getStrictCollectionElementTypeHint(array $property)
     {
@@ -1197,7 +1197,7 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $propertyDefinition
-     * @param string[] $shimChange
+     * @param array<string> $shimChange
      *
      * @return array
      */

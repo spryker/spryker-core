@@ -12,23 +12,23 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 interface ProductOptionRepositoryInterface
 {
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer>
      */
     public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
 
     /**
-     * @param int[] $salesOrderItemIds
+     * @param array<int> $salesOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function getOrderItemsWithProductOptions(array $salesOrderItemIds): array;
 
     /**
-     * @param string[] $productOptionSkus
+     * @param array<string> $productOptionSkus
      *
-     * @return \Generated\Shared\Transfer\ProductOptionValueTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductOptionValueTransfer>
      */
     public function getProductOptionValuesBySkus(array $productOptionSkus): array;
 

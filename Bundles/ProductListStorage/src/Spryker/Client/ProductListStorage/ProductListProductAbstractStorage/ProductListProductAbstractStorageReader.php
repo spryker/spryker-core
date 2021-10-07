@@ -80,9 +80,9 @@ class ProductListProductAbstractStorageReader implements ProductListProductAbstr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer>
      */
     public function getProductAbstractProductListStorageTransfersByProductAbstractIds(array $productAbstractIds): array
     {
@@ -93,9 +93,9 @@ class ProductListProductAbstractStorageReader implements ProductListProductAbstr
     }
 
     /**
-     * @param int[] $productAbstractIds
+     * @param array<int> $productAbstractIds
      *
-     * @return string[]
+     * @return array<string>
      */
     protected function generateProductAbstractProductListStorageKeys(array $productAbstractIds): array
     {
@@ -110,7 +110,7 @@ class ProductListProductAbstractStorageReader implements ProductListProductAbstr
     /**
      * @param array $productAbstractProductListStorageData
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer>
      */
     protected function mapProductAbstractProductListTransfers(array $productAbstractProductListStorageData): array
     {

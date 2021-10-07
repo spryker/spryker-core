@@ -25,7 +25,7 @@ class CacheReaderPhp implements CacheReaderInterface
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function read(): array
     {

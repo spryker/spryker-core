@@ -20,7 +20,7 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
 class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
     /**
-     * @var \Generated\Shared\Transfer\CurrentProductPriceTransfer[]
+     * @var array<\Generated\Shared\Transfer\CurrentProductPriceTransfer>
      */
     protected $productPriceTransfersByIdAbstractProduct = [];
 

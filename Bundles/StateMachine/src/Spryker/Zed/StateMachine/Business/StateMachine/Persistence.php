@@ -20,12 +20,12 @@ use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 class Persistence implements PersistenceInterface
 {
     /**
-     * @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess[]
+     * @var array<\Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess>
      */
     protected $processEntityBuffer = [];
 
     /**
-     * @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState[]
+     * @var array<\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState>
      */
     protected $persistedStates;
 
@@ -46,7 +46,7 @@ class Persistence implements PersistenceInterface
      * @param int $itemIdentifier
      * @param int $idStateMachineProcess
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getStateHistoryByStateItemIdentifier($itemIdentifier, $idStateMachineProcess)
     {
@@ -158,9 +158,9 @@ class Persistence implements PersistenceInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function updateStateMachineItemsFromPersistence(array $stateMachineItems)
     {
@@ -210,9 +210,9 @@ class Persistence implements PersistenceInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     * @param array<\Generated\Shared\Transfer\StateMachineItemTransfer> $stateMachineItems
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getProcessedStateMachineItems(array $stateMachineItems)
     {
@@ -267,9 +267,9 @@ class Persistence implements PersistenceInterface
     /**
      * @param string $processName
      * @param string $stateMachineName
-     * @param string[] $states
+     * @param array<string> $states
      *
-     * @return int[]
+     * @return array<int>
      */
     public function getStateMachineItemIdsByStatesProcessAndStateMachineName(
         $processName,
@@ -298,7 +298,7 @@ class Persistence implements PersistenceInterface
     /**
      * @param string $stateMachineName
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */
     public function getItemsWithExpiredTimeouts($stateMachineName)
     {

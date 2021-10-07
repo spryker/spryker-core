@@ -26,7 +26,7 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
     protected $productAbstractRelationWriter;
 
     /**
-     * @var array|\Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface[]
+     * @var array<\Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface>
      */
     protected $productLabelRelationUpdaterPlugins;
 
@@ -38,7 +38,7 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
     /**
      * @param \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleterInterface $productAbstractRelationDeleter
      * @param \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationWriterInterface $productAbstractRelationWriter
-     * @param \Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface[] $productLabelRelationUpdaterPlugins
+     * @param array<\Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface> $productLabelRelationUpdaterPlugins
      * @param \Psr\Log\LoggerInterface|null $logger
      */
     public function __construct(
@@ -87,7 +87,7 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[] $productLabelProductAbstractRelationTransfers
+     * @param array<\Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer> $productLabelProductAbstractRelationTransfers
      * @param string $pluginName
      * @param bool $isTouchEnabled
      *

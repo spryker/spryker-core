@@ -55,12 +55,12 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
+     * @param array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer> $productAbstractOptionStorageTransfers
      * @param array $resourceMapping
      * @param string $parentResourceType
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]>
      */
     public function createProductOptionRestResources(
         array $productAbstractOptionStorageTransfers,
@@ -89,10 +89,10 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[] $productAbstractOptionStorageTransfers
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface[] $sorts
+     * @param array<\Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer> $productAbstractOptionStorageTransfers
+     * @param array<\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface> $sorts
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[][]
+     * @return array<\Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]>
      */
     protected function getSortedRestProductOptionsAttributesTransfers(
         array $productAbstractOptionStorageTransfers,
@@ -123,11 +123,11 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestProductOptionsAttributesTransfer> $restProductOptionsAttributesTransfers
      * @param string $parentResourceType
      * @param string $parentResourceId
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      */
     protected function createRestResources(
         array $restProductOptionsAttributesTransfers,
@@ -170,10 +170,10 @@ class ProductOptionRestResponseBuilder implements ProductOptionRestResponseBuild
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[] $restProductOptionsAttributesTransfers
+     * @param array<\Generated\Shared\Transfer\RestProductOptionsAttributesTransfer> $restProductOptionsAttributesTransfers
      * @param string $currencyIsoCode
      *
-     * @return \Generated\Shared\Transfer\RestProductOptionsAttributesTransfer[]
+     * @return array<\Generated\Shared\Transfer\RestProductOptionsAttributesTransfer>
      */
     protected function expandRestProductOptionsAttributesTransfersByCurrencyIsoCode(
         array $restProductOptionsAttributesTransfers,

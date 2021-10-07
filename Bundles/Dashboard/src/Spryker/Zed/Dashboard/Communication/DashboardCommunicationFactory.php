@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class DashboardCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface[]
+     * @return array<\Spryker\Shared\Dashboard\Dependency\Plugin\DashboardPluginInterface>
      */
     public function getDateFormatterService(): array
     {

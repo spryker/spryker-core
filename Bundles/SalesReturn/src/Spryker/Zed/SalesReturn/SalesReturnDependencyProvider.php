@@ -230,7 +230,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface[]
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnPreCreatePluginInterface>
      */
     protected function getReturnPreCreatePlugins(): array
     {
@@ -238,7 +238,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface[]
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValidatorPluginInterface>
      */
     protected function getReturnCreateRequestValidatorPlugins(): array
     {
@@ -248,7 +248,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCollectionExpanderPluginInterface>
      */
     protected function getReturnCollectionExpanderPlugins(): array
     {
@@ -256,7 +256,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface[]
+     * @return array<\Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInterface>
      */
     protected function getReturnExpanderPlugins(): array
     {

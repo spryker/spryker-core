@@ -14,10 +14,10 @@ class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
     /**
      * @deprecated Use {@link updateFromTransfer()} instead.
      *
-     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facets
+     * @param array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer> $facets
      * @param array $updateCriteria
      *
-     * @return \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer>
      */
     public function update(array $facets, array $updateCriteria)
     {
@@ -36,14 +36,14 @@ class FacetUpdaterByProductCategoryFilters implements FacetUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[] $facets
+     * @param array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer> $facets
      * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\FacetSearchResultTransfer[]|\Generated\Shared\Transfer\RangeSearchResultTransfer[]
+     * @return array<\Generated\Shared\Transfer\FacetSearchResultTransfer|\Generated\Shared\Transfer\RangeSearchResultTransfer>
      */
     public function updateFromTransfer(array $facets, ProductCategoryFilterTransfer $productCategoryFilterTransfer)
     {
-        /** @var (\Generated\Shared\Transfer\ProductCategoryFilterItemTransfer|null)[] $filters */
+        /** @var array<\Generated\Shared\Transfer\ProductCategoryFilterItemTransfer|null> $filters */
         $filters = (array)$productCategoryFilterTransfer->getFilters();
         if (!$filters) {
             return $facets;

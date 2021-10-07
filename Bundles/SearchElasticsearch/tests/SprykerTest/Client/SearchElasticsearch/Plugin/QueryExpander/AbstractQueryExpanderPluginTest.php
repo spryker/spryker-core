@@ -114,7 +114,7 @@ abstract class AbstractQueryExpanderPluginTest extends Unit
     }
 
     /**
-     * @param string[] $methodsToMock
+     * @param array<string> $methodsToMock
      *
      * @return \Spryker\Client\SearchElasticsearch\SearchElasticsearchFactory|\PHPUnit\Framework\MockObject\MockObject
      */

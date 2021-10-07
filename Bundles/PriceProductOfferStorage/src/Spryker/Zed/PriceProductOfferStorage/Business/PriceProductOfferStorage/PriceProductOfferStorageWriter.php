@@ -76,7 +76,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param int[] $priceProductOfferIds
+     * @param array<int> $priceProductOfferIds
      *
      * @return void
      */
@@ -90,7 +90,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param int[] $priceProductOfferIdsWithOfferIds
+     * @param array<int> $priceProductOfferIdsWithOfferIds
      *
      * @return void
      */
@@ -119,7 +119,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -146,7 +146,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
      * @return void
      */
@@ -162,7 +162,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param int[] $priceProductOfferIds
+     * @param array<int> $priceProductOfferIds
      *
      * @return array
      */
@@ -180,7 +180,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param string[] $productSkus
+     * @param array<string> $productSkus
      *
      * @return array
      */
@@ -215,7 +215,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param string[] $productSkus
+     * @param array<string> $productSkus
      *
      * @return array
      */
@@ -231,9 +231,9 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProduct[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function getProductEntitiesByProductIds(array $productIds): ObjectCollection
     {
@@ -294,9 +294,9 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param int[] $productIds
+     * @param array<int> $productIds
      *
-     * @return \Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProductOfferStorage\Persistence\SpyProductConcreteProductOfferPriceStorage>
      */
     protected function getProductConcreteProductOfferPriceStorageEntities(array $productIds): ObjectCollection
     {
@@ -306,9 +306,9 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param int[] $productOfferIds
+     * @param array<int> $productOfferIds
      *
-     * @return int[]
+     * @return array<int>
      */
     protected function getProductIdsByProductOfferIds(array $productOfferIds): array
     {
@@ -327,7 +327,7 @@ class PriceProductOfferStorageWriter implements PriceProductOfferStorageWriterIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventEntityTransfers
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      *
      * @return void
      */

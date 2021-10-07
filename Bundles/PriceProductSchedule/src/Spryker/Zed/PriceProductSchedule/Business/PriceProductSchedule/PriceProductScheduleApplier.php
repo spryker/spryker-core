@@ -67,7 +67,7 @@ class PriceProductScheduleApplier implements PriceProductScheduleApplierInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer[]
+     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
     protected function findPriceProductSchedulesToEnableForCurrentStore(): array
     {

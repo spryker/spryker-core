@@ -85,7 +85,7 @@ class ZedNavigationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getNavigationSchemaFileNamePatterns(): array
     {
@@ -113,7 +113,7 @@ class ZedNavigationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getRootNavigationSchemaPaths(): array
     {
@@ -141,7 +141,7 @@ class ZedNavigationConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return string[]
+     * @return array<string>
      */
     public function getCacheFilePaths(): array
     {

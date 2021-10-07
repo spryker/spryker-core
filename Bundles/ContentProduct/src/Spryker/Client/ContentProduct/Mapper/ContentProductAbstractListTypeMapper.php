@@ -19,7 +19,7 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
     protected $contentStorageClient;
 
     /**
-     * @var \Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface[]
+     * @var array<\Spryker\Client\ContentProduct\Executor\ContentProductTermExecutorInterface>
      */
     protected $contentProductTermExecutors;
 
@@ -65,10 +65,10 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
     /**
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
      *
-     * @param string[] $contentKeys
+     * @param array<string> $contentKeys
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer[]
+     * @return array<\Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
      */
     public function executeProductAbstractListTypeByKeys(array $contentKeys, string $localeName): array
     {

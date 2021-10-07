@@ -71,9 +71,9 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject $shoppingListItemNoteTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ShoppingListItemNoteTransfer> $shoppingListItemNoteTransfers
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ShoppingListItemNoteTransfer>
      */
     protected function indexShoppingListItemNoteTransfersByShoppingListItemIds(ArrayObject $shoppingListItemNoteTransfers): array
     {

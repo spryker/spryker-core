@@ -41,12 +41,12 @@ class ProductBusinessTester extends Actor
     use _generated\ProductBusinessTesterActions;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $productConcreteIds = [];
 
     /**
-     * @var int[]
+     * @var array<int>
      */
     protected $productAbstractIds = [];
 
@@ -86,7 +86,7 @@ class ProductBusinessTester extends Actor
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getProductConcreteIds(): array
     {
@@ -94,7 +94,7 @@ class ProductBusinessTester extends Actor
     }
 
     /**
-     * @return int[]
+     * @return array<int>
      */
     public function getProductAbstractIds(): array
     {
@@ -226,7 +226,7 @@ class ProductBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function createProductConcreteTransferCollection(ProductAbstractTransfer $productAbstractTransfer): array
     {

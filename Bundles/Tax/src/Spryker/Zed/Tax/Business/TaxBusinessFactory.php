@@ -57,7 +57,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface[]
+     * @return array<\Spryker\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface>
      */
     public function getTaxChangePlugins()
     {
