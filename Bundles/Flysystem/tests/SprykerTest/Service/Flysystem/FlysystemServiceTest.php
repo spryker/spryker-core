@@ -211,7 +211,7 @@ class FlysystemServiceTest extends Unit
         );
 
         $file = $this->getLocalDocumentFile();
-        $this->assertFileNotExists($file);
+        $this->assertFileDoesNotExist($file);
     }
 
     /**
@@ -230,7 +230,7 @@ class FlysystemServiceTest extends Unit
         $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $renamedFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
 
-        $this->assertFileNotExists($originalFile);
+        $this->assertFileDoesNotExist($originalFile);
         $this->assertFileExists($renamedFile);
     }
 

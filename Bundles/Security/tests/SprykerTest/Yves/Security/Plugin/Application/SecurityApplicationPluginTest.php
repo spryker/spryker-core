@@ -103,7 +103,7 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'bar']);
         $lastError = $container->get('security.last_error')($httpKernelBrowser->getRequest());
-        $this->assertRegexp('/(Bad credentials|The presented password is invalid)/', $lastError);
+        $this->assertMatchesRegularExpression('/(Bad credentials|The presented password is invalid)/', $lastError);
         // hack to re-close the session as the previous assertions re-opens it
         $httpKernelBrowser->getRequest()->getSession()->save();
 
@@ -217,7 +217,7 @@ class SecurityApplicationPluginTest extends Unit
 
         $httpKernelBrowser->request('get', '/', [], [], ['HTTP_X_AUTH_TOKEN' => 'lili:not the secret']);
         $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'User not found');
-        $this->assertRegExp('/(Username could not be found|Invalid credentials)/', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertMatchesRegularExpression('/(Username could not be found|Invalid credentials)/', $httpKernelBrowser->getResponse()->getContent());
 
         $httpKernelBrowser->request('get', '/', [], [], ['HTTP_X_AUTH_TOKEN' => 'victoria:not the secret']);
         $this->assertSame(403, $httpKernelBrowser->getResponse()->getStatusCode(), 'Invalid credentials');

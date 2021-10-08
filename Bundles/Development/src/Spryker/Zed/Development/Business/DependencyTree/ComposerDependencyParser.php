@@ -261,11 +261,41 @@ class ComposerDependencyParser implements ComposerDependencyParserInterface
                 $dependencyCollectionTransfer->addDependencyModule($moduleDependencyTransfer);
             }
         }
+
+        $overwrittenRequiredDependencies = [];
         foreach ($declaredDependencies[static::TYPE_INCLUDE] as $declaredDependency) {
             $dependencyCollectionTransfer = $this->addDeclaredDependency($dependencyCollectionTransfer, $declaredDependency);
+            $overwrittenRequiredDependencies[] = $declaredDependency;
         }
+
         foreach ($declaredDependencies[static::TYPE_INCLUDE_DEV] as $declaredDependency) {
             $dependencyCollectionTransfer = $this->addDeclaredDependency($dependencyCollectionTransfer, $declaredDependency, true);
+        }
+
+        $dependencyCollectionTransfer = $this->addNonOverwrittenRequiredDependencies($dependencyCollectionTransfer, $overwrittenRequiredDependencies);
+
+        return $dependencyCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DependencyCollectionTransfer $dependencyCollectionTransfer
+     * @param array<string> $overwrittenRequiredDependencies
+     *
+     * @return \Generated\Shared\Transfer\DependencyCollectionTransfer
+     */
+    protected function addNonOverwrittenRequiredDependencies(
+        DependencyCollectionTransfer $dependencyCollectionTransfer,
+        array $overwrittenRequiredDependencies
+    ): DependencyCollectionTransfer {
+        $composerDependencyCollectionTransfer = $this->parseComposerJson($dependencyCollectionTransfer->getModule());
+
+        foreach ($composerDependencyCollectionTransfer->getComposerDependencies() as $composerDependency) {
+            if (
+                $composerDependency->getName() && $composerDependency->getIsDev() === false &&
+                !in_array($composerDependency->getName(), $overwrittenRequiredDependencies)
+            ) {
+                $dependencyCollectionTransfer = $this->addDeclaredDependency($dependencyCollectionTransfer, $composerDependency->getName());
+            }
         }
 
         return $dependencyCollectionTransfer;

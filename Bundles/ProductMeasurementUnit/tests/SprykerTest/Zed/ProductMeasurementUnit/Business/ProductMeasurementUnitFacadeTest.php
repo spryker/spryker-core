@@ -96,7 +96,7 @@ class ProductMeasurementUnitFacadeTest extends Unit
         $actualResult = $this->productMeasurementUnitFacade->expandItemGroupKeyWithQuantitySalesUnit($itemTransfer);
 
         // Assert
-        $this->assertRegExp($expectedPregMatch, $actualResult);
+        $this->assertMatchesRegularExpression($expectedPregMatch, $actualResult);
     }
 
     /**

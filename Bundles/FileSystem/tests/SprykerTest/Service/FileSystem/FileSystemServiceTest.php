@@ -253,7 +253,7 @@ class FileSystemServiceTest extends Unit
 
         $this->fileSystemService->delete($fileSystemDeleteTransfer);
 
-        $this->assertFileNotExists($this->getDocumentFIleName());
+        $this->assertFileDoesNotExist($this->getDocumentFIleName());
     }
 
     /**
@@ -272,7 +272,7 @@ class FileSystemServiceTest extends Unit
         $originalFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/' . static::FILE_DOCUMENT;
         $renamedFile = $this->testDataFileSystemRootDirectory . static::PATH_DOCUMENT . 'foo/NEW_' . static::FILE_DOCUMENT;
 
-        $this->assertFileNotExists($originalFile);
+        $this->assertFileDoesNotExist($originalFile);
         $this->assertFileExists($renamedFile);
     }
 

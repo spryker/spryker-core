@@ -19,7 +19,10 @@ class ValidationRuleInSourceNotInRequire implements ValidationRuleInterface
      */
     public function validateModuleDependency(ModuleDependencyTransfer $moduleDependencyTransfer): ModuleDependencyTransfer
     {
-        if ($moduleDependencyTransfer->getIsSrcDependency() && (!$moduleDependencyTransfer->getIsInComposerRequire() && !$moduleDependencyTransfer->getIsOptionalDependency())) {
+        if (
+            $moduleDependencyTransfer->getIsSrcDependency() && (!$moduleDependencyTransfer->getIsInComposerRequire() && !$moduleDependencyTransfer->getIsOptionalDependency()) &&
+            !$moduleDependencyTransfer->getIsInComposerRequireDev()
+        ) {
             $moduleDependencyTransfer->setIsValid(false);
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage('Source dependency not listed in composer require');
