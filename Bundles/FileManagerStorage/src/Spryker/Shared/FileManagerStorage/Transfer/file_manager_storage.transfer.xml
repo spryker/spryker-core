@@ -61,5 +61,7 @@
     </transfer>
 
     <transfer name="FileLocalizedAttributes">
+        <property name="title" type="string"/>
+        <property name="alt" type="string"/>
     </transfer>
 </transfers>

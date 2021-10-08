@@ -55,7 +55,7 @@ class MimeTypeSettingsTable extends AbstractTable
     protected const ROUTE_DELETE = 'mime-type/delete';
 
     /**
-     * @var \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
+     * @var \Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery
      */
     protected $mimeTypeQuery;
 

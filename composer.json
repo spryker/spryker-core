@@ -305,6 +305,7 @@
         "spryker/file-manager-gui": "*",
         "spryker/file-manager-storage": "*",
         "spryker/file-system": "*",
+        "spryker/file-system-extension": "*",
         "spryker/flysystem": "*",
         "spryker/flysystem-aws3v3-file-system": "*",
         "spryker/flysystem-ftp-file-system": "*",

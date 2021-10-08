@@ -134,7 +134,7 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
             $key = $fileTransfer->getIdFile() . static::KEY_DELIMITER . $localeTransfer->getLocaleName();
 
             if (!$fileTransfer->getFileInfo()->count() && isset($fileStorageTransfers[$key])) {
-                $this->unpublish([$fileTransfer->getIdFile()]);
+                $this->unpublish([$fileTransfer->getIdFileOrFail()]);
 
                 continue;
             }
@@ -196,14 +196,17 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
         $latestFileInfo = $this->getLatestFileInfo($fileInfoTransfers);
 
         $fileStorageDataTransfer = new FileStorageDataTransfer();
+        if ($latestFileInfo === null) {
+            return $fileStorageDataTransfer;
+        }
         $fileStorageDataTransfer->fromArray($fileTransfer->toArray(), true);
         $fileStorageDataTransfer->setLocale($localeTransfer->getLocaleName());
-        $fileStorageDataTransfer->setType($latestFileInfo->getType());
-        $fileStorageDataTransfer->setVersion($latestFileInfo->getVersion());
+        $fileStorageDataTransfer->setType($latestFileInfo->getTypeOrFail());
+        $fileStorageDataTransfer->setVersion($latestFileInfo->getVersionOrFail());
         $fileStorageDataTransfer->setVersions($fileInfoTransfers);
-        $fileStorageDataTransfer->setSize($latestFileInfo->getSize());
-        $fileStorageDataTransfer->setStorageName($latestFileInfo->getStorageName());
-        $fileStorageDataTransfer->setStorageFileName($latestFileInfo->getStorageFileName());
+        $fileStorageDataTransfer->setSize($latestFileInfo->getSizeOrFail());
+        $fileStorageDataTransfer->setStorageName($latestFileInfo->getStorageNameOrFail());
+        $fileStorageDataTransfer->setStorageFileName($latestFileInfo->getStorageFileNameOrFail());
         $fileStorageDataTransfer->setFkFile($fileTransfer->getIdFile());
         $this->addLocalizedAttributesToFileStorageDataTransfer($fileStorageDataTransfer, $localizedAttributes, $localeTransfer);
 

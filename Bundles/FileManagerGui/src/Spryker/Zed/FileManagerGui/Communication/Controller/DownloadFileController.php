@@ -8,7 +8,7 @@
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
 use Generated\Shared\Transfer\FileManagerDataTransfer;
-use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
+use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,13 +73,18 @@ class DownloadFileController extends AbstractController
     protected function createResponse(FileManagerDataTransfer $fileManagerDataTransfer)
     {
         $response = new Response($fileManagerDataTransfer->getContent());
-        $fileName = $fileManagerDataTransfer->getFile()->getFileName();
-        $contentType = $fileManagerDataTransfer->getFileInfo()->getType();
+        $fileName = $fileManagerDataTransfer->getFileOrFail()->getFileNameOrFail();
+        $contentType = $fileManagerDataTransfer->getFileInfoOrFail()->getType() ?? '';
+        $transliterator = Transliterator::create(static::TRANSLITERATOR_RULE);
+
+        if ($transliterator === null) {
+            return $response;
+        }
 
         $disposition = $response->headers->makeDisposition(
             ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             $fileName,
-            Transliterator::create(static::TRANSLITERATOR_RULE)->transliterate($fileName)
+            (string)$transliterator->transliterate($fileName)
         );
 
         $response->headers->set(static::CONTENT_DISPOSITION, $disposition);

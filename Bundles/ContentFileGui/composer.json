@@ -7,11 +7,12 @@
         "php": ">=7.3",
         "spryker/content-file": "^1.0.0",
         "spryker/content-gui-extension": "^1.1.0",
-        "spryker/file-manager": "^1.1.0",
+        "spryker/file-manager": "^2.0.0",
         "spryker/gui": "^3.21.0",
         "spryker/kernel": "^3.33.0",
         "spryker/locale": "^3.2.0",
         "spryker/symfony": "^3.2.2",
+        "spryker/transfer": "^3.25.0",
         "spryker/util-text": "^1.2.1"
     },
     "require-dev": {
@@ -30,7 +31,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     },
     "config": {

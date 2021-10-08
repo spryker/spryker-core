@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileSystem\Dependency\Plugin;
+namespace Spryker\Service\FileSystemExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\FileSystemContentTransfer;
 use Generated\Shared\Transfer\FileSystemCopyTransfer;
@@ -19,14 +19,14 @@ interface FileSystemWriterPluginInterface
 {
     /**
      * Specification:
-     * - Mark resource with private access rights
-     * - Return true on success, throw exception on failure
+     * - Marks resource with private access rights
+     * - Returns true on success, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -34,14 +34,14 @@ interface FileSystemWriterPluginInterface
 
     /**
      * Specification:
-     * - Mark resource with public access rights
-     * - Return true on success, throw exception on failure
+     * - Marks resource with public access rights
+     * - Returns true on success, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -49,14 +49,14 @@ interface FileSystemWriterPluginInterface
 
     /**
      * Specification:
-     * - Create directory with its path
-     * - Return true on success, throw exception on failure
+     * - Creates directory with its path
+     * - Returns true on success, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -64,14 +64,14 @@ interface FileSystemWriterPluginInterface
 
     /**
      * Specification:
-     * - Delete empty directory
-     * - Return true on success, throw exception on failure
+     * - Deletes empty directory
+     * - Returns true on success, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -79,14 +79,14 @@ interface FileSystemWriterPluginInterface
 
     /**
      * Specification:
-     * - Copy file, the destination must not exist
-     * - Return true on success, throw exception on failure
+     * - Copies file, the destination must not exist
+     * - Returns true on success, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -94,14 +94,14 @@ interface FileSystemWriterPluginInterface
 
     /**
      * Specification:
-     * - Delete file
-     * - Return true on success, throw exception on failure
+     * - Deletes file
+     * - Returns true on success, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -109,29 +109,14 @@ interface FileSystemWriterPluginInterface
 
     /**
      * Specification:
-     * - Create a file or update if exists
-     * - Return true on success, throw exception on failure
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function put(FileSystemContentTransfer $fileSystemContentTransfer);
-
-    /**
-     * Specification:
-     * - Create a file or update if exists
-     * - Return true on success, throw exception on failure
+     * - Creates a file or update if exists
+     * - Returns true on success, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -139,29 +124,14 @@ interface FileSystemWriterPluginInterface
 
     /**
      * Specification:
-     * - Update an existing file
-     * - Return true on success, throw exception on failure
+     * - Writes a new file
+     * - Returns true on success, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function update(FileSystemContentTransfer $fileSystemContentTransfer);
-
-    /**
-     * Specification:
-     * - Write a new file
-     * - Return true on success, throw exception on failure
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */

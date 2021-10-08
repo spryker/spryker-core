@@ -73,7 +73,9 @@ class FileManagerStorageMapper implements FileManagerStorageMapperInterface
     public function mapFileStorageTransferToEntity(FileStorageTransfer $fileStorageTransfer, SpyFileStorage $fileStorage)
     {
         $fileStorage->fromArray($fileStorageTransfer->toArray());
-        $fileStorage->setData($fileStorageTransfer->getData()->toArray());
+        $transferedData = $fileStorageTransfer->getData();
+        $data = $transferedData !== null ? $transferedData->toArray() : [];
+        $fileStorage->setData($data);
 
         return $fileStorage;
     }

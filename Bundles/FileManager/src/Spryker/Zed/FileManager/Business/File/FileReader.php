@@ -122,7 +122,7 @@ class FileReader implements FileReaderInterface
 
         if ($fileInfoTransfer !== null) {
             $fileManagerDataTransfer->setContent(
-                $this->fileContent->read($fileInfoTransfer->getStorageFileName())
+                $this->fileContent->read($fileInfoTransfer->getStorageFileNameOrFail())
             );
         }
 

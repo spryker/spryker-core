@@ -9,32 +9,22 @@ namespace Spryker\Service\FileSystem\Model\Adapter;
 
 use Generated\Shared\Transfer\FileSystemListTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
-use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface;
 use Spryker\Service\FileSystem\Model\FileSystemReaderInterface;
+use Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemReaderPluginInterface;
 
 class FileSystemReader implements FileSystemReaderInterface
 {
     /**
-     * @var \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface
+     * @var \Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemReaderPluginInterface
      */
     protected $fileSystemReader;
 
     /**
-     * @param \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemReaderPluginInterface $fileSystemReaderPlugin
+     * @param \Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemReaderPluginInterface $fileSystemReaderPlugin
      */
     public function __construct(FileSystemReaderPluginInterface $fileSystemReaderPlugin)
     {
         $this->fileSystemReader = $fileSystemReaderPlugin;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer
-     */
-    public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer)
-    {
-        return $this->fileSystemReader->getMetadata($fileSystemQueryTransfer);
     }
 
     /**

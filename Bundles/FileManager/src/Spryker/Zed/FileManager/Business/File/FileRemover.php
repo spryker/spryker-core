@@ -54,6 +54,10 @@ class FileRemover implements FileRemoverInterface
     {
         $fileInfoTransfer = $this->repository->getFileInfo($idFileInfo);
 
+        if ($fileInfoTransfer === null) {
+            return false;
+        }
+
         return $this->getTransactionHandler()->handleTransaction(function () use ($fileInfoTransfer) {
             return $this->executeDeleteFileInfoTransaction($fileInfoTransfer);
         });
@@ -80,10 +84,14 @@ class FileRemover implements FileRemoverInterface
      */
     protected function executeDeleteFileTransaction(FileTransfer $fileTransfer)
     {
-        $fileTransfer = $this->repository->getFileByIdFile($fileTransfer->getIdFile());
+        $fileTransfer = $this->repository->getFileByIdFile($fileTransfer->getIdFileOrFail());
+
+        if ($fileTransfer === null) {
+            return false;
+        }
 
         foreach ($fileTransfer->getFileInfo() as $fileInfoTransfer) {
-            $this->fileContent->delete($fileInfoTransfer->getStorageFileName());
+            $this->fileContent->delete($fileInfoTransfer->getStorageFileNameOrFail());
             $this->entityManager->deleteFileInfo($fileInfoTransfer);
         }
 
@@ -97,7 +105,7 @@ class FileRemover implements FileRemoverInterface
      */
     protected function executeDeleteFileInfoTransaction(FileInfoTransfer $fileInfoTransfer)
     {
-        $this->fileContent->delete($fileInfoTransfer->getStorageFileName());
+        $this->fileContent->delete($fileInfoTransfer->getStorageFileNameOrFail());
 
         return $this->entityManager->deleteFileInfo($fileInfoTransfer);
     }

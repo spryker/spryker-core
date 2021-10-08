@@ -28,14 +28,13 @@ class Aws3v3FilesystemBuilderPlugin extends AbstractPlugin implements FlysystemF
 
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     * @param array<\League\Flysystem\PluginInterface> $flysystemPluginCollection
      *
      * @return \League\Flysystem\Filesystem
      */
-    public function build(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = [])
+    public function build(FlysystemConfigTransfer $configTransfer)
     {
         return $this->getFactory()
-            ->createFlysystemAws3v3FileSystemBuilder($configTransfer, $flysystemPluginCollection)
+            ->createFlysystemAws3v3FileSystemBuilder($configTransfer)
             ->build();
     }
 }

@@ -8,12 +8,13 @@
 namespace Spryker\Service\FlysystemFtpFileSystem\Model\Builder\Adapter;
 
 use Generated\Shared\Transfer\FlysystemConfigFtpTransfer;
-use League\Flysystem\Adapter\Ftp as FtpAdapter;
+use League\Flysystem\Ftp\FtpAdapter;
+use League\Flysystem\Ftp\FtpConnectionOptions;
 
 class FtpAdapterBuilder implements AdapterBuilderInterface
 {
     /**
-     * @var \League\Flysystem\Adapter\Ftp
+     * @var \League\Flysystem\Ftp\FtpAdapter
      */
     protected $adapter;
 
@@ -21,6 +22,11 @@ class FtpAdapterBuilder implements AdapterBuilderInterface
      * @var \Generated\Shared\Transfer\FlysystemConfigFtpTransfer
      */
     protected $adapterConfig;
+
+    /**
+     * @var \League\Flysystem\Ftp\FtpConnectionOptions
+     */
+    protected $connectionOptions;
 
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigFtpTransfer $adapterConfig
@@ -31,11 +37,12 @@ class FtpAdapterBuilder implements AdapterBuilderInterface
     }
 
     /**
-     * @return \League\Flysystem\AdapterInterface
+     * @return \League\Flysystem\FilesystemAdapter
      */
     public function build()
     {
         $this
+            ->buildFtpConnectionOptions()
             ->buildAdapter();
 
         return $this->adapter;
@@ -44,9 +51,24 @@ class FtpAdapterBuilder implements AdapterBuilderInterface
     /**
      * @return $this
      */
+    protected function buildFtpConnectionOptions()
+    {
+        $this->connectionOptions = new FtpConnectionOptions(
+            $this->adapterConfig->getHostOrFail(),
+            '',
+            $this->adapterConfig->getUsernameOrFail(),
+            $this->adapterConfig->getPasswordOrFail()
+        );
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     protected function buildAdapter()
     {
-        $this->adapter = new FtpAdapter($this->adapterConfig->modifiedToArray());
+        $this->adapter = new FtpAdapter($this->connectionOptions);
 
         return $this;
     }

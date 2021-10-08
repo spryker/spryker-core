@@ -9,7 +9,7 @@ namespace Spryker\Shared\Flysystem\OperationHandler;
 
 use Closure;
 use Exception;
-use Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException;
+use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException;
 use Throwable;
 
 trait StreamOperationHandlerTrait
@@ -17,7 +17,7 @@ trait StreamOperationHandlerTrait
     /**
      * @param \Closure $callback
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      * @throws \Exception
      *
      * @return mixed
@@ -31,8 +31,6 @@ trait StreamOperationHandlerTrait
             }
 
             return $result;
-        } catch (Exception $exception) {
-            throw new FileSystemStreamException($exception->getMessage(), $exception->getCode(), $exception);
         } catch (Throwable $exception) {
             throw new FileSystemStreamException($exception->getMessage(), $exception->getCode(), $exception);
         }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Service\FlysystemFtpFileSystem;
 
-use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
 
 /**
  * @method \Spryker\Service\FlysystemFtpFileSystem\FlysystemFtpFileSystemConfig getConfig()

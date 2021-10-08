@@ -77,8 +77,9 @@ class FileSynchronizationDataBulkPlugin extends AbstractPlugin implements Synchr
         $synchronizationDataTransfers = [];
         foreach ($fileStorageTransfers as $fileStorageTransfer) {
             $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            /** @var string $data */
-            $data = $fileStorageTransfer->getData() ? $fileStorageTransfer->getData()->toArray() : [];
+            $transferedData = $fileStorageTransfer->getData();
+            /** @var array $data */
+            $data = $transferedData !== null ? $transferedData->toArray() : [];
             $synchronizationDataTransfer->setData($data);
             $synchronizationDataTransfer->setKey($fileStorageTransfer->getKey());
             $synchronizationDataTransfers[] = $synchronizationDataTransfer;

@@ -13,7 +13,7 @@ interface WriterInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -23,7 +23,7 @@ interface WriterInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -34,7 +34,7 @@ interface WriterInterface
      * @param string $dirname
      * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -44,7 +44,7 @@ interface WriterInterface
      * @param string $filesystemName
      * @param string $dirname
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -55,7 +55,7 @@ interface WriterInterface
      * @param string $path
      * @param string $newpath
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -65,7 +65,7 @@ interface WriterInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -74,21 +74,9 @@ interface WriterInterface
     /**
      * @param string $filesystemName
      * @param string $path
-     * @param string $content
-     * @param array $config
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function put($filesystemName, $path, $content, array $config = []);
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
      * @param string $newpath
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -100,19 +88,7 @@ interface WriterInterface
      * @param string $content
      * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function update($filesystemName, $path, $content, array $config = []);
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     * @param string $content
-     * @param array $config
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */

@@ -15,23 +15,6 @@ interface FlysystemServiceInterface
     /**
      * Specification:
      * - Select pre-configured filesystem
-     * - Get resource metadata
-     * - Return resource metadata transfer, null on failure
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer
-     */
-    public function getMetadata($filesystemName, $path);
-
-    /**
-     * Specification:
-     * - Select pre-configured filesystem
      * - Get resource mime type
      * - Return resource mime type, throw exception on failure
      *
@@ -40,7 +23,7 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -57,7 +40,7 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return int|null
      */
@@ -74,7 +57,7 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return int
      */
@@ -91,7 +74,7 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -108,7 +91,7 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -125,7 +108,7 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -143,7 +126,7 @@ interface FlysystemServiceInterface
      * @param string $directory
      * @param bool $recursive
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return array<\Generated\Shared\Transfer\FlysystemResourceTransfer>
      */
@@ -160,7 +143,7 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -177,7 +160,7 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -195,7 +178,7 @@ interface FlysystemServiceInterface
      * @param string $dirname
      * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -212,7 +195,7 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $dirname
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -230,7 +213,7 @@ interface FlysystemServiceInterface
      * @param string $path
      * @param string $newpath
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -247,7 +230,7 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -263,51 +246,13 @@ interface FlysystemServiceInterface
      *
      * @param string $filesystemName
      * @param string $path
-     * @param string $content
-     * @param array $config
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function put($filesystemName, $path, $content, array $config = []);
-
-    /**
-     * Specification:
-     * - Select pre-configured filesystem
-     * - Create a file or update if exists
-     * - Return true on success, throw exception on failure
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
      * @param string $newpath
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
     public function rename($filesystemName, $path, $newpath);
-
-    /**
-     * Specification:
-     * - Select pre-configured filesystem
-     * - Update an existing file
-     * - Return true on success, throw exception on failure
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     * @param string $content
-     * @param array $config
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function update($filesystemName, $path, $content, array $config = []);
 
     /**
      * Specification:
@@ -322,30 +267,11 @@ interface FlysystemServiceInterface
      * @param string $content
      * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
     public function write($filesystemName, $path, $content, array $config = []);
-
-    /**
-     * Specification:
-     * - Select pre-configured filesystem
-     * - Create a file or update if exists using stream
-     * - Return true on success, throw exception on failure
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     * @param mixed $resource
-     * @param array $config
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
-     *
-     * @return void
-     */
-    public function putStream($filesystemName, $path, $resource, array $config = []);
 
     /**
      * Specification:
@@ -358,30 +284,11 @@ interface FlysystemServiceInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return mixed
      */
     public function readStream($filesystemName, $path);
-
-    /**
-     * Specification:
-     * - Select pre-configured filesystem
-     * - Update an existing file using a stream
-     * - Return true on success, throw exception on failure
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     * @param mixed $resource
-     * @param array $config
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
-     *
-     * @return void
-     */
-    public function updateStream($filesystemName, $path, $resource, array $config = []);
 
     /**
      * Specification:
@@ -396,7 +303,7 @@ interface FlysystemServiceInterface
      * @param mixed $resource
      * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return void
      */

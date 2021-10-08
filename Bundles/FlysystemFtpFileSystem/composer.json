@@ -4,9 +4,11 @@
     "description": "FlysystemFtpFileSystem module",
     "license": "proprietary",
     "require": {
-        "league/flysystem": "^1.0",
+        "league/flysystem": "^2.0",
+        "league/flysystem-ftp": "^2.0.8",
         "php": ">=7.3",
-        "spryker/kernel": "^3.30.0"
+        "spryker/kernel": "^3.30.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
@@ -35,7 +37,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     },
     "config": {

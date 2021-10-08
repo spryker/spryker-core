@@ -33,25 +33,30 @@ class FileLocalizedAttributesSaver implements FileLocalizedAttributesSaverInterf
      */
     public function save(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        $fkFile = $fileManagerDataTransfer->getFile()->getIdFile();
-
         foreach ($fileManagerDataTransfer->getFileLocalizedAttributes() as $fileLocalizedAttributesTransfer) {
-            $this->prepareFileLocalizedAttributesTransfer($fileLocalizedAttributesTransfer, $fkFile);
+            $this->prepareFileLocalizedAttributesTransfer($fileLocalizedAttributesTransfer, $fileManagerDataTransfer);
             $this->entityManager->saveFileLocalizedAttribute($fileLocalizedAttributesTransfer);
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer
-     * @param int $fkFile
+     * @param \Generated\Shared\Transfer\FileManagerDataTransfer $fileManagerDataTransfer
      *
      * @return void
      */
-    protected function prepareFileLocalizedAttributesTransfer(FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer, int $fkFile)
-    {
-        $fileLocalizedAttributesTransfer->setFkFile($fkFile);
-        $fileLocalizedAttributesTransfer->setFkLocale(
-            $fileLocalizedAttributesTransfer->getLocale()->getIdLocale()
-        );
+    protected function prepareFileLocalizedAttributesTransfer(
+        FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer,
+        FileManagerDataTransfer $fileManagerDataTransfer
+    ): void {
+        $fileTransfer = $fileManagerDataTransfer->getFile();
+        if ($fileTransfer !== null) {
+            $fileLocalizedAttributesTransfer->setFkFile($fileTransfer->getIdFile());
+        }
+
+        $localeTransfer = $fileLocalizedAttributesTransfer->getLocale();
+        if ($localeTransfer !== null) {
+            $fileLocalizedAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
+        }
     }
 }

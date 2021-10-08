@@ -14,17 +14,15 @@ interface FlysystemFilesystemBuilderPluginInterface
     /**
      * Specification:
      *  - Create a Filesystem with parameters from FlysystemConfigTransfer
-     *  - Pass thephpleague/flysystem related plugins under $flysystemPluginCollection
-     *  - Return class implementing of \League\Flysystem\FilesystemInterface
+     *  - Return class implementing of \League\Flysystem\FilesystemOperator
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     * @param array<\League\Flysystem\PluginInterface> $flysystemPluginCollection
      *
-     * @return \League\Flysystem\FilesystemInterface
+     * @return \League\Flysystem\FilesystemOperator
      */
-    public function build(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = []);
+    public function build(FlysystemConfigTransfer $configTransfer);
 
     /**
      * Specification:

@@ -68,7 +68,11 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
     public function delete($idFileDirectory)
     {
         $fileDirectoryTransfer = $this->repository->getFileDirectory($idFileDirectory);
-        $idFileDirectory = $fileDirectoryTransfer->getIdFileDirectory();
+
+        if ($fileDirectoryTransfer === null) {
+            return false;
+        }
+
         $idParentFileDirectory = $fileDirectoryTransfer->getFkParentFileDirectory();
 
         return $this->getTransactionHandler()->handleTransaction(
@@ -115,7 +119,7 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
         $this->performDirectoryFilesDeletion($idFileDirectory);
 
         foreach ($this->repository->getFileDirectories($idFileDirectory) as $childFileDirectory) {
-            $this->deleteDirectoryFiles($childFileDirectory->getIdFileDirectory());
+            $this->deleteDirectoryFiles($childFileDirectory->getIdFileDirectoryOrFail());
         }
     }
 
@@ -142,7 +146,7 @@ class FileDirectoryRemover implements FileDirectoryRemoverInterface
         $this->performDirectoryFilesMove($idFileDirectory, $idParentFileDirectory);
 
         foreach ($this->repository->getFileDirectories($idFileDirectory) as $childFileDirectory) {
-            $this->moveDirectoryFiles($childFileDirectory->getIdFileDirectory(), $idParentFileDirectory);
+            $this->moveDirectoryFiles($childFileDirectory->getIdFileDirectoryOrFail(), $idParentFileDirectory);
         }
     }
 

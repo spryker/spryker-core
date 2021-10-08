@@ -28,14 +28,13 @@ class LocalFilesystemBuilderPlugin extends AbstractPlugin implements FlysystemFi
 
     /**
      * @param \Generated\Shared\Transfer\FlysystemConfigTransfer $configTransfer
-     * @param array<\League\Flysystem\PluginInterface> $flysystemPluginCollection
      *
      * @return \League\Flysystem\Filesystem
      */
-    public function build(FlysystemConfigTransfer $configTransfer, array $flysystemPluginCollection = [])
+    public function build(FlysystemConfigTransfer $configTransfer)
     {
         return $this->getFactory()
-            ->createFlysystemLocalFileSystemBuilder($configTransfer, $flysystemPluginCollection)
+            ->createFlysystemLocalFileSystemBuilder($configTransfer)
             ->build();
     }
 }

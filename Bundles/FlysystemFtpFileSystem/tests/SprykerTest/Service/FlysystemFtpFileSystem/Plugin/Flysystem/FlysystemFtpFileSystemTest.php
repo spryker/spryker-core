@@ -10,7 +10,7 @@ namespace SprykerTest\Service\FlysystemFtpFileSystem\Plugin\Flysystem;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FlysystemConfigFtpTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilderPlugin;
 
 /**
@@ -45,7 +45,7 @@ class FlysystemFtpFileSystemTest extends Unit
 
         $ftpFilesystem = $localFilesystemBuilderPlugin->build($configTransfer);
 
-        $this->assertInstanceOf(FilesystemInterface::class, $ftpFilesystem);
+        $this->assertInstanceOf(FilesystemOperator::class, $ftpFilesystem);
     }
 
     /**

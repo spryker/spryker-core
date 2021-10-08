@@ -7,17 +7,18 @@
 
 namespace Spryker\Service\Flysystem\Model\Provider;
 
+use League\Flysystem\FilesystemOperator;
 use Spryker\Service\Flysystem\Exception\FilesystemNotFoundException;
 
 class FilesystemProvider implements FilesystemProviderInterface
 {
     /**
-     * @var array<\League\Flysystem\FilesystemInterface>
+     * @var array<\League\Flysystem\FilesystemOperator>
      */
     protected $filesystemCollection;
 
     /**
-     * @param array<\League\Flysystem\FilesystemInterface> $filesystemCollection
+     * @param array<\League\Flysystem\FilesystemOperator> $filesystemCollection
      */
     public function __construct(array $filesystemCollection)
     {
@@ -29,9 +30,9 @@ class FilesystemProvider implements FilesystemProviderInterface
      *
      * @throws \Spryker\Service\Flysystem\Exception\FilesystemNotFoundException
      *
-     * @return \League\Flysystem\FilesystemInterface
+     * @return \League\Flysystem\FilesystemOperator
      */
-    public function getFilesystemByName($name)
+    public function getFilesystemByName($name): FilesystemOperator
     {
         if (!array_key_exists($name, $this->filesystemCollection)) {
             throw new FilesystemNotFoundException(
@@ -43,9 +44,9 @@ class FilesystemProvider implements FilesystemProviderInterface
     }
 
     /**
-     * @return array<\League\Flysystem\FilesystemInterface>
+     * @return array<\League\Flysystem\FilesystemOperator>
      */
-    public function getFilesystemCollection()
+    public function getFilesystemCollection(): array
     {
         return $this->filesystemCollection;
     }

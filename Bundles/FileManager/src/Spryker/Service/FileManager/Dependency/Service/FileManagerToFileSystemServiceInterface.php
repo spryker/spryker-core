@@ -15,7 +15,7 @@ interface FileManagerToFileSystemServiceInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -24,7 +24,7 @@ interface FileManagerToFileSystemServiceInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return mixed
      */
@@ -33,7 +33,7 @@ interface FileManagerToFileSystemServiceInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */

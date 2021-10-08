@@ -6,14 +6,15 @@
     "require": {
         "php": ">=7.3",
         "spryker/event-behavior": "^1.0.0",
-        "spryker/file-manager": "^1.0.0",
+        "spryker/file-manager": "^2.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.0.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/storage": "^3.0.0",
         "spryker/synchronization": "^1.0.0",
         "spryker/synchronization-behavior": "^1.0.0",
-        "spryker/synchronization-extension": "^1.1.0"
+        "spryker/synchronization-extension": "^1.1.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
@@ -35,7 +36,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     },
     "config": {

@@ -89,8 +89,8 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
         }
 
         $fileStorageQuery
-            ->setOffset($filterTransfer->getOffset())
-            ->setLimit($filterTransfer->getLimit());
+            ->setOffset($filterTransfer->getOffsetOrFail())
+            ->setLimit($filterTransfer->getLimitOrFail());
 
         return $this->getFactory()
             ->createFileManagerStorageMapper()

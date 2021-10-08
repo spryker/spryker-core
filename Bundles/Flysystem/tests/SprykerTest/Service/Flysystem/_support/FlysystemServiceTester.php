@@ -9,6 +9,7 @@ namespace SprykerTest\Service\Flysystem;
 
 use Codeception\Actor;
 use Codeception\Stub;
+use League\Flysystem\DirectoryListing;
 use League\Flysystem\Filesystem;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface;
 
@@ -42,7 +43,9 @@ class FlysystemServiceTester extends Actor
                 'getFilesystemByName' => function () {
                     return Stub::make(Filesystem::class, [
                         'listContents' => function () {
-                            return [['non-existent-transfer-property' => 'foo']];
+                            return Stub::make(DirectoryListing::class, [
+                                ['non-existent-transfer-property' => 'foo'],
+                            ]);
                         },
                     ]);
                 },

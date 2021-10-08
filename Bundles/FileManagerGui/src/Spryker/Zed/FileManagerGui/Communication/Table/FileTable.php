@@ -61,7 +61,7 @@ class FileTable extends AbstractTable
     protected $fileQuery;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $fileDirectoryId;
 
@@ -71,7 +71,7 @@ class FileTable extends AbstractTable
      */
     public function __construct(
         SpyFileQuery $fileQuery,
-        $fileDirectoryId = null
+        ?int $fileDirectoryId = null
     ) {
         $this->fileQuery = $fileQuery;
         $this->fileDirectoryId = $fileDirectoryId;

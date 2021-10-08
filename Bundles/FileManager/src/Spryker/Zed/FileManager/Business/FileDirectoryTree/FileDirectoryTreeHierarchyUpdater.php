@@ -91,7 +91,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
     {
         $fileDirectoryTreeNodeTransfer
             ->requireFileDirectory()
-            ->getFileDirectory()
+            ->getFileDirectoryOrFail()
             ->requireIdFileDirectory();
 
         foreach ($fileDirectoryTreeNodeTransfer->getChildren() as $childFileDirectoryTreeNodeTransfer) {
@@ -108,7 +108,7 @@ class FileDirectoryTreeHierarchyUpdater implements FileDirectoryTreeHierarchyUpd
     protected function persistFileDirectoryTreeNodeRecursively(FileDirectoryTreeNodeTransfer $fileDirectoryTreeNodeTransfer, ?int $fkParentFileDirectory = null)
     {
         $fileDirectoryTransfer = $this->getFileDirectoryTransfer(
-            $fileDirectoryTreeNodeTransfer->getFileDirectory()->getIdFileDirectory()
+            $fileDirectoryTreeNodeTransfer->getFileDirectoryOrFail()->getIdFileDirectoryOrFail()
         );
         $fileDirectoryTransfer->setPosition($fileDirectoryTransfer->getPosition());
         $fileDirectoryTransfer->setFkParentFileDirectory($fkParentFileDirectory);

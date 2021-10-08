@@ -51,7 +51,10 @@ class FileRollback implements FileRollbackInterface
     public function rollback(int $idFileInfo)
     {
         $targetFileInfo = $this->repository->getFileInfo($idFileInfo);
-        $this->addFileVersion($targetFileInfo);
+
+        if ($targetFileInfo !== null) {
+            $this->addFileVersion($targetFileInfo);
+        }
     }
 
     /**

@@ -20,7 +20,7 @@ interface FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -29,7 +29,7 @@ interface FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemVisibilityTransfer $fileSystemVisibilityTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -38,7 +38,7 @@ interface FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemCreateDirectoryTransfer $fileSystemCreateDirectoryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -47,7 +47,7 @@ interface FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer $fileSystemDeleteDirectoryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -56,7 +56,7 @@ interface FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemCopyTransfer $fileSystemCopyTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -65,25 +65,16 @@ interface FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemDeleteTransfer $fileSystemDeleteTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
     public function delete(FileSystemDeleteTransfer $fileSystemDeleteTransfer);
 
     /**
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function put(FileSystemContentTransfer $fileSystemContentTransfer);
-
-    /**
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -92,16 +83,7 @@ interface FileSystemWriterInterface
     /**
      * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function update(FileSystemContentTransfer $fileSystemContentTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */

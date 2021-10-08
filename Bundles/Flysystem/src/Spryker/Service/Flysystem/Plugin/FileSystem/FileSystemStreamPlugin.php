@@ -8,7 +8,7 @@
 namespace Spryker\Service\Flysystem\Plugin\FileSystem;
 
 use Generated\Shared\Transfer\FileSystemStreamTransfer;
-use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemStreamPluginInterface;
+use Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemStreamPluginInterface;
 use Spryker\Service\Kernel\AbstractPlugin;
 
 /**
@@ -18,46 +18,14 @@ class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamP
 {
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
-     *
-     * @return void
-     */
-    public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
-    {
-        $this->getService()->putStream(
-            $fileSystemStreamTransfer->getFileSystemName(),
-            $fileSystemStreamTransfer->getPath(),
-            $stream,
-            $fileSystemStreamTransfer->getConfig()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      *
      * @return mixed
      */
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
     {
         return $this->getService()->readStream(
-            $fileSystemStreamTransfer->getFileSystemName(),
-            $fileSystemStreamTransfer->getPath()
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
-     *
-     * @return void
-     */
-    public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
-    {
-        $this->getService()->updateStream(
-            $fileSystemStreamTransfer->getFileSystemName(),
-            $fileSystemStreamTransfer->getPath(),
-            $stream,
-            $fileSystemStreamTransfer->getConfig()
+            $fileSystemStreamTransfer->getFileSystemNameOrFail(),
+            $fileSystemStreamTransfer->getPathOrFail()
         );
     }
 
@@ -70,8 +38,8 @@ class FileSystemStreamPlugin extends AbstractPlugin implements FileSystemStreamP
     public function writeStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
     {
         $this->getService()->writeStream(
-            $fileSystemStreamTransfer->getFileSystemName(),
-            $fileSystemStreamTransfer->getPath(),
+            $fileSystemStreamTransfer->getFileSystemNameOrFail(),
+            $fileSystemStreamTransfer->getPathOrFail(),
             $stream,
             $fileSystemStreamTransfer->getConfig()
         );

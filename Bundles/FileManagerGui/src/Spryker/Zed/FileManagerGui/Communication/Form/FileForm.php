@@ -214,11 +214,11 @@ class FileForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array|null $options
+     * @param mixed|null $options
      *
      * @return $this
      */
-    protected function addFileLocalizedAttributesForm(FormBuilderInterface $builder, ?array $options = null)
+    protected function addFileLocalizedAttributesForm(FormBuilderInterface $builder, $options = null)
     {
         $builder->add(static::FILE_LOCALIZED_ATTRIBUTES, CollectionType::class, [
             'entry_type' => FileLocalizedAttributesForm::class,
@@ -246,7 +246,7 @@ class FileForm extends AbstractType
 
         $fileUploadTransfer = new FileUploadTransfer();
         $fileUploadTransfer->setClientOriginalName($uploadedFile->getClientOriginalName());
-        $fileUploadTransfer->setRealPath($uploadedFile->getRealPath());
+        $fileUploadTransfer->setRealPath((string)$uploadedFile->getRealPath());
         $fileUploadTransfer->setMimeTypeName($uploadedFile->getMimeType());
         $fileUploadTransfer->setClientOriginalExtension($uploadedFile->getClientOriginalExtension());
         $fileUploadTransfer->setSize($uploadedFile->getSize());

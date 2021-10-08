@@ -12,20 +12,8 @@ interface StreamInterface
     /**
      * @param string $filesystemName
      * @param string $path
-     * @param mixed $resource
-     * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
-     *
-     * @return void
-     */
-    public function putStream($filesystemName, $path, $resource, array $config = []);
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return mixed
      */
@@ -37,19 +25,7 @@ interface StreamInterface
      * @param mixed $resource
      * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
-     *
-     * @return void
-     */
-    public function updateStream($filesystemName, $path, $resource, array $config = []);
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     * @param mixed $resource
-     * @param array $config
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return void
      */

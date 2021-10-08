@@ -14,18 +14,18 @@ use Generated\Shared\Transfer\FileSystemDeleteDirectoryTransfer;
 use Generated\Shared\Transfer\FileSystemDeleteTransfer;
 use Generated\Shared\Transfer\FileSystemRenameTransfer;
 use Generated\Shared\Transfer\FileSystemVisibilityTransfer;
-use Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface;
 use Spryker\Service\FileSystem\Model\FileSystemWriterInterface;
+use Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemWriterPluginInterface;
 
 class FileSystemWriter implements FileSystemWriterInterface
 {
     /**
-     * @var \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface
+     * @var \Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemWriterPluginInterface
      */
     protected $fileSystemWriter;
 
     /**
-     * @param \Spryker\Service\FileSystem\Dependency\Plugin\FileSystemWriterPluginInterface $fileSystemWriterPlugin
+     * @param \Spryker\Service\FileSystemExtension\Dependency\Plugin\FileSystemWriterPluginInterface $fileSystemWriterPlugin
      */
     public function __construct(FileSystemWriterPluginInterface $fileSystemWriterPlugin)
     {
@@ -93,16 +93,6 @@ class FileSystemWriter implements FileSystemWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @return void
-     */
-    public function put(FileSystemContentTransfer $fileSystemContentTransfer)
-    {
-        $this->fileSystemWriter->put($fileSystemContentTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
      * @return void
@@ -110,16 +100,6 @@ class FileSystemWriter implements FileSystemWriterInterface
     public function rename(FileSystemRenameTransfer $fileSystemRenameTransfer)
     {
         $this->fileSystemWriter->rename($fileSystemRenameTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @return void
-     */
-    public function update(FileSystemContentTransfer $fileSystemContentTransfer)
-    {
-        $this->fileSystemWriter->update($fileSystemContentTransfer);
     }
 
     /**

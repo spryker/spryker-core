@@ -17,7 +17,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 class ContentFileListConstraintValidator extends ConstraintValidator
 {
     /**
-     * @param array $fileIds The value that should be validated
+     * @param int[] $fileIds The value that should be validated
      * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ContentFileGui\Communication\Form\Constraints\ContentFileListConstraint $constraint The constraint for the validation
      *
      * @throws \InvalidArgumentException
@@ -57,7 +57,7 @@ class ContentFileListConstraintValidator extends ConstraintValidator
     {
         foreach ($parameterMessageTransfer->getMessages() as $messageTransfer) {
             $constraintViolation = $this->context
-                ->buildViolation($messageTransfer->getValue())
+                ->buildViolation($messageTransfer->getValueOrFail())
                 ->atPath(FileListContentTermForm::FIELD_FILE_IDS);
 
             foreach ($messageTransfer->getParameters() as $parameter => $value) {

@@ -13,18 +13,8 @@ interface FileSystemStreamInterface
 {
     /**
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
-     *
-     * @return void
-     */
-    public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return mixed
      */
@@ -34,17 +24,7 @@ interface FileSystemStreamInterface
      * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
      * @param mixed $stream
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
-     *
-     * @return void
-     */
-    public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream);
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return void
      */

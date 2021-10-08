@@ -11,7 +11,7 @@ use Codeception\Configuration;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FlysystemConfigLocalTransfer;
 use Generated\Shared\Transfer\FlysystemConfigTransfer;
-use League\Flysystem\FilesystemInterface;
+use League\Flysystem\FilesystemOperator;
 use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
 
 /**
@@ -67,7 +67,7 @@ class FlysystemLocalFileSystemTest extends Unit
 
         $localFilesystem = $localFilesystemBuilderPlugin->build($configTransfer);
 
-        $this->assertInstanceOf(FilesystemInterface::class, $localFilesystem);
+        $this->assertInstanceOf(FilesystemOperator::class, $localFilesystem);
     }
 
     /**

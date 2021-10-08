@@ -48,7 +48,7 @@ class AddFileController extends AbstractUploadFileController
                     $fileManagerDataTransfer = $this->createFileManagerDataTransfer($data);
 
                     if ($request->get(static::FILE_DIRECTORY_ID)) {
-                        $fileManagerDataTransfer->getFile()->setFkFileDirectory($request->get(static::FILE_DIRECTORY_ID));
+                        $fileManagerDataTransfer->getFileOrFail()->setFkFileDirectory($request->get(static::FILE_DIRECTORY_ID));
                     }
 
                     $this->getFactory()->getFileManagerFacade()->saveFile($fileManagerDataTransfer);
@@ -81,6 +81,10 @@ class AddFileController extends AbstractUploadFileController
         $fileInfo = new FileInfoTransfer();
         $fileUploadTransfer = $fileTransfer->getFileUpload();
 
+        if ($fileUploadTransfer === null) {
+            return $fileInfo;
+        }
+
         $fileInfo->setExtension($fileUploadTransfer->getClientOriginalExtension());
         $fileInfo->setSize($fileUploadTransfer->getSize());
         $fileInfo->setType($fileUploadTransfer->getMimeTypeName());
@@ -95,9 +99,15 @@ class AddFileController extends AbstractUploadFileController
      */
     protected function setFileName(FileTransfer $fileTransfer)
     {
+        $fileUploadTransfer = $fileTransfer->getFileUpload();
+
+        if ($fileUploadTransfer === null) {
+            return $fileTransfer;
+        }
+
         if ($fileTransfer->getUseRealName()) {
             $fileTransfer->setFileName(
-                $fileTransfer->getFileUpload()->getClientOriginalName()
+                $fileUploadTransfer->getClientOriginalName()
             );
         }
 
@@ -111,12 +121,9 @@ class AddFileController extends AbstractUploadFileController
      */
     protected function addErrors(FormInterface $form)
     {
-        $errors = $form->getErrors(true);
-
-        do {
-            $this->addErrorMessage(
-                $errors->current()->getMessage()
-            );
-        } while ($errors->next());
+        foreach ($form->getErrors(true) as $error) {
+            /** @var \Symfony\Component\Form\FormError $error */
+            $this->addErrorMessage($error->getMessage());
+        }
     }
 }

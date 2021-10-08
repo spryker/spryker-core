@@ -9,10 +9,9 @@ namespace SprykerTest\Service\Flysystem;
 
 use Codeception\Configuration;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
 use Generated\Shared\Transfer\FlysystemResourceTransfer;
 use PHPUnit\Framework\Assert;
-use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
+use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\Flysystem\FlysystemDependencyProvider;
 use Spryker\Service\Flysystem\FlysystemService;
 use Spryker\Service\Flysystem\FlysystemServiceFactory;
@@ -186,24 +185,6 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testPut(): void
-    {
-        $this->createDocumentFile('Lorem Ipsum');
-
-        $this->flysystemService->put(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            static::FILE_CONTENT
-        );
-
-        $content = $this->getDocumentFileContent();
-
-        $this->assertSame(static::FILE_CONTENT, $content);
-    }
-
-    /**
-     * @return void
-     */
     public function testWrite(): void
     {
         $this->flysystemService->write(
@@ -271,21 +252,6 @@ class FlysystemServiceTest extends Unit
 
         $this->assertFileExists($originalFile);
         $this->assertFileExists($copiedFile);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetMetadata(): void
-    {
-        $this->createDocumentFile();
-
-        $metadataTransfer = $this->flysystemService->getMetadata(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT
-        );
-
-        $this->assertInstanceOf(FlysystemResourceMetadataTransfer::class, $metadataTransfer);
     }
 
     /**
@@ -446,32 +412,6 @@ class FlysystemServiceTest extends Unit
     /**
      * @return void
      */
-    public function testPutStream(): void
-    {
-        $stream = tmpfile();
-        fwrite($stream, static::FILE_CONTENT);
-        rewind($stream);
-
-        $this->flysystemService->putStream(
-            static::FILE_SYSTEM_DOCUMENT,
-            'foo/' . static::FILE_DOCUMENT,
-            $stream
-        );
-
-        if ($stream !== false) {
-            fclose($stream);
-        }
-
-        $file = $this->getLocalDocumentFile();
-        $content = file_get_contents($file);
-
-        $this->assertFileExists($file);
-        $this->assertSame(static::FILE_CONTENT, $content);
-    }
-
-    /**
-     * @return void
-     */
     public function testReadStream(): void
     {
         $this->createDocumentFile();
@@ -500,7 +440,7 @@ class FlysystemServiceTest extends Unit
         $file = $this->testDataFileSystemRootDirectory . static::FILE_DOCUMENT;
         $stream = fopen($file, 'r+');
 
-        $this->flysystemService->updateStream(
+        $this->flysystemService->writeStream(
             static::FILE_SYSTEM_DOCUMENT,
             'foo/' . static::FILE_DOCUMENT,
             $stream

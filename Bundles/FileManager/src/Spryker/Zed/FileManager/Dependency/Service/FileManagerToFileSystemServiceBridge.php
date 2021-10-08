@@ -36,16 +36,6 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
     /**
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer
-     */
-    public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer)
-    {
-        return $this->fileSystemService->getMetadata($fileSystemQueryTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
      * @return string
      */
     public function getMimeType(FileSystemQueryTransfer $fileSystemQueryTransfer)
@@ -174,16 +164,6 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
     }
 
     /**
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @return void
-     */
-    public function put(FileSystemContentTransfer $fileSystemContentTransfer)
-    {
-        $this->fileSystemService->put($fileSystemContentTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\FileSystemRenameTransfer $fileSystemRenameTransfer
      *
      * @return void
@@ -198,30 +178,9 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
      *
      * @return void
      */
-    public function update(FileSystemContentTransfer $fileSystemContentTransfer)
-    {
-        $this->fileSystemService->update($fileSystemContentTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemContentTransfer $fileSystemContentTransfer
-     *
-     * @return void
-     */
     public function write(FileSystemContentTransfer $fileSystemContentTransfer)
     {
         $this->fileSystemService->write($fileSystemContentTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
-     *
-     * @return void
-     */
-    public function putStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
-    {
-        $this->fileSystemService->putStream($fileSystemStreamTransfer, $stream);
     }
 
     /**
@@ -232,17 +191,6 @@ class FileManagerToFileSystemServiceBridge implements FileManagerToFileSystemSer
     public function readStream(FileSystemStreamTransfer $fileSystemStreamTransfer)
     {
         return $this->fileSystemService->readStream($fileSystemStreamTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\FileSystemStreamTransfer $fileSystemStreamTransfer
-     * @param mixed $stream
-     *
-     * @return void
-     */
-    public function updateStream(FileSystemStreamTransfer $fileSystemStreamTransfer, $stream)
-    {
-        $this->fileSystemService->updateStream($fileSystemStreamTransfer, $stream);
     }
 
     /**

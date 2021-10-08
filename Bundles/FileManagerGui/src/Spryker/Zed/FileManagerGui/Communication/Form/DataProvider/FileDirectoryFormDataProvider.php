@@ -49,6 +49,11 @@ class FileDirectoryFormDataProvider
         }
 
         $fileDirectoryTransfer = $this->fileManagerFacade->findFileDirectory($idFileDirectory);
+
+        if ($fileDirectoryTransfer === null) {
+            return new FileDirectoryTransfer();
+        }
+
         $this->setFileDirectoryLocalizedAttributes($fileDirectoryTransfer);
 
         return $fileDirectoryTransfer;

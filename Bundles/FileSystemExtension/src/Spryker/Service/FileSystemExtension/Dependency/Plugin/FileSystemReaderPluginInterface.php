@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\FileSystem\Dependency\Plugin;
+namespace Spryker\Service\FileSystemExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\FileSystemListTransfer;
 use Generated\Shared\Transfer\FileSystemQueryTransfer;
@@ -14,29 +14,14 @@ interface FileSystemReaderPluginInterface
 {
     /**
      * Specification:
-     * - Get resource metadata
-     * - Return resource metadata transfer, throw exception on failure
+     * - Gets resource mime type
+     * - Returns resource mime type, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FileSystemResourceMetadataTransfer
-     */
-    public function getMetadata(FileSystemQueryTransfer $fileSystemQueryTransfer);
-
-    /**
-     * Specification:
-     * - Get resource mime type
-     * - Return resource mime type, throw exception on failure
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -44,14 +29,14 @@ interface FileSystemReaderPluginInterface
 
     /**
      * Specification:
-     * - Get resource timestamp
-     * - Return resource timestamp, throw exception on failure
+     * - Gets resource timestamp
+     * - Returns resource timestamp, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return int|null
      */
@@ -59,14 +44,14 @@ interface FileSystemReaderPluginInterface
 
     /**
      * Specification:
-     * - Get resource size
-     * - Return resource size, throw exception on failure
+     * - Gets resource size
+     * - Returns resource size, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return int
      */
@@ -74,14 +59,14 @@ interface FileSystemReaderPluginInterface
 
     /**
      * Specification:
-     * - Check if resource has private access rights
-     * - Return true if resource has private access rights
+     * - Checks if resource has private access rights
+     * - Returns true if resource has private access rights
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -89,14 +74,14 @@ interface FileSystemReaderPluginInterface
 
     /**
      * Specification:
-     * - Check if resource exists
-     * - Return true if resource exist, false otherwise
+     * - Checks if resource exists
+     * - Returns true if resource exist, false otherwise
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -104,14 +89,14 @@ interface FileSystemReaderPluginInterface
 
     /**
      * Specification:
-     * - Read file
-     * - Return file content, throw exception on failure
+     * - Reads file
+     * - Returns file content, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemQueryTransfer $fileSystemQueryTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -119,14 +104,14 @@ interface FileSystemReaderPluginInterface
 
     /**
      * Specification:
-     * - List contents under a path
-     * - Return array of FileSystemResourceTransfer objects located under given path, throw exception on failure
+     * - Gets list contents under a path
+     * - Returns array of FileSystemResourceTransfer objects located under given path, throws exception on failure
      *
      * @api
      *
      * @param \Generated\Shared\Transfer\FileSystemListTransfer $fileSystemListTransfer
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return array<\Generated\Shared\Transfer\FileSystemResourceTransfer>
      */

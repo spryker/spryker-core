@@ -51,6 +51,7 @@ class ContentFileListViewTable extends AbstractTable
      * @var string
      */
     public const COL_SELECTED = 'Actions';
+
     /**
      * @var string
      */

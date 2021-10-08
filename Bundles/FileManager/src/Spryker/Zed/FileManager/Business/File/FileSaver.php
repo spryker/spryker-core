@@ -116,8 +116,8 @@ class FileSaver implements FileSaverInterface
      */
     protected function saveFile(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        $this->prepareFileTransfer($fileManagerDataTransfer->getFile());
-        $fileTransfer = $this->entityManager->saveFile($fileManagerDataTransfer->getFile());
+        $this->prepareFileTransfer($fileManagerDataTransfer->getFileOrFail());
+        $fileTransfer = $this->entityManager->saveFile($fileManagerDataTransfer->getFileOrFail());
         $fileManagerDataTransfer->setFile($fileTransfer);
     }
 
@@ -133,7 +133,7 @@ class FileSaver implements FileSaverInterface
         }
 
         $this->prepareFileInfoTransfer($fileManagerDataTransfer);
-        $fileInfoTransfer = $this->entityManager->saveFileInfo($fileManagerDataTransfer->getFileInfo());
+        $fileInfoTransfer = $this->entityManager->saveFileInfo($fileManagerDataTransfer->getFileInfoOrFail());
         $fileManagerDataTransfer->setFileInfo($fileInfoTransfer);
     }
 
@@ -156,8 +156,8 @@ class FileSaver implements FileSaverInterface
      */
     protected function prepareFileInfoTransfer(FileManagerDataTransfer $fileManagerDataTransfer)
     {
-        $fileTransfer = $fileManagerDataTransfer->getFile();
-        $fileInfoTransfer = $fileManagerDataTransfer->getFileInfo();
+        $fileTransfer = $fileManagerDataTransfer->getFileOrFail();
+        $fileInfoTransfer = $fileManagerDataTransfer->getFileInfoOrFail();
 
         $nextVersion = $this->fileVersion->getNextVersionNumber($fileInfoTransfer->getFkFile());
         $nextVersionName = $this->fileVersion->getNextVersionName($nextVersion);
@@ -172,16 +172,16 @@ class FileSaver implements FileSaverInterface
     }
 
     /**
-     * @param string $fileName
+     * @param string|null $fileName
      *
      * @return string
      */
-    protected function sanitizeFileName($fileName)
+    protected function sanitizeFileName(?string $fileName = null): string
     {
-        $fileName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $fileName);
-        $fileName = mb_ereg_replace("([\.]{2,})", '', $fileName);
-        $fileName = preg_replace("/\s+/", ' ', $fileName);
-        $fileName = trim($fileName);
+        $fileName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', (string)$fileName);
+        $fileName = mb_ereg_replace("([\.]{2,})", '', (string)$fileName);
+        $fileName = preg_replace("/\s+/", ' ', (string)$fileName);
+        $fileName = trim((string)$fileName);
 
         if (!strlen($fileName) || $fileName === '.') {
             $fileName = static::DEFAULT_FILENAME;
@@ -198,10 +198,10 @@ class FileSaver implements FileSaverInterface
     protected function saveContent(FileManagerDataTransfer $fileManagerDataTransfer)
     {
         if ($fileManagerDataTransfer->getContent() !== null) {
-            $fileTransfer = $fileManagerDataTransfer->getFile();
+            $fileTransfer = $fileManagerDataTransfer->getFile() ?? new FileTransfer();
             $fileTransfer->setFileContent($fileManagerDataTransfer->getContent());
             $fileTransfer->setFileName(
-                $fileManagerDataTransfer->getFileInfo()->getStorageFileName()
+                $fileManagerDataTransfer->getFileInfoOrFail()->getStorageFileName()
             );
             $this->fileContent->save($fileTransfer);
         }

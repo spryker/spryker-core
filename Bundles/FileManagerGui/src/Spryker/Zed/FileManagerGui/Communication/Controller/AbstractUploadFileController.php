@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerGui\Communication\Controller;
 
+use Exception;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\FileUploadTransfer;
@@ -32,16 +33,23 @@ abstract class AbstractUploadFileController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\FileUploadTransfer $fileUploadTransfer
      *
+     * @throws \Exception
      * @throws \Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException
      *
      * @return string
      */
     protected function getFileContent(FileUploadTransfer $fileUploadTransfer)
     {
-        $fileContent = file_get_contents($fileUploadTransfer->getRealPath());
+        $realPath = $fileUploadTransfer->getRealPath();
+
+        if ($realPath === null) {
+            throw new Exception('Real path not found');
+        }
+
+        $fileContent = file_get_contents($realPath);
 
         if ($fileContent === false) {
-            throw new FileNotFoundException($fileUploadTransfer->getRealPath());
+            throw new FileNotFoundException($realPath);
         }
 
         return $fileContent;

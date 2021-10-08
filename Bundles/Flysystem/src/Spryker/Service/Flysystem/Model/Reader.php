@@ -7,12 +7,9 @@
 
 namespace Spryker\Service\Flysystem\Model;
 
-use Exception;
-use Generated\Shared\Transfer\FlysystemResourceMetadataTransfer;
 use Generated\Shared\Transfer\FlysystemResourceTransfer;
-use League\Flysystem\AdapterInterface;
-use Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException;
-use Spryker\Service\Flysystem\Exception\MetadataNotFoundException;
+use League\Flysystem\Visibility;
+use Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException;
 use Spryker\Service\Flysystem\Model\Provider\FilesystemProviderInterface;
 use Spryker\Shared\Flysystem\OperationHandler\ReadOperationHandlerTrait;
 use Throwable;
@@ -38,7 +35,7 @@ class Reader implements ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -47,11 +44,9 @@ class Reader implements ReaderInterface
         try {
             $visibility = $this->filesystemProvider
                 ->getFilesystemByName($filesystemName)
-                ->getVisibility($path);
+                ->visibility($path);
 
-            return $visibility === AdapterInterface::VISIBILITY_PRIVATE;
-        } catch (Exception $exception) {
-            throw new FileSystemReadException($exception->getMessage(), $exception->getCode(), $exception);
+            return $visibility === Visibility::PRIVATE;
         } catch (Throwable $exception) {
             throw new FileSystemReadException($exception->getMessage(), $exception->getCode(), $exception);
         }
@@ -61,7 +56,7 @@ class Reader implements ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -70,43 +65,10 @@ class Reader implements ReaderInterface
         try {
             return $this->filesystemProvider
                 ->getFilesystemByName($filesystemName)
-                ->has($path);
-        } catch (Exception $exception) {
-            throw new FileSystemReadException($exception->getMessage(), $exception->getCode(), $exception);
+                ->fileExists($path);
         } catch (Throwable $exception) {
             throw new FileSystemReadException($exception->getMessage(), $exception->getCode(), $exception);
         }
-    }
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer
-     */
-    public function getMetadata($filesystemName, $path)
-    {
-        return $this->handleReadOperation(function () use ($filesystemName, $path) {
-            $metadata = $this->filesystemProvider
-                ->getFilesystemByName($filesystemName)
-                ->getMetadata($path);
-
-            if (!$metadata) {
-                throw new MetadataNotFoundException(sprintf(
-                    'No metadata found for filesystem "%s" in path "%s"',
-                    $filesystemName,
-                    $path
-                ));
-            }
-
-            $metadataTransfer = new FlysystemResourceMetadataTransfer();
-            $metadataTransfer->fromArray($metadata, true);
-
-            $isFile = $this->isFile($metadataTransfer->getType());
-            $metadataTransfer->setIsFile($isFile);
-
-            return $metadataTransfer;
-        });
     }
 
     /**
@@ -120,7 +82,7 @@ class Reader implements ReaderInterface
         return $this->handleReadOperation(function () use ($filesystemName, $path) {
             return $this->filesystemProvider
                 ->getFilesystemByName($filesystemName)
-                ->getMimetype($path);
+                ->mimeType($path);
         });
     }
 
@@ -135,7 +97,7 @@ class Reader implements ReaderInterface
         return $this->handleReadOperation(function () use ($filesystemName, $path) {
             return $this->filesystemProvider
                 ->getFilesystemByName($filesystemName)
-                ->getVisibility($path);
+                ->visibility($path);
         });
     }
 
@@ -150,7 +112,7 @@ class Reader implements ReaderInterface
         return $this->handleReadOperation(function () use ($filesystemName, $path) {
             $timestamp = $this->filesystemProvider
                 ->getFilesystemByName($filesystemName)
-                ->getTimestamp($path);
+                ->lastModified($path);
 
             return $timestamp ? (int)$timestamp : null;
         });
@@ -167,7 +129,7 @@ class Reader implements ReaderInterface
         return $this->handleReadOperation(function () use ($filesystemName, $path) {
             return $this->filesystemProvider
                 ->getFilesystemByName($filesystemName)
-                ->getSize($path);
+                ->fileSize($path);
         });
     }
 
@@ -198,14 +160,15 @@ class Reader implements ReaderInterface
         return $this->handleReadOperation(function () use ($filesystemName, $directory, $recursive) {
             $resourceCollection = $this->filesystemProvider
                 ->getFilesystemByName($filesystemName)
-                ->listContents($directory, $recursive);
+                ->listContents($directory, $recursive)
+                ->toArray();
 
             $results = [];
             foreach ($resourceCollection as $resource) {
                 $resourceTransfer = new FlysystemResourceTransfer();
-                $resourceTransfer->fromArray($resource, true);
+                $resourceTransfer->fromArray($resource->jsonSerialize(), true);
 
-                $isFile = $this->isFile($resourceTransfer->getType());
+                $isFile = $this->isFile($resourceTransfer->getTypeOrFail());
                 $resourceTransfer->setIsFile($isFile);
 
                 $results[] = $resourceTransfer;

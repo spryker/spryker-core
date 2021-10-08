@@ -27,7 +27,7 @@ class FileDirectoryReader implements FileDirectoryReaderInterface
     /**
      * @param int $idFileDirectory
      *
-     * @return \Generated\Shared\Transfer\FileDirectoryTransfer
+     * @return \Generated\Shared\Transfer\FileDirectoryTransfer|null
      */
     public function getFileDirectory(int $idFileDirectory)
     {

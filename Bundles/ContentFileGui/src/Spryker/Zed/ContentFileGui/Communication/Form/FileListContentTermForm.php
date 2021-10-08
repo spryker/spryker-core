@@ -47,8 +47,12 @@ class FileListContentTermForm extends AbstractType
     {
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
+                $parentForm = $form->getParent();
+                if ($parentForm === null) {
+                    return [Constraint::DEFAULT_GROUP];
+                }
                 /** @var \Generated\Shared\Transfer\LocalizedContentTransfer $localizedContentTransfer */
-                $localizedContentTransfer = $form->getParent()->getData();
+                $localizedContentTransfer = $parentForm->getData();
                 if ($localizedContentTransfer->getFkLocale() === null) {
                     return [Constraint::DEFAULT_GROUP];
                 }
@@ -69,7 +73,7 @@ class FileListContentTermForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormView $view
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return void
      */
@@ -95,7 +99,7 @@ class FileListContentTermForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param mixed[] $options
      *
      * @return void
      */
@@ -147,11 +151,12 @@ class FileListContentTermForm extends AbstractType
                 $fileIds = [];
 
                 foreach ($fileManagerDataTransfers as $fileManagerDataTransfer) {
-                    if (!$fileManagerDataTransfer->getFile()) {
+                    $fileTransfer = $fileManagerDataTransfer->getFile();
+                    if ($fileTransfer === null) {
                         continue;
                     }
 
-                    $fileIds[] = $fileManagerDataTransfer->getFile()->getIdFile();
+                    $fileIds[] = $fileTransfer->getIdFile();
                 }
 
                 $event->setData($fileIds);

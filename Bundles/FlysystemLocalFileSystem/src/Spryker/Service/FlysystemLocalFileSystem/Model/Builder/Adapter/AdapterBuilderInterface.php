@@ -10,7 +10,7 @@ namespace Spryker\Service\FlysystemLocalFileSystem\Model\Builder\Adapter;
 interface AdapterBuilderInterface
 {
     /**
-     * @return \League\Flysystem\AdapterInterface
+     * @return \League\Flysystem\FilesystemAdapter
      */
     public function build();
 }

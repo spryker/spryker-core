@@ -30,23 +30,6 @@ class Stream implements StreamInterface
     /**
      * @param string $filesystemName
      * @param string $path
-     * @param mixed $resource
-     * @param array $config
-     *
-     * @return void
-     */
-    public function putStream($filesystemName, $path, $resource, array $config = [])
-    {
-        $this->handleStreamOperation(function () use ($filesystemName, $path, $resource, $config) {
-            return $this->filesystemProvider
-                ->getFilesystemByName($filesystemName)
-                ->putStream($path, $resource, $config);
-        });
-    }
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
      *
      * @return mixed
      */
@@ -67,27 +50,10 @@ class Stream implements StreamInterface
      *
      * @return void
      */
-    public function updateStream($filesystemName, $path, $resource, array $config = [])
-    {
-        $this->handleStreamOperation(function () use ($filesystemName, $path, $resource, $config) {
-            return $this->filesystemProvider
-                ->getFilesystemByName($filesystemName)
-                ->updateStream($path, $resource, $config);
-        });
-    }
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     * @param mixed $resource
-     * @param array $config
-     *
-     * @return void
-     */
     public function writeStream($filesystemName, $path, $resource, array $config = [])
     {
         $this->handleStreamOperation(function () use ($filesystemName, $path, $resource, $config) {
-            return $this->filesystemProvider
+            $this->filesystemProvider
                 ->getFilesystemByName($filesystemName)
                 ->writeStream($path, $resource, $config);
         });

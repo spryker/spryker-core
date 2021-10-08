@@ -22,26 +22,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer
-     */
-    public function getMetadata($filesystemName, $path)
-    {
-        return $this->getFactory()
-            ->createReader()
-            ->getMetadata($filesystemName, $path);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -60,7 +41,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return int|null
      */
@@ -79,7 +60,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return int
      */
@@ -98,7 +79,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -117,7 +98,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -136,7 +117,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -156,7 +137,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $directory
      * @param bool $recursive
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return array<\Generated\Shared\Transfer\FlysystemResourceTransfer>
      */
@@ -175,7 +156,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -194,7 +175,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -214,7 +195,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $dirname
      * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -233,7 +214,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $dirname
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -253,7 +234,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $path
      * @param string $newpath
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -272,7 +253,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -290,30 +271,9 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @param string $filesystemName
      * @param string $path
-     * @param string $content
-     * @param array $config
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function put($filesystemName, $path, $content, array $config = [])
-    {
-        $this->getFactory()
-            ->createWriter()
-            ->put($filesystemName, $path, $content, $config);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
      * @param string $newpath
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -334,28 +294,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param string $content
      * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
-     *
-     * @return void
-     */
-    public function update($filesystemName, $path, $content, array $config = [])
-    {
-        $this->getFactory()
-            ->createWriter()
-            ->update($filesystemName, $path, $content, $config);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     * @param string $content
-     * @param array $config
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemWriteException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemWriteException
      *
      * @return void
      */
@@ -373,29 +312,8 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      *
      * @param string $filesystemName
      * @param string $path
-     * @param mixed $resource
-     * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
-     *
-     * @return void
-     */
-    public function putStream($filesystemName, $path, $resource, array $config = [])
-    {
-        $this->getFactory()
-            ->createStream()
-            ->putStream($filesystemName, $path, $resource, $config);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return mixed
      */
@@ -416,28 +334,7 @@ class FlysystemService extends AbstractService implements FlysystemServiceInterf
      * @param mixed $resource
      * @param array $config
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
-     *
-     * @return void
-     */
-    public function updateStream($filesystemName, $path, $resource, array $config = [])
-    {
-        $this->getFactory()
-            ->createStream()
-            ->updateStream($filesystemName, $path, $resource, $config);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $filesystemName
-     * @param string $path
-     * @param mixed $resource
-     * @param array $config
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemStreamException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemStreamException
      *
      * @return void
      */

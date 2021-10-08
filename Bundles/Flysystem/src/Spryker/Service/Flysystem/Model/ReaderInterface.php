@@ -13,7 +13,7 @@ interface ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -23,17 +23,7 @@ interface ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
-     *
-     * @return \Generated\Shared\Transfer\FlysystemResourceMetadataTransfer
-     */
-    public function getMetadata($filesystemName, $path);
-
-    /**
-     * @param string $filesystemName
-     * @param string $path
-     *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -43,7 +33,7 @@ interface ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -53,7 +43,7 @@ interface ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return int|null
      */
@@ -63,7 +53,7 @@ interface ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return int
      */
@@ -73,7 +63,7 @@ interface ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return bool
      */
@@ -83,7 +73,7 @@ interface ReaderInterface
      * @param string $filesystemName
      * @param string $path
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return string
      */
@@ -94,7 +84,7 @@ interface ReaderInterface
      * @param string $directory
      * @param bool $recursive
      *
-     * @throws \Spryker\Service\FileSystem\Dependency\Exception\FileSystemReadException
+     * @throws \Spryker\Service\FileSystemExtension\Dependency\Exception\FileSystemReadException
      *
      * @return array<\Generated\Shared\Transfer\FlysystemResourceTransfer>
      */
