@@ -30,3 +30,5 @@ phpstan.neon export-ignore
 phpstan.json export-ignore
 psalm-report.json export-ignore linguist-generated=true
 tooling.yml export-ignore
+.github/ export-ignore
+architecture-baseline.json export-ignore
