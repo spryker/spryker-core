@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "galbar/jsonpath": "^1.0",
-        "php": ">=7.3"
+        "php": ">=7.4"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

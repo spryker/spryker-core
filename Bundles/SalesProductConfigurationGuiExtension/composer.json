@@ -4,7 +4,7 @@
     "description": "SalesProductConfigurationGuiExtension module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3"
+        "php": ">=7.4"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"
