@@ -4,7 +4,7 @@
     "description": "OmsProductOfferReservation module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/decimal-object": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/oms": "^11.7.0",

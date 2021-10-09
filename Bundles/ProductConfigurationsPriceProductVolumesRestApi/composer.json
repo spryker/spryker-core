@@ -4,7 +4,7 @@
     "description": "ProductConfigurationsPriceProductVolumesRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/kernel": "^3.56.0",
         "spryker/product-configuration": "^0.2.0",
         "spryker/product-configurations-rest-api-extension": "^0.2.0",

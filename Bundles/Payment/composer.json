@@ -4,7 +4,7 @@
     "description": "Payment module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/checkout-extension": "^1.2.0",
         "spryker/kernel": "^3.30.0",
         "spryker/payment-extension": "^1.0.0",

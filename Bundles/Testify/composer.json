@@ -8,7 +8,7 @@
         "dms/phpunit-arraysubset-asserts": "^0.1.0 || ^0.2.0 || ^0.3.0",
         "fzaninotto/faker": "^1.6.0",
         "mikey179/vfsstream": "^1.6",
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/application": "^3.12.0",
         "spryker/application-extension": "^1.0.0",
         "spryker/config": "^3.0.0",

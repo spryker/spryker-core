@@ -6,7 +6,7 @@
     "require": {
         "league/flysystem": "^2.0",
         "league/flysystem-ftp": "^2.0.8",
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/kernel": "^3.30.0",
         "spryker/transfer": "^3.25.0"
     },

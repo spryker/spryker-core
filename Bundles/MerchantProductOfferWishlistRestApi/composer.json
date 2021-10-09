@@ -4,7 +4,7 @@
     "description": "MerchantProductOfferWishlistRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/kernel": "^3.33.0",
         "spryker/wishlist": "^8.4.0",
         "spryker/wishlists-rest-api-extension": "^1.0.0"

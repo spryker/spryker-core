@@ -4,7 +4,7 @@
     "description": "ProductConfigurationPersistentCart module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/kernel": "^3.30.0",
         "spryker/persistent-cart-extension": "^1.0.0",
         "spryker/product-configuration-storage": "^0.2.0",

@@ -4,7 +4,7 @@
     "description": "ProductMerchantPortalGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/category": "^4.21.0 || ^5.0.0",
         "spryker/currency": "^3.0.0",
         "spryker/decimal-object": "^1.0.0",

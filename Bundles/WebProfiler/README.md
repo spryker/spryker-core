@@ -1,6 +1,6 @@
 # WebProfiler Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/web-profiler/v/stable.svg)](https://packagist.org/packages/spryker/web-profiler)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.3-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 The WebProfiler includes a profiler bar at the bottom of the page to analyze the request during local development.
 

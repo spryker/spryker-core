@@ -4,7 +4,7 @@
     "description": "QuoteRequestsRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/carts-rest-api": "^5.7.0",
         "spryker/glue-application": "^1.18.0",
         "spryker/glue-application-extension": "^1.0.0",

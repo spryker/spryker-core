@@ -22,7 +22,7 @@ class RequireUpdater implements UpdaterInterface
     /**
      * @var string
      */
-    public const PHP_MINIMUM = '>=7.3';
+    public const PHP_MINIMUM = '>=7.4';
 
     /**
      * @param array $composerJson

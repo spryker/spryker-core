@@ -4,7 +4,7 @@
     "description": "ProductOfferSalesRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/product-offer-sales": "^1.0.0"
     },
     "require-dev": {

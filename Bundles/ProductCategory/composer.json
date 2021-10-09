@@ -4,7 +4,7 @@
     "description": "ProductCategory module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/category": "^3.3.0 || ^4.14.0 || ^5.0.0",
         "spryker/category-gui-extension": "^1.0.0",
         "spryker/event": "^1.0.0 || ^2.0.0",

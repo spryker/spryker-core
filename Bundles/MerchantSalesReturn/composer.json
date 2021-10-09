@@ -4,7 +4,7 @@
     "description": "MerchantSalesReturn module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "spryker/kernel": "^3.33.0",
         "spryker/merchant-sales-order": "^1.0.0",
         "spryker/sales-return-extension": "^1.2.0",
