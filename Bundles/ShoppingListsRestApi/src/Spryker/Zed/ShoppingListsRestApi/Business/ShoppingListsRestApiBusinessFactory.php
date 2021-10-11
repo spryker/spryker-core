@@ -104,7 +104,7 @@ class ShoppingListsRestApiBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /***
+    /**
      * @return \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListItem\ShoppingListItemDeleterInterface
      */
     public function createShoppingListItemDeleter(): ShoppingListItemDeleterInterface

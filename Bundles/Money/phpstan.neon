@@ -5,3 +5,4 @@ parameters:
     ignoreErrors:
         - '#Parameter \#1 \$left_operand of function bcdiv expects string, int given.#'
         - '#Parameter \#1 \$num1 of function bcdiv expects string, int given.#'
+        - '#Call to an undefined method Generated\\Zed\\Ide\\AutoCompletion\|.+#'

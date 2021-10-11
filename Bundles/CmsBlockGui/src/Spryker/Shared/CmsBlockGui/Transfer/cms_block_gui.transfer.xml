@@ -35,9 +35,11 @@
     </transfer>
 
     <transfer name="CmsBlockGlossary">
+        <property name="glossaryPlaceholders" type="CmsBlockGlossaryPlaceholder[]" singular="glossaryPlaceholder"/>
     </transfer>
 
     <transfer name="CmsBlockGlossaryPlaceholder">
+        <property name="placeholder" type="string"/>
     </transfer>
 
     <transfer name="CmsBlockGlossaryPlaceholderTranslation">

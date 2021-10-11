@@ -62,7 +62,7 @@ class ReferenceResolver implements ReferenceResolverInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function __debugInfo()
     {

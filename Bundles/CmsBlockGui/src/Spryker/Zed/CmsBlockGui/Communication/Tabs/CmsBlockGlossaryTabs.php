@@ -15,7 +15,7 @@ use Spryker\Zed\Gui\Communication\Tabs\AbstractTabs;
 class CmsBlockGlossaryTabs extends AbstractTabs
 {
     /**
-     * @var \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
+     * @var \Generated\Shared\Transfer\CmsBlockGlossaryTransfer
      */
     protected $glossaryTransfer;
 

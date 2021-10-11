@@ -116,11 +116,10 @@ class MoneyBuilder implements MoneyBuilderInterface
      */
     protected function getMoney($amount, $isoCode = null)
     {
-        $isoCode = $this->getCurrency($isoCode);
-        $money = $this->createMoney($amount, $isoCode);
-        $moneyTransfer = $this->convertToTransfer($money);
+        $currency = $this->getCurrency($isoCode);
+        $money = $this->createMoney($amount, $currency);
 
-        return $moneyTransfer;
+        return $this->convertToTransfer($money);
     }
 
     /**
@@ -138,7 +137,7 @@ class MoneyBuilder implements MoneyBuilderInterface
     }
 
     /**
-     * @param int $amount
+     * @param int|string $amount
      * @param \Money\Currency $isoCode
      *
      * @return \Money\Money

@@ -136,7 +136,7 @@ class RequestAttributesEventDispatcherPlugin extends AbstractPlugin implements E
      */
     protected function getRequestUriFragments(Request $request): array
     {
-        $requestUriWithoutParameters = strtok($request->server->get('REQUEST_URI'), '?');
+        $requestUriWithoutParameters = (string)strtok($request->server->get('REQUEST_URI'), '?');
         $requestUriWithoutParameters = trim($requestUriWithoutParameters, '/');
         $requestUriWithoutParameters = str_replace('//', '/', $requestUriWithoutParameters);
 

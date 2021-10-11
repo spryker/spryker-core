@@ -203,7 +203,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         $this->assertSame((float)$expectedResult, $actualResult);
     }
 
-    /***
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param float|null $countryTaxRate
      *

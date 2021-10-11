@@ -72,7 +72,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritDoc
+     * @return mixed
      */
     public function current()
     {
@@ -82,7 +82,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritDoc
+     * @return void
      */
     public function next()
     {
@@ -92,7 +92,7 @@ class YamlBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritDoc
+     * @return int
      */
     public function key()
     {

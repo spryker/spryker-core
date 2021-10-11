@@ -21,7 +21,7 @@ class CmsBlockProductConnectorRepository extends AbstractRepository implements C
      */
     protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
 
-    /***
+    /**
      * @param int $idLocale
      * @param int $idCmsBlock
      *

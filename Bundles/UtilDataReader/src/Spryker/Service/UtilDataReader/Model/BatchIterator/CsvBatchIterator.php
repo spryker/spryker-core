@@ -73,7 +73,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritDoc
+     * @return mixed
      */
     public function current()
     {
@@ -81,7 +81,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritDoc
+     * @return void
      */
     public function next()
     {
@@ -89,7 +89,7 @@ class CsvBatchIterator implements CountableIteratorInterface
     }
 
     /**
-     * @inheritDoc
+     * @return int
      */
     public function key()
     {

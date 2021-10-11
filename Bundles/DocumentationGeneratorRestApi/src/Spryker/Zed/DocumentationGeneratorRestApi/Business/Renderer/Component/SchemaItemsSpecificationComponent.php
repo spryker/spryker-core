@@ -42,7 +42,7 @@ class SchemaItemsSpecificationComponent implements SchemaItemsSpecificationCompo
     protected const VALUE_TYPE_ARRAY = 'array';
 
     /**
-     * @var \Generated\Shared\Transfer\SchemaItemsComponentTransfer|null $schemaPropertyComponentTransfer
+     * @var \Generated\Shared\Transfer\SchemaItemsComponentTransfer|null
      */
     protected $schemaItemsComponentTransfer;
 
