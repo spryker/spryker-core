@@ -147,6 +147,11 @@ class Environment extends Module
         }
 
         if (!$this->rootDirectory) {
+            if (defined('APPLICATION_ROOT_DIR')) {
+                return rtrim(APPLICATION_ROOT_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            }
+
+            // Deprecated: Will be removed in the next major. Please use APPLICATION_ROOT_DIR instead.
             $directory = getcwd();
 
             $pathParts = explode(DIRECTORY_SEPARATOR, Configuration::projectDir());

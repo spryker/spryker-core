@@ -399,7 +399,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'dms/phpunit-arraysubset-asserts' => 'spryker/testify',
             'doctrine/inflector' => 'spryker/doctrine-inflector',
             'egulias/email-validator' => 'spryker/egulias',
-            'fzaninotto/faker' => 'spryker/testify',
+            'fakerphp/faker' => 'spryker/testify',
             'galbar/jsonpath' => 'spryker/json-path',
             'guzzlehttp/guzzle' => 'spryker/guzzle',
             'justinrainbow/json-schema' => 'spryker/json-schema',
