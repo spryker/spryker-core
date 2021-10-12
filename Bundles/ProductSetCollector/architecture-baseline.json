@@ -1,19 +1,5 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/ProductSetCollectorFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\ProductSetCollector\\Business\\ProductSetCollectorFacade::runStorageProductSetCollector() has 2 factory calls and violates the rule \"Every Facade method should have no more than one factory call.\".\n    ",
-        "rule": "FacadeRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
-        "fileName": "/vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Business/ProductSetCollectorFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\ProductSetCollector\\Business\\ProductSetCollectorFacade::runSearchProductSetCollector() has 2 factory calls and violates the rule \"Every Facade method should have no more than one factory call.\".\n    ",
-        "rule": "FacadeRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
         "fileName": "/vendor/spryker/spryker/Bundles/ProductSetCollector/src/Spryker/Zed/ProductSetCollector/Dependency/Facade/ProductSetCollectorToCollectorInterface.php",
         "description": "\n      Bridges: The bridge interface has incorrect method 'runCollector' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
         "rule": "BridgeMethodsRule",

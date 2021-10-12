@@ -45,23 +45,15 @@ class ProductLabelCollectorFacade extends AbstractFacade implements ProductLabel
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this
-            ->getFactory()
-            ->createLabelDictionaryStorageCollector();
-
-        $this
-            ->getFactory()
-            ->getCollectorFacade()
-            ->runCollector(
-                $collector,
-                $baseQuery,
-                $localeTransfer,
-                $result,
-                $dataReader,
-                $dataWriter,
-                $touchUpdater,
-                $output
-            );
+        $this->getFactory()->createLabelDictionaryStorageCollectorRunner()->run(
+            $baseQuery,
+            $localeTransfer,
+            $result,
+            $dataReader,
+            $dataWriter,
+            $touchUpdater,
+            $output
+        );
     }
 
     /**
@@ -88,22 +80,14 @@ class ProductLabelCollectorFacade extends AbstractFacade implements ProductLabel
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this
-            ->getFactory()
-            ->createAbstractProductRelationStorageCollector();
-
-        $this
-            ->getFactory()
-            ->getCollectorFacade()
-            ->runCollector(
-                $collector,
-                $baseQuery,
-                $localeTransfer,
-                $result,
-                $dataReader,
-                $dataWriter,
-                $touchUpdater,
-                $output
-            );
+        $this->getFactory()->createAbstractProductRelationStorageCollectorRunner()->run(
+            $baseQuery,
+            $localeTransfer,
+            $result,
+            $dataReader,
+            $dataWriter,
+            $touchUpdater,
+            $output
+        );
     }
 }

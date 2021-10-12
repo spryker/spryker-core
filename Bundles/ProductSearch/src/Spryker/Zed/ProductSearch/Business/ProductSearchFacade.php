@@ -375,12 +375,15 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()->createProductSearchConfigExtensionCollector();
-
-        $this
-            ->getFactory()
-            ->getCollectorFacade()
-            ->runCollector($collector, $baseQuery, $locale, $result, $dataReader, $dataWriter, $touchUpdater, $output);
+        $this->getFactory()->createProductSearchConfigExtensionCollectorRunner()->run(
+            $baseQuery,
+            $locale,
+            $result,
+            $dataReader,
+            $dataWriter,
+            $touchUpdater,
+            $output
+        );
     }
 
     /**

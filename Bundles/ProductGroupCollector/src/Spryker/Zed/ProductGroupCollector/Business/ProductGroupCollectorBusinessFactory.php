@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductGroupCollector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductGroupCollector\Business\Collector\ProductGroupCollectorRunner;
+use Spryker\Zed\ProductGroupCollector\Business\Collector\ProductGroupCollectorRunnerInterface;
 use Spryker\Zed\ProductGroupCollector\Business\Collector\Storage\ProductAbstractGroupsCollector;
 use Spryker\Zed\ProductGroupCollector\Business\Collector\Storage\ProductGroupCollector;
 use Spryker\Zed\ProductGroupCollector\Persistence\Collector\Propel\ProductAbstractGroupsCollectorQuery;
@@ -82,10 +84,32 @@ class ProductGroupCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\CollectorFacadeInterface
+     * @return \Spryker\Zed\ProductGroupCollector\Dependency\Facade\ProductGroupCollectorToCollectorInterface
      */
     public function getCollectorFacade()
     {
         return $this->getProvidedDependency(ProductGroupCollectorDependencyProvider::FACADE_COLLECTOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductGroupCollector\Business\Collector\ProductGroupCollectorRunnerInterface
+     */
+    public function createStorageProductAbstractGroupsCollectorRunner(): ProductGroupCollectorRunnerInterface
+    {
+        return new ProductGroupCollectorRunner(
+            $this->createStorageProductAbstractGroupsCollector(),
+            $this->getCollectorFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductGroupCollector\Business\Collector\ProductGroupCollectorRunnerInterface
+     */
+    public function createStorageProductGroupCollectorRunner(): ProductGroupCollectorRunnerInterface
+    {
+        return new ProductGroupCollectorRunner(
+            $this->createStorageProductGroupCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

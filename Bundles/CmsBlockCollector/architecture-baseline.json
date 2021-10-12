@@ -1,12 +1,5 @@
 [
     {
-        "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/Business/CmsBlockCollectorFacade.php",
-        "description": "\n      Zed Business Layer - Facade: The method Spryker\\Zed\\CmsBlockCollector\\Business\\CmsBlockCollectorFacade::runStorageCmsBlockCollector() has 2 factory calls and violates the rule \"Every Facade method should have no more than one factory call.\".\n    ",
-        "rule": "FacadeRule",
-        "ruleset": "Spryker Zed",
-        "priority": "1"
-    },
-    {
         "fileName": "/vendor/spryker/spryker/Bundles/CmsBlockCollector/src/Spryker/Zed/CmsBlockCollector/Dependency/Facade/CmsBlockCollectorToCollectorInterface.php",
         "description": "\n      Bridges: The bridge interface has incorrect method 'runCollector' signature. That violates the rule \"All bridge methods must have exactly the same signature as their interface\"\n    ",
         "rule": "BridgeMethodsRule",

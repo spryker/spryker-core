@@ -45,13 +45,9 @@ class CmsBlockCollectorFacade extends AbstractFacade implements CmsBlockCollecto
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()
-            ->createStorageCmsBlockCollector();
-
         $this->getFactory()
-            ->getCollectorFacade()
-            ->runCollector(
-                $collector,
+            ->createCmsBlockCollectorRunner()
+            ->run(
                 $baseQuery,
                 $localeTransfer,
                 $result,

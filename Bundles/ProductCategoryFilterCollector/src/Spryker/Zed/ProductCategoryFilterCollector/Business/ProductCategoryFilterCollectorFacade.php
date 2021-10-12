@@ -47,8 +47,7 @@ class ProductCategoryFilterCollectorFacade extends AbstractFacade implements Pro
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $this->getFactory()->createStorageProductGroupCollector(),
+        $this->getFactory()->createProductCategoryFilterCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,

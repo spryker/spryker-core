@@ -9,6 +9,8 @@ namespace Spryker\Zed\NavigationCollector\Business;
 
 use Spryker\Shared\Navigation\KeyBuilder\NavigationKeyBuilder;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\NavigationCollector\Business\Collector\NavigationCollectorRunner;
+use Spryker\Zed\NavigationCollector\Business\Collector\NavigationCollectorRunnerInterface;
 use Spryker\Zed\NavigationCollector\Business\Collector\Storage\NavigationMenuCollector;
 use Spryker\Zed\NavigationCollector\NavigationCollectorDependencyProvider;
 use Spryker\Zed\NavigationCollector\Persistence\Collector\Propel\NavigationMenuCollectorQuery;
@@ -68,7 +70,7 @@ class NavigationCollectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Collector\Business\CollectorFacadeInterface
+     * @return \Spryker\Zed\NavigationCollector\Dependency\Facade\NavigationCollectorToCollectorInterface
      */
     public function getCollectorFacade()
     {
@@ -81,5 +83,16 @@ class NavigationCollectorBusinessFactory extends AbstractBusinessFactory
     protected function getNavigationFacade()
     {
         return $this->getProvidedDependency(NavigationCollectorDependencyProvider::FACADE_NAVIGATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\NavigationCollector\Business\Collector\NavigationCollectorRunnerInterface
+     */
+    public function createStorageNavigationMenuCollectorRunner(): NavigationCollectorRunnerInterface
+    {
+        return new NavigationCollectorRunner(
+            $this->createStorageNavigationMenuCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

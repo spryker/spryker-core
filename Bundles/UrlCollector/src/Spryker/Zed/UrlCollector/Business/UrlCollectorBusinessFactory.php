@@ -9,6 +9,8 @@ namespace Spryker\Zed\UrlCollector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\UrlCollector\Business\Collector\Storage\UrlCollector;
+use Spryker\Zed\UrlCollector\Business\Collector\UrlCollectorRunner;
+use Spryker\Zed\UrlCollector\Business\Collector\UrlCollectorRunnerInterface;
 use Spryker\Zed\UrlCollector\Persistence\Collector\Propel\UrlCollectorQuery;
 use Spryker\Zed\UrlCollector\UrlCollectorDependencyProvider;
 
@@ -18,7 +20,7 @@ use Spryker\Zed\UrlCollector\UrlCollectorDependencyProvider;
 class UrlCollectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\ProductLabelCollector\Dependency\Facade\ProductLabelCollectorToCollectorInterface
+     * @return \Spryker\Zed\UrlCollector\Dependency\Facade\UrlCollectorToCollectorFacadeInterface
      */
     public function getCollectorFacade()
     {
@@ -71,5 +73,16 @@ class UrlCollectorBusinessFactory extends AbstractBusinessFactory
     public function createUrlCollectorQuery()
     {
         return new UrlCollectorQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\UrlCollector\Business\Collector\UrlCollectorRunnerInterface
+     */
+    public function createStorageUrlCollectorRunner(): UrlCollectorRunnerInterface
+    {
+        return new UrlCollectorRunner(
+            $this->createStorageUrlCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

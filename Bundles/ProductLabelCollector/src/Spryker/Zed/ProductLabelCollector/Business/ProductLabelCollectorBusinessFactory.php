@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductLabelCollector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductLabelCollector\Business\Collector\ProductLabelCollectorRunner;
+use Spryker\Zed\ProductLabelCollector\Business\Collector\ProductLabelCollectorRunnerInterface;
 use Spryker\Zed\ProductLabelCollector\Business\Collector\Storage\LabelDictionaryCollector;
 use Spryker\Zed\ProductLabelCollector\Business\Collector\Storage\ProductAbstractRelationCollector;
 use Spryker\Zed\ProductLabelCollector\Persistence\Collector\Propel\LabelDictionaryCollectorQuery;
@@ -94,5 +96,27 @@ class ProductLabelCollectorBusinessFactory extends AbstractBusinessFactory
     protected function createAbstractProductRelationCollectorQuery()
     {
         return new ProductAbstractRelationCollectorQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelCollector\Business\Collector\ProductLabelCollectorRunnerInterface
+     */
+    public function createAbstractProductRelationStorageCollectorRunner(): ProductLabelCollectorRunnerInterface
+    {
+        return new ProductLabelCollectorRunner(
+            $this->createAbstractProductRelationStorageCollector(),
+            $this->getCollectorFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelCollector\Business\Collector\ProductLabelCollectorRunnerInterface
+     */
+    public function createLabelDictionaryStorageCollectorRunner(): ProductLabelCollectorRunnerInterface
+    {
+        return new ProductLabelCollectorRunner(
+            $this->createLabelDictionaryStorageCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

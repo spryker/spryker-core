@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsBlockCollector\Business;
 
+use Spryker\Zed\CmsBlockCollector\Business\Collector\CmsBlockCollectorRunner;
+use Spryker\Zed\CmsBlockCollector\Business\Collector\CmsBlockCollectorRunnerInterface;
 use Spryker\Zed\CmsBlockCollector\Business\Collector\Storage\CmsBlockCollector;
 use Spryker\Zed\CmsBlockCollector\CmsBlockCollectorDependencyProvider;
 use Spryker\Zed\CmsBlockCollector\Persistence\Collector\Storage\Propel\CmsBlockCollectorQuery;
@@ -71,5 +73,16 @@ class CmsBlockCollectorBusinessFactory extends AbstractBusinessFactory
     protected function createCmsBlockCollectorStorageQuery()
     {
         return new CmsBlockCollectorQuery();
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockCollector\Business\Collector\CmsBlockCollectorRunnerInterface
+     */
+    public function createCmsBlockCollectorRunner(): CmsBlockCollectorRunnerInterface
+    {
+        return new CmsBlockCollectorRunner(
+            $this->createStorageCmsBlockCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

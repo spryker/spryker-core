@@ -8,6 +8,8 @@
 namespace Spryker\Zed\CmsBlockCategoryConnector\Business;
 
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCollector;
+use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCollectorRunner;
+use Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCollectorRunnerInterface;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryPositionReader;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryPositionSync;
 use Spryker\Zed\CmsBlockCategoryConnector\Business\Model\CmsBlockCategoryReader;
@@ -89,7 +91,7 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsBlockCollector\Dependency\Facade\CmsBlockCollectorToCollectorInterface
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Dependency\Facade\CmsBlockCategoryConnectorToCollectorInterface
      */
     public function getCollectorFacade()
     {
@@ -126,5 +128,16 @@ class CmsBlockCategoryConnectorBusinessFactory extends AbstractBusinessFactory
     protected function createCmsBlockCategoryStorageQueryContainer()
     {
         return new CmsBlockCategoryConnectorCollector();
+    }
+
+    /**
+     * @return \Spryker\Zed\CmsBlockCategoryConnector\Business\Collector\CmsBlockCategoryCollectorRunnerInterface
+     */
+    public function createCmsBlockCategoryCollectorRunner(): CmsBlockCategoryCollectorRunnerInterface
+    {
+        return new CmsBlockCategoryCollectorRunner(
+            $this->createStorageCmsBlockCategoryConnectorCollector(),
+            $this->getCollectorFacade()
+        );
     }
 }

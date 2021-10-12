@@ -45,10 +45,7 @@ class ProductReviewCollectorFacade extends AbstractFacade implements ProductRevi
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()->createSearchProductReviewCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createSearchProductReviewCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,
@@ -83,10 +80,7 @@ class ProductReviewCollectorFacade extends AbstractFacade implements ProductRevi
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()->createStorageProductAbstractReviewCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createStorageProductAbstractReviewCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,

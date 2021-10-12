@@ -112,11 +112,7 @@ class CmsBlockProductConnectorFacade extends AbstractFacade implements CmsBlockP
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
-        $collector = $this->getFactory()
-            ->createStorageCmsBlockProductConnectorCollector();
-
-        $this->getFactory()->getCollectorFacade()->runCollector(
-            $collector,
+        $this->getFactory()->createCmsBlockProductCollectorRunner()->run(
             $baseQuery,
             $localeTransfer,
             $result,
