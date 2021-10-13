@@ -89,7 +89,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
     public function saveOrderItems(QuoteTransfer $quoteTransfer, SaveOrderTransfer $saveOrderTransfer): void
     {
         $this->handleDatabaseTransaction(function () use ($quoteTransfer, $saveOrderTransfer) {
-             $this->saveOrderItemTransaction($quoteTransfer, $saveOrderTransfer);
+            $this->saveOrderItemTransaction($quoteTransfer, $saveOrderTransfer);
         });
     }
 

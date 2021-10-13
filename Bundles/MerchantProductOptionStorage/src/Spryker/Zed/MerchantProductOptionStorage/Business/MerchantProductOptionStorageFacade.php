@@ -27,7 +27,7 @@ class MerchantProductOptionStorageFacade extends AbstractFacade implements Merch
      */
     public function writeCollectionByMerchantProductOptionGroupEvents(array $eventTransfers): void
     {
-         $this->getFactory()
+        $this->getFactory()
             ->createMerchantProductOptionStorageWriter()
             ->writeCollectionByMerchantProductOptionGroupEvents($eventTransfers);
     }

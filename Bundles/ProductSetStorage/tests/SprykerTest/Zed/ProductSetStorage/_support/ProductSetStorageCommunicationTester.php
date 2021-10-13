@@ -72,13 +72,13 @@ class ProductSetStorageCommunicationTester extends Actor
             ->build()
             ->setLocale($this->haveLocale());
 
-         return $this->haveProductSet([
-             ProductSetTransfer::LOCALIZED_DATA => new ArrayObject([$localizedProductSetTransfer]),
-             ProductSetTransfer::ID_PRODUCT_ABSTRACTS => [
-                $this->haveProductAbstract()->getIdProductAbstract(),
-                $this->haveProductAbstract()->getIdProductAbstract(),
-             ],
-         ]);
+        return $this->haveProductSet([
+            ProductSetTransfer::LOCALIZED_DATA => new ArrayObject([$localizedProductSetTransfer]),
+            ProductSetTransfer::ID_PRODUCT_ABSTRACTS => [
+               $this->haveProductAbstract()->getIdProductAbstract(),
+               $this->haveProductAbstract()->getIdProductAbstract(),
+            ],
+        ]);
     }
 
     /**

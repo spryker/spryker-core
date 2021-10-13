@@ -38,7 +38,7 @@ class MetaDataProvider implements MetaDataProviderInterface
     /**
      * @see MetaDataProvider::availableFieldsBuffer
      *
-     * @var array|null Each key is an available field. Contains the flipped $availableFieldsBuffer variable for performance reason.
+     * @var array<string, mixed>|null Each key is an available field. Contains the flipped $availableFieldsBuffer variable for performance reason.
      */
     protected $availableFieldsMapBuffer;
 

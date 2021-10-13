@@ -58,7 +58,7 @@ class SalesProductConfigurationClientTest extends Unit
     protected const TEST_ORDER_REFERENCE = 'TEST_ORDER_REFERENCE';
 
     /**
-     * @var \Spryker\Client\SalesProductConfiguration\SalesProductConfigurationClientInterface $salesProductConfigurationClient
+     * @var \Spryker\Client\SalesProductConfiguration\SalesProductConfigurationClientInterface
      */
     protected $salesProductConfigurationClient;
 

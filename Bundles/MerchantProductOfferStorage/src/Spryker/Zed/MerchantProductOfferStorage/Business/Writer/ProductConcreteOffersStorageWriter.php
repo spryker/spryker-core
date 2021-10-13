@@ -114,9 +114,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      */
     public function writeCollectionByProductSkuEvents(array $eventTransfers): void
     {
-        /**
-         * @var array<string> $productSkus
-         */
+        /** @var array<string> $productSkus */
         $productSkus = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
         $this->writeCollectionByProductSkus($productSkus);

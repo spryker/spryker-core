@@ -51,6 +51,6 @@ class WishlistToProductBridge implements WishlistToProductInterface
      */
     public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool
     {
-         return $this->productFacade->isProductConcreteActive($productConcreteTransfer);
+        return $this->productFacade->isProductConcreteActive($productConcreteTransfer);
     }
 }

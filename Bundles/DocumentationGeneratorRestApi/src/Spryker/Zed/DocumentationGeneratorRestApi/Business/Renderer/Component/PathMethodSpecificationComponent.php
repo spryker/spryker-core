@@ -22,7 +22,7 @@ class PathMethodSpecificationComponent implements PathMethodSpecificationCompone
     protected const KEY_REQUEST_BODY = 'requestBody';
 
     /**
-     * @var \Generated\Shared\Transfer\PathMethodComponentTransfer|null $pathMethodComponentTransfer
+     * @var \Generated\Shared\Transfer\PathMethodComponentTransfer|null
      */
     protected $pathMethodComponentTransfer;
 

@@ -51,9 +51,9 @@ class SequenceCustomerPasswordPolicy implements CustomerPasswordPolicyInterface
         }
 
         $customerErrorTransfer = (new CustomerErrorTransfer())
-          ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
+            ->setMessage(static::GLOSSARY_KEY_PASSWORD_POLICY_ERROR_SEQUENCE);
         $customerResponseTransfer->setIsSuccess(false)
-          ->addError($customerErrorTransfer);
+            ->addError($customerErrorTransfer);
 
         return $customerResponseTransfer;
     }

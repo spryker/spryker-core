@@ -57,7 +57,7 @@ class SetController extends AbstractController
         }
 
         return [
-          'form' => $taxSetForm->createView(),
+            'form' => $taxSetForm->createView(),
         ];
     }
 

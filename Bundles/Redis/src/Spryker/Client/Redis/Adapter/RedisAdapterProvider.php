@@ -19,7 +19,7 @@ class RedisAdapterProvider implements RedisAdapterProviderInterface
     protected static $clientPool = [];
 
     /**
-     * @var \Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface $clientAdapterFactory
+     * @var \Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface
      */
     protected $clientAdapterFactory;
 

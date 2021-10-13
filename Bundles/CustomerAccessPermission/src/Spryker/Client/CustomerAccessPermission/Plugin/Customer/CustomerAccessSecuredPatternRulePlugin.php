@@ -47,7 +47,7 @@ class CustomerAccessSecuredPatternRulePlugin extends AbstractPlugin implements C
         $unauthenticatedCustomerAccess = $this->getFactory()->getCustomerAccessStorageClient()->getUnauthenticatedCustomerAccess();
 
         return $this->getFactory()
-           ->createCustomerAccess()
-           ->applyCustomerAccessOnCustomerSecuredPattern($unauthenticatedCustomerAccess, $securedPattern);
+            ->createCustomerAccess()
+            ->applyCustomerAccessOnCustomerSecuredPattern($unauthenticatedCustomerAccess, $securedPattern);
     }
 }

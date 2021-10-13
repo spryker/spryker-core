@@ -76,10 +76,10 @@ class FinderTest extends StateMachineMocks
     public function testGetManualEventsForStateMachineItemsShouldReturnManualEventsForGivenItems(): void
     {
         $manualEvents = [
-           'state name' => [
-               'event1',
-               'event2',
-           ],
+            'state name' => [
+                'event1',
+                'event2',
+            ],
         ];
 
         $processMock = $this->createProcessMock();

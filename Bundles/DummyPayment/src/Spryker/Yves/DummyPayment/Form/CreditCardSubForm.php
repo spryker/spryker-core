@@ -112,11 +112,11 @@ class CreditCardSubForm extends AbstractSubForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addCardType($builder)
-             ->addCardNumber($builder)
-             ->addNameOnCard($builder)
-             ->addCardExpiresMonth($builder, $options)
-             ->addCardExpiresYear($builder, $options)
-             ->addCardSecurityCode($builder);
+            ->addCardNumber($builder)
+            ->addNameOnCard($builder)
+            ->addCardExpiresMonth($builder, $options)
+            ->addCardExpiresYear($builder, $options)
+            ->addCardSecurityCode($builder);
     }
 
     /**

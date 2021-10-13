@@ -118,9 +118,7 @@ class MerchantProductCartValidator implements MerchantProductCartValidatorInterf
                 continue;
             }
 
-            /**
-             * @var string $sku
-             */
+            /** @var string $sku */
             $sku = $itemTransfer->getSku();
 
             $merchantProductConcreteSkus[] = $sku;

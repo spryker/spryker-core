@@ -51,7 +51,7 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
     protected $eventFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantDataImport\Dependency\Facade\MerchantDataImportToMerchantFacadeInterface $merchantFacade
+     * @var \Spryker\Zed\MerchantDataImport\Dependency\Facade\MerchantDataImportToMerchantFacadeInterface
      */
     protected $merchantFacade;
 

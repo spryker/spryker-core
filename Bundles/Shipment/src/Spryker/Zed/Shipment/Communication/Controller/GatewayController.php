@@ -33,6 +33,6 @@ class GatewayController extends AbstractGatewayController
      */
     public function expandQuoteWithShipmentGroupsAction(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-         return $this->getFacade()->expandQuoteWithShipmentGroups($quoteTransfer);
+        return $this->getFacade()->expandQuoteWithShipmentGroups($quoteTransfer);
     }
 }

@@ -31,7 +31,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface $merchantProductOfferMapper
+     * @var \Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface
      */
     protected $merchantProductOfferMapper;
 

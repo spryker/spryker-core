@@ -117,6 +117,6 @@ class MerchantProfileWriterStep extends PublishAwareStep implements DataImportSt
      */
     protected function generateMerchantGlossaryKey(string $field, int $idMerchant): string
     {
-         return sprintf('merchant.%s.%s', $field, $idMerchant);
+        return sprintf('merchant.%s.%s', $field, $idMerchant);
     }
 }

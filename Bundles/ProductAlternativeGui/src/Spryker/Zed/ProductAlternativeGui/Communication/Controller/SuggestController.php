@@ -55,10 +55,10 @@ class SuggestController extends AbstractController
             ->suggestProductConcrete($suggestion);
 
         return $this->jsonResponse([
-           static::KEY_RESULTS => array_merge(
-               $this->prepareData($productAbstractSuggestions),
-               $this->prepareData($productConcreteSuggestions)
-           ),
+            static::KEY_RESULTS => array_merge(
+                $this->prepareData($productAbstractSuggestions),
+                $this->prepareData($productConcreteSuggestions)
+            ),
         ]);
     }
 

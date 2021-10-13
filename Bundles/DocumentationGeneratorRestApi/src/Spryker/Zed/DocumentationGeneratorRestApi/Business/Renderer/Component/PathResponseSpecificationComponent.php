@@ -34,7 +34,7 @@ class PathResponseSpecificationComponent implements PathResponseSpecificationCom
     protected const KEY_SCHEMA = 'schema';
 
     /**
-     * @var \Generated\Shared\Transfer\PathResponseComponentTransfer|null $pathResponseComponentTransfer
+     * @var \Generated\Shared\Transfer\PathResponseComponentTransfer|null
      */
     protected $pathResponseComponentTransfer;
 

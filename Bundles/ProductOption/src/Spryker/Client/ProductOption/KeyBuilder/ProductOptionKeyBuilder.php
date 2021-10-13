@@ -12,7 +12,7 @@ use Spryker\Shared\KeyBuilder\KeyBuilderTrait;
 
 class ProductOptionKeyBuilder implements KeyBuilderInterface
 {
-     use KeyBuilderTrait;
+    use KeyBuilderTrait;
 
     /**
      * @param int $idAbstractProduct

@@ -86,9 +86,7 @@ class AvailabilityNotificationStub implements AvailabilityNotificationStubInterf
     public function getAvailabilityNotifications(
         AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
     ): AvailabilityNotificationSubscriptionCollectionTransfer {
-        /**
-         * @var \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer
-         */
+        /** @var \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer $availabilityNotificationSubscriptionCollectionTransfer */
         $availabilityNotificationSubscriptionCollectionTransfer = $this->zedRequestClient->call('/availability-notification/gateway/get-availability-notifications', $availabilityNotificationCriteriaTransfer);
 
         return $availabilityNotificationSubscriptionCollectionTransfer;

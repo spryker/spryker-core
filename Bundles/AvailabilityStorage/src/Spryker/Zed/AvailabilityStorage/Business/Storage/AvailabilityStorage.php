@@ -53,7 +53,7 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     protected $isSendingToQueue = true;
 
     /**
-     * @var \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface $availabilityStorageRepository
+     * @var \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageRepositoryInterface
      */
     protected $availabilityStorageRepository;
 

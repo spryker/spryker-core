@@ -371,8 +371,8 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     public function queryProductAttributeKey()
     {
         return $this->getFactory()
-           ->getProductQueryContainer()
-           ->queryProductAttributeKey();
+            ->getProductQueryContainer()
+            ->queryProductAttributeKey();
     }
 
     /**
@@ -400,18 +400,18 @@ class ProductRelationQueryContainer extends AbstractQueryContainer implements Pr
     public function queryRulePropelQueryWithLocalizedProductData(ProductRelationTransfer $productRelationTransfer)
     {
         return $this->getRulePropelQuery($productRelationTransfer)
-         ->clearSelectColumns()
-        ->withColumn(
-            'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
-            static::COL_IS_ACTIVE_AGGREGATION
-        )
-         ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
-         ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
-         ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
-        ->withColumn(
-            'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
-            static::COL_CATEGORY_NAME
-        );
+            ->clearSelectColumns()
+            ->withColumn(
+                'GROUP_CONCAT(' . SpyProductTableMap::COL_IS_ACTIVE . ')',
+                static::COL_IS_ACTIVE_AGGREGATION
+            )
+            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::COL_ID_PRODUCT_ABSTRACT)
+            ->withColumn(SpyProductAbstractTableMap::COL_SKU, static::COL_SKU)
+            ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
+            ->withColumn(
+                'GROUP_CONCAT(DISTINCT ' . SpyCategoryAttributeTableMap::COL_NAME . ')',
+                static::COL_CATEGORY_NAME
+            );
     }
 
     /**

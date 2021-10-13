@@ -40,14 +40,14 @@ class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
             DiscountPromotionTransfer::ABSTRACT_SKU,
             TextType::class,
             [
-                 'label' => 'Abstract product sku',
-                 'constraints' => [
-                     new NotBlank(['groups' => DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY]),
-                 ],
-             ]
+                'label' => 'Abstract product sku',
+                'constraints' => [
+                    new NotBlank(['groups' => DiscountPromotionConfig::DISCOUNT_COLLECTOR_STRATEGY]),
+                ],
+            ]
         );
 
-         return $this;
+        return $this;
     }
 
     /**

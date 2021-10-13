@@ -42,9 +42,9 @@ class CmsBlockStorageCommunicationTester extends Actor
     public function createCmsBlock(array $storeIds, array $localeIds): CmsBlockTransfer
     {
         $cmsBlockTransfer = $this->haveCmsBlock([
-           CmsBlockTransfer::STORE_RELATION => [
-               StoreRelationTransfer::ID_STORES => $storeIds,
-           ],
+            CmsBlockTransfer::STORE_RELATION => [
+                StoreRelationTransfer::ID_STORES => $storeIds,
+            ],
         ]);
 
         $translations = new ArrayObject();

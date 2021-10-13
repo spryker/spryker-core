@@ -68,8 +68,8 @@ class PriceFacade extends AbstractFacade implements PriceFacadeInterface
     public function getGrossPriceModeIdentifier()
     {
         return $this->getFactory()
-           ->getModuleConfig()
-           ->getGrossPriceModeIdentifier();
+            ->getModuleConfig()
+            ->getGrossPriceModeIdentifier();
     }
 
     /**

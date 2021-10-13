@@ -174,7 +174,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
      */
     protected function hydrateProductStorageTransfer(array $productData)
     {
-       //implement, this method is overwritten and provided in demoshop
+        //implement, this method is overwritten and provided in demoshop
         return (new StorageProductTransfer())->fromArray($productData, true);
     }
 

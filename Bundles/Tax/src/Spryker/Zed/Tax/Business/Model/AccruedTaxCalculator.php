@@ -23,7 +23,7 @@ class AccruedTaxCalculator implements AccruedTaxCalculatorInterface
      * @var array<float>
      */
     protected static $roundingErrorBucket = [
-         self::DEFAULT_BUCKET_NAME => 0,
+        self::DEFAULT_BUCKET_NAME => 0,
     ];
 
     /**

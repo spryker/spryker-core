@@ -149,12 +149,12 @@ class PageMapBuilderTest extends Unit
     public function wronglyIndexedArrays(): array
     {
         return [
-           [
-               [1 => 'wrongly', 2 => 'indexed', 3 => 'array'],
-           ],
-           [
-               ['a' => 'wrongly', 'b' => 'indexed', 'c' => 'array'],
-           ],
+            [
+                [1 => 'wrongly', 2 => 'indexed', 3 => 'array'],
+            ],
+            [
+                ['a' => 'wrongly', 'b' => 'indexed', 'c' => 'array'],
+            ],
         ];
     }
 

@@ -426,26 +426,26 @@ class MerchantSalesOrderDataExportRepository extends AbstractRepository implemen
     protected function buildMerchantSalesOrderWithExpenseBaseQuery(int $offset, int $limit): SpyMerchantSalesOrderQuery
     {
         /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder> $spyMerchantSalesOrderQuery */
-         $spyMerchantSalesOrderQuery = $this->getFactory()
-             ->getMerchantSalesOrderPropelQuery()
-             ->orderByMerchantReference()
-             ->addJoin(
-                 SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
-                 SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
-                 Criteria::LEFT_JOIN
-             )
-             ->useOrderQuery()
-                 ->orderByStore()
-                 ->leftJoinExpense()
-                 ->where(SpySalesExpenseTableMap::COL_MERCHANT_REFERENCE . '=' . SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE)
-                 ->useExpenseQuery()
-                     ->leftJoinSpySalesShipment()
-                 ->endUse()
-             ->endUse()
-             ->offset($offset)
-             ->limit($limit);
+        $spyMerchantSalesOrderQuery = $this->getFactory()
+            ->getMerchantSalesOrderPropelQuery()
+            ->orderByMerchantReference()
+            ->addJoin(
+                SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE,
+                SpyMerchantTableMap::COL_MERCHANT_REFERENCE,
+                Criteria::LEFT_JOIN
+            )
+            ->useOrderQuery()
+                ->orderByStore()
+                ->leftJoinExpense()
+                ->where(SpySalesExpenseTableMap::COL_MERCHANT_REFERENCE . '=' . SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE)
+                ->useExpenseQuery()
+                    ->leftJoinSpySalesShipment()
+                ->endUse()
+            ->endUse()
+            ->offset($offset)
+            ->limit($limit);
 
-         return $spyMerchantSalesOrderQuery;
+        return $spyMerchantSalesOrderQuery;
     }
 
     /**

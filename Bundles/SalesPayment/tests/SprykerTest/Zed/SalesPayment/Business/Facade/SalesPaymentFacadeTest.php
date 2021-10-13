@@ -61,7 +61,7 @@ class SalesPaymentFacadeTest extends Unit
     protected const CUSTOMER_REFERENCE = 'CUSTOMER_REFERENCE';
 
     /**
-     * @var \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $salesPaymentFacade
+     * @var \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
     protected $salesPaymentFacade;
 

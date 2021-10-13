@@ -73,9 +73,7 @@ class MerchantCategorySearchExpander implements MerchantCategorySearchExpanderIn
         $merchantIds = [];
 
         foreach ($merchantSearchCollectionTransfer->getMerchants() as $merchantSearchTransfer) {
-            /**
-             * @var int $idMerchant
-             */
+            /** @var int $idMerchant */
             $idMerchant = $merchantSearchTransfer->getIdMerchant();
 
             $merchantIds[] = $idMerchant;

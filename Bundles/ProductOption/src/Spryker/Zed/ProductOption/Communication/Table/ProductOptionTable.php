@@ -182,9 +182,9 @@ class ProductOptionTable extends AbstractTable
             ];
         }
 
-         return [
-             self::COL_ACTIONS => 'Actions',
-         ];
+        return [
+            self::COL_ACTIONS => 'Actions',
+        ];
     }
 
     /**

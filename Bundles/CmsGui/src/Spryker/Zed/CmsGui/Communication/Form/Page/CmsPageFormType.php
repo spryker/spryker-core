@@ -297,21 +297,21 @@ class CmsPageFormType extends AbstractType
     protected function createValidToFieldRangeConstraint()
     {
         return new Callback([
-           'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
+            'callback' => function ($dateTimeTo, ExecutionContextInterface $context) {
                 $cmsPageTransfer = $context->getRoot()->getData();
 
-            if (!$dateTimeTo) {
-                if ($cmsPageTransfer->getValidFrom()) {
-                    $context->addViolation('This field should be selected if "Valid from" is filled.');
+                if (!$dateTimeTo) {
+                    if ($cmsPageTransfer->getValidFrom()) {
+                        $context->addViolation('This field should be selected if "Valid from" is filled.');
+                    }
+
+                    return;
                 }
 
-                return;
-            }
-
-            if ($dateTimeTo < $cmsPageTransfer->getValidFrom()) {
-                $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
-            }
-           },
+                if ($dateTimeTo < $cmsPageTransfer->getValidFrom()) {
+                    $context->addViolation('Date "Valid to" cannot be earlier than "Valid from".');
+                }
+            },
         ]);
     }
 

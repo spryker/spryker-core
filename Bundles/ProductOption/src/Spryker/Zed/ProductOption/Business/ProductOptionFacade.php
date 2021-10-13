@@ -38,8 +38,8 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
     public function saveProductOptionGroup(ProductOptionGroupTransfer $productOptionGroupTransfer)
     {
         return $this->getFactory()
-           ->createProductOptionGroupSaver()
-           ->saveProductOptionGroup($productOptionGroupTransfer);
+            ->createProductOptionGroupSaver()
+            ->saveProductOptionGroup($productOptionGroupTransfer);
     }
 
     /**

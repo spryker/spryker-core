@@ -79,7 +79,7 @@ class ProductOptionTranslationForm extends AbstractType
             'required' => true,
             'constraints' => [
                 new NotBlank(),
-             ],
+            ],
         ]);
 
         return $this;

@@ -480,7 +480,7 @@ class QuoteRequestFacadeTest extends Unit
             ->setQuoteRequestVersionReference($quoteRequestTransfer->getLatestVersion()->getVersionReference());
 
         // Act
-         $this->tester
+        $this->tester
             ->getFacade()
             ->closeQuoteRequest($quoteTransfer);
 
@@ -506,7 +506,7 @@ class QuoteRequestFacadeTest extends Unit
             ->setQuoteRequestVersionReference(static::FAKE_QUOTE_REQUEST_REFERENCE);
 
         // Act
-         $this->tester
+        $this->tester
             ->getFacade()
             ->closeQuoteRequest($quoteTransfer);
 

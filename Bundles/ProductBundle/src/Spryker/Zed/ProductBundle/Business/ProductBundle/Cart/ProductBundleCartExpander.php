@@ -351,7 +351,7 @@ class ProductBundleCartExpander implements ProductBundleCartExpanderInterface
             static::$productPriceCache[$sku] = $this->priceProductFacade->findPriceFor($priceFilterTransfer);
         }
 
-         return static::$productPriceCache[$sku];
+        return static::$productPriceCache[$sku];
     }
 
     /**

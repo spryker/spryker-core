@@ -22,6 +22,6 @@ class MerchantPortalApplicationConfig extends AbstractBundleConfig
      */
     public function isDebugModeEnabled(): bool
     {
-         return (bool)$this->get(MerchantPortalConstants::ENABLE_APPLICATION_DEBUG, false);
+        return (bool)$this->get(MerchantPortalConstants::ENABLE_APPLICATION_DEBUG, false);
     }
 }

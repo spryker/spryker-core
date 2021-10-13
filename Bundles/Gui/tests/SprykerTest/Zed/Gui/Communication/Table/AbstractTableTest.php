@@ -94,8 +94,8 @@ class AbstractTableTest extends Unit
             static::COL_TWO => 'Two',
         ]);
         $config->setSortable([
-           static::COL_ONE,
-           static::COL_TWO,
+            static::COL_ONE,
+            static::COL_TWO,
         ]);
 
         $config->setDefaultSortField(static::COL_TWO);

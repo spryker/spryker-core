@@ -81,9 +81,9 @@ class SalesOrderMapper
         SpySalesOrderAddressEntityTransfer $salesOrderAddressEntityTransfer,
         SpySalesOrderAddress $salesOrderAddressEntity
     ): SpySalesOrderAddress {
-         $salesOrderAddressEntity->fromArray($salesOrderAddressEntityTransfer->toArray());
+        $salesOrderAddressEntity->fromArray($salesOrderAddressEntityTransfer->toArray());
 
-         return $salesOrderAddressEntity;
+        return $salesOrderAddressEntity;
     }
 
     /**

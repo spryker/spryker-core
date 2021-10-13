@@ -13,7 +13,7 @@ namespace Spryker\Shared\Symfony\Form\Extension\DoubleSubmitProtection\RequestTo
 class TokenHashGenerator implements TokenGeneratorInterface
 {
     /**
-     * @var string $algorithm
+     * @var string
      */
     protected $algorithm;
 

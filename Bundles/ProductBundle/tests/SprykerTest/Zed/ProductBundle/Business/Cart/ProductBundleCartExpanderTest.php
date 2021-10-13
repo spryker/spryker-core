@@ -234,7 +234,7 @@ class ProductBundleCartExpanderTest extends Unit
      */
     protected function createPriceProductFacadeMock(): ProductBundleToPriceProductFacadeInterface
     {
-         return $this->getMockBuilder(ProductBundleToPriceProductFacadeInterface::class)->getMock();
+        return $this->getMockBuilder(ProductBundleToPriceProductFacadeInterface::class)->getMock();
     }
 
     /**

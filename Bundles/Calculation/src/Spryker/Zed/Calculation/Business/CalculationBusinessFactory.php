@@ -199,7 +199,7 @@ class CalculationBusinessFactory extends AbstractBusinessFactory
      */
     public function createSubtotalCalculator()
     {
-         return new SubtotalCalculator();
+        return new SubtotalCalculator();
     }
 
     /**

@@ -14,12 +14,12 @@ use Spryker\Zed\SalesPayment\Persistence\SalesPaymentRepositoryInterface;
 class SalesOrderExpander implements SalesOrderExpanderInterface
 {
     /**
-     * @var array<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface> $orderPaymentExpanderPlugins
+     * @var array<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface>
      */
     protected $orderPaymentExpanderPlugins;
 
     /**
-     * @var \Spryker\Zed\SalesPayment\Persistence\SalesPaymentRepositoryInterface $salesPaymentRepository
+     * @var \Spryker\Zed\SalesPayment\Persistence\SalesPaymentRepositoryInterface
      */
     protected $salesPaymentRepository;
 

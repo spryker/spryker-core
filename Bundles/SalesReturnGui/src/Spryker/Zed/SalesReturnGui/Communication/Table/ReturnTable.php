@@ -234,10 +234,10 @@ class ReturnTable extends AbstractTable
     {
         $salesReturnQuery = clone $this->salesReturnQuery;
 
-         $states = $salesReturnQuery
+        $states = $salesReturnQuery
             ->clear()
-             ->filterByIdSalesReturn($idSalesReturn)
-             ->useSpySalesReturnItemQuery()
+            ->filterByIdSalesReturn($idSalesReturn)
+            ->useSpySalesReturnItemQuery()
                 ->useSpySalesOrderItemQuery()
                     ->joinState()
                     ->withColumn(
@@ -250,13 +250,13 @@ class ReturnTable extends AbstractTable
             ->find()
             ->toArray();
 
-         $stateLabels = [];
+        $stateLabels = [];
 
         foreach ($states as $state) {
             $stateLabels[] = $this->generateLabel(ucfirst($state), $this->salesReturnGuiConfig->getItemStateToLabelClassMapping()[$state] ?? 'label-default');
         }
 
-         return $stateLabels;
+        return $stateLabels;
     }
 
     /**

@@ -271,7 +271,7 @@ class EventFacadeTest extends Unit
     protected function createTransferObjectMock(): TransferInterface
     {
         return $this->getMockBuilder(TransferInterface::class)
-           ->getMock();
+            ->getMock();
     }
 
     /**

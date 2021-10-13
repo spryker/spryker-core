@@ -82,7 +82,7 @@ class CodeStyleSniffer
 
         $pathOption = isset($options['path']) ? $options['path'] : null;
         $defaults = [
-           static::OPTION_IGNORE => $namespace || $pathOption ? null : 'vendor/',
+            static::OPTION_IGNORE => $namespace || $pathOption ? null : 'vendor/',
         ];
         $options += $defaults;
 

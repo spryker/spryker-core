@@ -89,7 +89,7 @@ class ProductRuleTable extends AbstractProductTable
     protected $showResultsWithoutCriteria = false;
 
     /**
-     * @var \Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface $utilEncodingService
+     * @var \Spryker\Zed\ProductRelationGui\Dependency\Service\ProductRelationGuiToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 

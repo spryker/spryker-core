@@ -263,9 +263,9 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->setFormatter(ModelCriteria::FORMAT_OBJECT)
             ->find();
 
-         return $this->getFactory()
-             ->createProductCategoryMapper()
-             ->mapProductCategoryEntitiesToProductCategoryTransfers($productCategoryEnteties, []);
+        return $this->getFactory()
+            ->createProductCategoryMapper()
+            ->mapProductCategoryEntitiesToProductCategoryTransfers($productCategoryEnteties, []);
     }
 
     /**

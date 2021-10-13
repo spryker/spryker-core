@@ -168,7 +168,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
      */
     protected function mapProductStorageTransfer(array $productData)
     {
-       //implement, this method is overwritten and provided in demoshop
+        //implement, this method is overwritten and provided in demoshop
         return (new StorageProductTransfer())->fromArray($productData, true);
     }
 

@@ -99,8 +99,8 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected function createMessage(string $sku): MessageTransfer
     {
         return (new MessageTransfer())
-         ->setValue(static::CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY)
-         ->setParameters(['%sku%' => $sku]);
+            ->setValue(static::CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY)
+            ->setParameters(['%sku%' => $sku]);
     }
 
     /**

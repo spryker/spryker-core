@@ -34,6 +34,6 @@ class ProductBundleOrderSaverPlugin extends AbstractPlugin implements CheckoutSa
      */
     public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-         $this->getFacade()->saveSalesOrderBundleItems($quoteTransfer, $checkoutResponse);
+        $this->getFacade()->saveSalesOrderBundleItems($quoteTransfer, $checkoutResponse);
     }
 }

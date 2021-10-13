@@ -101,7 +101,7 @@ class MerchantRelationshipReader implements MerchantRelationshipReaderInterface
         $merchantRelationships = $this->repository->getMerchantRelationshipCollection($merchantRelationshipFilterTransfer);
 
         foreach ($merchantRelationships as $merchantRelationshipTransfer) {
-             $this->merchantRelationshipExpander->expandWithName($merchantRelationshipTransfer);
+            $this->merchantRelationshipExpander->expandWithName($merchantRelationshipTransfer);
         }
 
         return $merchantRelationships;

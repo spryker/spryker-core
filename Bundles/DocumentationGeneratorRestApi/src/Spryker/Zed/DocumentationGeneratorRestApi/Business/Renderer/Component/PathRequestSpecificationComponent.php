@@ -34,7 +34,7 @@ class PathRequestSpecificationComponent implements PathRequestSpecificationCompo
     protected const KEY_SCHEMA = 'schema';
 
     /**
-     * @var \Generated\Shared\Transfer\PathRequestComponentTransfer|null $pathRequestComponentTransfer
+     * @var \Generated\Shared\Transfer\PathRequestComponentTransfer|null
      */
     protected $pathRequestComponentTransfer;
 

@@ -90,15 +90,15 @@ class StateMachineQueryContainer extends AbstractQueryContainer implements State
      */
     public function queryItemHistoryByStateItemIdentifier($identifier, $idStateMachineProcess)
     {
-         return $this->getFactory()
-             ->createStateMachineItemStateHistoryQuery()
-             ->useStateQuery()
+        return $this->getFactory()
+            ->createStateMachineItemStateHistoryQuery()
+            ->useStateQuery()
                 ->filterByFkStateMachineProcess($idStateMachineProcess)
-             ->endUse()
-             ->joinState()
-             ->filterByIdentifier($identifier)
-             ->orderByCreatedAt()
-             ->orderByIdStateMachineItemStateHistory();
+            ->endUse()
+            ->joinState()
+            ->filterByIdentifier($identifier)
+            ->orderByCreatedAt()
+            ->orderByIdStateMachineItemStateHistory();
     }
 
     /**

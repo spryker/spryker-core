@@ -68,7 +68,7 @@ class MoneyCollectionType extends AbstractCollectionType
         $resolver->setRequired(static::OPTION_AMOUNT_PER_STORE);
 
         $resolver->setDefaults([
-           static::OPTION_AMOUNT_PER_STORE => true,
+            static::OPTION_AMOUNT_PER_STORE => true,
         ]);
 
         parent::configureOptions($resolver);

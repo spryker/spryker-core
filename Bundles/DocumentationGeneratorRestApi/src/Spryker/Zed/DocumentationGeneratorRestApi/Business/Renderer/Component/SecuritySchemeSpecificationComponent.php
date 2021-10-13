@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\SecuritySchemeComponentTransfer;
 class SecuritySchemeSpecificationComponent implements SecuritySchemeSpecificationComponentInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\SecuritySchemeComponentTransfer|null $securitySchemeComponentTransfer
+     * @var \Generated\Shared\Transfer\SecuritySchemeComponentTransfer|null
      */
     protected $securitySchemeComponentTransfer;
 

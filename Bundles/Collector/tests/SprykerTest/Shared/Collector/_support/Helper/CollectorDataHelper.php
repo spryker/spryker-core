@@ -119,9 +119,10 @@ class CollectorDataHelper extends Module
                 $resourceType,
                 $localeTransfer,
                 $lastTouchedAt
-            )->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID)
-         ->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID)
-         ->setFormatter(new PropelArraySetFormatter());
+            )
+            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, CollectorConfig::COLLECTOR_TOUCH_ID)
+            ->withColumn(SpyTouchTableMap::COL_ITEM_ID, CollectorConfig::COLLECTOR_RESOURCE_ID)
+            ->setFormatter(new PropelArraySetFormatter());
     }
 
     /**

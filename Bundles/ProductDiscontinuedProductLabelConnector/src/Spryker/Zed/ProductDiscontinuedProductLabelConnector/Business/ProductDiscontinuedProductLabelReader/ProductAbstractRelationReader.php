@@ -16,12 +16,12 @@ use Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProd
 class ProductAbstractRelationReader implements ProductAbstractRelationReaderInterface
 {
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface $productLabelFacade
+     * @var \Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface
      */
     protected $productLabelFacade;
 
     /**
-     * @var \Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig $config
+     * @var \Spryker\Zed\ProductDiscontinuedProductLabelConnector\ProductDiscontinuedProductLabelConnectorConfig
      */
     protected $config;
 

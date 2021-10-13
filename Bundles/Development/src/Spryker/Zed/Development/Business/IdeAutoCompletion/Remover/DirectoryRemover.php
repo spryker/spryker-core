@@ -22,7 +22,7 @@ class DirectoryRemover implements DirectoryRemoverInterface
     protected $fileSystem;
 
     /**
-     * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface $fileFinder
+     * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface
      */
     protected $fileFinder;
 

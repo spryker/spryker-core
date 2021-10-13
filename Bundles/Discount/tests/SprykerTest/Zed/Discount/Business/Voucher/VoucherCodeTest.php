@@ -58,7 +58,7 @@ class VoucherCodeTest extends Unit
 
         $discountQueryContainerMock = $this->createDiscountQueryContainerMock();
         $discountQueryContainerMock->method('queryVoucherPoolByVoucherCodes')
-             ->willReturn($discountQueryMock);
+            ->willReturn($discountQueryMock);
 
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);

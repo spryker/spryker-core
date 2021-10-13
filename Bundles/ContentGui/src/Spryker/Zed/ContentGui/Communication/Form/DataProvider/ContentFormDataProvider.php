@@ -20,7 +20,7 @@ use Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface;
 class ContentFormDataProvider implements ContentFormDataProviderInterface
 {
     /**
-     * @var \Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface $contentResolver
+     * @var \Spryker\Zed\ContentGui\Communication\Resolver\ContentResolverInterface
      */
     protected $contentResolver;
 

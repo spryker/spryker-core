@@ -62,6 +62,6 @@ class ProductManagementToMoneyBridge implements ProductManagementToMoneyInterfac
      */
     public function fromInteger($amount, $isoCode = null)
     {
-         return $this->moneyFacade->fromInteger($amount, $isoCode);
+        return $this->moneyFacade->fromInteger($amount, $isoCode);
     }
 }

@@ -53,7 +53,7 @@ class AccessTokensResourceRoutePlugin extends AbstractPlugin implements Resource
      */
     public function getController(): string
     {
-         return 'access-tokens-resource';
+        return 'access-tokens-resource';
     }
 
     /**

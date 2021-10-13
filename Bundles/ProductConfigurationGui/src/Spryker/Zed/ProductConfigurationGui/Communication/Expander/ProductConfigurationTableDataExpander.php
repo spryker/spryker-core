@@ -65,7 +65,7 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
 
         if (
             $productConfigurationAggregationTransfer->getProductConcreteCount()
-             === $productConfigurationAggregationTransfer->getProductConfigurationCount()
+            === $productConfigurationAggregationTransfer->getProductConfigurationCount()
         ) {
             $item[static::COL_PRODUCT_TYPES] = static::CONFIGURABLE_PRODUCT_TYPE;
 
@@ -78,6 +78,6 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
             static::CONFIGURABLE_PRODUCT_TYPE
         );
 
-         return $item;
+        return $item;
     }
 }

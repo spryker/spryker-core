@@ -43,9 +43,9 @@ class ProductAbstractLabelStorageMapper
         SpyProductAbstractLabelStorage $productAbstractLabelStorageEntity,
         ProductAbstractLabelStorageTransfer $productAbstractLabelStorageTransfer
     ): ProductAbstractLabelStorageTransfer {
-         $productAbstractLabelStorageTransfer->fromArray($productAbstractLabelStorageEntity->toArray(), true);
-         $productAbstractLabelStorageTransfer->setIdProductAbstract($productAbstractLabelStorageEntity->getFkProductAbstract());
+        $productAbstractLabelStorageTransfer->fromArray($productAbstractLabelStorageEntity->toArray(), true);
+        $productAbstractLabelStorageTransfer->setIdProductAbstract($productAbstractLabelStorageEntity->getFkProductAbstract());
 
-         return $productAbstractLabelStorageTransfer;
+        return $productAbstractLabelStorageTransfer;
     }
 }

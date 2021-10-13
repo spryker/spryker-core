@@ -228,10 +228,10 @@ class DiscountsTable extends AbstractTable
      */
     protected function getStatus(SpyDiscount $discountEntity)
     {
-         return $this->generateLabel(
-             $discountEntity->getIsActive() ? 'Active' : 'Inactive',
-             $discountEntity->getIsActive() ? 'label-info' : 'label-danger'
-         );
+        return $this->generateLabel(
+            $discountEntity->getIsActive() ? 'Active' : 'Inactive',
+            $discountEntity->getIsActive() ? 'label-info' : 'label-danger'
+        );
     }
 
     /**

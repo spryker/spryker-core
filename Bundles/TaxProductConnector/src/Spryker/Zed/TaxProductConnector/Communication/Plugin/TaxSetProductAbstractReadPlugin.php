@@ -31,7 +31,7 @@ class TaxSetProductAbstractReadPlugin extends AbstractPlugin implements ProductA
      */
     public function read(ProductAbstractTransfer $productAbstractTransfer)
     {
-         return $this->getFacade()
-             ->mapTaxSet($productAbstractTransfer);
+        return $this->getFacade()
+            ->mapTaxSet($productAbstractTransfer);
     }
 }

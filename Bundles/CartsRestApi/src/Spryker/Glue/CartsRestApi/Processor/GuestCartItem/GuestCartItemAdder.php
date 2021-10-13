@@ -20,7 +20,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class GuestCartItemAdder implements GuestCartItemAdderInterface
 {
     /**
-     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface $cartsRestApiClient
+     * @var \Spryker\Client\CartsRestApi\CartsRestApiClientInterface
      */
     protected $cartsRestApiClient;
 

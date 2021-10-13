@@ -68,7 +68,7 @@ abstract class AbstractProductAbstractTable extends AbstractTable
     protected $productQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface $productImageFacade
+     * @var \Spryker\Zed\ContentProductGui\Dependency\Facade\ContentProductGuiToProductImageInterface
      */
     protected $productImageFacade;
 

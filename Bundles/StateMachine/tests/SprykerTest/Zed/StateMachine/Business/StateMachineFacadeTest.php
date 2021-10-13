@@ -834,10 +834,10 @@ class StateMachineFacadeTest extends Unit
         };
 
         $container[StateMachineDependencyProvider::PLUGIN_GRAPH] = function () {
-             return new GraphPlugin();
+            return new GraphPlugin();
         };
         $container[StateMachineDependencyProvider::SERVICE_NETWORK] = function () {
-             return new UtilNetworkService();
+            return new UtilNetworkService();
         };
 
         $stateMachineBusinessFactory->setContainer($container);

@@ -55,7 +55,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
     protected $productSetGuiQueryContainer;
 
     /**
-     * @var \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
+     * @var \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface
      */
     protected $productAbstractTableHelper;
 

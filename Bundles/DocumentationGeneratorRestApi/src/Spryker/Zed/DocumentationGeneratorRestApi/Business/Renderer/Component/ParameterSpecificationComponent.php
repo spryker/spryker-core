@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\ParameterComponentTransfer;
 class ParameterSpecificationComponent implements ParameterSpecificationComponentInterface
 {
     /**
-     * @var \Generated\Shared\Transfer\ParameterComponentTransfer|null $parameterComponentTransfer
+     * @var \Generated\Shared\Transfer\ParameterComponentTransfer|null
      */
     protected $parameterComponentTransfer;
 

@@ -13,7 +13,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\DocumentationWrite
 class DocumentationGenerator implements DocumentationGeneratorInterface
 {
     /**
-     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourcePluginAnalyzerInterface $resourcePluginAnalyzer
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourcePluginAnalyzerInterface
      */
     protected $resourcePluginAnalyzer;
 

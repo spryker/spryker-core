@@ -25,12 +25,12 @@ class ProductRelationClient extends AbstractClient implements ProductRelationCli
      */
     public function getProductRelationsByIdProductAbstract($idProductAbstract)
     {
-         $localeName = $this->getFactory()
-             ->getLocaleClient()
-             ->getCurrentLocale();
+        $localeName = $this->getFactory()
+            ->getLocaleClient()
+            ->getCurrentLocale();
 
-         return $this->getFactory()
-             ->createProductRelationStorage($localeName)
-             ->getAll($idProductAbstract);
+        return $this->getFactory()
+            ->createProductRelationStorage($localeName)
+            ->getAll($idProductAbstract);
     }
 }

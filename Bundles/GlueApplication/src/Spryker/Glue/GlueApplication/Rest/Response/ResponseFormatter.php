@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ResponseFormatter implements ResponseFormatterInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface $encoderMatcher
+     * @var \Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface
      */
     protected $encoderMatcher;
 

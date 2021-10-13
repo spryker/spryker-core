@@ -125,7 +125,7 @@ class UniqueGlossaryUrlValidatorTest extends Unit
     protected function createExecutionContextMock(): ExecutionContextInterface
     {
         $executionContextMock = $this->getMockBuilder(ExecutionContextInterface::class)
-             ->getMock();
+            ->getMock();
 
         $executionContextMock->method('buildViolation')
             ->willReturn($this->createConstraintViolationBuilderMock());
@@ -138,8 +138,8 @@ class UniqueGlossaryUrlValidatorTest extends Unit
      */
     protected function createConstraintViolationBuilderMock(): ConstraintViolationBuilderInterface
     {
-         $constraintViolationBuilderMock = $this->getMockBuilder(ConstraintViolationBuilderInterface::class)
-             ->getMock();
+        $constraintViolationBuilderMock = $this->getMockBuilder(ConstraintViolationBuilderInterface::class)
+            ->getMock();
 
         $constraintViolationBuilderMock->method('atPath')->willReturnSelf();
 

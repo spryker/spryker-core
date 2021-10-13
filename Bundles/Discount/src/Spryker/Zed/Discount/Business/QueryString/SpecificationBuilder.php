@@ -306,8 +306,8 @@ class SpecificationBuilder implements SpecificationBuilderInterface
      */
     protected function isValue($token)
     {
-         $first = substr($token, 0, 1);
-         $last = substr($token, -1);
+        $first = substr($token, 0, 1);
+        $last = substr($token, -1);
 
         if ($first === '"' && $last === '"') {
             return true;
@@ -317,6 +317,6 @@ class SpecificationBuilder implements SpecificationBuilderInterface
             return true;
         }
 
-         return false;
+        return false;
     }
 }

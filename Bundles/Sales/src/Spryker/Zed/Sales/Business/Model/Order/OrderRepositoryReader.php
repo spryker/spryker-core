@@ -14,7 +14,7 @@ use Spryker\Zed\Sales\Persistence\SalesRepositoryInterface;
 class OrderRepositoryReader implements OrderRepositoryReaderInterface
 {
     /**
-     * @var \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver
+     * @var \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface
      */
     protected $orderHydratorStrategyResolver;
 

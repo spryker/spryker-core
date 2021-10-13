@@ -208,8 +208,8 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
     public function calculateExpenseTotal(CalculableObjectTransfer $calculableObjectTransfer)
     {
         $this->getFactory()
-           ->createExpenseTotalCalculator()
-           ->recalculate($calculableObjectTransfer);
+            ->createExpenseTotalCalculator()
+            ->recalculate($calculableObjectTransfer);
     }
 
     /**

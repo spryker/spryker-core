@@ -74,8 +74,8 @@ class RestUserValidatorTest extends Unit
     protected function createRestUserValidatorPluginMock(): RestUserValidatorPluginInterface
     {
         return $this->getMockBuilder(RestUserValidatorPluginInterface::class)
-           ->onlyMethods(['validate'])
-           ->getMock();
+            ->onlyMethods(['validate'])
+            ->getMock();
     }
 
     /**

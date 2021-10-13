@@ -29,6 +29,6 @@ class ProductRelationCollectorCollectorToProductImageBridge implements ProductRe
      */
     public function queryImageSetByProductAbstractId($idProductAbstract)
     {
-         return $this->productImageQueryContainer->queryImageSetByProductAbstractId($idProductAbstract);
+        return $this->productImageQueryContainer->queryImageSetByProductAbstractId($idProductAbstract);
     }
 }

@@ -30,7 +30,7 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
     protected const KEY_REF = '$ref';
 
     /**
-     * @var \Generated\Shared\Transfer\PathParameterComponentTransfer|null $pathParameterComponentTransfer
+     * @var \Generated\Shared\Transfer\PathParameterComponentTransfer|null
      */
     protected $pathParameterComponentTransfer;
 

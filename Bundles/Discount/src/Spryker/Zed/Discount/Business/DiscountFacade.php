@@ -236,8 +236,8 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         ClauseTransfer $clauseTransfer
     ) {
         return $this->getFactory()
-           ->createCalendarWeekDecisionRule()
-           ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+            ->createCalendarWeekDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
@@ -658,9 +658,9 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-         return $this->getFactory()
-             ->createPriceModeDecisionRule()
-             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+        return $this->getFactory()
+            ->createPriceModeDecisionRule()
+            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**

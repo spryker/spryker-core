@@ -49,9 +49,9 @@ class PriceProductOfferBusinessTester extends Actor
     public function getPriceProductOfferByIdProductOffer(int $idProductOffer): PriceProductOfferTransfer
     {
         $priceProductOfferEntity = $this->getPriceProductOfferPropelQuery()
-           ->filterByFkProductOffer($idProductOffer)
-           ->orderByFkPriceProductStore()
-           ->findOne();
+            ->filterByFkProductOffer($idProductOffer)
+            ->orderByFkPriceProductStore()
+            ->findOne();
 
         $priceProductOfferTransfer = (new PriceProductOfferTransfer())->fromArray($priceProductOfferEntity->toArray(), true);
 

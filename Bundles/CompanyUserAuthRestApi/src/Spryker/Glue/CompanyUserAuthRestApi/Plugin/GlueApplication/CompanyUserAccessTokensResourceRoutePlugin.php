@@ -53,7 +53,7 @@ class CompanyUserAccessTokensResourceRoutePlugin extends AbstractPlugin implemen
      */
     public function getController(): string
     {
-         return CompanyUserAuthRestApiConfig::CONTROLLER_COMPANY_USER_ACCESS_TOKENS_RESOURCE;
+        return CompanyUserAuthRestApiConfig::CONTROLLER_COMPANY_USER_ACCESS_TOKENS_RESOURCE;
     }
 
     /**

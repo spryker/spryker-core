@@ -43,7 +43,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
     protected const VALUE_TYPE_ARRAY = 'array';
 
     /**
-     * @var \Generated\Shared\Transfer\SchemaPropertyComponentTransfer|null $schemaPropertyComponentTransfer
+     * @var \Generated\Shared\Transfer\SchemaPropertyComponentTransfer|null
      */
     protected $schemaPropertyComponentTransfer;
 

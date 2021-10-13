@@ -53,7 +53,7 @@ class DoubleSubmitFormType extends AbstractTypeExtension
     protected $storage;
 
     /**
-     * @var string $fieldName
+     * @var string
      */
     protected $fieldName;
 

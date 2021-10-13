@@ -103,9 +103,9 @@ class StoreReader implements StoreReaderInterface
             return $this->storeCache->getStoreByStoreId($idStore);
         }
 
-         $storeEntity = $this->storeQueryContainer
-             ->queryStoreById($idStore)
-             ->findOne();
+        $storeEntity = $this->storeQueryContainer
+            ->queryStoreById($idStore)
+            ->findOne();
 
         if (!$storeEntity) {
             throw new StoreNotFoundException(

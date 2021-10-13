@@ -65,7 +65,7 @@ class ShipmentCartValidator implements ShipmentCartValidatorInterface
         $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
 
         if (!$shipmentMethodTransfer) {
-             $cartPreCheckResponseTransfer
+            $cartPreCheckResponseTransfer
                 ->setIsSuccess(false)
                 ->addMessage($this->createMessage());
         }

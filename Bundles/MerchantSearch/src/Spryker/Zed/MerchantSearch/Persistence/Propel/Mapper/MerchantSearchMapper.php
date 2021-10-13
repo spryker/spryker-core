@@ -22,14 +22,12 @@ class MerchantSearchMapper
         MerchantSearchTransfer $merchantSearchTransfer,
         SpyMerchantSearch $merchantSearchEntity
     ): SpyMerchantSearch {
-        /**
-         * @var int $idMerchant
-         */
-         $idMerchant = $merchantSearchTransfer->requireIdMerchant()->getIdMerchant();
+        /** @var int $idMerchant */
+        $idMerchant = $merchantSearchTransfer->requireIdMerchant()->getIdMerchant();
 
-         $merchantSearchEntity->setFkMerchant($idMerchant)
+        $merchantSearchEntity->setFkMerchant($idMerchant)
             ->fromArray($merchantSearchTransfer->toArray());
 
-         return $merchantSearchEntity;
+        return $merchantSearchEntity;
     }
 }

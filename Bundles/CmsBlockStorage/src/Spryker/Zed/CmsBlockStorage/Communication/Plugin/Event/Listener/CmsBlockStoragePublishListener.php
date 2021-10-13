@@ -18,16 +18,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class CmsBlockStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-     /**
-      * {@inheritDoc}
-      *
-      * @api
-      *
-      * @param array $eventEntityTransfers
-      * @param string $eventName
-      *
-      * @return void
-      */
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $eventEntityTransfers
+     * @param string $eventName
+     *
+     * @return void
+     */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
         $cmsBlockIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);

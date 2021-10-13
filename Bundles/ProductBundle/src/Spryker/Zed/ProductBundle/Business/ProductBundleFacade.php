@@ -86,9 +86,9 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      */
     public function postSaveCartUpdateBundles(QuoteTransfer $quoteTransfer)
     {
-         return $this->getFactory()
-             ->createProductBundlePostSaveUpdate()
-             ->updateBundles($quoteTransfer);
+        return $this->getFactory()
+            ->createProductBundlePostSaveUpdate()
+            ->updateBundles($quoteTransfer);
     }
 
     /**
@@ -153,7 +153,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
         QuoteTransfer $quoteTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ) {
-         return $this->getFactory()
+        return $this->getFactory()
             ->createProductBundleCheckoutPreCheck()
             ->checkCheckoutAvailability($quoteTransfer, $checkoutResponseTransfer);
     }
@@ -169,9 +169,9 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      */
     public function calculateBundlePrice(QuoteTransfer $quoteTransfer)
     {
-         return $this->getFactory()
-             ->createProductBundlePriceCalculator()
-             ->calculate($quoteTransfer);
+        return $this->getFactory()
+            ->createProductBundlePriceCalculator()
+            ->calculate($quoteTransfer);
     }
 
     /**
@@ -268,7 +268,7 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      */
     public function saveSalesOrderBundleItems(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-         $this->getFactory()
+        $this->getFactory()
             ->createProductBundleSalesOrderSaver()
             ->saveSaleOrderBundleItems($quoteTransfer, $checkoutResponse);
     }

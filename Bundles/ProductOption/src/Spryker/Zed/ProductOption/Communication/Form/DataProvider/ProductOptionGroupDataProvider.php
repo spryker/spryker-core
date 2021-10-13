@@ -21,7 +21,7 @@ class ProductOptionGroupDataProvider
     public const NEW_GROUP_NAME = 'new_group_name';
 
     /**
-     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface $taxFacade
+     * @var \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeInterface
      */
     protected $taxFacade;
 

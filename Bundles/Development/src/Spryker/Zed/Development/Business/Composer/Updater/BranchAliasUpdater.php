@@ -40,9 +40,9 @@ class BranchAliasUpdater implements UpdaterInterface
         $alias = Config::get(DevelopmentConstants::COMPOSER_BRANCH_ALIAS);
 
         $composerJson[static::KEY_EXTRA] = [
-          static::KEY_BRANCH_ALIAS => [
-              static::KEY_MASTER_BRANCH => $alias,
-          ],
+            static::KEY_BRANCH_ALIAS => [
+                static::KEY_MASTER_BRANCH => $alias,
+            ],
         ];
 
         return $composerJson;

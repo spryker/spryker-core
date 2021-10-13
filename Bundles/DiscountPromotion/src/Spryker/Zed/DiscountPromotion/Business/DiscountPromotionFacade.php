@@ -96,9 +96,9 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
      */
     public function findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion)
     {
-         return $this->getFactory()
-             ->createDiscountPromotionReader()
-             ->findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion);
+        return $this->getFactory()
+            ->createDiscountPromotionReader()
+            ->findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion);
     }
 
     /**

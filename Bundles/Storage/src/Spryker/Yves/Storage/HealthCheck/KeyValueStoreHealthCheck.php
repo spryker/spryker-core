@@ -19,7 +19,7 @@ class KeyValueStoreHealthCheck implements HealthCheckInterface
     public const KEY_STORAGE_HEALTH_CHECK = 'STORAGE_YVES_HEALTH_CHECK';
 
     /**
-     * @var \Spryker\Client\Storage\StorageClientInterface $storageClient
+     * @var \Spryker\Client\Storage\StorageClientInterface
      */
     protected $storageClient;
 

@@ -45,7 +45,7 @@ class ShoppingListItemPluginExecutor implements ShoppingListItemPluginExecutorIn
     protected $itemCollectionExpanderPlugins;
 
     /**
-     * @var array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface> $bulkPostSavePlugins
+     * @var array<\Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface>
      */
     protected $bulkPostSavePlugins;
 

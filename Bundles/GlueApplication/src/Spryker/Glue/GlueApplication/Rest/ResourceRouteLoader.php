@@ -214,7 +214,7 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
         $resourceVersion = $resourceRoutePlugin->getVersion();
 
         return ($resourceVersion->getMajor() === $requestedVersionTransfer->getMajor() &&
-           $resourceVersion->getMinor() === $requestedVersionTransfer->getMinor());
+            $resourceVersion->getMinor() === $requestedVersionTransfer->getMinor());
     }
 
     /**

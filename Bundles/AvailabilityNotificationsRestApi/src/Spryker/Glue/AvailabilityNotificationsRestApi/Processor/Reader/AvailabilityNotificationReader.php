@@ -64,9 +64,7 @@ class AvailabilityNotificationReader implements AvailabilityNotificationReaderIn
     public function getMyAvailabilityNotifications(RestRequestInterface $restRequest): RestResponseInterface
     {
         $availabilityNotificationCriteriaTransfer = new AvailabilityNotificationCriteriaTransfer();
-        /**
-         * @var \Generated\Shared\Transfer\RestUserTransfer $restUser
-         */
+        /** @var \Generated\Shared\Transfer\RestUserTransfer $restUser */
         $restUser = $restRequest->getRestUser();
         $availabilityNotificationCriteriaTransfer->addCustomerReference($restUser->getNaturalIdentifierOrFail());
         $storeName = $this->storeClient->getCurrentStore()->getName();

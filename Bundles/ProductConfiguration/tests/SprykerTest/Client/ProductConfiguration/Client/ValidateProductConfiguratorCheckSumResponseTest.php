@@ -34,7 +34,7 @@ class ValidateProductConfiguratorCheckSumResponseTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Client\ProductConfiguration\ProductConfigurationClientInterface $productConfigurationClient
+     * @var \Spryker\Client\ProductConfiguration\ProductConfigurationClientInterface
      */
     protected $productConfigurationClient;
 

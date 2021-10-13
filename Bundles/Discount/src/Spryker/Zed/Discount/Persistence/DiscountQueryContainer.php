@@ -273,8 +273,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryDiscountName($discountName)
     {
         return $this->getFactory()
-           ->createDiscountQuery()
-           ->filterByDisplayName($discountName);
+            ->createDiscountQuery()
+            ->filterByDisplayName($discountName);
     }
 
     /**

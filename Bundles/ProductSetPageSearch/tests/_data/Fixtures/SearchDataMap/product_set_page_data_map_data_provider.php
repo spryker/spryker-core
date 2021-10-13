@@ -2,7 +2,7 @@
 
 return [
     [
-         [
+        [
             'id_product_abstracts' =>
                  [
                     0 => 111,
@@ -40,8 +40,8 @@ return [
             'locale' => 'de_DE',
             'store' => 'DE',
             'type' => 'product_set',
-         ],
-         [
+        ],
+        [
             'store' => 'DE',
             'type' => 'product_set',
             'locale' => 'de_DE',
@@ -86,7 +86,7 @@ return [
                  [
                     'weight' => 20,
                  ],
-         ],
-         'de_DE',
+        ],
+        'de_DE',
     ],
 ];

@@ -159,7 +159,7 @@ class SpecificationBuilderTest extends Unit
     protected function createDecisionRulePlugins(): array
     {
         return [
-           new SkuDecisionRulePlugin(),
+            new SkuDecisionRulePlugin(),
         ];
     }
 
