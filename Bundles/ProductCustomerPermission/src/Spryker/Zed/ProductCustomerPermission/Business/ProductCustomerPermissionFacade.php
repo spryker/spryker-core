@@ -110,7 +110,7 @@ class ProductCustomerPermissionFacade extends AbstractFacade implements ProductC
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
-     **/
+     */
     public function checkPermissions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         return $this->getFactory()

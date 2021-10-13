@@ -168,7 +168,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      * @param string $script The script will be modified in this method.
      *
      * @return void
-     **/
+     */
     protected function addDeleteClose(&$script)
     {
         $script .= "
