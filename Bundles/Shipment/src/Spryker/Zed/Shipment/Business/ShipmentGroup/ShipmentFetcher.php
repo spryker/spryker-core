@@ -53,9 +53,7 @@ class ShipmentFetcher implements ShipmentFetcherInterface
      */
     public function findActiveShipmentMethodWithPricesAndCarrierById(int $shipmentMethodId): ?ShipmentMethodTransfer
     {
-        /**
-         * @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null $shipmentMethodEntity|null
-         */
+        /** @var \Orm\Zed\Shipment\Persistence\SpyShipmentMethod|null $shipmentMethodEntity */
         $shipmentMethodEntity = $this->queryContainer
             ->queryActiveMethodsWithMethodPricesAndCarrierById($shipmentMethodId)
             ->find()

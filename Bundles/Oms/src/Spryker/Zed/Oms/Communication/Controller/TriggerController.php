@@ -174,9 +174,7 @@ class TriggerController extends AbstractController
             $idOrderItems = [];
         }
 
-        /**
-         * Exists for Backward Compatibility reasons only.
-         */
+        // Exists for Backward Compatibility reasons only.
         $idOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER_ITEM);
         if ($idOrderItems === [] && $idOrderItem !== null) {
             $idOrderItems = [$idOrderItem];

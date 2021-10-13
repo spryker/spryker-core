@@ -70,9 +70,7 @@ class PriceProductGroupKeyBuilder implements PriceProductGroupKeyBuilderInterfac
     {
         $priceDimensionKeys = $priceProductDimensionTransfer->toArray(false, true);
 
-        /**
-         * Since abstract and concrete product prices has different `idPriceProductDefault` it shouldn't be included in group key.
-         */
+        // Since abstract and concrete product prices has different `idPriceProductDefault` it shouldn't be included in group key.
         unset($priceDimensionKeys[PriceProductDimensionTransfer::ID_PRICE_PRODUCT_DEFAULT]);
 
         return array_values($priceDimensionKeys);

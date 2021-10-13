@@ -48,9 +48,7 @@ class MerchantCategoryMerchantExpanderPlugin extends AbstractPlugin implements M
         $categoryTransfers = [];
 
         foreach ($merchantCategoryResponseTransfer->getMerchantCategories() as $merchantCategoryTransfer) {
-            /**
-             * @var \Generated\Shared\Transfer\CategoryTransfer
-             */
+            /** @var \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer */
             $categoryTransfer = $merchantCategoryTransfer->getCategory();
 
             $categoryTransfers[] = $categoryTransfer;

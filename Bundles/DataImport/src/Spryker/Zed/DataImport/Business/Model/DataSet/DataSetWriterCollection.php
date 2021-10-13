@@ -34,8 +34,9 @@ class DataSetWriterCollection implements DataSetWriterInterface
     public function write(DataSetInterface $dataSet)
     {
         foreach ($this->getDatasetWriters() as $dataSetWriter) {
-            /**
-             * This check was added because of BC and will be removed once the `\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface` is removed.
+            /*
+             * This check was added because of BC and will be removed once the
+             * `\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface` is removed.
              */
             if ($dataSetWriter instanceof DataSetWriterPluginInterface) {
                 $dataSetWriter->write($dataSet);

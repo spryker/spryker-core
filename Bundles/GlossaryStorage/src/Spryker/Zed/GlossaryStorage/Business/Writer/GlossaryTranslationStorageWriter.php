@@ -190,7 +190,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         $glossaryStorageEntityTransfer->setGlossaryKey($glossaryTranslationEntityTransfer->getGlossaryKey()->getKey());
         $glossaryStorageEntityTransfer->setLocale($glossaryTranslationEntityTransfer->getLocale()->getLocaleName());
 
-        /**
+        /*
          * This line added to keep the glossary data structure in backward compatible and
          * will be removed in the next major version.
          */

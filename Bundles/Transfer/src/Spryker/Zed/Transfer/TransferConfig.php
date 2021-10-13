@@ -108,7 +108,7 @@ class TransferConfig extends AbstractBundleConfig
      */
     protected function getCoreSourceDirectoryGlobPatterns()
     {
-        /**
+        /*
          * This is added for keeping the BC and needs to be
          * replaced with the actual return of
          * getSprykerCoreSourceDirectoryGlobPattern() method
