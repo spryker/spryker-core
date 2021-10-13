@@ -42,9 +42,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
             $this->getYvesSessionLockReleaserPlugins()
         );
 
-        /**
-         * This check was added because of BC and will be removed in the next major release.
-         */
+        // This check was added because of BC and will be removed in the next major release.
         if (!$this->getYvesSessionLockReleaserPlugins()) {
             $sessionLockReleaserPool->addLockReleaser(
                 $this->createRedisSessionLockReleaser(
@@ -76,9 +74,7 @@ class SessionBusinessFactory extends AbstractBusinessFactory
             $this->getZedSessionLockReleaserPlugins()
         );
 
-        /**
-         * This check was added because of BC and will be removed in the next major release.
-         */
+        // This check was added because of BC and will be removed in the next major release.
         if (!$this->getZedSessionLockReleaserPlugins()) {
             $sessionLockReleaserPool->addLockReleaser(
                 $this->createRedisSessionLockReleaser(

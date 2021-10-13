@@ -76,7 +76,7 @@ class ManualOrderEntryFacadeTest extends Test
     protected function getFacade(): ManualOrderEntryFacadeInterface
     {
         /**
-         * @var \Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface
+         * @var \Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface $facade
          */
         $facade = $this->tester->getFacade();
 

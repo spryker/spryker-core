@@ -189,11 +189,8 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
                 ->leftJoinWithCompanyBusinessUnit()
             ->endUse();
 
-        /**
-         * @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress|null
-         */
+        /** @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress|null $companyUnitAddressEntity */
         $companyUnitAddressEntity = $companyUnitAddressQuery->findOne();
-
         if (!$companyUnitAddressEntity) {
             return null;
         }

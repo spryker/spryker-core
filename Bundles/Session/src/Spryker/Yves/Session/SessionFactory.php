@@ -55,9 +55,7 @@ class SessionFactory extends AbstractFactory
             $this->getSessionHandlerPlugins()
         );
 
-        /**
-         * This check was added because of BC and will be removed in the next major release.
-         */
+        // This check was added because of BC and will be removed in the next major release.
         if (!$this->getSessionHandlerPlugins()) {
             $sessionHandlerPool
                 ->addHandler($this->createSessionHandlerRedis(), SessionConfig::SESSION_HANDLER_REDIS)
